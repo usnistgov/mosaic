@@ -1,5 +1,5 @@
 #!/bin/sh
 
 
-easy_install --install-dir=deps/ "numpy==1.6.1"
-easy_install --install-dir=deps/ "uncertainties==1.8"
+easy_install "numpy==1.6.1"
+easy_install "uncertainties==1.8"
