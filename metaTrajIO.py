@@ -46,6 +46,8 @@ class metaTrajIO(object):
 							argument is ignored when used in combination with fnames. 
 
 				filter='<wildcard filter>' (optional, filter is '*'' if not specified)
+				start 		Data start point. This allows the first 'n' specified to be skipped
+							and excluded from any data analysis
 			Returns:
 				None
 			Errors:
@@ -100,6 +102,11 @@ class metaTrajIO(object):
 		# Last, on startup preview one data point to force
 		# the sampling frequency FsHz to be set on startup
 		self.previewdata(1)
+
+		# Drop the first 'n' points specified by the start keyword
+		if hasattr(self, 'start'):
+			n=int( getattr(self, 'start') )
+			self.popdata(n-1)
 
 	#################################################################
 	# Public API: functions

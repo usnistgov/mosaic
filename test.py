@@ -1,17 +1,28 @@
 import sys
 import singleStepEvent as sse
 from qdfTrajIO import *
+from abf2TrajIO import *
 from tsvTrajIO import *
 from eventSegment import *
 
-dat='/Users/balijepalliak/Research/Experiments/PEG29EBSRefData/GoldHeating/SteadyStateHeating/20120725/21Cr1M40mV/'
+
+fn=['/Users/balijepalliak/Research/Experiments/PEGModelData/JoesData/2012_09_10_0016.abf']
+
+eventSegment(
+	abf2TrajIO(fnames=fn, start=175000), 
+	sse.singleStepEvent
+).Run()
+
+
+
+#dat='/Users/balijepalliak/Research/Experiments/PEG29EBSRefData/GoldHeating/SteadyStateHeating/20120725/21Cr1M40mV/'
 
 #sys.stderr.write('###############################################################\n')
 #sys.stderr.write('Run 1 \n')
-eventSegment(
-	qdfTrajIO(dirname=dat, filter='*qdf', Rfb=9.1E+9, Cfb=1.07E-12), 
-	sse.singleStepEvent
-).Run()
+#eventSegment(
+#	qdfTrajIO(dirname=dat, filter='*qdf', Rfb=9.1E+9, Cfb=1.07E-12), 
+#	sse.singleStepEvent
+#).Run()
 
 #,
 #	maxDriftRate=5.0,

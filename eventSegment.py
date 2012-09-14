@@ -326,7 +326,7 @@ class eventSegment(object):
 
 		sigma=self.driftThreshold
 		if (abs(mu)<(abs(self.meanOpenCurr)-sigma*abs(self.sdOpenCurr))) or abs(mu)>(abs(self.meanOpenCurr)+sigma*abs(self.sdOpenCurr)):
-			raise ExcessiveDriftError("The open channel current ({0:0.2f} pA) exceeds the baseline value ({1:0.2f}) by {2} sigma.".format(mu, self.meanOpenCurr, sigma))
+			raise ExcessiveDriftError("The open channel current ({0:0.2f} pA) deviates from the baseline value ({1:0.2f}) by {2} sigma.".format(mu, self.meanOpenCurr, sigma))
 
 		if (abs(sl)) > abs(self.maxDriftRate):
 			raise DriftRateError("The open channel conductance is changing faster ({0} pA/s) than the allowed rate ({1} pA/s).".format(round(abs(sl),2), abs(round(self.maxDriftRate,2))))

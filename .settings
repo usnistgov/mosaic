@@ -1,11 +1,11 @@
 {
 	"eventSegment" : {
 		"blockSizeSec" 		: "1.0",
-		"eventPad" 			: "500",
+		"eventPad" 			: "100",
 		"minEventLength" 	: "5",
 		"eventThreshold" 	: "6.0",
 		"driftThreshold" 	: "2.0",
-		"maxDriftRate" 		: "5.0"
+		"maxDriftRate" 		: "20.0"
 	},
 	"singleStepEvent" : {
 		"binSize" 			: "1.0",
