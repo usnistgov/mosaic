@@ -346,7 +346,7 @@ class eventSegment(object):
 			immediately preceeding the start of the event), mark the event end. Pad 
 			the event by 'eventPad' points and hand off to the event processing algorithm.
 		"""
-		# copy the dict since the event processing will change key values
+		# copy the dict since the event processing will change key value pairs
 		tempEvntSettings=dict( self.settingsDict.getSettings(self.eventProcHnd.__name__) )
 
 		try:
