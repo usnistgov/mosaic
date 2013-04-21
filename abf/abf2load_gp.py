@@ -695,11 +695,19 @@ EpochInfoDescription = [
        ]
 
 if __name__ == '__main__':
-    f = '/Users/balijepalliak/Research/Experiments/PEGModelData/JoesData/2012_09_10_0016.abf'
-    a=ABF2(f)
+    f = '/Users/balijepalliak/Research/Experiments/StepRespData/p29pure/'
+    fn = '06710009.abf'
+    a=ABF2(f+fn)
+    #a=ABF2('/Users/balijepalliak/Google Drive/13102009.abf')
     a.abf2load()
 
     d=a.data
 
     print len(a.data), len(d[0]), a.samplingRateHz, a.version
-    d[0][:5000000].tofile('2012_09_10_0016.csv', sep=',')
+    #d[0][:5000000].tofile('2012_09_10_0010.csv', sep=',')
+
+    import matplotlib.pyplot as plt
+    plt.plot(d[0][:500000])
+    plt.ylabel('current (pA)')
+    #plt.title(fn)
+    plt.show()

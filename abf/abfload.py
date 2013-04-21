@@ -951,12 +951,36 @@ def char2str(list, format = 'c'):
         
 
 if __name__ == '__main__':
-    f = '/Users/hd/Documents/DataBase/invivocortex/2009_08_11_0001.abf'
+    # f = '/Users/balijepalliak/Research/Experiments/StepRespData/p29pure/'
+    # fn = '06710009.abf'
+    # a=Abf(f+fn)
+    # #a=ABF2('/Users/balijepalliak/Google Drive/13102009.abf')
+    # d=a.abfload()
+
+    # dd=np.squeeze(d)
+    # print len(d), type(d)
+    # print dd[:100]
+    # import matplotlib.pyplot as plt
+    # plt.plot(dd[:500000])
+    # plt.ylabel('current (pA)')
+    # #plt.title(fn)
+    # plt.show()
+
+
+
+    f = '/Users/balijepalliak/Research/Experiments/StepRespData/p29pure/06710009.abf'
     abfreader = Abf(f)
-    d = abfreader.abfload()
+    [d, h] = abfreader.abfload()
     
-    from MultiLinePlot import MultiLinePlot
+    #from MultiLinePlot import MultiLinePlot
+    import matplotlib.pyplot as plt
     try:
-        pc = MultiLinePlot(np.squeeze(d), 1000)
+        print 'data:\n\n' #np.squeeze(d)
+        
+        print "\n".join([ k+'='+str(h[k]) for k in h.keys() ])
+        
+        plt.plot(d[0][:1000000]/5.0)
+        plt.show()
+        #pc = MultiLinePlot(np.squeeze(d), 1000)
     except BaseException, e:
         print e

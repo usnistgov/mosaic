@@ -6,6 +6,12 @@
 	Created:	7/17/2012
 
 	ChangeLog:
+		9/26/12		AB  Allow automatic open channel state calculation to be overridden.
+						To do this the settings "meanOpenCurr","sdOpenCurr" and "slopeOpenCurr"
+						must be set. If all three settings are absent, they are 
+						atuomatically estimated.
+						Added "writeEventTS" boolean setting to control whether raw
+						event currents are written to file. Default is ON (1)
 		8/24/12		AB 	Settings are now read from a settings file '.settings' that
 						is located either with the data or in the working directory 
 						that the program is run from. Each class that relies on the 
@@ -24,9 +30,12 @@ from  collections import deque
 
 import commonExceptions
 import singleStepEvent as sse 
+import stepResponseAnalysis as sra 
+
 import metaTrajIO
 import util
 import settings
+import pproc 
 
 # custom errors
 class ExcessiveDriftError(Exception):
@@ -64,7 +73,14 @@ class eventSegment(object):
 								SD from the baseline open channel current (default: 2)
 				maxDriftRate	Trigger a warning when the open channel conductance changes at a rate faster 
 								than that specified. (default: 2 pA/s)
-			
+				meanOpenCurr	Explicitly set mean open channel current. (pA) (default: -1, to 
+								calculate automatically)
+				sdOpenCurr		Explicitly set open channel current SD. (pA) (default: -1, to 
+								calculate automatically)
+				slopeOpenCurr	Explicitly set open channel current slope. (default: -1, to 
+								calculate automatically)
+				writeEventTS	Write event current data to file. (default: 1, write data to file)
+				parallelProc	Process events in parallel using the pproc module. (default: 1, Yes)
 		"""
 		# Required arguments
 		self.trajDataObj=trajDataObj
@@ -76,6 +92,8 @@ class eventSegment(object):
 		# Algorithm settings and their default values
 		segmentSettings=self.settingsDict.getSettings(self.__class__.__name__)
 
+		if segmentSettings=={}:
+			sys.stderr.write('Settings file not found, default settings will be used.')
 		try:
 			self.blockSizeSec=float(segmentSettings.pop("blockSizeSec", 1.0))
 			self.eventPad=int(segmentSettings.pop("eventPad", 500))
@@ -83,6 +101,11 @@ class eventSegment(object):
 			self.eventThreshold=float(segmentSettings.pop("eventThreshold",6.0))
 			self.driftThreshold=float(segmentSettings.pop("driftThreshold",2.0))
 			self.maxDriftRate=float(segmentSettings.pop("maxDriftRate",2.0))
+			self.meanOpenCurr=float(segmentSettings.pop("meanOpenCurr",-1.))
+			self.sdOpenCurr=float(segmentSettings.pop("sdOpenCurr",-1.))
+			self.slopeOpenCurr=float(segmentSettings.pop("slopeOpenCurr",-1.))
+			self.writeEventTS=int(segmentSettings.pop("writeEventTS",1))
+			self.parallelProc=int(segmentSettings.pop("parallelProc",1))
 		except ValueError as err:
 			raise commonExceptions.SettingsTypeError( err )
 
@@ -95,15 +118,18 @@ class eventSegment(object):
 		outf=open(self.trajDataObj.datPath+'/eventProcessing.log','w')
 		outf.write(outputstr)
 
-		startTime=time.clock()
+		startTime=time.time()
 
 		# At the start of a run, store baseline stats for the open channel state
 		# Later, we use these values to detect drift
 		# First, calculate the number of points to include using the blockSizeSec 
 		# class attribute and the sampling frequency specified in trajDataObj
-		nPoints=int(self.blockSizeSec*self.trajDataObj.FsHz)
+		self.nPoints=int(self.blockSizeSec*self.trajDataObj.FsHz)
 
-		[ self.meanOpenCurr, self.sdOpenCurr, self.slopeOpenCurr ] = self.__openchanstats(self.trajDataObj.previewdata(nPoints))
+		if self.meanOpenCurr == -1. or self.sdOpenCurr == -1. or self.slopeOpenCurr == -1.:
+			[ self.meanOpenCurr, self.sdOpenCurr, self.slopeOpenCurr ] = self.__openchanstats(self.trajDataObj.previewdata(nPoints))
+		else:
+			print "Automatic open channel state calculation has been disabled."
 
 		# Initialize a FIFO queue to keep track of open channel conductance
 		#self.openchanFIFO=npfifo.npfifo(nPoints)
@@ -131,9 +157,11 @@ class eventSegment(object):
 		try:
 			while(1):	
 				# with each pass obtain more data and
-				d=self.trajDataObj.popdata(nPoints)
+				d=self.trajDataObj.popdata(self.nPoints)
 				# Check for excessive open channel drift
 				self.__checkdrift(d)
+
+				#print self.meanOpenCurr, self.minDrift, self.maxDrift, self.minDriftR, self.maxDriftR
 
 				# store the new data into a local store
 				self.currData.extend(list(d))
@@ -142,13 +170,13 @@ class eventSegment(object):
 				self.__eventsegment()
 
 		except metaTrajIO.EmptyDataPipeError, err:
-			segmentTime=time.clock()-startTime
+			segmentTime=time.time()-startTime
 			outputstr='[Status]\n\tSegment trajectory: ***NORMAL***\n'
 		except (ExcessiveDriftError, DriftRateError) as err:
-			segmentTime=time.clock()-startTime
+			segmentTime=time.time()-startTime
 			outputstr='[Status]\n\tSegment trajectory: ***ERROR***\n\t\t{0}\n'.format(str(err))
 		except KeyboardInterrupt, err:
-			segmentTime=time.clock()-startTime
+			segmentTime=time.time()-startTime
 			outputstr='[Status]\n\tSegment trajectory: ***USER STOP***\n'
 		except:
 			raise
@@ -159,28 +187,38 @@ class eventSegment(object):
 		outf.write(outputstr)
 
 		# Process individual events identified by the segmenting algorithm
-		startTime=time.clock()
+		startTime=time.time()
 		try:
-			[ evnt.processEvent() for evnt in self.eventQueue ]
-			outputstr='\tProcess events: ***NORMAL***\n\n\n'
-			procTime=time.clock()-startTime
+			if self.parallelProc:
+				p = pproc.pproc("processEvent", self.eventQueue, 8)
+				p.AsyncApply()
 
-			# write output files
-			# 1. Event metadata
+				# get the modified objects
+				self.eventQueue = p.objlist
+			else:
+				[ evnt.processEvent() for evnt in self.eventQueue ]
+	
+			outputstr='\tProcess events: ***NORMAL***\n\n\n'
+			procTime=time.time()-startTime
+		except BaseException, err:
+			outputstr='\tProcess events: ***ERROR***\n\t\t{0}\n\n\n'.format(str(err))
+			procTime=time.time()-startTime
+			raise
+		except KeyboardInterrupt:
+			procTime=time.time()-startTime
+			outputstr+='\t\Process events: ***USER STOP***\n\n\n'
+
+		#print "event count = ", self.eventcount
+		# write output files
+		# 1. Event metadata
+		if len(self.eventQueue) > 0:
 			w1=csv.writer(open(self.trajDataObj.datPath+'/eventMD.tsv', 'wO'),delimiter='\t')
 			w1.writerow(self.eventQueue[0].mdHeadings())
 			[ w1.writerow(event.mdList()) for event in self.eventQueue ]
-			# 2. Raw event currents as CSV
-			w2=csv.writer(open(self.trajDataObj.datPath+'/eventTS.csv', 'wO'),delimiter=',')
-			[ w2.writerow(event.eventData) for event in self.eventQueue ]
-
-		except BaseException, err:
-			outputstr='\tProcess events: ***ERROR***\n\t\t{0}\n\n\n'.format(str(err))
-			procTime=time.clock()-startTime
-			raise
-		except KeyboardInterrupt:
-			procTime=time.clock()-startTime
-			outputstr+='\t\Process events: ***USER STOP***\n\n\n'
+			if self.writeEventTS:
+				# 2. Raw event currents as CSV
+				w2=csv.writer(open(self.trajDataObj.datPath+'/eventTS.csv', 'wO'),delimiter=',')
+				[ w2.writerow(event.eventData) for event in self.eventQueue ]
 
 		outputstr+='[Summary]\n'
 
@@ -189,18 +227,18 @@ class eventSegment(object):
 
 		# print event processing stats. these are limited to how
 		# many events were rejected
-		nEventsProc=0
-		for evnt in self.eventQueue:
-			if evnt.mdProcessingStatus=='normal':
-				nEventsProc+=1
-		outputstr+='\tEvent processing stats:\n'
-		outputstr+='\t\tAccepted = {0}\n'.format(nEventsProc)
-		outputstr+='\t\tRejected = {0}\n'.format(self.eventcount-nEventsProc)
-		outputstr+='\t\tRejection rate = {0}\n\n'.format(round(1-nEventsProc/float(self.eventcount),2))
+		#nEventsProc=0
+		#for evnt in self.eventQueue:
+		#	if evnt.mdProcessingStatus=='normal':
+		#		nEventsProc+=1
+		#outputstr+='\tEvent processing stats:\n'
+		#outputstr+='\t\tAccepted = {0}\n'.format(nEventsProc)
+		#outputstr+='\t\tRejected = {0}\n'.format(self.eventcount-nEventsProc)
+		#outputstr+='\t\tRejection rate = {0}\n\n'.format(round(1-nEventsProc/float(self.eventcount),2))
 
 		# Display averaged properties
-		for p in self.eventQueue[0].mdAveragePropertiesList():
-			outputstr+='\t\t{0} = {1}\n'.format(p, self.__roundufloat( np.mean( [ getattr(evnt, p) for evnt in self.eventQueue if getattr(evnt, p) != -1 ] )) )
+		#for p in self.eventQueue[0].mdAveragePropertiesList():
+		#	outputstr+='\t\t{0} = {1}\n'.format(p, self.__roundufloat( np.mean( [ getattr(evnt, p) for evnt in self.eventQueue if getattr(evnt, p) != -1 ] )) )
 
 		outputstr+="\n\n[Settings]\n\tSettings File = '{0}'\n\n".format(self.settingsDict.settingsFile)
 		
@@ -217,7 +255,10 @@ class eventSegment(object):
 		outputstr+='[Output]\n'
 		outputstr+='\tOutput path = {0}\n'.format(self.trajDataObj.datPath)
 		outputstr+='\tEvent characterization data = eventMD.tsv\n'
-		outputstr+='\tEvent time-series = eventTS.csv\n'
+		if self.writeEventTS:
+			outputstr+='\tEvent time-series = eventTS.csv\n'
+		else:
+			outputstr+='\tEvent time-series = ***disabled***\n'
 		outputstr+='\tLog file = eventProcessing.log\n\n'
 
 		# Finally, timing information
@@ -358,6 +399,7 @@ class eventSegment(object):
 				
 				# Mark the start of the event
 				if abs(t) < self.thrCurr: 
+					#print "event",
 					self.eventstart=True
 					self.eventdat=[]
 
@@ -369,14 +411,31 @@ class eventSegment(object):
 
 					# end of event. Reset the flag
 					self.eventstart=False
-	
-					if len(self.eventdat)>self.minEventLength:
+					
+					# Check if there are enough data points to pad the event. If not pop more.
+					if len(self.currData) < self.eventPad:
+						self.currData.extend(list(self.trajDataObj.popdata(self.nPoints)))
+
+					# Cleanup event pad data before adding it to the event. We look for:
+					# 	1. the start of a second event
+					#	2. Outliers
+					# The threshold for accepting a point is eventThreshold/2.0
+					eventpaddat = util.selectS( 
+							[ self.currData[i] for i in range(self.eventPad) ],
+							self.eventThreshold/2.0,
+							self.meanOpenCurr, 
+							self.sdOpenCurr
+						)
+					 
+
+					#print self.trajDataObj.FsHz, self.windowOpenCurrentMean, self.sdOpenCurr, self.slopeOpenCurr
+					if len(self.eventdat)>=self.minEventLength:
 						self.eventcount+=1
 						#sys.stderr.write('event mean curr={0:0.2f}, len(preeventdat)={1}\n'.format(sum(self.eventdat)/len(self.eventdat),len(self.preeventdat)))
 						#print list(self.preeventdat) + self.eventdat + [ self.currData[i] for i in range(self.eventPad) ]
 						self.eventQueue.append(
 							 self.eventProcHnd(
-								list(self.preeventdat) + self.eventdat + [ self.currData[i] for i in range(self.eventPad) ], 
+								list(self.preeventdat) + self.eventdat + eventpaddat, 
 								self.trajDataObj.FsHz,
 								eventstart=len(self.preeventdat)+1,						# event start point
 								eventend=len(self.preeventdat)+len(self.eventdat)+1,	# event end point

@@ -1,19 +1,19 @@
 {
 	"eventSegment" : {
 		"blockSizeSec" 		: "1.0",
-		"eventPad" 			: "100",
+		"eventPad" 		: "200",
 		"minEventLength" 	: "5",
 		"eventThreshold" 	: "6.0",
-		"driftThreshold" 	: "2.0",
+		"driftThreshold" 	: "10.0",
 		"maxDriftRate" 		: "20.0"
 	},
 	"singleStepEvent" : {
-		"binSize" 			: "1.0",
-		"histPad" 			: "10",
+		"binSize" 		: "1.0",
+		"histPad" 		: "10",
 		"maxFitIters"		: "5000",
-		"a12Ratio" 			: "1.e4",
+		"a12Ratio" 		: "1.e4",
 		"minEvntTime" 		: "10.e-6",
-		"minDataPad" 		: "50"
+		"minDataPad" 		: "200"
 	}
 }
 

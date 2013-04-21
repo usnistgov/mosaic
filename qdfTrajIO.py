@@ -69,6 +69,8 @@ class qdfTrajIO(metaTrajIO.metaTrajIO):
 
 		# Slice the data to remove the time-stamps to conserve memory		
 		# and add new data to the existing array
+		print "last raw current val in file ", fname, " = ", q[-1]
+
 		self.currDataPipe=np.hstack((self.currDataPipe, q[ : , 1]))
 
 	def formatsettings(self):

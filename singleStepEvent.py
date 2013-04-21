@@ -202,7 +202,6 @@ class singleStepEvent(metaEventProcessor.metaEventProcessor):
 		# We put the sign back in the current when returning the results
 		evntabs=np.abs(cleandat)
 
-		
 		# Histogram and fit
 		try:
 			# PDF of event data
@@ -225,14 +224,19 @@ class singleStepEvent(metaEventProcessor.metaEventProcessor):
 			self.rejectEvent('eBDFit')
 			return
 			
-		# If the fit was successful, determine if the parameters are acceptable
-		if np.abs(popt[3]/popt[0]) > self.a12Ratio or popt[1]/popt[4] < 0 or popt[3]/popt[0] < 0 or np.abs(popt[4]-popt[1]) < 2.75*popt[5]:
-			self.rejectEvent('eBDPeak')
-			return
-		elif np.abs(popt[2]) > 2*np.abs(popt[5]):
-			self.rejectEvent('eEvntNoise')
-			return
-		
+
+		try:
+			# If the fit was successful, determine if the parameters are acceptable
+			if np.abs(popt[3]/popt[0]) > self.a12Ratio or popt[1]/popt[4] < 0 or popt[3]/popt[0] < 0 or np.abs(popt[4]-popt[1]) < 2.75*popt[5]:
+				self.rejectEvent('eBDPeak')
+				return
+			elif np.abs(popt[2]) > 2*np.abs(popt[5]):
+				self.rejectEvent('eEvntNoise')
+				return
+		except:
+			# unspecified fitting error
+			self.rejectEvent('eBDFit')
+
 		# One last test: make sure we have a flat region at the base of the event
 		# to avoid underestimating the blockade depth.
 		if len( util.selectS( 
@@ -244,16 +248,17 @@ class singleStepEvent(metaEventProcessor.metaEventProcessor):
 			self.rejectEvent('eShortEvent')
 			return
 
-
 		# The event is good, save it.
-		self.mdOpenChCurrent=uncertainties.ufloat((sign*round(popt[4],4), round(np.abs(popt[5]),4)))
-		self.mdBlockedCurrent=uncertainties.ufloat((sign*round(popt[1],4), round(np.abs(popt[2]),4)))
-		bd=self.mdBlockedCurrent/self.mdOpenChCurrent
-		self.mdBlockDepth=uncertainties.ufloat(( round(uncertainties.nominal_value(bd),2), round(uncertainties.std_dev(bd),2) ))
-		
-		self.mdTempA12=uncertainties.ufloat(( popt[0], popt[3] ))
-		#print 'normal\t'+str(s1)+'\t'+str(s2)+'\t'+'0.0+/-0.0'+'\t'+'0.0+/-0.0'+'\t'+str(bd1)+'\t'+'0.0+/-0.0'+'\t'+str(a12)
-
+		try:
+			self.mdOpenChCurrent=uncertainties.ufloat((sign*round(popt[4],4), round(np.abs(popt[5]),4)))
+			self.mdBlockedCurrent=uncertainties.ufloat((sign*round(popt[1],4), round(np.abs(popt[2]),4)))
+			bd=self.mdBlockedCurrent/self.mdOpenChCurrent
+			self.mdBlockDepth=uncertainties.ufloat(( round(uncertainties.nominal_value(bd),5), round(uncertainties.std_dev(bd),6) ))
+			
+			self.mdTempA12=uncertainties.ufloat(( popt[0], popt[3] ))
+			#print 'normal\t'+str(s1)+'\t'+str(s2)+'\t'+'0.0+/-0.0'+'\t'+'0.0+/-0.0'+'\t'+str(bd1)+'\t'+'0.0+/-0.0'+'\t'+str(a12)
+		except AssertionError:
+			self.rejectEvent('eBDFit')
 
 	def __sumgauss(self, x, a1, m1, s1, a2, m2, s2):
 		return a1 * np.exp( (-(x-m1)**2)/(2*s1*s1) ) + a2 * np.exp( (-(x-m2)**2)/(2*s2*s2) )
@@ -303,7 +308,7 @@ class singleStepEvent(metaEventProcessor.metaEventProcessor):
 		idx=self.eStartEstimate
 
 		try:
-			while np.abs((np.abs(self.eventData[idx])-ocmu)/ocsd) > 2.0:
+			while np.abs((np.abs(self.eventData[idx])-ocmu)/ocsd) > 5.0:
 				idx-=1
 			
 			# Set the start point
@@ -319,7 +324,7 @@ class singleStepEvent(metaEventProcessor.metaEventProcessor):
 				idx+=1
 
 			# Finally backtrack to find the true event end
-			while np.abs((np.abs(self.eventData[idx])-bcmu)/bcsd) > 2.0:
+			while np.abs((np.abs(self.eventData[idx])-bcmu)/bcsd) > 5.0:
 				idx-=1
 		except ( IndexError, FloatingPointError ):
 			self.rejectEvent('eResTime')
