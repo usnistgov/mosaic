@@ -5,6 +5,7 @@ import singleStepEvent as sse
 import stepResponseAnalysis as sra 
 from qdfTrajIO import *
 from abf2TrajIO import *
+from binTrajIO import *
 from tsvTrajIO import *
 from eventSegment import *
 
@@ -76,11 +77,15 @@ baseA='/Users/balijepalliak/Research/Experiments/PEGModelData/ArvindsData/'
 #			abf2TrajIO(fnames=[baseJoe+'PEGMixture/3.5M_121712/m40mV/2012_12_17_0009.abf'], start=375000), 
 #			sse.singleStepEvent
 #		).Run()
+
+# eventSegment(
+# 			abf2TrajIO(fnames=[baseJoe+'PEGMixture/3.5M_121712/m40mV/2012_12_17_0009.abf'], start=375000), 
+# 			sra.stepResponseAnalysis
+# 		).Run()
 eventSegment(
-			abf2TrajIO(fnames=[baseJoe+'PEGMixture/3.5M_121712/m40mV/2012_12_17_0009.abf'], start=375000), 
+			binTrajIO(fnames=['/Users/balijepalliak/Research/Experiments/StepRespData/p29pure/06710009.abf'], AmplifierScale=1000., AmplifierOffset=0, SamplingFrequency=50000, HeaderOffset=4096, RecordSize=2, start=5000), 
 			sra.stepResponseAnalysis
 		).Run()
-
 #,
 #	maxDriftRate=5.0,
 #	eventPad=250,
