@@ -1,5 +1,5 @@
 """
-	Segment a trajectory into individual events and pass each event 
+	Partition a trajectory into individual events and pass each event 
 	to an implementation of eventProcessor
 
 	Author: 	Arvind Balijepalli
@@ -28,11 +28,12 @@ import numpy as np
 import uncertainties
 from  collections import deque
 
+import metaEventPartition
 import commonExceptions
 import singleStepEvent as sse 
 import stepResponseAnalysis as sra 
-
 import metaTrajIO
+
 import util
 import settings
 import pproc 
@@ -44,23 +45,14 @@ class ExcessiveDriftError(Exception):
 class DriftRateError(Exception):
 	pass
 
-class eventSegment(object):
+class eventSegment(metaEventPartition):
 	"""
 		Segment a trajectory
 	"""
-	def __init__(self, trajDataObj, eventProcHnd):
+	def __init__(self, trajDataObj, eventProcHnd, eventPartitionSettings, eventProcSettings):
 		"""
-			Initialize a new event segment object
-			Args:
-				trajDataObj:	properly initialized object instantiated from a sub-class of metaTrajIO.
-				eventProcHnd:	handle to a sub-class of metaEventProcessor. Objects of this class are 
-								initialized as necessary
-			Returns:
-				None
-			
-			Errors:
-				None
-
+			Implement an event partitioning algorithm by sub-classing teh metaEventPartition class
+	
 			Parameters from settings file (.settings in the data path or current working directory):
 				blockSizeSec:	Functions that perform block processing use this value to set the size of 
 								their windows in seconds. For example, open channel conductance is processed
@@ -79,21 +71,11 @@ class eventSegment(object):
 								calculate automatically)
 				slopeOpenCurr	Explicitly set open channel current slope. (default: -1, to 
 								calculate automatically)
-				writeEventTS	Write event current data to file. (default: 1, write data to file)
-				parallelProc	Process events in parallel using the pproc module. (default: 1, Yes)
 		"""
-		# Required arguments
-		self.trajDataObj=trajDataObj
-		self.eventProcHnd=eventProcHnd
+		# First call the base class initializer. 
+		super(eventSegment, self).__init__(trajDataObj, eventProcHnd, eventPartitionSettings, eventProcSettings)
 
-		# Read and parse the settings file
-		self.settingsDict=settings.settings( self.trajDataObj.datPath )
-
-		# Algorithm settings and their default values
-		segmentSettings=self.settingsDict.getSettings(self.__class__.__name__)
-
-		if segmentSettings=={}:
-			sys.stderr.write('Settings file not found, default settings will be used.')
+		# parse algorithm specific settings from the settings dict
 		try:
 			self.blockSizeSec=float(segmentSettings.pop("blockSizeSec", 1.0))
 			self.eventPad=int(segmentSettings.pop("eventPad", 500))
@@ -134,13 +116,13 @@ class eventSegment(object):
 		# Initialize a FIFO queue to keep track of open channel conductance
 		#self.openchanFIFO=npfifo.npfifo(nPoints)
 		
-		# setup a local data store that is used by the main event segmentation loop
+		# setup a local data store that is used by the main event partition loop
 		self.currData = deque()
 
 		#### Event Queue ####
 		self.eventQueue=[]
 
-		#### Vars for event segmentation ####
+		#### Vars for event partition ####
 		self.eventstart=False
 		self.eventdat=[]
 		self.preeventdat=deque(maxlen=self.eventPad)
@@ -148,7 +130,7 @@ class eventSegment(object):
 
 		self.thrCurr=(abs(self.meanOpenCurr)-self.eventThreshold*abs(self.sdOpenCurr))
 
-		#### Vars for event segmentation stats ####
+		#### Vars for event partition stats ####
 		self.minDrift=abs(self.meanOpenCurr)
 		self.maxDrift=abs(self.meanOpenCurr)
 		self.minDriftR=self.slopeOpenCurr
@@ -252,13 +234,7 @@ class eventSegment(object):
 		outputstr+=self.eventQueue[0].formatsettings()+'\n\n'
 
 		# Output files
-		outputstr+='[Output]\n'
-		outputstr+='\tOutput path = {0}\n'.format(self.trajDataObj.datPath)
-		outputstr+='\tEvent characterization data = eventMD.tsv\n'
-		if self.writeEventTS:
-			outputstr+='\tEvent time-series = eventTS.csv\n'
-		else:
-			outputstr+='\tEvent time-series = ***disabled***\n'
+		outputstr+=self.formatoutputfiles()
 		outputstr+='\tLog file = eventProcessing.log\n\n'
 
 		# Finally, timing information
@@ -304,6 +280,19 @@ class eventSegment(object):
 
 		fmtstr+='\n\t\tOpen channel drift (max) = {0} * SD\n'.format(abs(round((abs(self.meanOpenCurr)-abs(self.maxDrift))/self.sdOpenCurr,2)))
 		fmtstr+='\t\tOpen channel drift rate (min/max) = ({0}/{1}) pA/s\n\n'.format(round(self.minDriftR,2), round(self.maxDriftR))
+
+		return fmtstr
+
+	def formatoutputfiles(self):
+		fmtstr=""
+
+		fmtstr+='[Output]\n'
+		fmtstr+='\tOutput path = {0}\n'.format(self.trajDataObj.datPath)
+		fmtstr+='\tEvent characterization data = eventMD.tsv\n'
+		if self.writeEventTS:
+			fmtstr+='\tEvent time-series = eventTS.csv\n'
+		else:
+			fmtstr+='\tEvent time-series = ***disabled***\n'
 
 		return fmtstr
 
