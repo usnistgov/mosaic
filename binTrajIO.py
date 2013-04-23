@@ -1,4 +1,11 @@
 """
+Binary file implementation of metaTrajIO. Read raw binary files with specified record sizes
+
+	Author: Arvind Balijepalli
+	Created: 4/22/2013
+
+	ChangeLog:
+		4/22/13		AB	Initial version
 """
 import struct
 
