@@ -74,7 +74,7 @@ class binTrajIO(metaTrajIO.metaTrajIO):
 		fmtstr+='\n\t\tAmplifier scale = {0} pA\n'.format(self.AmplifierScale)
 		fmtstr+='\t\tAmplifier offset = {0} pA\n'.format(self.AmplifierOffset)
 		fmtstr+='\t\tHeader offset = {0} bytes\n'.format(self.HeaderOffset)
-		fmtstr+='\t\tRecord size = {0} pF\n'.format(self.RecordSize)
+		fmtstr+='\t\tRecord size = {0} bytes\n'.format(self.RecordSize)
 	
 		return fmtstr
 
