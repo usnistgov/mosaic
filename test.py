@@ -1,12 +1,17 @@
 import sys
 import glob
 
+import SingleChannelAnalysis
+
+import eventSegment as es
+
 import singleStepEvent as sse
 import stepResponseAnalysis as sra 
+
 from qdfTrajIO import *
 from abf2TrajIO import *
 from tsvTrajIO import *
-from eventSegment import *
+
 
 
 
@@ -76,8 +81,15 @@ baseA='/Users/balijepalliak/Research/Experiments/PEGModelData/ArvindsData/'
 #			abf2TrajIO(fnames=[baseJoe+'PEGMixture/3.5M_121712/m40mV/2012_12_17_0009.abf'], start=375000), 
 #			sse.singleStepEvent
 #		).Run()
-eventSegment(
+
+#eventSegment(
+#			abf2TrajIO(fnames=[baseJoe+'PEGMixture/3.5M_121712/m40mV/2012_12_17_0009.abf'], start=375000), 
+#			sra.stepResponseAnalysis
+#		).Run()
+
+SingleChannelAnalysis.SingleChannelAnalysis(
 			abf2TrajIO(fnames=[baseJoe+'PEGMixture/3.5M_121712/m40mV/2012_12_17_0009.abf'], start=375000), 
+			es.eventSegment,
 			sra.stepResponseAnalysis
 		).Run()
 

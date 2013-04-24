@@ -1,4 +1,8 @@
 from abc import ABCMeta, abstractmethod
+import zmqWorker
+import zmqIO
+import multiprocessing 
+import time
 
 class metaEventPartition(object):
 	"""
@@ -30,6 +34,7 @@ class metaEventPartition(object):
 			current working directory):
 				writeEventTS	Write event current data to file. (default: 1, write data to file)
 				parallelProc	Process events in parallel using the pproc module. (default: 1, Yes)
+				reserveNCPU		Reserve the specified number of CPUs and exclude them from the parallel pool
 		"""
 		# Required arguments
 		self.trajDataObj=trajDataObj
@@ -39,18 +44,66 @@ class metaEventPartition(object):
 		self.eventProcSettingsDict = eventProcSettings
 
 		try:
-			self.writeEventTS=int(segmentSettings.pop("writeEventTS",1))
-			self.parallelProc=int(segmentSettings.pop("parallelProc",1))
+			self.writeEventTS=int(self.settingsDict.pop("writeEventTS",1))
+			self.parallelProc=int(self.settingsDict.pop("parallelProc",1))
+			self.reserveNCPU=int(self.settingsDict.pop("reserveNCPU",2))
 		except ValueError as err:
 			raise commonExceptions.SettingsTypeError( err )
+
+		if self.parallelProc:
+			# setup parallel processing here
+			self.parallelProcDict={}
+
+			nworkers=multiprocessing.cpu_count() - self.reserveNCPU
+			for i in range(nworkers):
+				self.parallelProcDict[i] = multiprocessing.Process(
+												target=zmqWorker.zmqWorker, 
+												args=( { 'job' : '127.0.0.1:'+str(5500) }, { 'results' : '127.0.0.1:'+str(5600+i*10) }, "processEvent",)
+											)
+				self.parallelProcDict[i].start()
+			# allow the processes to start up
+			time.sleep(1)
+
+			tdict={}
+			[ tdict.update( {'results'+str(i) : '127.0.0.1:'+str(5600+i*10) } ) for i in range(nworkers) ]
+			# Parallel processing also needs zmq handles to send data to the worker processes and retrieve the results
+			self.SendJobsChan=zmqIO.zmqIO(zmqIO.PUSH, { 'job' : '127.0.0.1:'+str(5500) } )
+			self.RecvResultsChan=zmqIO.zmqIO(zmqIO.PULL, tdict )
+
+	# Define enter and exit funcs so this class can be used with a context manager
+	def __enter__(self):
+		return self
+
+	def __exit__(self, type, value, traceback):
+		self.Stop()
 
 	@abstractmethod
 	def PartitionEvents(self):
 		"""
 			This is the equivalent of a pure virtual function in C++. Specific event processing
-			algorithms must implement this method.
+			algorithms must implement this method. 
+
+			An implementation of this function should separate individual events of interest from 
+			a time-series of ionic current recordings. The data pertaining to each event is then passed
+			to an instance of metaEventProcessor for detailed analysis. The function will collect the 
+			results of this analysis.
 		"""
 		pass
+
+	@abstractmethod
+	def Stop(self):
+		if self.parallelProc:
+			# send a STOP message to all the processes
+			for i in range(len(self.parallelProcDict)):
+				self.SendJobsChan.zmqSendData('job','STOP')
+
+			# wait for the processes to terminate
+			for k in self.parallelProcDict.keys():
+				self.parallelProcDict[k].join()
+
+			# shutdown the zmq channels
+			self.SendJobsChan.zmqShutdown()
+			self.RecvResultsChan.zmqShutdown()
 
 	@abstractmethod
 	def formatsettings(self):

@@ -6,7 +6,9 @@
 	Created:	7/17/2012
 
 	ChangeLog:
-		9/26/12		AB  Allow automatic open channel state calculation to be overridden.
+		4/22/13		AB 	Rewrote this class as an implementation of the base class metaEventPartition.
+						Included event processing parallelization using ZMQ.
+		9/26/12		AB  Allowed automatic open channel state calculation to be overridden.
 						To do this the settings "meanOpenCurr","sdOpenCurr" and "slopeOpenCurr"
 						must be set. If all three settings are absent, they are 
 						atuomatically estimated.
@@ -23,6 +25,7 @@ import sys
 import time
 import datetime
 import csv
+import cPickle
 
 import numpy as np 
 import uncertainties
@@ -45,7 +48,7 @@ class ExcessiveDriftError(Exception):
 class DriftRateError(Exception):
 	pass
 
-class eventSegment(metaEventPartition):
+class eventSegment(metaEventPartition.metaEventPartition):
 	"""
 		Segment a trajectory
 	"""
@@ -77,21 +80,20 @@ class eventSegment(metaEventPartition):
 
 		# parse algorithm specific settings from the settings dict
 		try:
-			self.blockSizeSec=float(segmentSettings.pop("blockSizeSec", 1.0))
-			self.eventPad=int(segmentSettings.pop("eventPad", 500))
-			self.minEventLength=int(segmentSettings.pop("minEventLength",5))
-			self.eventThreshold=float(segmentSettings.pop("eventThreshold",6.0))
-			self.driftThreshold=float(segmentSettings.pop("driftThreshold",2.0))
-			self.maxDriftRate=float(segmentSettings.pop("maxDriftRate",2.0))
-			self.meanOpenCurr=float(segmentSettings.pop("meanOpenCurr",-1.))
-			self.sdOpenCurr=float(segmentSettings.pop("sdOpenCurr",-1.))
-			self.slopeOpenCurr=float(segmentSettings.pop("slopeOpenCurr",-1.))
-			self.writeEventTS=int(segmentSettings.pop("writeEventTS",1))
-			self.parallelProc=int(segmentSettings.pop("parallelProc",1))
+			self.blockSizeSec=float(self.settingsDict.pop("blockSizeSec", 1.0))
+			self.eventPad=int(self.settingsDict.pop("eventPad", 500))
+			self.minEventLength=int(self.settingsDict.pop("minEventLength",5))
+			self.eventThreshold=float(self.settingsDict.pop("eventThreshold",6.0))
+			self.driftThreshold=float(self.settingsDict.pop("driftThreshold",2.0))
+			self.maxDriftRate=float(self.settingsDict.pop("maxDriftRate",2.0))
+			self.meanOpenCurr=float(self.settingsDict.pop("meanOpenCurr",-1.))
+			self.sdOpenCurr=float(self.settingsDict.pop("sdOpenCurr",-1.))
+			self.slopeOpenCurr=float(self.settingsDict.pop("slopeOpenCurr",-1.))
+			self.writeEventTS=int(self.settingsDict.pop("writeEventTS",1))
 		except ValueError as err:
 			raise commonExceptions.SettingsTypeError( err )
 
-	def Run(self):
+	def PartitionEvents(self):
 		"""			
 		"""	
 		outputstr="Start time: "+str(datetime.datetime.now().strftime('%Y-%m-%d %I:%M %p'))+"\n\n"
@@ -127,6 +129,7 @@ class eventSegment(metaEventPartition):
 		self.eventdat=[]
 		self.preeventdat=deque(maxlen=self.eventPad)
 		self.eventcount=0
+		self.eventprocessedcount=0
 
 		self.thrCurr=(abs(self.meanOpenCurr)-self.eventThreshold*abs(self.sdOpenCurr))
 
@@ -143,10 +146,10 @@ class eventSegment(metaEventPartition):
 				# Check for excessive open channel drift
 				self.__checkdrift(d)
 
-				#print self.meanOpenCurr, self.minDrift, self.maxDrift, self.minDriftR, self.maxDriftR
-
 				# store the new data into a local store
 				self.currData.extend(list(d))
+
+				#print self.meanOpenCurr, self.minDrift, self.maxDrift, self.minDriftR, self.maxDriftR
 
 				# Process the data segment for events
 				self.__eventsegment()
@@ -172,14 +175,27 @@ class eventSegment(metaEventPartition):
 		startTime=time.time()
 		try:
 			if self.parallelProc:
-				p = pproc.pproc("processEvent", self.eventQueue, 8)
-				p.AsyncApply()
+				# gather up any remaining results from the worker processes
+				while self.eventprocessedcount < self.eventcount:
+					recvdat=self.RecvResultsChan.zmqReceiveData()
+					if recvdat != "":
+						#store the processed event
+						self.eventQueue.append( cPickle.loads(recvdat) )
+						self.eventprocessedcount+=1
 
-				# get the modified objects
-				self.eventQueue = p.objlist
+						if self.eventprocessedcount%100 == 0:
+							sys.stdout.write('Finished processing %d of %d events.\r' % (self.eventprocessedcount,self.eventcount) )
+	    					sys.stdout.flush()
+
+				sys.stdout.write('                                                                    \r' )
+				sys.stdout.flush()
+
 			else:
-				[ evnt.processEvent() for evnt in self.eventQueue ]
-	
+			####################
+			#	[ evnt.processEvent() for evnt in self.eventQueue ]
+			####################
+				pass
+
 			outputstr='\tProcess events: ***NORMAL***\n\n\n'
 			procTime=time.time()-startTime
 		except BaseException, err:
@@ -222,7 +238,7 @@ class eventSegment(metaEventPartition):
 		#for p in self.eventQueue[0].mdAveragePropertiesList():
 		#	outputstr+='\t\t{0} = {1}\n'.format(p, self.__roundufloat( np.mean( [ getattr(evnt, p) for evnt in self.eventQueue if getattr(evnt, p) != -1 ] )) )
 
-		outputstr+="\n\n[Settings]\n\tSettings File = '{0}'\n\n".format(self.settingsDict.settingsFile)
+		#outputstr+="\n\n[Settings]\n\tSettings File = '{0}'\n\n".format(self.settingsDict.settingsFile)
 		
 		# write out trajectory IO settings
 		outputstr+=self.trajDataObj.formatsettings()+'\n'
@@ -249,6 +265,11 @@ class eventSegment(metaEventPartition):
 	
 		outf.write(outputstr)
 		outf.close()
+
+	def Stop(self):
+		# other cleanup before calling the base class cleanup
+
+		super(eventSegment, self).Stop()
 
 	def formatsettings(self):
 		"""
@@ -376,9 +397,6 @@ class eventSegment(metaEventPartition):
 			immediately preceeding the start of the event), mark the event end. Pad 
 			the event by 'eventPad' points and hand off to the event processing algorithm.
 		"""
-		# copy the dict since the event processing will change key value pairs
-		tempEvntSettings=dict( self.settingsDict.getSettings(self.eventProcHnd.__name__) )
-
 		try:
 			while(1):
 				t=self.currData.popleft()
@@ -422,20 +440,43 @@ class eventSegment(metaEventPartition):
 						self.eventcount+=1
 						#sys.stderr.write('event mean curr={0:0.2f}, len(preeventdat)={1}\n'.format(sum(self.eventdat)/len(self.eventdat),len(self.preeventdat)))
 						#print list(self.preeventdat) + self.eventdat + [ self.currData[i] for i in range(self.eventPad) ]
-						self.eventQueue.append(
+						#print "ecount=", self.eventcount, self.eventProcHnd
+						self.__processEvent(
 							 self.eventProcHnd(
 								list(self.preeventdat) + self.eventdat + eventpaddat, 
 								self.trajDataObj.FsHz,
 								eventstart=len(self.preeventdat)+1,						# event start point
 								eventend=len(self.preeventdat)+len(self.eventdat)+1,	# event end point
 								baselinestats=[ self.windowOpenCurrentMean, self.sdOpenCurr, self.slopeOpenCurr ],
-								algosettingsdict=tempEvntSettings
+								algosettingsdict=self.eventProcSettingsDict
 							)
 						)
 	
 					self.preeventdat.clear()
 		except IndexError:
 			return
+
+	def __processEvent(self, eventobj):
+		if self.parallelProc:
+			# handle parallel
+			
+			sys.stdout.flush()
+			self.SendJobsChan.zmqSendData('job', cPickle.dumps(eventobj))
+			
+			# check for a message 100 times. If an empty message is recevied quit immediately
+			for i in range(100):	
+				recvdat=self.RecvResultsChan.zmqReceiveData()
+				if recvdat=="":	# bail on receiving an empty message
+					return
+
+				self.eventprocessedcount+=1
+				#store the processed event
+				self.eventQueue.append( cPickle.loads(recvdat) )
+
+		else:
+			# call the process event function and store
+			eventobj.processEvent()
+			self.eventQueue.append( eventobj )
 
 	def __roundufloat(self, uf):
 		u=uncertainties
