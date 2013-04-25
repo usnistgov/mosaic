@@ -46,29 +46,49 @@ class metaEventPartition(object):
 		try:
 			self.writeEventTS=int(self.settingsDict.pop("writeEventTS",1))
 			self.parallelProc=int(self.settingsDict.pop("parallelProc",1))
-			self.reserveNCPU=int(self.settingsDict.pop("reserveNCPU",2))
+			self.reserveNCPU=int(self.settingsDict.pop("reserveNCPU",1))
 		except ValueError as err:
 			raise commonExceptions.SettingsTypeError( err )
+
+		# Shared variables 
+		# Set the counters to be type Value so they can be shared if parallel is enabled
+		self.eventcount=multiprocessing.Value('i', 0)
+		self.eventprocessedcount=multiprocessing.Value('i', 0)
+
+		# Event Queue. Use multiprocessing.Queue in case paralle is used
+		self.eventQueue=multiprocessing.Queue()
 
 		if self.parallelProc:
 			# setup parallel processing here
 			self.parallelProcDict={}
 
 			nworkers=multiprocessing.cpu_count() - self.reserveNCPU
-			for i in range(nworkers):
-				self.parallelProcDict[i] = multiprocessing.Process(
-												target=zmqWorker.zmqWorker, 
-												args=( { 'job' : '127.0.0.1:'+str(5500) }, { 'results' : '127.0.0.1:'+str(5600+i*10) }, "processEvent",)
-											)
-				self.parallelProcDict[i].start()
-			# allow the processes to start up
-			time.sleep(1)
+			
+			# in parallel mode, we want at least 2 processes: one to do the work and the second
+			# to poll for results
+			if nworkers >= 2:
+				# Parallel processing also needs zmq handles to send data to the worker processes and retrieve the results
+				self.SendJobsChan=zmqIO.zmqIO(zmqIO.PUSH, { 'job' : '127.0.0.1:'+str(5500) } )
+				
+				tdict={}
+				[ tdict.update( {'results'+str(i) : '127.0.0.1:'+str(5600+i*10) } ) for i in range(nworkers-1) ]
 
-			tdict={}
-			[ tdict.update( {'results'+str(i) : '127.0.0.1:'+str(5600+i*10) } ) for i in range(nworkers) ]
-			# Parallel processing also needs zmq handles to send data to the worker processes and retrieve the results
-			self.SendJobsChan=zmqIO.zmqIO(zmqIO.PUSH, { 'job' : '127.0.0.1:'+str(5500) } )
-			self.RecvResultsChan=zmqIO.zmqIO(zmqIO.PULL, tdict )
+				# Setup a process for the polling thread
+				self.pollingProc = multiprocessing.Process( target=self.PollResults, args=(tdict, self.eventcount, self.eventprocessedcount,self.eventQueue,) )
+				self.pollingProc.start()
+								
+				for i in range(nworkers-1):
+					self.parallelProcDict[i] = multiprocessing.Process(
+													target=zmqWorker.zmqWorker, 
+													args=( { 'job' : '127.0.0.1:'+str(5500) }, { 'results' : '127.0.0.1:'+str(5600+i*10) }, "processEvent",)
+												)
+					self.parallelProcDict[i].start()
+				# allow the processes to start up
+				time.sleep(1)
+
+			else:
+				print "At least two available CPUs are required for parallel. Reserving %d CPUs leaves only %d available processor(s) on this system.\nReverting to single CPU processing.\n\n" % (self.reserveNCPU, nworkers) 
+				self.parallelProc=False
 
 	# Define enter and exit funcs so this class can be used with a context manager
 	def __enter__(self):
@@ -91,6 +111,14 @@ class metaEventPartition(object):
 		pass
 
 	@abstractmethod
+	def PollResults(self, portmap, eventcount, eventprocessedcount, eventQueue):
+		"""
+			Poll the reuslts of a parallel calculation. This must be implemented
+			by the spcefic algorithm.
+		"""
+		pass
+
+	@abstractmethod
 	def Stop(self):
 		if self.parallelProc:
 			# send a STOP message to all the processes
@@ -101,9 +129,10 @@ class metaEventPartition(object):
 			for k in self.parallelProcDict.keys():
 				self.parallelProcDict[k].join()
 
+			#self.pollingProc.join()
+
 			# shutdown the zmq channels
 			self.SendJobsChan.zmqShutdown()
-			self.RecvResultsChan.zmqShutdown()
 
 	@abstractmethod
 	def formatsettings(self):
