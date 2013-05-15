@@ -19,7 +19,7 @@ class abf2TrajIO(metaTrajIO.metaTrajIO):
 			Returns:
 				None
 			Errors:
-				None
+				InsufficientArgumentsError if the mandatory arguments Rfb and Cfb are not set
 		"""
 		# base class processing first
 		super(abf2TrajIO, self).__init__(**kwargs)

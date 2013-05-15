@@ -30,7 +30,6 @@ class zmqIO():
 		self.mContext = zmq.Context()
 		self.mSocketType = type;
 		
-		self.mURLDict=urldict
 		try:
 			if( self.mSocketType == SUBSCRIBE or self.mSocketType == PULL ):
 				if( self.mSocketType == SUBSCRIBE):

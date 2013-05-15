@@ -26,7 +26,6 @@ import time
 import datetime
 import csv
 import cPickle
-import multiprocessing
 
 import numpy as np 
 import uncertainties
@@ -37,7 +36,6 @@ import commonExceptions
 import singleStepEvent as sse 
 import stepResponseAnalysis as sra 
 import metaTrajIO
-import zmqIO
 
 import util
 import settings
@@ -76,8 +74,8 @@ class eventSegment(metaEventPartition.metaEventPartition):
 								calculate automatically)
 				slopeOpenCurr	Explicitly set open channel current slope. (default: -1, to 
 								calculate automatically)
-		"""		
-		# call the base class initializer. 
+		"""
+		# First call the base class initializer. 
 		super(eventSegment, self).__init__(trajDataObj, eventProcHnd, eventPartitionSettings, eventProcSettings)
 
 		# parse algorithm specific settings from the settings dict
@@ -123,10 +121,15 @@ class eventSegment(metaEventPartition.metaEventPartition):
 		# setup a local data store that is used by the main event partition loop
 		self.currData = deque()
 
+		#### Event Queue ####
+		self.eventQueue=[]
+
 		#### Vars for event partition ####
 		self.eventstart=False
 		self.eventdat=[]
 		self.preeventdat=deque(maxlen=self.eventPad)
+		self.eventcount=0
+		self.eventprocessedcount=0
 
 		self.thrCurr=(abs(self.meanOpenCurr)-self.eventThreshold*abs(self.sdOpenCurr))
 
@@ -171,24 +174,27 @@ class eventSegment(metaEventPartition.metaEventPartition):
 		# Process individual events identified by the segmenting algorithm
 		startTime=time.time()
 		try:
-			# if self.parallelProc:
-			# 	# gather up any remaining results from the worker processes
-			# 	while self.eventprocessedcount < self.eventcount:
-			# 		recvdat=self.RecvResultsChan.zmqReceiveData()
-			# 		if recvdat != "":
-			# 			#store the processed event
-			# 			self.eventQueue.append( cPickle.loads(recvdat) )
-			# 			self.eventprocessedcount+=1
+			if self.parallelProc:
+				# gather up any remaining results from the worker processes
+				while self.eventprocessedcount < self.eventcount:
+					recvdat=self.RecvResultsChan.zmqReceiveData()
+					if recvdat != "":
+						#store the processed event
+						self.eventQueue.append( cPickle.loads(recvdat) )
+						self.eventprocessedcount+=1
 
-			# 			if self.eventprocessedcount%100 == 0:
-			# 				sys.stdout.write('Finished processing %d of %d events.\r' % (self.eventprocessedcount,self.eventcount) )
-	  #   					sys.stdout.flush()
+						if self.eventprocessedcount%100 == 0:
+							sys.stdout.write('Finished processing %d of %d events.\r' % (self.eventprocessedcount,self.eventcount) )
+	    					sys.stdout.flush()
 
-			# 	sys.stdout.write('                                                                    \r' )
-			# 	sys.stdout.flush()
+				sys.stdout.write('                                                                    \r' )
+				sys.stdout.flush()
 
-			# wait for the results to be fully processed.
-			self.pollingProc.join()
+			else:
+			####################
+			#	[ evnt.processEvent() for evnt in self.eventQueue ]
+			####################
+				pass
 
 			outputstr='\tProcess events: ***NORMAL***\n\n\n'
 			procTime=time.time()-startTime
@@ -203,7 +209,7 @@ class eventSegment(metaEventPartition.metaEventPartition):
 		#print "event count = ", self.eventcount
 		# write output files
 		# 1. Event metadata
-		if self.eventprocessedcount.value > 0:
+		if len(self.eventQueue) > 0:
 			w1=csv.writer(open(self.trajDataObj.datPath+'/eventMD.tsv', 'wO'),delimiter='\t')
 			w1.writerow(self.eventQueue[0].mdHeadings())
 			[ w1.writerow(event.mdList()) for event in self.eventQueue ]
@@ -251,7 +257,7 @@ class eventSegment(metaEventPartition.metaEventPartition):
 		outputstr+='[Timing]\n\tSegment trajectory = {0} s\n'.format(round(segmentTime,2))
 		outputstr+='\tProcess events = {0} s\n\n'.format(round(procTime,2))
 		outputstr+='\tTotal = {0} s\n'.format(round(segmentTime+procTime,2))
-		outputstr+='\tTime per event = {0} ms\n\n\n'.format(round(1000.*(segmentTime+procTime)/float(self.eventcount.value),2))
+		outputstr+='\tTime per event = {0} ms\n\n\n'.format(round(1000.*(segmentTime+procTime)/float(self.eventcount),2))
 		
 		# write it all out to stdout and also to a file
 		# eventProcessing.log in the data location
@@ -259,38 +265,6 @@ class eventSegment(metaEventPartition.metaEventPartition):
 	
 		outf.write(outputstr)
 		outf.close()
-
-	def PollResults(self, portmap, eventcount, eventprocessedcount, eventQueue):
-		# call the base class func to setup the ZMQ channels.
-		# The zmqIO object is held in the variable RecvResultsChan
-		#super(eventSegment, self).PollResults(portmap, eventcount, eventprocessedcount)
-		RecvResultsChan=zmqIO.zmqIO( zmqIO.PULL, portmap )
-
-		#print 'processedcount', eventprocessedcount.value
-		# wait 10 seconds for the event partition algorithm to start up
-		time.sleep(1)
-		
-		# continuously check for a message. If the received message is not empty
-		while eventprocessedcount.value < eventcount.value:	
-			recvdat=RecvResultsChan.zmqReceiveData()
-			#print "data=", recvdat
-			if recvdat=="":
-				pass
-			else:
-				#store the processed event
-				eventQueue.put( cPickle.loads(recvdat) )
-				eventprocessedcount.value += 1
-
-				if self.eventprocessedcount.value%100 == 0:
-					sys.stdout.write('Finished processing %d of %d events.\r' % (processedcount, eventcount.value) )
-					sys.stdout.flush()
-
-		sys.stdout.write('                                                                    \r' )
-		sys.stdout.flush()
-		
-		# cleanup
-		RecvResultsChan.zmqShutdown()
-		
 
 	def Stop(self):
 		# other cleanup before calling the base class cleanup
@@ -323,7 +297,7 @@ class eventSegment(metaEventPartition.metaEventPartition):
 		
 
 		fmtstr+='\n\tEvent segment stats:\n'
-		fmtstr+='\t\tEvents detected = {0}\n'.format(self.eventcount.value)
+		fmtstr+='\t\tEvents detected = {0}\n'.format(self.eventcount)
 
 		fmtstr+='\n\t\tOpen channel drift (max) = {0} * SD\n'.format(abs(round((abs(self.meanOpenCurr)-abs(self.maxDrift))/self.sdOpenCurr,2)))
 		fmtstr+='\t\tOpen channel drift rate (min/max) = ({0}/{1}) pA/s\n\n'.format(round(self.minDriftR,2), round(self.maxDriftR))
@@ -463,8 +437,7 @@ class eventSegment(metaEventPartition.metaEventPartition):
 
 					#print self.trajDataObj.FsHz, self.windowOpenCurrentMean, self.sdOpenCurr, self.slopeOpenCurr
 					if len(self.eventdat)>=self.minEventLength:
-						self.eventcount.value+=1
-						#print self.eventcount.value
+						self.eventcount+=1
 						#sys.stderr.write('event mean curr={0:0.2f}, len(preeventdat)={1}\n'.format(sum(self.eventdat)/len(self.eventdat),len(self.preeventdat)))
 						#print list(self.preeventdat) + self.eventdat + [ self.currData[i] for i in range(self.eventPad) ]
 						#print "ecount=", self.eventcount, self.eventProcHnd
@@ -486,14 +459,24 @@ class eventSegment(metaEventPartition.metaEventPartition):
 	def __processEvent(self, eventobj):
 		if self.parallelProc:
 			# handle parallel
+			
+			sys.stdout.flush()
 			self.SendJobsChan.zmqSendData('job', cPickle.dumps(eventobj))
+			
+			# check for a message 100 times. If an empty message is recevied quit immediately
+			for i in range(100):	
+				recvdat=self.RecvResultsChan.zmqReceiveData()
+				if recvdat=="":	# bail on receiving an empty message
+					return
 
-			# in parallel mode, the results are collected by PollResults
+				self.eventprocessedcount+=1
+				#store the processed event
+				self.eventQueue.append( cPickle.loads(recvdat) )
+
 		else:
 			# call the process event function and store
 			eventobj.processEvent()
-			self.eventQueue.put( eventobj )
-			self.eventprocessedcount.value += 1
+			self.eventQueue.append( eventobj )
 
 	def __roundufloat(self, uf):
 		u=uncertainties

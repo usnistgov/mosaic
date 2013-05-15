@@ -10,8 +10,8 @@ import stepResponseAnalysis as sra
 
 from qdfTrajIO import *
 from abf2TrajIO import *
-from binTrajIO import *
 from tsvTrajIO import *
+from binTrajIO import *
 
 
 
@@ -83,17 +83,28 @@ baseA='/Users/balijepalliak/Research/Experiments/PEGModelData/ArvindsData/'
 #			sse.singleStepEvent
 #		).Run()
 
-
 #eventSegment(
 #			abf2TrajIO(fnames=[baseJoe+'PEGMixture/3.5M_121712/m40mV/2012_12_17_0009.abf'], start=375000), 
 #			sra.stepResponseAnalysis
 #		).Run()
 
+# SingleChannelAnalysis.SingleChannelAnalysis(
+# 			binTrajIO(filter='*abf', dirname='/Users/balijepalliak/Research/Experiments/StepRespData/PEG1000_40mV/', AmplifierScale=400., AmplifierOffset=0, SamplingFrequency=50000, HeaderOffset=4096, RecordSize=2), 
+# 			es.eventSegment,
+# 			sra.stepResponseAnalysis
+# 		).Run()
 SingleChannelAnalysis.SingleChannelAnalysis(
-			abf2TrajIO(fnames=[baseJoe+'PEGMixture/3.5M_121712/m40mV/2012_12_17_0009.abf'], start=375000), 
+			binTrajIO(fnames=['/Users/balijepalliak/Research/Experiments/StepRespData/PEG11/06o18014.abf'], AmplifierScale=400., AmplifierOffset=0, SamplingFrequency=50000, HeaderOffset=4096, RecordSize=2), 
 			es.eventSegment,
 			sra.stepResponseAnalysis
 		).Run()
+
+# SingleChannelAnalysis.SingleChannelAnalysis(
+# 			abf2TrajIO(fnames=[baseJoe+'PEGMixture/3.5M_121712/m40mV/2012_12_17_0009.abf'], start=375000), 
+# 			es.eventSegment,
+# 			sra.stepResponseAnalysis
+# 		).Run()
+
 #,
 #	maxDriftRate=5.0,
 #	eventPad=250,
