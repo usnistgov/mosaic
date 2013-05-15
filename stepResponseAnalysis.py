@@ -191,7 +191,10 @@ class stepResponseAnalysis(metaEventProcessor.metaEventProcessor):
 
 	def __threadList(self, l1, l2):
 		"""thread two lists	"""
-		return map( lambda x,y : (x,y), l1, l2 )
+		try:
+			return map( lambda x,y : (x,y), l1, l2 )
+		except KeyboardInterrupt:
+			raise
 
 	def __eventEndIndex(self, dat, mu, sigma):
 		try:
@@ -206,28 +209,36 @@ class stepResponseAnalysis(metaEventProcessor.metaEventProcessor):
 			return -1
 
 	def __heaviside(self, x):
-		out=[]
-		for x1 in x:
-			if x1 == 0:
-				out.append( 0.5 )
-			else:
-				if x1 < 0:
-					out.append( 0 )
+		try:
+			out=[]
+			for x1 in x:
+				if x1 == 0:
+					out.append( 0.5 )
 				else:
-					out.append( 1 )
-		return out
+					if x1 < 0:
+						out.append( 0 )
+					else:
+						out.append( 1 )
+			return out
+		except:
+			raise
 		
 	def __eventFunc(self, t, tau, mu1, mu2, a, b):
-		return a*( (np.exp((mu1-t)/tau)-1)*self.__heaviside(t-mu1)+(1-np.exp((mu2-t)/tau))*self.__heaviside(t-mu2) ) + b
-		
+		try:
+			return a*( (np.exp((mu1-t)/tau)-1)*self.__heaviside(t-mu1)+(1-np.exp((mu2-t)/tau))*self.__heaviside(t-mu2) ) + b
+		except:
+			raise
+
 	def __objfunc(self, params, t, data):
 		""" model decaying sine wave, subtract data"""
-		tau = params['tau'].value
-		mu1 = params['mu1'].value
-		mu2 = params['mu2'].value
-		a = params['a'].value
-		b = params['b'].value
-	    
-		model = self.__eventFunc(t, tau, mu1, mu2, a, b)
-		return model - data
-		
+		try:
+			tau = params['tau'].value
+			mu1 = params['mu1'].value
+			mu2 = params['mu2'].value
+			a = params['a'].value
+			b = params['b'].value
+		    
+			model = self.__eventFunc(t, tau, mu1, mu2, a, b)
+			return model - data
+		except KeyboardInterrupt:
+			raise

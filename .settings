@@ -5,7 +5,10 @@
 		"minEventLength" 	: "5",
 		"eventThreshold" 	: "6.0",
 		"driftThreshold" 	: "10.0",
-		"maxDriftRate" 		: "20.0"
+		"maxDriftRate" 		: "20.0",
+		"writeEventTS"          : "1",
+		"parallelProc"		: "1",
+		"reserveNCPU"		: "2"
 	},
 	"singleStepEvent" : {
 		"binSize" 		: "1.0",
@@ -14,6 +17,10 @@
 		"a12Ratio" 		: "1.e4",
 		"minEvntTime" 		: "10.e-6",
 		"minDataPad" 		: "200"
+	},
+	"stepResponseAnalysis" : {
+		"FitTol"		: "1.e-6",
+		"FitIters"		: "5000"
 	}
 }
 
