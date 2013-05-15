@@ -6,7 +6,7 @@ import time
 
 class metaEventPartition(object):
 	"""
-		An class to abstract partitioning individual events. Once a single 
+		A class to abstract partitioning individual events. Once a single 
 		molecule event is identified, it is handed off to to an event processor.
 		If parallel processing is requested, detailed event processing will commence
 		immediately. If not, detailed event processing is performed after the event 
