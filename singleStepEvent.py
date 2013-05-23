@@ -195,6 +195,8 @@ class singleStepEvent(metaEventProcessor.metaEventProcessor):
 	def __fitsumgauss(self, cleandat, oc, ocsd, bc):
 		"""
 		"""
+		np.seterr(invalid='raise', over='raise')
+
 		# keep track of the current polarity
 		sign=np.sign(util.avg(cleandat))
 

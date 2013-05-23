@@ -118,4 +118,3 @@ class binTrajIO(metaTrajIO.metaTrajIO):
 		pdat=struct.unpack('<' + str(int(len(dat)/float(self.RecordSize))) + structcode, dat)
 
 		return [ dat*scale-offset for dat in pdat ]
-
