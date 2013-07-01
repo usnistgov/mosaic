@@ -4,6 +4,8 @@
 
 	ChangeLog:
 		4/18/13		AB	Initial version
+		6/20/13		AB 	Added an additional check to reject events 
+						with blockade depths > BlockRejectRatio (default: 0.8)
 """
 import commonExceptions
 import metaEventProcessor
@@ -13,7 +15,6 @@ import sys
 import numpy as np
 import scipy.optimize
 
-import uncertainties
 from lmfit import minimize, Parameters, Parameter, report_errors, Minimizer
 
 class datblock:
@@ -33,7 +34,6 @@ class stepResponseAnalysis(metaEventProcessor.metaEventProcessor):
 		information in the analysis, specifically the filtering effects (throught the RC constant)
 		of either amplifiers or the membrane/nanopore complex. The analysis generates several 
 		parameters that are stored as metadata including:
-		of information are measured for each event and stored as metadata:
 			1. Blockade depth: the ratio of the open channel current to the blocked current
 			2. Residence time: the time the molecule spends inside the pore
 			3. Rise time: the 1/RC of the response to a step input (e.g. the entry or exit of the
@@ -67,6 +67,8 @@ class stepResponseAnalysis(metaEventProcessor.metaEventProcessor):
 		try:
 			self.FitTol=float(self.settingsDict.pop("FitTol", 1.e-7))
 			self.FitIters=int(self.settingsDict.pop("FitIters", 5000))
+
+			self.BlockRejectRatio=float(self.settingsDict.pop("BlockRejectRatio", 0.8))
 		
 		except ValueError as err:
 			raise commonExceptions.SettingsTypeError( err )
@@ -82,6 +84,9 @@ class stepResponseAnalysis(metaEventProcessor.metaEventProcessor):
 		try:
 			# Fit the system transfer function to the event data
 			self.__FitEvent()
+
+			# Call the base class function for any additional processing
+			super(stepResponseAnalysis, self).processEvent()
 		except:
 			raise
 
@@ -139,7 +144,7 @@ class stepResponseAnalysis(metaEventProcessor.metaEventProcessor):
 			i0=np.abs(self.baseMean)
 			i0sig=self.baseSD
 			dt = 1000./self.Fs 	# time-step in ms.
-			edat=np.abs(self.eventData)
+			edat=np.asarray( np.abs(self.eventData),  dtype='float64' )
 
 			estart 	= self.__eventStartIndex( self.__threadList( edat, range(0,len(edat)) ), i0, i0sig ) - 1
 			eend 	= self.__eventEndIndex( self.__threadList( edat, range(0,len(edat)) ), i0, i0sig ) - 2
@@ -147,7 +152,7 @@ class stepResponseAnalysis(metaEventProcessor.metaEventProcessor):
 			# control numpy error reporting
 			np.seterr(invalid='ignore', over='ignore', under='ignore')
 
-			ts = np.array([ t*dt for t in range(0,len(edat)) ])
+			ts = np.array([ t*dt for t in range(0,len(edat)) ], dtype='float64')
 
 			params=Parameters()
 
@@ -157,16 +162,19 @@ class stepResponseAnalysis(metaEventProcessor.metaEventProcessor):
 			params.add('b', value = i0)
 			params.add('tau', value = dt)
 
-			optfit=Minimizer(self.__objfunc, params,  fcn_args=(ts,edat,))
+			optfit=Minimizer(self.__objfunc, params, fcn_args=(ts,edat,))
 			optfit.prepare_fit()
 
 			optfit.leastsq(xtol=self.FitTol,ftol=self.FitTol,maxfev=self.FitIters)
 
 			if optfit.success:
 				if optfit.params['mu1'].value < 0.0 or optfit.params['mu2'].value < 0.0:
+					# print 'eInvalidFitParams', optfit.params['b'].value, optfit.params['b'].value - optfit.params['a'].value, optfit.params['mu1'].value, optfit.params['mu2'].value
+					self.rejectEvent('eInvalidFitParams')
+				# The start of the event is set past the length of the data
+				elif optfit.params['mu1'].value > ts[-1]:
 					self.rejectEvent('eInvalidFitParams')
 				else:
-					
 					self.mdOpenChCurrent 	= optfit.params['b'].value 
 					self.mdBlockedCurrent	= optfit.params['b'].value - optfit.params['a'].value
 					self.mdEventStart		= optfit.params['mu1'].value
@@ -178,6 +186,9 @@ class stepResponseAnalysis(metaEventProcessor.metaEventProcessor):
 					
 					self.mdRedChiSq			= optfit.chisqr/( np.var(optfit.residual) * (len(self.eventData) - optfit.nvarys -1) )
 
+					if self.mdBlockDepth > self.BlockRejectRatio:
+						# print 'eBlockDepthHigh', optfit.params['b'].value, optfit.params['b'].value - optfit.params['a'].value, optfit.params['mu1'].value, optfit.params['mu2'].value
+						self.rejectEvent('eBlockDepthHigh')
 					#print i0, i0sig, [optfit.params['a'].value, optfit.params['b'].value, optfit.params['mu1'].value, optfit.params['mu2'].value, optfit.params['tau'].value]
 			else:
 				#print optfit.message, optfit.lmdif_message
@@ -204,24 +215,18 @@ class stepResponseAnalysis(metaEventProcessor.metaEventProcessor):
 
 	def __eventStartIndex(self, dat, mu, sigma):
 		try:
-			return ([ d for d in dat if d[0] < (mu-2*sigma) ][0][1]+1)
+			return ([ d for d in dat if d[0] < (mu-2.75*sigma) ][0][1]+1)
 		except IndexError:
 			return -1
 
 	def __heaviside(self, x):
-		try:
-			out=[]
-			for x1 in x:
-				if x1 == 0:
-					out.append( 0.5 )
-				else:
-					if x1 < 0:
-						out.append( 0 )
-					else:
-						out.append( 1 )
-			return out
-		except:
-			raise
+		out=np.array(x)
+
+		out[out==0]=0.5
+		out[out<0]=0
+		out[out>0]=1
+
+		return out
 		
 	def __eventFunc(self, t, tau, mu1, mu2, a, b):
 		try:

@@ -1,0 +1,19 @@
+#!/bin/sh
+
+# always run this script from the ustrade root directory
+
+#set -x
+source dependencies/.scripts/set-shell-vars-sh
+
+cwd=${PWD}
+
+
+cd dependencies/
+tar xzf .tarballs/lmfit-0.7.2.tar.gz
+cd lmfit-0.7.2
+
+python setup.py configure
+python setup.py install --prefix=..
+
+cd ../../
+rm -rf dependencies/lmfit-0.7.2

@@ -8,6 +8,8 @@
 
 	ChangeLog:
 		7/16/12		AB	Initial version
+		6/28/13		AB 	Added a new keyword argument 'savets'. When set to False, the event time-series
+						is set to None. This can save a lot of memory when handling large data sets. 
 """
 from abc import ABCMeta, abstractmethod
 import types
@@ -48,6 +50,8 @@ class metaEventProcessor(object):
 
 		[ self.baseMean, self.baseSD, self.baseSlope ]=kwargs['baselinestats']
 
+		self.saveTS=kwargs['savets']
+		
 		# meta-data attrs that are common to all event processing
 		self.mdProcessingStatus='normal'
 
@@ -55,9 +59,11 @@ class metaEventProcessor(object):
 	def processEvent(self):
 		"""
 			This is the equivalent of a pure virtual function in C++. Specific event processing
-			algorithms must implement this method.
+			algorithms must implement this method and then call this base function using super for
+			additional processing.
 		"""
-		pass
+		if not self.saveTS:
+			self.eventData=None
 
 	@abstractmethod
 	def mdList(self):

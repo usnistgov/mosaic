@@ -1,0 +1,19 @@
+#!/bin/sh
+
+# always run this script from the ustrade root directory
+
+#set -x
+source dependencies/.scripts/set-shell-vars-sh
+
+cwd=${PWD}
+
+
+cd dependencies/
+tar xzf .tarballs/pyzmq-2.1.11.tar.gz
+cd pyzmq-2.1.11
+
+python setup.py configure --zmq=..
+python setup.py install --prefix=..
+
+cd ../../
+rm -rf dependencies/pyzmq-2.1.11

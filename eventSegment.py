@@ -6,6 +6,8 @@
 	Created:	7/17/2012
 
 	ChangeLog:
+		6/22/13		AB 	Use plotting hooks in metaEventPartition to plot blockade depth histogram in 
+						real-time using matplotlib.
 		4/22/13		AB 	Rewrote this class as an implementation of the base class metaEventPartition.
 						Included event processing parallelization using ZMQ.
 		9/26/12		AB  Allowed automatic open channel state calculation to be overridden.
@@ -30,6 +32,7 @@ import cPickle
 import numpy as np 
 import uncertainties
 from  collections import deque
+import matplotlib.pyplot as plt
 
 import metaEventPartition
 import commonExceptions
@@ -39,7 +42,6 @@ import metaTrajIO
 
 import util
 import settings
-import pproc 
 
 # custom errors
 class ExcessiveDriftError(Exception):
@@ -89,9 +91,12 @@ class eventSegment(metaEventPartition.metaEventPartition):
 			self.meanOpenCurr=float(self.settingsDict.pop("meanOpenCurr",-1.))
 			self.sdOpenCurr=float(self.settingsDict.pop("sdOpenCurr",-1.))
 			self.slopeOpenCurr=float(self.settingsDict.pop("slopeOpenCurr",-1.))
-			self.writeEventTS=int(self.settingsDict.pop("writeEventTS",1))
+			self.plotResults=int(self.settingsDict.pop("plotResults", 1))
 		except ValueError as err:
 			raise commonExceptions.SettingsTypeError( err )
+
+		if self.plotResults:
+			self.InitPlot()
 
 	def PartitionEvents(self):
 		"""			
@@ -111,7 +116,7 @@ class eventSegment(metaEventPartition.metaEventPartition):
 		self.nPoints=int(self.blockSizeSec*self.trajDataObj.FsHz)
 
 		if self.meanOpenCurr == -1. or self.sdOpenCurr == -1. or self.slopeOpenCurr == -1.:
-			[ self.meanOpenCurr, self.sdOpenCurr, self.slopeOpenCurr ] = self.__openchanstats(self.trajDataObj.previewdata(nPoints))
+			[ self.meanOpenCurr, self.sdOpenCurr, self.slopeOpenCurr ] = self.__openchanstats(self.trajDataObj.previewdata(self.nPoints))
 		else:
 			print "Automatic open channel state calculation has been disabled."
 
@@ -170,7 +175,7 @@ class eventSegment(metaEventPartition.metaEventPartition):
 		# write out first stage results
 		sys.stdout.write(outputstr)
 		outf.write(outputstr)
-
+		
 		# Process individual events identified by the segmenting algorithm
 		startTime=time.time()
 		try:
@@ -265,6 +270,42 @@ class eventSegment(metaEventPartition.metaEventPartition):
 	
 		outf.write(outputstr)
 		outf.close()
+
+	def InitPlot(self):
+		"""
+			Initialize a plotting window to display analysis results in real-time.
+		"""
+		self.bvals=np.arange(0,1,0.0001)
+		ehist,bins=np.histogram(
+				np.array([-1]), 
+				bins=self.bvals
+			)
+
+		plt.ion()
+
+		self.fig = plt.figure()
+		ax = self.fig.add_subplot(111)
+		self.line1, = ax.plot(bins[:-1], ehist, 'r-') # Returns a tuple of line objects, thus the comma
+		plt.ylim([0, 1])
+
+	def UpdatePlot(self):
+		"""
+			Update plot data with new results as the analysis progresses.
+		"""
+		if len(self.eventQueue)==0:
+			return
+
+		bd=np.array([evnt.mdBlockDepth for evnt in self.eventQueue])
+
+		ehist,bins=np.histogram(
+				bd, 
+				bins=self.bvals
+			)
+
+		plt.ylim([0, np.max(bd)+5])
+
+		self.line1.set_ydata(ehist)
+		self.fig.canvas.draw()
 
 	def Stop(self):
 		# other cleanup before calling the base class cleanup
@@ -434,7 +475,6 @@ class eventSegment(metaEventPartition.metaEventPartition):
 							self.sdOpenCurr
 						)
 					 
-
 					#print self.trajDataObj.FsHz, self.windowOpenCurrentMean, self.sdOpenCurr, self.slopeOpenCurr
 					if len(self.eventdat)>=self.minEventLength:
 						self.eventcount+=1
@@ -448,7 +488,8 @@ class eventSegment(metaEventPartition.metaEventPartition):
 								eventstart=len(self.preeventdat)+1,						# event start point
 								eventend=len(self.preeventdat)+len(self.eventdat)+1,	# event end point
 								baselinestats=[ self.windowOpenCurrentMean, self.sdOpenCurr, self.slopeOpenCurr ],
-								algosettingsdict=self.eventProcSettingsDict
+								algosettingsdict=self.eventProcSettingsDict,
+								savets=self.writeEventTS
 							)
 						)
 	
@@ -457,6 +498,9 @@ class eventSegment(metaEventPartition.metaEventPartition):
 			return
 
 	def __processEvent(self, eventobj):
+		if self.plotResults:
+			self.UpdatePlot()
+
 		if self.parallelProc:
 			# handle parallel
 			
@@ -478,6 +522,6 @@ class eventSegment(metaEventPartition.metaEventPartition):
 			eventobj.processEvent()
 			self.eventQueue.append( eventobj )
 
-	def __roundufloat(self, uf):
-		u=uncertainties
-		return u.ufloat(( round( u.nominal_value(uf), 4), round( u.std_dev(uf), 4) ))
+	# def __roundufloat(self, uf):
+	# 	u=uncertainties
+	# 	return u.ufloat(( round( u.nominal_value(uf), 4), round( u.std_dev(uf), 4) ))

@@ -442,7 +442,7 @@ TagInfoDescription = [
 	   ]
 
 if __name__ == '__main__':
-	f='/Volumes/DATA/PRL Data/cis/06o19014.abf'
+	f='/Volumes/DATA/PEG1500/PEG29/06710009.abf'
 
 	[freq, hdr, data]=abfload_gp(f)
 

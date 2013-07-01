@@ -91,6 +91,9 @@ class singleStepEvent(metaEventProcessor.metaEventProcessor):
 			# the processing status should be normal. Proceed
 			# to calculate the residence time.
 			self.__residenceTime()
+
+			# Call the base class function for any additional processing
+			super(singleStepEvent, self).processEvent()
 		except:
 			raise
 

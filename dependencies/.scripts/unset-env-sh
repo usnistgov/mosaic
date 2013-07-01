@@ -1,0 +1,21 @@
+#!/bin/sh
+
+# always run this script from the ustrade root directory
+
+#set -x
+
+cwd=${PWD}
+
+if [ -e ~/.bash_profile ]; then
+	pypath=`grep -i $cwd/dependencies/lib/python2.7/site-packages ~/.bash_profile`
+	bashprof=~/.bash_profile
+else
+	pypath=`grep -i $cwd/dependencies/lib/python2.7/site-packages ~/.bashrc`
+	bashprof=~/.bashrc
+fi
+
+if [  "$pypath" != "" ]; then
+	grep -v 'export PYTHONPATH='$cwd':'$cwd'/dependencies/lib/python2.7/site-packages:$PYTHONPATH' $bashprof > temp && mv temp $bashprof
+	grep -v 'export PATH='$cwd'/dependencies/bin/:$PATH' $bashprof > temp && mv temp $bashprof
+	grep -v 'export LD_LIBRARY_PATH='$cwd'/dependencies/lib/:/usr/X11/lib/:$LD_LIBRARY_PATH' $bashprof > temp && mv temp $bashprof
+fi

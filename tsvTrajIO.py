@@ -6,6 +6,8 @@
 
 	ChangeLog:
 		7/31/12		AB	Initial version
+		6/30/13		AB 	Added the 'seprator' kwarg to the class initializer to allow any delimited 
+						files to be read. e.g. '\t' (default), ',', etc.
 """
 import numpy as np 
 
@@ -22,18 +24,19 @@ class tsvTrajIO(metaTrajIO.metaTrajIO):
 			In addition to metaTrajIO.__init__ args,
 			Optional Args:
 				headers		If True, the first row is ignored (default: True)
-
+				separator	set the data separator (defualt: '\t')
+				
 				Either:
 					Fs 			Sampling frequency in Hz. If set, all other options are ignored
-								and the first column in the file is assumed to be the current pA.
+								and the first column in the file is assumed to be the current in pA.
 				Or:
 					nCols		number of columns in TSV file (default:2, first column is time 
 								in ms and second is current in pA) 
 					timeCol		explicitly set the time column (default: 0, first col)
 					currCol		explicitly set the position of the current column (default: 1)
 
-				If either 'Fs' or {'nCols', 'timeCol','currCol'} are not set then the latter 
-				is assumed with the specified default values.
+				If neither 'Fs' nor {'nCols', 'timeCol','currCol'} are set then the latter 
+				is assumed with the listed default values.
 		"""
 		# Check if headers are present
 		self.hasHeaders=kwargs.pop('headers', True)
@@ -53,6 +56,9 @@ class tsvTrajIO(metaTrajIO.metaTrajIO):
 			self.currCol=kwargs.pop('currCol', 1)
 
 			self.userSetFs=True
+
+		# The default data separator is a tab.
+		self.separator=kwargs.pop('separator', '\t')
 
 		# base class processing last
 		super(tsvTrajIO, self).__init__(**kwargs)
@@ -79,7 +85,7 @@ class tsvTrajIO(metaTrajIO.metaTrajIO):
 	def __readtsv(self, fname):
 		"""
 		"""
-		r1=csv.reader(open(fname,'rU'), delimiter='\t')
+		r1=csv.reader(open(fname,'rU'), delimiter=self.separator)
 
 		# remove the file headers
 		if self.hasHeaders: r1.next()
