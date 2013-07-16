@@ -31,10 +31,10 @@ class abfTrajIO(metaTrajIO.metaTrajIO):
 		# base class processing first
 		super(abfTrajIO, self).__init__(**kwargs)
 
-	def appenddata(self, fname):
+	def readdata(self, fname):
 		"""
 			Read one or more files and append their data to the data pipeline.
-			Set a class attribute FsHz with the sampling frequency in Hz.
+			Set a class attribute Fs with the sampling frequency in Hz.
 
 			Args:
 				fname  list of data files to read
@@ -43,6 +43,8 @@ class abfTrajIO(metaTrajIO.metaTrajIO):
 			Errors:
 				SamplingRateChangedError if the sampling rate for any data file differs from previous
 		"""
+		tempdata=np.array([])
+		
 		# Read a single file or a list of files.		
 		for f in fname:
 			[freq, hdr, dat] = abf.abfload_gp(f)
@@ -52,15 +54,17 @@ class abfTrajIO(metaTrajIO.metaTrajIO):
 	
 			# set the sampling frequency in Hz. The times are in ms.
 			# If the Fs attribute doesn't exist set it
-			if not hasattr(self, 'FsHz'):	
-				self.FsHz=freq
+			if not hasattr(self, 'Fs'):	
+				self.Fs=freq
 			# else check if it s the same as before
 			else:
-				if self.FsHz!=freq:
+				if self.Fs!=freq:
 					raise metaTrajIO.SamplingRateChangedError("The sampling rate in the data file '{0}' has changed.".format(f))
 
 			# Add new data to the existing array
-			self.currDataPipe=np.hstack((self.currDataPipe, dat))
+			tempdata=np.hstack((tempdata, dat))
+
+		return tempdata
 
 	def formatsettings(self):
 		"""

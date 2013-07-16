@@ -42,10 +42,10 @@ class qdfTrajIO(metaTrajIO.metaTrajIO):
 		# additional meta data
 		self.fileFormat='qdf'
 
-	def appenddata(self, fname):
+	def readdata(self, fname):
 		"""
 			Read one or more files and append their data to the data pipeline.
-			Set a class attribute FsHz with the sampling frequency in Hz.
+			Set a class attribute Fs with the sampling frequency in Hz.
 
 			Args:
 				fname  list of data files to read
@@ -60,18 +60,17 @@ class qdfTrajIO(metaTrajIO.metaTrajIO):
 
 		# set the sampling frequency in Hz. The times are in ms.
 		# If the Fs attribute doesn't exist set it
-		if not hasattr(self, 'FsHz'):	
-			self.FsHz=1000./(q[1][0]-q[0][0])
+		if not hasattr(self, 'Fs'):	
+			self.Fs=1000./(q[1][0]-q[0][0])
 		# else check if it s the same as before
 		else:
-			if self.FsHz!=1000./(q[1][0]-q[0][0]):
+			if self.Fs!=1000./(q[1][0]-q[0][0]):
 				raise metaTrajIO.SamplingRateChangedError("The sampling rate in the data file '{0}' has changed.".format(fname))
 
 		# Slice the data to remove the time-stamps to conserve memory		
 		# and add new data to the existing array
 		#print "last raw current val in file ", fname, " = ", q[-1]
-
-		self.currDataPipe=np.hstack((self.currDataPipe, q[ : , 1]))
+		return q[ : , 1]
 
 	def formatsettings(self):
 		"""

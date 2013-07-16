@@ -11,6 +11,8 @@ from abc import ABCMeta, abstractmethod
 import glob
 import numpy as np
 
+import settings
+
 # define custom exceptions
 class IncompatibleArgumentsError(Exception):
 	pass
@@ -45,11 +47,16 @@ class metaTrajIO(object):
 							cannot be used in conjuction with dirname/nfiles. The filter 
 							argument is ignored when used in combination with fnames. 
 
-				filter='<wildcard filter>' (optional, filter is '*'' if not specified)
+				filter		'<wildcard filter>' (optional, filter is '*'' if not specified)
 				start 		Data start point. This allows the first 'n' specified to be skipped
 							and excluded from any data analysis
+				datafilter	Handle to the algorithm to use to filter the data. If no algorithm is specified, datafilter
+							is None and no filtering is performed.
 			Returns:
 				None
+			Properties:
+				FsHz		sampling frequency in Hz. If the data was decimated, this property will hold the
+							sampling frequency after decimation.
 			Errors:
 				IncompatibleArgumentsError when arguments defined above are not used properly
 		"""
@@ -90,6 +97,15 @@ class metaTrajIO(object):
 		self.fileFormat='N/A'
 		self.datPath="/".join((self.dataFiles[0].split('/'))[:-1])
 
+
+		# setup data filtering
+		if hasattr(self, 'datafilter'):
+			self.dataFilter=True
+			self.dataFilterObj=self.__setupDataFilter()
+		else:
+			self.dataFilter=False
+
+
 		# initialize an empty data pipeline
 		self.currDataPipe=np.array([])
 		# Track the start point of the queue. This var is used to manage
@@ -111,6 +127,13 @@ class metaTrajIO(object):
 	#################################################################
 	# Public API: functions
 	#################################################################
+	@property
+	def FsHz(self):
+		if not self.dataFilter:
+			return self.Fs
+		else:
+			return self.dataFilterObj.filterFs
+
 	def popdata(self, n):
 		"""
 			Pop data points from self.currDataPipe. This function uses recursion 
@@ -197,7 +220,11 @@ class metaTrajIO(object):
 		"""
 		fmtstr=""
 
-		fmtstr+='\tTrajectory I/O settings: \n'
+		# add the filter settings
+		if self.dataFilter:
+			fmtstr+=self.dataFilterObj.formatsettings()
+
+		fmtstr+='\n\tTrajectory I/O settings: \n'
 		fmtstr+='\t\tFiles processed = {0}\n'.format(self.nFiles-len(self.dataFiles))
 		fmtstr+='\t\tData path = {0}\n'.format(self.datPath)
 		fmtstr+='\t\tFile format = {0}\n'.format(self.fileFormat)
@@ -209,17 +236,32 @@ class metaTrajIO(object):
 	# Private API: Interface functions, implemented by sub-classes.
 	# Should not be called from external classes
 	#################################################################
-	@abstractmethod
 	def appenddata(self, fname):
 		"""
 			Read the specified data file(s) and append its data to the data pipeline. Set 
-			a class attribute FsHz with the sampling frequency in Hz.
+			a class property FsHz with the sampling frequency in Hz.
 
 			Args:
 				fname	list of filenames
 
 			
 			See implementations of metaTrajIO for specfic documentation.
+		"""
+		data=self.readdata(fname)
+		if self.dataFilter:
+			self.dataFilterObj.filterData(data, self.Fs)
+			self.currDataPipe=np.hstack((self.currDataPipe, self.dataFilterObj.filteredData ))
+		else:
+			self.currDataPipe=np.hstack((self.currDataPipe, data ))
+			
+	@abstractmethod
+	def readdata(self, fname):
+		"""
+			Read the specified data file(s) and  return the data as an array. Set 
+			a class property Fs with the sampling frequency in Hz.
+
+			Args:
+				fname	list of filenames
 		"""
 		pass
 
@@ -241,4 +283,14 @@ class metaTrajIO(object):
 			pass
 		return poplist
 
+	#################################################################
+	# Private Functions
+	#################################################################
+	def __setupDataFilter(self):
+		filtsettings=settings.settings( self.datPath ).getSettings(self.datafilter.__name__)
+		if filtsettings=={}:
+			print "No settings found for '{0}'. Data filtering is disabled".format(str(self.datafilter.__name__))
+			self.dataFilter=False
+			return
 
+		return self.datafilter(**filtsettings)

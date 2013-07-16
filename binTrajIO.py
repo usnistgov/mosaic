@@ -51,13 +51,13 @@ class binTrajIO(metaTrajIO.metaTrajIO):
 		self.fileFormat='bin'
 
 		# set the sampling frequency in Hz.
-		if not hasattr(self, 'FsHz'):	
-			self.FsHz=self.SamplingFrequency
+		if not hasattr(self, 'Fs'):	
+			self.Fs=self.SamplingFrequency
 
-	def appenddata(self, fname):
+	def readdata(self, fname):
 		"""
 			Read one or more files and append their data to the data pipeline.
-			Set a class attribute FsHz with the sampling frequency in Hz.
+			Set a class attribute Fs with the sampling frequency in Hz.
 
 			Args:
 				fname  list of data files to read
@@ -66,10 +66,13 @@ class binTrajIO(metaTrajIO.metaTrajIO):
 			Errors:
 				None
 		"""
+		tempdata=np.array([])
 		# Read binary data and add it to the data pipe
 		for f in fname:
-			self.currDataPipe=np.hstack(( self.currDataPipe, self.readBinaryFile(f) ))
+			tempdata=np.hstack(( tempdata, self.readBinaryFile(f) ))
 
+		return tempdata
+		
 	def formatsettings(self):
 		"""
 			Return a formatted string of settings for display

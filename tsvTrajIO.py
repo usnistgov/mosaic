@@ -43,7 +43,7 @@ class tsvTrajIO(metaTrajIO.metaTrajIO):
 		try:
 			# if the sampling frequency is set explicitly, currents 
 			# in pA will be in column 0.
-			self.FsHz=kwargs["Fs"]
+			self.Fs=kwargs["Fs"]
 			self.currCol=0
 
 			self.userSetFs=True
@@ -66,10 +66,10 @@ class tsvTrajIO(metaTrajIO.metaTrajIO):
 		# additional meta data
 		self.fileFormat='tsv'
 
-	def appenddata(self, fname):
+	def readdata(self, fname):
 		"""
 			Read a single TSV file and append its data to the data pipeline.
-			Set/update a class attribute FsHz with the sampling frequency in Hz.
+			Set/update a class attribute Fs with the sampling frequency in Hz.
 
 			Args:
 				fname  list of data files to read
@@ -78,9 +78,12 @@ class tsvTrajIO(metaTrajIO.metaTrajIO):
 			Errors:
 				SamplingRateChangedError if the sampling rate for any data file differs from previous
 		"""
+		data=np.array([])
 		# Add new data to the existing array
 		for f in fname:
-			self.currDataPipe=np.hstack((self.currDataPipe, self.__readtsv(f)))
+			data=np.hstack((data, self.__readtsv(f)))
+
+		return data
 
 	def __readtsv(self, fname):
 		"""
@@ -100,11 +103,11 @@ class tsvTrajIO(metaTrajIO.metaTrajIO):
 			p1=r1.next()
 			p2=r1.next()
 
-			if not hasattr(self, 'FsHz'):
-				self.FsHz=1000./(p2[self.timeCol]-p1[self.timeCol])
+			if not hasattr(self, 'Fs'):
+				self.Fs=1000./(p2[self.timeCol]-p1[self.timeCol])
 			# else check if it s the same as before
 			else:
-				if self.FsHz!=1000./(p2[self.timeCol]-p1[self.timeCol]):
+				if self.Fs!=1000./(p2[self.timeCol]-p1[self.timeCol]):
 					raise metaTrajIO.SamplingRateChangedError("The sampling rate in the data file '{0}' has changed.".format(fname))
 				
 			# Store the ionic currents for the first two points
