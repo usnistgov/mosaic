@@ -428,6 +428,7 @@ class eventSegment(metaEventPartition.metaEventPartition):
 		self.windowOpenCurrentSD=sd 
 		self.windowOpenCurrentSlope=sl
 
+	#@profile
 	def __eventsegment(self):
 		"""
 			Cut up a trajectory into individual events. This algorithm uses

@@ -37,12 +37,12 @@ from besselLowpassFilter import *
 
 
 # raw_input("Enter to continue")
-
-# SingleChannelAnalysis.SingleChannelAnalysis(
-# 			abfTrajIO(fnames=['/Volumes/DATA/tetheredPEG/13712018_peg2k.abf']), 
-# 			es.eventSegment,
-# 			sra.stepResponseAnalysis
-# 		).Run()
+# dirname='/Volumes/DATA/tetheredPEG/20130716/',filter='*abf'
+SingleChannelAnalysis.SingleChannelAnalysis(
+ 			abfTrajIO(fnames=['/Users/balijepalliak/Desktop/peg2k/first hour/13730039_001.abf', '/Users/balijepalliak/Desktop/peg2k/first hour/13730039_002.abf']),
+			es.eventSegment,
+			sra.stepResponseAnalysis
+		).Run()
 
 #'set3','set4','set5',
 # [ SingleChannelAnalysis.SingleChannelAnalysis(
@@ -66,7 +66,7 @@ def analysisiter(dir, filt, i):
 			).Run() 
 
 		os.rename(dir+'/eventMD.tsv', dir+'/eventMD_'+str(i).zfill(2)+'.tsv')
-		#os.rename(dir+'/eventTS.csv', dir+'/eventTS_'+str(i).zfill(2)+'.csv')
+		os.rename(dir+'/eventTS.csv', dir+'/eventTS_'+str(i).zfill(2)+'.csv')
 		os.rename(dir+'/eventProcessing.log', dir+'/eventProcessing'+str(i).zfill(2)+'.log')
 	except MemoryError, e:
 		print "memory exceeded: ", e
@@ -74,13 +74,14 @@ def analysisiter(dir, filt, i):
 
 
 
-#[ analysisiter('/Volumes/DATA/PRL Data/EBSPEG600/20130627/m40mV2/', '*-'+str(i).zfill(2)+'??.qdf', i)	for i in range(10, 11) ]
+#[ analysisiter('/Volumes/DATA/PRL Data/EBSPEG600/20130722/m40mV8/', '*-'+str(i).zfill(2)+'??.qdf', i)	for i in range(100, 101) ]
+# [ analysisiter('/Volumes/DATA/PRL Data/EBSPEG600/20130723/m40mV2/', '*-'+str(i).zfill(2)+'??.qdf', i)	for i in range(10, 11) ]
 
-SingleChannelAnalysis.SingleChannelAnalysis(
-			qdfTrajIO(dirname='/Volumes/DATA/PRL Data/EBSPEG600/20130715/m40mV/', filter='*qdf', nfiles=150, Rfb=9.1E+9, Cfb=1.07E-12),
-			es.eventSegment,
-			sra.stepResponseAnalysis
-		).Run() 
+# SingleChannelAnalysis.SingleChannelAnalysis(
+# 			qdfTrajIO(dirname='/Volumes/DATA/PRL Data/EBSPEG600/20130717/m40mV2/', filter='*qdf', nfiles=325, Rfb=9.1E+9, Cfb=1.07E-12),
+# 			es.eventSegment,
+# 			sra.stepResponseAnalysis
+# 		).Run() 
 
 # print ['*-'+str(i).zfill(2)+'??.qdf' for i in range(1,15)]
 

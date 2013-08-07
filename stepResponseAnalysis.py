@@ -11,6 +11,7 @@ import commonExceptions
 import metaEventProcessor
 import util
 import sys
+import math
 
 import numpy as np
 import scipy.optimize
@@ -131,7 +132,8 @@ class stepResponseAnalysis(metaEventProcessor.metaEventProcessor):
 		fmtstr+='Algorithm = {0}\n\n'.format(self.__class__.__name__)
 		
 		fmtstr+='\t\tMax. iterations  = {0}\n'.format(self.FitIters)
-		fmtstr+='\t\tFit tolerance (rel. err in leastsq)  = {0}\n\n'.format(self.FitTol)
+		fmtstr+='\t\tFit tolerance (rel. err in leastsq)  = {0}\n'.format(self.FitTol)
+		fmtstr+='\t\tBlockade Depth Rejection = {0}\n\n'.format(self.BlockRejectRatio)
 
 
 		return fmtstr
@@ -186,9 +188,13 @@ class stepResponseAnalysis(metaEventProcessor.metaEventProcessor):
 					
 					self.mdRedChiSq			= optfit.chisqr/( np.var(optfit.residual) * (len(self.eventData) - optfit.nvarys -1) )
 
-					if self.mdBlockDepth > self.BlockRejectRatio:
-						# print 'eBlockDepthHigh', optfit.params['b'].value, optfit.params['b'].value - optfit.params['a'].value, optfit.params['mu1'].value, optfit.params['mu2'].value
-						self.rejectEvent('eBlockDepthHigh')
+					# if self.mdBlockDepth > self.BlockRejectRatio:
+					# 	# print 'eBlockDepthHigh', optfit.params['b'].value, optfit.params['b'].value - optfit.params['a'].value, optfit.params['mu1'].value, optfit.params['mu2'].value
+					# 	self.rejectEvent('eBlockDepthHigh')
+						
+					if math.isnan(self.mdRedChiSq):
+						self.rejectEvent('eInvalidFitParams')
+
 					#print i0, i0sig, [optfit.params['a'].value, optfit.params['b'].value, optfit.params['mu1'].value, optfit.params['mu2'].value, optfit.params['tau'].value]
 			else:
 				#print optfit.message, optfit.lmdif_message
