@@ -39,7 +39,7 @@ from besselLowpassFilter import *
 # raw_input("Enter to continue")
 # dirname='/Volumes/DATA/tetheredPEG/20130716/',filter='*abf'
 SingleChannelAnalysis.SingleChannelAnalysis(
- 			abfTrajIO(fnames=['/Users/balijepalliak/Desktop/peg2k/first hour/13730039_001.abf', '/Users/balijepalliak/Desktop/peg2k/first hour/13730039_002.abf']),
+ 			abfTrajIO(dirname='/Users/balijepalliak/Desktop/peg2k/selected m60', filter='*abf'),
 			es.eventSegment,
 			sra.stepResponseAnalysis
 		).Run()
