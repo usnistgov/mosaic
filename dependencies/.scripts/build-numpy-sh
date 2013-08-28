@@ -12,6 +12,11 @@ cd dependencies/
 tar xzf .tarballs/numpy-1.7.1.tar.gz
 cd numpy-1.7.1
 
+
+#export CC=clang
+#export CXX=clang++
+export FFLAGS=-ff2c
+
 python setup.py configure
 python setup.py install --prefix=..
 

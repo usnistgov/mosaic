@@ -9,6 +9,7 @@ depend:
 	bash dependencies/.scripts/build-matplotlib-sh
 	bash dependencies/.scripts/build-lmfit-sh
 	bash dependencies/.scripts/build-uncertainties-sh
+	bash dependencies/.scripts/build-nose-sh
 	bash dependencies/.scripts/set-env-sh
 
 clean-depend:

@@ -12,11 +12,11 @@
 						Included event processing parallelization using ZMQ.
 		9/26/12		AB  Allowed automatic open channel state calculation to be overridden.
 						To do this the settings "meanOpenCurr","sdOpenCurr" and "slopeOpenCurr"
-						must be set. If all three settings are absent, they are 
-						atuomatically estimated.
+						must be set manually. If all three settings are absent or 
+						set to 01, they are autuomatically estimated.
 						Added "writeEventTS" boolean setting to control whether raw
-						event currents are written to file. Default is ON (1)
-		8/24/12		AB 	Settings are now read from a settings file '.settings' that
+						events are written to file. Default is ON (1)
+		8/24/12		AB 	Settings are now read from a settings file that
 						is located either with the data or in the working directory 
 						that the program is run from. Each class that relies on the 
 						settings file will fallback to default values if the file
@@ -56,7 +56,7 @@ class eventSegment(metaEventPartition.metaEventPartition):
 	"""
 	def __init__(self, trajDataObj, eventProcHnd, eventPartitionSettings, eventProcSettings):
 		"""
-			Implement an event partitioning algorithm by sub-classing teh metaEventPartition class
+			Implement an event partitioning algorithm by sub-classing the metaEventPartition class
 	
 			Parameters from settings file (.settings in the data path or current working directory):
 				blockSizeSec:	Functions that perform block processing use this value to set the size of 
