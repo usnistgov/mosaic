@@ -10,10 +10,10 @@
 NotebookFileLineBreakTest
 NotebookFileLineBreakTest
 NotebookDataPosition[       157,          7]
-NotebookDataLength[    223203,       5554]
-NotebookOptionsPosition[    222102,       5514]
-NotebookOutlinePosition[    222457,       5530]
-CellTagsIndexPosition[    222414,       5527]
+NotebookDataLength[    223204,       5554]
+NotebookOptionsPosition[    222103,       5514]
+NotebookOutlinePosition[    222458,       5530]
+CellTagsIndexPosition[    222415,       5527]
 WindowFrame->Normal*)
 
 (* Beginning of Notebook Content *)
@@ -5493,7 +5493,7 @@ Cell[BoxData[
        RowBox[{
         RowBox[{"-", "0.5"}], ",", "200", ",", "700", ",", 
         RowBox[{"#", "\[LeftDoubleBracket]", "2", "\[RightDoubleBracket]"}], 
-        ",", "1", ",", "50000", ",", "1200", ",", "0.012"}], "}"}]}], "]"}], 
+        ",", "1", ",", "50000", ",", "1200", ",", "0.02"}], "}"}]}], "]"}], 
     "&"}], "/@", 
    RowBox[{"Transpose", "[", 
     RowBox[{"{", 
@@ -5510,7 +5510,7 @@ Cell[BoxData[
         "300", ",", "500"}], "}"}]}], "}"}], "]"}]}], ";"}]], "Input",
  CellChangeTimes->{{3.586796929337748*^9, 3.5867969343127327`*^9}, 
    3.586797030752056*^9, {3.586797075807424*^9, 3.586797078485857*^9}, {
-   3.58679759001201*^9, 3.586797619065484*^9}}]
+   3.58679759001201*^9, 3.5867976265778646`*^9}}]
 },
 WindowSize->{1083, 935},
 WindowMargins->{{4, Automatic}, {Automatic, 4}},
@@ -5555,7 +5555,7 @@ Cell[218248, 5406, 72, 1, 28, "Output"]
 }, Open  ]],
 Cell[218335, 5410, 1349, 34, 53, "Input"],
 Cell[219687, 5446, 1203, 32, 46, "Input"],
-Cell[220893, 5480, 1205, 32, 46, "Input"]
+Cell[220893, 5480, 1206, 32, 46, "Input"]
 }
 ]
 *)

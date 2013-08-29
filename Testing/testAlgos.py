@@ -6,7 +6,7 @@ import json
 import stepResponseAnalysis as sra
 import singleStepEvent as sse
 
-class AlgorithmTestFunctions(unittest.TestCase):
+class PEGTestFunctions(unittest.TestCase):
 
 	def setUp(self):
 		self.datapath = 'testdata'
@@ -36,7 +36,7 @@ class AlgorithmTestFunctions(unittest.TestCase):
 		self.assertEqual( round(testobj.mdResTime,1), (prm['tau2']-prm['tau1'])/1000. )
 
 
-class SRATests(AlgorithmTestFunctions):
+class PEGSRATests(PEGTestFunctions):
 	def test_e1sra(self):
 		self.runTestCase('testdata/test1.csv', 'testdata/test1.prm', sra.stepResponseAnalysis)
 
@@ -109,51 +109,53 @@ class SRATests(AlgorithmTestFunctions):
 	def test_e24sra(self):
 		self.runTestCase('testdata/test24.csv', 'testdata/test24.prm', sra.stepResponseAnalysis)
 
-# class SSETests(AlgorithmTestFunctions):
-# 	def test_e1sse(self):
-# 		self.runTestCase('testdata/test1.csv', 'testdata/test1.prm', sse.singleStepEvent)
 
-# 	def test_e2sse(self):
-# 		self.runTestCase('testdata/test2.csv', 'testdata/test2.prm', sse.singleStepEvent)
 
-# 	def test_e3sse(self):
-# 		self.runTestCase('testdata/test3.csv', 'testdata/test3.prm', sse.singleStepEvent)
+class PEGSSETests(PEGTestFunctions):
+	def test_e1sse(self):
+		self.runTestCase('testdata/test1.csv', 'testdata/test1.prm', sse.singleStepEvent)
 
-# 	def test_e4sse(self):
-# 		self.runTestCase('testdata/test4.csv', 'testdata/test4.prm', sse.singleStepEvent)
+	def test_e2sse(self):
+		self.runTestCase('testdata/test2.csv', 'testdata/test2.prm', sse.singleStepEvent)
 
-# 	def test_e5sse(self):
-# 		self.runTestCase('testdata/test5.csv', 'testdata/test5.prm', sse.singleStepEvent)
+	def test_e3sse(self):
+		self.runTestCase('testdata/test3.csv', 'testdata/test3.prm', sse.singleStepEvent)
 
-# 	def test_e6sse(self):
-# 		self.runTestCase('testdata/test6.csv', 'testdata/test6.prm', sse.singleStepEvent)
+	def test_e4sse(self):
+		self.runTestCase('testdata/test4.csv', 'testdata/test4.prm', sse.singleStepEvent)
 
-# 	def test_e7sse(self):
-# 		self.runTestCase('testdata/test7.csv', 'testdata/test7.prm', sse.singleStepEvent)
+	def test_e5sse(self):
+		self.runTestCase('testdata/test5.csv', 'testdata/test5.prm', sse.singleStepEvent)
 
-# 	def test_e8sse(self):
-# 		self.runTestCase('testdata/test8.csv', 'testdata/test8.prm', sse.singleStepEvent)
+	def test_e6sse(self):
+		self.runTestCase('testdata/test6.csv', 'testdata/test6.prm', sse.singleStepEvent)
 
-# 	def test_e9sse(self):
-# 		self.runTestCase('testdata/test9.csv', 'testdata/test9.prm', sse.singleStepEvent)
+	def test_e7sse(self):
+		self.runTestCase('testdata/test7.csv', 'testdata/test7.prm', sse.singleStepEvent)
 
-# 	def test_e10sse(self):
-# 		self.runTestCase('testdata/test10.csv', 'testdata/test10.prm', sse.singleStepEvent)
+	def test_e8sse(self):
+		self.runTestCase('testdata/test8.csv', 'testdata/test8.prm', sse.singleStepEvent)
 
-# 	def test_e11sse(self):
-# 		self.runTestCase('testdata/test11.csv', 'testdata/test11.prm', sse.singleStepEvent)
+	def test_e9sse(self):
+		self.runTestCase('testdata/test9.csv', 'testdata/test9.prm', sse.singleStepEvent)
 
-# 	def test_e12sse(self):
-# 		self.runTestCase('testdata/test12.csv', 'testdata/test12.prm', sse.singleStepEvent)
+	def test_e10sse(self):
+		self.runTestCase('testdata/test10.csv', 'testdata/test10.prm', sse.singleStepEvent)
 
-# 	def test_e13sse(self):
-# 		self.runTestCase('testdata/test13.csv', 'testdata/test13.prm', sse.singleStepEvent)
+	def test_e11sse(self):
+		self.runTestCase('testdata/test11.csv', 'testdata/test11.prm', sse.singleStepEvent)
 
-# 	def test_e14sse(self):
-# 		self.runTestCase('testdata/test14.csv', 'testdata/test14.prm', sse.singleStepEvent)
+	def test_e12sse(self):
+		self.runTestCase('testdata/test12.csv', 'testdata/test12.prm', sse.singleStepEvent)
 
-# 	def test_e15sse(self):
-# 		self.runTestCase('testdata/test15.csv', 'testdata/test15.prm', sse.singleStepEvent)
+	def test_e13sse(self):
+		self.runTestCase('testdata/test13.csv', 'testdata/test13.prm', sse.singleStepEvent)
 
-# 	def test_e16sse(self):
-# 		self.runTestCase('testdata/test16.csv', 'testdata/test16.prm', sse.singleStepEvent)
+	def test_e14sse(self):
+		self.runTestCase('testdata/test14.csv', 'testdata/test14.prm', sse.singleStepEvent)
+
+	def test_e15sse(self):
+		self.runTestCase('testdata/test15.csv', 'testdata/test15.prm', sse.singleStepEvent)
+
+	def test_e16sse(self):
+		self.runTestCase('testdata/test16.csv', 'testdata/test16.prm', sse.singleStepEvent)
