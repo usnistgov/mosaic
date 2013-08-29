@@ -169,12 +169,14 @@ class stepResponseAnalysis(metaEventProcessor.metaEventProcessor):
 
 			optfit.leastsq(xtol=self.FitTol,ftol=self.FitTol,maxfev=self.FitIters)
 
+			# print optfit.params['b'].value, optfit.params['b'].value - optfit.params['a'].value, optfit.params['mu1'].value, optfit.params['mu2'].value
 			if optfit.success:
 				if optfit.params['mu1'].value < 0.0 or optfit.params['mu2'].value < 0.0:
 					# print 'eInvalidFitParams', optfit.params['b'].value, optfit.params['b'].value - optfit.params['a'].value, optfit.params['mu1'].value, optfit.params['mu2'].value
 					self.rejectEvent('eInvalidFitParams')
 				# The start of the event is set past the length of the data
 				elif optfit.params['mu1'].value > ts[-1]:
+					# print 'eInvalidFitParams', optfit.params['b'].value, optfit.params['b'].value - optfit.params['a'].value, optfit.params['mu1'].value, optfit.params['mu2'].value
 					self.rejectEvent('eInvalidFitParams')
 				else:
 					self.mdOpenChCurrent 	= optfit.params['b'].value 

@@ -184,7 +184,7 @@ class singleStepEvent(metaEventProcessor.metaEventProcessor):
 	def __blockadeDepthFit(self):
 		"""
 		"""
-		# First get first order estimates of the open channel and blocked state currents
+		# Get first order estimates of the open channel and blocked state currents
 		# We will use these to guide the final fits.
 		pre=self.__currentEstimate(self.eventData[:self.eStartEstimate-self.datPad], min(50, int(len(self.eventData[:self.eStartEstimate-self.datPad])/10.0)) )
 		post=self.__currentEstimate(self.eventData[self.eEndEstimate+self.datPad:], min(50, int(len(self.eventData[self.eEndEstimate+self.datPad:])/10.0)) )

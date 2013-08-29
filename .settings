@@ -16,11 +16,11 @@
 		"maxFitIters"		: "5000",
 		"a12Ratio" 		: "1.e4",
 		"minEvntTime" 		: "10.e-6",
-		"minDataPad" 		: "200"
+		"minDataPad" 		: "5"
 	},
 	"stepResponseAnalysis" : {
-		"FitTol"		: "1.e-6",
-		"FitIters"		: "5000"
+		"FitTol"		: "1.e-7",
+		"FitIters"		: "10000"
 	}
 }
 
