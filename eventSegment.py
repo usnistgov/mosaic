@@ -223,7 +223,7 @@ class eventSegment(metaEventPartition.metaEventPartition):
 				w2=csv.writer(open(self.trajDataObj.datPath+'/eventTS.csv', 'wO'),delimiter=',')
 				[ w2.writerow(event.eventData) for event in self.eventQueue ]
 
-		outputstr+='[Summary]\n'
+		outputstr+='[Summary]'
 
 		# write out event segment stats
 		outputstr+=self.formatstats()
@@ -244,7 +244,8 @@ class eventSegment(metaEventPartition.metaEventPartition):
 		#	outputstr+='\t\t{0} = {1}\n'.format(p, self.__roundufloat( np.mean( [ getattr(evnt, p) for evnt in self.eventQueue if getattr(evnt, p) != -1 ] )) )
 
 		#outputstr+="\n\n[Settings]\n\tSettings File = '{0}'\n\n".format(self.settingsDict.settingsFile)
-		
+		outputstr+="\n[Settings]\n"
+
 		# write out trajectory IO settings
 		outputstr+=self.trajDataObj.formatsettings()+'\n'
 		

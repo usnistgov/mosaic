@@ -1,14 +1,18 @@
 {
 	"eventSegment" : {
 		"blockSizeSec" 		: "1.0",
-		"eventPad" 		: "200",
+		"eventPad" 		: "100",
 		"minEventLength" 	: "5",
-		"eventThreshold" 	: "6.0",
-		"driftThreshold" 	: "10.0",
+		"eventThreshold" 	: "5.0",
+		"driftThreshold" 	: "6.0",
 		"maxDriftRate" 		: "20.0",
-		"writeEventTS"          : "1",
-		"parallelProc"		: "1",
-		"reserveNCPU"		: "2"
+		"meanOpenCurr"		: "-1",
+		"sdOpenCurr"		: "-1",
+		"slopeOpenCurr"		: "-1",
+		"writeEventTS"		: "0",
+		"parallelProc"		: "0",
+		"reserveNCPU"		: "5",
+		"plotResults"		: "0"
 	},
 	"singleStepEvent" : {
 		"binSize" 		: "1.0",
@@ -16,11 +20,17 @@
 		"maxFitIters"		: "5000",
 		"a12Ratio" 		: "1.e4",
 		"minEvntTime" 		: "10.e-6",
-		"minDataPad" 		: "5"
+		"minDataPad" 		: "75"
 	},
 	"stepResponseAnalysis" : {
 		"FitTol"		: "1.e-7",
-		"FitIters"		: "10000"
+		"FitIters"		: "10000",
+		"BlockRejectRatio"	: "0.9"
+	},
+	"besselLowpassFilter" : {
+		"filterOrder"		: "6",
+		"filterCutoff"		: "10000",
+		"decimate"		: "1"	
 	}
 }
 

@@ -6,7 +6,7 @@
 
 	ChangeLog:
 		9/5/13		AB 	Check for either .settings or settings in data directory
-						and code root.
+						and code root. Warn when using default settings
 		8/24/12		AB	Initial version	
 """
 import json
@@ -26,8 +26,10 @@ class settings:
 		elif os.path.isfile(datpath+'/.settings'):
 			self.settingsFile=datpath+"/.settings"
 		elif os.path.isfile('settings'):
-			self.settingsFile="settings"
+			print "Settings file not found in data directory. Default settings will be used."
+			self.settingsFile=os.getcwd()+"settings"
 		elif os.path.isfile('.settings'):
+			print "Settings file not found in data directory. Default settings will be used."
 			self.settingsFile=os.getcwd()+"/.settings"
 
 		self.settingsDict=json.loads( "".join((open(self.settingsFile, 'r').readlines())) )

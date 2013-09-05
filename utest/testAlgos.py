@@ -109,8 +109,6 @@ class PEGSRATests(PEGTestFunctions):
 	def test_e24sra(self):
 		self.runTestCase('testdata/test24.csv', 'testdata/test24.prm', sra.stepResponseAnalysis)
 
-
-
 class PEGSSETests(PEGTestFunctions):
 	def test_e1sse(self):
 		self.runTestCase('testdata/test1.csv', 'testdata/test1.prm', sse.singleStepEvent)
