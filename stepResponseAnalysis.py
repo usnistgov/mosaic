@@ -113,7 +113,17 @@ class stepResponseAnalysis(metaEventProcessor.metaEventProcessor):
 		"""
 			Explicity set the metadata to print out.
 		"""
-		return ['ProcessingStatus', 'OpenChCurrent (pA)', 'BlockedCurrent (pA)','EventStart', 'EventEnd', 'BlockDepth', 'ResTime (ms)', 'RiseTime (ms)', 'ReducedChiSquared' ]
+		return [
+					'ProcessingStatus', 
+					'OpenChCurrent (pA)', 
+					'BlockedCurrent (pA)',
+					'EventStart', 
+					'EventEnd', 
+					'BlockDepth', 
+					'ResTime (ms)', 
+					'RCConstant (ms)', 
+					'ReducedChiSquared' 
+				]
 
 	def mdAveragePropertiesList(self):
 		"""
