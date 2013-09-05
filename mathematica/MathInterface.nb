@@ -10,10 +10,10 @@
 NotebookFileLineBreakTest
 NotebookFileLineBreakTest
 NotebookDataPosition[       157,          7]
-NotebookDataLength[     42433,       1051]
-NotebookOptionsPosition[     41193,       1006]
-NotebookOutlinePosition[     41550,       1022]
-CellTagsIndexPosition[     41507,       1019]
+NotebookDataLength[     41771,       1030]
+NotebookOptionsPosition[     40533,        985]
+NotebookOutlinePosition[     40890,       1001]
+CellTagsIndexPosition[     40847,        998]
 WindowFrame->Normal*)
 
 (* Beginning of Notebook Content *)
@@ -125,7 +125,33 @@ Cell["Plot Results", "Subsubsection",
 
 Cell[BoxData[
  RowBox[{
-  RowBox[{"genTab", "[", "]"}], ":=", 
+  RowBox[{"genKeyList", "[", "]"}], ":=", 
+  RowBox[{"{", 
+   RowBox[{
+    RowBox[{"{", 
+     RowBox[{"\"\<stepheight\>\"", ",", "1"}], "}"}], ",", 
+    RowBox[{"{", 
+     RowBox[{"\"\<opencurr\>\"", ",", "2"}], "}"}], ",", 
+    RowBox[{"{", 
+     RowBox[{"\"\<eventstart\>\"", ",", "3"}], "}"}], ",", 
+    RowBox[{"{", 
+     RowBox[{"\"\<eventend\>\"", ",", "4"}], "}"}], ",", 
+    RowBox[{"{", 
+     RowBox[{"\"\<tau\>\"", ",", "5"}], "}"}], ",", 
+    RowBox[{"{", 
+     RowBox[{"\"\<chisq\>\"", ",", "6"}], "}"}], ",", 
+    RowBox[{"{", 
+     RowBox[{"\"\<blockdepth\>\"", ",", "7"}], "}"}], ",", 
+    RowBox[{"{", 
+     RowBox[{"\"\<status\>\"", ",", "8"}], "}"}]}], "}"}]}]], "Input",
+ InitializationCell->True,
+ CellChangeTimes->{{3.587375501223958*^9, 3.587375533775798*^9}, {
+  3.5873788819171267`*^9, 3.587378894560961*^9}, {3.587379002060225*^9, 
+  3.587379002484967*^9}, {3.587379041966195*^9, 3.587379064043365*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"MDKey", "[", "key_", "]"}], ":=", 
   RowBox[{"Module", "[", 
    RowBox[{
     RowBox[{"{", "tab", "}"}], ",", "\[IndentingNewLine]", 
@@ -140,46 +166,16 @@ Cell[BoxData[
          RowBox[{
          "#", "\[LeftDoubleBracket]", "2", "\[RightDoubleBracket]"}]}], ")"}],
         "&"}], "/@", 
-      RowBox[{"{", 
-       RowBox[{
-        RowBox[{"{", 
-         RowBox[{"\"\<step\>\"", ",", "1"}], "}"}], ",", 
-        RowBox[{"{", 
-         RowBox[{"\"\<open\>\"", ",", "2"}], "}"}], ",", 
-        RowBox[{"{", 
-         RowBox[{"\"\<estart\>\"", ",", "3"}], "}"}], ",", 
-        RowBox[{"{", 
-         RowBox[{"\"\<eend\>\"", ",", "4"}], "}"}], ",", 
-        RowBox[{"{", 
-         RowBox[{"\"\<\[Tau]\>\"", ",", "5"}], "}"}], ",", 
-        RowBox[{"{", 
-         RowBox[{"\"\<chisq\>\"", ",", "6"}], "}"}], ",", 
-        RowBox[{"{", 
-         RowBox[{"\"\<blockdepth\>\"", ",", "7"}], "}"}], ",", 
-        RowBox[{"{", 
-         RowBox[{"\"\<status\>\"", ",", "8"}], "}"}]}], "}"}]}], ";", 
-     "\[IndentingNewLine]", 
-     RowBox[{"Return", "[", "tab", "]"}]}]}], "\[IndentingNewLine]", 
-   "]"}]}]], "Input",
- InitializationCell->True,
- CellChangeTimes->{{3.587375501223958*^9, 3.587375533775798*^9}}],
-
-Cell[BoxData[
- RowBox[{
-  RowBox[{"MDKey", "[", "key_", "]"}], ":=", 
-  RowBox[{"Module", "[", 
-   RowBox[{
-    RowBox[{"{", 
-     RowBox[{"tab", "=", 
-      RowBox[{"genTab", "[", "]"}]}], "}"}], ",", "\[IndentingNewLine]", 
-    RowBox[{"Return", "[", 
-     RowBox[{"tab", "[", "key", "]"}], "]"}]}], "\[IndentingNewLine]", 
+      RowBox[{"genKeyList", "[", "]"}]}], ";", "\[IndentingNewLine]", 
+     RowBox[{"Return", "[", 
+      RowBox[{"tab", "[", "key", "]"}], "]"}]}]}], "\[IndentingNewLine]", 
    "]"}]}]], "Input",
  InitializationCell->True,
  CellChangeTimes->{{3.587374437524671*^9, 3.587374449133602*^9}, {
    3.5873745336999063`*^9, 3.58737457016154*^9}, 3.587374609744707*^9, {
    3.5873748016536627`*^9, 3.58737481265541*^9}, {3.587375492730665*^9, 
-   3.587375499959638*^9}, 3.587375886433976*^9}],
+   3.587375499959638*^9}, 3.587375886433976*^9, {3.587378901125065*^9, 
+   3.587378910457635*^9}}],
 
 Cell[BoxData[
  RowBox[{
@@ -198,25 +194,7 @@ Cell[BoxData[
          RowBox[{
          "#", "\[LeftDoubleBracket]", "2", "\[RightDoubleBracket]"}]}], ")"}],
         "&"}], "/@", 
-      RowBox[{"{", 
-       RowBox[{
-        RowBox[{"{", 
-         RowBox[{"\"\<step\>\"", ",", "1"}], "}"}], ",", 
-        RowBox[{"{", 
-         RowBox[{"\"\<open\>\"", ",", "2"}], "}"}], ",", 
-        RowBox[{"{", 
-         RowBox[{"\"\<estart\>\"", ",", "3"}], "}"}], ",", 
-        RowBox[{"{", 
-         RowBox[{"\"\<eend\>\"", ",", "4"}], "}"}], ",", 
-        RowBox[{"{", 
-         RowBox[{"\"\<\[Tau]\>\"", ",", "5"}], "}"}], ",", 
-        RowBox[{"{", 
-         RowBox[{"\"\<chisq\>\"", ",", "6"}], "}"}], ",", 
-        RowBox[{"{", 
-         RowBox[{"\"\<blockdepth\>\"", ",", "7"}], "}"}], ",", 
-        RowBox[{"{", 
-         RowBox[{"\"\<status\>\"", ",", "8"}], "}"}]}], "}"}]}], ";", 
-     "\[IndentingNewLine]", 
+      RowBox[{"genKeyList", "[", "]"}]}], ";", "\[IndentingNewLine]", 
      RowBox[{
       RowBox[{"DownValues", "[", "tab", "]"}], "\[LeftDoubleBracket]", 
       RowBox[{"All", ",", "1", ",", "1", ",", "1"}], 
@@ -224,7 +202,8 @@ Cell[BoxData[
 
  InitializationCell->True,
  CellChangeTimes->{{3.587375723315249*^9, 3.5873758222911043`*^9}, {
-  3.5873758773894167`*^9, 3.587375877754548*^9}}],
+  3.5873758773894167`*^9, 3.587375877754548*^9}, {3.5873789198885393`*^9, 
+  3.5873789223704233`*^9}}],
 
 Cell[BoxData[
  RowBox[{
@@ -1036,21 +1015,21 @@ Cell[3069, 81, 1897, 36, 97, "Input",
 }, Open  ]],
 Cell[CellGroupData[{
 Cell[5003, 122, 103, 1, 35, "Subsubsection"],
-Cell[5109, 125, 1406, 39, 80, "Input",
+Cell[5109, 125, 952, 24, 46, "Input",
  InitializationCell->True],
-Cell[6518, 166, 636, 15, 63, "Input",
+Cell[6064, 151, 1035, 26, 80, "Input",
  InitializationCell->True],
-Cell[7157, 183, 1593, 43, 80, "Input",
+Cell[7102, 179, 988, 26, 80, "Input",
  InitializationCell->True],
-Cell[8753, 228, 1128, 28, 28, "Input",
+Cell[8093, 207, 1128, 28, 28, "Input",
  InitializationCell->True],
-Cell[9884, 258, 700, 18, 46, "Input",
+Cell[9224, 237, 700, 18, 46, "Input",
  InitializationCell->True],
-Cell[10587, 278, 24873, 586, 846, "Input",
+Cell[9927, 257, 24873, 586, 846, "Input",
  InitializationCell->True],
-Cell[35463, 866, 3607, 84, 165, "Input",
+Cell[34803, 845, 3607, 84, 165, "Input",
  InitializationCell->True],
-Cell[39073, 952, 2104, 51, 131, "Input",
+Cell[38413, 931, 2104, 51, 131, "Input",
  InitializationGroup->True]
 }, Open  ]]
 }

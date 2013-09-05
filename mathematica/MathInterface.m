@@ -45,19 +45,17 @@ FilePrint[coderoot<>"/.tmp"]
 (*Plot Results*)
 
 
-genTab[]:=Module[{tab},
-(tab[#[[1]]]=#[[2]])&/@{{"step",1},{"open",2},{"estart",3},{"eend",4},{"\[Tau]",5},{"chisq",6},{"blockdepth",7},{"status",8}};
-Return[tab]
-]
+genKeyList[]:={{"stepheight",1},{"opencurr",2},{"eventstart",3},{"eventend",4},{"tau",5},{"chisq",6},{"blockdepth",7},{"status",8}}
 
 
-MDKey[key_]:=Module[{tab=genTab[]},
+MDKey[key_]:=Module[{tab},
+(tab[#[[1]]]=#[[2]])&/@genKeyList[];
 Return[tab[key]]
 ]
 
 
 PrintMDKeys[]:=Module[{tab},
-(tab[#[[1]]]=#[[2]])&/@{{"step",1},{"open",2},{"estart",3},{"eend",4},{"\[Tau]",5},{"chisq",6},{"blockdepth",7},{"status",8}};
+(tab[#[[1]]]=#[[2]])&/@genKeyList[];
 DownValues[tab][[All,1,1,1]]
 ]
 

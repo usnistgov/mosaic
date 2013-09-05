@@ -10,10 +10,10 @@
 NotebookFileLineBreakTest
 NotebookFileLineBreakTest
 NotebookDataPosition[       157,          7]
-NotebookDataLength[     33418,        765]
-NotebookOptionsPosition[     32686,        734]
-NotebookOutlinePosition[     33042,        750]
-CellTagsIndexPosition[     32999,        747]
+NotebookDataLength[     33500,        766]
+NotebookOptionsPosition[     32768,        735]
+NotebookOutlinePosition[     33124,        751]
+CellTagsIndexPosition[     33081,        748]
 WindowFrame->Normal*)
 
 (* Beginning of Notebook Content *)
@@ -124,10 +124,10 @@ Cell[BoxData[
 
 Cell[BoxData[
  RowBox[{"{", 
-  RowBox[{"\<\"blockdepth\"\>", ",", "\<\"chisq\"\>", ",", "\<\"eend\"\>", 
-   ",", "\<\"estart\"\>", ",", "\<\"open\"\>", ",", "\<\"status\"\>", 
-   ",", "\<\"step\"\>", ",", "\<\"\[Tau]\"\>"}], "}"}]], "Output",
- CellChangeTimes->{3.5873759220914803`*^9}]
+  RowBox[{"\<\"blockdepth\"\>", ",", "\<\"chisq\"\>", ",", "\<\"eventend\"\>",
+    ",", "\<\"eventstart\"\>", ",", "\<\"opencurr\"\>", ",", "\<\"status\"\>",
+    ",", "\<\"stepheight\"\>", ",", "\<\"tau\"\>"}], "}"}]], "Output",
+ CellChangeTimes->{3.587378967042534*^9, 3.58737910311053*^9}]
 }, Open  ]],
 
 Cell[CellGroupData[{
@@ -149,7 +149,7 @@ Cell[BoxData[
          "\[RightDoubleBracket]"}], "\[Equal]", "\"\<normal\>\""}], "&&", 
        RowBox[{
         RowBox[{"#", "\[LeftDoubleBracket]", 
-         RowBox[{"MDKey", "[", "\"\<\[Tau]\>\"", "]"}], 
+         RowBox[{"MDKey", "[", "\"\<tau\>\"", "]"}], 
          "\[RightDoubleBracket]"}], ">", "0.0002"}]}], ")"}], "&"}], ")"}]}], 
   "]"}]], "Input",
  CellChangeTimes->{{3.58730528705478*^9, 3.587305323063048*^9}, {
@@ -161,7 +161,8 @@ Cell[BoxData[
    3.5873727576002073`*^9}, {3.587372809482794*^9, 3.5873728124229593`*^9}, {
    3.5873728923343363`*^9, 3.587372892516415*^9}, {3.587373616353716*^9, 
    3.587373641703987*^9}, {3.587374861559885*^9, 3.5873748759887857`*^9}, {
-   3.587375925708931*^9, 3.587375928052812*^9}}],
+   3.587375925708931*^9, 3.587375928052812*^9}, {3.5873789881456423`*^9, 
+   3.58737899630177*^9}}],
 
 Cell[BoxData[
  GraphicsBox[{{}, {InsetBox[
@@ -757,15 +758,15 @@ Cell[1678, 45, 1734, 69, 903, "Print"]
 }, Open  ]],
 Cell[CellGroupData[{
 Cell[3449, 119, 178, 3, 28, "Input"],
-Cell[3630, 124, 286, 5, 28, "Output"]
+Cell[3630, 124, 320, 5, 62, "Output"]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[3953, 134, 1464, 29, 46, "Input"],
-Cell[5420, 165, 24646, 510, 276, "Output"]
+Cell[3987, 134, 1512, 30, 46, "Input"],
+Cell[5502, 166, 24646, 510, 276, "Output"]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[30103, 680, 293, 6, 28, "Input"],
-Cell[30399, 688, 2271, 43, 718, "Output"]
+Cell[30185, 681, 293, 6, 28, "Input"],
+Cell[30481, 689, 2271, 43, 684, "Output"]
 }, Open  ]]
 }
 ]
