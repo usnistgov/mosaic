@@ -10,10 +10,10 @@
 NotebookFileLineBreakTest
 NotebookFileLineBreakTest
 NotebookDataPosition[       157,          7]
-NotebookDataLength[     41771,       1030]
-NotebookOptionsPosition[     40533,        985]
-NotebookOutlinePosition[     40890,       1001]
-CellTagsIndexPosition[     40847,        998]
+NotebookDataLength[     49444,       1225]
+NotebookOptionsPosition[     47971,       1173]
+NotebookOutlinePosition[     48356,       1190]
+CellTagsIndexPosition[     48313,       1187]
 WindowFrame->Normal*)
 
 (* Beginning of Notebook Content *)
@@ -845,6 +845,194 @@ FontSlant->\"Italic\"]\) (pA)\>\"", ",", "40", ",",
 
 Cell[BoxData[
  RowBox[{
+  RowBox[{"PlotBlockDepth", "[", 
+   RowBox[{"datpath_", ",", "filt_", ",", "bin_", ",", 
+    RowBox[{"pltstyle_:", "Automatic"}]}], "]"}], ":=", 
+  RowBox[{"Module", "[", 
+   RowBox[{
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"md", " ", "=", 
+       RowBox[{"MDTransform", "/@", 
+        RowBox[{"Flatten", "[", 
+         RowBox[{
+          RowBox[{
+           RowBox[{
+            RowBox[{
+             RowBox[{"Import", "[", 
+              RowBox[{"#", ",", "\"\<TSV\>\""}], "]"}], 
+             "\[LeftDoubleBracket]", 
+             RowBox[{"2", ";;"}], "\[RightDoubleBracket]"}], "&"}], "/@", 
+           RowBox[{"FileNames", "[", 
+            RowBox[{"\"\<eventMD*tsv\>\"", ",", "datpath"}], "]"}]}], ",", 
+          "1"}], "]"}]}]}], ",", "d1"}], "}"}], ",", "\[IndentingNewLine]", 
+    RowBox[{
+     RowBox[{"d1", "=", 
+      RowBox[{"Select", "[", 
+       RowBox[{"md", ",", "filt"}], "]"}]}], ";", "\[IndentingNewLine]", 
+     RowBox[{"Return", "[", 
+      RowBox[{"ListLinePlot", "[", 
+       RowBox[{
+        RowBox[{"PDF1D", "[", 
+         RowBox[{
+          RowBox[{"d1", "\[LeftDoubleBracket]", 
+           RowBox[{"All", ",", "7"}], "\[RightDoubleBracket]"}], ",", 
+          RowBox[{"bin", "\[LeftDoubleBracket]", 
+           RowBox[{";;", "2"}], "\[RightDoubleBracket]"}], ",", 
+          RowBox[{
+          "bin", "\[LeftDoubleBracket]", "3", "\[RightDoubleBracket]"}]}], 
+         "]"}], ",", 
+        RowBox[{"PlotRange", "\[Rule]", "All"}], ",", 
+        RowBox[{"PlotStyle", "\[Rule]", "pltstyle"}]}], "]"}], "]"}]}]}], 
+   "\[IndentingNewLine]", "]"}]}]], "Input",
+ InitializationCell->True,
+ CellChangeTimes->{{3.587473086862224*^9, 3.587473179200979*^9}, {
+  3.5874732533860826`*^9, 3.587473283215149*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"MeanBDGauss", "[", 
+   RowBox[{"datpath_", ",", "filt_"}], "]"}], ":=", 
+  RowBox[{"Module", "[", 
+   RowBox[{
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"md", " ", "=", 
+       RowBox[{"MDTransform", "/@", 
+        RowBox[{"Flatten", "[", 
+         RowBox[{
+          RowBox[{
+           RowBox[{
+            RowBox[{
+             RowBox[{"Import", "[", 
+              RowBox[{"#", ",", "\"\<TSV\>\""}], "]"}], 
+             "\[LeftDoubleBracket]", 
+             RowBox[{"2", ";;"}], "\[RightDoubleBracket]"}], "&"}], "/@", 
+           RowBox[{"FileNames", "[", 
+            RowBox[{"\"\<eventMD*tsv\>\"", ",", "datpath"}], "]"}]}], ",", 
+          "1"}], "]"}]}]}], ",", "d1"}], "}"}], ",", "\[IndentingNewLine]", 
+    RowBox[{
+     RowBox[{"d1", "=", 
+      RowBox[{"Select", "[", 
+       RowBox[{"md", ",", "filt"}], "]"}]}], ";", "\[IndentingNewLine]", 
+     RowBox[{"Return", "[", 
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"Mean", "[", 
+         RowBox[{"d1", "\[LeftDoubleBracket]", 
+          RowBox[{"All", ",", "7"}], "\[RightDoubleBracket]"}], "]"}], ",", 
+        RowBox[{"StandardDeviation", "[", 
+         RowBox[{"d1", "\[LeftDoubleBracket]", 
+          RowBox[{"All", ",", "7"}], "\[RightDoubleBracket]"}], "]"}], ",", 
+        RowBox[{"StandardError", "[", 
+         RowBox[{"d1", "\[LeftDoubleBracket]", 
+          RowBox[{"All", ",", "7"}], "\[RightDoubleBracket]"}], "]"}]}], 
+       "}"}], "]"}]}]}], "\[IndentingNewLine]", "]"}]}]], "Input",
+ InitializationCell->True,
+ CellChangeTimes->{{3.587473086862224*^9, 3.587473179200979*^9}, {
+  3.5874732533860826`*^9, 3.587473283215149*^9}, {3.587475110372418*^9, 
+  3.5874751619704027`*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"MeanResTimeExp", "[", 
+   RowBox[{"datpath_", ",", "filt_", ",", "bin_", ",", "resest_"}], "]"}], ":=", 
+  RowBox[{"Module", "[", 
+   RowBox[{
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"md", " ", "=", 
+       RowBox[{"MDTransform", "/@", 
+        RowBox[{"Flatten", "[", 
+         RowBox[{
+          RowBox[{
+           RowBox[{
+            RowBox[{
+             RowBox[{"Import", "[", 
+              RowBox[{"#", ",", "\"\<TSV\>\""}], "]"}], 
+             "\[LeftDoubleBracket]", 
+             RowBox[{"2", ";;"}], "\[RightDoubleBracket]"}], "&"}], "/@", 
+           RowBox[{"FileNames", "[", 
+            RowBox[{"\"\<eventMD*tsv\>\"", ",", "datpath"}], "]"}]}], ",", 
+          "1"}], "]"}]}]}], ",", "d1", ",", "hist", ",", "ft", ",", "a", ",", 
+      "b", ",", "t"}], "}"}], ",", "\[IndentingNewLine]", 
+    RowBox[{
+     RowBox[{"d1", "=", 
+      RowBox[{"Select", "[", 
+       RowBox[{"md", ",", "filt"}], "]"}]}], ";", "\[IndentingNewLine]", 
+     RowBox[{"hist", "=", 
+      RowBox[{"Hist1D", "[", 
+       RowBox[{
+        RowBox[{
+         RowBox[{"d1", "\[LeftDoubleBracket]", 
+          RowBox[{"All", ",", "4"}], "\[RightDoubleBracket]"}], "-", 
+         RowBox[{"d1", "\[LeftDoubleBracket]", 
+          RowBox[{"All", ",", "3"}], "\[RightDoubleBracket]"}]}], ",", 
+        RowBox[{"bin", "\[LeftDoubleBracket]", 
+         RowBox[{";;", "2"}], "\[RightDoubleBracket]"}], ",", 
+        RowBox[{
+        "bin", "\[LeftDoubleBracket]", "3", "\[RightDoubleBracket]"}]}], 
+       "]"}]}], ";", "\[IndentingNewLine]", 
+     RowBox[{"ft", "=", 
+      RowBox[{"NonlinearModelFit", "[", 
+       RowBox[{"hist", ",", 
+        RowBox[{"a", " ", 
+         RowBox[{"Exp", "[", 
+          RowBox[{
+           RowBox[{"-", "b"}], " ", "t"}], "]"}]}], ",", 
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{"{", 
+           RowBox[{"a", ",", 
+            RowBox[{
+             RowBox[{
+             "hist", "\[LeftDoubleBracket]", "1", "\[RightDoubleBracket]"}], 
+             "\[LeftDoubleBracket]", "2", "\[RightDoubleBracket]"}]}], "}"}], 
+          ",", 
+          RowBox[{"{", 
+           RowBox[{"b", ",", 
+            RowBox[{"1", "/", "resest"}]}], "}"}]}], "}"}], ",", "t"}], 
+       "]"}]}], ";", "\[IndentingNewLine]", 
+     RowBox[{"Return", "[", 
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{
+         RowBox[{"1", "/", "b"}], "/.", 
+         RowBox[{"ft", "[", "\"\<BestFitParameters\>\"", "]"}]}], ",", 
+        "\[IndentingNewLine]", 
+        RowBox[{"Show", "[", 
+         RowBox[{"{", "\[IndentingNewLine]", 
+          RowBox[{
+           RowBox[{"ListLogPlot", "[", 
+            RowBox[{"hist", ",", 
+             RowBox[{"PlotRange", "\[Rule]", "All"}], ",", 
+             RowBox[{"PlotMarkers", "\[Rule]", "Automatic"}]}], "]"}], ",", 
+           "\[IndentingNewLine]", 
+           RowBox[{"LogPlot", "[", 
+            RowBox[{
+             RowBox[{"Evaluate", "[", 
+              RowBox[{"Normal", "[", "ft", "]"}], "]"}], ",", 
+             RowBox[{"{", 
+              RowBox[{"t", ",", 
+               RowBox[{
+               "bin", "\[LeftDoubleBracket]", "1", "\[RightDoubleBracket]"}], 
+               ",", 
+               RowBox[{
+               "bin", "\[LeftDoubleBracket]", "2", 
+                "\[RightDoubleBracket]"}]}], "}"}]}], "]"}]}], "}"}], "]"}]}],
+        "\[IndentingNewLine]", "}"}], "]"}]}]}], "\[IndentingNewLine]", 
+   "]"}]}]], "Input",
+ InitializationCell->True,
+ CellChangeTimes->{{3.587473086862224*^9, 3.587473179200979*^9}, {
+  3.5874732533860826`*^9, 3.587473283215149*^9}, {3.587475110372418*^9, 
+  3.5874751619704027`*^9}, {3.587488040933926*^9, 3.587488157406272*^9}, {
+  3.587488187964287*^9, 3.5874881973128233`*^9}, {3.587488274094975*^9, 
+  3.587488365967032*^9}, {3.587488455271306*^9, 3.58748845537531*^9}, {
+  3.587488507639839*^9, 3.587488516569026*^9}, {3.587500381174704*^9, 
+  3.5875003986450567`*^9}}],
+
+Cell[BoxData[
+ RowBox[{
   RowBox[{"PlotAnalysis", "[", 
    RowBox[{
    "folder_", ",", " ", "bin_List", ",", "bint_List", ",", " ", "filt_"}], 
@@ -900,7 +1088,7 @@ Cell[BoxData[
                RowBox[{"{", 
                 RowBox[{"0.2", ",", "0.7"}], "}"}], "]"}]}], "]"}], "}"}]}]}],
           "]"}], ",", "\[IndentingNewLine]", 
-        RowBox[{"ListLogLinearPlot", "[", 
+        RowBox[{"ListLogPlot", "[", 
          RowBox[{
           RowBox[{"Hist1D", "[", 
            RowBox[{
@@ -927,7 +1115,7 @@ Cell[BoxData[
   3.587305545819384*^9, 3.587305565062471*^9}, {3.5873056409805317`*^9, 
   3.587305643143964*^9}, {3.587306660162079*^9, 3.587306667415967*^9}, {
   3.587306734598267*^9, 3.587306741819028*^9}, {3.587372797275331*^9, 
-  3.58737279797756*^9}}],
+  3.58737279797756*^9}, {3.587500084052065*^9, 3.587500084884728*^9}}],
 
 Cell[BoxData[
  RowBox[{
@@ -983,6 +1171,7 @@ Cell[BoxData[
   3.587338397860778*^9}, {3.587373410474434*^9, 3.587373417018278*^9}}]
 }, Open  ]]
 },
+NotebookEventActions->None,
 WindowSize->{1180, 819},
 WindowMargins->{{44, Automatic}, {36, Automatic}},
 FrontEndVersion->"9.0 for Mac OS X x86 (32-bit, 64-bit Kernel) (January 25, \
@@ -1027,9 +1216,15 @@ Cell[9224, 237, 700, 18, 46, "Input",
  InitializationCell->True],
 Cell[9927, 257, 24873, 586, 846, "Input",
  InitializationCell->True],
-Cell[34803, 845, 3607, 84, 165, "Input",
+Cell[34803, 845, 1760, 44, 97, "Input",
  InitializationCell->True],
-Cell[38413, 931, 2104, 51, 131, "Input",
+Cell[36566, 891, 1707, 42, 80, "Input",
+ InitializationCell->True],
+Cell[38276, 935, 3922, 96, 199, "Input",
+ InitializationCell->True],
+Cell[42201, 1033, 3647, 84, 165, "Input",
+ InitializationCell->True],
+Cell[45851, 1119, 2104, 51, 131, "Input",
  InitializationGroup->True]
 }, Open  ]]
 }

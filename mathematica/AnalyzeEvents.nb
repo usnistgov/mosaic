@@ -10,19 +10,20 @@
 NotebookFileLineBreakTest
 NotebookFileLineBreakTest
 NotebookDataPosition[       157,          7]
-NotebookDataLength[     33404,        765]
-NotebookOptionsPosition[     32651,        733]
-NotebookOutlinePosition[     33028,        750]
-CellTagsIndexPosition[     32985,        747]
+NotebookDataLength[     38214,        881]
+NotebookOptionsPosition[     37125,        841]
+NotebookOutlinePosition[     37502,        858]
+CellTagsIndexPosition[     37459,        855]
 WindowFrame->Normal*)
 
 (* Beginning of Notebook Content *)
 Notebook[{
 Cell[BoxData[
- RowBox[{"<<", "MathInterface`"}]], "Input",
+ RowBox[{"<<", "nanoporeAnalysis`"}]], "Input",
  InitializationCell->True,
  CellChangeTimes->{{3.571950305351722*^9, 3.5719503070462933`*^9}, {
-   3.587337681120981*^9, 3.587337681848693*^9}, 3.587337872102079*^9}],
+   3.587337681120981*^9, 3.587337681848693*^9}, 3.587337872102079*^9, {
+   3.587499920962996*^9, 3.587499921429241*^9}}],
 
 Cell[CellGroupData[{
 
@@ -124,8 +125,7 @@ Cell[BoxData[
   RowBox[{"\<\"blockdepth\"\>", ",", "\<\"chisq\"\>", ",", "\<\"eventend\"\>",
     ",", "\<\"eventstart\"\>", ",", "\<\"opencurr\"\>", ",", "\<\"status\"\>",
     ",", "\<\"stepheight\"\>", ",", "\<\"tau\"\>"}], "}"}]], "Output",
- CellChangeTimes->{3.587378967042534*^9, 3.58737910311053*^9, 
-  3.587395989855815*^9}]
+ CellChangeTimes->{3.58749993147206*^9}]
 }, Open  ]],
 
 Cell[CellGroupData[{
@@ -694,9 +694,9 @@ Cell[BoxData[
     1, Typeset`name$$ = "\"untitled\"", Typeset`specs$$ = {{
       Hold[$CellContext`i$$], 1, 8678, 1}, {
       Hold[$CellContext`s$$], 1, 10, 1}}, Typeset`size$$ = {
-    800., {246., 251.}}, Typeset`update$$ = 0, Typeset`initDone$$, 
-    Typeset`skipInitDone$$ = True, $CellContext`i$49178$$ = 
-    0, $CellContext`s$49179$$ = 0}, 
+    733.68076171875, {11.65, 18.704375}}, Typeset`update$$ = 0, 
+    Typeset`initDone$$, Typeset`skipInitDone$$ = 
+    True, $CellContext`i$49178$$ = 0, $CellContext`s$49179$$ = 0}, 
     DynamicBox[Manipulate`ManipulateBoxes[
      1, StandardForm, 
       "Variables" :> {$CellContext`i$$ = 1, $CellContext`s$$ = 1}, 
@@ -714,7 +714,7 @@ Cell[BoxData[
       "Specifications" :> {{$CellContext`i$$, 1, 8678, 1, Appearance -> 
          "Open"}, {$CellContext`s$$, 1, 10, 1, Appearance -> "Open"}}, 
       "Options" :> {}, "DefaultOptions" :> {}],
-     ImageSizeCache->{845., {331., 336.}},
+     ImageSizeCache->{779., {98., 103.}},
      SingleEvaluation->True],
     Deinitialization:>None,
     DynamicModuleValues:>{},
@@ -728,7 +728,115 @@ Cell[BoxData[
    3.5873133085317583`*^9, 3.5873382613651447`*^9, {3.587338323826406*^9, 
    3.587338341863084*^9}, {3.587338406416388*^9, 3.587338415535524*^9}, 
    3.587372764645967*^9, {3.587373397494884*^9, 3.587373422707508*^9}, 
-   3.587373604745137*^9, 3.587374057556158*^9, 3.5873759411221123`*^9}]
+   3.587373604745137*^9, 3.587374057556158*^9, 3.5873759411221123`*^9}],
+
+Cell[BoxData[
+ RowBox[{
+  StyleBox[
+   RowBox[{"Part", "::", "partd"}], "MessageName"], 
+  RowBox[{
+  ":", " "}], "\<\"Part specification \[NoBreak]\\!\\(ts$49095 \
+\[LeftDoubleBracket] 1 \[RightDoubleBracket]\\)\[NoBreak] is longer than \
+depth of object. \\!\\(\\*ButtonBox[\\\"\[RightSkeleton]\\\", ButtonStyle->\\\
+\"Link\\\", ButtonFrame->None, \
+ButtonData:>\\\"paclet:ref/message/General/partd\\\", ButtonNote -> \
+\\\"Part::partd\\\"]\\)\"\>"}]], "Message", "MSG",
+ CellChangeTimes->{3.5874999238750057`*^9}],
+
+Cell[BoxData[
+ RowBox[{
+  StyleBox[
+   RowBox[{"Part", "::", "partd"}], "MessageName"], 
+  RowBox[{
+  ":", " "}], "\<\"Part specification \[NoBreak]\\!\\(md$49049 \
+\[LeftDoubleBracket] 1 \[RightDoubleBracket]\\)\[NoBreak] is longer than \
+depth of object. \\!\\(\\*ButtonBox[\\\"\[RightSkeleton]\\\", ButtonStyle->\\\
+\"Link\\\", ButtonFrame->None, \
+ButtonData:>\\\"paclet:ref/message/General/partd\\\", ButtonNote -> \
+\\\"Part::partd\\\"]\\)\"\>"}]], "Message", "MSG",
+ CellChangeTimes->{3.587499923943758*^9}],
+
+Cell[BoxData[
+ RowBox[{
+  StyleBox[
+   RowBox[{"Transpose", "::", "nmtx"}], "MessageName"], 
+  RowBox[{
+  ":", " "}], "\<\"The first two levels of the one-dimensional list \
+\[NoBreak]\\!\\({\\(\\({0, 1\\/500}\\)\\), \\(\\(Abs[\\(\\(ts$49095 \
+\[LeftDoubleBracket] 1 \[RightDoubleBracket]\\)\\)]\\)\\)}\\)\[NoBreak] \
+cannot be transposed. \\!\\(\\*ButtonBox[\\\"\[RightSkeleton]\\\", \
+ButtonStyle->\\\"Link\\\", ButtonFrame->None, \
+ButtonData:>\\\"paclet:ref/message/Transpose/nmtx\\\", ButtonNote -> \
+\\\"Transpose::nmtx\\\"]\\)\"\>"}]], "Message", "MSG",
+ CellChangeTimes->{3.587499923944714*^9}],
+
+Cell[BoxData[
+ RowBox[{
+  StyleBox[
+   RowBox[{"ListPlot", "::", "lpn"}], "MessageName"], 
+  RowBox[{
+  ":", " "}], "\<\"\[NoBreak]\\!\\(Transpose[\\(\\({\\(\\({0, 1\\/500}\\)\\), \
+\\(\\(Abs[\\(\\(ts$49095 \[LeftDoubleBracket] 1 \
+\[RightDoubleBracket]\\)\\)]\\)\\)}\\)\\)]\\)\[NoBreak] is not a list of \
+numbers or pairs of numbers. \\!\\(\\*ButtonBox[\\\"\[RightSkeleton]\\\", \
+ButtonStyle->\\\"Link\\\", ButtonFrame->None, \
+ButtonData:>\\\"paclet:ref/ListPlot\\\", ButtonNote -> \\\"ListPlot::lpn\\\"]\
+\\)\"\>"}]], "Message", "MSG",
+ CellChangeTimes->{3.587499924007866*^9}],
+
+Cell[BoxData[
+ RowBox[{
+  StyleBox[
+   RowBox[{"Part", "::", "partd"}], "MessageName"], 
+  RowBox[{
+  ":", " "}], "\<\"Part specification \[NoBreak]\\!\\(ts$49095 \
+\[LeftDoubleBracket] 1 \[RightDoubleBracket]\\)\[NoBreak] is longer than \
+depth of object. \\!\\(\\*ButtonBox[\\\"\[RightSkeleton]\\\", ButtonStyle->\\\
+\"Link\\\", ButtonFrame->None, \
+ButtonData:>\\\"paclet:ref/message/General/partd\\\", ButtonNote -> \
+\\\"Part::partd\\\"]\\)\"\>"}]], "Message", "MSG",
+ CellChangeTimes->{3.587499926918951*^9}],
+
+Cell[BoxData[
+ RowBox[{
+  StyleBox[
+   RowBox[{"Part", "::", "partd"}], "MessageName"], 
+  RowBox[{
+  ":", " "}], "\<\"Part specification \[NoBreak]\\!\\(md$49049 \
+\[LeftDoubleBracket] 1 \[RightDoubleBracket]\\)\[NoBreak] is longer than \
+depth of object. \\!\\(\\*ButtonBox[\\\"\[RightSkeleton]\\\", ButtonStyle->\\\
+\"Link\\\", ButtonFrame->None, \
+ButtonData:>\\\"paclet:ref/message/General/partd\\\", ButtonNote -> \
+\\\"Part::partd\\\"]\\)\"\>"}]], "Message", "MSG",
+ CellChangeTimes->{3.587499926963892*^9}],
+
+Cell[BoxData[
+ RowBox[{
+  StyleBox[
+   RowBox[{"Transpose", "::", "nmtx"}], "MessageName"], 
+  RowBox[{
+  ":", " "}], "\<\"The first two levels of the one-dimensional list \
+\[NoBreak]\\!\\({\\(\\({0, 1\\/500}\\)\\), \\(\\(Abs[\\(\\(ts$49095 \
+\[LeftDoubleBracket] 1 \[RightDoubleBracket]\\)\\)]\\)\\)}\\)\[NoBreak] \
+cannot be transposed. \\!\\(\\*ButtonBox[\\\"\[RightSkeleton]\\\", \
+ButtonStyle->\\\"Link\\\", ButtonFrame->None, \
+ButtonData:>\\\"paclet:ref/message/Transpose/nmtx\\\", ButtonNote -> \
+\\\"Transpose::nmtx\\\"]\\)\"\>"}]], "Message", "MSG",
+ CellChangeTimes->{3.5874999269998198`*^9}],
+
+Cell[BoxData[
+ RowBox[{
+  StyleBox[
+   RowBox[{"ListPlot", "::", "lpn"}], "MessageName"], 
+  RowBox[{
+  ":", " "}], "\<\"\[NoBreak]\\!\\(Transpose[\\(\\({\\(\\({0, 1\\/500}\\)\\), \
+\\(\\(Abs[\\(\\(ts$49095 \[LeftDoubleBracket] 1 \
+\[RightDoubleBracket]\\)\\)]\\)\\)}\\)\\)]\\)\[NoBreak] is not a list of \
+numbers or pairs of numbers. \\!\\(\\*ButtonBox[\\\"\[RightSkeleton]\\\", \
+ButtonStyle->\\\"Link\\\", ButtonFrame->None, \
+ButtonData:>\\\"paclet:ref/ListPlot\\\", ButtonNote -> \\\"ListPlot::lpn\\\"]\
+\\)\"\>"}]], "Message", "MSG",
+ CellChangeTimes->{3.587499927054459*^9}]
 }, Open  ]]
 },
 WindowSize->{978, 873},
@@ -749,23 +857,31 @@ CellTagsIndex->{}
 *)
 (*NotebookFileOutline
 Notebook[{
-Cell[557, 20, 225, 4, 28, "Input",
+Cell[557, 20, 278, 5, 28, "Input",
  InitializationCell->True],
 Cell[CellGroupData[{
-Cell[807, 28, 963, 16, 148, "Input"],
-Cell[1773, 46, 1454, 65, 889, "Print"]
+Cell[860, 29, 963, 16, 148, "Input"],
+Cell[1826, 47, 1454, 65, 889, "Print"]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[3264, 116, 178, 3, 28, "Input"],
-Cell[3445, 121, 345, 6, 28, "Output"]
+Cell[3317, 117, 178, 3, 28, "Input"],
+Cell[3498, 122, 298, 5, 62, "Output"]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[3827, 132, 1560, 30, 46, "Input"],
-Cell[5390, 164, 24641, 510, 276, "Output"]
+Cell[3833, 132, 1560, 30, 46, "Input"],
+Cell[5396, 164, 24641, 510, 276, "Output"]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[30068, 679, 293, 6, 28, "Input"],
-Cell[30364, 687, 2271, 43, 684, "Output"]
+Cell[30074, 679, 293, 6, 28, "Input"],
+Cell[30370, 687, 2287, 43, 218, "Output"],
+Cell[32660, 732, 516, 11, 24, "Message"],
+Cell[33179, 745, 514, 11, 24, "Message"],
+Cell[33696, 758, 602, 12, 40, "Message"],
+Cell[34301, 772, 582, 12, 40, "Message"],
+Cell[34886, 786, 514, 11, 24, "Message"],
+Cell[35403, 799, 514, 11, 24, "Message"],
+Cell[35920, 812, 604, 12, 40, "Message"],
+Cell[36527, 826, 582, 12, 40, "Message"]
 }, Open  ]]
 }
 ]

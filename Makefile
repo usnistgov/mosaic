@@ -17,10 +17,10 @@ depend:
 	bash dependencies/.scripts/set-env-sh
 
 math-iface:
-	cp mathematica/MathInterface.m ~/Library/Mathematica/Applications/
+	cp mathematica/nanoporeAnalysis.m ~/Library/Mathematica/Applications/
 	
 clean-math-iface:
-	rm ~/Library/Mathematica/Applications/MathInterface.m
+	rm ~/Library/Mathematica/Applications/nanoporeAnalysis.m
 	
 clean-depend:
 	$(RM) dependencies/lib dependencies/bin dependencies/include dependencies/man dependencies/share dependencies/ticpp/.obj
