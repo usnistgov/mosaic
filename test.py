@@ -38,11 +38,11 @@ from besselLowpassFilter import *
 
 # raw_input("Enter to continue")
 # dirname='/Volumes/DATA/tetheredPEG/20130716/',filter='*abf'
-SingleChannelAnalysis.SingleChannelAnalysis(
- 			abfTrajIO(dirname='/Users/balijepalliak/Desktop/peg2k/selected m60', filter='*abf'),
-			es.eventSegment,
-			sra.stepResponseAnalysis
-		).Run()
+# SingleChannelAnalysis.SingleChannelAnalysis(
+#  			abfTrajIO(dirname='/Users/balijepalliak/Desktop/peg2k/selected m60', filter='*abf'),
+# 			es.eventSegment,
+# 			sra.stepResponseAnalysis
+# 		).Run()
 
 #'set3','set4','set5',
 # [ SingleChannelAnalysis.SingleChannelAnalysis(
@@ -77,11 +77,11 @@ def analysisiter(dir, filt, i):
 #[ analysisiter('/Volumes/DATA/PRL Data/EBSPEG600/20130722/m40mV8/', '*-'+str(i).zfill(2)+'??.qdf', i)	for i in range(100, 101) ]
 # [ analysisiter('/Volumes/DATA/PRL Data/EBSPEG600/20130723/m40mV2/', '*-'+str(i).zfill(2)+'??.qdf', i)	for i in range(10, 11) ]
 
-# SingleChannelAnalysis.SingleChannelAnalysis(
-# 			qdfTrajIO(dirname='/Volumes/DATA/PRL Data/EBSPEG600/20130717/m40mV2/', filter='*qdf', nfiles=325, Rfb=9.1E+9, Cfb=1.07E-12),
-# 			es.eventSegment,
-# 			sra.stepResponseAnalysis
-# 		).Run() 
+SingleChannelAnalysis.SingleChannelAnalysis(
+			qdfTrajIO(dirname='/Volumes/DATA/PRL Data/EBSPEG600/20130717/m40mV2/', filter='*qdf', nfiles=325, Rfb=9.1E+9, Cfb=1.07E-12),
+			es.eventSegment,
+			sra.stepResponseAnalysis
+		).Run() 
 
 # print ['*-'+str(i).zfill(2)+'??.qdf' for i in range(1,15)]
 

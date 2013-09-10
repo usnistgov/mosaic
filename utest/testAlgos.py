@@ -2,6 +2,7 @@ import random
 import unittest
 import testutil
 import json
+import time
 
 import settings
 import stepResponseAnalysis as sra
@@ -48,46 +49,67 @@ class PEGEventPartitionTest(unittest.TestCase):
 	def setUp(self):
 		self.datapath = 'testdata'
 
-	def runTestCase(self, datfile, prmfile, eventPartHnd):
+	def runTestCase(self, datfile, prmfile, eventPartHnd, parallel):
 		prm=testutil.readparams(prmfile)
 		dat=tsvTrajIO(fnames=[datfile], Fs=prm['Fs'], separator=',')
 
 		sett=json.loads( "".join((open('../.settings', 'r').readlines())) )
 
+		epartsettings = sett[eventPartHnd.__name__]
+
+		epartsettings['blockSizeSec'] = 0.006
+		epartsettings['meanOpenCurr'] = 1
+		epartsettings['sdOpenCurr'] = 0.03 
+		epartsettings['slopeOpenCurr'] = 0
+		epartsettings['driftThreshold'] = 1000
+		epartsettings['maxDriftRate'] = 9999.0
+		epartsettings['eventThreshold'] = 5.0
+
+		if parallel:
+			epartsettings['parallelProc'] = 1
+
 		testobj=eventPartHnd(
 							dat, 
 							sra.stepResponseAnalysis, 
-							sett[eventPartHnd.__name__],
+							epartsettings,
 							sett["stepResponseAnalysis"]
 						)
-		testobj.blockSizeSec=0.006
-		testobj.meanOpenCurr = 1
-		testobj.sdOpenCurr = 0.03 
-		testobj.slopeOpenCurr = 0
-		testobj.driftThreshold = 1000
-		testobj.maxDriftRate = 9999.0
-		testobj.eventThreshold = 5.0
-
 		testobj.PartitionEvents()
 
 		self.assertEqual( testobj.eventcount, prm['nevents'] )
 
+		testobj.Stop()
 
 class PEGSegmentTests(PEGEventPartitionTest):
 	def test_e1seg(self):
-		self.runTestCase('testdata/testEventPartition1.csv', 'testdata/testEventPartition1.prm', es.eventSegment)
+		self.runTestCase('testdata/testEventPartition1.csv', 'testdata/testEventPartition1.prm', es.eventSegment, False)
 
 	def test_e2seg(self):
-		self.runTestCase('testdata/testEventPartition2.csv', 'testdata/testEventPartition2.prm', es.eventSegment)
+		self.runTestCase('testdata/testEventPartition2.csv', 'testdata/testEventPartition2.prm', es.eventSegment, False)
 
 	def test_e3seg(self):
-		self.runTestCase('testdata/testEventPartition3.csv', 'testdata/testEventPartition3.prm', es.eventSegment)
+		self.runTestCase('testdata/testEventPartition3.csv', 'testdata/testEventPartition3.prm', es.eventSegment, False)
 
 	def test_e4seg(self):
-		self.runTestCase('testdata/testEventPartition4.csv', 'testdata/testEventPartition4.prm', es.eventSegment)
+		self.runTestCase('testdata/testEventPartition4.csv', 'testdata/testEventPartition4.prm', es.eventSegment, False)
 
 	def test_e5seg(self):
-		self.runTestCase('testdata/testEventPartition5.csv', 'testdata/testEventPartition5.prm', es.eventSegment)
+		self.runTestCase('testdata/testEventPartition5.csv', 'testdata/testEventPartition5.prm', es.eventSegment, False)
+
+	def test_e1segP(self):
+		self.runTestCase('testdata/testEventPartition1.csv', 'testdata/testEventPartition1.prm', es.eventSegment, True)
+
+	def test_e2segP(self):
+		self.runTestCase('testdata/testEventPartition2.csv', 'testdata/testEventPartition2.prm', es.eventSegment, True)
+
+	def test_e3segP(self):
+		self.runTestCase('testdata/testEventPartition3.csv', 'testdata/testEventPartition3.prm', es.eventSegment, True)
+
+	def test_e4segP(self):
+		self.runTestCase('testdata/testEventPartition4.csv', 'testdata/testEventPartition4.prm', es.eventSegment, True)
+
+	def test_e5segP(self):
+		self.runTestCase('testdata/testEventPartition5.csv', 'testdata/testEventPartition5.prm', es.eventSegment, True)
 
 class PEGSRATests(PEGAlgorithmTest):
 	def test_e1sra(self):
