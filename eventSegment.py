@@ -253,7 +253,8 @@ class eventSegment(metaEventPartition.metaEventPartition):
 		outputstr+=self.formatsettings()+'\n\n'
 
 		# event processing settings
-		outputstr+=self.eventQueue[0].formatsettings()+'\n\n'
+		if self.eventcount > 0:
+			outputstr+=self.eventQueue[0].formatsettings()+'\n\n'
 
 		# Output files
 		outputstr+=self.formatoutputfiles()
@@ -263,7 +264,8 @@ class eventSegment(metaEventPartition.metaEventPartition):
 		outputstr+='[Timing]\n\tSegment trajectory = {0} s\n'.format(round(segmentTime,2))
 		outputstr+='\tProcess events = {0} s\n\n'.format(round(procTime,2))
 		outputstr+='\tTotal = {0} s\n'.format(round(segmentTime+procTime,2))
-		outputstr+='\tTime per event = {0} ms\n\n\n'.format(round(1000.*(segmentTime+procTime)/float(self.eventcount),2))
+		if self.eventcount > 0:
+			outputstr+='\tTime per event = {0} ms\n\n\n'.format(round(1000.*(segmentTime+procTime)/float(self.eventcount),2))
 		
 		# write it all out to stdout and also to a file
 		# eventProcessing.log in the data location
