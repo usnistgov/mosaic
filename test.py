@@ -9,6 +9,7 @@ import eventSegment as es
 
 import singleStepEvent as sse
 import stepResponseAnalysis as sra 
+import multiStateAnalysis as msa
 
 from qdfTrajIO import *
 from abfTrajIO import *
@@ -77,12 +78,19 @@ def analysisiter(dir, filt, i):
 #[ analysisiter('/Volumes/DATA/PRL Data/EBSPEG600/20130722/m40mV8/', '*-'+str(i).zfill(2)+'??.qdf', i)	for i in range(100, 101) ]
 # [ analysisiter('/Volumes/DATA/PRL Data/EBSPEG600/20130723/m40mV2/', '*-'+str(i).zfill(2)+'??.qdf', i)	for i in range(10, 11) ]
 
-SingleChannelAnalysis.SingleChannelAnalysis(
-			qdfTrajIO(dirname='/Volumes/DATA/PRL Data/EBSPEG600/20130717/m40mV2/', filter='*qdf', nfiles=325, Rfb=9.1E+9, Cfb=1.07E-12),
-			es.eventSegment,
-			sra.stepResponseAnalysis
-		).Run() 
+# qdfTrajIO(dirname='/Volumes/DATA/PRL Data/EBSPEG600/20130717/m40mV2/', filter='*qdf', nfiles=325, Rfb=9.1E+9, Cfb=1.07E-12),
+# , datafilter=besselLowpassFilter
+# SingleChannelAnalysis.SingleChannelAnalysis(
+# 			qdfTrajIO(dirname='/Volumes/DATA/SBSTags/d6TPCy3T25/20130930/p80mV6',filter='*.qdf', nfiles=10, Rfb=9.1E+9, Cfb=1.07E-12),
+# 			es.eventSegment,
+# 			sra.stepResponseAnalysis
+# 		).Run() 
 
+SingleChannelAnalysis.SingleChannelAnalysis(
+			qdfTrajIO(dirname='/Volumes/DATA/SBSTags/dA6TP30odd/20130925/p120mV',filter='*.qdf', nfiles=600, Rfb=9.1E+9, Cfb=1.07E-12),
+			es.eventSegment,
+			msa.multiStateAnalysis
+		).Run() 
 # print ['*-'+str(i).zfill(2)+'??.qdf' for i in range(1,15)]
 
 # SingleChannelAnalysis.SingleChannelAnalysis(

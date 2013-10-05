@@ -482,6 +482,7 @@ class eventSegment(metaEventPartition.metaEventPartition):
 					#print self.trajDataObj.FsHz, self.windowOpenCurrentMean, self.sdOpenCurr, self.slopeOpenCurr
 					if len(self.eventdat)>=self.minEventLength:
 						self.eventcount+=1
+						# print "i=", self.eventcount
 						#sys.stderr.write('event mean curr={0:0.2f}, len(preeventdat)={1}\n'.format(sum(self.eventdat)/len(self.eventdat),len(self.preeventdat)))
 						#print list(self.preeventdat) + self.eventdat + [ self.currData[i] for i in range(self.eventPad) ]
 						#print "ecount=", self.eventcount, self.eventProcHnd
@@ -491,7 +492,7 @@ class eventSegment(metaEventPartition.metaEventPartition):
 								self.trajDataObj.FsHz,
 								eventstart=len(self.preeventdat)+1,						# event start point
 								eventend=len(self.preeventdat)+len(self.eventdat)+1,	# event end point
-								baselinestats=[ self.windowOpenCurrentMean, self.sdOpenCurr, self.slopeOpenCurr ],
+								baselinestats=[ self.meanOpenCurr, self.sdOpenCurr, self.slopeOpenCurr ],
 								algosettingsdict=self.eventProcSettingsDict,
 								savets=self.writeEventTS
 							)

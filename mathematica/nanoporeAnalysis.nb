@@ -10,10 +10,10 @@
 NotebookFileLineBreakTest
 NotebookFileLineBreakTest
 NotebookDataPosition[       157,          7]
-NotebookDataLength[     49444,       1225]
-NotebookOptionsPosition[     47971,       1173]
-NotebookOutlinePosition[     48356,       1190]
-CellTagsIndexPosition[     48313,       1187]
+NotebookDataLength[     52342,       1279]
+NotebookOptionsPosition[     50798,       1225]
+NotebookOutlinePosition[     51183,       1242]
+CellTagsIndexPosition[     51140,       1239]
 WindowFrame->Normal*)
 
 (* Beginning of Notebook Content *)
@@ -32,15 +32,17 @@ Cell[BoxData[
  RowBox[{
   RowBox[{"pySetup", "[", "]"}], ":=", 
   "\"\<\nimport SingleChannelAnalysis\n\nfrom eventSegment import *\n\nfrom \
-singleStepEvent import *\nfrom stepResponseAnalysis import *\n\nfrom \
-qdfTrajIO import *\nfrom abfTrajIO import *\nfrom tsvTrajIO import *\nfrom \
-binTrajIO import *\n\nfrom besselLowpassFilter import *\nfrom \
-convolutionFilter import *\\n\\n\>\""}]], "Input",
+singleStepEvent import *\nfrom stepResponseAnalysis import *\nfrom \
+multiStateAnalysis import *\n\nfrom qdfTrajIO import *\nfrom abfTrajIO import \
+*\nfrom tsvTrajIO import *\nfrom binTrajIO import *\n\nfrom \
+besselLowpassFilter import *\nfrom convolutionFilter import *\\n\\n\>\""}]], \
+"Input",
  InitializationCell->True,
  CellChangeTimes->{{3.587326056557321*^9, 3.587326067148013*^9}, {
   3.587326099875936*^9, 3.58732610359722*^9}, {3.587326234059906*^9, 
   3.58732626316818*^9}, {3.587326429494646*^9, 3.587326431444117*^9}, {
-  3.587326723191869*^9, 3.587326751393264*^9}}],
+  3.587326723191869*^9, 3.587326751393264*^9}, {3.589208032336199*^9, 
+  3.589208037912417*^9}}],
 
 Cell[BoxData[
  RowBox[{
@@ -78,6 +80,56 @@ Cell[BoxData[
  InitializationCell->True,
  CellChangeTimes->{{3.5873268829334993`*^9, 3.587326968543475*^9}, {
   3.587327030485941*^9, 3.587327035203208*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"WriteSettings", "[", 
+   RowBox[{"settingspath_", ",", "ethresh_", ",", "writets_", ",", 
+    RowBox[{"meancurr_:", "-", "1"}], ",", 
+    RowBox[{"sdcurr_:", "-", "1"}], ",", 
+    RowBox[{"slopecurr_:", "-", "1"}], ",", 
+    RowBox[{"mineventlen_:", "5"}]}], "]"}], ":=", 
+  RowBox[{"Export", "[", 
+   RowBox[{
+    RowBox[{"settingspath", "<>", "\"\</.settings\>\""}], ",", 
+    RowBox[{
+    "\"\<{\n\\t\\\"eventSegment\\\" : {\n\\t\\t\\\"blockSizeSec\\\" \\t\\t: \
+\\\"0.5\\\",\n\\t\\t\\\"eventPad\\\" \\t\\t: \\\"50\\\",\n\
+\\t\\t\\\"minEventLength\\\" \\t: \\\"\>\"", "<>", 
+     RowBox[{"ToString", "[", "mineventlen", "]"}], "<>", 
+     "\"\<\\\",\n\\t\\t\\\"eventThreshold\\\" \\t: \\\"\>\"", "<>", 
+     RowBox[{"ToString", "[", "ethresh", "]"}], "<>", 
+     "\"\<\\\",\n\\t\\t\\\"driftThreshold\\\" \\t: \\\"9999.0\\\",\n\
+\\t\\t\\\"maxDriftRate\\\" \\t\\t: \\\"100000.0\\\",\n\
+\\t\\t\\\"meanOpenCurr\\\"\\t\\t: \\\"\>\"", "<>", 
+     RowBox[{"ToString", "[", "meancurr", "]"}], "<>", 
+     "\"\<\\\",\n\\t\\t\\\"sdOpenCurr\\\"\\t\\t: \\\"\>\"", "<>", 
+     RowBox[{"ToString", "[", "sdcurr", "]"}], "<>", 
+     "\"\<\\\",\n\\t\\t\\\"slopeOpenCurr\\\"\\t\\t: \\\"\>\"", "<>", 
+     RowBox[{"ToString", "[", "slopecurr", "]"}], "<>", 
+     "\"\<\\\",\n\\t\\t\\\"writeEventTS\\\"\\t\\t: \\\"\>\"", "<>", 
+     RowBox[{"ToString", "[", "writets", "]"}], "<>", 
+     "\"\<\\\",\n\\t\\t\\\"parallelProc\\\"\\t\\t: \\\"0\\\",\n\
+\\t\\t\\\"reserveNCPU\\\"\\t\\t: \\\"5\\\",\n\\t\\t\\\"plotResults\\\"\\t\\t: \
+\\\"0\\\"\n\\t},\n\\t\\\"singleStepEvent\\\" : {\n\\t\\t\\\"binSize\\\" \
+\\t\\t: \\\"1.0\\\",\n\\t\\t\\\"histPad\\\" \\t\\t: \\\"10\\\",\n\
+\\t\\t\\\"maxFitIters\\\"\\t\\t: \\\"5000\\\",\n\\t\\t\\\"a12Ratio\\\" \
+\\t\\t: \\\"1.e4\\\",\n\\t\\t\\\"minEvntTime\\\" \\t\\t: \\\"10.e-6\\\",\n\\t\
+\\t\\\"minDataPad\\\" \\t\\t: \\\"75\\\"\n\\t},\n\
+\\t\\\"stepResponseAnalysis\\\" : {\n\\t\\t\\\"FitTol\\\"\\t\\t: \
+\\\"1.e-7\\\",\n\\t\\t\\\"FitIters\\\"\\t\\t: \\\"10000\\\",\n\
+\\t\\t\\\"BlockRejectRatio\\\"\\t: \\\"0.9\\\"\n\\t},\n\
+\\t\\\"multiStateAnalysis\\\" : {\n\\t\\t\\\"FitTol\\\"\\t\\t: \\\"1.e-7\\\",\
+\n\\t\\t\\\"FitIters\\\"\\t\\t: \\\"10000\\\",\n\
+\\t\\t\\\"BlockRejectRatio\\\"\\t: \\\"0.9\\\",\n\\t\\t\\\"nStates\\\"\\t: \\\
+\"2\\\"\n\\t},\n\\t\\\"besselLowpassFilter\\\" : {\n\\t\\t\\\"filterOrder\\\"\
+\\t\\t: \\\"6\\\",\n\\t\\t\\\"filterCutoff\\\"\\t\\t: \\\"10000\\\",\n\
+\\t\\t\\\"decimate\\\"\\t\\t: \\\"1\\\"\\t\n\\t}\n}\>\""}], ",", 
+    "\"\<Text\>\""}], "]"}]}]], "Input",
+ InitializationCell->True,
+ CellChangeTimes->{{3.589132115522781*^9, 3.589132338148005*^9}, {
+  3.589132386839488*^9, 3.589132388894305*^9}, {3.5892078011088057`*^9, 
+  3.5892078275027447`*^9}}],
 
 Cell[BoxData[
  RowBox[{
@@ -1193,38 +1245,40 @@ Cell[557, 20, 144, 3, 28, "Input",
  InitializationCell->True],
 Cell[CellGroupData[{
 Cell[726, 27, 107, 1, 35, "Subsubsection"],
-Cell[836, 30, 688, 12, 267, "Input",
+Cell[836, 30, 773, 14, 284, "Input",
  InitializationCell->True],
-Cell[1527, 44, 834, 16, 97, "Input",
+Cell[1612, 46, 834, 16, 97, "Input",
  InitializationCell->True],
-Cell[2364, 62, 702, 17, 46, "Input",
+Cell[2449, 64, 702, 17, 46, "Input",
  InitializationCell->True],
-Cell[3069, 81, 1897, 36, 97, "Input",
+Cell[3154, 83, 2739, 48, 726, "Input",
+ InitializationCell->True],
+Cell[5896, 133, 1897, 36, 97, "Input",
  InitializationCell->True]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[5003, 122, 103, 1, 35, "Subsubsection"],
-Cell[5109, 125, 952, 24, 46, "Input",
+Cell[7830, 174, 103, 1, 35, "Subsubsection"],
+Cell[7936, 177, 952, 24, 46, "Input",
  InitializationCell->True],
-Cell[6064, 151, 1035, 26, 80, "Input",
+Cell[8891, 203, 1035, 26, 80, "Input",
  InitializationCell->True],
-Cell[7102, 179, 988, 26, 80, "Input",
+Cell[9929, 231, 988, 26, 80, "Input",
  InitializationCell->True],
-Cell[8093, 207, 1128, 28, 28, "Input",
+Cell[10920, 259, 1128, 28, 28, "Input",
  InitializationCell->True],
-Cell[9224, 237, 700, 18, 46, "Input",
+Cell[12051, 289, 700, 18, 46, "Input",
  InitializationCell->True],
-Cell[9927, 257, 24873, 586, 846, "Input",
+Cell[12754, 309, 24873, 586, 846, "Input",
  InitializationCell->True],
-Cell[34803, 845, 1760, 44, 97, "Input",
+Cell[37630, 897, 1760, 44, 97, "Input",
  InitializationCell->True],
-Cell[36566, 891, 1707, 42, 80, "Input",
+Cell[39393, 943, 1707, 42, 80, "Input",
  InitializationCell->True],
-Cell[38276, 935, 3922, 96, 199, "Input",
+Cell[41103, 987, 3922, 96, 199, "Input",
  InitializationCell->True],
-Cell[42201, 1033, 3647, 84, 165, "Input",
+Cell[45028, 1085, 3647, 84, 165, "Input",
  InitializationCell->True],
-Cell[45851, 1119, 2104, 51, 131, "Input",
+Cell[48678, 1171, 2104, 51, 131, "Input",
  InitializationGroup->True]
 }, Open  ]]
 }

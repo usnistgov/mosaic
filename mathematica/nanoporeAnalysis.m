@@ -29,6 +29,7 @@ from eventSegment import *
 
 from singleStepEvent import *
 from stepResponseAnalysis import *
+from multiStateAnalysis import *
 
 from qdfTrajIO import *
 from abfTrajIO import *
@@ -47,6 +48,49 @@ pyAnalysisCommand[datpath_,filetype_,fileopts_,segment_,analysis_]:="SingleChann
 
 
 GenPytonScript[datapath_,filetype_,fileopts_,segment_,analysis_,coderoot_]:=Export[coderoot<>"/analysisScript.py",pySetup[]<>pyAnalysisCommand[datapath,filetype,fileopts,segment,analysis],"Text"]
+
+
+WriteSettings[settingspath_,ethresh_,writets_,meancurr_:-1,sdcurr_:-1,slopecurr_:-1,mineventlen_:5]:=Export[settingspath<>"/.settings","{
+\t\"eventSegment\" : {
+\t\t\"blockSizeSec\" \t\t: \"0.5\",
+\t\t\"eventPad\" \t\t: \"50\",
+\t\t\"minEventLength\" \t: \""<>ToString[mineventlen]<>"\",
+\t\t\"eventThreshold\" \t: \""<>ToString[ethresh]<>"\",
+\t\t\"driftThreshold\" \t: \"9999.0\",
+\t\t\"maxDriftRate\" \t\t: \"100000.0\",
+\t\t\"meanOpenCurr\"\t\t: \""<>ToString[meancurr]<>"\",
+\t\t\"sdOpenCurr\"\t\t: \""<>ToString[sdcurr]<>"\",
+\t\t\"slopeOpenCurr\"\t\t: \""<>ToString[slopecurr]<>"\",
+\t\t\"writeEventTS\"\t\t: \""<>ToString[writets]<>"\",
+\t\t\"parallelProc\"\t\t: \"0\",
+\t\t\"reserveNCPU\"\t\t: \"5\",
+\t\t\"plotResults\"\t\t: \"0\"
+\t},
+\t\"singleStepEvent\" : {
+\t\t\"binSize\" \t\t: \"1.0\",
+\t\t\"histPad\" \t\t: \"10\",
+\t\t\"maxFitIters\"\t\t: \"5000\",
+\t\t\"a12Ratio\" \t\t: \"1.e4\",
+\t\t\"minEvntTime\" \t\t: \"10.e-6\",
+\t\t\"minDataPad\" \t\t: \"75\"
+\t},
+\t\"stepResponseAnalysis\" : {
+\t\t\"FitTol\"\t\t: \"1.e-7\",
+\t\t\"FitIters\"\t\t: \"10000\",
+\t\t\"BlockRejectRatio\"\t: \"0.9\"
+\t},
+\t\"multiStateAnalysis\" : {
+\t\t\"FitTol\"\t\t: \"1.e-7\",
+\t\t\"FitIters\"\t\t: \"10000\",
+\t\t\"BlockRejectRatio\"\t: \"0.9\",
+\t\t\"nStates\"\t: \"2\"
+\t},
+\t\"besselLowpassFilter\" : {
+\t\t\"filterOrder\"\t\t: \"6\",
+\t\t\"filterCutoff\"\t\t: \"10000\",
+\t\t\"decimate\"\t\t: \"1\"\t
+\t}
+}","Text"]
 
 
 RunAnalysis[datapath_,filetype_,fileopts_,segment_,analysis_,coderoot_]:=Block[{},
