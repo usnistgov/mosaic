@@ -86,8 +86,10 @@ def analysisiter(dir, filt, i):
 # 			sra.stepResponseAnalysis
 # 		).Run() 
 
+
+# '/Volumes/DATA/SBSTags/dA6TP30odd/20130925/p120mV'
 SingleChannelAnalysis.SingleChannelAnalysis(
-			qdfTrajIO(dirname='/Volumes/DATA/SBSTags/dA6TP30odd/20130925/p120mV',filter='*.qdf', nfiles=600, Rfb=9.1E+9, Cfb=1.07E-12),
+			qdfTrajIO(dirname='/Volumes/DATA/SBSTags/d6TPCy3T25/20130930/p120mV6' ,filter='*.qdf', nfiles=10, Rfb=9.1E+9, Cfb=1.07E-12),
 			es.eventSegment,
 			msa.multiStateAnalysis
 		).Run() 

@@ -10,10 +10,10 @@
 NotebookFileLineBreakTest
 NotebookFileLineBreakTest
 NotebookDataPosition[       157,          7]
-NotebookDataLength[     52342,       1279]
-NotebookOptionsPosition[     50798,       1225]
-NotebookOutlinePosition[     51183,       1242]
-CellTagsIndexPosition[     51140,       1239]
+NotebookDataLength[     52479,       1282]
+NotebookOptionsPosition[     50934,       1228]
+NotebookOutlinePosition[     51319,       1245]
+CellTagsIndexPosition[     51276,       1242]
 WindowFrame->Normal*)
 
 (* Beginning of Notebook Content *)
@@ -121,15 +121,18 @@ Cell[BoxData[
 \\t\\t\\\"BlockRejectRatio\\\"\\t: \\\"0.9\\\"\n\\t},\n\
 \\t\\\"multiStateAnalysis\\\" : {\n\\t\\t\\\"FitTol\\\"\\t\\t: \\\"1.e-7\\\",\
 \n\\t\\t\\\"FitIters\\\"\\t\\t: \\\"10000\\\",\n\
-\\t\\t\\\"BlockRejectRatio\\\"\\t: \\\"0.9\\\",\n\\t\\t\\\"nStates\\\"\\t: \\\
-\"2\\\"\n\\t},\n\\t\\\"besselLowpassFilter\\\" : {\n\\t\\t\\\"filterOrder\\\"\
-\\t\\t: \\\"6\\\",\n\\t\\t\\\"filterCutoff\\\"\\t\\t: \\\"10000\\\",\n\
+\\t\\t\\\"InitThreshold\\\"\\t: \\\"\>\"", "<>", 
+     RowBox[{"ToString", "[", "ethresh", "]"}], "<>", 
+     "\"\<\\\"\n\\t},\n\\t\\\"besselLowpassFilter\\\" : {\n\
+\\t\\t\\\"filterOrder\\\"\\t\\t: \\\"6\\\",\n\
+\\t\\t\\\"filterCutoff\\\"\\t\\t: \\\"10000\\\",\n\
 \\t\\t\\\"decimate\\\"\\t\\t: \\\"1\\\"\\t\n\\t}\n}\>\""}], ",", 
     "\"\<Text\>\""}], "]"}]}]], "Input",
  InitializationCell->True,
  CellChangeTimes->{{3.589132115522781*^9, 3.589132338148005*^9}, {
   3.589132386839488*^9, 3.589132388894305*^9}, {3.5892078011088057`*^9, 
-  3.5892078275027447`*^9}}],
+  3.5892078275027447`*^9}, {3.5899646837603207`*^9, 3.5899646914533663`*^9}, {
+  3.589964754675891*^9, 3.5899647589890013`*^9}}],
 
 Cell[BoxData[
  RowBox[{
@@ -1251,34 +1254,34 @@ Cell[1612, 46, 834, 16, 97, "Input",
  InitializationCell->True],
 Cell[2449, 64, 702, 17, 46, "Input",
  InitializationCell->True],
-Cell[3154, 83, 2739, 48, 726, "Input",
+Cell[3154, 83, 2875, 51, 709, "Input",
  InitializationCell->True],
-Cell[5896, 133, 1897, 36, 97, "Input",
+Cell[6032, 136, 1897, 36, 97, "Input",
  InitializationCell->True]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[7830, 174, 103, 1, 35, "Subsubsection"],
-Cell[7936, 177, 952, 24, 46, "Input",
+Cell[7966, 177, 103, 1, 35, "Subsubsection"],
+Cell[8072, 180, 952, 24, 46, "Input",
  InitializationCell->True],
-Cell[8891, 203, 1035, 26, 80, "Input",
+Cell[9027, 206, 1035, 26, 80, "Input",
  InitializationCell->True],
-Cell[9929, 231, 988, 26, 80, "Input",
+Cell[10065, 234, 988, 26, 80, "Input",
  InitializationCell->True],
-Cell[10920, 259, 1128, 28, 28, "Input",
+Cell[11056, 262, 1128, 28, 28, "Input",
  InitializationCell->True],
-Cell[12051, 289, 700, 18, 46, "Input",
+Cell[12187, 292, 700, 18, 46, "Input",
  InitializationCell->True],
-Cell[12754, 309, 24873, 586, 846, "Input",
+Cell[12890, 312, 24873, 586, 846, "Input",
  InitializationCell->True],
-Cell[37630, 897, 1760, 44, 97, "Input",
+Cell[37766, 900, 1760, 44, 97, "Input",
  InitializationCell->True],
-Cell[39393, 943, 1707, 42, 80, "Input",
+Cell[39529, 946, 1707, 42, 80, "Input",
  InitializationCell->True],
-Cell[41103, 987, 3922, 96, 199, "Input",
+Cell[41239, 990, 3922, 96, 199, "Input",
  InitializationCell->True],
-Cell[45028, 1085, 3647, 84, 165, "Input",
+Cell[45164, 1088, 3647, 84, 165, "Input",
  InitializationCell->True],
-Cell[48678, 1171, 2104, 51, 131, "Input",
+Cell[48814, 1174, 2104, 51, 131, "Input",
  InitializationGroup->True]
 }, Open  ]]
 }

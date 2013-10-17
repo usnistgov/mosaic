@@ -64,7 +64,7 @@ class multiStateAnalysis(metaEventProcessor.metaEventProcessor):
 		
 		self.mdResTime = -1
 
-		self.mdTau=-1
+		self.mdRCConst=-1
 
 		self.mdRedChiSq=-1
 
@@ -110,7 +110,7 @@ class multiStateAnalysis(metaEventProcessor.metaEventProcessor):
 					self.mdEventEnd,
 					self.mdEventDelay,
 					self.mdResTime,
-					self.mdTau,
+					self.mdRCConst,
 					self.mdRedChiSq
 				]
 		
@@ -148,8 +148,8 @@ class multiStateAnalysis(metaEventProcessor.metaEventProcessor):
 		fmtstr+='Algorithm = {0}\n\n'.format(self.__class__.__name__)
 		
 		fmtstr+='\t\tMax. iterations  = {0}\n'.format(self.FitIters)
-		fmtstr+='\t\tFit tolerance (rel. err in leastsq)  = {0}\n\n'.format(self.FitTol)
-
+		fmtstr+='\t\tFit tolerance (rel. err in leastsq)  = {0}\n'.format(self.FitTol)
+		fmtstr+='\t\tInitial partition threshold  = {0}\n\n'.format(self.InitThreshold)
 
 		return fmtstr
 
@@ -158,8 +158,6 @@ class multiStateAnalysis(metaEventProcessor.metaEventProcessor):
 	###########################################################################
 	def __FitEvent(self):
 		try:
-			# i0=np.abs(self.baseMean)
-			# i0sig=self.baseSD
 			dt = 1000./self.Fs 	# time-step in ms.
 			edat=np.asarray( np.abs(self.eventData),  dtype='float64' )
 
@@ -189,49 +187,8 @@ class multiStateAnalysis(metaEventProcessor.metaEventProcessor):
 	
 			optfit.leastsq(xtol=self.FitTol,ftol=self.FitTol,maxfev=self.FitIters)
 
-			# print initguess
-			# print optfit.success, optfit.params['b'].value, optfit.params['b'].value + optfit.params['a0'].value, optfit.params['mu0'].value
-			# print 
-			# print optfit.params['b'].value, optfit.params['b'].value - optfit.params['a0'].value, optfit.params['mu0'].value
-			# print self.nStates
 			if optfit.success:
-				# print initguess
-				# print optfit.params['b'].value, optfit.params['b'].value - optfit.params['a0'].value, optfit.params['mu0'].value
-				# print 
-
-				if optfit.params['mu0'].value < 0.0 or optfit.params['mu'+str(self.nStates-1)].value < 0.0:
-					# print 'eInvalidFitParams: neg res time', optfit.params['b'].value, optfit.params['b'].value - optfit.params['a0'].value, optfit.params['mu0'].value
-					self.rejectEvent('eInvalidFitParams')
-				# The start of the event is set past the length of the data
-				elif optfit.params['mu'+str(self.nStates-1)].value > ts[-1]:
-					# print 'eInvalidFitParams: nstate exceed', optfit.params['b'].value, optfit.params['b'].value - optfit.params['a0'].value, optfit.params['mu0'].value
-					self.rejectEvent('eInvalidFitParams')
-				else:
-					self.mdOpenChCurrent 	= optfit.params['b'].value 
-					self.mdCurrentStep		= [ optfit.params['a'+str(i)].value for i in range(self.nStates) ]
-					
-					self.mdEventDelay		= [ optfit.params['mu'+str(i)].value for i in range(self.nStates) ]
-
-					self.mdEventStart		= optfit.params['mu0'].value
-					self.mdEventEnd			= optfit.params['mu'+str(self.nStates-1)].value
-					self.mdTau				= optfit.params['tau'].value
-
-					# self.mdBlockDepth		= [ curr/self.mdOpenChCurrent for curr in self.mdBlockedCurrent ]
-					self.mdResTime			= self.mdEventEnd - self.mdEventStart
-					
-					self.mdRedChiSq			= optfit.chisqr/( np.var(optfit.residual) * (len(self.eventData) - optfit.nvarys -1) )
-
-					# if self.mdBlockDepth > self.BlockRejectRatio:
-					# 	# print 'eBlockDepthHigh', optfit.params['b'].value, optfit.params['b'].value - optfit.params['a'].value, optfit.params['mu1'].value, optfit.params['mu2'].value
-					# 	self.rejectEvent('eBlockDepthHigh')
-						
-					if math.isnan(self.mdOpenChCurrent):
-						# print self.baseMean, self.baseSD
-						# print 'eInvalidFitParams: opench nan:', optfit.params['b'].value, optfit.params['b'].value - optfit.params['a0'].value, optfit.params['mu0'].value
-						# print
-						self.rejectEvent('eInvalidFitParams')
-
-					#print i0, i0sig, [optfit.params['a'].value, optfit.params['b'].value, optfit.params['mu1'].value, optfit.params['mu2'].value, optfit.params['tau'].value]
+				self.__recordevent(optfit)
 			else:
 				#print optfit.message, optfit.lmdif_message
 				self.rejectEvent('eFitConvergence')
@@ -241,8 +198,8 @@ class multiStateAnalysis(metaEventProcessor.metaEventProcessor):
 		except InvalidEvent:
 			self.rejectEvent('eInvalidEvent')
 		except:
-			raise
 	 		self.rejectEvent('eFitFailure')
+	 		raise
 
 	def __threadList(self, l1, l2):
 		"""thread two lists	"""
@@ -294,6 +251,31 @@ class multiStateAnalysis(metaEventProcessor.metaEventProcessor):
 			return model - data
 		except KeyboardInterrupt:
 			raise
+
+	def __recordevent(self, optfit):
+		if self.nStates<2:
+			self.rejectEvent('eInvalidFitParams')
+		elif optfit.params['mu0'].value < 0.0 or optfit.params['mu'+str(self.nStates-1)].value < 0.0:
+			self.rejectEvent('eInvalidFitParams')
+		# The start of the event is set past the length of the data
+		elif optfit.params['mu'+str(self.nStates-1)].value > (1000./self.Fs)*(len(self.eventData)-1):
+			self.rejectEvent('eInvalidFitParams')
+		else:
+			self.mdOpenChCurrent 	= optfit.params['b'].value 
+			self.mdCurrentStep		= [ optfit.params['a'+str(i)].value for i in range(self.nStates) ]
+			
+			self.mdEventDelay		= [ optfit.params['mu'+str(i)].value for i in range(self.nStates) ]
+
+			self.mdEventStart		= optfit.params['mu0'].value
+			self.mdEventEnd			= optfit.params['mu'+str(self.nStates-1)].value
+			self.mdRCConst			= optfit.params['tau'].value
+
+			self.mdResTime			= self.mdEventEnd - self.mdEventStart
+			
+			self.mdRedChiSq			= sum(np.array(optfit.residual)**2/self.baseSD**2)/optfit.nfree
+				
+			if math.isnan(self.mdRedChiSq):
+				self.rejectEvent('eInvalidFitParams')
 
 
 	def __levelchange(self, dat, sMean, sSD, nSD, blksz):

@@ -82,8 +82,7 @@ WriteSettings[settingspath_,ethresh_,writets_,meancurr_:-1,sdcurr_:-1,slopecurr_
 \t\"multiStateAnalysis\" : {
 \t\t\"FitTol\"\t\t: \"1.e-7\",
 \t\t\"FitIters\"\t\t: \"10000\",
-\t\t\"BlockRejectRatio\"\t: \"0.9\",
-\t\t\"nStates\"\t: \"2\"
+\t\t\"InitThreshold\"\t: \""<>ToString[ethresh]<>"\"
 \t},
 \t\"besselLowpassFilter\" : {
 \t\t\"filterOrder\"\t\t: \"6\",
