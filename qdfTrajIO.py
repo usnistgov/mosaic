@@ -7,6 +7,8 @@
 
 	ChangeLog:
 		7/18/12		AB	Initial version
+		2/11/14		AB 	Support qdf files that save the current in pA. This needs 
+						format='pA' argument.
 """
 import types
 
@@ -28,6 +30,7 @@ class qdfTrajIO(metaTrajIO.metaTrajIO):
 				In addition to metaTrajIO.__init__ args,
 					Rfb		feedback resistance of amplifier
 					Cfb		feedback capacitance of amplifier
+					format 	'V' for voltage or 'pA' for current. Default is 'V'
 			Returns:
 				None
 			Errors:
@@ -38,6 +41,9 @@ class qdfTrajIO(metaTrajIO.metaTrajIO):
 
 		if not hasattr(self, 'Rfb') or not hasattr(self, 'Cfb'):
 			raise metaTrajIO.InsufficientArgumentsError("{0} requires the feedback resistance (Rfb) and feedback capacitance (Cfb) to be defined.".format(type(self).__name__))
+
+		if not hasattr(self, 'format'):
+			self.format='V'
 
 		# additional meta data
 		self.fileFormat='qdf'
@@ -55,8 +61,12 @@ class qdfTrajIO(metaTrajIO.metaTrajIO):
 				SamplingRateChangedError if the sampling rate for any data file differs from previous
 		"""
 		# Read a single file or a list of files. By setting scale_data 
-		# and time_scale to 0, we get back times in ms and current in pA.		
-		q=qdf.qdf_V2I(fname, self.Cfb, self.Rfb, scale_data=0, time_scale=0)
+		# and time_scale to 0, we get back times in ms and current in pA.
+		# Check if the files have current of voltage.
+		if self.format=='V':
+			q=qdf.qdf_V2I(fname, self.Cfb, self.Rfb, scale_data=0, time_scale=0)
+		else:
+			q=qdf.qdf_I(fname, self.Cfb, self.Rfb, scale_data=0, time_scale=0)
 
 		# set the sampling frequency in Hz. The times are in ms.
 		# If the Fs attribute doesn't exist set it

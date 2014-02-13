@@ -356,13 +356,82 @@ def qdf_V2I(fileList, Cfb, Rfb, scale_data=0, time_scale=0):
 		sys.exit("Input files have different sampling rates")
 	
 	return transpose([(array(range(0, sampleCount))*dt[0]*itime_scale), data])
+
+def qdf_I(fileList, Cfb, Rfb, scale_data=0, time_scale=0):
+#	Description:	Performs a conversion of voltage to current for a list of qdf data files.
+#	Author: 		Ryan Dunnam
+#	Inputs:
+#			data0 - the original voltage data
+#			Cfb - the feedback capaciatance
+#			Rfb - the feedback resistance
+#			scale_data
+#			time_scale
+
+	if (fileList == 0):
+		sys.exit("File list is empty")
 	
+	# Counter to use in for loop
+	ncount = 0
+
+	if (scale_data == 0):
+		scale_idata = 1		# current is in pA
+	else:
+		scale_idata = scale_data		# can apply other scaling factors (e.g. to mV or fA)
+	
+	if (time_scale == 0):
+		itime_scale = 10**3			# default is time in ms
+	else:
+		itime_scale = time_scale
+		
+	# number of files
+	nfiles = len(fileList)
+	data=array([])
+	dt=array([])
+	sampleCount=int(0)
+	
+	for filename in fileList:
+		#print "read " + filename
+		file0 = QDFDataFile(filename)
+		data0 = array(file0.data)
+		dt=append(dt,file0.dt)
+		
+		# Handle cases of last and not last file
+		if (ncount + 1 < nfiles):	# not on last file
+			# open next file
+			file1 = QDFDataFile(fileList[ncount + 1])
+			# read in 1st point
+			firstPoint = []
+			firstPoint.append(file1.data[0])
+			# make data1 array - time shift forward by 1
+			data1 = concatenate([file0.data[1:],firstPoint])
+			del file1
+			
+		else:	# on last file (or there is only 1) - final output will be 1 point shorter
+			data1 = file0.data[1:]
+			data0 = file0.data[0:-1]
+
+		file0.data = data1*scale_idata #(((-1.0 * data1/Rfb) - (Cfb * (data1 - data0)/(file0.dt))) * scale_idata)
+
+		# get the number of data points
+		n = int(file0.data.size)
+		sampleCount+=n
+		
+		data=append(data, file0.data)
+
+		del file0, data0, data1
+
+	if (mean(dt/dt[0])!=1.0):
+		sys.exit("Input files have different sampling rates")
+	
+	return transpose([(array(range(0, sampleCount))*dt[0]*itime_scale), data])
+
 def fileList(path, prefix, start, end):
 	return [("%s%s%04d.qdf" % (path, prefix, i)) for i in range(start,end+1)]
 	
 
 def ConvertQDFToCSV(infilelist, outfile, fbC, fbR):
-	return qdf_V2I(infilelist, fbC, fbR).tofile(outfile, sep=',')
+	#return qdf_V2I(infilelist, fbC, fbR).tofile(outfile, sep=',')
+	return qdf_I(infilelist, fbC, fbR).tofile(outfile, sep=',')
 	
 
 

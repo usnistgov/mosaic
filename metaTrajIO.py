@@ -5,6 +5,8 @@
 	Created:	7/17/2012
 
 	ChangeLog:
+		2/13/14		AB 	Fixed a potential infinite recursion bug in the
+						initialization. 
 		7/17/12		AB	Initial version
 """
 from abc import ABCMeta, abstractmethod
@@ -58,7 +60,7 @@ class metaTrajIO(object):
 				FsHz		sampling frequency in Hz. If the data was decimated, this property will hold the
 							sampling frequency after decimation.
 			Errors:
-				IncompatibleArgumentsError when arguments defined above are not used properly
+				IncompatibleArgumentsError when conflicting arguments are used.
 		"""
 		# start by setting all passed keyword arguments as class attributes
 		for (k,v) in kwargs.iteritems():
@@ -114,21 +116,16 @@ class metaTrajIO(object):
 		# exceeds 1 million data points.
 		self.currDataIdx=0
 
-
-		# Last, on startup preview one data point to force
-		# the sampling frequency FsHz to be set on startup
-		self.previewdata(1)
-
-		# Drop the first 'n' points specified by the start keyword
-		if hasattr(self, 'start'):
-			n=int( getattr(self, 'start') )
-			self.popdata(n-1)
+		self.initPipe=False
 
 	#################################################################
 	# Public API: functions
 	#################################################################
 	@property
 	def FsHz(self):
+		if not self.initPipe:
+			self.__initPipe()
+
 		if not self.dataFilter:
 			return self.Fs
 		else:
@@ -148,6 +145,10 @@ class metaTrajIO(object):
 			Errors:
 				EmptyDataPipeError if the queue has fewer data points than requested.
 		"""
+		if not self.initPipe:
+			self.__initPipe()
+
+
 		try:
 			# Get the elements to return: index to (index+n)
 			t=self.currDataPipe[self.currDataIdx:self.currDataIdx+n]
@@ -194,6 +195,9 @@ class metaTrajIO(object):
 			Errors:
 				EmptyDataPipeError if the queue has fewer data points than requested.
 		"""
+		if not self.initPipe:
+			self.__initPipe()
+
 		try:
 			# Get the elements to return
 			t=self.currDataPipe[self.currDataIdx:self.currDataIdx+n]
@@ -286,6 +290,23 @@ class metaTrajIO(object):
 	#################################################################
 	# Private Functions
 	#################################################################
+	def __initPipe(self):
+		# Last, on startup load a single data file to force
+		# the sampling frequency FsHz to be set on startup
+		fnames=self.popfnames(1)
+		if len(fnames) > 0:
+			self.appenddata(fnames)
+		else:
+			raise EmptyDataPipeError("End of data.")
+
+		self.initPipe=True
+
+		# Drop the first 'n' points specified by the start keyword
+		if hasattr(self, 'start'):
+			n=int( getattr(self, 'start') )
+			self.popdata(n-1)
+
+
 	def __setupDataFilter(self):
 		filtsettings=settings.settings( self.datPath ).getSettings(self.datafilter.__name__)
 		if filtsettings=={}:

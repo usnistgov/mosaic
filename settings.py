@@ -27,7 +27,7 @@ class settings:
 			self.settingsFile=datpath+"/.settings"
 		elif os.path.isfile('settings'):
 			print "Settings file not found in data directory. Default settings will be used."
-			self.settingsFile=os.getcwd()+"settings"
+			self.settingsFile=os.getcwd()+"/settings"
 		elif os.path.isfile('.settings'):
 			print "Settings file not found in data directory. Default settings will be used."
 			self.settingsFile=os.getcwd()+"/.settings"
