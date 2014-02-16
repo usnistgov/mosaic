@@ -6,6 +6,8 @@
 	Created:	7/17/2012
 
 	ChangeLog:
+		2/14/14		AB 	Pass absdatidx argument to event processing to track absolute time of 
+						event start for capture rate estimation.
 		6/22/13		AB 	Use plotting hooks in metaEventPartition to plot blockade depth histogram in 
 						real-time using matplotlib.
 		4/22/13		AB 	Rewrote this class as an implementation of the base class metaEventPartition.
@@ -91,7 +93,7 @@ class eventSegment(metaEventPartition.metaEventPartition):
 			self.meanOpenCurr=float(self.settingsDict.pop("meanOpenCurr",-1.))
 			self.sdOpenCurr=float(self.settingsDict.pop("sdOpenCurr",-1.))
 			self.slopeOpenCurr=float(self.settingsDict.pop("slopeOpenCurr",-1.))
-			self.plotResults=int(self.settingsDict.pop("plotResults", 1))
+			self.plotResults=int(self.settingsDict.pop("plotResults", 0))
 		except ValueError as err:
 			raise commonExceptions.SettingsTypeError( err )
 
@@ -115,10 +117,13 @@ class eventSegment(metaEventPartition.metaEventPartition):
 		# class attribute and the sampling frequency specified in trajDataObj
 		self.nPoints=int(self.blockSizeSec*self.trajDataObj.FsHz)
 
+		# a global counter that keeps track of the position in data pipe.
+		self.globalDataIndex=0
+
 		if self.meanOpenCurr == -1. or self.sdOpenCurr == -1. or self.slopeOpenCurr == -1.:
 			[ self.meanOpenCurr, self.sdOpenCurr, self.slopeOpenCurr ] = self.__openchanstats(self.trajDataObj.previewdata(self.nPoints))
 		else:
-			print "Automatic open channel state calculation has been disabled."
+			print "Automatic open channel state estimation has been disabled."
 
 		# Initialize a FIFO queue to keep track of open channel conductance
 		#self.openchanFIFO=npfifo.npfifo(nPoints)
@@ -153,7 +158,7 @@ class eventSegment(metaEventPartition.metaEventPartition):
 
 				# store the new data into a local store
 				self.currData.extend(list(d))
-
+				
 				#print self.meanOpenCurr, self.minDrift, self.maxDrift, self.minDriftR, self.maxDriftR
 
 				# Process the data segment for events
@@ -426,7 +431,7 @@ class eventSegment(metaEventPartition.metaEventPartition):
 		if (abs(sl)) > abs(self.maxDriftRate):
 			raise DriftRateError("The open channel conductance is changing faster ({0} pA/s) than the allowed rate ({1} pA/s).".format(round(abs(sl),2), abs(round(self.maxDriftRate,2))))
 
-		# Save teh open channel conductance stats for the current window
+		# Save the open channel conductance stats for the current window
 		self.windowOpenCurrentMean=mu
 		self.windowOpenCurrentSD=sd 
 		self.windowOpenCurrentSlope=sl
@@ -442,12 +447,16 @@ class eventSegment(metaEventPartition.metaEventPartition):
 			immediately preceeding the start of the event), mark the event end. Pad 
 			the event by 'eventPad' points and hand off to the event processing algorithm.
 		"""
+		dataStart=0
 		try:
 			while(1):
 				t=self.currData.popleft()
+				self.globalDataIndex+=1
 
 				# store the latest point in a fixed buffer
-				self.preeventdat.append(t)
+				if not self.eventstart:
+					self.preeventdat.append(t)
+					dataStart=self.globalDataIndex
 				
 				# Mark the start of the event
 				if abs(t) < self.thrCurr: 
@@ -460,6 +469,7 @@ class eventSegment(metaEventPartition.metaEventPartition):
 					while(abs(t)<mean):
 						t=self.currData.popleft()
 						self.eventdat.append(t)
+						self.globalDataIndex+=1
 
 					# end of event. Reset the flag
 					self.eventstart=False
@@ -494,7 +504,8 @@ class eventSegment(metaEventPartition.metaEventPartition):
 								eventend=len(self.preeventdat)+len(self.eventdat)+1,	# event end point
 								baselinestats=[ self.meanOpenCurr, self.sdOpenCurr, self.slopeOpenCurr ],
 								algosettingsdict=self.eventProcSettingsDict,
-								savets=self.writeEventTS
+								savets=self.writeEventTS,
+								absdatidx=dataStart
 							)
 						)
 	

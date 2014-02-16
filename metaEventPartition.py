@@ -5,12 +5,12 @@
 	Created:	4/22/2013
 
 	ChangeLog:
-		4/22/13		AB	Initial version
 		6/22/13		AB 	Added two function hooks to allow plotting 
 						results in real-time. The first InitPlot must 
 						be implemented to initialize a plot. The second
 						UpdatePlot is used to update the plot data in 
 						real-time and refresh the graphics. 
+		4/22/13		AB	Initial version
 """
 from abc import ABCMeta, abstractmethod
 import zmqWorker

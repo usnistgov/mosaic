@@ -10,10 +10,10 @@
 NotebookFileLineBreakTest
 NotebookFileLineBreakTest
 NotebookDataPosition[       157,          7]
-NotebookDataLength[     52479,       1282]
-NotebookOptionsPosition[     50934,       1228]
-NotebookOutlinePosition[     51319,       1245]
-CellTagsIndexPosition[     51276,       1242]
+NotebookDataLength[     55534,       1294]
+NotebookOptionsPosition[     53986,       1240]
+NotebookOutlinePosition[     54371,       1257]
+CellTagsIndexPosition[     54328,       1254]
 WindowFrame->Normal*)
 
 (* Beginning of Notebook Content *)
@@ -194,15 +194,18 @@ Cell[BoxData[
     RowBox[{"{", 
      RowBox[{"\"\<tau\>\"", ",", "5"}], "}"}], ",", 
     RowBox[{"{", 
-     RowBox[{"\"\<chisq\>\"", ",", "6"}], "}"}], ",", 
+     RowBox[{"\"\<abseventstart\>\"", ",", "6"}], "}"}], ",", 
     RowBox[{"{", 
      RowBox[{"\"\<blockdepth\>\"", ",", "7"}], "}"}], ",", 
     RowBox[{"{", 
-     RowBox[{"\"\<status\>\"", ",", "8"}], "}"}]}], "}"}]}]], "Input",
+     RowBox[{"\"\<status\>\"", ",", "8"}], "}"}], ",", 
+    RowBox[{"{", 
+     RowBox[{"\"\<chisq\>\"", ",", "9"}], "}"}]}], "}"}]}]], "Input",
  InitializationCell->True,
  CellChangeTimes->{{3.587375501223958*^9, 3.587375533775798*^9}, {
   3.5873788819171267`*^9, 3.587378894560961*^9}, {3.587379002060225*^9, 
-  3.587379002484967*^9}, {3.587379041966195*^9, 3.587379064043365*^9}}],
+  3.587379002484967*^9}, {3.587379041966195*^9, 3.587379064043365*^9}, {
+  3.6015616613274593`*^9, 3.6015616688127947`*^9}}],
 
 Cell[BoxData[
  RowBox[{
@@ -283,12 +286,15 @@ Cell[BoxData[
       ",", 
       RowBox[{"#", "\[LeftDoubleBracket]", "6", "\[RightDoubleBracket]"}], 
       ",", 
-      RowBox[{"#", "\[LeftDoubleBracket]", "1", "\[RightDoubleBracket]"}]}], 
+      RowBox[{"#", "\[LeftDoubleBracket]", "1", "\[RightDoubleBracket]"}], 
+      ",", 
+      RowBox[{"#", "\[LeftDoubleBracket]", "10", "\[RightDoubleBracket]"}]}], 
      "}"}], "&"}]}], ";"}]], "Input",
  InitializationCell->True,
  CellChangeTimes->{{3.575390181996069*^9, 3.57539019057633*^9}, {
   3.575390282126252*^9, 3.575390286903249*^9}, {3.575390796517888*^9, 
-  3.575390800434267*^9}}],
+  3.575390800434267*^9}, {3.6015617523537207`*^9, 3.6015617608575153`*^9}, {
+  3.601562266882617*^9, 3.601562281122094*^9}}],
 
 Cell[BoxData[{
  RowBox[{
@@ -343,8 +349,8 @@ Cell[BoxData[{
      RowBox[{"PlotStyle", "\[Rule]", "Red"}]}], "]"}], "/;", 
    RowBox[{
     RowBox[{"fit", "\[LeftDoubleBracket]", 
-     RowBox[{"-", "1"}], "\[RightDoubleBracket]"}], "\[NotEqual]", 
-    "\"\<normal\>\""}]}]}], "\[IndentingNewLine]", 
+     RowBox[{"MDKey", "[", "\"\<status\>\"", "]"}], "\[RightDoubleBracket]"}],
+     "\[NotEqual]", "\"\<normal\>\""}]}]}], "\[IndentingNewLine]", 
  RowBox[{
   RowBox[{"PlotEvent", "[", 
    RowBox[{"dat_", ",", "fit_", ",", "\[Delta]t_", ",", "nPts_", ",", 
@@ -373,15 +379,17 @@ Cell[BoxData[{
         RowBox[{"{", 
          RowBox[{
           RowBox[{
-           RowBox[{
-           "fit", "\[LeftDoubleBracket]", "2", "\[RightDoubleBracket]"}], "-", 
-           RowBox[{
-           "fit", "\[LeftDoubleBracket]", "1", "\[RightDoubleBracket]"}], "-",
-            "15"}], ",", 
+           RowBox[{"fit", "\[LeftDoubleBracket]", 
+            RowBox[{"MDKey", "[", "\"\<opencurr\>\"", "]"}], 
+            "\[RightDoubleBracket]"}], "-", 
+           RowBox[{"fit", "\[LeftDoubleBracket]", 
+            RowBox[{"MDKey", "[", "\"\<stepheight\>\"", "]"}], 
+            "\[RightDoubleBracket]"}], "-", "15"}], ",", 
           RowBox[{
-           RowBox[{
-           "fit", "\[LeftDoubleBracket]", "2", "\[RightDoubleBracket]"}], "+",
-            "15"}]}], "}"}]}]}]}], ";", "\[IndentingNewLine]", 
+           RowBox[{"fit", "\[LeftDoubleBracket]", 
+            RowBox[{"MDKey", "[", "\"\<opencurr\>\"", "]"}], 
+            "\[RightDoubleBracket]"}], "+", "15"}]}], "}"}]}]}]}], ";", 
+     "\[IndentingNewLine]", 
      RowBox[{"Show", "[", 
       RowBox[{"{", "\[IndentingNewLine]", 
        RowBox[{
@@ -405,8 +413,8 @@ Cell[BoxData[{
               RowBox[{
                RowBox[{"IntegerPart", "[", 
                 FractionBox[
-                 RowBox[{
-                 "fit", "\[LeftDoubleBracket]", "3", 
+                 RowBox[{"fit", "\[LeftDoubleBracket]", 
+                  RowBox[{"MDKey", "[", "\"\<eventstart\>\"", "]"}], 
                   "\[RightDoubleBracket]"}], "\[Delta]t"], "]"}], "-", 
                "nPts"}]}], "]"}], ";;", 
             RowBox[{"Min", "[", 
@@ -414,8 +422,8 @@ Cell[BoxData[{
               RowBox[{
                RowBox[{"IntegerPart", "[", 
                 FractionBox[
-                 RowBox[{
-                 "fit", "\[LeftDoubleBracket]", "4", 
+                 RowBox[{"fit", "\[LeftDoubleBracket]", 
+                  RowBox[{"MDKey", "[", "\"\<eventend\>\"", "]"}], 
                   "\[RightDoubleBracket]"}], "\[Delta]t"], "]"}], "+", 
                "nPts"}], ",", 
               RowBox[{"Length", "[", "dat", "]"}]}], "]"}], ";;", "skip"}], 
@@ -449,36 +457,36 @@ Cell[BoxData[{
                     RowBox[{
                     RowBox[{"IntegerPart", "[", 
                     FractionBox[
-                    RowBox[{
-                    "fit", "\[LeftDoubleBracket]", "3", 
+                    RowBox[{"fit", "\[LeftDoubleBracket]", 
+                    RowBox[{"MDKey", "[", "\"\<eventstart\>\"", "]"}], 
                     "\[RightDoubleBracket]"}], "\[Delta]t"], "]"}], "-", 
                     "nPts"}], ")"}], "\[Delta]t"}], ",", 
-                  RowBox[{
-                  "fit", "\[LeftDoubleBracket]", "2", 
+                  RowBox[{"fit", "\[LeftDoubleBracket]", 
+                   RowBox[{"MDKey", "[", "\"\<opencurr\>\"", "]"}], 
                    "\[RightDoubleBracket]"}]}], "}"}], ",", 
                 RowBox[{"{", 
                  RowBox[{
-                  RowBox[{
-                  "fit", "\[LeftDoubleBracket]", "3", 
+                  RowBox[{"fit", "\[LeftDoubleBracket]", 
+                   RowBox[{"MDKey", "[", "\"\<eventstart\>\"", "]"}], 
                    "\[RightDoubleBracket]"}], ",", 
-                  RowBox[{
-                  "fit", "\[LeftDoubleBracket]", "2", 
+                  RowBox[{"fit", "\[LeftDoubleBracket]", 
+                   RowBox[{"MDKey", "[", "\"\<opencurr\>\"", "]"}], 
                    "\[RightDoubleBracket]"}]}], "}"}]}], "}"}], "]"}], ",", 
              RowBox[{"Line", "[", 
               RowBox[{"{", 
                RowBox[{
                 RowBox[{"{", 
                  RowBox[{
-                  RowBox[{
-                  "fit", "\[LeftDoubleBracket]", "4", 
+                  RowBox[{"fit", "\[LeftDoubleBracket]", 
+                   RowBox[{"MDKey", "[", "\"\<eventend\>\"", "]"}], 
                    "\[RightDoubleBracket]"}], ",", 
-                  RowBox[{
-                  "fit", "\[LeftDoubleBracket]", "2", 
+                  RowBox[{"fit", "\[LeftDoubleBracket]", 
+                   RowBox[{"MDKey", "[", "\"\<opencurr\>\"", "]"}], 
                    "\[RightDoubleBracket]"}]}], "}"}], ",", 
                 RowBox[{"{", 
                  RowBox[{"100", ",", 
-                  RowBox[{
-                  "fit", "\[LeftDoubleBracket]", "2", 
+                  RowBox[{"fit", "\[LeftDoubleBracket]", 
+                   RowBox[{"MDKey", "[", "\"\<opencurr\>\"", "]"}], 
                    "\[RightDoubleBracket]"}]}], "}"}]}], "}"}], "]"}], ",", 
              "\[IndentingNewLine]", 
              RowBox[{"Line", "[", 
@@ -486,27 +494,27 @@ Cell[BoxData[{
                RowBox[{
                 RowBox[{"{", 
                  RowBox[{
-                  RowBox[{
-                  "fit", "\[LeftDoubleBracket]", "3", 
+                  RowBox[{"fit", "\[LeftDoubleBracket]", 
+                   RowBox[{"MDKey", "[", "\"\<eventstart\>\"", "]"}], 
                    "\[RightDoubleBracket]"}], ",", 
                   RowBox[{
-                   RowBox[{
-                   "fit", "\[LeftDoubleBracket]", "2", 
+                   RowBox[{"fit", "\[LeftDoubleBracket]", 
+                    RowBox[{"MDKey", "[", "\"\<opencurr\>\"", "]"}], 
                     "\[RightDoubleBracket]"}], "-", 
-                   RowBox[{
-                   "fit", "\[LeftDoubleBracket]", "1", 
+                   RowBox[{"fit", "\[LeftDoubleBracket]", 
+                    RowBox[{"MDKey", "[", "\"\<stepheight\>\"", "]"}], 
                     "\[RightDoubleBracket]"}]}]}], "}"}], ",", 
                 RowBox[{"{", 
                  RowBox[{
-                  RowBox[{
-                  "fit", "\[LeftDoubleBracket]", "4", 
+                  RowBox[{"fit", "\[LeftDoubleBracket]", 
+                   RowBox[{"MDKey", "[", "\"\<eventend\>\"", "]"}], 
                    "\[RightDoubleBracket]"}], ",", 
                   RowBox[{
-                   RowBox[{
-                   "fit", "\[LeftDoubleBracket]", "2", 
+                   RowBox[{"fit", "\[LeftDoubleBracket]", 
+                    RowBox[{"MDKey", "[", "\"\<opencurr\>\"", "]"}], 
                     "\[RightDoubleBracket]"}], "-", 
-                   RowBox[{
-                   "fit", "\[LeftDoubleBracket]", "1", 
+                   RowBox[{"fit", "\[LeftDoubleBracket]", 
+                    RowBox[{"MDKey", "[", "\"\<stepheight\>\"", "]"}], 
                     "\[RightDoubleBracket]"}]}]}], "}"}]}], "}"}], "]"}], ",",
               "\[IndentingNewLine]", 
              RowBox[{"Line", "[", 
@@ -514,46 +522,46 @@ Cell[BoxData[{
                RowBox[{
                 RowBox[{"{", 
                  RowBox[{
-                  RowBox[{
-                  "fit", "\[LeftDoubleBracket]", "3", 
+                  RowBox[{"fit", "\[LeftDoubleBracket]", 
+                   RowBox[{"MDKey", "[", "\"\<eventstart\>\"", "]"}], 
                    "\[RightDoubleBracket]"}], ",", 
                   RowBox[{
-                   RowBox[{
-                   "fit", "\[LeftDoubleBracket]", "2", 
+                   RowBox[{"fit", "\[LeftDoubleBracket]", 
+                    RowBox[{"MDKey", "[", "\"\<opencurr\>\"", "]"}], 
                     "\[RightDoubleBracket]"}], "-", 
-                   RowBox[{
-                   "fit", "\[LeftDoubleBracket]", "1", 
+                   RowBox[{"fit", "\[LeftDoubleBracket]", 
+                    RowBox[{"MDKey", "[", "\"\<stepheight\>\"", "]"}], 
                     "\[RightDoubleBracket]"}]}]}], "}"}], ",", 
                 RowBox[{"{", 
                  RowBox[{
-                  RowBox[{
-                  "fit", "\[LeftDoubleBracket]", "3", 
+                  RowBox[{"fit", "\[LeftDoubleBracket]", 
+                   RowBox[{"MDKey", "[", "\"\<eventstart\>\"", "]"}], 
                    "\[RightDoubleBracket]"}], ",", 
-                  RowBox[{
-                  "fit", "\[LeftDoubleBracket]", "2", 
+                  RowBox[{"fit", "\[LeftDoubleBracket]", 
+                   RowBox[{"MDKey", "[", "\"\<opencurr\>\"", "]"}], 
                    "\[RightDoubleBracket]"}]}], "}"}]}], "}"}], "]"}], ",", 
              RowBox[{"Line", "[", 
               RowBox[{"{", 
                RowBox[{
                 RowBox[{"{", 
                  RowBox[{
-                  RowBox[{
-                  "fit", "\[LeftDoubleBracket]", "4", 
+                  RowBox[{"fit", "\[LeftDoubleBracket]", 
+                   RowBox[{"MDKey", "[", "\"\<eventend\>\"", "]"}], 
                    "\[RightDoubleBracket]"}], ",", 
                   RowBox[{
-                   RowBox[{
-                   "fit", "\[LeftDoubleBracket]", "2", 
+                   RowBox[{"fit", "\[LeftDoubleBracket]", 
+                    RowBox[{"MDKey", "[", "\"\<opencurr\>\"", "]"}], 
                     "\[RightDoubleBracket]"}], "-", 
-                   RowBox[{
-                   "fit", "\[LeftDoubleBracket]", "1", 
+                   RowBox[{"fit", "\[LeftDoubleBracket]", 
+                    RowBox[{"MDKey", "[", "\"\<stepheight\>\"", "]"}], 
                     "\[RightDoubleBracket]"}]}]}], "}"}], ",", 
                 RowBox[{"{", 
                  RowBox[{
-                  RowBox[{
-                  "fit", "\[LeftDoubleBracket]", "4", 
+                  RowBox[{"fit", "\[LeftDoubleBracket]", 
+                   RowBox[{"MDKey", "[", "\"\<eventend\>\"", "]"}], 
                    "\[RightDoubleBracket]"}], ",", 
-                  RowBox[{
-                  "fit", "\[LeftDoubleBracket]", "2", 
+                  RowBox[{"fit", "\[LeftDoubleBracket]", 
+                   RowBox[{"MDKey", "[", "\"\<opencurr\>\"", "]"}], 
                    "\[RightDoubleBracket]"}]}], "}"}]}], "}"}], "]"}], ",", 
              "Black", ",", 
              RowBox[{"Thickness", "[", "0.005", "]"}], ",", 
@@ -572,19 +580,19 @@ Cell[BoxData[{
                     RowBox[{
                     RowBox[{"IntegerPart", "[", 
                     FractionBox[
-                    RowBox[{
-                    "fit", "\[LeftDoubleBracket]", "3", 
+                    RowBox[{"fit", "\[LeftDoubleBracket]", 
+                    RowBox[{"MDKey", "[", "\"\<eventstart\>\"", "]"}], 
                     "\[RightDoubleBracket]"}], "\[Delta]t"], "]"}], "-", 
                     "nPts"}]}], "]"}], "+", "3"}], ")"}], " ", "\[Delta]t"}], 
                   ",", 
                   RowBox[{
                    RowBox[{"(", 
                     RowBox[{
-                    RowBox[{
-                    "fit", "\[LeftDoubleBracket]", "2", 
+                    RowBox[{"fit", "\[LeftDoubleBracket]", 
+                    RowBox[{"MDKey", "[", "\"\<opencurr\>\"", "]"}], 
                     "\[RightDoubleBracket]"}], "-", 
-                    RowBox[{
-                    "fit", "\[LeftDoubleBracket]", "1", 
+                    RowBox[{"fit", "\[LeftDoubleBracket]", 
+                    RowBox[{"MDKey", "[", "\"\<stepheight\>\"", "]"}], 
                     "\[RightDoubleBracket]"}]}], ")"}], "+", "0"}]}], "}"}], 
                 ",", 
                 RowBox[{"{", 
@@ -597,19 +605,19 @@ Cell[BoxData[{
                     RowBox[{
                     RowBox[{"IntegerPart", "[", 
                     FractionBox[
-                    RowBox[{
-                    "fit", "\[LeftDoubleBracket]", "3", 
+                    RowBox[{"fit", "\[LeftDoubleBracket]", 
+                    RowBox[{"MDKey", "[", "\"\<eventstart\>\"", "]"}], 
                     "\[RightDoubleBracket]"}], "\[Delta]t"], "]"}], "-", 
                     "nPts"}]}], "]"}], "+", "3"}], ")"}], " ", "\[Delta]t"}], 
                   ",", 
                   RowBox[{
                    RowBox[{"(", 
                     RowBox[{
-                    RowBox[{
-                    "fit", "\[LeftDoubleBracket]", "2", 
+                    RowBox[{"fit", "\[LeftDoubleBracket]", 
+                    RowBox[{"MDKey", "[", "\"\<opencurr\>\"", "]"}], 
                     "\[RightDoubleBracket]"}], "-", 
-                    RowBox[{
-                    "fit", "\[LeftDoubleBracket]", "1", 
+                    RowBox[{"fit", "\[LeftDoubleBracket]", 
+                    RowBox[{"MDKey", "[", "\"\<stepheight\>\"", "]"}], 
                     "\[RightDoubleBracket]"}]}], ")"}], "+", "10"}]}], 
                  "}"}]}], "}"}], "]"}], ",", 
              RowBox[{"Line", "[", 
@@ -625,18 +633,18 @@ Cell[BoxData[{
                     RowBox[{
                     RowBox[{"IntegerPart", "[", 
                     FractionBox[
-                    RowBox[{
-                    "fit", "\[LeftDoubleBracket]", "3", 
+                    RowBox[{"fit", "\[LeftDoubleBracket]", 
+                    RowBox[{"MDKey", "[", "\"\<eventstart\>\"", "]"}], 
                     "\[RightDoubleBracket]"}], "\[Delta]t"], "]"}], "-", 
                     "nPts"}]}], "]"}], "+", "3"}], ")"}], " ", "\[Delta]t"}], 
                   ",", 
                   RowBox[{"(", 
                    RowBox[{
-                    RowBox[{
-                    "fit", "\[LeftDoubleBracket]", "2", 
+                    RowBox[{"fit", "\[LeftDoubleBracket]", 
+                    RowBox[{"MDKey", "[", "\"\<opencurr\>\"", "]"}], 
                     "\[RightDoubleBracket]"}], "-", 
-                    RowBox[{
-                    "fit", "\[LeftDoubleBracket]", "1", 
+                    RowBox[{"fit", "\[LeftDoubleBracket]", 
+                    RowBox[{"MDKey", "[", "\"\<stepheight\>\"", "]"}], 
                     "\[RightDoubleBracket]"}]}], ")"}]}], "}"}], ",", 
                 RowBox[{"{", 
                  RowBox[{
@@ -648,18 +656,18 @@ Cell[BoxData[{
                     RowBox[{
                     RowBox[{"IntegerPart", "[", 
                     FractionBox[
-                    RowBox[{
-                    "fit", "\[LeftDoubleBracket]", "3", 
+                    RowBox[{"fit", "\[LeftDoubleBracket]", 
+                    RowBox[{"MDKey", "[", "\"\<eventstart\>\"", "]"}], 
                     "\[RightDoubleBracket]"}], "\[Delta]t"], "]"}], "-", 
                     "nPts"}]}], "]"}], "+", "8"}], ")"}], " ", "\[Delta]t"}], 
                   ",", 
                   RowBox[{"(", 
                    RowBox[{
-                    RowBox[{
-                    "fit", "\[LeftDoubleBracket]", "2", 
+                    RowBox[{"fit", "\[LeftDoubleBracket]", 
+                    RowBox[{"MDKey", "[", "\"\<opencurr\>\"", "]"}], 
                     "\[RightDoubleBracket]"}], "-", 
-                    RowBox[{
-                    "fit", "\[LeftDoubleBracket]", "1", 
+                    RowBox[{"fit", "\[LeftDoubleBracket]", 
+                    RowBox[{"MDKey", "[", "\"\<stepheight\>\"", "]"}], 
                     "\[RightDoubleBracket]"}]}], ")"}]}], "}"}]}], "}"}], 
               "]"}], ",", 
              RowBox[{"Text", "[", 
@@ -678,19 +686,19 @@ Cell[BoxData[{
                     RowBox[{
                     RowBox[{"IntegerPart", "[", 
                     FractionBox[
-                    RowBox[{
-                    "fit", "\[LeftDoubleBracket]", "3", 
+                    RowBox[{"fit", "\[LeftDoubleBracket]", 
+                    RowBox[{"MDKey", "[", "\"\<eventstart\>\"", "]"}], 
                     "\[RightDoubleBracket]"}], "\[Delta]t"], "]"}], "-", 
                     "nPts"}]}], "]"}], "+", "5.5"}], ")"}], " ", 
                   "\[Delta]t"}], ",", 
                  RowBox[{
                   RowBox[{"(", 
                    RowBox[{
-                    RowBox[{
-                    "fit", "\[LeftDoubleBracket]", "2", 
+                    RowBox[{"fit", "\[LeftDoubleBracket]", 
+                    RowBox[{"MDKey", "[", "\"\<opencurr\>\"", "]"}], 
                     "\[RightDoubleBracket]"}], "-", 
-                    RowBox[{
-                    "fit", "\[LeftDoubleBracket]", "1", 
+                    RowBox[{"fit", "\[LeftDoubleBracket]", 
+                    RowBox[{"MDKey", "[", "\"\<stepheight\>\"", "]"}], 
                     "\[RightDoubleBracket]"}]}], ")"}], "-", "5"}]}], "}"}]}],
                "]"}], ",", 
              RowBox[{"Text", "[", 
@@ -712,19 +720,19 @@ Cell[BoxData[{
                     RowBox[{
                     RowBox[{"IntegerPart", "[", 
                     FractionBox[
-                    RowBox[{
-                    "fit", "\[LeftDoubleBracket]", "3", 
+                    RowBox[{"fit", "\[LeftDoubleBracket]", 
+                    RowBox[{"MDKey", "[", "\"\<eventstart\>\"", "]"}], 
                     "\[RightDoubleBracket]"}], "\[Delta]t"], "]"}], "-", 
                     "nPts"}]}], "]"}], "+", "1.5"}], ")"}], " ", 
                   "\[Delta]t"}], ",", 
                  RowBox[{
                   RowBox[{"(", 
                    RowBox[{
-                    RowBox[{
-                    "fit", "\[LeftDoubleBracket]", "2", 
+                    RowBox[{"fit", "\[LeftDoubleBracket]", 
+                    RowBox[{"MDKey", "[", "\"\<opencurr\>\"", "]"}], 
                     "\[RightDoubleBracket]"}], "-", 
-                    RowBox[{
-                    "fit", "\[LeftDoubleBracket]", "1", 
+                    RowBox[{"fit", "\[LeftDoubleBracket]", 
+                    RowBox[{"MDKey", "[", "\"\<stepheight\>\"", "]"}], 
                     "\[RightDoubleBracket]"}]}], ")"}], "+", "5"}]}], "}"}]}],
                "]"}]}], "}"}]}], ",", 
           RowBox[{"Frame", "\[Rule]", "True"}], ",", 
@@ -803,24 +811,24 @@ FontSlant->\"Italic\"]\) (pA)\>\"", ",", "40", ",",
                  RowBox[{"{", 
                   RowBox[{
                    RowBox[{"\[Tau]", "\[Rule]", 
-                    RowBox[{
-                    "fit", "\[LeftDoubleBracket]", "5", 
+                    RowBox[{"fit", "\[LeftDoubleBracket]", 
+                    RowBox[{"MDKey", "[", "\"\<tau\>\"", "]"}], 
                     "\[RightDoubleBracket]"}]}], ",", 
                    RowBox[{"\[Mu]1", "\[Rule]", 
-                    RowBox[{
-                    "fit", "\[LeftDoubleBracket]", "3", 
+                    RowBox[{"fit", "\[LeftDoubleBracket]", 
+                    RowBox[{"MDKey", "[", "\"\<eventstart\>\"", "]"}], 
                     "\[RightDoubleBracket]"}]}], ",", 
                    RowBox[{"\[Mu]2", "\[Rule]", 
-                    RowBox[{
-                    "fit", "\[LeftDoubleBracket]", "4", 
+                    RowBox[{"fit", "\[LeftDoubleBracket]", 
+                    RowBox[{"MDKey", "[", "\"\<eventend\>\"", "]"}], 
                     "\[RightDoubleBracket]"}]}], ",", 
                    RowBox[{"a", "\[Rule]", 
-                    RowBox[{
-                    "fit", "\[LeftDoubleBracket]", "1", 
+                    RowBox[{"fit", "\[LeftDoubleBracket]", 
+                    RowBox[{"MDKey", "[", "\"\<stepheight\>\"", "]"}], 
                     "\[RightDoubleBracket]"}]}], ",", 
                    RowBox[{"b", "\[Rule]", 
-                    RowBox[{
-                    "fit", "\[LeftDoubleBracket]", "2", 
+                    RowBox[{"fit", "\[LeftDoubleBracket]", 
+                    RowBox[{"MDKey", "[", "\"\<opencurr\>\"", "]"}], 
                     "\[RightDoubleBracket]"}]}]}], "}"}]}], ")"}]}], "}"}], 
              ",", 
              RowBox[{"{", 
@@ -830,8 +838,8 @@ FontSlant->\"Italic\"]\) (pA)\>\"", ",", "40", ",",
                  RowBox[{
                   RowBox[{"IntegerPart", "[", 
                    FractionBox[
-                    RowBox[{
-                    "fit", "\[LeftDoubleBracket]", "3", 
+                    RowBox[{"fit", "\[LeftDoubleBracket]", 
+                    RowBox[{"MDKey", "[", "\"\<eventstart\>\"", "]"}], 
                     "\[RightDoubleBracket]"}], "\[Delta]t"], "]"}], "-", 
                   "nPts"}], ")"}], "\[Delta]t"}], ",", 
                RowBox[{
@@ -839,8 +847,8 @@ FontSlant->\"Italic\"]\) (pA)\>\"", ",", "40", ",",
                  RowBox[{
                   RowBox[{"IntegerPart", "[", 
                    FractionBox[
-                    RowBox[{
-                    "fit", "\[LeftDoubleBracket]", "4", 
+                    RowBox[{"fit", "\[LeftDoubleBracket]", 
+                    RowBox[{"MDKey", "[", "\"\<eventend\>\"", "]"}], 
                     "\[RightDoubleBracket]"}], "\[Delta]t"], "]"}], "+", 
                   "nPts"}], ")"}], "\[Delta]t"}], ",", 
                FractionBox["\[Delta]t", "10"]}], "}"}]}], "]"}], 
@@ -896,7 +904,11 @@ FontSlant->\"Italic\"]\) (pA)\>\"", ",", "40", ",",
    3.583774257342042*^9, 3.583774304797852*^9}, {3.584017383251465*^9, 
    3.584017453496852*^9}, {3.5840176456310263`*^9, 3.5840176464465923`*^9}, {
    3.584017702582755*^9, 3.584017708227903*^9}, {3.587373301946014*^9, 
-   3.5873733254877996`*^9}, 3.587373365894532*^9}],
+   3.5873733254877996`*^9}, 3.587373365894532*^9, {3.601562611847357*^9, 
+   3.601562618449429*^9}, {3.601562695301503*^9, 3.601563062654001*^9}, {
+   3.6015632138760233`*^9, 3.6015632313503036`*^9}, {3.6015632661192703`*^9, 
+   3.601563270325368*^9}, 3.601563320099347*^9, {3.601563418141996*^9, 
+   3.6015634528945847`*^9}}],
 
 Cell[BoxData[
  RowBox[{
@@ -1228,7 +1240,7 @@ Cell[BoxData[
 },
 NotebookEventActions->None,
 WindowSize->{1180, 819},
-WindowMargins->{{44, Automatic}, {36, Automatic}},
+WindowMargins->{{-27, Automatic}, {Automatic, 0}},
 FrontEndVersion->"9.0 for Mac OS X x86 (32-bit, 64-bit Kernel) (January 25, \
 2013)",
 StyleDefinitions->"Default.nb"
@@ -1261,27 +1273,27 @@ Cell[6032, 136, 1897, 36, 97, "Input",
 }, Open  ]],
 Cell[CellGroupData[{
 Cell[7966, 177, 103, 1, 35, "Subsubsection"],
-Cell[8072, 180, 952, 24, 46, "Input",
+Cell[8072, 180, 1086, 27, 46, "Input",
  InitializationCell->True],
-Cell[9027, 206, 1035, 26, 80, "Input",
+Cell[9161, 209, 1035, 26, 80, "Input",
  InitializationCell->True],
-Cell[10065, 234, 988, 26, 80, "Input",
+Cell[10199, 237, 988, 26, 80, "Input",
  InitializationCell->True],
-Cell[11056, 262, 1128, 28, 28, "Input",
+Cell[11190, 265, 1316, 31, 28, "Input",
  InitializationCell->True],
-Cell[12187, 292, 700, 18, 46, "Input",
+Cell[12509, 298, 700, 18, 46, "Input",
  InitializationCell->True],
-Cell[12890, 312, 24873, 586, 846, "Input",
+Cell[13212, 318, 27603, 592, 1041, "Input",
  InitializationCell->True],
-Cell[37766, 900, 1760, 44, 97, "Input",
+Cell[40818, 912, 1760, 44, 97, "Input",
  InitializationCell->True],
-Cell[39529, 946, 1707, 42, 80, "Input",
+Cell[42581, 958, 1707, 42, 80, "Input",
  InitializationCell->True],
-Cell[41239, 990, 3922, 96, 199, "Input",
+Cell[44291, 1002, 3922, 96, 199, "Input",
  InitializationCell->True],
-Cell[45164, 1088, 3647, 84, 165, "Input",
+Cell[48216, 1100, 3647, 84, 165, "Input",
  InitializationCell->True],
-Cell[48814, 1174, 2104, 51, 131, "Input",
+Cell[51866, 1186, 2104, 51, 131, "Input",
  InitializationGroup->True]
 }, Open  ]]
 }

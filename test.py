@@ -91,10 +91,17 @@ def analysisiter(dir, filt, i):
 
 # '/Volumes/DATA/SBSTags/dA6TP30odd/20130925/p120mV'
 SingleChannelAnalysis.SingleChannelAnalysis(
-			qdfTrajIO(dirname='/Volumes/DATA/PolysialicAcid_KR/20140212/p100mV7/' ,filter='*.qdf', Rfb=2.11E+9, Cfb=1.16E-12, format='V'),
+			qdfTrajIO(dirname='/Users/arvind/Research/Experiments/PEG29EBSRefData/20120323/singleChan/' ,filter='*.qdf', nfiles=50, Rfb=9.1E+9, Cfb=1.07E-12),
 			es.eventSegment,
 			sra.stepResponseAnalysis
 		).Run() 
+
+
+# SingleChannelAnalysis.SingleChannelAnalysis(
+# 			qdfTrajIO(dirname='/Volumes/DATA/PEGCaptureRate/PEG12/20140214/m40mV5/' ,filter='*.qdf', Rfb=2.11E+9, Cfb=1.16E-12),
+# 			es.eventSegment,
+# 			sra.stepResponseAnalysis
+# 		).Run() 
 # print ['*-'+str(i).zfill(2)+'??.qdf' for i in range(1,15)]
 
 # SingleChannelAnalysis.SingleChannelAnalysis(

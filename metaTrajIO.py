@@ -68,7 +68,7 @@ class metaTrajIO(object):
 
 		# Check if the passed arguments are sane	
 		if hasattr(self, 'dirname') and hasattr(self, 'fnames'):
-			raise IncompatibleArgumentsError("Cannot specify both directory name and explicit list of files when initializing class {0}.".format(type(self).__name__))
+			raise IncompatibleArgumentsError("Incompatible arguments: expect either 'dirname' or 'fnames' when initializing class {0}.".format(type(self).__name__))
 
 		# Check for the filter arg
 		if not hasattr(self, 'filter'):
@@ -90,7 +90,7 @@ class metaTrajIO(object):
 					self.dataFiles=glob.glob(str(self.dirname)+"/"+str(self.filter))
 					delattr(self, 'dirname')
 				else:
-					raise IncompatibleArgumentsError("Arguments 'dirname' or 'fnames' must be supplied to initialize {0}".format(type(self).__name__))
+					raise IncompatibleArgumentsError("Missing arguments: 'dirname' or 'fnames' must be supplied to initialize {0}".format(type(self).__name__))
 			except AttributeError, err:
 				raise IncompatibleArgumentsError(err)
 

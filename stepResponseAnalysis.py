@@ -3,9 +3,11 @@
 	Created:	4/18/2013
 
 	ChangeLog:
-		4/18/13		AB	Initial version
+		2/16/14		AB 	Added new metadata field, 'AbsEventStart' to track 
+						global time of event start to allow capture rate estimation.
 		6/20/13		AB 	Added an additional check to reject events 
 						with blockade depths > BlockRejectRatio (default: 0.8)
+		4/18/13		AB	Initial version
 """
 import commonExceptions
 import metaEventProcessor
@@ -63,6 +65,8 @@ class stepResponseAnalysis(metaEventProcessor.metaEventProcessor):
 
 		self.mdRedChiSq=-1
 
+		self.mdAbsEventStart=-1
+
 		# Settings for single step event processing
 		# settings for gaussian fits
 		try:
@@ -105,6 +109,7 @@ class stepResponseAnalysis(metaEventProcessor.metaEventProcessor):
 					self.mdBlockDepth,
 					self.mdResTime,
 					self.mdRiseTime,
+					self.mdAbsEventStart,
 					self.mdRedChiSq
 				]
 		
@@ -117,11 +122,12 @@ class stepResponseAnalysis(metaEventProcessor.metaEventProcessor):
 					'ProcessingStatus', 
 					'OpenChCurrent (pA)', 
 					'BlockedCurrent (pA)',
-					'EventStart', 
-					'EventEnd', 
-					'BlockDepth', 
+					'EventStart (ms)', 
+					'EventEnd (ms)', 
+					'BlockDepth (ms)', 
 					'ResTime (ms)', 
 					'RCConstant (ms)', 
+					'AbsEventStart (ms)', 
 					'ReducedChiSquared' 
 				]
 
@@ -168,6 +174,8 @@ class stepResponseAnalysis(metaEventProcessor.metaEventProcessor):
 
 			params=Parameters()
 
+			# print self.absDataStartIndex
+
 			params.add('mu1', value=estart * dt)
 			params.add('mu2', value=eend * dt)
 			params.add('a', value=(i0-min(edat)))
@@ -191,9 +199,10 @@ class stepResponseAnalysis(metaEventProcessor.metaEventProcessor):
 				else:
 					self.mdOpenChCurrent 	= optfit.params['b'].value 
 					self.mdBlockedCurrent	= optfit.params['b'].value - optfit.params['a'].value
-					self.mdEventStart		= optfit.params['mu1'].value
+					self.mdEventStart		= optfit.params['mu1'].value 
 					self.mdEventEnd			= optfit.params['mu2'].value
 					self.mdRiseTime			= optfit.params['tau'].value
+					self.mdAbsEventStart	= self.mdEventStart + self.absDataStartIndex * dt
 
 					self.mdBlockDepth		= self.mdBlockedCurrent/self.mdOpenChCurrent
 					self.mdResTime			= self.mdEventEnd - self.mdEventStart

@@ -7,9 +7,10 @@
 	Created:	7/16/2012
 
 	ChangeLog:
-		7/16/12		AB	Initial version
+		2/16/14		AB 	Define new kwarg, absdatidx to allow capture rate estimation.
 		6/28/13		AB 	Added a new keyword argument 'savets'. When set to False, the event time-series
 						is set to None. This can save a lot of memory when handling large data sets. 
+		7/16/12		AB	Initial version
 """
 from abc import ABCMeta, abstractmethod
 import types
@@ -38,6 +39,7 @@ class metaEventProcessor(object):
 				eventend			the event end point
 				baselinestats 		baseline conductance statistics: a list of [mean, sd, slope] for the baseline current
 				algosettingsdict 	settings for event processing algorithm as a dictionary
+				absdatidx 			index of data start. This arg can allow arrival time estimation.
 		"""
 		self.eventData=icurr
 		self.Fs=Fs
@@ -47,6 +49,8 @@ class metaEventProcessor(object):
 		self.eEndEstimate=kwargs['eventend']
 
 		self.settingsDict=kwargs['algosettingsdict']
+
+		self.absDataStartIndex=kwargs['absdatidx']
 
 		[ self.baseMean, self.baseSD, self.baseSlope ]=kwargs['baselinestats']
 
