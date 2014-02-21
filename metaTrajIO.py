@@ -28,6 +28,8 @@ class SamplingRateChangedError(Exception):
 	pass
 class EmptyDataPipeError(Exception):
 	pass
+class FileNotFoundError(Exception):
+	pass
 
 class metaTrajIO(object):
 	__metaclass__=ABCMeta
@@ -97,8 +99,10 @@ class metaTrajIO(object):
 		# set additional meta-data
 		self.nFiles = len(self.dataFiles)
 		self.fileFormat='N/A'
-		self.datPath="/".join((self.dataFiles[0].split('/'))[:-1])
-
+		try:
+			self.datPath="/".join((self.dataFiles[0].split('/'))[:-1])
+		except IndexError, err:
+			raise FileNotFoundError("Files not found.")
 
 		# setup data filtering
 		if hasattr(self, 'datafilter'):

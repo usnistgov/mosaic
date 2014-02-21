@@ -10,10 +10,10 @@
 NotebookFileLineBreakTest
 NotebookFileLineBreakTest
 NotebookDataPosition[       157,          7]
-NotebookDataLength[     55534,       1294]
-NotebookOptionsPosition[     53986,       1240]
-NotebookOutlinePosition[     54371,       1257]
-CellTagsIndexPosition[     54328,       1254]
+NotebookDataLength[     56534,       1324]
+NotebookOptionsPosition[     54920,       1268]
+NotebookOutlinePosition[     55303,       1285]
+CellTagsIndexPosition[     55260,       1282]
 WindowFrame->Normal*)
 
 (* Beginning of Notebook Content *)
@@ -1235,12 +1235,40 @@ Cell[BoxData[
  InitializationGroup->True,
  CellChangeTimes->{{3.587312975989841*^9, 3.587312982352169*^9}, {
   3.5873130177147303`*^9, 3.587313116796503*^9}, {3.587338397085477*^9, 
-  3.587338397860778*^9}, {3.587373410474434*^9, 3.587373417018278*^9}}]
+  3.587338397860778*^9}, {3.587373410474434*^9, 3.587373417018278*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"CaptureRate", "[", 
+   RowBox[{"md_", ",", "blksz_"}], "]"}], ":=", 
+  RowBox[{
+   RowBox[{
+    RowBox[{"#", "[", 
+     FractionBox["1", 
+      RowBox[{"Mean", "/@", 
+       RowBox[{"Partition", "[", 
+        RowBox[{
+         RowBox[{
+          RowBox[{"Flatten", "[", 
+           RowBox[{"Differences", "/@", 
+            RowBox[{"Partition", "[", 
+             RowBox[{
+              RowBox[{
+               RowBox[{
+                RowBox[{"#", "\[LeftDoubleBracket]", 
+                 RowBox[{"MDKey", "[", "\"\<abseventstart\>\"", "]"}], 
+                 "\[RightDoubleBracket]"}], "&"}], "/@", "md"}], ",", "2"}], 
+             "]"}]}], "]"}], "/", "1000"}], ",", "blksz"}], "]"}]}]], "]"}], 
+    "&"}], "/@", 
+   RowBox[{"{", 
+    RowBox[{"Mean", ",", "StandardError"}], "}"}]}]}]], "Input",
+ InitializationCell->True,
+ CellChangeTimes->{{3.6016399242484207`*^9, 3.601639958667521*^9}}]
 }, Open  ]]
 },
 NotebookEventActions->None,
 WindowSize->{1180, 819},
-WindowMargins->{{-27, Automatic}, {Automatic, 0}},
+WindowMargins->{{0, Automatic}, {Automatic, 0}},
 FrontEndVersion->"9.0 for Mac OS X x86 (32-bit, 64-bit Kernel) (January 25, \
 2013)",
 StyleDefinitions->"Default.nb"
@@ -1294,7 +1322,9 @@ Cell[44291, 1002, 3922, 96, 199, "Input",
 Cell[48216, 1100, 3647, 84, 165, "Input",
  InitializationCell->True],
 Cell[51866, 1186, 2104, 51, 131, "Input",
- InitializationGroup->True]
+ InitializationGroup->True],
+Cell[53973, 1239, 931, 26, 71, "Input",
+ InitializationCell->True]
 }, Open  ]]
 }
 ]

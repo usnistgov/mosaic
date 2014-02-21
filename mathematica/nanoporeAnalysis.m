@@ -166,3 +166,6 @@ ts=Import[folder<>"/eventTS.csv","CSV"]
 },
 Manipulate[PlotEvent[ts[[i]],md[[i]],1/FsKHz,20,{Automatic,16},s,Automatic,Automatic],{i,1,Length[md],1,Appearance->"Open"},{s,1,10,1,Appearance->"Open"}]
 ]
+
+
+CaptureRate[md_,blksz_]:=#[1/Mean/@Partition[Flatten[Differences/@Partition[#[[MDKey["abseventstart"]]]&/@md,2]]/1000,blksz]]&/@{Mean,StandardError}

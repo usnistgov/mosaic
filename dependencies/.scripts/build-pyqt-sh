@@ -1,0 +1,30 @@
+#!/bin/sh
+
+# always run this script from the ustrade root directory
+
+#set -x
+source dependencies/.scripts/set-shell-vars-sh
+
+cwd=${PWD}
+
+
+cd dependencies/
+
+if [ "${plat}" == "Linux" ]; then
+	tar xzf .tarballs/PyQt-x11-gpl-4.9.5.tar.gz
+	cd PyQt-x11-gpl-4.9.5
+	python configure.py -b ../bin -d ../lib/python2.7/site-packages/ -v ../share/sip --confirm-license 
+else
+	tar xzf .tarballs/PyQt-mac-gpl-4.9.5.tar.gz
+	cd PyQt-mac-gpl-4.9.5
+	python configure.py --use-arch=x86_64 -b ../bin -d ../lib/python2.7/site-packages/ -v ../share/sip --confirm-license -q /Developer/Tools/Qt/qmake
+fi
+make -j8
+make install
+
+cd ../../
+if [ "${plat}" == "Linux" ]; then
+	rm -rf dependencies/PyQt-x11-gpl-4.9.5
+else
+	rm -rf dependencies/PyQt-mac-gpl-4.9.5
+fi

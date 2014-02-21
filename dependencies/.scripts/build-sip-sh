@@ -1,0 +1,25 @@
+#!/bin/sh
+
+# always run this script from the ustrade root directory
+
+#set -x
+source dependencies/.scripts/set-shell-vars-sh
+
+cwd=${PWD}
+
+
+cd dependencies/
+tar xzf .tarballs/sip-4.14.tar.gz
+cd sip-4.14
+
+# SIP must be built as 64-bit only for PyQt to compile properly. This may have to do with Qt being installed as a 64-bit only binaries.
+if [ "${plat}" == "Linux" ]; then
+	python configure.py -b ../bin -d ../lib/python2.7/site-packages/ -e ../include/python2.7 -v ../share/sip
+else
+	python configure.py --arch=x86_64 -b ../bin -d ../lib/python2.7/site-packages/ -e ../include/python2.7 -v ../share/sip
+fi
+make -j8
+make install
+
+cd ../../
+rm -rf dependencies/sip-4.14

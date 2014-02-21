@@ -228,7 +228,7 @@ class eventSegment(metaEventPartition.metaEventPartition):
 				w2=csv.writer(open(self.trajDataObj.datPath+'/eventTS.csv', 'wO'),delimiter=',')
 				[ w2.writerow(event.eventData) for event in self.eventQueue ]
 
-		outputstr+='[Summary]'
+		outputstr+='[Summary]\n'
 
 		# write out event segment stats
 		outputstr+=self.formatstats()

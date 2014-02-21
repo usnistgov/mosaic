@@ -90,18 +90,23 @@ def analysisiter(dir, filt, i):
 #/Volumes/DATA/SBSTags/d6TPCy3T25/20130930/p120mV6
 
 # '/Volumes/DATA/SBSTags/dA6TP30odd/20130925/p120mV'
-SingleChannelAnalysis.SingleChannelAnalysis(
-			qdfTrajIO(dirname='/Users/arvind/Research/Experiments/PEG29EBSRefData/20120323/singleChan/' ,filter='*.qdf', nfiles=50, Rfb=9.1E+9, Cfb=1.07E-12),
-			es.eventSegment,
-			sra.stepResponseAnalysis
-		).Run() 
-
-
 # SingleChannelAnalysis.SingleChannelAnalysis(
-# 			qdfTrajIO(dirname='/Volumes/DATA/PEGCaptureRate/PEG12/20140214/m40mV5/' ,filter='*.qdf', Rfb=2.11E+9, Cfb=1.16E-12),
+# 			qdfTrajIO(dirname='/Users/arvind/Research/Experiments/PEG29EBSRefData/20120323/singleChan/' ,filter='*.qdf', nfiles=50, Rfb=9.1E+9, Cfb=1.07E-12),
 # 			es.eventSegment,
 # 			sra.stepResponseAnalysis
 # 		).Run() 
+
+
+SingleChannelAnalysis.SingleChannelAnalysis(
+			qdfTrajIO(dirname='/Volumes/DATA/PEGCaptureRate/PEG12/20140214/m70mV5/' ,filter='*.qdf', Rfb=2.11E+9, Cfb=1.16E-12),
+			es.eventSegment,
+			sra.stepResponseAnalysis
+		).Run() 
+SingleChannelAnalysis.SingleChannelAnalysis(
+			qdfTrajIO(dirname='/Volumes/DATA/PEGCaptureRate/PEG12/20140214/m80mV5/' ,filter='*.qdf', Rfb=2.11E+9, Cfb=1.16E-12),
+			es.eventSegment,
+			sra.stepResponseAnalysis
+		).Run() 
 # print ['*-'+str(i).zfill(2)+'??.qdf' for i in range(1,15)]
 
 # SingleChannelAnalysis.SingleChannelAnalysis(
