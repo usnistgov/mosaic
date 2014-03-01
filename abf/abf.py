@@ -47,11 +47,20 @@ def abfload_gp(filename):
 		nbchannel = header['nADCNumChannels']
 		headOffset = header['lDataSectionPtr']*BLOCKSIZE+header['nNumPointsIgnored']*dt.itemsize
 		totalsize = header['lActualAcqLength']
+		if nbchannel == 1:
+			if header['nTelegraphEnable'][0]:
+				gain = header['fTelegraphAdditGain'][0]
+				bandwidth = header['fTelegraphFilter'][0]
 	elif version >=2. :
 		nbchannel = header['sections']['ADCSection']['llNumEntries']
 		headOffset = header['sections']['DataSection']['uBlockIndex']*BLOCKSIZE
 		totalsize = header['sections']['DataSection']['llNumEntries']
-	
+		if nbchannel == 1:
+			if header['listADCInfo'][0]['nTelegraphEnable']:
+				gain = header['listADCInfo'][0]['fTelegraphAdditGain']
+				bandwidth = header['listADCInfo'][0]['fTelegraphFilter']
+
+
 	data = memmap(filename , dt  , 'r', shape = (totalsize,) , offset = headOffset)
 
 	# Check file mode. Only gapfree mode (3) is supported
@@ -81,7 +90,7 @@ def abfload_gp(filename):
 	elif version >=2. :
 		freq = 1.e6/header['protocol']['fADCSequenceInterval']
 
-	return [freq, header, data[:,0]]
+	return [freq, header['fFileSignature'], bandwidth, gain, data[:,0]]
 
 def read_header(filename):
 	"""
@@ -245,7 +254,6 @@ def reformat_integer_V2(data, nbchannel , header):
 		data[:,i] /= header['protocol']['lADCResolution']
 		data[:,i] += header['listADCInfo'][i]['fInstrumentOffset']
 		data[:,i] -= header['listADCInfo'][i]['fSignalOffset']
-
 
 BLOCKSIZE = 512
 

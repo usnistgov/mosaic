@@ -47,10 +47,7 @@ class abfTrajIO(metaTrajIO.metaTrajIO):
 		
 		# Read a single file or a list of files.		
 		for f in fname:
-			[freq, hdr, dat] = abf.abfload_gp(f)
-
-			# additional meta data
-			self.fileFormat=hdr['fFileSignature']
+			[freq, self.fileFormat, self.bandwidth, self.gain, dat] = abf.abfload_gp(f)
 	
 			# set the sampling frequency in Hz. The times are in ms.
 			# If the Fs attribute doesn't exist set it
@@ -72,5 +69,8 @@ class abfTrajIO(metaTrajIO.metaTrajIO):
 		"""
 		# get base class formatting
 		fmtstr=super(abfTrajIO,self).formatsettings()
+
+		fmtstr+='\t\tLowpass filter = {0} kHz\n'.format(self.bandwidth*0.001)
+		fmtstr+='\t\tSignal gain = {0}\n'.format(self.gain)
 
 		return fmtstr

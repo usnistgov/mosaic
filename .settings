@@ -27,6 +27,11 @@
 		"FitIters"		: "10000",
 		"BlockRejectRatio"	: "0.9"
 	},
+	"multiStateAnalysis" : {
+                "FitTol"                : "1.e-7",
+                "FitIters"              : "10000",
+                "InitThreshold"         : "5.0"
+        },
 	"besselLowpassFilter" : {
 		"filterOrder"		: "6",
 		"filterCutoff"		: "10000",

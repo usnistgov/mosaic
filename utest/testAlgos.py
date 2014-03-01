@@ -36,7 +36,8 @@ class PEGAlgorithmTest(unittest.TestCase):
 							eventend=int(prm['tau2']/dt),    		# event end point
 							baselinestats=[ 1.0, 0.01, 0.0 ],
 							algosettingsdict=sett,
-							savets=0
+							savets=0,
+							absdatidx=0.0
 						)
 		testobj.processEvent()
 

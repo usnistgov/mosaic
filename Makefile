@@ -18,6 +18,9 @@ depend:
 
 math-iface:
 	cp mathematica/nanoporeAnalysis.m ~/Library/Mathematica/Applications/
+
+tests:
+	sh install-test-sh
 	
 clean-math-iface:
 	rm ~/Library/Mathematica/Applications/nanoporeAnalysis.m

@@ -103,6 +103,10 @@ DownValues[tab][[All,1,1,1]]
 ]
 
 
+(* ::Text:: *)
+(*ProcessingStatus	OpenChCurrent (pA)	BlockedCurrent (pA)	EventStart (ms)	EventEnd (ms)	BlockDepth (ms)	ResTime (ms)	RCConstant (ms)	AbsEventStart (ms)	ReducedChiSquared*)
+
+
 MDTransform={#[[2]]-#[[3]],#[[2]],#[[4]],#[[5]],#[[8]],#[[9]],#[[6]],#[[1]],#[[10]]}&;
 
 
@@ -168,4 +172,34 @@ Manipulate[PlotEvent[ts[[i]],md[[i]],1/FsKHz,20,{Automatic,16},s,Automatic,Autom
 ]
 
 
-CaptureRate[md_,blksz_]:=#[1/Mean/@Partition[Flatten[Differences/@Partition[#[[MDKey["abseventstart"]]]&/@md,2]]/1000,blksz]]&/@{Mean,StandardError}
+CaptureRate[art_,blksz_]:=#[1/Mean/@Partition[art,blksz]]&/@{Mean,StandardError}
+
+
+ArrivalTimes[md_]:=Flatten[Differences/@Partition[md[[All,MDKey["abseventstart"]]],2,1]]/1000
+
+
+kon[cap_,c_]:=1/((1/cap)c)
+
+
+(* ::Input:: *)
+(*PlotEvent2[ts_,md_,Fs_]:=Module[{},*)
+(*Show[{*)
+(*ListLinePlot[Table[{t,First[Differences[md[[{3,2}]]]]((1-Exp[-((t-md[[5]])/md[[8]])])HeavisideTheta[t-md[[5]]]-(1-Exp[-((t-md[[4]])/md[[8]])])HeavisideTheta[t-md[[4]]])+md[[2]]},{t,0,Length[ts] 1/Fs,1/(5 Fs)}],PlotRange->All,PlotStyle->{Black,Thickness[0.006]}],*)
+(*ListPlot[Transpose[{Range[0,Length[ts]-1] 1/Fs,Abs[ts]}],PlotRange->All,PlotStyle->Directive[RGBColor@@({41, 74,130}/255),Opacity[0.75]],PlotMarkers->{Automatic,14}]*)
+(*},Frame->True,FrameStyle->Thick,FrameTicks->{{Automatic,None},{Automatic,None}},FrameTicksStyle->Directive[30,FontFamily->"Helvetica"],FrameLabel->{Style["\!\(\**)
+(*StyleBox[\"t\",\nFontSlant->\"Italic\"]\) (ms)",30,FontFamily->"Helvetica"],Style["|\!\(\**)
+(*StyleBox[\"i\",\nFontSlant->\"Italic\"]\)\!\(\**)
+(*StyleBox[\"|\",\nFontSlant->\"Italic\"]\) (pA)",30,FontFamily->"Helvetica"]},ImageSize->800]*)
+(*]/;md[[1]]=="normal"*)
+(*PlotEvent2[ts_,md_,Fs_]:=ListPlot[Transpose[{Range[0,Length[ts]-1] 1/Fs,Abs[ts]}],PlotRange->All,PlotStyle->Red,Frame->True,FrameStyle->Thick,FrameTicks->{{Automatic,None},{Automatic,None}},FrameTicksStyle->Directive[30,FontFamily->"Helvetica"],FrameLabel->{Style["\!\(\**)
+(*StyleBox[\"t\",\nFontSlant->\"Italic\"]\) (ms)",30,FontFamily->"Helvetica"],Style["|\!\(\**)
+(*StyleBox[\"i\",\nFontSlant->\"Italic\"]\)\!\(\**)
+(*StyleBox[\"|\",\nFontSlant->\"Italic\"]\) (pA)",30,FontFamily->"Helvetica"]},ImageSize->800]*)
+
+
+PlotEvents2[folder_,FsKHz_]:=Module[{
+md =MDTransform/@Flatten[Import[#,"TSV"][[2;;]]&/@FileNames["eventMD.tsv",folder],1],
+ts=Import[folder<>"/eventTS.csv","CSV"]
+},
+Manipulate[PlotEvent[ts[[i]],md[[i]],1/FsKHz,20,{Automatic,16},s,Automatic,Automatic],{i,1,Length[md],1,Appearance->"Open"},{s,1,10,1,Appearance->"Open"}]
+]
