@@ -119,6 +119,7 @@ class eventSegment(metaEventPartition.metaEventPartition):
 
 		# a global counter that keeps track of the position in data pipe.
 		self.globalDataIndex=0
+		self.dataStart=0
 
 		if self.meanOpenCurr == -1. or self.sdOpenCurr == -1. or self.slopeOpenCurr == -1.:
 			[ self.meanOpenCurr, self.sdOpenCurr, self.slopeOpenCurr ] = self.__openchanstats(self.trajDataObj.previewdata(self.nPoints))
@@ -447,7 +448,6 @@ class eventSegment(metaEventPartition.metaEventPartition):
 			immediately preceeding the start of the event), mark the event end. Pad 
 			the event by 'eventPad' points and hand off to the event processing algorithm.
 		"""
-		dataStart=0
 		try:
 			while(1):
 				t=self.currData.popleft()
@@ -456,13 +456,14 @@ class eventSegment(metaEventPartition.metaEventPartition):
 				# store the latest point in a fixed buffer
 				if not self.eventstart:
 					self.preeventdat.append(t)
-					dataStart=self.globalDataIndex
 				
 				# Mark the start of the event
 				if abs(t) < self.thrCurr: 
 					#print "event",
 					self.eventstart=True
 					self.eventdat=[]
+					self.eventdat.append(t)
+					self.dataStart=self.globalDataIndex-len(self.preeventdat)-1
 
 				if self.eventstart:
 					mean=abs(util.avg(self.preeventdat))
@@ -505,7 +506,7 @@ class eventSegment(metaEventPartition.metaEventPartition):
 								baselinestats=[ self.meanOpenCurr, self.sdOpenCurr, self.slopeOpenCurr ],
 								algosettingsdict=self.eventProcSettingsDict,
 								savets=self.writeEventTS,
-								absdatidx=dataStart
+								absdatidx=self.dataStart
 							)
 						)
 	

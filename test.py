@@ -97,17 +97,17 @@ def analysisiter(dir, filt, i):
 # 		).Run() 
 
 
-SingleChannelAnalysis.SingleChannelAnalysis(
-			abfTrajIO(fnames=['/Users/arvind/Desktop/JoeProtein/2010_09_24_0009_001.abf','/Users/arvind/Desktop/JoeProtein/2010_09_24_0009_002.abf','/Users/arvind/Desktop/JoeProtein/2010_09_24_0009_003.abf'],start=319300),
-			es.eventSegment,
-			sra.stepResponseAnalysis
-		).Run() 
-
 # SingleChannelAnalysis.SingleChannelAnalysis(
-# 			qdfTrajIO(dirname='/Volumes/DATA/PEGCaptureRate/PEG12/20140214/m70mV5/' ,filter='*.qdf', Rfb=2.11E+9, Cfb=1.16E-12),
+# 			abfTrajIO(fnames=['/Users/arvind/Desktop/JoeProtein/2010_09_24_0009_001.abf','/Users/arvind/Desktop/JoeProtein/2010_09_24_0009_002.abf','/Users/arvind/Desktop/JoeProtein/2010_09_24_0009_003.abf'],start=319300),
 # 			es.eventSegment,
 # 			sra.stepResponseAnalysis
 # 		).Run() 
+
+SingleChannelAnalysis.SingleChannelAnalysis(
+			qdfTrajIO(dirname='/Users/arvind/Research/Experiments/PolysialicAcid_KR/pH5.5/20140304/p90mV2/' ,filter='*.qdf', Rfb=2.11E+9, Cfb=1.16E-12),
+			es.eventSegment,
+			sra.stepResponseAnalysis
+		).Run() 
 # SingleChannelAnalysis.SingleChannelAnalysis(
 # 			qdfTrajIO(dirname='/Volumes/DATA/PEGCaptureRate/PEG12/20140214/m80mV5/' ,filter='*.qdf', Rfb=2.11E+9, Cfb=1.16E-12),
 # 			es.eventSegment,
