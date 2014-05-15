@@ -4,16 +4,16 @@ import testutil
 import json
 import time
 
-import settings
-import stepResponseAnalysis as sra
-import singleStepEvent as sse
+import pyeventanalysis.settings
+import pyeventanalysis.stepResponseAnalysis as sra
+import pyeventanalysis.singleStepEvent as sse
 
-import eventSegment as es
+import pyeventanalysis.eventSegment as es
 
-from qdfTrajIO import *
-from abfTrajIO import *
-from tsvTrajIO import *
-from binTrajIO import *
+from pyeventanalysis.qdfTrajIO import *
+from pyeventanalysis.abfTrajIO import *
+from pyeventanalysis.tsvTrajIO import *
+from pyeventanalysis.binTrajIO import *
 
 
 class PEGAlgorithmTest(unittest.TestCase):
@@ -25,7 +25,7 @@ class PEGAlgorithmTest(unittest.TestCase):
 		dat=testutil.readcsv(datfile)
 		prm=testutil.readparams(prmfile)
 
-		sett=json.loads( "".join((open('../.settings', 'r').readlines())) )[algoHnd.__name__]
+		sett=json.loads( "".join((open('../../.settings', 'r').readlines())) )[algoHnd.__name__]
 
 		dt=int(1e6/dat[0])
 
@@ -54,7 +54,7 @@ class PEGEventPartitionTest(unittest.TestCase):
 		prm=testutil.readparams(prmfile)
 		dat=tsvTrajIO(fnames=[datfile], Fs=prm['Fs'], separator=',')
 
-		sett=json.loads( "".join((open('../.settings', 'r').readlines())) )
+		sett=json.loads( "".join((open('../../.settings', 'r').readlines())) )
 
 		epartsettings = sett[eventPartHnd.__name__]
 
