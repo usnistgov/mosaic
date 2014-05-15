@@ -1,6 +1,11 @@
 #!/bin/sh
 
-export FFLAGS="-ff2c"
+plat=`uname`
+
+if [ $plat == 'Darwin' ]; then
+        export FFLAGS="-ff2c"
+fi
+
 
 set -x
 
