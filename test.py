@@ -73,7 +73,19 @@ def analysisiter(dir, filt, i):
 		print "memory exceeded: ", e
 		pass
 
+# for dir in ['m120mV', 'm120mV1','m120mV2','m120mV3','m120mV3a','m120mV3b', 'm120mV4', 'm120mV5', 'm120mV6', 'm120mV7','m120mV8', 'm120mV11']:
+#         SingleChannelAnalysis.SingleChannelAnalysis(
+#                         qdfTrajIO(dirname='/Volumes/DATA/nanocluster/20140320/'+dir+'/' ,filter='*.qdf', nfiles=10, Rfb=2.11E+9, Cfb=1.16E-12),
+#                         es.eventSegment,
+#                         sra.stepResponseAnalysis
+#                 ).Run()
 
+
+# SingleChannelAnalysis.SingleChannelAnalysis(
+# 			qdfTrajIO(dirname='/Users/arvind/Desktop/POM_nobuffer_PH7_m120/',nfiles=20, filter='*.qdf', Rfb=2.126E+9, Cfb=1.13E-12),
+# 			es.eventSegment,
+# 			sra.stepResponseAnalysis
+# 		).Run() 
 
 #[ analysisiter('/Volumes/DATA/PRL Data/EBSPEG600/20130722/m40mV8/', '*-'+str(i).zfill(2)+'??.qdf', i)	for i in range(100, 101) ]
 # [ analysisiter('/Volumes/DATA/PRL Data/EBSPEG600/20130723/m40mV2/', '*-'+str(i).zfill(2)+'??.qdf', i)	for i in range(10, 11) ]
@@ -90,11 +102,11 @@ def analysisiter(dir, filt, i):
 #/Volumes/DATA/SBSTags/d6TPCy3T25/20130930/p120mV6
 
 # '/Volumes/DATA/SBSTags/dA6TP30odd/20130925/p120mV'
-# SingleChannelAnalysis.SingleChannelAnalysis(
-# 			qdfTrajIO(dirname='/Users/arvind/Research/Experiments/PEG29EBSRefData/20120323/singleChan/' ,filter='*.qdf', nfiles=50, Rfb=9.1E+9, Cfb=1.07E-12),
-# 			es.eventSegment,
-# 			sra.stepResponseAnalysis
-# 		).Run() 
+SingleChannelAnalysis.SingleChannelAnalysis(
+			qdfTrajIO(dirname='/Users/arvind/Research/Experiments/PEG29EBSRefData/20120323/singleChan/' ,filter='*.qdf', nfiles=50, Rfb=9.1E+9, Cfb=1.07E-12),
+			es.eventSegment,
+			sra.stepResponseAnalysis
+		).Run() 
 
 
 # SingleChannelAnalysis.SingleChannelAnalysis(
@@ -103,11 +115,11 @@ def analysisiter(dir, filt, i):
 # 			sra.stepResponseAnalysis
 # 		).Run() 
 
-SingleChannelAnalysis.SingleChannelAnalysis(
-			qdfTrajIO(dirname='/Users/arvind/Research/Experiments/PolysialicAcid_KR/pH5.5/20140304/p90mV2/' ,filter='*.qdf', Rfb=2.11E+9, Cfb=1.16E-12),
-			es.eventSegment,
-			sra.stepResponseAnalysis
-		).Run() 
+# SingleChannelAnalysis.SingleChannelAnalysis(
+# 			qdfTrajIO(dirname='/Volumes/DATA/nanocluster/PW12O40-Dopamine/20140311/m80mV6/', filter='*.qdf', nfiles=300, format='pA', Rfb=2.11E+9, Cfb=1.16E-12),
+# 			es.eventSegment,
+# 			sra.stepResponseAnalysis
+# 		).Run() 
 # SingleChannelAnalysis.SingleChannelAnalysis(
 # 			qdfTrajIO(dirname='/Volumes/DATA/PEGCaptureRate/PEG12/20140214/m80mV5/' ,filter='*.qdf', Rfb=2.11E+9, Cfb=1.16E-12),
 # 			es.eventSegment,

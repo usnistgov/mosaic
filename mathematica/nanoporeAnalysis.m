@@ -172,7 +172,13 @@ Manipulate[PlotEvent[ts[[i]],md[[i]],1/FsKHz,20,{Automatic,16},s,Automatic,Autom
 ]
 
 
-CaptureRate[art_,blksz_]:=#[1/Mean/@Partition[art,blksz]]&/@{Mean,StandardError}
+CaptureRate[art_,cutoff_]:=Module[{h1=Hist1D[art,{0,cutoff},cutoff/1000],a,\[Lambda],t,ft},ft=NonlinearModelFit[Transpose[{h1[[All,1]],h1[[All,2]]/h1[[All,2]][[1]]}],a Exp[-(t/\[Lambda])],{{a,1},{\[Lambda],Mean[art]}},t];
+Return[{1/\[Lambda],1/(\[Lambda] Sqrt[Length[art]])}/.ft["BestFitParameters"]]
+]
+
+
+(* ::Text:: *)
+(*CaptureRate[art_,blksz_]:=#[1/Mean/@Partition[art,blksz]]&/@{Mean,StandardError}*)
 
 
 ArrivalTimes[md_]:=Flatten[Differences/@Partition[md[[All,MDKey["abseventstart"]]],2,1]]/1000

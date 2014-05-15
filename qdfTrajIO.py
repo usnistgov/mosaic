@@ -64,9 +64,9 @@ class qdfTrajIO(metaTrajIO.metaTrajIO):
 		# and time_scale to 0, we get back times in ms and current in pA.
 		# Check if the files have current of voltage.
 		if self.format=='V':
-			q=qdf.qdf_V2I(fname, self.Cfb, self.Rfb, scale_data=0, time_scale=0)
+			q=qdf.qdf_V2I(fname, float(self.Cfb), float(self.Rfb), scale_data=0, time_scale=0)
 		else:
-			q=qdf.qdf_I(fname, self.Cfb, self.Rfb, scale_data=0, time_scale=0)
+			q=qdf.qdf_I(fname, float(self.Cfb), float(self.Rfb), scale_data=0, time_scale=0)
 
 		# set the sampling frequency in Hz. The times are in ms.
 		# If the Fs attribute doesn't exist set it

@@ -10,10 +10,10 @@
 NotebookFileLineBreakTest
 NotebookFileLineBreakTest
 NotebookDataPosition[       157,          7]
-NotebookDataLength[     67756,       1612]
-NotebookOptionsPosition[     65852,       1548]
-NotebookOutlinePosition[     66237,       1565]
-CellTagsIndexPosition[     66194,       1562]
+NotebookDataLength[     69921,       1672]
+NotebookOptionsPosition[     67948,       1606]
+NotebookOutlinePosition[     68333,       1623]
+CellTagsIndexPosition[     68290,       1620]
 WindowFrame->Normal*)
 
 (* Beginning of Notebook Content *)
@@ -1249,6 +1249,64 @@ Cell[BoxData[
 Cell[BoxData[
  RowBox[{
   RowBox[{"CaptureRate", "[", 
+   RowBox[{"art_", ",", "cutoff_"}], "]"}], ":=", 
+  RowBox[{"Module", "[", 
+   RowBox[{
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"h1", "=", 
+       RowBox[{"Hist1D", "[", 
+        RowBox[{"art", ",", 
+         RowBox[{"{", 
+          RowBox[{"0", ",", "cutoff"}], "}"}], ",", 
+         FractionBox["cutoff", "1000"]}], "]"}]}], ",", "a", ",", "\[Lambda]",
+       ",", "t", ",", "ft"}], "}"}], ",", 
+    RowBox[{
+     RowBox[{"ft", "=", 
+      RowBox[{"NonlinearModelFit", "[", 
+       RowBox[{
+        RowBox[{"Transpose", "[", 
+         RowBox[{"{", 
+          RowBox[{
+           RowBox[{"h1", "\[LeftDoubleBracket]", 
+            RowBox[{"All", ",", "1"}], "\[RightDoubleBracket]"}], ",", 
+           FractionBox[
+            RowBox[{"h1", "\[LeftDoubleBracket]", 
+             RowBox[{"All", ",", "2"}], "\[RightDoubleBracket]"}], 
+            RowBox[{
+             RowBox[{"h1", "\[LeftDoubleBracket]", 
+              RowBox[{"All", ",", "2"}], "\[RightDoubleBracket]"}], 
+             "\[LeftDoubleBracket]", "1", "\[RightDoubleBracket]"}]]}], "}"}],
+          "]"}], ",", 
+        RowBox[{"a", " ", 
+         RowBox[{"Exp", "[", 
+          RowBox[{"-", 
+           FractionBox["t", "\[Lambda]"]}], "]"}]}], ",", 
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{"{", 
+           RowBox[{"a", ",", "1"}], "}"}], ",", 
+          RowBox[{"{", 
+           RowBox[{"\[Lambda]", ",", 
+            RowBox[{"Mean", "[", "art", "]"}]}], "}"}]}], "}"}], ",", "t"}], 
+       "]"}]}], ";", "\[IndentingNewLine]", 
+     RowBox[{"Return", "[", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{
+         FractionBox["1", "\[Lambda]"], ",", 
+         FractionBox["1", 
+          RowBox[{"\[Lambda]", 
+           SqrtBox[
+            RowBox[{"Length", "[", "art", "]"}]]}]]}], "}"}], "/.", 
+       RowBox[{"ft", "[", "\"\<BestFitParameters\>\"", "]"}]}], "]"}]}]}], 
+   "\[IndentingNewLine]", "]"}]}]], "Input",
+ InitializationCell->True,
+ CellChangeTimes->{{3.603151703157567*^9, 3.603151825377048*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"CaptureRate", "[", 
    RowBox[{"art_", ",", "blksz_"}], "]"}], ":=", 
   RowBox[{
    RowBox[{
@@ -1258,13 +1316,13 @@ Cell[BoxData[
        RowBox[{"Partition", "[", 
         RowBox[{"art", ",", "blksz"}], "]"}]}]], "]"}], "&"}], "/@", 
    RowBox[{"{", 
-    RowBox[{"Mean", ",", "StandardError"}], "}"}]}]}]], "Input",
+    RowBox[{"Mean", ",", "StandardError"}], "}"}]}]}]], "Text",
  InitializationCell->True,
  CellChangeTimes->{{3.6016399242484207`*^9, 3.601639958667521*^9}, {
-  3.602027839690157*^9, 3.602027839789959*^9}, {3.602027900854957*^9, 
-  3.602027901044438*^9}, {3.602028437186529*^9, 3.60202843728196*^9}, {
-  3.602028652034189*^9, 3.602028656614513*^9}, {3.6025082986027527`*^9, 
-  3.602508313718452*^9}}],
+   3.602027839690157*^9, 3.602027839789959*^9}, {3.602027900854957*^9, 
+   3.602027901044438*^9}, {3.602028437186529*^9, 3.60202843728196*^9}, {
+   3.602028652034189*^9, 3.602028656614513*^9}, {3.6025082986027527`*^9, 
+   3.602508313718452*^9}, 3.603152030440093*^9}],
 
 Cell[BoxData[
  RowBox[{
@@ -1604,14 +1662,16 @@ Cell[48465, 1107, 3647, 84, 165, "Input",
  InitializationCell->True],
 Cell[52115, 1193, 2206, 53, 131, "Input",
  InitializationGroup->True],
-Cell[54324, 1248, 726, 18, 51, "Input",
+Cell[54324, 1248, 2068, 56, 167, "Input",
  InitializationCell->True],
-Cell[55053, 1268, 532, 14, 28, "Input",
+Cell[56395, 1306, 751, 18, 51, "Text",
  InitializationCell->True],
-Cell[55588, 1284, 257, 9, 28, "Input",
+Cell[57149, 1326, 532, 14, 28, "Input",
  InitializationCell->True],
-Cell[55848, 1295, 7752, 195, 514, "Input"],
-Cell[63603, 1492, 2233, 53, 131, "Input",
+Cell[57684, 1342, 257, 9, 28, "Input",
+ InitializationCell->True],
+Cell[57944, 1353, 7752, 195, 514, "Input"],
+Cell[65699, 1550, 2233, 53, 131, "Input",
  InitializationGroup->True]
 }, Open  ]]
 }
