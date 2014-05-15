@@ -3,20 +3,20 @@ import os
 import glob
 import resource
 
-import SingleChannelAnalysis
+import pyeventanalysis.SingleChannelAnalysis
 
-import eventSegment as es
+import pyeventanalysis.eventSegment as es
 
-import singleStepEvent as sse
-import stepResponseAnalysis as sra 
-import multiStateAnalysis as msa
+import pyeventanalysis.singleStepEvent as sse
+import pyeventanalysis.stepResponseAnalysis as sra 
+import pyeventanalysis.multiStateAnalysis as msa
 
-from qdfTrajIO import *
-from abfTrajIO import *
-from tsvTrajIO import *
-from binTrajIO import *
+from pyeventanalysis.qdfTrajIO import *
+from pyeventanalysis.abfTrajIO import *
+from pyeventanalysis.tsvTrajIO import *
+from pyeventanalysis.binTrajIO import *
 
-from besselLowpassFilter import *
+from pyeventanalysis.besselLowpassFilter import *
 
 
 # resource.setrlimit(resource.RLIMIT_AS, (0.6*(2**30), 0.7*(2**30)))
@@ -102,7 +102,7 @@ def analysisiter(dir, filt, i):
 #/Volumes/DATA/SBSTags/d6TPCy3T25/20130930/p120mV6
 
 # '/Volumes/DATA/SBSTags/dA6TP30odd/20130925/p120mV'
-SingleChannelAnalysis.SingleChannelAnalysis(
+pyeventanalysis.SingleChannelAnalysis.SingleChannelAnalysis(
 			qdfTrajIO(dirname='/Users/arvind/Research/Experiments/PEG29EBSRefData/20120323/singleChan/' ,filter='*.qdf', nfiles=50, Rfb=9.1E+9, Cfb=1.07E-12),
 			es.eventSegment,
 			sra.stepResponseAnalysis

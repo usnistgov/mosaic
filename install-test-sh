@@ -1,5 +1,5 @@
 #!/bin/sh
 
 python test-depend.py
-cd utest
+cd pyeventanalysis/utest
 nosetests testAlgos.py -v
