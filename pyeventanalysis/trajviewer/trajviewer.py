@@ -8,9 +8,9 @@ import csv
 from PyQt4 import QtCore
 from PyQt4 import QtGui
 
-import abfTrajIO as abf
-import qdfTrajIO as qdf
-from metaTrajIO import FileNotFoundError, EmptyDataPipeError
+import pyeventanalysis.abfTrajIO as abf
+import pyeventanalysis.qdfTrajIO as qdf
+from pyeventanalysis.metaTrajIO import FileNotFoundError, EmptyDataPipeError
 
 from trajviewerui import Ui_mplWindow
 
