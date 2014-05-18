@@ -10,6 +10,7 @@ depend:
 
 math-iface:
 	cp mathematica/nanoporeAnalysis.m ~/Library/Mathematica/Applications/
+	cp mathematica/Util.m ~/Library/Mathematica/Applications/
 
 tests:
 	sh install-test-sh

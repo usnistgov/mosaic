@@ -103,7 +103,7 @@ def analysisiter(dir, filt, i):
 
 # '/Volumes/DATA/SBSTags/dA6TP30odd/20130925/p120mV'
 pyeventanalysis.SingleChannelAnalysis.SingleChannelAnalysis(
-			qdfTrajIO(dirname='/Users/arvind/Research/Experiments/PEG29EBSRefData/20120323/singleChan/' ,filter='*.qdf', nfiles=50, Rfb=9.1E+9, Cfb=1.07E-12),
+			qdfTrajIO(dirname='/Users/arvind/Research/Experiments/PEG29EBSRefData/20120323/singleChan/' ,filter='*.qdf', Rfb=9.1E+9, Cfb=1.07E-12),
 			es.eventSegment,
 			sra.stepResponseAnalysis
 		).Run() 

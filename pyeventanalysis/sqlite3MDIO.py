@@ -31,7 +31,6 @@ class data_record(dict):
 			else:
 				dat = base64.b64encode(struct.pack( packstr % len(val[1]), *val[1] ))
 		
-
 		dict.__setitem__(self, key, dat)
 
 	def __getitem__(self, key):
