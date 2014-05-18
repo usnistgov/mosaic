@@ -3,6 +3,7 @@
 	Created:	4/18/2013
 
 	ChangeLog:
+		5/17/14		AB  Modified md interface functions for metaMDIO support
 		2/16/14		AB 	Added new metadata field, 'AbsEventStart' to track 
 						global time of event start to allow capture rate estimation.
 		6/20/13		AB 	Added an additional check to reject events 
@@ -44,13 +45,10 @@ class stepResponseAnalysis(metaEventProcessor.metaEventProcessor):
 
 		When an event cannot be analyzed, the blockade depth, residence time and rise time are set to -1.
 	"""
-	def __init__(self, icurr, Fs, **kwargs):
+	def _init(self, **kwargs):
 		"""
 			Initialize the single step analysis class.
 		"""
-		# call the base class initializer. This sets self.eventData and self.Fs
-		super(stepResponseAnalysis, self).__init__(icurr,Fs, **kwargs)
-
 		# initialize the object's metadata (to -1) as class attributes
 		self.mdOpenChCurrent=-1
 		self.mdBlockedCurrent=-1
@@ -82,16 +80,13 @@ class stepResponseAnalysis(metaEventProcessor.metaEventProcessor):
 	###########################################################################
 	# Interface functions implemented starting here
 	###########################################################################
-	def processEvent(self):
+	def _processEvent(self):
 		"""
 			This function implements the core logic to analyze one single step-event.
 		"""
 		try:
 			# Fit the system transfer function to the event data
 			self.__FitEvent()
-
-			# Call the base class function for any additional processing
-			super(stepResponseAnalysis, self).processEvent()
 		except:
 			raise
 
@@ -113,6 +108,22 @@ class stepResponseAnalysis(metaEventProcessor.metaEventProcessor):
 					self.mdRedChiSq
 				]
 		
+	def mdHeadingDataType(self):
+		"""
+			Return a list of meta-data tags data types.
+		"""
+		return [
+					'TEXT', 
+					'REAL', 
+					'REAL',
+					'REAL',
+					'REAL',
+					'REAL',
+					'REAL',
+					'REAL',
+					'REAL',
+					'REAL'
+				]
 
 	def mdHeadings(self):
 		"""
@@ -120,14 +131,14 @@ class stepResponseAnalysis(metaEventProcessor.metaEventProcessor):
 		"""
 		return [
 					'ProcessingStatus', 
-					'OpenChCurrent (pA)', 
-					'BlockedCurrent (pA)',
-					'EventStart (ms)', 
-					'EventEnd (ms)', 
-					'BlockDepth (ms)', 
-					'ResTime (ms)', 
-					'RCConstant (ms)', 
-					'AbsEventStart (ms)', 
+					'OpenChCurrent', 
+					'BlockedCurrent',
+					'EventStart', 
+					'EventEnd', 
+					'BlockDepth', 
+					'ResTime', 
+					'RCConstant', 
+					'AbsEventStart', 
 					'ReducedChiSquared' 
 				]
 

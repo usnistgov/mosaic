@@ -35,7 +35,8 @@ def zmqWorker(inchdict, outchdict, workfuncname):
 				func()
 				#print procObj.mdProcessingStatus
 				# pickle and return the results
-				outchan.zmqSendData(outchanname, cPickle.dumps(procObj))
+				# outchan.zmqSendData(outchanname, cPickle.dumps(procObj))
+				outchan.zmqSendData(outchanname, 'DONE')
 
 	except KeyboardInterrupt:
 		pass

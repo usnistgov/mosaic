@@ -5,6 +5,7 @@
 	Created:	4/18/2013
 
 	ChangeLog:
+		5/17/14		AB  Modified md interface functions for metaMDIO support
 		9/26/13		AB	Initial version
 """
 import commonExceptions
@@ -46,13 +47,10 @@ class multiStateAnalysis(metaEventProcessor.metaEventProcessor):
 
 		When an event cannot be analyzed, the blockade depth, residence time and rise time are set to -1.
 	"""
-	def __init__(self, icurr, Fs, **kwargs):
+	def _init(self, **kwargs):
 		"""
 			Initialize the single step analysis class.
 		"""
-		# call the base class initializer. This sets self.eventData and self.Fs
-		super(multiStateAnalysis, self).__init__(icurr,Fs, **kwargs)
-
 		# initialize the object's metadata (to -1) as class attributes
 		self.mdOpenChCurrent=-1
 		self.mdCurrentStep=-1
@@ -91,9 +89,6 @@ class multiStateAnalysis(metaEventProcessor.metaEventProcessor):
 		try:
 			# Fit the system transfer function to the event data
 			self.__FitEvent()
-
-			# Call the base class function for any additional processing
-			super(multiStateAnalysis, self).processEvent()
 		except:
 			raise
 
@@ -114,6 +109,21 @@ class multiStateAnalysis(metaEventProcessor.metaEventProcessor):
 					self.mdRedChiSq
 				]
 		
+	def mdHeadingDataType(self):
+		"""
+			Return a list of meta-data tags data types.
+		"""
+		return [
+					'TEXT', 
+					'REAL', 
+					'REAL_LIST',
+					'REAL',
+					'REAL',
+					'REAL_LIST',
+					'REAL',
+					'REAL',
+					'REAL'
+				]
 
 	def mdHeadings(self):
 		"""
@@ -121,13 +131,13 @@ class multiStateAnalysis(metaEventProcessor.metaEventProcessor):
 		"""
 		return [
 					'ProcessingStatus', 
-					'OpenChCurrent (pA)', 
-					'CurrentStep (pA)',
+					'OpenChCurrent', 
+					'CurrentStep',
 					'EventStart', 
 					'EventEnd', 
 					'EventDelay', 
-					'ResTime (ms)', 
-					'RCConstant (ms)', 
+					'ResTime', 
+					'RCConstant', 
 					'ReducedChiSquared' 
 				]
 

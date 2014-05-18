@@ -6,6 +6,8 @@
 	Created:	7/17/2012
 
 	ChangeLog:
+		5/17/14		AB  Delete plotting support
+		5/17/14		AB  Add metaMDIO support for meta-data and time-series storage
 		2/14/14		AB 	Pass absdatidx argument to event processing to track absolute time of 
 						event start for capture rate estimation.
 		6/22/13		AB 	Use plotting hooks in metaEventPartition to plot blockade depth histogram in 
@@ -34,13 +36,13 @@ import cPickle
 import numpy as np 
 import uncertainties
 from  collections import deque
-import matplotlib.pyplot as plt
 
 import metaEventPartition
 import commonExceptions
 import singleStepEvent as sse 
 import stepResponseAnalysis as sra 
 import metaTrajIO
+import sqlite3MDIO
 
 import util
 import settings
@@ -109,6 +111,16 @@ class eventSegment(metaEventPartition.metaEventPartition):
 		outf=open(self.trajDataObj.datPath+'/eventProcessing.log','w')
 		outf.write(outputstr)
 
+		self.tEventProcObj=self.eventProcHnd([], self.trajDataObj.FsHz, eventstart=0,eventend=0, baselinestats=[ 0,0,0 ], algosettingsdict={}, savets=False, absdatidx=0, datafileHnd=None )
+
+		self.mdioDBHnd=sqlite3MDIO.sqlite3MDIO()
+		self.mdioDBHnd.initDB(
+								dbPath=self.trajDataObj.datPath, 
+								tableName='metadata',
+								colNames=(self.tEventProcObj.mdHeadings())+['TimeSeries'],
+								colNames_t=(self.tEventProcObj.mdHeadingDataType())+['REAL_LIST']
+							)
+
 		startTime=time.time()
 
 		# At the start of a run, store baseline stats for the open channel state
@@ -133,7 +145,7 @@ class eventSegment(metaEventPartition.metaEventPartition):
 		self.currData = deque()
 
 		#### Event Queue ####
-		self.eventQueue=[]
+		# self.eventQueue=[]
 
 		#### Vars for event partition ####
 		self.eventstart=False
@@ -191,7 +203,6 @@ class eventSegment(metaEventPartition.metaEventPartition):
 					recvdat=self.RecvResultsChan.zmqReceiveData()
 					if recvdat != "":
 						#store the processed event
-						self.eventQueue.append( cPickle.loads(recvdat) )
 						self.eventprocessedcount+=1
 
 						if self.eventprocessedcount%100 == 0:
@@ -217,17 +228,6 @@ class eventSegment(metaEventPartition.metaEventPartition):
 			procTime=time.time()-startTime
 			outputstr+='\t\Process events: ***USER STOP***\n\n\n'
 
-		#print "event count = ", self.eventcount
-		# write output files
-		# 1. Event metadata
-		if len(self.eventQueue) > 0:
-			w1=csv.writer(open(self.trajDataObj.datPath+'/eventMD.tsv', 'wO'),delimiter='\t')
-			w1.writerow(self.eventQueue[0].mdHeadings())
-			[ w1.writerow(event.mdList()) for event in self.eventQueue ]
-			if self.writeEventTS:
-				# 2. Raw event currents as CSV
-				w2=csv.writer(open(self.trajDataObj.datPath+'/eventTS.csv', 'wO'),delimiter=',')
-				[ w2.writerow(event.eventData) for event in self.eventQueue ]
 
 		outputstr+='[Summary]\n'
 
@@ -259,8 +259,7 @@ class eventSegment(metaEventPartition.metaEventPartition):
 		outputstr+=self.formatsettings()+'\n\n'
 
 		# event processing settings
-		if self.eventcount > 0:
-			outputstr+=self.eventQueue[0].formatsettings()+'\n\n'
+		outputstr+=self.tEventProcObj.formatsettings()+'\n\n'
 
 		# Output files
 		outputstr+=self.formatoutputfiles()
@@ -280,41 +279,7 @@ class eventSegment(metaEventPartition.metaEventPartition):
 		outf.write(outputstr)
 		outf.close()
 
-	def InitPlot(self):
-		"""
-			Initialize a plotting window to display analysis results in real-time.
-		"""
-		self.bvals=np.arange(0,1,0.0001)
-		ehist,bins=np.histogram(
-				np.array([-1]), 
-				bins=self.bvals
-			)
-
-		plt.ion()
-
-		self.fig = plt.figure()
-		ax = self.fig.add_subplot(111)
-		self.line1, = ax.plot(bins[:-1], ehist, 'r-') # Returns a tuple of line objects, thus the comma
-		plt.ylim([0, 1])
-
-	def UpdatePlot(self):
-		"""
-			Update plot data with new results as the analysis progresses.
-		"""
-		if len(self.eventQueue)==0:
-			return
-
-		bd=np.array([evnt.mdBlockDepth for evnt in self.eventQueue])
-
-		ehist,bins=np.histogram(
-				bd, 
-				bins=self.bvals
-			)
-
-		plt.ylim([0, np.max(bd)+5])
-
-		self.line1.set_ydata(ehist)
-		self.fig.canvas.draw()
+		self.mdioDBHnd.closeDB()
 
 	def Stop(self):
 		# other cleanup before calling the base class cleanup
@@ -359,9 +324,9 @@ class eventSegment(metaEventPartition.metaEventPartition):
 
 		fmtstr+='[Output]\n'
 		fmtstr+='\tOutput path = {0}\n'.format(self.trajDataObj.datPath)
-		fmtstr+='\tEvent characterization data = eventMD.tsv\n'
+		fmtstr+='\tEvent characterization data = '+ self.mdioDBHnd.dbFilename +'\n'
 		if self.writeEventTS:
-			fmtstr+='\tEvent time-series = eventTS.csv\n'
+			fmtstr+='\tEvent time-series = ***enabled***\n'
 		else:
 			fmtstr+='\tEvent time-series = ***disabled***\n'
 
@@ -506,7 +471,8 @@ class eventSegment(metaEventPartition.metaEventPartition):
 								baselinestats=[ self.meanOpenCurr, self.sdOpenCurr, self.slopeOpenCurr ],
 								algosettingsdict=self.eventProcSettingsDict,
 								savets=self.writeEventTS,
-								absdatidx=self.dataStart
+								absdatidx=self.dataStart,
+								datafileHnd=self.mdioDBHnd
 							)
 						)
 	
@@ -520,8 +486,8 @@ class eventSegment(metaEventPartition.metaEventPartition):
 
 		if self.parallelProc:
 			# handle parallel
-			
 			sys.stdout.flush()
+
 			self.SendJobsChan.zmqSendData('job', cPickle.dumps(eventobj))
 			
 			# check for a message 100 times. If an empty message is recevied quit immediately
@@ -532,12 +498,12 @@ class eventSegment(metaEventPartition.metaEventPartition):
 
 				self.eventprocessedcount+=1
 				#store the processed event
-				self.eventQueue.append( cPickle.loads(recvdat) )
+				# self.eventQueue.append( cPickle.loads(recvdat) )
 
 		else:
 			# call the process event function and store
 			eventobj.processEvent()
-			self.eventQueue.append( eventobj )
+			# self.eventQueue.append( eventobj )
 
 	# def __roundufloat(self, uf):
 	# 	u=uncertainties

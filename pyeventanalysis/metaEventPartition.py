@@ -5,6 +5,7 @@
 	Created:	4/22/2013
 
 	ChangeLog:
+		5/17/14		AB 	Delete Plotting support
 		6/22/13		AB 	Added two function hooks to allow plotting 
 						results in real-time. The first InitPlot must 
 						be implemented to initialize a plot. The second
@@ -118,20 +119,6 @@ class metaEventPartition(object):
 			# shutdown the zmq channels
 			self.SendJobsChan.zmqShutdown()
 			self.RecvResultsChan.zmqShutdown()
-
-	@abstractmethod
-	def InitPlot(self):
-		"""
-			Initialize a plotting window to display analysis results in real-time.
-		"""
-		pass
-
-	@abstractmethod
-	def UpdatePlot(self):
-		"""
-			Update plot data with new results as the analysis progresses.
-		"""
-		pass
 
 	@abstractmethod
 	def formatsettings(self):

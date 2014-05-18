@@ -7,6 +7,7 @@
 	Created:	7/16/2012
 
 	ChangeLog:
+		5/17/14		AB  Add metaMDIO support for meta-data and time-series storage
 		2/16/14		AB 	Define new kwarg, absdatidx to allow capture rate estimation.
 		6/28/13		AB 	Added a new keyword argument 'savets'. When set to False, the event time-series
 						is set to None. This can save a lot of memory when handling large data sets. 
@@ -40,6 +41,7 @@ class metaEventProcessor(object):
 				baselinestats 		baseline conductance statistics: a list of [mean, sd, slope] for the baseline current
 				algosettingsdict 	settings for event processing algorithm as a dictionary
 				absdatidx 			index of data start. This arg can allow arrival time estimation.
+				datafileHnd			reference to an metaMDIO object for meta-data IO
 		"""
 		self.eventData=icurr
 		self.Fs=Fs
@@ -56,18 +58,34 @@ class metaEventProcessor(object):
 
 		self.saveTS=kwargs['savets']
 		
+		self.dataFileHnd=kwargs['datafileHnd']
+
 		# meta-data attrs that are common to all event processing
 		self.mdProcessingStatus='normal'
 
-	@abstractmethod
+		# Call sub-class initialization
+		self._init(**kwargs)
+
 	def processEvent(self):
 		"""
 			This is the equivalent of a pure virtual function in C++. Specific event processing
 			algorithms must implement this method and then call this base function using super for
 			additional processing.
 		"""
+		self._processEvent()
+
 		if not self.saveTS:
-			self.eventData=None
+			self.eventData=[]
+
+		self.writeEvent()
+
+	@abstractmethod
+	def _init(self, **kwargs):
+		pass
+
+	@abstractmethod
+	def _processEvent(self):
+		pass
 
 	@abstractmethod
 	def mdList(self):
@@ -77,7 +95,8 @@ class metaEventProcessor(object):
 			To preserve this output, implementations of this class should
 			simply invoke the base class function using super. 				
 		"""
-		return [ str(self.__mdformat(getattr(self, mdHead))) for mdHead in self.__dict__.keys() if mdHead.startswith('md')==True ]
+		pass
+		#return [ str(self.__mdformat(getattr(self, mdHead))) for mdHead in self.__dict__.keys() if mdHead.startswith('md')==True ]
 	
 	@abstractmethod
 	def mdHeadings(self):
@@ -87,7 +106,15 @@ class metaEventProcessor(object):
 			To keep this functionality, sub-classes must invoke this function using super.
 		"""
 		# return metadata class attributes
-		return [ str(mdHead)[2:] for mdHead in self.__dict__.keys() if mdHead.startswith('md')==True ]
+		pass
+		#return [ str(mdHead)[2:] for mdHead in self.__dict__.keys() if mdHead.startswith('md')==True ]
+
+	@abstractmethod
+	def mdHeadingDataType(self):
+		"""
+			Return a list of meta-data tags data types.
+		"""
+		pass
 
 	@abstractmethod
 	def mdAveragePropertiesList(self):
@@ -97,7 +124,8 @@ class metaEventProcessor(object):
 			by sub-classes of metaEventProcessor. As a failsafe, an empty list
 			is returned.
 		"""
-		return []
+		pass
+		#return []
 
 	def rejectEvent(self, status):
 		"""
@@ -108,6 +136,13 @@ class metaEventProcessor(object):
 		[ setattr(self, mdHead, -1) for mdHead in self.__dict__.keys() if mdHead.startswith('md')==True ]
 		# set processing status to status
 		self.mdProcessingStatus=status
+
+	def writeEvent(self):
+		"""
+			Write event meta data to a metaMDIO object.
+		"""
+		if self.dataFileHnd:
+			self.dataFileHnd.writeRecord( (self.mdList())+[self.eventData] )
 
 	###########################################################################
 	# Local functions

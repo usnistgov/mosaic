@@ -3,6 +3,7 @@
 	Created:	7/16/2012
 
 	ChangeLog:
+		5/17/14		AB  Modified md interface functions for metaMDIO support
 		8/24/12 	AB 	Settings are read from a settings file and passed
 						to this class as the settingsDict class attr set
 						by metaEventProcessor.
@@ -39,13 +40,10 @@ class singleStepEvent(metaEventProcessor.metaEventProcessor):
 		When an event cannot be analyzed, the blockade depth and residence time are set to -1.
 
 	"""
-	def __init__(self, icurr, Fs, **kwargs):
+	def _init(self, **kwargs):
 		"""
 			Initialize the single step analysis class.
 		"""
-		# call the base class initializer. This sets self.eventData and self.Fs
-		super(singleStepEvent, self).__init__(icurr,Fs, **kwargs)
-
 		# initialize the object's metadata (to -1) as class attributes
 		self.mdOpenChCurrent=-1
 		self.mdBlockedCurrent=-1
@@ -78,7 +76,7 @@ class singleStepEvent(metaEventProcessor.metaEventProcessor):
 	###########################################################################
 	# Interface functions implemented starting here
 	###########################################################################
-	def processEvent(self):
+	def _processEvent(self):
 		"""
 			This function implements the core logic to analyze one single step-event.
 		"""
@@ -92,8 +90,6 @@ class singleStepEvent(metaEventProcessor.metaEventProcessor):
 			# to calculate the residence time.
 			self.__residenceTime()
 
-			# Call the base class function for any additional processing
-			super(singleStepEvent, self).processEvent()
 		except:
 			raise
 
@@ -118,7 +114,31 @@ class singleStepEvent(metaEventProcessor.metaEventProcessor):
 		"""
 			Explicity set the metadata to print out.
 		"""
-		return ['ProcessingStatus', 'OpenChCurrent (pA)', 'BlockedCurrent (pA)','EventStart', 'EventEnd', 'BlockDepth', 'ResTime (ms)', 'A12TempOutput' ]
+		return [	
+					'ProcessingStatus', 
+					'OpenChCurrent', 
+					'BlockedCurrent',
+					'EventStart', 
+					'EventEnd', 
+					'BlockDepth', 
+					'ResTime', 
+					'A12TempOutput' 
+				]
+
+	def mdHeadingDataType(self):
+		"""
+			Return a list of meta-data tags data types.
+		"""
+		return [
+					'TEXT', 
+					'REAL', 
+					'REAL',
+					'REAL',
+					'REAL',
+					'REAL',
+					'REAL',
+					'REAL'
+				]
 
 	def mdAveragePropertiesList(self):
 		"""
