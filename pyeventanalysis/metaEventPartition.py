@@ -85,12 +85,35 @@ class metaEventPartition(object):
 			self.SendJobsChan=zmqIO.zmqIO(zmqIO.PUSH, { 'job' : '127.0.0.1:'+str(5500) } )
 			self.RecvResultsChan=zmqIO.zmqIO(zmqIO.PULL, tdict )
 
+		self._init(trajDataObj, eventProcHnd, eventPartitionSettings, eventProcSettings)
+
+
 	# Define enter and exit funcs so this class can be used with a context manager
 	def __enter__(self):
 		return self
 
 	def __exit__(self, type, value, traceback):
 		self.Stop()
+
+	def Stop(self):
+		if self.parallelProc:
+			# send a STOP message to all the processes
+			for i in range(len(self.parallelProcDict)):
+				self.SendJobsChan.zmqSendData('job','STOP')
+
+			# wait for the processes to terminate
+			for k in self.parallelProcDict.keys():
+				self.parallelProcDict[k].join()
+
+			# shutdown the zmq channels
+			self.SendJobsChan.zmqShutdown()
+			self.RecvResultsChan.zmqShutdown()
+
+		self._stop()
+
+	@abstractmethod
+	def _init(self, trajDataObj, eventProcHnd, eventPartitionSettings, eventProcSettings):
+		pass
 
 	@abstractmethod
 	def PartitionEvents(self):
@@ -106,19 +129,8 @@ class metaEventPartition(object):
 		pass
 
 	@abstractmethod
-	def Stop(self):
-		if self.parallelProc:
-			# send a STOP message to all the processes
-			for i in range(len(self.parallelProcDict)):
-				self.SendJobsChan.zmqSendData('job','STOP')
-
-			# wait for the processes to terminate
-			for k in self.parallelProcDict.keys():
-				self.parallelProcDict[k].join()
-
-			# shutdown the zmq channels
-			self.SendJobsChan.zmqShutdown()
-			self.RecvResultsChan.zmqShutdown()
+	def _stop(self):
+		pass
 
 	@abstractmethod
 	def formatsettings(self):

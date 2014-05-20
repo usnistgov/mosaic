@@ -58,7 +58,7 @@ class eventSegment(metaEventPartition.metaEventPartition):
 	"""
 		Segment a trajectory
 	"""
-	def __init__(self, trajDataObj, eventProcHnd, eventPartitionSettings, eventProcSettings):
+	def _init(self, trajDataObj, eventProcHnd, eventPartitionSettings, eventProcSettings):
 		"""
 			Implement an event partitioning algorithm by sub-classing the metaEventPartition class
 	
@@ -81,9 +81,6 @@ class eventSegment(metaEventPartition.metaEventPartition):
 				slopeOpenCurr	Explicitly set open channel current slope. (default: -1, to 
 								calculate automatically)
 		"""
-		# First call the base class initializer. 
-		super(eventSegment, self).__init__(trajDataObj, eventProcHnd, eventPartitionSettings, eventProcSettings)
-
 		# parse algorithm specific settings from the settings dict
 		try:
 			self.blockSizeSec=float(self.settingsDict.pop("blockSizeSec", 1.0))
@@ -95,12 +92,8 @@ class eventSegment(metaEventPartition.metaEventPartition):
 			self.meanOpenCurr=float(self.settingsDict.pop("meanOpenCurr",-1.))
 			self.sdOpenCurr=float(self.settingsDict.pop("sdOpenCurr",-1.))
 			self.slopeOpenCurr=float(self.settingsDict.pop("slopeOpenCurr",-1.))
-			self.plotResults=int(self.settingsDict.pop("plotResults", 0))
 		except ValueError as err:
 			raise commonExceptions.SettingsTypeError( err )
-
-		if self.plotResults:
-			self.InitPlot()
 
 	def PartitionEvents(self):
 		"""			
@@ -281,10 +274,8 @@ class eventSegment(metaEventPartition.metaEventPartition):
 
 		self.mdioDBHnd.closeDB()
 
-	def Stop(self):
-		# other cleanup before calling the base class cleanup
-
-		super(eventSegment, self).Stop()
+	def _stop(self):
+		pass
 
 	def formatsettings(self):
 		"""
@@ -481,9 +472,6 @@ class eventSegment(metaEventPartition.metaEventPartition):
 			return
 
 	def __processEvent(self, eventobj):
-		if self.plotResults:
-			self.UpdatePlot()
-
 		if self.parallelProc:
 			# handle parallel
 			sys.stdout.flush()
