@@ -66,24 +66,7 @@ class metaEventPartition(object):
 			raise commonExceptions.SettingsTypeError( err )
 
 		if self.parallelProc:
-			# setup parallel processing here
-			self.parallelProcDict={}
-
-			nworkers=multiprocessing.cpu_count() - self.reserveNCPU
-			for i in range(nworkers):
-				self.parallelProcDict[i] = multiprocessing.Process(
-												target=zmqWorker.zmqWorker, 
-												args=( { 'job' : '127.0.0.1:'+str(5500) }, { 'results' : '127.0.0.1:'+str(5600+i*10) }, "processEvent",)
-											)
-				self.parallelProcDict[i].start()
-			# allow the processes to start up
-			time.sleep(1)
-
-			tdict={}
-			[ tdict.update( {'results'+str(i) : '127.0.0.1:'+str(5600+i*10) } ) for i in range(nworkers) ]
-			# Parallel processing also needs zmq handles to send data to the worker processes and retrieve the results
-			self.SendJobsChan=zmqIO.zmqIO(zmqIO.PUSH, { 'job' : '127.0.0.1:'+str(5500) } )
-			self.RecvResultsChan=zmqIO.zmqIO(zmqIO.PULL, tdict )
+			self._setupparallel()
 
 		self._init(trajDataObj, eventProcHnd, eventPartitionSettings, eventProcSettings)
 
@@ -110,6 +93,26 @@ class metaEventPartition(object):
 			self.RecvResultsChan.zmqShutdown()
 
 		self._stop()
+
+	def _setupparallel(self):
+		# setup parallel processing here
+		self.parallelProcDict={}
+
+		nworkers=multiprocessing.cpu_count() - self.reserveNCPU
+		for i in range(nworkers):
+			self.parallelProcDict[i] = multiprocessing.Process(
+											target=zmqWorker.zmqWorker, 
+											args=( { 'job' : '127.0.0.1:'+str(5500) }, { 'results' : '127.0.0.1:'+str(5600+i*10) }, "processEvent",)
+										)
+			self.parallelProcDict[i].start()
+		# allow the processes to start up
+		time.sleep(1)
+
+		tdict={}
+		[ tdict.update( {'results'+str(i) : '127.0.0.1:'+str(5600+i*10) } ) for i in range(nworkers) ]
+		# Parallel processing also needs zmq handles to send data to the worker processes and retrieve the results
+		self.SendJobsChan=zmqIO.zmqIO(zmqIO.PUSH, { 'job' : '127.0.0.1:'+str(5500) } )
+		self.RecvResultsChan=zmqIO.zmqIO(zmqIO.PULL, tdict )
 
 	@abstractmethod
 	def _init(self, trajDataObj, eventProcHnd, eventPartitionSettings, eventProcSettings):

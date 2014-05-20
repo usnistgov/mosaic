@@ -77,29 +77,38 @@ class sqlite3MDIO(metaMDIO.metaMDIO):
 		self.db.close()
 		
 	def writeRecord(self, data):
-		c=self.db.cursor()
-
 		placeholders_list=','.join(['?' for i in range(len(data)+1)])
 
-		c.execute(	'INSERT INTO ' + 
-					self.tableName + 
-					'(recIDX, '+', '.join(self.colNames)+') VALUES('+
-					placeholders_list+')', self._datalist(data)
-				)
+		with self.db:
+			self.db.execute(	'INSERT INTO ' + 
+						self.tableName + 
+						'(recIDX, '+', '.join(self.colNames)+') VALUES('+
+						placeholders_list+')', self._datalist(data)
+					)
 
-		if self.recIdx % 10000 == 0:
-			self.db.commit()
-
-		self.recIdx+=1
+			self.recIdx+=1
 
 	def queryDB(self, query):
+		def col_names(query, c, tablename):
+			cols=[]
+			for word in query.split()[1:]:
+				if word == 'from':
+					break
+				
+				cols+=[word]
+
+			c1=[ c.rstrip(',') for c in cols ]
+			if c1[0]=='*':
+				return [ str(row[1]) for row in c.execute('PRAGMA table_info('+tablename+'_t)').fetchall() ]
+			else:
+				return c1
+
 		try:
 			self.db.commit()
-
 			c = self.db.cursor()
 
-			colnames=[ str(row[1]) for row in c.execute('PRAGMA table_info('+self.tableName+'_t)').fetchall() ]
-			colnames_t=list(str(c) for c in (c.execute( 'select * from '+self.tableName+'_t' ).fetchall())[0])
+			colnames=col_names(query, c, self.tableName)
+			colnames_t=list(str(c) for c in (c.execute( 'select '+','.join(colnames)+' from '+self.tableName+'_t' ).fetchall())[0])
 
 			c.execute(str(query))
 		
@@ -160,16 +169,9 @@ class sqlite3MDIO(metaMDIO.metaMDIO):
 
 if __name__=="__main__":
 	c=sqlite3MDIO()
-	c.initDB(
-				dbPath='.', 
-				tableName='metadata',
-				colNames=['status', 'blockdepth', 'restime','timeseries'], 
-				colNames_t=['TEXT','REAL','REAL','REAL_LIST']
-			)
-	for i in range(100):
-		c.writeRecord( ["normal", i/12.0, i*12.0+6.8, numpy.array([1.,2.,3.,4.])*i/12.] )
+	c.openDB('/Users/arvind/Research/Experiments/PEG29EBSRefData/20120323/singleChan/eventMD2014-05-19 10.50 PM.sqlite')
 	
-	q=c.queryDB( "select * from metadata where ( blockdepth > 0.2 and status = 'normal')" )[:10]
+	q=c.queryDB( "select BlockDepth from metadata" )[:10]
 	print "results:"
 	print q
 	
