@@ -60,7 +60,7 @@ class sqlite3MDIO(metaMDIO.metaMDIO):
 			raise metaMDIO.InsufficientArgumentsError("Missing arguments: 'colNames_t' must be supplied to initialize {0}".format(type(self).__name__))
 
 		self.recIdx=0
-		self.dbFilename='eventMD' +str(datetime.datetime.now().strftime('%Y-%m-%d %I.%M %p'))+'.sqlite'
+		self.dbFilename='eventMD-' +str(datetime.datetime.now().strftime('%Y%m%d-%H%M%S'))+'.sqlite'
 		self.db = sqlite3.connect(self.dbPath+'/'+self.dbFilename, detect_types=sqlite3.PARSE_DECLTYPES)
 
 		self._setuptables()

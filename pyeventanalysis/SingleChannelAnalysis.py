@@ -1,4 +1,5 @@
 import settings
+import multiprocessing
 
 class SingleChannelAnalysis(object):
 	"""
@@ -13,7 +14,7 @@ class SingleChannelAnalysis(object):
 		self.eventPartitionHnd=eventPartitionHnd
 		self.eventProcHnd=eventProcHnd
 
-	def Run(self):
+	def Run(self, forkProcess=False):
 		"""
 		"""
 		with self.eventPartitionHnd(
@@ -22,4 +23,12 @@ class SingleChannelAnalysis(object):
 							self.settingsDict.getSettings(self.eventPartitionHnd.__name__),
 							self.settingsDict.getSettings(self.eventProcHnd.__name__)
 						) as EventPartition:
-			EventPartition.PartitionEvents()
+			if forkProcess:
+				try:
+					proc = multiprocessing.Process( target=EventPartition.PartitionEvents )
+					proc.start()
+					proc.join()
+				except:
+					proc.join()
+			else:
+				EventPartition.PartitionEvents()

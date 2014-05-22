@@ -5,6 +5,8 @@
 	Created:	7/17/2012
 
 	ChangeLog:
+		5/22/14		AB 	Added dcOffset kwarg to initialization to allow 
+						for offset correction in the ionic current data.
 		2/13/14		AB 	Fixed a potential infinite recursion bug in the
 						initialization. 
 		7/17/12		AB	Initial version
@@ -43,7 +45,7 @@ class metaTrajIO(object):
 			for what those may be. For example, the qdfTrajIO implementation of metaTrajIO also requires
 			the feedback resistance (Rfb) and feedback capacitance (Cfb) to be passed at initialization.
 
-			Args: The arguments	passed to init change based on the method of file IO selected:
+			Common Args:
 				dirname		all files from a directory ('<full path to data directory>')
 				nfiles		if requesting N files (in addition to dirname) from a specified directory
 				
@@ -56,6 +58,7 @@ class metaTrajIO(object):
 							and excluded from any data analysis
 				datafilter	Handle to the algorithm to use to filter the data. If no algorithm is specified, datafilter
 							is None and no filtering is performed.
+				dcOffset	Subtract a DC offset from the ionic current data.
 			Returns:
 				None
 			Properties:
@@ -107,10 +110,14 @@ class metaTrajIO(object):
 		# setup data filtering
 		if hasattr(self, 'datafilter'):
 			self.dataFilter=True
-			self.dataFilterObj=self.__setupDataFilter()
+			self.dataFilterObj=self._setupDataFilter()
 		else:
 			self.dataFilter=False
 
+		if not hasattr(self, 'dcOffset'):
+			self.dcOffset=0.0
+		else:
+			self.dcOffset=float(self.dcOffset)
 
 		# initialize an empty data pipeline
 		self.currDataPipe=np.array([])
@@ -128,7 +135,7 @@ class metaTrajIO(object):
 	@property
 	def FsHz(self):
 		if not self.initPipe:
-			self.__initPipe()
+			self._initPipe()
 
 		if not self.dataFilter:
 			return self.Fs
@@ -150,12 +157,12 @@ class metaTrajIO(object):
 				EmptyDataPipeError if the queue has fewer data points than requested.
 		"""
 		if not self.initPipe:
-			self.__initPipe()
+			self._initPipe()
 
 
 		try:
 			# Get the elements to return: index to (index+n)
-			t=self.currDataPipe[self.currDataIdx:self.currDataIdx+n]
+			t=self.currDataPipe[self.currDataIdx:self.currDataIdx+n]-self.dcOffset
 			if len(t) < n:
 				raise IndexError
 
@@ -200,11 +207,11 @@ class metaTrajIO(object):
 				EmptyDataPipeError if the queue has fewer data points than requested.
 		"""
 		if not self.initPipe:
-			self.__initPipe()
+			self._initPipe()
 
 		try:
 			# Get the elements to return
-			t=self.currDataPipe[self.currDataIdx:self.currDataIdx+n]
+			t=self.currDataPipe[self.currDataIdx:self.currDataIdx+n]-self.dcOffset
 			if len(t) < n:
 				raise IndexError
 			return t
@@ -292,9 +299,9 @@ class metaTrajIO(object):
 		return poplist
 
 	#################################################################
-	# Private Functions
+	# Internal Functions
 	#################################################################
-	def __initPipe(self):
+	def _initPipe(self):
 		# Last, on startup load a single data file to force
 		# the sampling frequency FsHz to be set on startup
 		fnames=self.popfnames(1)
@@ -311,7 +318,7 @@ class metaTrajIO(object):
 			self.popdata(n-1)
 
 
-	def __setupDataFilter(self):
+	def _setupDataFilter(self):
 		filtsettings=settings.settings( self.datPath ).getSettings(self.datafilter.__name__)
 		if filtsettings=={}:
 			print "No settings found for '{0}'. Data filtering is disabled".format(str(self.datafilter.__name__))
