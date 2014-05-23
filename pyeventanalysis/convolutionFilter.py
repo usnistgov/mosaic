@@ -16,15 +16,12 @@ import metaIOFilter
 class convolutionFilter(metaIOFilter.metaIOFilter):
 	"""
 	"""
-	def __init__(self, **kwargs):
+	def _init(self, **kwargs):
 		"""
 			Keyword Args:
 			In addition to metaIOFilter.__init__ args,
 				filterCoeff		filter coefficients (default is a 10 point uniform moving average)
 		"""
-		# base class processing last
-		super(convolutionFilter, self).__init__(**kwargs)
-
 		try:
 			self.filterCoeff=eval(kwargs['filterCoeff'])
 		except KeyError:

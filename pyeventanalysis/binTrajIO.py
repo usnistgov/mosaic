@@ -18,7 +18,7 @@ class binTrajIO(metaTrajIO.metaTrajIO):
 		Read a binary file that contains single channel ionic current data and calculate the current in pA 
 		after scaling by the amplifier scale factor and removing any offsets.
 	"""
-	def __init__(self, **kwargs):
+	def _init(self, **kwargs):
 		"""
 			Args:
 				In addition to metaTrajIO.__init__ args,
@@ -33,9 +33,6 @@ class binTrajIO(metaTrajIO.metaTrajIO):
 			Errors:
 				InsufficientArgumentsError if the mandatory arguments Rfb and Cfb are not set
 		"""
-		# base class processing first
-		super(binTrajIO, self).__init__(**kwargs)
-
 		if not hasattr(self, 'AmplifierScale'):
 			raise metaTrajIO.InsufficientArgumentsError("{0} requires the amplifier scale in pA to be defined.".format(type(self).__name__))
 		if not hasattr(self, 'AmplifierOffset'):
@@ -73,14 +70,10 @@ class binTrajIO(metaTrajIO.metaTrajIO):
 
 		return tempdata
 		
-	def formatsettings(self):
+	def _formatsettings(self):
 		"""
 			Return a formatted string of settings for display
 		"""
-		# get base class formatting
-		fmtstr=super(binTrajIO,self).formatsettings()
-
-		# for qdf files, add the values of the feedback resistance and capacitance
 		fmtstr+='\n\t\tAmplifier scale = {0} pA\n'.format(self.AmplifierScale)
 		fmtstr+='\t\tAmplifier offset = {0} pA\n'.format(self.AmplifierOffset)
 		fmtstr+='\t\tHeader offset = {0} bytes\n'.format(self.HeaderOffset)

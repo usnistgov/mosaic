@@ -17,7 +17,7 @@ import csv
 class tsvTrajIO(metaTrajIO.metaTrajIO):
 	"""
 	"""
-	def __init__(self, **kwargs):
+	def _init(self, **kwargs):
 		"""
 			Perform additional initialization checks. Check if kwarg 'timeCol' is set to a number.
 
@@ -60,9 +60,6 @@ class tsvTrajIO(metaTrajIO.metaTrajIO):
 		# The default data separator is a tab.
 		self.separator=kwargs.pop('separator', '\t')
 
-		# base class processing last
-		super(tsvTrajIO, self).__init__(**kwargs)
-
 		# additional meta data
 		self.fileFormat='tsv'
 
@@ -84,6 +81,9 @@ class tsvTrajIO(metaTrajIO.metaTrajIO):
 			data=np.hstack((data, self.__readtsv(f)))
 
 		return data
+
+	def _formatsettings(self):
+		return ""
 
 	def __readtsv(self, fname):
 		"""

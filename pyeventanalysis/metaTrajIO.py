@@ -129,6 +129,9 @@ class metaTrajIO(object):
 
 		self.initPipe=False
 
+		# Call sub-class init
+		self._init(**kwargs)
+
 	#################################################################
 	# Public API: functions
 	#################################################################
@@ -245,6 +248,9 @@ class metaTrajIO(object):
 		fmtstr+='\t\tFile format = {0}\n'.format(self.fileFormat)
 		fmtstr+='\t\tSampling frequency = {0} kHz\n'.format(self.FsHz*1e-3)
 
+		# Sub-class formatted settings
+		fmtstr+=self._formatsettings()
+
 		return fmtstr
 
 	#################################################################
@@ -268,7 +274,15 @@ class metaTrajIO(object):
 			self.currDataPipe=np.hstack((self.currDataPipe, self.dataFilterObj.filteredData ))
 		else:
 			self.currDataPipe=np.hstack((self.currDataPipe, data ))
-			
+		
+	@abstractmethod
+	def _formatsettings(self):
+		pass
+		
+	@abstractmethod
+	def _init(self, **Kwargs):
+		pass
+
 	@abstractmethod
 	def readdata(self, fname):
 		"""

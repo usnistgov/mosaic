@@ -18,7 +18,7 @@ import numpy as np
 class abfTrajIO(metaTrajIO.metaTrajIO):
 	"""
 	"""
-	def __init__(self, **kwargs):
+	def _init(self, **kwargs):
 		"""
 			Args:
 				In addition to metaTrajIO.__init__ args,
@@ -28,9 +28,8 @@ class abfTrajIO(metaTrajIO.metaTrajIO):
 			Errors:
 				None
 		"""
-		# base class processing first
-		super(abfTrajIO, self).__init__(**kwargs)
-
+		pass
+	
 	def readdata(self, fname):
 		"""
 			Read one or more files and append their data to the data pipeline.
@@ -63,13 +62,10 @@ class abfTrajIO(metaTrajIO.metaTrajIO):
 
 		return tempdata
 
-	def formatsettings(self):
+	def _formatsettings(self):
 		"""
 			Return a formatted string of settings for display
 		"""
-		# get base class formatting
-		fmtstr=super(abfTrajIO,self).formatsettings()
-
 		fmtstr+='\t\tLowpass filter = {0} kHz\n'.format(self.bandwidth*0.001)
 		fmtstr+='\t\tSignal gain = {0}\n'.format(self.gain)
 

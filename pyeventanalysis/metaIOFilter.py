@@ -31,15 +31,20 @@ class metaIOFilter(object):
 		"""
 		self.decimate=int(kwargs.pop('decimate', 1))
 
+		# sub-class initialization
+		self._init(**kwargs)
+
+	@abstractmethod
+	def _init(self, **kwargs):
+		pass
+
 	@abstractmethod
 	def filterData(self, icurr, Fs):
 		"""
-			This is the equivalent of a pure virtual function in C++. Specific filtering
-			algorithms must implement this method and then call this base function using super for
-			additional processing.
+			This is the equivalent of a pure virtual function in C++. 
 
 			Implementations of this method MUST store (1) a ref to the raw event data in self.eventData AND 
-			(2) the sampling frequence in self.Fs.
+			(2) the sampling frequency in self.Fs.
 
 			Args:
 				icurr				ionic current in pA

@@ -68,9 +68,7 @@ class metaEventProcessor(object):
 
 	def processEvent(self):
 		"""
-			This is the equivalent of a pure virtual function in C++. Specific event processing
-			algorithms must implement this method and then call this base function using super for
-			additional processing.
+			This is the equivalent of a pure virtual function in C++. 
 		"""
 		self._processEvent()
 
@@ -90,24 +88,16 @@ class metaEventProcessor(object):
 	@abstractmethod
 	def mdList(self):
 		"""
-			Return a list of meta-data set by event processing. 
-			By default this function prints all metadata attributes starting with 'md'. 
-			To preserve this output, implementations of this class should
-			simply invoke the base class function using super. 				
+			Return a list of meta-data set by event processing.  				
 		"""
 		pass
-		#return [ str(self.__mdformat(getattr(self, mdHead))) for mdHead in self.__dict__.keys() if mdHead.startswith('md')==True ]
 	
 	@abstractmethod
 	def mdHeadings(self):
 		"""
-			Return a list of meta-data tags for display purposes. By default
-			this function returns any class attributes starting with 'md' sorted alphabetically.
-			To keep this functionality, sub-classes must invoke this function using super.
+			Return a list of meta-data tags for display purposes.
 		"""
-		# return metadata class attributes
 		pass
-		#return [ str(mdHead)[2:] for mdHead in self.__dict__.keys() if mdHead.startswith('md')==True ]
 
 	@abstractmethod
 	def mdHeadingDataType(self):

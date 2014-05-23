@@ -20,7 +20,7 @@ import qdf.readqdf as qdf
 class qdfTrajIO(metaTrajIO.metaTrajIO):
 	"""
 	"""
-	def __init__(self, **kwargs):
+	def _init(self, **kwargs):
 		"""
 			In addition to the base class init, check if the 
 			feedback resistance (Rfb) and feedback capacitance (Cfb)
@@ -36,9 +36,6 @@ class qdfTrajIO(metaTrajIO.metaTrajIO):
 			Errors:
 				InsufficientArgumentsError if the mandatory arguments Rfb and Cfb are not set
 		"""
-		# base class processing first
-		super(qdfTrajIO, self).__init__(**kwargs)
-
 		if not hasattr(self, 'Rfb') or not hasattr(self, 'Cfb'):
 			raise metaTrajIO.InsufficientArgumentsError("{0} requires the feedback resistance (Rfb) and feedback capacitance (Cfb) to be defined.".format(type(self).__name__))
 
@@ -82,13 +79,10 @@ class qdfTrajIO(metaTrajIO.metaTrajIO):
 		#print "last raw current val in file ", fname, " = ", q[-1]
 		return q[ : , 1]
 
-	def formatsettings(self):
+	def _formatsettings(self):
 		"""
 			Return a formatted string of settings for display
 		"""
-		# get base class formatting
-		fmtstr=super(qdfTrajIO,self).formatsettings()
-
 		# for qdf files, add the values of the feedback resistance and capacitance
 		fmtstr+='\n\t\tFeedback resistance = {0} GOhm\n'.format(self.Rfb*1e-9)
 		fmtstr+='\t\tFeedback capacitance = {0} pF\n'.format(self.Cfb*1e12)

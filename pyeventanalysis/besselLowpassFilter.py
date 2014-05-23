@@ -15,16 +15,13 @@ import metaIOFilter
 class besselLowpassFilter(metaIOFilter.metaIOFilter):
 	"""
 	"""
-	def __init__(self, **kwargs):
+	def _init(self, **kwargs):
 		"""
 			Keyword Args:
 			In addition to metaIOFilter.__init__ args,
 				filterOrder		the filter order
 				filterCutoff	filter cutoff frequency in Hz
 		"""
-		# base class processing last
-		super(besselLowpassFilter, self).__init__(**kwargs)
-
 		try:
 			self.filterOrder=float(kwargs['filterOrder'])
 			self.filterCutoff=float(kwargs['filterCutoff'])
