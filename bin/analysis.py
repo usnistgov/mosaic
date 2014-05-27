@@ -110,10 +110,16 @@ def analysisiter(dir, filt, i):
 # 		).Run() 
 
 pyeventanalysis.SingleChannelAnalysis.SingleChannelAnalysis(
-			qdfTrajIO(dirname='/Volumes/DATA/polypeptide standard/20140521/p120mV5/' ,filter='*.qdf', dcOffset=75, Rfb=2.11E+9, Cfb=1.16E-12),
+			qdfTrajIO(dirname='/Users/arvind/Research/Experiments/PEGCoumarin/SingleChanPCoumSet4/' ,filter='*.qdf', Rfb=9.1E+9, Cfb=1.07E-12),
 			es.eventSegment,
 			sra.stepResponseAnalysis
 		).Run() 
+
+# pyeventanalysis.SingleChannelAnalysis.SingleChannelAnalysis(
+# 			qdfTrajIO(dirname='/Users/arvind/Research/Experiments/PEG29EBSRefData/20120323/singleChan/' ,filter='*.qdf', nfiles=5, Rfb=9.1E+9, Cfb=1.07E-12),
+# 			es.eventSegment,
+# 			sra.stepResponseAnalysis
+# 		).Run() 
 
 
 

@@ -66,6 +66,8 @@ class abfTrajIO(metaTrajIO.metaTrajIO):
 		"""
 			Return a formatted string of settings for display
 		"""
+		fmtstr=""
+		
 		fmtstr+='\t\tLowpass filter = {0} kHz\n'.format(self.bandwidth*0.001)
 		fmtstr+='\t\tSignal gain = {0}\n'.format(self.gain)
 

@@ -74,6 +74,8 @@ class binTrajIO(metaTrajIO.metaTrajIO):
 		"""
 			Return a formatted string of settings for display
 		"""
+		fmtstr=""
+		
 		fmtstr+='\n\t\tAmplifier scale = {0} pA\n'.format(self.AmplifierScale)
 		fmtstr+='\t\tAmplifier offset = {0} pA\n'.format(self.AmplifierOffset)
 		fmtstr+='\t\tHeader offset = {0} bytes\n'.format(self.HeaderOffset)

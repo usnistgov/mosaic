@@ -89,7 +89,20 @@ class sqlite3MDIO(metaMDIO.metaMDIO):
 			self.recIdx+=1
 
 	def queryDB(self, query):
-		def col_names(query, c, tablename):
+		try:
+			self.db.commit()
+			c = self.db.cursor()
+
+			colnames=self._col_names(query, c, self.tableName)
+			colnames_t=list(str(c) for c in (c.execute( 'select '+','.join(colnames)+' from '+self.tableName+'_t' ).fetchall())[0])
+
+			c.execute(str(query))
+		
+			return [ self._decoderecord(colnames, colnames_t, rec) for rec in c.fetchall() ]
+		except sqlite3.OperationalError, err:
+			print err
+
+	def _col_names(self, query, c, tablename):
 			cols=[]
 			for word in query.split()[1:]:
 				if word == 'from':
@@ -102,19 +115,6 @@ class sqlite3MDIO(metaMDIO.metaMDIO):
 				return [ str(row[1]) for row in c.execute('PRAGMA table_info('+tablename+'_t)').fetchall() ]
 			else:
 				return c1
-
-		try:
-			self.db.commit()
-			c = self.db.cursor()
-
-			colnames=col_names(query, c, self.tableName)
-			colnames_t=list(str(c) for c in (c.execute( 'select '+','.join(colnames)+' from '+self.tableName+'_t' ).fetchall())[0])
-
-			c.execute(str(query))
-		
-			return [ self._decoderecord(colnames, colnames_t, rec) for rec in c.fetchall() ]
-		except sqlite3.OperationalError, err:
-			print err
 
 	def _setuptables(self):
 		c = self.db.cursor()

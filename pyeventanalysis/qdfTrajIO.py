@@ -83,6 +83,8 @@ class qdfTrajIO(metaTrajIO.metaTrajIO):
 		"""
 			Return a formatted string of settings for display
 		"""
+		fmtstr=""
+		
 		# for qdf files, add the values of the feedback resistance and capacitance
 		fmtstr+='\n\t\tFeedback resistance = {0} GOhm\n'.format(self.Rfb*1e-9)
 		fmtstr+='\t\tFeedback capacitance = {0} pF\n'.format(self.Cfb*1e12)
