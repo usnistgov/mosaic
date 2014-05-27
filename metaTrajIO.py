@@ -5,6 +5,8 @@
 	Created:	7/17/2012
 
 	ChangeLog:
+		5/27/14		AB 	Added dcOffset kwarg to initialization to allow 
+						for offset correction in the ionic current data.
 		2/13/14		AB 	Fixed a potential infinite recursion bug in the
 						initialization. 
 		7/17/12		AB	Initial version
@@ -56,6 +58,7 @@ class metaTrajIO(object):
 							and excluded from any data analysis
 				datafilter	Handle to the algorithm to use to filter the data. If no algorithm is specified, datafilter
 							is None and no filtering is performed.
+				dcOffset	Subtract a DC offset from the ionic current data.
 			Returns:
 				None
 			Properties:
@@ -111,6 +114,10 @@ class metaTrajIO(object):
 		else:
 			self.dataFilter=False
 
+		if not hasattr(self, 'dcOffset'):
+			self.dcOffset=0.0
+		else:
+			self.dcOffset=float(self.dcOffset)
 
 		# initialize an empty data pipeline
 		self.currDataPipe=np.array([])
@@ -155,7 +162,7 @@ class metaTrajIO(object):
 
 		try:
 			# Get the elements to return: index to (index+n)
-			t=self.currDataPipe[self.currDataIdx:self.currDataIdx+n]
+			t=self.currDataPipe[self.currDataIdx:self.currDataIdx+n]-self.dcOffset
 			if len(t) < n:
 				raise IndexError
 
@@ -204,7 +211,7 @@ class metaTrajIO(object):
 
 		try:
 			# Get the elements to return
-			t=self.currDataPipe[self.currDataIdx:self.currDataIdx+n]
+			t=self.currDataPipe[self.currDataIdx:self.currDataIdx+n]-self.dcOffset
 			if len(t) < n:
 				raise IndexError
 			return t
