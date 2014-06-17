@@ -14,6 +14,8 @@ class SingleChannelAnalysis(object):
 		self.eventPartitionHnd=eventPartitionHnd
 		self.eventProcHnd=eventProcHnd
 
+		self.subProc=None
+
 	def Run(self, forkProcess=False):
 		"""
 		"""
@@ -25,10 +27,10 @@ class SingleChannelAnalysis(object):
 						) as EventPartition:
 			if forkProcess:
 				try:
-					proc = multiprocessing.Process( target=EventPartition.PartitionEvents )
-					proc.start()
-					proc.join()
+					self.subProc = multiprocessing.Process( target=EventPartition.PartitionEvents )
+					self.subProc.start()
+					# self.proc.join()
 				except:
-					proc.join()
+					self.subProc.join()
 			else:
 				EventPartition.PartitionEvents()

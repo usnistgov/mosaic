@@ -1,3 +1,6 @@
+import os
+import time
+
 """
 	Interface class to write and query metadata 
 
@@ -21,7 +24,7 @@ class metaMDIO(object):
 	__metaclass__=ABCMeta
 
 	def __init__(self):
-		pass
+		self.pid=os.getpid()
 
 	def initDB(self, **kwargs):
 		"""
@@ -45,7 +48,7 @@ class metaMDIO(object):
 		self._opendb(dbname, **kwargs)
 
 	@abstractmethod
-	def _opendb(self, dbname):
+	def _opendb(self, dbname, **kwargs):
 		pass
 
 	@abstractmethod
@@ -63,4 +66,7 @@ class metaMDIO(object):
 	@abstractmethod
 	def queryDB(self, query):
 		pass
+
+	def _generateRecordKey(self):
+		return float(time.time()+self.pid)
 

@@ -1,11 +1,11 @@
 import zmqIO
 import cPickle
-
+import sqlite3MDIO
 
 class InvalidFunctionName(Exception):
 	pass
 
-def zmqWorker(inchdict, outchdict, workfuncname):
+def zmqWorker(inchdict, outchdict, workfuncname, dbSpec):
 	"""
 		Setup two zmq channels, one to receive data and another to return results. Run an
 		infinite loop waiting for work. Processing stopped when the message 'STOP' is received
@@ -16,8 +16,14 @@ def zmqWorker(inchdict, outchdict, workfuncname):
 	inchan=zmqIO.zmqIO(zmqIO.PULL, inchdict)
 
 	outchanname=outchdict.keys()[0]
-	try:
-		while True:
+
+	# setup MDIO
+	if dbSpec[0]=="sqlite3MDIO":
+		db=sqlite3MDIO.sqlite3MDIO()
+		db.openDB(dbSpec[1], colNames=dbSpec[2], colNames_t=dbSpec[3])
+	
+	while True:
+		try:
 			data=inchan.zmqReceiveData()
 			if data != "":
 				if data=='STOP':
@@ -25,6 +31,9 @@ def zmqWorker(inchdict, outchdict, workfuncname):
 
 				# unpickle the object
 				procObj=cPickle.loads( data )
+
+				# First set the meta-data IO object in eventobj
+				procObj.dataFileHnd=db
 
 				# get a handle to the function to call
 				func = getattr(procObj, workfuncname)
@@ -38,8 +47,10 @@ def zmqWorker(inchdict, outchdict, workfuncname):
 				# outchan.zmqSendData(outchanname, cPickle.dumps(procObj))
 				outchan.zmqSendData(outchanname, 'DONE')
 
-	except KeyboardInterrupt:
-		pass
+		except KeyboardInterrupt:
+			pass
 
 	inchan.zmqShutdown()
 	outchan.zmqShutdown()
+
+	db.closeDB()

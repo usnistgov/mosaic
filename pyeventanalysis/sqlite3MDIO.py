@@ -59,18 +59,29 @@ class sqlite3MDIO(metaMDIO.metaMDIO):
 		if not hasattr(self, 'colNames_t'):
 			raise metaMDIO.InsufficientArgumentsError("Missing arguments: 'colNames_t' must be supplied to initialize {0}".format(type(self).__name__))
 
-		self.recIdx=0
-		self.dbFilename='eventMD-' +str(datetime.datetime.now().strftime('%Y%m%d-%H%M%S'))+'.sqlite'
-		self.db = sqlite3.connect(self.dbPath+'/'+self.dbFilename, detect_types=sqlite3.PARSE_DECLTYPES)
+		self.dbFilename=self.dbPath+'/'+'eventMD-' +str(datetime.datetime.now().strftime('%Y%m%d-%H%M%S'))+'.sqlite'
+		self.db = sqlite3.connect(self.dbFilename, detect_types=sqlite3.PARSE_DECLTYPES)
 
 		self._setuptables()
 
 	def _opendb(self, dbname, **kwargs):
 		if not hasattr(self, 'tableName'):
 			self.tableName='metadata'
-
+		try:
+			self.colNames=kwargs['colNames']
+		except AttributeError, err:
+			raise metaMDIO.InsufficientArgumentsError("Missing arguments: 'colNames' must be supplied to initialize {0}".format(type(self).__name__))
+		try:
+			self.colNames_t=kwargs['colNames_t']
+		except AttributeError, err:
+			raise metaMDIO.InsufficientArgumentsError("Missing arguments: 'colNames_t' must be supplied to initialize {0}".format(type(self).__name__))
+		
+		# if not hasattr(self, 'colNames_t'):
+		# 	raise metaMDIO.InsufficientArgumentsError("Missing arguments: 'colNames_t' must be supplied to initialize {0}".format(type(self).__name__))
+		
 		self.db = sqlite3.connect(dbname, detect_types=sqlite3.PARSE_DECLTYPES)
-
+		
+		self._setuptables()
 
 	def closeDB(self):
 		self.db.commit()
@@ -85,8 +96,6 @@ class sqlite3MDIO(metaMDIO.metaMDIO):
 						'(recIDX, '+', '.join(self.colNames)+') VALUES('+
 						placeholders_list+')', self._datalist(data)
 					)
-
-			self.recIdx+=1
 
 	def queryDB(self, query):
 		try:
@@ -129,7 +138,7 @@ class sqlite3MDIO(metaMDIO.metaMDIO):
 		if (self.tableName,) not in tables:
 			c.execute('create table '+
 				self.tableName+
-				' ('+'recIDX INTEGER, '+ 
+				' ('+'recIDX REAL, '+ 
 				self._sqltypes() +
 				', PRIMARY KEY (recIDX)'+')'
 			)
@@ -144,7 +153,7 @@ class sqlite3MDIO(metaMDIO.metaMDIO):
 			c.execute(	'INSERT INTO ' + 
 					self.tableName+'_t' + 
 					'(recIDX, '+', '.join(self.colNames)+') VALUES('+
-					placeholders_list+')', ('INTEGER',)+tuple(self.colNames_t)
+					placeholders_list+')', ('REAL',)+tuple(self.colNames_t)
 				)
 
 		self.db.commit()
@@ -160,8 +169,9 @@ class sqlite3MDIO(metaMDIO.metaMDIO):
 		return ', '.join(sqlstring)
 
 	def _datalist(self, data):
+		recidx=self._generateRecordKey()
 		d=data_record( self.colNames, data, self.colNames_t )
-		return  (self.recIdx,)+tuple( [ d[col] for col in self.colNames ] )
+		return  (recidx,)+tuple( [ d[col] for col in self.colNames ] )
 		
 	def _decoderecord(self, colnames, colnames_t, rec):
 		d=data_record( colnames, rec, colnames_t )

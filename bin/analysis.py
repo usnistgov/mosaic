@@ -2,6 +2,7 @@ import sys
 import os
 import glob
 import time
+import signal
 import resource
 
 import pyeventanalysis.SingleChannelAnalysis
@@ -109,19 +110,22 @@ def analysisiter(dir, filt, i):
 # 			sra.stepResponseAnalysis
 # 		).Run() 
 
-pyeventanalysis.SingleChannelAnalysis.SingleChannelAnalysis(
-			qdfTrajIO(dirname='/Users/arvind/Research/Experiments/PEGCoumarin/SingleChanPCoumSet4/' ,filter='*.qdf', Rfb=9.1E+9, Cfb=1.07E-12),
-			es.eventSegment,
-			sra.stepResponseAnalysis
-		).Run() 
-
 # pyeventanalysis.SingleChannelAnalysis.SingleChannelAnalysis(
-# 			qdfTrajIO(dirname='/Users/arvind/Research/Experiments/PEG29EBSRefData/20120323/singleChan/' ,filter='*.qdf', nfiles=5, Rfb=9.1E+9, Cfb=1.07E-12),
+# 			qdfTrajIO(dirname='/Users/arvind/Research/Experiments/PEGCoumarin/SingleChanPCoumSet4/' ,filter='*.qdf', Rfb=9.1E+9, Cfb=1.07E-12),
 # 			es.eventSegment,
 # 			sra.stepResponseAnalysis
 # 		).Run() 
 
 
+tt=pyeventanalysis.SingleChannelAnalysis.SingleChannelAnalysis(
+			qdfTrajIO(dirname='/Users/arvind/Research/Experiments/PEG29EBSRefData/20120323/singleChan/' ,filter='*.qdf', nfiles=5, Rfb=9.1E+9, Cfb=1.07E-12),
+			es.eventSegment,
+			sra.stepResponseAnalysis
+		)
+tt.Run(forkProcess=False) 
+# tt.subProc.join()
+# time.sleep(10)
+# os.kill( tt.subProc.pid, signal.SIGINT )
 
 # SingleChannelAnalysis.SingleChannelAnalysis(
 # 			abfTrajIO(fnames=['/Users/arvind/Desktop/JoeProtein/2010_09_24_0009_001.abf','/Users/arvind/Desktop/JoeProtein/2010_09_24_0009_002.abf','/Users/arvind/Desktop/JoeProtein/2010_09_24_0009_003.abf'],start=319300),
@@ -129,11 +133,12 @@ pyeventanalysis.SingleChannelAnalysis.SingleChannelAnalysis(
 # 			sra.stepResponseAnalysis
 # 		).Run() 
 
-# SingleChannelAnalysis.SingleChannelAnalysis(
-# 			qdfTrajIO(dirname='/Volumes/DATA/nanocluster/PW12O40-Dopamine/20140311/m80mV6/', filter='*.qdf', nfiles=300, format='pA', Rfb=2.11E+9, Cfb=1.16E-12),
+# pyeventanalysis.SingleChannelAnalysis.SingleChannelAnalysis(
+# 			qdfTrajIO(dirname='/Volumes/DATA/polypeptide standard/20140529/p120mV/', filter='*.qdf', Rfb=2.11E+9, Cfb=1.16E-12),
 # 			es.eventSegment,
 # 			sra.stepResponseAnalysis
 # 		).Run() 
+
 # SingleChannelAnalysis.SingleChannelAnalysis(
 # 			qdfTrajIO(dirname='/Volumes/DATA/PEGCaptureRate/PEG12/20140214/m80mV5/' ,filter='*.qdf', Rfb=2.11E+9, Cfb=1.16E-12),
 # 			es.eventSegment,

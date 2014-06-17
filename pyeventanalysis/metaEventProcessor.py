@@ -17,6 +17,10 @@ from abc import ABCMeta, abstractmethod
 import types
 import sys
 
+# custom errors
+class MissingMDIOError(Exception):
+	pass
+
 class metaEventProcessor(object):
 	"""
 		Defines the interface for specific event processing algorithms. Each event processing
@@ -41,7 +45,7 @@ class metaEventProcessor(object):
 				baselinestats 		baseline conductance statistics: a list of [mean, sd, slope] for the baseline current
 				algosettingsdict 	settings for event processing algorithm as a dictionary
 				absdatidx 			index of data start. This arg can allow arrival time estimation.
-				datafileHnd			reference to an metaMDIO object for meta-data IO
+				datafilehnd			reference to an metaMDIO object for meta-data IO
 		"""
 		self.eventData=icurr
 		self.Fs=Fs
@@ -58,7 +62,10 @@ class metaEventProcessor(object):
 
 		self.saveTS=kwargs['savets']
 		
-		self.dataFileHnd=kwargs['datafileHnd']
+		# Optional args. If dataFileHnd is not passed at init, it must be set later
+		# If not set before WriteEvent is called, it will result in a MissingMDIOError
+		self.dataFileHnd=kwargs.pop("datafilehnd", None)
+		# self.dataFileHnd=kwargs['datafileHnd']
 
 		# meta-data attrs that are common to all event processing
 		self.mdProcessingStatus='normal'
@@ -133,6 +140,8 @@ class metaEventProcessor(object):
 		"""
 		if self.dataFileHnd:
 			self.dataFileHnd.writeRecord( (self.mdList())+[self.eventData] )
+		# else:
+		# 	raise MissingMDIOError("Meta-data I/O object not initialized.")
 
 	###########################################################################
 	# Local functions

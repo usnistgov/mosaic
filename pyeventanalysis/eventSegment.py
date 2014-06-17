@@ -201,8 +201,7 @@ class eventSegment(metaEventPartition.metaEventPartition):
 								baselinestats=[ self.meanOpenCurr, self.sdOpenCurr, self.slopeOpenCurr ],
 								algosettingsdict=self.eventProcSettingsDict,
 								savets=self.writeEventTS,
-								absdatidx=self.dataStart,
-								datafileHnd=self.mdioDBHnd
+								absdatidx=self.dataStart
 							)
 						)
 	

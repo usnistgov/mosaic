@@ -88,9 +88,6 @@ class metaEventPartition(object):
 		except ValueError as err:
 			raise commonExceptions.SettingsTypeError( err )
 
-		if self.parallelProc:
-			self._setupparallel()
-
 		self.logFileHnd=open(self.trajDataObj.datPath+'/eventProcessing.log','w')
 		
 		self.tEventProcObj=self.eventProcHnd([], self.trajDataObj.FsHz, eventstart=0,eventend=0, baselinestats=[ 0,0,0 ], algosettingsdict={}, savets=False, absdatidx=0, datafileHnd=None )
@@ -103,8 +100,11 @@ class metaEventPartition(object):
 								colNames_t=(self.tEventProcObj.mdHeadingDataType())+['REAL_LIST']
 							)
 
-		self._init(trajDataObj, eventProcHnd, eventPartitionSettings, eventProcSettings)
+		if self.parallelProc:
+			self._setupparallel()
 
+
+		self._init(trajDataObj, eventProcHnd, eventPartitionSettings, eventProcSettings)
 
 	# Define enter and exit funcs so this class can be used with a context manager
 	def __enter__(self):
@@ -118,9 +118,10 @@ class metaEventPartition(object):
 			# send a STOP message to all the processes
 			for i in range(len(self.parallelProcDict)):
 				self.SendJobsChan.zmqSendData('job','STOP')
-
+			
 			# wait for the processes to terminate
 			for k in self.parallelProcDict.keys():
+				# self.parallelProcDict[k].terminate()
 				self.parallelProcDict[k].join()
 
 			# shutdown the zmq channels
@@ -233,7 +234,17 @@ class metaEventPartition(object):
 		for i in range(nworkers):
 			self.parallelProcDict[i] = multiprocessing.Process(
 											target=zmqWorker.zmqWorker, 
-											args=( { 'job' : '127.0.0.1:'+str(5500) }, { 'results' : '127.0.0.1:'+str(5600+i*10) }, "processEvent",)
+											args=( 
+												{ 'job' : '127.0.0.1:'+str(5500) }, 
+												{ 'results' : '127.0.0.1:'+str(5600+i*10) }, 
+												"processEvent",
+												[ 
+													"sqlite3MDIO", 
+													self.mdioDBHnd.dbFilename,
+													(self.tEventProcObj.mdHeadings())+['TimeSeries'],
+													(self.tEventProcObj.mdHeadingDataType())+['REAL_LIST'] 
+												],
+											)
 										)
 			self.parallelProcDict[i].start()
 		# allow the processes to start up
@@ -299,13 +310,13 @@ class metaEventPartition(object):
 
 			self.outputString='\tProcess events: ***NORMAL***\n\n\n'
 			self.procTime=time.time()-startTime
+		except KeyboardInterrupt:
+			self.procTime=time.time()-startTime
+			self.outputString+='\tProcess events: ***USER STOP***\n\n\n'
 		except BaseException, err:
 			self.outputString='\tProcess events: ***ERROR***\n\t\t{0}\n\n\n'.format(str(err))
 			self.procTime=time.time()-startTime
 			raise
-		except KeyboardInterrupt:
-			self.procTime=time.time()-startTime
-			self.outputString+='\t\Process events: ***USER STOP***\n\n\n'
 
 	def _writeoutputlog(self):
 		self.outputString+='[Summary]\n'
@@ -440,6 +451,9 @@ class metaEventPartition(object):
 				# self.eventQueue.append( cPickle.loads(recvdat) )
 
 		else:
+			# First set the meta-data IO object in eventobj
+			eventobj.dataFileHnd=self.mdioDBHnd
+
 			# call the process event function and store
 			eventobj.processEvent()
 			# self.eventQueue.append( eventobj )

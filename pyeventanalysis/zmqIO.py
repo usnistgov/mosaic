@@ -100,16 +100,18 @@ class zmqIO():
 			raise
 			
 	def zmqShutdown( self, exitproc=False ):
-		# first close and/or unbind all the sockets
-		#print "Closing network connections...",
-		sys.stdout.flush()
-		if( self.mSocketType==PUBLISH or self.mSocketType==PUSH):
-			for (k,v) in self.mSockets.iteritems():
-				self.mSockets[k].close()
-		else:
-			self.mSockets.close()
-		time.sleep(1)
-		#print "done."
-		if exitproc is True: 
-			exit()
-		
+		try:
+			# first close and/or unbind all the sockets
+			#print "Closing network connections...",
+			sys.stdout.flush()
+			if( self.mSocketType==PUBLISH or self.mSocketType==PUSH):
+				for (k,v) in self.mSockets.iteritems():
+					self.mSockets[k].close()
+			else:
+				self.mSockets.close()
+			time.sleep(1)
+			#print "done."
+			if exitproc is True: 
+				exit()
+		except KeyboardInterrupt:
+			pass
