@@ -125,8 +125,8 @@ tt=pyeventanalysis.SingleChannelAnalysis.SingleChannelAnalysis(
 tt.Run(forkProcess=True) 
 
 # tt.subProc.join()
-time.sleep(20)
-os.kill( tt.subProc.pid, signal.SIGINT )
+time.sleep(5)
+tt.Stop()
 
 # SingleChannelAnalysis.SingleChannelAnalysis(
 # 			abfTrajIO(fnames=['/Users/arvind/Desktop/JoeProtein/2010_09_24_0009_001.abf','/Users/arvind/Desktop/JoeProtein/2010_09_24_0009_002.abf','/Users/arvind/Desktop/JoeProtein/2010_09_24_0009_003.abf'],start=319300),

@@ -88,12 +88,12 @@ class sqlite3MDIO(metaMDIO.metaMDIO):
 		self.db.close()
 		
 	def writeRecord(self, data):
-		placeholders_list=','.join(['?' for i in range(len(data)+1)])
+		placeholders_list=','.join(['?' for i in range(len(data))])
 
 		with self.db:
 			self.db.execute(	'INSERT INTO ' + 
 						self.tableName + 
-						'(recIDX, '+', '.join(self.colNames)+') VALUES('+
+						'('+', '.join(self.colNames)+') VALUES('+
 						placeholders_list+')', self._datalist(data)
 					)
 
@@ -136,11 +136,10 @@ class sqlite3MDIO(metaMDIO.metaMDIO):
 		
 		# create a new table for event meta-data
 		if (self.tableName,) not in tables:
-			c.execute('create table '+
-				self.tableName+
-				' ('+'recIDX REAL, '+ 
-				self._sqltypes() +
-				', PRIMARY KEY (recIDX)'+')'
+			c.execute( 
+				'create table ' + self.tableName + 
+				' ( recIDX INTEGER PRIMARY KEY AUTOINCREMENT, ' + 
+				self._sqltypes() + ' );' 
 			)
 			# create a second table with native types and store them
 			c.execute('create table '+
@@ -169,9 +168,9 @@ class sqlite3MDIO(metaMDIO.metaMDIO):
 		return ', '.join(sqlstring)
 
 	def _datalist(self, data):
-		recidx=self._generateRecordKey()
+		# recidx=self._generateRecordKey()
 		d=data_record( self.colNames, data, self.colNames_t )
-		return  (recidx,)+tuple( [ d[col] for col in self.colNames ] )
+		return  tuple( [ d[col] for col in self.colNames ] )
 		
 	def _decoderecord(self, colnames, colnames_t, rec):
 		d=data_record( colnames, rec, colnames_t )

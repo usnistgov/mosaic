@@ -1,5 +1,7 @@
 import settings
 import multiprocessing
+import os
+import signal
 
 def run_eventpartition( trajdataObj, eventPartHnd, eventProcHnd, settingsdict):
 	try:
@@ -44,3 +46,11 @@ class SingleChannelAnalysis(object):
 				self.subProc.join()
 		else:
 			run_eventpartition( self.trajDataObj, self.eventPartitionHnd, self.eventProcHnd, self.settingsDict )
+
+	def Stop(self):
+		if self.subProc:
+			os.kill( self.subProc.pid, signal.SIGINT )
+		else:
+			os.kill( os.getpid(), signal.SIGINT )
+
+
