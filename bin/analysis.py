@@ -118,14 +118,15 @@ def analysisiter(dir, filt, i):
 
 
 tt=pyeventanalysis.SingleChannelAnalysis.SingleChannelAnalysis(
-			qdfTrajIO(dirname='/Users/arvind/Research/Experiments/PEG29EBSRefData/20120323/singleChan/' ,filter='*.qdf', nfiles=5, Rfb=9.1E+9, Cfb=1.07E-12),
+			qdfTrajIO(dirname='/Users/arvind/Research/Experiments/PEG29EBSRefData/20120323/singleChan/', filter='*.qdf', nfiles=50, Rfb=9.1E+9, Cfb=1.07E-12),
 			es.eventSegment,
 			sra.stepResponseAnalysis
 		)
-tt.Run(forkProcess=False) 
+tt.Run(forkProcess=True) 
+
 # tt.subProc.join()
-# time.sleep(10)
-# os.kill( tt.subProc.pid, signal.SIGINT )
+time.sleep(20)
+os.kill( tt.subProc.pid, signal.SIGINT )
 
 # SingleChannelAnalysis.SingleChannelAnalysis(
 # 			abfTrajIO(fnames=['/Users/arvind/Desktop/JoeProtein/2010_09_24_0009_001.abf','/Users/arvind/Desktop/JoeProtein/2010_09_24_0009_002.abf','/Users/arvind/Desktop/JoeProtein/2010_09_24_0009_003.abf'],start=319300),

@@ -302,11 +302,8 @@ class metaEventPartition(object):
 						self.eventprocessedcount+=1
 
 						if self.eventprocessedcount%100 == 0:
-							sys.stdout.write('Finished processing %d of %d events.\r' % (self.eventprocessedcount,self.eventcount) )
+							sys.stdout.write('Processing %d of %d events.\r' % (self.eventprocessedcount,self.eventcount) )
 	    					sys.stdout.flush()
-
-				sys.stdout.write('                                                                    \r' )
-				sys.stdout.flush()
 
 			self.outputString='\tProcess events: ***NORMAL***\n\n\n'
 			self.procTime=time.time()-startTime
@@ -317,6 +314,9 @@ class metaEventPartition(object):
 			self.outputString='\tProcess events: ***ERROR***\n\t\t{0}\n\n\n'.format(str(err))
 			self.procTime=time.time()-startTime
 			raise
+
+		sys.stdout.write('                                                                    \r' )
+		sys.stdout.flush()
 
 	def _writeoutputlog(self):
 		self.outputString+='[Summary]\n'

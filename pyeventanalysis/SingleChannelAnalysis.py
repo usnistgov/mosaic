@@ -1,6 +1,18 @@
 import settings
 import multiprocessing
 
+def run_eventpartition( trajdataObj, eventPartHnd, eventProcHnd, settingsdict):
+	try:
+		with eventPartHnd(
+							trajdataObj, 
+							eventProcHnd, 
+							settingsdict.getSettings(eventPartHnd.__name__),
+							settingsdict.getSettings(eventProcHnd.__name__)
+						) as EventPartition:
+			EventPartition.PartitionEvents()
+	except KeyboardInterrupt:
+		raise
+
 class SingleChannelAnalysis(object):
 	"""
 	"""
@@ -19,18 +31,16 @@ class SingleChannelAnalysis(object):
 	def Run(self, forkProcess=False):
 		"""
 		"""
-		with self.eventPartitionHnd(
-							self.trajDataObj, 
-							self.eventProcHnd, 
-							self.settingsDict.getSettings(self.eventPartitionHnd.__name__),
-							self.settingsDict.getSettings(self.eventProcHnd.__name__)
-						) as EventPartition:
-			if forkProcess:
-				try:
-					self.subProc = multiprocessing.Process( target=EventPartition.PartitionEvents )
-					self.subProc.start()
-					# self.proc.join()
-				except:
-					self.subProc.join()
-			else:
-				EventPartition.PartitionEvents()
+		if forkProcess:
+			try:
+				self.subProc = multiprocessing.Process( 
+						target=run_eventpartition,
+						args=(self.trajDataObj, self.eventPartitionHnd, self.eventProcHnd, self.settingsDict,)
+					)
+				self.subProc.start()
+				# self.proc.join()
+			except:
+				self.subProc.terminate()
+				self.subProc.join()
+		else:
+			run_eventpartition( self.trajDataObj, self.eventPartitionHnd, self.eventProcHnd, self.settingsDict )

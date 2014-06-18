@@ -82,6 +82,7 @@ class zmqIO():
 				time.sleep(2e-6)
 		except KeyboardInterrupt:
 			raise
+		
 	# receive data on any channel. This is a non-blocking receive
 	# which returns the message on any 0MQ channel or a 
 	# blank string when there is no message. It is complementary
