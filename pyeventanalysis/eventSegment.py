@@ -192,6 +192,7 @@ class eventSegment(metaEventPartition.metaEventPartition):
 						#sys.stderr.write('event mean curr={0:0.2f}, len(preeventdat)={1}\n'.format(sum(self.eventdat)/len(self.eventdat),len(self.preeventdat)))
 						#print list(self.preeventdat) + self.eventdat + [ self.currData[i] for i in range(self.eventPad) ]
 						#print "ecount=", self.eventcount, self.eventProcHnd
+						# print "eventProcSettings", self.eventProcSettingsDict
 						self._processEvent(
 							 self.eventProcHnd(
 								list(self.preeventdat) + self.eventdat + eventpaddat, 
@@ -199,7 +200,7 @@ class eventSegment(metaEventPartition.metaEventPartition):
 								eventstart=len(self.preeventdat)+1,						# event start point
 								eventend=len(self.preeventdat)+len(self.eventdat)+1,	# event end point
 								baselinestats=[ self.meanOpenCurr, self.sdOpenCurr, self.slopeOpenCurr ],
-								algosettingsdict=self.eventProcSettingsDict,
+								algosettingsdict=self.eventProcSettingsDict.copy(),
 								savets=self.writeEventTS,
 								absdatidx=self.dataStart
 							)

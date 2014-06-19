@@ -53,9 +53,9 @@ class multiStateAnalysis(metaEventProcessor.metaEventProcessor):
 		"""
 		# initialize the object's metadata (to -1) as class attributes
 		self.mdOpenChCurrent=-1
-		self.mdCurrentStep=-1
+		self.mdCurrentStep=[-1]
 
-		self.mdEventDelay=-1
+		self.mdEventDelay=[-1]
 
 		self.mdEventStart=-1
 		self.mdEventEnd=-1
@@ -74,7 +74,6 @@ class multiStateAnalysis(metaEventProcessor.metaEventProcessor):
 			self.FitTol=float(self.settingsDict.pop("FitTol", 1.e-7))
 			self.FitIters=int(self.settingsDict.pop("FitIters", 5000))
 			self.InitThreshold=float(self.settingsDict.pop("InitThreshold", 5.0))
-		
 		except ValueError as err:
 			raise commonExceptions.SettingsTypeError( err )
 
@@ -82,7 +81,7 @@ class multiStateAnalysis(metaEventProcessor.metaEventProcessor):
 	###########################################################################
 	# Interface functions implemented starting here
 	###########################################################################
-	def processEvent(self):
+	def _processEvent(self):
 		"""
 			This function implements the core logic to analyze one single step-event.
 		"""

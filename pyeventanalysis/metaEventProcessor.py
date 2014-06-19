@@ -70,6 +70,7 @@ class metaEventProcessor(object):
 		# meta-data attrs that are common to all event processing
 		self.mdProcessingStatus='normal'
 
+		# print self.settingsDict
 		# Call sub-class initialization
 		self._init(**kwargs)
 
@@ -130,7 +131,7 @@ class metaEventProcessor(object):
 			The status is assigned to mdProcessingStatus.
 		"""
 		# set all meta data to -1
-		[ setattr(self, mdHead, -1) for mdHead in self.__dict__.keys() if mdHead.startswith('md')==True ]
+		[ self._setRejectMetadata(mdHead) for mdHead in self.__dict__.keys() if mdHead.startswith('md')==True ]
 		# set processing status to status
 		self.mdProcessingStatus=status
 
@@ -146,6 +147,13 @@ class metaEventProcessor(object):
 	###########################################################################
 	# Local functions
 	###########################################################################
+	def _setRejectMetadata(self, metadata):
+		try:
+			if len(getattr(self, metadata)) > 1:
+				setattr(self, metadata, [-1])
+		except TypeError:
+			setattr(self, metadata, -1)
+
 	def __mdformat(self, dat):
 		"""
 			Round a float to 3 decimal places. Leave ints and strings unchanged

@@ -118,15 +118,21 @@ def analysisiter(dir, filt, i):
 
 
 tt=pyeventanalysis.SingleChannelAnalysis.SingleChannelAnalysis(
-			qdfTrajIO(dirname='/Users/arvind/Research/Experiments/PEG29EBSRefData/20120323/singleChan/', filter='*.qdf', nfiles=50, Rfb=9.1E+9, Cfb=1.07E-12),
+			qdfTrajIO(dirname='/Users/arvind/Research/Experiments/SBSTagsColumbia/dA6TP30odd/p100mV3/', filter='*.qdf', nfiles=50, Rfb=9.1E+9, Cfb=1.07E-12),
 			es.eventSegment,
-			sra.stepResponseAnalysis
+			msa.multiStateAnalysis
 		)
-tt.Run(forkProcess=True) 
+tt.Run(forkProcess=False) 
 
-# tt.subProc.join()
-time.sleep(5)
-tt.Stop()
+
+# tt=pyeventanalysis.SingleChannelAnalysis.SingleChannelAnalysis(
+# 			qdfTrajIO(dirname='/Users/arvind/Research/Experiments/PEG29EBSRefData/20120323/singleChan/', filter='*.qdf', nfiles=50, Rfb=9.1E+9, Cfb=1.07E-12),
+# 			es.eventSegment,
+# 			sra.stepResponseAnalysis
+# 		)
+# tt.Run(forkProcess=True) 
+# time.sleep(5)
+# tt.Stop()
 
 # SingleChannelAnalysis.SingleChannelAnalysis(
 # 			abfTrajIO(fnames=['/Users/arvind/Desktop/JoeProtein/2010_09_24_0009_001.abf','/Users/arvind/Desktop/JoeProtein/2010_09_24_0009_002.abf','/Users/arvind/Desktop/JoeProtein/2010_09_24_0009_003.abf'],start=319300),

@@ -90,7 +90,7 @@ class metaEventPartition(object):
 
 		self.logFileHnd=open(self.trajDataObj.datPath+'/eventProcessing.log','w')
 		
-		self.tEventProcObj=self.eventProcHnd([], self.trajDataObj.FsHz, eventstart=0,eventend=0, baselinestats=[ 0,0,0 ], algosettingsdict={}, savets=False, absdatidx=0, datafileHnd=None )
+		self.tEventProcObj=self.eventProcHnd([], self.trajDataObj.FsHz, eventstart=0,eventend=0, baselinestats=[ 0,0,0 ], algosettingsdict=self.eventProcSettingsDict.copy(), savets=False, absdatidx=0, datafileHnd=None )
 
 		self.mdioDBHnd=sqlite3MDIO.sqlite3MDIO()
 		self.mdioDBHnd.initDB(
