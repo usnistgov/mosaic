@@ -1,0 +1,5 @@
+include .settings
+include *.txt
+recursive-include dependencies *.txt
+recursive-include pyeventanalysis/utest/testdata *.prm
+recursive-include pyeventanalysis/utest/testdata *.csv
