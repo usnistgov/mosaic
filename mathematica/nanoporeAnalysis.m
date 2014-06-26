@@ -88,124 +88,119 @@ FilePrint[coderoot<>"/.tmp"]
 (*Plot Results*)
 
 
-genKeyList[]:={{"stepheight",1},{"opencurr",2},{"eventstart",3},{"eventend",4},{"tau",5},{"abseventstart",6},{"blockdepth",7},{"status",8},{"chisq",9}}
-
-
-MDKey[key_]:=Module[{tab},
-(tab[#[[1]]]=#[[2]])&/@genKeyList[];
-Return[tab[key]]
+PrintMDKeys[filename_]:=Module[{db=Database`OpenDatabase[filename],keys},
+keys=Database`QueryDatabase[db,"PRAGMA table_info(metadata);"][[All,2]];
+Database`CloseDatabase[db];
+Return[keys]
 ]
 
 
-PrintMDKeys[]:=Module[{tab},
-(tab[#[[1]]]=#[[2]])&/@genKeyList[];
-DownValues[tab][[All,1,1,1]]
+QueryDB[filename_,cols_, status_, query_]:=Module[{db=Database`OpenDatabase[filename],q,res},
+q=querystring[cols, status, query];
+res=Database`QueryDatabase[db,q[[1]],q[[2]]];
+Database`CloseDatabase[db];
+Return[res]
 ]
+querystring[cols_,status_,query_]:={"select "<>ToString[cols]<>" from metadata where ( ProcessingStatus = ? and "<>ToString[query]<> " )",{ToString[status,CharacterEncoding->"UTF-8"]}}/;(status !="*"&&query!="")
+querystring[cols_,status_,query_]:={"select "<>ToString[cols]<>" from metadata where ( "<>ToString[query]<> " )",{}}/;(status=="*"&& query !="")
+querystring[cols_,status_,query_]:={"select "<>ToString[cols]<>" from metadata",{}}/;(status=="*"&& query =="")
+querystring[cols_,status_,query_]:={"select "<>ToString[cols]<>" from metadata where ( ProcessingStatus = ? )",{ToString[status,CharacterEncoding->"UTF-8"]}};
 
 
-(* ::Text:: *)
-(*ProcessingStatus	OpenChCurrent (pA)	BlockedCurrent (pA)	EventStart (ms)	EventEnd (ms)	BlockDepth (ms)	ResTime (ms)	RCConstant (ms)	AbsEventStart (ms)	ReducedChiSquared*)
-
-
-MDTransform={#[[2]]-#[[3]],#[[2]],#[[4]],#[[5]],#[[8]],#[[9]],#[[6]],#[[1]],#[[10]]}&;
-
-
-frTicks[rng_]:=rng/;rng==Automatic
-frTicks[rng_]:={#,#,{0.02,0}}&/@rng
-
-
-PlotEvent[dat_,fit_,\[Delta]t_,nPts_,plotmark_:None,skip_:1,yrng_:Range[0,150,25],xrng_:Range[0,2,0.1],pltrng_:Automatic]:=ListPlot[Transpose[{Range[0,Length[dat]-1]\[Delta]t,Abs[dat]}][[;;;;skip]],PlotRange->All,PlotStyle->Red]/;fit[[MDKey["status"]]]!="normal"
-PlotEvent[dat_,fit_,\[Delta]t_,nPts_,plotmark_:None,skip_:1,yrng_:Range[0,150,25],xrng_:Range[0,2,0.1],pltrng_:Automatic]:=Block[{a,t,b,\[Mu]1,\[Mu]2,\[Tau],prng=pltrng},
-prng=prng/.e_/;prng==Automatic->{fit[[MDKey["opencurr"]]]-fit[[MDKey["stepheight"]]]-15,fit[[MDKey["opencurr"]]]+15};
-Show[{
-ListPlot[Transpose[{Range[0,Length[dat]-1]\[Delta]t,Abs[dat]}][[Max[1,IntegerPart[fit[[MDKey["eventstart"]]]/\[Delta]t]-nPts];;Min[IntegerPart[fit[[MDKey["eventend"]]]/\[Delta]t]+nPts,Length[dat]];;skip]],PlotRange->prng,PlotStyle->Directive[RGBColor@@({41, 74,130}/255),Opacity[0.75]],PlotMarkers->plotmark,Epilog->{Gray,Dashing[{0.01,0.02}],Thickness[0.005],
-Line[{{(IntegerPart[fit[[MDKey["eventstart"]]]/\[Delta]t]-nPts)\[Delta]t,fit[[MDKey["opencurr"]]]},{fit[[MDKey["eventstart"]]],fit[[MDKey["opencurr"]]]}}],Line[{{fit[[MDKey["eventend"]]],fit[[MDKey["opencurr"]]]},{100,fit[[MDKey["opencurr"]]]}}],
-Line[{{fit[[MDKey["eventstart"]]],fit[[MDKey["opencurr"]]]-fit[[MDKey["stepheight"]]]},{fit[[MDKey["eventend"]]],fit[[MDKey["opencurr"]]]-fit[[MDKey["stepheight"]]]}}],
-Line[{{fit[[MDKey["eventstart"]]],fit[[MDKey["opencurr"]]]-fit[[MDKey["stepheight"]]]},{fit[[MDKey["eventstart"]]],fit[[MDKey["opencurr"]]]}}],Line[{{fit[[MDKey["eventend"]]],fit[[MDKey["opencurr"]]]-fit[[MDKey["stepheight"]]]},{fit[[MDKey["eventend"]]],fit[[MDKey["opencurr"]]]}}],Black,Thickness[0.005],Dashing[{}],Line[{{(Max[1,IntegerPart[fit[[MDKey["eventstart"]]]/\[Delta]t]-nPts]+3) \[Delta]t,(fit[[MDKey["opencurr"]]]-fit[[MDKey["stepheight"]]])+0},{(Max[1,IntegerPart[fit[[MDKey["eventstart"]]]/\[Delta]t]-nPts]+3) \[Delta]t,(fit[[MDKey["opencurr"]]]-fit[[MDKey["stepheight"]]])+10}}],Line[{{(Max[1,IntegerPart[fit[[MDKey["eventstart"]]]/\[Delta]t]-nPts]+3) \[Delta]t,(fit[[MDKey["opencurr"]]]-fit[[MDKey["stepheight"]]])},{(Max[1,IntegerPart[fit[[MDKey["eventstart"]]]/\[Delta]t]-nPts]+8) \[Delta]t,(fit[[MDKey["opencurr"]]]-fit[[MDKey["stepheight"]]])}}],Text[Style["5 \[Mu]s",24,FontFamily->"Helvetica"],{(Max[1,IntegerPart[fit[[MDKey["eventstart"]]]/\[Delta]t]-nPts]+5.5) \[Delta]t,(fit[[MDKey["opencurr"]]]-fit[[MDKey["stepheight"]]])-5}],Text[Rotate[Style["10 pA",24,FontFamily->"Helvetica"],\[Pi]/2],{(Max[1,IntegerPart[fit[[MDKey["eventstart"]]]/\[Delta]t]-nPts]+1.5) \[Delta]t,(fit[[MDKey["opencurr"]]]-fit[[MDKey["stepheight"]]])+5}]},Frame->True,FrameStyle->Thick,FrameTicks->{{frTicks[yrng],None},{frTicks[xrng],None}},FrameTicksStyle->Directive[40,FontFamily->"Helvetica"],FrameLabel->{Style["\!\(\*
-StyleBox[\"t\",\nFontSlant->\"Italic\"]\) (ms)",40,FontFamily->"Helvetica"],Style["|\!\(\*
-StyleBox[\"i\",\nFontSlant->\"Italic\"]\)\!\(\*
-StyleBox[\"|\",\nFontSlant->\"Italic\"]\) (pA)",40,FontFamily->"Helvetica"]},ImageSize->800],
-ListLinePlot[{
-Table[{t,((a( (-1+E^((-t+\[Mu]1)/\[Tau])) HeavisideTheta[t-\[Mu]1]+(1-E^((-t+\[Mu]2)/\[Tau])) HeavisideTheta[t-\[Mu]2])+b)/.{\[Tau]->fit[[MDKey["tau"]]],\[Mu]1->fit[[MDKey["eventstart"]]],\[Mu]2->fit[[MDKey["eventend"]]],a->fit[[MDKey["stepheight"]]],b->fit[[MDKey["opencurr"]]]})},{t,(IntegerPart[fit[[MDKey["eventstart"]]]/\[Delta]t]-nPts)\[Delta]t,(IntegerPart[fit[[MDKey["eventend"]]]/\[Delta]t]+nPts)\[Delta]t,\[Delta]t/10}]
-},PlotRange->All,PlotStyle->{{Black,Thickness[0.006]}}]}]
-]
-
-
-PlotBlockDepth[datpath_,filt_,bin_,pltstyle_:Automatic]:=Module[{md =MDTransform/@Flatten[Import[#,"TSV"][[2;;]]&/@FileNames["eventMD*tsv",datpath],1],d1},
-d1=Select[md,filt];
-Return[ListLinePlot[PDF1D[d1[[All,7]],bin[[;;2]],bin[[3]]],PlotRange->All,PlotStyle->pltstyle]]
-]
-
-
-MeanBDGauss[datpath_,filt_]:=Module[{md =MDTransform/@Flatten[Import[#,"TSV"][[2;;]]&/@FileNames["eventMD*tsv",datpath],1],d1},
-d1=Select[md,filt];
-Return[{Mean[d1[[All,7]]],StandardDeviation[d1[[All,7]]],StandardError[d1[[All,7]]]}]
-]
-
-
-MeanResTimeExp[datpath_,filt_,bin_,resest_]:=Module[{md =MDTransform/@Flatten[Import[#,"TSV"][[2;;]]&/@FileNames["eventMD*tsv",datpath],1],d1,hist,ft,a,b,t},
-d1=Select[md,filt];
-hist=Hist1D[d1[[All,4]]-d1[[All,3]],bin[[;;2]],bin[[3]]];
-ft=NonlinearModelFit[hist,a Exp[-b t],{{a,hist[[1]][[2]]},{b,1/resest}},t];
-Return[{1/b/.ft["BestFitParameters"],
-Show[{
-ListLogPlot[hist,PlotRange->All,PlotMarkers->Automatic],
-LogPlot[Evaluate[Normal[ft]],{t,bin[[1]],bin[[2]]}]}]
-}]
-]
-
-
-PlotAnalysis[folder_, bin_List,bint_List, filt_]:=Module[{md =MDTransform/@Flatten[Import[#,"TSV"][[2;;]]&/@FileNames["eventMD*tsv",folder],1],d1},
-d1=Select[md,filt];
-GraphicsRow[{
-ListLinePlot[Hist1D[d1[[All,7]],bin[[;;2]],bin[[3]]],PlotRange->All,Epilog->{Text[Style["nEvents="<>ToString[Length[d1]],16],Scaled[{0.2,0.7}]]}],
-ListLogPlot[Hist1D[d1[[All,5]],bint[[;;2]],bint[[3]]],PlotRange->All,Joined->True,PlotMarkers->{Automatic,14}]
-}]
-]
-
-
-PlotEvents[folder_,FsKHz_]:=Module[{
-md =MDTransform/@Flatten[Import[#,"TSV"][[2;;]]&/@FileNames["eventMD.tsv",folder],1],
-ts=Import[folder<>"/eventTS.csv","CSV"]
-},
-Manipulate[PlotEvent[ts[[i]],md[[i]],1/FsKHz,20,{Automatic,16},s,Automatic,Automatic],{i,1,Length[md],1,Appearance->"Open"},{s,1,10,1,Appearance->"Open"}]
-]
-
-
-CaptureRate[art_,cutoff_]:=Module[{h1=Hist1D[art,{0,cutoff},cutoff/1000],a,\[Lambda],t,ft},ft=NonlinearModelFit[Transpose[{h1[[All,1]],h1[[All,2]]/h1[[All,2]][[1]]}],a Exp[-(t/\[Lambda])],{{a,1},{\[Lambda],Mean[art]}},t];
-Return[{1/\[Lambda],1/(\[Lambda] Sqrt[Length[art]])}/.ft["BestFitParameters"]]
-]
-
-
-(* ::Text:: *)
-(*CaptureRate[art_,blksz_]:=#[1/Mean/@Partition[art,blksz]]&/@{Mean,StandardError}*)
-
-
-ArrivalTimes[md_]:=Flatten[Differences/@Partition[md[[All,MDKey["abseventstart"]]],2,1]]/1000
-
-
-kon[cap_,c_]:=1/((1/cap)c)
+DecodeTimeSeries[ts_]:=ImportString[ImportString[ToString[ts],{"Base64","String"}],"Real64"]
 
 
 (* ::Input:: *)
-(*PlotEvent2[ts_,md_,Fs_]:=Module[{},*)
-(*Show[{*)
-(*ListLinePlot[Table[{t,First[Differences[md[[{3,2}]]]]((1-Exp[-((t-md[[5]])/md[[8]])])HeavisideTheta[t-md[[5]]]-(1-Exp[-((t-md[[4]])/md[[8]])])HeavisideTheta[t-md[[4]]])+md[[2]]},{t,0,Length[ts] 1/Fs,1/(5 Fs)}],PlotRange->All,PlotStyle->{Black,Thickness[0.006]}],*)
-(*ListPlot[Transpose[{Range[0,Length[ts]-1] 1/Fs,Abs[ts]}],PlotRange->All,PlotStyle->Directive[RGBColor@@({41, 74,130}/255),Opacity[0.75]],PlotMarkers->{Automatic,14}]*)
-(*},Frame->True,FrameStyle->Thick,FrameTicks->{{Automatic,None},{Automatic,None}},FrameTicksStyle->Directive[30,FontFamily->"Helvetica"],FrameLabel->{Style["\!\(\**)
-(*StyleBox[\"t\",\nFontSlant->\"Italic\"]\) (ms)",30,FontFamily->"Helvetica"],Style["|\!\(\**)
-(*StyleBox[\"i\",\nFontSlant->\"Italic\"]\)\!\(\**)
-(*StyleBox[\"|\",\nFontSlant->\"Italic\"]\) (pA)",30,FontFamily->"Helvetica"]},ImageSize->800]*)
-(*]/;md[[1]]=="normal"*)
-(*PlotEvent2[ts_,md_,Fs_]:=ListPlot[Transpose[{Range[0,Length[ts]-1] 1/Fs,Abs[ts]}],PlotRange->All,PlotStyle->Red,Frame->True,FrameStyle->Thick,FrameTicks->{{Automatic,None},{Automatic,None}},FrameTicksStyle->Directive[30,FontFamily->"Helvetica"],FrameLabel->{Style["\!\(\**)
-(*StyleBox[\"t\",\nFontSlant->\"Italic\"]\) (ms)",30,FontFamily->"Helvetica"],Style["|\!\(\**)
-(*StyleBox[\"i\",\nFontSlant->\"Italic\"]\)\!\(\**)
-(*StyleBox[\"|\",\nFontSlant->\"Italic\"]\) (pA)",30,FontFamily->"Helvetica"]},ImageSize->800]*)
+(*PrintMDKeys[FileNames["*sqlite","/Users/arvind/Research/Experiments/SBSTagsColumbia/dA6TP30odd/p100mV3/"][[-1]]]*)
 
 
-PlotEvents2[folder_,FsKHz_]:=Module[{
-md =MDTransform/@Flatten[Import[#,"TSV"][[2;;]]&/@FileNames["eventMD.tsv",folder],1],
-ts=Import[folder<>"/eventTS.csv","CSV"]
-},
-Manipulate[PlotEvent[ts[[i]],md[[i]],1/FsKHz,20,{Automatic,16},s,Automatic,Automatic],{i,1,Length[md],1,Appearance->"Open"},{s,1,10,1,Appearance->"Open"}]
+ts[dat_,FsKHz_]:=Transpose[{Range[0,Length[dat]-1]/FsKHz,dat}]
+
+
+Options[PlotEvents]={AnalysisAlgorithm->"StepResponseAnalysis"};
+PlotEvents[dbname_,FsKHz_,OptionsPattern[]]:=Module[{q},
+q=QueryDB[
+			dbname, 
+			"ProcessingStatus, BlockedCurrent, OpenChCurrent, EventStart, EventEnd, RCConstant, TimeSeries",
+			"*",
+			""
+		];
+Manipulate[plotsra[q[[i]][[1]], ts[DecodeTimeSeries[q[[i]][[-1]]],FsKHz],q[[i]][[2;;-2]] ,FsKHz],{i,1,Length[q],1,Appearance->"Open"}]
+]/;OptionValue[AnalysisAlgorithm]=="StepResponseAnalysis"
+PlotEvents[dbname_,FsKHz_,OptionsPattern[]]:=Module[{q},
+q=QueryDB[
+			dbname, 
+			"ProcessingStatus, OpenChCurrent, CurrentStep, EventDelay, RCConstant, TimeSeries",
+			"*",
+			""
+		];
+Manipulate[plotmsa[q[[i]][[1]], ts[DecodeTimeSeries[q[[i]][[-1]]],FsKHz], {q[[i]][[2]],DecodeTimeSeries[q[[i]][[3]]],DecodeTimeSeries[q[[i]][[4]]],q[[i]][[5]]},FsKHz],{i,1,Length[q],1,Appearance->"Open"}]
+]/;OptionValue[AnalysisAlgorithm]=="MultiStateAnalysis"
+
+
+(* ::Input:: *)
+(*Prolog->{Thick,Dashed,Darker[Red],*)
+(*Line[{{md[[3]],Abs[md[[1]]]},{md[[4]],Abs[md[[1]]]}}],*)
+(*Line[{{md[[3]],Abs[md[[2]]]},{md[[3]],Abs[md[[1]]]}}],*)
+(*Line[{{md[[4]],Abs[md[[2]]]},{md[[4]],Abs[md[[1]]]}}]*)
+(*}*)
+
+
+plotmsa[status_,ts_,md_,FsKHz_]:=Module[{t,a,\[Mu]1,\[Mu]2,\[Tau],b},
+Show[{
+ListPlot[Abs[ts],PlotRange->{0,All},PlotStyle->Directive[RGBColor@@({41, 74,130}/255),Opacity[0.75]],PlotMarkers->{Automatic,14},Frame->True,FrameLabel->{Style["t (ms)",20,FontFamily->"Helvectica"],Style["|i| (pA)",20,FontFamily->"Helvectica"]},FrameTicksStyle->Directive[20,FontFamily->"Helvectica"]],
+ListPlot[{
+Table[{t,Evaluate[Abs[md[[1]]]+\!\(
+\*UnderoverscriptBox[\(\[Sum]\), \(i = 1\), \(Length[md[[2]]]\)]\((\(md[[2]]\)[[i]] \((1 - Exp[
+\*FractionBox[\(-\((t - \(md[[3]]\)[[i]])\)\), \(md[[4]]\)]])\) HeavisideTheta[t - \(md[[3]]\)[[i]]])\)\)]},{t,ts[[1]][[1]],ts[[-1]][[1]],(1/FsKHz)/10}]
+},PlotStyle->{{Black,Thickness[0.005]},{Black,Thickness[0.005]},{Black,Thickness[0.005]}},Joined->True]
+},ImageSize->600]
+]/;status=="normal"
+ plotmsa[status_,ts_,md_,FsKHz_]:=Module[{t,a,\[Mu]1,\[Mu]2,\[Tau],b},
+Show[{
+ListPlot[Abs[ts],PlotRange->All,PlotStyle->Red,PlotMarkers->{Automatic,10},Frame->True,FrameLabel->{Style["t (ms)",20,FontFamily->"Helvectica"],Style["|i| (pA)",20,FontFamily->"Helvectica"]},FrameTicksStyle->Directive[20,FontFamily->"Helvectica"]]
+},ImageSize->600]
 ]
+
+
+plotsra[status_,ts_,md_,FsKHz_]:=Module[{t,a,\[Mu]1,\[Mu]2,\[Tau],b},
+Show[{
+ListPlot[Abs[ts],PlotRange->{0,All},PlotStyle->Directive[RGBColor@@({41, 74,130}/255),Opacity[0.75]],PlotMarkers->{Automatic,14},Frame->True,FrameLabel->{Style["t (ms)",20,FontFamily->"Helvectica"],Style["|i| (pA)",20,FontFamily->"Helvectica"]},FrameTicksStyle->Directive[20,FontFamily->"Helvectica"],Prolog->{Thick,Dashed,Darker[Red],
+Line[{{md[[3]],Abs[md[[1]]]},{md[[4]],Abs[md[[1]]]}}],
+Line[{{md[[3]],Abs[md[[2]]]},{md[[3]],Abs[md[[1]]]}}],
+Line[{{md[[4]],Abs[md[[2]]]},{md[[4]],Abs[md[[1]]]}}]
+}],
+ListPlot[{
+Table[{t,Evaluate[(a( (-1+E^((-t+\[Mu]1)/\[Tau])) HeavisideTheta[t-\[Mu]1]+(1-E^((-t+\[Mu]2)/\[Tau])) HeavisideTheta[t-\[Mu]2])+b)/.{a->Abs[md[[1]]-md[[2]]],b->md[[2]],\[Tau]->md[[5]],\[Mu]1->md[[3]],\[Mu]2->md[[4]]}]},{t,ts[[1]][[1]],ts[[-1]][[1]],(1/FsKHz)/10}]
+},PlotStyle->{{Black,Thickness[0.005]},{Black,Thickness[0.005]},{Black,Thickness[0.005]}},Joined->True]
+},ImageSize->600]
+]/;status=="normal"
+ plotsra[status_,ts_,md_,FsKHz_]:=Module[{t,a,\[Mu]1,\[Mu]2,\[Tau],b},
+Show[{
+ListPlot[Abs[ts],PlotRange->All,PlotStyle->Red,PlotMarkers->{Automatic,10},Frame->True,FrameLabel->{Style["t (ms)",20,FontFamily->"Helvectica"],Style["|i| (pA)",20,FontFamily->"Helvectica"]},FrameTicksStyle->Directive[20,FontFamily->"Helvectica"]]
+},ImageSize->600]
+]
+
+
+CaptureRate[absstart_,stime_,etime_,nbins_]:=Module[{at=ArrivalTimes[absstart],a,\[Lambda],t,ft,h1},
+
+h1=Hist1D[at,{stime,etime},(etime-stime)/nbins];
+ft=NonlinearModelFit[Transpose[{h1[[All,1]],h1[[All,2]]/h1[[All,2]][[1]]}],a Exp[-(t/\[Lambda])],{{a,1},{\[Lambda],Mean[at]}},t];
+Return[{{1/\[Lambda],1/(\[Lambda] Sqrt[Length[at]])}/.ft["BestFitParameters"],
+Show[{
+ListLogPlot[Transpose[{h1[[All,1]],h1[[All,2]]/h1[[All,2]][[1]]}],PlotRange->{{stime,etime},All},PlotMarkers->Automatic,Epilog->{Text[NumberForm[1/\[Lambda],{4,0}]\[PlusMinus]NumberForm[1/(\[Lambda] Sqrt[Length[at]]),{2,1}]/.ft["BestFitParameters"],{(etime-stime)/2,Log[0.5]}]}],
+LogPlot[Evaluate[Normal[ft]],{t,stime,etime},PlotStyle->Thick]
+},ImageSize->300]
+}]
+]
+
+
+ArrivalTimes[dbname_, query_]:=Module[{q=Flatten[QueryDB[dbname, "AbsEventStart","normal",query]]},
+Flatten[Differences/@Partition[q,2,1]]/1000
+]
+
+
+ArrivalTimes[arrtime_]:=Flatten[Differences/@Partition[arrtime,2,1]]/1000
+
+
+kon[cap_,c_]:=1/((1/cap)c)

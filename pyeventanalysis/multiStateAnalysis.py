@@ -176,7 +176,7 @@ class multiStateAnalysis(metaEventProcessor.metaEventProcessor):
 			ts = np.array([ t*dt for t in range(0,len(edat)) ], dtype='float64')
 
 			# estimate initial guess for events
-			initguess=self.__characterizeevent(edat, np.abs(util.avg(edat[:10])), self.baseSD, self.InitThreshold, 6.)
+			initguess=self._characterizeevent(edat, np.abs(util.avg(edat[:10])), self.baseSD, self.InitThreshold, 6.)
 			self.nStates=len(initguess)-1
 
 			# setup fit params
@@ -287,21 +287,21 @@ class multiStateAnalysis(metaEventProcessor.metaEventProcessor):
 				self.rejectEvent('eInvalidFitParams')
 
 
-	def __levelchange(self, dat, sMean, sSD, nSD, blksz):
+	def _levelchange(self, dat, sMean, sSD, nSD, blksz):
 		for i in range(int(blksz/2.0), len(dat)-int(blksz/2.0)):
 			if abs(util.avg(dat[i-int(blksz/2.0):i+int(blksz/2.0)])-sMean) > nSD * sSD:
 				return  [i+1, util.avg(dat[i:i+blksz])]
 
 		raise InvalidEvent()
 
-	def __characterizeevent(self, dat, mean, sd, nSD, blksz):
+	def _characterizeevent(self, dat, mean, sd, nSD, blksz):
 		tdat=dat #movingaverage(dat, 2*blksz)
 		tt=[0, mean]
 		mu=[0]
 		a=[mean]
 		t1=0
 		while (1):
-			tt=self.__levelchange( tdat[t1:], tt[1], sd, nSD, blksz )
+			tt=self._levelchange( tdat[t1:], tt[1], sd, nSD, blksz )
 			t1+=tt[0]
 			mu.append(t1)
 			a.append(tt[1])

@@ -1,14 +1,12 @@
-Copyright (C) <year>  <name of author>
+This software was developed at the National Institute of Standards and Technology 
+by employees of the Federal Government in the course of their official duties. 
+Pursuant to title 17 section 105 of the United States Code this software is not 
+subject to copyright protection and is in the public domain. This software is experimental. 
+NIST assumes no responsibility whatsoever for its use by other parties, and makes no 
+guarantees, expressed or implied, about its quality, reliability, or any other 
+characteristic. We would appreciate acknowledgement if the software is used.
 
-    This program is free software: you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation, either version 3 of the License, or
-    (at your option) any later version.
+This software can be redistributed and/or modified freely provided that any derivative 
+works bear some notice that they are derived from it, and any modified versions bear 
+some notice that they have been modified.
 
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
-
-    You should have received a copy of the GNU General Public License
-    along with this program.  If not, see <http://www.gnu.org/licenses/>.

@@ -59,8 +59,10 @@ class sqlite3MDIO(metaMDIO.metaMDIO):
 		if not hasattr(self, 'colNames_t'):
 			raise metaMDIO.InsufficientArgumentsError("Missing arguments: 'colNames_t' must be supplied to initialize {0}".format(type(self).__name__))
 
+		dbTimeout=kwargs.pop('timeout', 11.0)
+
 		self.dbFilename=self.dbPath+'/'+'eventMD-' +str(datetime.datetime.now().strftime('%Y%m%d-%H%M%S'))+'.sqlite'
-		self.db = sqlite3.connect(self.dbFilename, detect_types=sqlite3.PARSE_DECLTYPES)
+		self.db = sqlite3.connect(self.dbFilename, detect_types=sqlite3.PARSE_DECLTYPES, timeout=dbTimeout)
 
 		self._setuptables()
 
