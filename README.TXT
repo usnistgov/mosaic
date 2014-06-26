@@ -4,46 +4,67 @@ pyEventAnalysis
 
 Description::
 
-    #!/usr/bin/env python
+    import sys
+	import os
+	import glob
+	import time
+	import signal
+	import resource
 
-    from towelstuff import location
-    from towelstuff import utils
+	import pyeventanalysis.SingleChannelAnalysis
 
-    if utils.has_towel():
-        print "Your towel is located:", location.where_is_my_towel()
+	import pyeventanalysis.eventSegment as es
 
-(Note the double-colon and 4-space indent formatting above.)
+	import pyeventanalysis.singleStepEvent as sse
+	import pyeventanalysis.stepResponseAnalysis as sra 
+	import pyeventanalysis.multiStateAnalysis as msa
 
-Paragraphs are separated by blank lines. *Italics*, **bold**,
-and ``monospace`` look like this.
+	from pyeventanalysis.qdfTrajIO import *
+	from pyeventanalysis.abfTrajIO import *
+	from pyeventanalysis.tsvTrajIO import *
+	from pyeventanalysis.binTrajIO import *
+
+	from pyeventanalysis.besselLowpassFilter import *
+
+
+
+	# SingleChannelAnalysis.SingleChannelAnalysis(
+	# 			abfTrajIO(dirname='/Volumes/DATA/PEG1500/PEG29/',filter='*abf', nfiles=1, start=1000), 
+	# 			es.eventSegment,
+	# 			sra.stepResponseAnalysis
+	# 		).Run()
+
+	pyeventanalysis.SingleChannelAnalysis.SingleChannelAnalysis(
+				qdfTrajIO(dirname='/Volumes/DATA/PEG28/20140624/m70mV3/', filter='*.qdf', Rfb=2.11E+9, Cfb=1.16E-12),
+				es.eventSegment,
+				sra.stepResponseAnalysis
+			).Run() 
+
 
 
 Installation
 =========
 
-OS X 
-brew install python qt4 pyqt
-gfortran from sourceforge
+The code is tested under OS X and Ubuntu. Installation instructions for both platforms are below.
 
-Ubuntu
+Dependencies
+-------------
+* OS X
+	First install Homebrew. Next install python using brew
+		brew install python
+
+	Next install the Fortran compiler from <http://hpc.sourceforge.net/>
+
+* Ubuntu
+	Under Ubuntu in addition to gfortran, the BLAS and LAPACK libraries are required
 apt-get install libblas-dev liblapack-dev gfortran libfreetype6-dev
 
-
-Lists look like this:
-
-* First
-
-* Second. Can be multiple lines
-  but must be indented properly.
-
-A Sub-Section
+Mathematica Scripts
 -------------
 
-Numbered lists look like you'd expect:
+To install the Mathematica analysis scripts type "make math-iface" from the root of the source directory.
 
-1. hi there
+Testing the Installation
+-------------
 
-2. must be going
-
-Urls are http://like.this and links can be
-written `like this <http://www.example.com/foo/bar>`_.
+Type "make tests" from the root of the source directory to test if the code was installed correctly.
