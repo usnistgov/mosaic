@@ -5,6 +5,10 @@ Binary file implementation of metaTrajIO. Read raw binary files with specified r
 	Created: 4/22/2013
 
 	ChangeLog:
+		7/27/14		AB 	Update interface to specify python PythonStructCode instead of 
+						RecordSize. This will allow any binary file to be decoded
+						The AmplifierScale and AmplifierOffset are set to 1 and 0
+						respectively if PythonStructCode is an integer or short.
 		4/22/13		AB	Initial version
 """
 import struct
@@ -12,6 +16,9 @@ import struct
 import metaTrajIO
 
 import numpy as np
+
+class InvalidPythonStructCodeError(Exception):
+	pass
 
 class binTrajIO(metaTrajIO.metaTrajIO):
 	"""
@@ -25,24 +32,29 @@ class binTrajIO(metaTrajIO.metaTrajIO):
 					AmplifierScale		full scale of amplifier (in pA) that varies with the gain
 					AmplifierOffset		current offset in the recorded data
 					SamplingFrequency	sampling rate of data in the file in Hz
-					HeaderOffset		ignore first 'n' bytes of the file for header.
-					RecordSize			size in bytes of each data point (always assume unsigned). Acceptable values
-										are 1, 2 or 4.
+					HeaderOffset		ignore first 'n' bytes of the file for header (default: 0 bytes).
+					PythonStructCode	Single character code for a python struct (see Python struct docs).
 			Returns:
 				None
 			Errors:
 				InsufficientArgumentsError if the mandatory arguments Rfb and Cfb are not set
 		"""
-		if not hasattr(self, 'AmplifierScale'):
-			raise metaTrajIO.InsufficientArgumentsError("{0} requires the amplifier scale in pA to be defined.".format(type(self).__name__))
-		if not hasattr(self, 'AmplifierOffset'):
-			raise metaTrajIO.InsufficientArgumentsError("{0} requires the amplifier offset in pA to be defined.".format(type(self).__name__))
 		if not hasattr(self, 'SamplingFrequency'):
 			raise metaTrajIO.InsufficientArgumentsError("{0} requires the sampling rate in Hz to be defined.".format(type(self).__name__))
+		if not hasattr(self, 'PythonStructCode'):
+			raise metaTrajIO.InsufficientArgumentsError("{0} requires the Python struct code to be defined.".format(type(self).__name__))
+
 		if not hasattr(self, 'HeaderOffset'):
-			raise metaTrajIO.InsufficientArgumentsError("{0} requires the header offset in bytes to be defined.".format(type(self).__name__))
-		if not hasattr(self, 'RecordSize'):
-			raise metaTrajIO.InsufficientArgumentsError("{0} requires the size of the data in bytes to be defined.".format(type(self).__name__))
+			self.HeaderOffset=0
+
+		if not hasattr(self, 'AmplifierScale') and self.PythonStructCode in ['h', 'H', 'i', 'I', 'l', 'L', 'q', 'Q']:
+			raise metaTrajIO.InsufficientArgumentsError("{0} requires the amplifier scale in pA to be defined.".format(type(self).__name__))
+		else:
+			self.AmplifierScale=1.0
+		if not hasattr(self, 'AmplifierOffset') and self.PythonStructCode in ['h', 'H', 'i', 'I', 'l', 'L', 'q', 'Q']:
+			raise metaTrajIO.InsufficientArgumentsError("{0} requires the amplifier offset in pA to be defined.".format(type(self).__name__))
+		else:
+			self.AmplifierOffset=0.0
 
 		# additional meta data
 		self.fileFormat='bin'
@@ -50,6 +62,8 @@ class binTrajIO(metaTrajIO.metaTrajIO):
 		# set the sampling frequency in Hz.
 		if not hasattr(self, 'Fs'):	
 			self.Fs=self.SamplingFrequency
+
+		self.IntegerBits={'h':2, 'H':2, 'i':4, 'I':4, 'l':4, 'L':4, 'q':8, 'Q':8, 'f':4, 'd':8}
 
 	def readdata(self, fname):
 		"""
@@ -79,20 +93,22 @@ class binTrajIO(metaTrajIO.metaTrajIO):
 		fmtstr+='\n\t\tAmplifier scale = {0} pA\n'.format(self.AmplifierScale)
 		fmtstr+='\t\tAmplifier offset = {0} pA\n'.format(self.AmplifierOffset)
 		fmtstr+='\t\tHeader offset = {0} bytes\n'.format(self.HeaderOffset)
-		fmtstr+='\t\tRecord size = {0} bytes\n'.format(self.RecordSize)
+		fmtstr+='\t\tData type code = \'{0}\'\n'.format(self.PythonStructCode)
 	
 		return fmtstr
 
 	def readBinaryFile(self, fname):
-		try:
-			structcode = { 1 : 'B', 2 : 'H', 4 : 'I'}[self.RecordSize]
-		except KeyError:
-			raise IncompatibleArgumentsError('Record size must be 1, 2 or 4 bytes, got {0} bytes instead.' % self.RecordSize)
-		
 		CHUNKSIZE=4096
 
-		bits=self.RecordSize*8
-		scale=self.AmplifierScale/(2**bits)
+		if self.PythonStructCode in ['f', 'd']:
+			scale=1
+			offset=0
+		elif self.PythonStructCode in ['h', 'H', 'i', 'I', 'l', 'L', 'q', 'Q']:
+			bits=self.IntegerBits[self.PythonStructCode]*8
+			scale=self.AmplifierScale/(2**bits)
+			offset=self.AmplifierOffset
+		else:
+			raise InvalidPythonStructCodeError("Invalid Python struct code.")
 
 		binfile=open(fname, 'rb')
 
@@ -106,13 +122,13 @@ class binTrajIO(metaTrajIO.metaTrajIO):
 				break
 
 			# read and parse the rest of the data
-			parsedat.extend( self.parseChunk( bd, structcode, scale, self.AmplifierOffset ) )
+			parsedat.extend( self.parseChunk( bd, self.PythonStructCode, scale, offset ) )
 
 		binfile.close()
 
 		return parsedat
 
 	def parseChunk(self, dat, structcode, scale, offset):
-		pdat=struct.unpack('<' + str(int(len(dat)/float(self.RecordSize))) + structcode, dat)
+		pdat=struct.unpack('<' + str(int(len(dat)/float(self.IntegerBits[self.PythonStructCode]))) + structcode, dat)
 
 		return [ dat*scale-offset for dat in pdat ]

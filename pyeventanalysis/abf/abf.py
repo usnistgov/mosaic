@@ -8,6 +8,7 @@
 	Created: 5/23/2013
 
 	ChangeLog:
+		7/28/14 	AB 	Included support for mode 5 (event driven fixed length)
 		5/23/13		AB	Initial version
 """
 import struct
@@ -37,6 +38,9 @@ def abfload_gp(filename):
 	header = read_header(filename)
 	version = header['fFileVersionNumber']
 
+	bandwidth=0
+	gain=0
+
 	# file format
 	if header['nDataFormat'] == 0 :
 		dt = dtype('i2')
@@ -45,6 +49,7 @@ def abfload_gp(filename):
 	
 	if version <2. :
 		nbchannel = header['nADCNumChannels']
+		nbepisod = header['lSynchArraySize']
 		headOffset = header['lDataSectionPtr']*BLOCKSIZE+header['nNumPointsIgnored']*dt.itemsize
 		totalsize = header['lActualAcqLength']
 		if nbchannel == 1:
@@ -54,12 +59,12 @@ def abfload_gp(filename):
 	elif version >=2. :
 		nbchannel = header['sections']['ADCSection']['llNumEntries']
 		headOffset = header['sections']['DataSection']['uBlockIndex']*BLOCKSIZE
+		nbepisod = header['sections']['SynchArraySection']['llNumEntries']
 		totalsize = header['sections']['DataSection']['llNumEntries']
 		if nbchannel == 1:
 			if header['listADCInfo'][0]['nTelegraphEnable']:
 				gain = header['listADCInfo'][0]['fTelegraphAdditGain']
 				bandwidth = header['listADCInfo'][0]['fTelegraphFilter']
-
 
 	data = memmap(filename , dt  , 'r', shape = (totalsize,) , offset = headOffset)
 
@@ -69,8 +74,13 @@ def abfload_gp(filename):
 	elif version >=2. :
 		mode = header['protocol']['nOperationMode']
 
-	if mode != 3:
-		raise InvalidModeError("Only gap-free mode is currently supported")
+	# print mode, nbchannel, nbepisod, bandwidth, gain
+	# for k,v in header.iteritems():
+	# 	print k, '=', v
+
+	# Check for either gap free or event driven fixed-length modes
+	if mode not in [3, 5]:
+		raise InvalidModeError("Only gap-free (3) and event driven fixed length (5) modes are currently supported")
 	if nbchannel != 1:
 		raise MultipleChannelError('Data from more than one channel is not currently supported')
 
@@ -450,14 +460,12 @@ TagInfoDescription = [
 	   ]
 
 if __name__ == '__main__':
-	f='/Volumes/DATA/PEG1500/PEG29/06710009.abf'
+	f='/Users/arvind/Research/Experiments/jan_doublets/AS45_2 Kopie-e249-235_st.abf'
 
-	[freq, hdr, data]=abfload_gp(f)
+	[freq, hdr, bandwidth, gain, data]=abfload_gp(f)
 
-	print freq
-	for k,v in hdr.iteritems():
-		print k, '=', v
-
+	print freq, hdr, bandwidth, gain
+	
 	print len(data)
 
 	import matplotlib.pyplot as plt

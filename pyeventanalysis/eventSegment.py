@@ -132,7 +132,7 @@ class eventSegment(metaEventPartition.metaEventPartition):
 	#################################################################
 	# Interface functions
 	#################################################################
-	#@profile
+	"""#@profile"""
 	def _eventsegment(self):
 		"""
 			Cut up a trajectory into individual events. This algorithm uses

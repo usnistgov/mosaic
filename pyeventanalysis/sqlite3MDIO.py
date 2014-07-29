@@ -48,8 +48,6 @@ class sqlite3MDIO(metaMDIO.metaMDIO):
 			Initialize the database tables
 			
 			Args:
-				colNames 	list of text names for the columns in the tables
-				colNames_t	list of data types for each column. 
 				tableName   name of database table. Default is 'metadata'
 		"""
 		if not hasattr(self, 'tableName'):

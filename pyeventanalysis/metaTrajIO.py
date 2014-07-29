@@ -1,3 +1,5 @@
+##@package pyeventanalysis.metaTrajIO
+#Meta class to allow import of ionic current data from a variety of sources.
 """
 	Read binary ionic current data into numpy arrays
 
@@ -5,7 +7,6 @@
 	Created:	7/17/2012
 
 	ChangeLog:
-<<<<<<< HEAD:metaTrajIO.py
 		5/27/14		AB 	Added dcOffset kwarg to initialization to allow 
 						for offset correction in the ionic current data.
 		2/13/14		AB 	Fixed a potential infinite recursion bug in the

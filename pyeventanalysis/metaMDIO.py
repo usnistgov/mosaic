@@ -34,6 +34,8 @@ class metaMDIO(object):
 			The arguments	passed to init change based on the method of file IO selected, in addition to 
 			the common args below:
 				dbPath		directory to store the MD database ('<full path to data directory>')
+				colNames 	list of text names for the columns in the tables
+				colNames_t	list of data types for each column. 
 		"""
 		# start by setting all passed keyword arguments as class attributes
 		for (k,v) in kwargs.iteritems():
@@ -41,6 +43,10 @@ class metaMDIO(object):
 
 		if not hasattr(self, 'dbPath'):
 			raise InsufficientArgumentsError("Missing arguments: 'dbPath' must be supplied to initialize {0}".format(type(self).__name__))
+		if not hasattr(self, 'colNames'):
+			raise InsufficientArgumentsError("Missing arguments: 'colNames' must be supplied to initialize {0}".format(type(self).__name__))
+		if not hasattr(self, 'colNames_t'):
+			raise InsufficientArgumentsError("Missing arguments: 'colNames_t' must be supplied to initialize {0}".format(type(self).__name__))
 
 		self._initdb(**kwargs)
 

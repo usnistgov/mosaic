@@ -1,4 +1,6 @@
-"""
+##@package pyeventanalysis.metaEventProcessor 
+#Event processing meta class.
+""" 
 	A meta class that defines the interface for event processing functions. The class object stores the 
 	raw data for the event as well as meta-data after processing individual events. The meta-data is
 	defined by specfic implementations of this class.

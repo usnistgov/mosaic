@@ -10,10 +10,10 @@
 NotebookFileLineBreakTest
 NotebookFileLineBreakTest
 NotebookDataPosition[       157,          7]
-NotebookDataLength[     38214,        881]
-NotebookOptionsPosition[     37125,        841]
-NotebookOutlinePosition[     37502,        858]
-CellTagsIndexPosition[     37459,        855]
+NotebookDataLength[     40465,        937]
+NotebookOptionsPosition[     39209,        893]
+NotebookOutlinePosition[     39585,        910]
+CellTagsIndexPosition[     39542,        907]
 WindowFrame->Normal*)
 
 (* Beginning of Notebook Content *)
@@ -694,7 +694,7 @@ Cell[BoxData[
     1, Typeset`name$$ = "\"untitled\"", Typeset`specs$$ = {{
       Hold[$CellContext`i$$], 1, 8678, 1}, {
       Hold[$CellContext`s$$], 1, 10, 1}}, Typeset`size$$ = {
-    733.68076171875, {11.65, 18.704375}}, Typeset`update$$ = 0, 
+    655.68076171875, {11.65, 18.704375}}, Typeset`update$$ = 0, 
     Typeset`initDone$$, Typeset`skipInitDone$$ = 
     True, $CellContext`i$49178$$ = 0, $CellContext`s$49179$$ = 0}, 
     DynamicBox[Manipulate`ManipulateBoxes[
@@ -714,7 +714,7 @@ Cell[BoxData[
       "Specifications" :> {{$CellContext`i$$, 1, 8678, 1, Appearance -> 
          "Open"}, {$CellContext`s$$, 1, 10, 1, Appearance -> "Open"}}, 
       "Options" :> {}, "DefaultOptions" :> {}],
-     ImageSizeCache->{779., {98., 103.}},
+     ImageSizeCache->{701., {98., 103.}},
      SingleEvaluation->True],
     Deinitialization:>None,
     DynamicModuleValues:>{},
@@ -836,11 +836,63 @@ numbers or pairs of numbers. \\!\\(\\*ButtonBox[\\\"\[RightSkeleton]\\\", \
 ButtonStyle->\\\"Link\\\", ButtonFrame->None, \
 ButtonData:>\\\"paclet:ref/ListPlot\\\", ButtonNote -> \\\"ListPlot::lpn\\\"]\
 \\)\"\>"}]], "Message", "MSG",
- CellChangeTimes->{3.587499927054459*^9}]
+ CellChangeTimes->{3.587499927054459*^9}],
+
+Cell[BoxData[
+ RowBox[{
+  StyleBox[
+   RowBox[{"Part", "::", "partd"}], "MessageName"], 
+  RowBox[{
+  ":", " "}], "\<\"Part specification \[NoBreak]\\!\\(ts$49095 \
+\[LeftDoubleBracket] 1 \[RightDoubleBracket]\\)\[NoBreak] is longer than \
+depth of object. \\!\\(\\*ButtonBox[\\\"\[RightSkeleton]\\\", ButtonStyle->\\\
+\"Link\\\", ButtonFrame->None, \
+ButtonData:>\\\"paclet:ref/message/General/partd\\\", ButtonNote -> \
+\\\"Part::partd\\\"]\\)\"\>"}]], "Message", "MSG",
+ CellChangeTimes->{3.615041148546207*^9}],
+
+Cell[BoxData[
+ RowBox[{
+  StyleBox[
+   RowBox[{"Part", "::", "partd"}], "MessageName"], 
+  RowBox[{
+  ":", " "}], "\<\"Part specification \[NoBreak]\\!\\(md$49049 \
+\[LeftDoubleBracket] 1 \[RightDoubleBracket]\\)\[NoBreak] is longer than \
+depth of object. \\!\\(\\*ButtonBox[\\\"\[RightSkeleton]\\\", ButtonStyle->\\\
+\"Link\\\", ButtonFrame->None, \
+ButtonData:>\\\"paclet:ref/message/General/partd\\\", ButtonNote -> \
+\\\"Part::partd\\\"]\\)\"\>"}]], "Message", "MSG",
+ CellChangeTimes->{3.615041148547022*^9}],
+
+Cell[BoxData[
+ RowBox[{
+  StyleBox[
+   RowBox[{"Part", "::", "partd"}], "MessageName"], 
+  RowBox[{
+  ":", " "}], "\<\"Part specification \[NoBreak]\\!\\(ts$49095 \
+\[LeftDoubleBracket] 1 \[RightDoubleBracket]\\)\[NoBreak] is longer than \
+depth of object. \\!\\(\\*ButtonBox[\\\"\[RightSkeleton]\\\", ButtonStyle->\\\
+\"Link\\\", ButtonFrame->None, \
+ButtonData:>\\\"paclet:ref/message/General/partd\\\", ButtonNote -> \
+\\\"Part::partd\\\"]\\)\"\>"}]], "Message", "MSG",
+ CellChangeTimes->{3.615041148610591*^9}],
+
+Cell[BoxData[
+ RowBox[{
+  StyleBox[
+   RowBox[{"General", "::", "stop"}], "MessageName"], 
+  RowBox[{
+  ":", " "}], "\<\"Further output of \[NoBreak]\\!\\(\\*StyleBox[\\(Part :: \
+partd\\), \\\"MessageName\\\"]\\)\[NoBreak] will be suppressed during this \
+calculation. \\!\\(\\*ButtonBox[\\\"\[RightSkeleton]\\\", \
+ButtonStyle->\\\"Link\\\", ButtonFrame->None, \
+ButtonData:>\\\"paclet:ref/message/General/stop\\\", ButtonNote -> \
+\\\"General::stop\\\"]\\)\"\>"}]], "Message", "MSG",
+ CellChangeTimes->{3.6150411486114407`*^9}]
 }, Open  ]]
 },
-WindowSize->{978, 873},
-WindowMargins->{{229, Automatic}, {Automatic, 9}},
+WindowSize->{1223, 790},
+WindowMargins->{{0, Automatic}, {Automatic, 0}},
 ShowSelection->True,
 FrontEndVersion->"9.0 for Mac OS X x86 (32-bit, 64-bit Kernel) (January 25, \
 2013)",
@@ -865,7 +917,7 @@ Cell[1826, 47, 1454, 65, 889, "Print"]
 }, Open  ]],
 Cell[CellGroupData[{
 Cell[3317, 117, 178, 3, 28, "Input"],
-Cell[3498, 122, 298, 5, 62, "Output"]
+Cell[3498, 122, 298, 5, 28, "Output"]
 }, Open  ]],
 Cell[CellGroupData[{
 Cell[3833, 132, 1560, 30, 46, "Input"],
@@ -881,7 +933,11 @@ Cell[34301, 772, 582, 12, 40, "Message"],
 Cell[34886, 786, 514, 11, 24, "Message"],
 Cell[35403, 799, 514, 11, 24, "Message"],
 Cell[35920, 812, 604, 12, 40, "Message"],
-Cell[36527, 826, 582, 12, 40, "Message"]
+Cell[36527, 826, 582, 12, 40, "Message"],
+Cell[37112, 840, 514, 11, 24, "Message"],
+Cell[37629, 853, 514, 11, 24, "Message"],
+Cell[38146, 866, 514, 11, 24, "Message"],
+Cell[38663, 879, 530, 11, 24, "Message"]
 }, Open  ]]
 }
 ]

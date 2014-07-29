@@ -10,10 +10,10 @@
 NotebookFileLineBreakTest
 NotebookFileLineBreakTest
 NotebookDataPosition[       157,          7]
-NotebookDataLength[     52865,       1283]
-NotebookOptionsPosition[     51138,       1223]
-NotebookOutlinePosition[     51521,       1240]
-CellTagsIndexPosition[     51478,       1237]
+NotebookDataLength[     55550,       1340]
+NotebookOptionsPosition[     53822,       1280]
+NotebookOutlinePosition[     54205,       1297]
+CellTagsIndexPosition[     54162,       1294]
 WindowFrame->Normal*)
 
 (* Beginning of Notebook Content *)
@@ -589,7 +589,8 @@ Cell[BoxData[{
            RowBox[{"Abs", "[", "ts", "]"}], ",", 
            RowBox[{"PlotRange", "\[Rule]", 
             RowBox[{"{", 
-             RowBox[{"0", ",", "All"}], "}"}]}], ",", 
+             RowBox[{
+              RowBox[{"-", "25"}], ",", "All"}], "}"}]}], ",", 
            RowBox[{"PlotStyle", "\[Rule]", 
             RowBox[{"Directive", "[", 
              RowBox[{
@@ -598,7 +599,7 @@ Cell[BoxData[{
                 RowBox[{"{", 
                  RowBox[{"41", ",", " ", "74", ",", "130"}], "}"}], "255"]}], 
               ",", 
-              RowBox[{"Opacity", "[", "0.75", "]"}]}], "]"}]}], ",", 
+              RowBox[{"Opacity", "[", "0.4", "]"}]}], "]"}]}], ",", 
            RowBox[{"PlotMarkers", "\[Rule]", 
             RowBox[{"{", 
              RowBox[{"Automatic", ",", "14"}], "}"}]}], ",", 
@@ -622,24 +623,71 @@ Cell[BoxData[{
          RowBox[{"ListPlot", "[", 
           RowBox[{
            RowBox[{"{", "\[IndentingNewLine]", 
-            RowBox[{"Table", "[", 
-             RowBox[{
-              RowBox[{"{", 
-               RowBox[{"t", ",", 
-                RowBox[{"Evaluate", "[", 
-                 RowBox[{
-                  RowBox[{"Abs", "[", 
-                   RowBox[{
-                   "md", "\[LeftDoubleBracket]", "1", 
-                    "\[RightDoubleBracket]"}], "]"}], "+", 
+            RowBox[{
+             RowBox[{"Table", "[", 
+              RowBox[{
+               RowBox[{"{", 
+                RowBox[{"t", ",", 
+                 RowBox[{"Evaluate", "[", 
                   RowBox[{
-                   UnderoverscriptBox["\[Sum]", 
+                   RowBox[{"Abs", "[", 
+                    RowBox[{
+                    "md", "\[LeftDoubleBracket]", "1", 
+                    "\[RightDoubleBracket]"}], "]"}], "+", 
+                   RowBox[{
+                    UnderoverscriptBox["\[Sum]", 
                     RowBox[{"i", "=", "1"}], 
                     RowBox[{"Length", "[", 
                     RowBox[{
                     "md", "\[LeftDoubleBracket]", "2", 
                     "\[RightDoubleBracket]"}], "]"}]], 
-                   RowBox[{"(", 
+                    RowBox[{"(", 
+                    RowBox[{
+                    RowBox[{
+                    RowBox[{
+                    "md", "\[LeftDoubleBracket]", "2", 
+                    "\[RightDoubleBracket]"}], "\[LeftDoubleBracket]", "i", 
+                    "\[RightDoubleBracket]"}], 
+                    RowBox[{"HeavisideTheta", "[", 
+                    RowBox[{"t", "-", 
+                    RowBox[{
+                    RowBox[{
+                    "md", "\[LeftDoubleBracket]", "3", 
+                    "\[RightDoubleBracket]"}], "\[LeftDoubleBracket]", "i", 
+                    "\[RightDoubleBracket]"}]}], "]"}]}], ")"}]}]}], "]"}]}], 
+                "}"}], ",", 
+               RowBox[{"{", 
+                RowBox[{"t", ",", 
+                 RowBox[{
+                  RowBox[{
+                  "ts", "\[LeftDoubleBracket]", "1", 
+                   "\[RightDoubleBracket]"}], "\[LeftDoubleBracket]", "1", 
+                  "\[RightDoubleBracket]"}], ",", 
+                 RowBox[{
+                  RowBox[{"ts", "\[LeftDoubleBracket]", 
+                   RowBox[{"-", "1"}], "\[RightDoubleBracket]"}], 
+                  "\[LeftDoubleBracket]", "1", "\[RightDoubleBracket]"}], ",", 
+                 FractionBox[
+                  RowBox[{"1", "/", "FsKHz"}], "10"]}], "}"}]}], "]"}], ",", 
+             "\[IndentingNewLine]", 
+             RowBox[{"Table", "[", 
+              RowBox[{
+               RowBox[{"{", 
+                RowBox[{"t", ",", 
+                 RowBox[{"Evaluate", "[", 
+                  RowBox[{
+                   RowBox[{"Abs", "[", 
+                    RowBox[{
+                    "md", "\[LeftDoubleBracket]", "1", 
+                    "\[RightDoubleBracket]"}], "]"}], "+", 
+                   RowBox[{
+                    UnderoverscriptBox["\[Sum]", 
+                    RowBox[{"i", "=", "1"}], 
+                    RowBox[{"Length", "[", 
+                    RowBox[{
+                    "md", "\[LeftDoubleBracket]", "2", 
+                    "\[RightDoubleBracket]"}], "]"}]], 
+                    RowBox[{"(", 
                     RowBox[{
                     RowBox[{
                     RowBox[{
@@ -668,29 +716,34 @@ Cell[BoxData[{
                     "md", "\[LeftDoubleBracket]", "3", 
                     "\[RightDoubleBracket]"}], "\[LeftDoubleBracket]", "i", 
                     "\[RightDoubleBracket]"}]}], "]"}]}], ")"}]}]}], "]"}]}], 
-               "}"}], ",", 
-              RowBox[{"{", 
-               RowBox[{"t", ",", 
-                RowBox[{
+                "}"}], ",", 
+               RowBox[{"{", 
+                RowBox[{"t", ",", 
                  RowBox[{
-                 "ts", "\[LeftDoubleBracket]", "1", "\[RightDoubleBracket]"}],
+                  RowBox[{
+                  "ts", "\[LeftDoubleBracket]", "1", 
+                   "\[RightDoubleBracket]"}], "\[LeftDoubleBracket]", "1", 
+                  "\[RightDoubleBracket]"}], ",", 
+                 RowBox[{
+                  RowBox[{"ts", "\[LeftDoubleBracket]", 
+                   RowBox[{"-", "1"}], "\[RightDoubleBracket]"}], 
                   "\[LeftDoubleBracket]", "1", "\[RightDoubleBracket]"}], ",", 
-                RowBox[{
-                 RowBox[{"ts", "\[LeftDoubleBracket]", 
-                  RowBox[{"-", "1"}], "\[RightDoubleBracket]"}], 
-                 "\[LeftDoubleBracket]", "1", "\[RightDoubleBracket]"}], ",", 
-                
-                FractionBox[
-                 RowBox[{"1", "/", "FsKHz"}], "10"]}], "}"}]}], "]"}], 
+                 FractionBox[
+                  RowBox[{"1", "/", "FsKHz"}], "10"]}], "}"}]}], "]"}]}], 
             "\[IndentingNewLine]", "}"}], ",", 
            RowBox[{"PlotStyle", "\[Rule]", 
             RowBox[{"{", 
              RowBox[{
               RowBox[{"{", 
-               RowBox[{"Black", ",", 
+               RowBox[{
+                RowBox[{
+                 RowBox[{"ColorData", "[", "\"\<DarkRainbow\>\"", "]"}], "[", 
+                 "0.95", "]"}], ",", "Dashed", ",", 
                 RowBox[{"Thickness", "[", "0.005", "]"}]}], "}"}], ",", 
               RowBox[{"{", 
                RowBox[{"Black", ",", 
+                RowBox[{"Dashing", "[", 
+                 RowBox[{"{", "}"}], "]"}], ",", 
                 RowBox[{"Thickness", "[", "0.005", "]"}]}], "}"}], ",", 
               RowBox[{"{", 
                RowBox[{"Black", ",", 
@@ -759,7 +812,11 @@ Cell[BoxData[{
    3.612133441660656*^9}, {3.612133913555655*^9, 3.612133915876708*^9}, {
    3.612134068352976*^9, 3.6121340700620327`*^9}, {3.6121344233950377`*^9, 
    3.612134429227354*^9}, 3.6121346776863117`*^9, {3.6121347992310534`*^9, 
-   3.612134800068111*^9}}],
+   3.612134800068111*^9}, {3.6144943490051327`*^9, 3.614494364153603*^9}, {
+   3.614494488091107*^9, 3.614494488441135*^9}, {3.614494560520927*^9, 
+   3.614494578334903*^9}, {3.61449466839638*^9, 3.614494672194643*^9}, {
+   3.614494788882308*^9, 3.6144947925816507`*^9}, {3.614501350330645*^9, 
+   3.614501352530095*^9}, 3.614501397908681*^9}],
 
 Cell[BoxData[{
  RowBox[{
@@ -1222,7 +1279,7 @@ Cell[BoxData[
 }, Open  ]]
 },
 NotebookEventActions->None,
-WindowSize->{1024, 724},
+WindowSize->{1043, 673},
 WindowMargins->{{0, Automatic}, {Automatic, 0}},
 FrontEndVersion->"9.0 for Mac OS X x86 (32-bit, 64-bit Kernel) (January 25, \
 2013)",
@@ -1271,18 +1328,18 @@ Cell[14364, 348, 460, 14, 49, "Input",
 Cell[14827, 364, 6587, 141, 386, "Input",
  InitializationCell->True],
 Cell[21417, 507, 2209, 62, 97, "Input"],
-Cell[23629, 571, 8507, 190, 494, "Input",
+Cell[23629, 571, 11191, 247, 615, "Input",
  InitializationCell->True],
-Cell[32139, 763, 11767, 271, 546, "Input",
+Cell[34823, 820, 11767, 271, 546, "Input",
  InitializationCell->True],
-Cell[43909, 1036, 5643, 135, 431, "Input",
+Cell[46593, 1093, 5643, 135, 431, "Input",
  InitializationCell->True],
-Cell[49555, 1173, 805, 21, 63, "Input",
+Cell[52239, 1230, 805, 21, 63, "Input",
  InitializationCell->True],
-Cell[50363, 1196, 499, 13, 28, "Input",
+Cell[53047, 1253, 499, 13, 28, "Input",
  InitializationCell->True,
  InitializationGroup->True],
-Cell[50865, 1211, 257, 9, 28, "Input",
+Cell[53549, 1268, 257, 9, 28, "Input",
  InitializationCell->True]
 }, Open  ]]
 }

@@ -11,7 +11,7 @@
 		"slopeOpenCurr"		: "-1",
 		"writeEventTS"		: "0",
 		"parallelProc"		: "0",
-		"reserveNCPU"		: "5",
+		"reserveNCPU"		: "2",
 		"plotResults"		: "0"
 	},
 	"singleStepEvent" : {
