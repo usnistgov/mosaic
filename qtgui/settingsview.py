@@ -7,31 +7,30 @@ import multiprocessing
 from PyQt4 import QtCore
 from PyQt4 import QtGui
 
-import EBSStateFileDict
+import qtgui.EBSStateFileDict
 import pyeventanalysis.settings
 # import AnalysisSettings
-from SettingsWindow import Ui_SettingsWindow
-import trajview.trajview
-import advancedsettings.advancedsettings
-import datamodel
+from qtgui.SettingsWindow import Ui_SettingsWindow
+import qtgui.trajview.trajview
+import qtgui.advancedsettings.advancedsettings
+import qtgui.datamodel
 
-class SettingsView(QtGui.QMainWindow, Ui_SettingsWindow):
+class settingsview(QtGui.QMainWindow, Ui_SettingsWindow):
 	def __init__(self, parent = None):
-		super(SettingsView, self).__init__(parent)
+		super(settingsview, self).__init__(parent)
 
 		self.setupUi(self)
 		self.setMenuBar(self.menubar)
 		self._positionWindow()
 
-		self.analysisRunning=False
 		self.updateDialogs=False
 
 		# setup handles and data structs for other application windows
-		self.trajViewerWindow = trajview.trajview.TrajectoryWindow(parent=self)
-		self.advancedSettingsDialog = advancedsettings.advancedsettings.AdvancedSettingsDialog(parent=self)
+		self.trajViewerWindow = qtgui.trajview.trajview.TrajectoryWindow(parent=self)
+		self.advancedSettingsDialog = qtgui.advancedsettings.advancedsettings.AdvancedSettingsDialog(parent=self)
 		
 		# Setup and initialize the data model for the settings view
-		self.analysisDataModel=datamodel.guiDataModel()
+		self.analysisDataModel=qtgui.datamodel.guiDataModel()
 
 		# default settings
 		self._updateControls()
@@ -66,14 +65,10 @@ class SettingsView(QtGui.QMainWindow, Ui_SettingsWindow):
 		# View Menu signals
 		QtCore.QObject.connect(self.actionAdvanced_Settings_Mode, QtCore.SIGNAL('triggered()'), self.OnAdvancedModeMenuAction)
 		QtCore.QObject.connect(self.actionTrajectory_Viewer, QtCore.SIGNAL('triggered()'), self.OnShowTrajectoryViewer)
-
-		# QtCore.QObject.connect(self.startAnalysisPushButton, QtCore.SIGNAL('clicked()'), self.OnStartAnalysis)
-		# QtCore.QObject.connect(self.actionStart_Analysis, QtCore.SIGNAL('triggered()'), self.OnStartAnalysis)
 		
 		# Dialog signals and slots
 		QtCore.QObject.connect(self.advancedSettingsDialog, QtCore.SIGNAL('rejected()'), self.OnAdvancedModeCancel)
-		QtCore.QObject.connect(self.advancedSettingsDialog, QtCore.SIGNAL('accepted()'), self.OnAdvancedModeSave)
-		
+		QtCore.QObject.connect(self.advancedSettingsDialog, QtCore.SIGNAL('accepted()'), self.OnAdvancedModeSave)		
 
 
 	def _positionWindow(self):
@@ -100,6 +95,9 @@ class SettingsView(QtGui.QMainWindow, Ui_SettingsWindow):
 
 		# store the  data type in the trajviewer data struct
 		model["DataFilesType"] = str(self.datTypeComboBox.currentText())
+
+		self.startIndexLineEdit.setText(str(model["start"]))
+		self.dcOffsetDoubleSpinBox.setValue(model["dcOffset"])
 
 		if float(model["meanOpenCurr"]) == -1 or float(model["sdOpenCurr"]) == -1:
 			self.baselineAutoCheckBox.setChecked(True)
@@ -138,7 +136,7 @@ class SettingsView(QtGui.QMainWindow, Ui_SettingsWindow):
 		if path:
 			ebsFile=glob.glob(str(path)+'/*_state.txt')
 			if len(ebsFile) > 0:
-				ebsState=EBSStateFileDict.EBSStateFileDict(ebsFile[0])
+				ebsState=qtgui.EBSStateFileDict.EBSStateFileDict(ebsFile[0])
 
 				rfb=ebsState.pop('FB Resistance',1.0)
 				cfb=ebsState.pop('FB Capacitance',1.0)
@@ -239,7 +237,7 @@ class SettingsView(QtGui.QMainWindow, Ui_SettingsWindow):
 	def OnDataStartIndexChange(self, item):
 		if self.updateDialogs:
 			self.analysisDataModel["start"]=int(item)
-
+			
 			self.trajViewerWindow.setTrajdata(self.analysisDataModel.GenerateTrajView())
 			self.trajViewerWindow.refreshPlot()
 
@@ -352,7 +350,7 @@ class SettingsView(QtGui.QMainWindow, Ui_SettingsWindow):
 
 if __name__ == '__main__':
 	app = QtGui.QApplication(sys.argv)
-	dmw = SettingsView()
+	dmw = settingsview()
 	dmw.show()
 	dmw.raise_()
 	sys.exit(app.exec_())

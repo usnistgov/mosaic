@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'trajview/trajviewui.ui'
 #
-# Created: Thu Aug  7 15:54:56 2014
+# Created: Sat Aug  9 17:51:54 2014
 #      by: PyQt4 UI code generator 4.10.4
 #
 # WARNING! All changes made in this file will be lost!

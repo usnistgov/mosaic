@@ -28,7 +28,7 @@ class NavigationToolbar( NavigationToolbar2QTAgg ):
 				next=None
 
 		# create custom button
-		pm=QPixmap(32,32)
+		pm=QPixmap(64,64)
 		# pm.fill(QApplication.palette().color(QPalette.Normal,QPalette.Button))
 		c = QColor(0)
 		c.setAlpha(0)
@@ -37,8 +37,8 @@ class NavigationToolbar( NavigationToolbar2QTAgg ):
 		# painter.fillRect(6,6,20,20,Qt.red)
 		painter.setBrush(Qt.black)
 		painter.setPen(Qt.black)
-		painter.drawPolygon( QPoint( 10, 10 ), QPoint( 10, 22 ),
-                           QPoint( 22, 16 ), QPoint( 10, 10 ) )
+		painter.drawPolygon( QPoint( 22, 22 ), QPoint( 22, 42 ),
+                           QPoint( 42, 32 ), QPoint( 22, 22 ) )
 		# painter.fillRect(3,23,5,23,Qt.blue)
 		painter.end()
 		icon=QIcon(pm)

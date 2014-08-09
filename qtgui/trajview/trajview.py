@@ -12,7 +12,7 @@ import pyeventanalysis.abfTrajIO as abf
 import pyeventanalysis.qdfTrajIO as qdf
 from pyeventanalysis.metaTrajIO import FileNotFoundError, EmptyDataPipeError
 
-from trajviewui import Ui_Dialog
+from qtgui.trajview.trajviewui import Ui_Dialog
 
 class TrajectoryWindow(QtGui.QDialog, Ui_Dialog):
 
