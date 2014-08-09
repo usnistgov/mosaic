@@ -54,8 +54,12 @@ def abfload_gp(filename):
 		totalsize = header['lActualAcqLength']
 		if nbchannel == 1:
 			if header['nTelegraphEnable'][0]:
-				gain = header['fTelegraphAdditGain'][0]
-				bandwidth = header['fTelegraphFilter'][0]
+				try:
+					gain = header['fTelegraphAdditGain'][0]
+					bandwidth = header['fTelegraphFilter'][0]
+				except KeyError:
+					bandwidth=0
+					gain=0
 	elif version >=2. :
 		nbchannel = header['sections']['ADCSection']['llNumEntries']
 		headOffset = header['sections']['DataSection']['uBlockIndex']*BLOCKSIZE
@@ -63,8 +67,12 @@ def abfload_gp(filename):
 		totalsize = header['sections']['DataSection']['llNumEntries']
 		if nbchannel == 1:
 			if header['listADCInfo'][0]['nTelegraphEnable']:
-				gain = header['listADCInfo'][0]['fTelegraphAdditGain']
-				bandwidth = header['listADCInfo'][0]['fTelegraphFilter']
+				try:
+					gain = header['listADCInfo'][0]['fTelegraphAdditGain']
+					bandwidth = header['listADCInfo'][0]['fTelegraphFilter']
+				except KeyError:
+					bandwidth=0
+					gain=0
 
 	data = memmap(filename , dt  , 'r', shape = (totalsize,) , offset = headOffset)
 
