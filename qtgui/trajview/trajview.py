@@ -5,23 +5,23 @@ import sys
 import os
 import csv
 
-from PyQt4 import QtCore
-from PyQt4 import QtGui
+from PyQt4 import QtCore, QtGui, uic
 
 import pyeventanalysis.abfTrajIO as abf
 import pyeventanalysis.qdfTrajIO as qdf
 from pyeventanalysis.metaTrajIO import FileNotFoundError, EmptyDataPipeError
 
-from qtgui.trajview.trajviewui import Ui_Dialog
+# from qtgui.trajview.trajviewui import Ui_Dialog
 
-class TrajectoryWindow(QtGui.QDialog, Ui_Dialog):
+class TrajectoryWindow(QtGui.QDialog):
 
 	def __init__(self, parent = None):
 		self.v=[]
 
 		super(TrajectoryWindow, self).__init__(parent)
 
-		self.setupUi(self)
+		uic.loadUi(os.path.join(os.path.dirname(os.path.abspath(__file__)),"trajviewui.ui"), self)
+		# self.setupUi(self)
 		self._positionWindow()
 
 		QtCore.QObject.connect(self.nextBtn, QtCore.SIGNAL("clicked()"), self.OnNextButton)

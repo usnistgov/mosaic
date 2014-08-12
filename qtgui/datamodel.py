@@ -16,6 +16,9 @@ from pyeventanalysis.metaTrajIO import FileNotFoundError, EmptyDataPipeError
 
 class guiDataModel(dict):
 	def __init__(self):
+		self._setupModelViews()
+
+
 		self["DataFilesType"]="ABF"
 		self["DataFilesPath"]=""
 		self["start"]=1
@@ -23,8 +26,27 @@ class guiDataModel(dict):
 		self["Rfb"]=0.0
 		self["Cfb"]=0.0
 
-		self._setupModelViews()
 		self.UpdateDataModelFromSettings()
+
+	def __setitem__(self, key, val):
+		dat=val
+
+		# Add special rules to modify data here
+		if key == "start":		# the start index cannot be set to 0
+			if val == 0:
+				dat=1
+
+		try:
+			dict.__setitem__(self, key, self.keyTypesDict[key](dat) )
+		except KeyError:
+			dict.__setitem__(self, key, dat )
+
+	def __getitem__(self, key):
+		return dict.__getitem__(self, key)
+
+	def update(self, *args, **kwargs):
+		for k, v in dict(*args, **kwargs).iteritems():
+			self[k] = v
 
 	def GenerateSettingsView(self, eventPartitionAlgo, eventProcessingAlgo):
 		settingsdict={}
@@ -51,8 +73,8 @@ class guiDataModel(dict):
 
 	def GenerateTrajView(self):
 		settingsdict={}
-		for k, _t in self.trajviewerKeys.iteritems():
-			settingsdict[k]=_t(self[k])
+		for k in self.trajviewerKeys.keys():
+			settingsdict[k]=self[k]
 
 		return settingsdict		
 
@@ -89,6 +111,37 @@ class guiDataModel(dict):
 			self.update(vals)
 
 	def _setupModelViews(self):
+		self.keyTypesDict={
+								"blockSizeSec" 			: float,
+								"eventPad" 				: int,
+								"minEventLength" 		: int,
+								"eventThreshold" 		: float,
+								"driftThreshold" 		: float,
+								"maxDriftRate" 			: float,
+								"meanOpenCurr" 			: float,
+								"sdOpenCurr"			: float,
+								"slopeOpenCurr"			: float,
+								"writeEventTS"			: int,
+								"parallelProc"			: int,
+								"reserveNCPU" 			: int,
+								"plotResults" 			: int,
+								"FitTol" 				: float,
+								"FitIters" 				: int,
+								"BlockRejectRatio" 		: float,
+								"filterOrder" 			: int,
+								"filterCutoff" 			: float,
+								"decimate" 				: int,
+								"DataFilesType" 		: str,
+								"DataFilesPath" 		: str,
+								"eventThreshold"		: float,
+								"blockSizeSec" 			: float,
+								"meanOpenCurr" 			: float,
+								"sdOpenCurr" 			: float,
+								"dcOffset" 				: float,
+								"start" 				: int,
+								"Rfb" 					: float,
+								"Cfb" 					: float
+							}
 		self.eventSegmentKeys={
 								"blockSizeSec" 			: float,
 								"eventPad" 				: int,

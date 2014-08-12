@@ -23,11 +23,14 @@ from pyeventanalysis.besselLowpassFilter import *
 
 
 
-pyeventanalysis.SingleChannelAnalysis.SingleChannelAnalysis(
-			qdfTrajIO(dirname='/Users/arvind/Research/Experiments/PEG29EBSRefData/20120323/singleChan',filter='*qdf', Rfb=9.1E+9, Cfb=1.07E-12), 
-			es.eventSegment,
-			sra.stepResponseAnalysis
-		).Run()
+# q=pyeventanalysis.SingleChannelAnalysis.SingleChannelAnalysis(
+# 			qdfTrajIO(dirname='/Users/arvind/Research/Experiments/PEG29EBSRefData/20120323/singleChan',filter='*qdf', Rfb=9.1E+9, Cfb=1.07E-12), 
+# 			es.eventSegment,
+# 			sra.stepResponseAnalysis
+# 		)
+# q.Run(forkProcess=True)
+# time.sleep(10)
+# q.Stop()
 
 # pyeventanalysis.SingleChannelAnalysis.SingleChannelAnalysis(
 # 			qdfTrajIO(dirname='/Volumes/DATA/PEG28/20140624/m70mV3/', filter='*.qdf', Rfb=2.11E+9, Cfb=1.16E-12),
@@ -44,7 +47,9 @@ pyeventanalysis.SingleChannelAnalysis.SingleChannelAnalysis(
 # 		)
 # tt.Run(forkProcess=False)
 
-# q=qdfTrajIO(fnames=['/Volumes/DATA/nanocluster/20140403/m120mV4/m120mV4-0205.qdf'], Rfb=2.11E+9, Cfb=1.16E-12)
-# with open('/Users/arvind/Research/Publications/Journals/Neurotransmitters/Figures/m120mV4-0205.csv', 'wb') as csvfile:
-#     csvwriter = csv.writer(csvfile, delimiter=',')
-#     csvwriter.writerow(q.popdata(500000))
+q=qdfTrajIO(fnames=['/Volumes/DATA/nanocluster/PW9O34-Serotonin/20140430/m120mV3/m120mV3-0205.qdf'], Rfb=2.11E+9, Cfb=1.16E-12)
+with open('/Users/arvind/Desktop/m120mV3-0205.csv', 'wb') as csvfile:
+    csvwriter = csv.writer(csvfile, delimiter=',')
+    csvwriter.writerow(q.popdata(500000))
+
+

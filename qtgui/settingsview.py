@@ -1,25 +1,28 @@
 import sys
+import os
 import glob
 import json
 import types
 import multiprocessing
 
-from PyQt4 import QtCore
-from PyQt4 import QtGui
-
+from PyQt4 import QtCore, QtGui, uic
+from qtgui.redirectSTDOUT import redirectSTDOUT
 import qtgui.EBSStateFileDict
 import pyeventanalysis.settings
 # import AnalysisSettings
-from qtgui.SettingsWindow import Ui_SettingsWindow
+# from qtgui.SettingsWindow import Ui_SettingsWindow
 import qtgui.trajview.trajview
 import qtgui.advancedsettings.advancedsettings
+import qtgui.consolelog.consolelog
 import qtgui.datamodel
 
-class settingsview(QtGui.QMainWindow, Ui_SettingsWindow):
+class settingsview(QtGui.QMainWindow):
 	def __init__(self, parent = None):
 		super(settingsview, self).__init__(parent)
 
-		self.setupUi(self)
+		uic.loadUi(os.path.join(os.path.dirname(os.path.abspath(__file__)),"SettingsWindow.ui"), self)
+		# self.setupUi(self)
+
 		self.setMenuBar(self.menubar)
 		self._positionWindow()
 
@@ -28,7 +31,15 @@ class settingsview(QtGui.QMainWindow, Ui_SettingsWindow):
 		# setup handles and data structs for other application windows
 		self.trajViewerWindow = qtgui.trajview.trajview.TrajectoryWindow(parent=self)
 		self.advancedSettingsDialog = qtgui.advancedsettings.advancedsettings.AdvancedSettingsDialog(parent=self)
+		self.consoleLog = qtgui.consolelog.consolelog.AnalysisLogDialog(parent=self)
 		
+		# redirect stdout and stderr
+		# sys.stdout = redirectSTDOUT( edit=self.consoleLog.consoleLogTextEdit, out=sys.stdout, color=QtGui.QColor(0,0,0) )
+		# sys.stderr = redirectSTDOUT( edit=self.consoleLog.consoleLogTextEdit, out=sys.stderr, color=QtGui.QColor(255,0,0) )
+		# # Always show the console log
+		# self.consoleLog.show()
+		# self.consoleLog.raise_()
+
 		# Setup and initialize the data model for the settings view
 		self.analysisDataModel=qtgui.datamodel.guiDataModel()
 

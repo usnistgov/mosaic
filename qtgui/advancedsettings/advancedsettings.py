@@ -5,21 +5,21 @@ import sys
 import os
 import csv
 
-from PyQt4 import QtCore
-from PyQt4 import QtGui
+from PyQt4 import QtCore, QtGui, uic
 
 import pyeventanalysis.abfTrajIO as abf
 import pyeventanalysis.qdfTrajIO as qdf
 from pyeventanalysis.metaTrajIO import FileNotFoundError, EmptyDataPipeError
 
-from advancedSettingsDialog import Ui_advancedSettingsDialog
+# from advancedSettingsDialog import Ui_advancedSettingsDialog
 
-class AdvancedSettingsDialog(QtGui.QDialog, Ui_advancedSettingsDialog):
+class AdvancedSettingsDialog(QtGui.QDialog):
 
 	def __init__(self, parent = None):
 		super(AdvancedSettingsDialog, self).__init__(parent)
 
-		self.setupUi(self)
+		uic.loadUi(os.path.join(os.path.dirname(os.path.abspath(__file__)),"advancedSettingsDialog.ui"), self)
+		# self.setupUi(self)
 		self._positionWindow()
 
 		QtCore.QObject.connect(self.cancelPushButton, QtCore.SIGNAL("clicked()"), self.OnCancel)
