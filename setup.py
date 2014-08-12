@@ -4,10 +4,20 @@ import numpy
 
 setup(
     name='pyEventAnalysis',
-    version='1.0.0a1',
+    version='1.0.0a2',
     author='Arvind Balijepalli',
     author_email='arvind.balijepalli@nist.gov',
-    packages=['pyeventanalysis', 'pyeventanalysis.utest', 'pyeventanalysis.trajviewer','pyeventanalysis.qdf','pyeventanalysis.abf'],
+    packages=[
+            'pyeventanalysis', 
+            'pyeventanalysis.utest', 
+            'pyeventanalysis.trajviewer',
+            'pyeventanalysis.qdf',
+            'pyeventanalysis.abf',
+            'qtgui',
+            'qtgui.trajview',
+            'qtgui.advancedsettings',
+            'qtgui.consolelog'
+            ],
     scripts=['bin/analysis.py', 'dependencies/build-deps-sh', 'pyeventanalysis/utest/run-tests-sh', 'mathematica/nanoporeAnalysis.m', 'mathematica/Util.m', 'Makefile'],
     url='http://pypi.python.org/pypi/pyEventAnalysis/',
     license='LICENSE.txt',
