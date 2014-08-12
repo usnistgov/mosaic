@@ -18,7 +18,19 @@ setup(
             'qtgui.advancedsettings',
             'qtgui.consolelog'
             ],
-    scripts=['bin/analysis.py', 'dependencies/build-deps-sh', 'pyeventanalysis/utest/run-tests-sh', 'mathematica/nanoporeAnalysis.m', 'mathematica/Util.m', 'Makefile'],
+    scripts=[
+            '.settings',
+            'bin/analysis.py', 
+            'dependencies/build-deps-sh', 
+            'pyeventanalysis/utest/run-tests-sh', 
+            'mathematica/nanoporeAnalysis.m', 
+            'mathematica/Util.m', 
+            'Makefile',
+            'qtgui/SettingsWindow.ui',
+            'qtgui/trajview/trajviewui.ui',
+            'qtgui/advancedsettings/advancedSettingsDialog.ui',
+            'qtgui/consolelog/consoleDialog.ui'
+            ],
     url='http://pypi.python.org/pypi/pyEventAnalysis/',
     license='LICENSE.txt',
     description='Nanopore analysis.',

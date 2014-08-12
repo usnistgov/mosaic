@@ -184,8 +184,10 @@ class settingsview(QtGui.QMainWindow):
 
 			try:
 				self.analysisDataModel[value] = float(control.text())
+				self.analysisDataModel["slopeOpenCurr"]=0.0
 			except:
 				self.analysisDataModel[value]=-1
+				self.analysisDataModel["slopeOpenCurr"]=-1
 
 			self.analysisDataModel["blockSizeSec"]=float(self.baselineBlockSizeDoubleSpinBox.value())
 			self.trajViewerWindow.setTrajdata(self.analysisDataModel.GenerateTrajView())
@@ -265,6 +267,7 @@ class settingsview(QtGui.QMainWindow):
 
 				self.analysisDataModel["meanOpenCurr"]=-1
 				self.analysisDataModel["sdOpenCurr"]=-1
+				self.analysisDataModel["slopeOpenCurr"]=-1
 
 				self.baselineMeanLineEdit.setEnabled(False)
 				self.baselineSDLineEdit.setEnabled(False)
