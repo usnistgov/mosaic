@@ -70,7 +70,7 @@ class settingsview(QtGui.QMainWindow):
 		QtCore.QObject.connect(self.writeEventsCheckBox, QtCore.SIGNAL('clicked(bool)'), self.OnWriteEvents)
 		QtCore.QObject.connect(self.parallelCheckBox, QtCore.SIGNAL('clicked(bool)'), self.OnParallelProcessing)
 		QtCore.QObject.connect(self.parallelCoresSpinBox, QtCore.SIGNAL('valueChanged ( int )'), self.OnParallelProcessing)
-		
+		QtCore.QObject.connect(self.processingAlgorithmComboBox, QtCore.SIGNAL('currentIndexChanged(const QString &)'), self.OnProcessingAlgoChange)
 		
 
 		# View Menu signals
@@ -130,6 +130,12 @@ class settingsview(QtGui.QMainWindow):
 		self.parallelCheckBox.setChecked(int(model["parallelProc"]))				
 		self.parallelCoresSpinBox.setValue(multiprocessing.cpu_count()-int(model["reserveNCPU"]))
 
+		procidx= {}
+		for v in self.analysisDataModel.eventProcessingAlgoKeys.values():
+			procidx[v]=self.processingAlgorithmComboBox.findText(v)
+		
+		self.processingAlgorithmComboBox.setCurrentIndex( procidx[self.analysisDataModel["ProcessingAlgorithm"]] )
+
 		# If an advanced mode dialog exists, update its settings
 		if self.advancedSettingsDialog:
 			self.advancedSettingsDialog.updateSettingsString(
@@ -162,6 +168,11 @@ class settingsview(QtGui.QMainWindow):
 	def _setThreshold(self, mean, sd, threshold):
 		self.ThresholdDoubleSpinBox.setValue(threshold)
 
+		# [min,max]=[self.ThresholdDoubleSpinBox.minimum(), self.ThresholdDoubleSpinBox.maximum()]
+		# [smin,smax]=[self.partitionThresholdHorizontalSlider.minimum(),self.partitionThresholdHorizontalSlider.maximum()]
+
+		# self.ThresholdDoubleSpinBox.setValue( (int((max-min))*threshold/float(smax-smin)) )
+
 		# self.OnThresholdChangeSpinbox(threshold)
 
 	def _setEnableSettingsWidgets(self, state):
@@ -170,6 +181,8 @@ class settingsview(QtGui.QMainWindow):
 		self.writeEventsCheckBox.setEnabled(state)
 		self.parallelCheckBox.setEnabled(state)
 		self.parallelCoresSpinBox.setEnabled(state)
+		self.processingAlgorithmComboBox.setEnabled(state)
+		self.advancedModeCheckBox.setEnabled(state)
 
 	def _setEnableDataSettingsWidgets(self, state):
 		self.processingAlgorithmComboBox.setEnabled(state)
@@ -343,7 +356,8 @@ class settingsview(QtGui.QMainWindow):
 			self.advancedSettingsDialog.hide()
 			self._setEnableSettingsWidgets(True)
 
-	
+	def OnProcessingAlgoChange(self, value):
+		self.analysisDataModel["ProcessingAlgorithm"]=value
 
 	# Menu SLOTs
 	def OnAdvancedModeMenuAction(self):

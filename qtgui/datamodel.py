@@ -107,6 +107,11 @@ class guiDataModel(dict):
 			s=pyeventanalysis.settings.settings("..")
 
 		for section, vals in s.settingsDict.iteritems():
+			if section in self.eventPartitionAlgoKeys.values():
+				self["PartitionAlgorithm"]=section
+			elif section in self.eventProcessingAlgoKeys.values():
+				self["ProcessingAlgorithm"]=section
+
 			# print vals
 			self.update(vals)
 
@@ -140,7 +145,9 @@ class guiDataModel(dict):
 								"dcOffset" 				: float,
 								"start" 				: int,
 								"Rfb" 					: float,
-								"Cfb" 					: float
+								"Cfb" 					: float,
+								"ProcessingAlgorithm"	: str,
+								"PartitionAlgorithm"	: str
 							}
 		self.eventSegmentKeys={
 								"blockSizeSec" 			: float,
