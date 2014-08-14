@@ -26,6 +26,8 @@ class guiDataModel(dict):
 		self["Rfb"]=0.0
 		self["Cfb"]=0.0
 
+		self.jsonSettingsObj=None
+
 		self.UpdateDataModelFromSettings()
 
 	def __setitem__(self, key, val):
@@ -102,11 +104,24 @@ class guiDataModel(dict):
 
 	def UpdateDataModelFromSettings(self):
 		if self["DataFilesPath"]:
-			s=pyeventanalysis.settings.settings(self["DataFilesPath"])
+			self.jsonSettingsObj=pyeventanalysis.settings.settings(self["DataFilesPath"])
 		else:
-			s=pyeventanalysis.settings.settings("..")
+			self.jsonSettingsObj=pyeventanalysis.settings.settings("..")
 
-		for section, vals in s.settingsDict.iteritems():
+		self._updateSettings()
+
+	def UpdateDataModelFromSettingsString(self, settingsstr):
+		if not self.jsonSettingsObj:
+			self.UpdateDataModelFromSettings()
+
+		self.jsonSettingsObj.parseSettingsString(settingsstr)
+
+		self._updateSettings()
+
+	def _updateSettings(self):
+		sd=self.jsonSettingsObj.settingsDict
+		
+		for section, vals in sd.iteritems():
 			if section in self.eventPartitionAlgoKeys.values():
 				self["PartitionAlgorithm"]=section
 			elif section in self.eventProcessingAlgoKeys.values():

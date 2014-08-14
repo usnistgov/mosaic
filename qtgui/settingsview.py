@@ -377,7 +377,17 @@ class settingsview(QtGui.QMainWindow):
 		self._setEnableSettingsWidgets(True)
 
 	def OnAdvancedModeSave(self):
-		pass
+		updatesettings=self.analysisDataModel.UpdateDataModelFromSettingsString
+
+		updatesettings(str(self.advancedSettingsDialog.advancedSettingsTextEdit.toPlainText()))
+		self._updateControls()
+		
+		# update trajviewer
+		self.trajViewerWindow.setTrajdata(self.analysisDataModel.GenerateTrajView())
+		self.trajViewerWindow.refreshPlot()
+
+		self.advancedModeCheckBox.setChecked(False)
+		self._setEnableSettingsWidgets(True)
 
 if __name__ == '__main__':
 	app = QtGui.QApplication(sys.argv)

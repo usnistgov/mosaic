@@ -34,12 +34,12 @@ class AdvancedSettingsDialog(QtGui.QDialog):
 		# self.move( (-screen.width()/2)+200, -screen.height()/2 )
 
 	def updateSettingsString(self, str):
-		self.settingsTextEdit.setText(str)
+		self.advancedSettingsTextEdit.setText(str)
 
 	# SLOTS
 	def OnSave(self):
-		# self.accept()
-		pass
+		self.accept()
+		# pass
 
 	def OnCancel(self):
 		self.reject()
