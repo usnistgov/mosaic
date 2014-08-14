@@ -151,10 +151,11 @@ class settingsview(QtGui.QMainWindow):
 		path=self.analysisDataModel["DataFilesPath"] 
 
 		if path:
-			ebsFile=glob.glob(str(path)+'/*_state.txt')
+			ebsFile=glob.glob(str(path)+'/*_?tate.txt')
+
 			if len(ebsFile) > 0:
 				ebsState=qtgui.EBSStateFileDict.EBSStateFileDict(ebsFile[0])
-
+				
 				rfb=ebsState.pop('FB Resistance',1.0)
 				cfb=ebsState.pop('FB Capacitance',1.0)
 
@@ -258,7 +259,9 @@ class settingsview(QtGui.QMainWindow):
 			self.analysisDataModel["dcOffset"]=float(item)
 
 			# print self.analysisDataModel["dcOffset"]
-			self.trajViewerWindow.updatePlot(self.analysisDataModel.GenerateTrajView())
+			# self.trajViewerWindow.updatePlot(self.analysisDataModel.GenerateTrajView())
+			self.trajViewerWindow.setTrajdata(self.analysisDataModel.GenerateTrajView())
+			self.trajViewerWindow.refreshPlot()
 
 	def OnDataStartIndexChange(self, item):
 		if self.updateDialogs:

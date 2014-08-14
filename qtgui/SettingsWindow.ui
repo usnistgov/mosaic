@@ -197,7 +197,11 @@
          <item>
           <layout class="QHBoxLayout" name="horizontalLayout_5">
            <item>
-            <widget class="QDoubleSpinBox" name="dcOffsetDoubleSpinBox"/>
+            <widget class="QDoubleSpinBox" name="dcOffsetDoubleSpinBox">
+             <property name="minimum">
+              <double>-99.989999999999995</double>
+             </property>
+            </widget>
            </item>
            <item>
             <widget class="QLabel" name="label_8">
@@ -692,6 +696,9 @@
       <layout class="QVBoxLayout" name="verticalLayout_3">
        <item>
         <widget class="QCheckBox" name="plotEventFitsCheckBox">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
          <property name="text">
           <string>Event Fits</string>
          </property>
@@ -699,6 +706,9 @@
        </item>
        <item>
         <widget class="QCheckBox" name="plotBlockDepthHistCheckBox">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
          <property name="text">
           <string>Blockade Depth Histogram</string>
          </property>
