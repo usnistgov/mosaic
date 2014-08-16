@@ -80,7 +80,7 @@ class NavigationToolbar( NavigationToolbar2QTAgg ):
 class MplCanvas(FigureCanvas):
 	def __init__(self):
 		self.dpi=100
-		self.fig = Figure(dpi=self.dpi)
+		self.fig = Figure(dpi=self.dpi, tight_layout=True)
 		
 		self.ax = self.fig.add_subplot(111)
 		self.ax.hold(False)
@@ -101,5 +101,5 @@ class MplWidget(QWidget):
 		self.canvas = MplCanvas()
 		self.vbl = QVBoxLayout()
 		self.vbl.addWidget(self.canvas)
-		self.vbl.addWidget( NavigationToolbar(self.canvas, None) )
+		self.vbl.addWidget( NavigationToolbar(self.canvas, self) )
 		self.setLayout(self.vbl)

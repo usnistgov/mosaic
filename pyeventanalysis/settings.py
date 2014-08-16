@@ -22,14 +22,14 @@ class settings:
 			then in the current working directory. If a settings/.settings file is not
 			found in either location return without an error
 		"""
-		if os.path.isfile(datpath+'/settings'):
-			self.settingsFile=datpath+"/settings"
-		elif os.path.isfile(datpath+'/.settings'):
+		if os.path.isfile(datpath+'/.settings'):
 			self.settingsFile=datpath+"/.settings"
-		elif os.path.isfile('settings'):
+		elif os.path.isfile(datpath+'/settings'):
+			self.settingsFile=datpath+"/settings"
+		elif os.path.isfile('.settings'):
 			print "Settings file not found in data directory. Default settings will be used."
 			self.settingsFile=os.getcwd()+"/settings"
-		elif os.path.isfile('.settings'):
+		elif os.path.isfile('settings'):
 			print "Settings file not found in data directory. Default settings will be used."
 			self.settingsFile=os.getcwd()+"/.settings"
 

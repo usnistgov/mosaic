@@ -68,7 +68,7 @@ class qtAnalysisGUI(qtgui.settingsview.settingsview):
 
 				self.analysisRunning=False
 		except FileNotFoundError:
-			QtGui.QMessageBox.warning(self, "Data Error","Files not found")
+			QtGui.QMessageBox.warning(self, "Data Error", "Files not found")
 
 			self._setEnableSettingsWidgets(True)
 			self._setEnableDataSettingsWidgets(True)

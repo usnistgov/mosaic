@@ -11,6 +11,7 @@ import pyeventanalysis.abfTrajIO as abf
 import pyeventanalysis.qdfTrajIO as qdf
 from pyeventanalysis.metaTrajIO import FileNotFoundError, EmptyDataPipeError
 
+import matplotlib.ticker as ticker
 # from qtgui.trajview.trajviewui import Ui_Dialog
 
 class TrajectoryWindow(QtGui.QDialog):
@@ -28,6 +29,7 @@ class TrajectoryWindow(QtGui.QDialog):
 		self.nextBtn.setArrowType(QtCore.Qt.RightArrow)
 
 		self.trajData=""
+
 
 		# Set a counter for number of updates
 		self.blockSize=0.25
@@ -87,6 +89,7 @@ class TrajectoryWindow(QtGui.QDialog):
 
 				self.dataLoaded=True
 
+				# self.mpl_hist.canvas.ax.set_autoscale_on(True)
 				self.update_graph()
 		except AttributeError:
 			QtGui.QMessageBox.warning(self, "Path Error","Data path not set")
@@ -102,6 +105,7 @@ class TrajectoryWindow(QtGui.QDialog):
   		# set block size
   		self.blockSize=self.datadict.pop( "blockSizeSec", 0.25)
 
+  		# self.mpl_hist.canvas.ax.set_autoscale_on(False)
   		self.update_graph()
 
   	def setTrajdata(self, datadict):
@@ -115,10 +119,7 @@ class TrajectoryWindow(QtGui.QDialog):
 			if self.dataLoaded:
 				ydat=np.abs(self.trajData)
 				xdat=np.arange(float(self.nUpdate)*self.blockSize,float(self.nUpdate+1)*self.blockSize,1/float(self.IOObject.FsHz))[:len(ydat)]
-
-				self.mpl_hist.canvas.ax.set_xlabel('t (s)')
-				self.mpl_hist.canvas.ax.set_ylabel('|i| (pA)')
-				
+	
 				c='#%02x%02x%02x' % (72,91,144)
 				self.mpl_hist.canvas.ax.plot( xdat, ydat, color=c, markersize='1.')
 				if float(self.datadict["meanOpenCurr"]) == -1 and float(self.datadict["sdOpenCurr"]) == -1:
@@ -139,9 +140,26 @@ class TrajectoryWindow(QtGui.QDialog):
 				c='#%02x%02x%02x' % (182,69,71)
 				self.mpl_hist.canvas.ax.axhline(mu-thr*sd, color=c, lw=1.5)
 
+				self._ticks(4)
+
+				self.mpl_hist.canvas.ax.set_xlabel('t (s)', fontsize=10)
+				self.mpl_hist.canvas.ax.set_ylabel('|i| (pA)', fontsize=10)
+			
 				self.mpl_hist.canvas.draw()
 		except EmptyDataPipeError:
 			pass
+
+	def _ticks(self, nticks):
+		axes=self.mpl_hist.canvas.ax
+
+		start, end = axes.get_xlim()
+		dx=(end-start)/nticks
+		axes.xaxis.set_ticks( np.arange( start, end+dx, dx ) )
+		axes.xaxis.set_major_formatter(ticker.FormatStrFormatter('%0.2f'))
+
+		start, end = axes.get_ylim()
+		dy=(end-start)/nticks
+		axes.yaxis.set_ticks( np.arange( start, end+dy, dy ) ) 
 
 	def OnNextButton(self):
 		if hasattr(self,'IOObject'):
@@ -149,6 +167,8 @@ class TrajectoryWindow(QtGui.QDialog):
 			try:
 				self.trajData=self.IOObject.popdata(self.nPoints)
 				self.nUpdate+=1
+
+				# self.mpl_hist.canvas.ax.set_autoscale_on(False)
 				self.update_graph()
 			except EmptyDataPipeError:
 				pass
