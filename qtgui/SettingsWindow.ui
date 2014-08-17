@@ -707,7 +707,7 @@
        <item>
         <widget class="QCheckBox" name="plotBlockDepthHistCheckBox">
          <property name="enabled">
-          <bool>false</bool>
+          <bool>true</bool>
          </property>
          <property name="text">
           <string>Blockade Depth Histogram</string>

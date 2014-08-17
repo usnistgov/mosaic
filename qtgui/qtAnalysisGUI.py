@@ -1,4 +1,5 @@
 import sys
+import time
 
 from PyQt4 import QtCore
 from PyQt4 import QtGui
@@ -12,7 +13,6 @@ class qtAnalysisGUI(qtgui.settingsview.settingsview):
 		super(qtAnalysisGUI, self).__init__(parent)
 
 		self.analysisObject=None
-		self.analysisRunning=False
 
 		self.analysisThreadObj=analysisThread(None)
 		self.idleTimer=QtCore.QTimer()
@@ -53,11 +53,15 @@ class qtAnalysisGUI(qtgui.settingsview.settingsview):
 						eventPartitionAlgo=str(self.partitionAlgorithmComboBox.currentText()), 
 						eventProcessingAlgo=str(self.processingAlgorithmComboBox.currentText())
 					)
-					print self.analysisObject.DataPath 
 
 					self.analysisThreadObj=analysisThread( self.analysisObject, parent=self )
 					self.analysisThreadObj.start()
 					
+					time.sleep(2)
+					self.blockDepthWindow.openDB( self.analysisObject.DataPath )
+					if self.showBlockDepthWindow:	
+						self.blockDepthWindow.show()
+
 					self.analysisRunning=True	
 			else:
 				self.analysisObject.Stop()
@@ -99,7 +103,8 @@ class qtAnalysisGUI(qtgui.settingsview.settingsview):
 			self.OnAnalysisFinished(True)
 
 	def OnQuit(self):
-		self.OnStartAnalysis()
+		if self.analysisRunning:
+			self.OnStartAnalysis()
 
 class analysisThread(QtCore.QThread):
 	def __init__(self, analysisObj, parent=None):

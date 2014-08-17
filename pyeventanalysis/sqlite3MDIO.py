@@ -67,14 +67,15 @@ class sqlite3MDIO(metaMDIO.metaMDIO):
 	def _opendb(self, dbname, **kwargs):
 		if not hasattr(self, 'tableName'):
 			self.tableName='metadata'
+
+		# colnames and colname types are needed for appending data. If they are not passed
+		# as arguments, no exception is raised. In the future this can be retrieved from the 
+		# metadata_t table in the db.
 		try:
 			self.colNames=kwargs['colNames']
-		except AttributeError, err:
-			raise metaMDIO.InsufficientArgumentsError("Missing arguments: 'colNames' must be supplied to initialize {0}".format(type(self).__name__))
-		try:
 			self.colNames_t=kwargs['colNames_t']
-		except AttributeError, err:
-			raise metaMDIO.InsufficientArgumentsError("Missing arguments: 'colNames_t' must be supplied to initialize {0}".format(type(self).__name__))
+		except:
+			pass
 		
 		# if not hasattr(self, 'colNames_t'):
 		# 	raise metaMDIO.InsufficientArgumentsError("Missing arguments: 'colNames_t' must be supplied to initialize {0}".format(type(self).__name__))
@@ -109,7 +110,7 @@ class sqlite3MDIO(metaMDIO.metaMDIO):
 		
 			return [ self._decoderecord(colnames, colnames_t, rec) for rec in c.fetchall() ]
 		except sqlite3.OperationalError, err:
-			print err
+			raise
 
 	def _col_names(self, query, c, tablename):
 			cols=[]
@@ -155,7 +156,7 @@ class sqlite3MDIO(metaMDIO.metaMDIO):
 					placeholders_list+')', ('REAL',)+tuple(self.colNames_t)
 				)
 
-		self.db.commit()
+			self.db.commit()
 
 	def _sqltypes(self):
 		sqlstring=[]
@@ -178,9 +179,11 @@ class sqlite3MDIO(metaMDIO.metaMDIO):
 
 if __name__=="__main__":
 	c=sqlite3MDIO()
-	c.openDB('/Users/arvind/Research/Experiments/PEG29EBSRefData/20120323/singleChan/eventMD2014-05-19 10.50 PM.sqlite')
+	c.openDB(
+		'/Users/arvind/Research/Experiments/PEG29EBSRefData/20120323/singleChan/eventMD-20140617-083530_single.sqlite'
+		)
 	
-	q=c.queryDB( "select BlockDepth from metadata" )[:10]
+	q=c.queryDB( "select BlockDepth from metadata where ResTime > 0.1 order by ResTime ASC" )[:10]
 	print "results:"
 	print q
 	

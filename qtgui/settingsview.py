@@ -13,6 +13,7 @@ import pyeventanalysis.settings
 # from qtgui.SettingsWindow import Ui_SettingsWindow
 import qtgui.trajview.trajview
 import qtgui.advancedsettings.advancedsettings
+import qtgui.blockdepthview.blockdepthview
 import qtgui.consolelog.consolelog
 import qtgui.datamodel
 
@@ -27,12 +28,15 @@ class settingsview(QtGui.QMainWindow):
 		self._positionWindow()
 
 		self.updateDialogs=False
+		self.analysisRunning=False
 
 		# setup handles and data structs for other application windows
 		self.trajViewerWindow = qtgui.trajview.trajview.TrajectoryWindow(parent=self)
 		self.advancedSettingsDialog = qtgui.advancedsettings.advancedsettings.AdvancedSettingsDialog(parent=self)
 		self.consoleLog = qtgui.consolelog.consolelog.AnalysisLogDialog(parent=self)
+		self.blockDepthWindow = qtgui.blockdepthview.blockdepthview.BlockDepthWindow(parent=self)
 		
+		self.showBlockDepthWindow=False
 		# redirect stdout and stderr
 		# sys.stdout = redirectSTDOUT( edit=self.consoleLog.consoleLogTextEdit, out=sys.stdout, color=QtGui.QColor(0,0,0) )
 		# sys.stderr = redirectSTDOUT( edit=self.consoleLog.consoleLogTextEdit, out=sys.stderr, color=QtGui.QColor(255,0,0) )
@@ -72,10 +76,14 @@ class settingsview(QtGui.QMainWindow):
 		QtCore.QObject.connect(self.parallelCoresSpinBox, QtCore.SIGNAL('valueChanged ( int )'), self.OnParallelProcessing)
 		QtCore.QObject.connect(self.processingAlgorithmComboBox, QtCore.SIGNAL('currentIndexChanged(const QString &)'), self.OnProcessingAlgoChange)
 		
+		# Plots signals
+		QtCore.QObject.connect(self.plotBlockDepthHistCheckBox, QtCore.SIGNAL('clicked(bool)'), self.OnPlotBlockDepth)
 
 		# View Menu signals
 		QtCore.QObject.connect(self.actionAdvanced_Settings_Mode, QtCore.SIGNAL('triggered()'), self.OnAdvancedModeMenuAction)
 		QtCore.QObject.connect(self.actionTrajectory_Viewer, QtCore.SIGNAL('triggered()'), self.OnShowTrajectoryViewer)
+		QtCore.QObject.connect(self.actionBlockade_Depth_Histogram, QtCore.SIGNAL('triggered()'), self.OnShowBlockDepthViewer)
+		
 		
 		# Dialog signals and slots
 		QtCore.QObject.connect(self.advancedSettingsDialog, QtCore.SIGNAL('rejected()'), self.OnAdvancedModeCancel)
@@ -234,6 +242,7 @@ class settingsview(QtGui.QMainWindow):
 
 			self.trajViewerWindow.setTrajdata(self.analysisDataModel.GenerateTrajView())
 			self.trajViewerWindow.refreshPlot()
+			self.blockDepthWindow.hide()
 			self.trajViewerWindow.show()
 
 	def OnDataTypeChange(self, item):
@@ -362,6 +371,15 @@ class settingsview(QtGui.QMainWindow):
 	def OnProcessingAlgoChange(self, value):
 		self.analysisDataModel["ProcessingAlgorithm"]=value
 
+	# Plot SLOTS
+	def OnPlotBlockDepth(self, value):
+		self.showBlockDepthWindow=bool(value)
+		if value:
+			if self.analysisRunning:
+				self.blockDepthWindow.show()
+		else:
+			self.blockDepthWindow.hide()
+
 	# Menu SLOTs
 	def OnAdvancedModeMenuAction(self):
 		if self.advancedModeCheckBox.isChecked():
@@ -371,6 +389,9 @@ class settingsview(QtGui.QMainWindow):
 	# Dialog SLOTS
 	def OnShowTrajectoryViewer(self):
 		self.trajViewerWindow.show()
+
+	def OnShowBlockDepthViewer(self):
+		self.blockDepthWindow.show()
 
 	def OnAdvancedModeCancel(self):
 		self.advancedModeCheckBox.setChecked(False)
