@@ -13,24 +13,28 @@ class qtAnalysisGUI(qtgui.settingsview.settingsview):
 
 		self.analysisObject=None
 		self.analysisRunning=False
+
+		self.analysisThreadObj=analysisThread(None)
 		self.idleTimer=QtCore.QTimer()
 
-		self.idleTimer.start()
+		self.idleTimer.start(5000)
 
 		# Start Analysis Signals
 		QtCore.QObject.connect(self.startAnalysisPushButton, QtCore.SIGNAL('clicked()'), self.OnStartAnalysis)
 		QtCore.QObject.connect(self.actionStart_Analysis, QtCore.SIGNAL('triggered()'), self.OnStartAnalysis)
 
+		QtCore.QObject.connect(self.analysisThreadObj, QtCore.SIGNAL('finished(bool)'), self.OnAnalysisFinished)
+
 		# Idle processing
-		# QtCore.QObject.connect(self.idleTimer, QtCore.SIGNAL('timeout()'), self.OnAppIdle)
+		QtCore.QObject.connect(self.idleTimer, QtCore.SIGNAL('timeout()'), self.OnAppIdle)
 
 	def OnStartAnalysis(self):
 		try:
 			if not self.analysisRunning:
-				self._setEnableSettingsWidgets(False)
-				self._setEnableDataSettingsWidgets(False)
-				
 				if self.analysisDataModel["DataFilesPath"]:
+					self._setEnableSettingsWidgets(False)
+					self._setEnableDataSettingsWidgets(False)
+
 					with open(self.analysisDataModel["DataFilesPath"]+"/.settings", 'w') as f:
 						f.write(
 							self.analysisDataModel.GenerateSettingsView(
@@ -49,24 +53,24 @@ class qtAnalysisGUI(qtgui.settingsview.settingsview):
 						eventPartitionAlgo=str(self.partitionAlgorithmComboBox.currentText()), 
 						eventProcessingAlgo=str(self.processingAlgorithmComboBox.currentText())
 					)
-					
-					self.analysisObject.Run(forkProcess=True)
+					print self.analysisObject.DataPath 
 
-					# import time
-					# time.sleep(10)
-					# self.analysisObject.Stop()
+					self.analysisThreadObj=analysisThread( self.analysisObject, parent=self )
+					self.analysisThreadObj.start()
 					
 					self.analysisRunning=True	
 			else:
 				self.analysisObject.Stop()
 
-				self._setEnableSettingsWidgets(True)
-				self._setEnableDataSettingsWidgets(True)
+				self.startAnalysisPushButton.setEnabled(False)
+				self.actionStart_Analysis.setEnabled(False)
+				# self._setEnableSettingsWidgets(True)
+				# self._setEnableDataSettingsWidgets(True)
 
-				self.startAnalysisPushButton.setText("Start Analysis")
-				self.actionStart_Analysis.setText("Start Analysis")
+				self.startAnalysisPushButton.setText("Stopping...")
+				self.actionStart_Analysis.setText("Stopping...")
 
-				self.analysisRunning=False
+				# self.analysisRunning=False
 		except FileNotFoundError:
 			QtGui.QMessageBox.warning(self, "Data Error", "Files not found")
 
@@ -76,10 +80,40 @@ class qtAnalysisGUI(qtgui.settingsview.settingsview):
 			self.startAnalysisPushButton.setText("Start Analysis")
 			self.actionStart_Analysis.setText("Start Analysis")
 
+	def OnAnalysisFinished(self, value):
+		if value:
+			self._setEnableSettingsWidgets(True)
+			self._setEnableDataSettingsWidgets(True)
+
+			self.startAnalysisPushButton.setText("Start Analysis")
+			self.actionStart_Analysis.setText("Start Analysis")
+
+			self.startAnalysisPushButton.setEnabled(True)
+			self.actionStart_Analysis.setEnabled(True)
+
+			self.analysisRunning=False
+
 	def OnAppIdle(self):
-		pass
-		# if self.analysisObject:
-		# 	print self.analysisObject.subProc.pid
+		if self.analysisThreadObj.isFinished() and self.analysisRunning:
+			# print "finished"
+			self.OnAnalysisFinished(True)
+
+	def OnQuit(self):
+		self.OnStartAnalysis()
+
+class analysisThread(QtCore.QThread):
+	def __init__(self, analysisObj, parent=None):
+		super(analysisThread, self).__init__(parent)
+
+		self.analysisObj=analysisObj
+
+	def run(self):
+		self.analysisObj.Run(forkProcess=True)
+		self.analysisObj.subProc.join()
+		self.exit()
+		self.emit(QtCore.SIGNAL("finished(bool)"), True)
+		# print "thread finished"
+
 
 if __name__ == '__main__':
 	# multiprocessing.freeze_support()
@@ -87,6 +121,10 @@ if __name__ == '__main__':
 	app = QtGui.QApplication(sys.argv)
 	dmw = qtAnalysisGUI()
 	dmw.show()
+
+	# cleanup processing
+	app.connect(app, QtCore.SIGNAL("aboutToQuit()"), dmw.OnQuit)
+
 	dmw.raise_()
 	sys.exit(app.exec_())
 

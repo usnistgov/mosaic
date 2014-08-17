@@ -140,7 +140,7 @@ class TrajectoryWindow(QtGui.QDialog):
 				c='#%02x%02x%02x' % (182,69,71)
 				self.mpl_hist.canvas.ax.axhline(mu-thr*sd, color=c, lw=1.5)
 
-				self._ticks(4)
+				self._ticks(5)
 
 				self.mpl_hist.canvas.ax.set_xlabel('t (s)', fontsize=10)
 				self.mpl_hist.canvas.ax.set_ylabel('|i| (pA)', fontsize=10)
@@ -153,13 +153,14 @@ class TrajectoryWindow(QtGui.QDialog):
 		axes=self.mpl_hist.canvas.ax
 
 		start, end = axes.get_xlim()
-		dx=(end-start)/nticks
+		dx=(end-start)/(nticks-1)
 		axes.xaxis.set_ticks( np.arange( start, end+dx, dx ) )
 		axes.xaxis.set_major_formatter(ticker.FormatStrFormatter('%0.2f'))
 
 		start, end = axes.get_ylim()
-		dy=(end-start)/nticks
+		dy=(end-start)/(nticks-1)
 		axes.yaxis.set_ticks( np.arange( start, end+dy, dy ) ) 
+		axes.yaxis.set_major_formatter(ticker.FormatStrFormatter('%d'))
 
 	def OnNextButton(self):
 		if hasattr(self,'IOObject'):

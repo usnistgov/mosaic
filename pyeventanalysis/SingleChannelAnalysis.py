@@ -53,4 +53,7 @@ class SingleChannelAnalysis(object):
 		else:
 			os.kill( os.getpid(), signal.SIGINT )
 
+	@property 
+	def DataPath(self):
+		return self.trajDataObj.datPath
 

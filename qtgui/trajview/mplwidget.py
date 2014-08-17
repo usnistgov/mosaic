@@ -22,59 +22,59 @@ class NavigationToolbar( NavigationToolbar2QTAgg ):
 				continue
 			# Need to keep track of pan and zoom buttons
 			# Also grab toggled event to clear checked status of picker button
-			if str(c.text()) in ('Zoom', 'Pan'):
-				c.toggled.connect(self.clearPicker)
-				self.clearButtons.append(c)
-				next=None
+			# if str(c.text()) in ('Zoom', 'Pan'):
+			# 	c.toggled.connect(self.clearPicker)
+			# 	self.clearButtons.append(c)
+			# 	next=None
 
-		# create custom button
-		pm=QPixmap(64,64)
-		# pm.fill(QApplication.palette().color(QPalette.Normal,QPalette.Button))
-		c = QColor(0)
-		c.setAlpha(0)
-		pm.fill( c )
-		painter=QPainter(pm)
-		# painter.fillRect(6,6,20,20,Qt.red)
-		painter.setBrush(Qt.black)
-		painter.setPen(Qt.black)
-		painter.drawPolygon( QPoint( 22, 22 ), QPoint( 22, 42 ),
-                           QPoint( 42, 32 ), QPoint( 22, 22 ) )
-		# painter.fillRect(3,23,5,23,Qt.blue)
-		painter.end()
-		icon=QIcon(pm)
-		picker=QAction("Next",self)
-		picker.setIcon(icon)
-		picker.setCheckable(True)
-		picker.setToolTip("Load more time-series data")
-		self.picker = picker
-		button=QToolButton(self)
-		button.setDefaultAction(self.picker)
+	# 	# create custom button
+	# 	pm=QPixmap(64,64)
+	# 	# pm.fill(QApplication.palette().color(QPalette.Normal,QPalette.Button))
+	# 	c = QColor(0)
+	# 	c.setAlpha(0)
+	# 	pm.fill( c )
+	# 	painter=QPainter(pm)
+	# 	# painter.fillRect(6,6,20,20,Qt.red)
+	# 	painter.setBrush(Qt.black)
+	# 	painter.setPen(Qt.black)
+	# 	painter.drawPolygon( QPoint( 22, 22 ), QPoint( 22, 42 ),
+ #                           QPoint( 42, 32 ), QPoint( 22, 22 ) )
+	# 	# painter.fillRect(3,23,5,23,Qt.blue)
+	# 	painter.end()
+	# 	icon=QIcon(pm)
+	# 	picker=QAction("Next",self)
+	# 	picker.setIcon(icon)
+	# 	picker.setCheckable(True)
+	# 	picker.setToolTip("Load more time-series data")
+	# 	self.picker = picker
+	# 	button=QToolButton(self)
+	# 	button.setDefaultAction(self.picker)
 
-		# Add it to the toolbar, and connect up event
-		self.insertWidget(next.defaultAction(),button)
-		picker.toggled.connect(self.pickerToggled)
+	# 	# Add it to the toolbar, and connect up event
+	# 	self.insertWidget(next.defaultAction(),button)
+	# 	picker.toggled.connect(self.pickerToggled)
 
-		# Grab the picked event from the canvas
-		canvas.mpl_connect('pick_event',self.canvasPicked)
-		canvas.mpl_connect('motion_notify_event',self.on_move)
+	# 	# Grab the picked event from the canvas
+	# 	canvas.mpl_connect('pick_event',self.canvasPicked)
+	# 	canvas.mpl_connect('motion_notify_event',self.on_move)
 
-	def clearPicker( self, checked ):
-		if checked:
-			self.picker.setChecked(False)
+	# def clearPicker( self, checked ):
+	# 	if checked:
+	# 		self.picker.setChecked(False)
 
-	def pickerToggled( self, checked ):
-		if checked:
-			for c in self.clearButtons:
-				c.defaultAction().setChecked(False)
-			self.set_message('Reject/use observation')
+	# def pickerToggled( self, checked ):
+	# 	if checked:
+	# 		for c in self.clearButtons:
+	# 			c.defaultAction().setChecked(False)
+	# 		self.set_message('Reject/use observation')
 
-	def canvasPicked( self, event ):
-		if self.picker.isChecked():
-			self.picked.emit(event.ind)
+	# def canvasPicked( self, event ):
+	# 	if self.picker.isChecked():
+	# 		self.picked.emit(event.ind)
 
-	def on_move(self, event):
-		# get the x and y pixel coords
-		x, y = event.x, event.y
+	# def on_move(self, event):
+	# 	# get the x and y pixel coords
+	# 	x, y = event.x, event.y
 
 
 class MplCanvas(FigureCanvas):
@@ -101,5 +101,6 @@ class MplWidget(QWidget):
 		self.canvas = MplCanvas()
 		self.vbl = QVBoxLayout()
 		self.vbl.addWidget(self.canvas)
+		# self.vbl.addWidget( NavigationToolbar2QTAgg(self.canvas, self) )
 		self.vbl.addWidget( NavigationToolbar(self.canvas, self) )
 		self.setLayout(self.vbl)
