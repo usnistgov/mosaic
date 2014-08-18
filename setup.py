@@ -4,7 +4,7 @@ import numpy
 
 setup(
     name='pyEventAnalysis',
-    version='1.0.0a4',
+    version='1.0.0a4.1',
     author='Arvind Balijepalli',
     author_email='arvind.balijepalli@nist.gov',
     packages=[
