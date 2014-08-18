@@ -61,6 +61,8 @@ class qtAnalysisGUI(qtgui.settingsview.settingsview):
 					self.blockDepthWindow.openDB( self.analysisObject.DataPath )
 					if self.showBlockDepthWindow:	
 						self.blockDepthWindow.show()
+					self.statisticsView.openDB( self.analysisObject.DataPath )
+					self.statisticsView.show()
 
 					self.analysisRunning=True	
 			else:

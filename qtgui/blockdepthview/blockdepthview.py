@@ -29,7 +29,7 @@ class BlockDepthWindow(QtGui.QDialog):
 		self._positionWindow()
 
 		self.idleTimer=QtCore.QTimer()
-		self.idleTimer.start(5000)
+		self.idleTimer.start(2500)
 
 		# Set error line edit color to red
 		self.errorLabel.setStyleSheet(css)
@@ -79,18 +79,21 @@ class BlockDepthWindow(QtGui.QDialog):
 
 	def update_graph(self):
 		try:
-			# c='#%02x%02x%02x' % (72,91,144)
-			n, bins, patches = self.mpl_hist.canvas.ax.hist( 
+			c='#%02x%02x%02x' % (72,91,144)
+			self.mpl_hist.canvas.ax.hist( 
 						self.queryData, 
 						bins=self.nBins, 
-						normed=1, 
-						facecolor='green', 
-						alpha=0.5
+						normed=0, 
+						histtype='step',
+						rwidth=0.1,
+						color=c
 					)
 			self.mpl_hist.canvas.ax.set_xlabel('<i>/<i0>', fontsize=10)
-			self.mpl_hist.canvas.ax.set_ylabel('density', fontsize=10)
+			self.mpl_hist.canvas.ax.set_ylabel('counts', fontsize=10)
 			
 			self.mpl_hist.canvas.draw()
+		except ValueError:
+			pass
 		except:
 			raise
 
@@ -146,7 +149,7 @@ class BlockDepthWindow(QtGui.QDialog):
 if __name__ == '__main__':
 	app = QtGui.QApplication(sys.argv)
 	dmw = BlockDepthWindow()
-	dmw.openDB('/Users/arvind/Desktop/POM ph5.45 m120_6')
+	dmw.openDB('/Users/arvind/Research/Experiments/PEGModelData/JoesData/PEGMixture/3.44M_1413/m40mv_long/set1')
 	dmw.show()
 	dmw.raise_()
 	sys.exit(app.exec_())

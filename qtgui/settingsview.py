@@ -14,6 +14,7 @@ import pyeventanalysis.settings
 import qtgui.trajview.trajview
 import qtgui.advancedsettings.advancedsettings
 import qtgui.blockdepthview.blockdepthview
+import qtgui.statisticsview.statisticsview
 import qtgui.consolelog.consolelog
 import qtgui.datamodel
 
@@ -35,6 +36,7 @@ class settingsview(QtGui.QMainWindow):
 		self.advancedSettingsDialog = qtgui.advancedsettings.advancedsettings.AdvancedSettingsDialog(parent=self)
 		self.consoleLog = qtgui.consolelog.consolelog.AnalysisLogDialog(parent=self)
 		self.blockDepthWindow = qtgui.blockdepthview.blockdepthview.BlockDepthWindow(parent=self)
+		self.statisticsView = qtgui.statisticsview.statisticsview.StatisticsWindow(parent=self)
 		
 		self.showBlockDepthWindow=False
 		# redirect stdout and stderr
@@ -83,11 +85,13 @@ class settingsview(QtGui.QMainWindow):
 		QtCore.QObject.connect(self.actionAdvanced_Settings_Mode, QtCore.SIGNAL('triggered()'), self.OnAdvancedModeMenuAction)
 		QtCore.QObject.connect(self.actionTrajectory_Viewer, QtCore.SIGNAL('triggered()'), self.OnShowTrajectoryViewer)
 		QtCore.QObject.connect(self.actionBlockade_Depth_Histogram, QtCore.SIGNAL('triggered()'), self.OnShowBlockDepthViewer)
-		
-		
+		QtCore.QObject.connect(self.actionStatistics, QtCore.SIGNAL('triggered()'), self.OnShowStatisticsWindow)
+
 		# Dialog signals and slots
 		QtCore.QObject.connect(self.advancedSettingsDialog, QtCore.SIGNAL('rejected()'), self.OnAdvancedModeCancel)
-		QtCore.QObject.connect(self.advancedSettingsDialog, QtCore.SIGNAL('accepted()'), self.OnAdvancedModeSave)		
+		QtCore.QObject.connect(self.advancedSettingsDialog, QtCore.SIGNAL('accepted()'), self.OnAdvancedModeSave)	
+
+		QtCore.QObject.connect(self.blockDepthWindow, QtCore.SIGNAL('rejected()'), self.OnBlockDepthWindowClose)	
 
 
 	def _positionWindow(self):
@@ -375,8 +379,8 @@ class settingsview(QtGui.QMainWindow):
 	def OnPlotBlockDepth(self, value):
 		self.showBlockDepthWindow=bool(value)
 		if value:
-			if self.analysisRunning:
-				self.blockDepthWindow.show()
+			# if self.analysisRunning:
+			self.blockDepthWindow.show()
 		else:
 			self.blockDepthWindow.hide()
 
@@ -386,16 +390,24 @@ class settingsview(QtGui.QMainWindow):
 			self.advancedSettingsDialog.show()
 		 	self.advancedSettingsDialog.raise_()
 
+	def OnShowStatisticsWindow(self):
+		self.statisticsView.show()
+
 	# Dialog SLOTS
 	def OnShowTrajectoryViewer(self):
 		self.trajViewerWindow.show()
 
 	def OnShowBlockDepthViewer(self):
 		self.blockDepthWindow.show()
+		self.plotBlockDepthHistCheckBox.setChecked(True)
 
 	def OnAdvancedModeCancel(self):
-		self.advancedModeCheckBox.setChecked(False)
-		self._setEnableSettingsWidgets(True)
+		if not self.analysisRunning:
+			self.advancedModeCheckBox.setChecked(False)
+			self._setEnableSettingsWidgets(True)
+
+	def OnBlockDepthWindowClose(self):
+		self.plotBlockDepthHistCheckBox.setChecked(False)
 
 	def OnAdvancedModeSave(self):
 		updatesettings=self.analysisDataModel.UpdateDataModelFromSettingsString

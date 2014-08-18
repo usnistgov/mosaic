@@ -790,6 +790,7 @@
      <addaction name="actionBlockade_Depth_Histogram"/>
     </widget>
     <addaction name="actionAdvanced_Settings_Mode"/>
+    <addaction name="actionStatistics"/>
     <addaction name="actionAnalysis_Log"/>
     <addaction name="menuPlots"/>
    </widget>
@@ -844,7 +845,12 @@
   </action>
   <action name="actionAdvanced_Settings_Mode">
    <property name="text">
-    <string>Advanced Settings Mode</string>
+    <string>Advanced Settings</string>
+   </property>
+  </action>
+  <action name="actionStatistics">
+   <property name="text">
+    <string>Statistics Window</string>
    </property>
   </action>
  </widget>

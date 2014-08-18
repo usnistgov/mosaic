@@ -16,6 +16,8 @@
 from abc import ABCMeta, abstractmethod
 
 import sys
+import signal
+import os
 import time
 import datetime
 import csv
@@ -121,7 +123,9 @@ class metaEventPartition(object):
 			
 			# wait for the processes to terminate
 			for k in self.parallelProcDict.keys():
+				os.kill( self.parallelProcDict[k].pid, signal.SIGINT )
 				# self.parallelProcDict[k].terminate()
+			for k in self.parallelProcDict.keys():
 				self.parallelProcDict[k].join()
 
 			# shutdown the zmq channels
