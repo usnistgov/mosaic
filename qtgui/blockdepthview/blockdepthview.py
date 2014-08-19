@@ -54,6 +54,9 @@ class BlockDepthWindow(QtGui.QDialog):
 		# Idle processing
 		QtCore.QObject.connect(self.idleTimer, QtCore.SIGNAL('timeout()'), self.OnAppIdle)
 
+	def closeDB(self):
+		self.queryDatabase.closeDB()
+
 	def _positionWindow(self):
 		"""
 			Position settings window at the top left corner

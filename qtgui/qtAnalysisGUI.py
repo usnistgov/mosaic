@@ -57,7 +57,8 @@ class qtAnalysisGUI(qtgui.settingsview.settingsview):
 					self.analysisThreadObj=analysisThread( self.analysisObject, parent=self )
 					self.analysisThreadObj.start()
 					
-					time.sleep(2)
+					time.sleep(3)
+
 					self.blockDepthWindow.openDB( self.analysisObject.DataPath )
 					if self.showBlockDepthWindow:	
 						self.blockDepthWindow.show()
@@ -107,6 +108,8 @@ class qtAnalysisGUI(qtgui.settingsview.settingsview):
 	def OnQuit(self):
 		if self.analysisRunning:
 			self.OnStartAnalysis()
+		self.statisticsView.closeDB()
+		self.blockDepthWindow.closeDB()
 
 class analysisThread(QtCore.QThread):
 	def __init__(self, analysisObj, parent=None):

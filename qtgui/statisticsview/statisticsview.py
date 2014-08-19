@@ -28,7 +28,7 @@ class StatisticsWindow(QtGui.QDialog):
 		self._positionWindow()
 
 		self.idleTimer=QtCore.QTimer()
-		self.idleTimer.start(5000)
+		self.idleTimer.start(3000)
 
 		self.queryString="select AbsEventStart from metadata where ProcessingStatus='normal' and BlockDepth > 0 and BlockDepth < 1 order by AbsEventStart ASC"
 		self.queryData=[]
@@ -41,6 +41,9 @@ class StatisticsWindow(QtGui.QDialog):
 
 		# Idle processing
 		QtCore.QObject.connect(self.idleTimer, QtCore.SIGNAL('timeout()'), self.OnAppIdle)
+
+	def closeDB(self):
+		self.queryDatabase.closeDB()
 
 	def _positionWindow(self):
 		"""
@@ -56,12 +59,12 @@ class StatisticsWindow(QtGui.QDialog):
 			c=self._caprate()
 
 			self.neventsLabel.setText( str(len(self.queryData)) )
-			self.caprateLabel.setText( str(int(c[0])) + " +/- " + str(int(c[1])) )
+			self.caprateLabel.setText( str(c[0]) + " +/- " + str(c[1]) )
 		except:
 			raise
 
 	def _caprate(self):
-		if len(self.queryData) < 2000:
+		if len(self.queryData) < 200:
 			return [0,0]
 
 		arrtimes=np.diff(self.queryData)
@@ -77,8 +80,18 @@ class StatisticsWindow(QtGui.QDialog):
 		popt, pcov = curve_fit(self._fitfunc, bins[:len(counts)], counts/counts[0])
 		perr=np.sqrt(np.diag(pcov))
 
-		return [ 1/(popt[1]/1000.), 1/(perr[1]/1000. * math.sqrt(len(arrtimes))) ]
+		return self._roundcaprate([ 1/(popt[1]/1000.), 1/(perr[1]/1000. * math.sqrt(len(arrtimes))) ])
 	
+	def _roundcaprate(self, caprate):
+		x,y=caprate
+
+		sigx=int(min(0, math.log10(x)))
+
+		if x<10:
+			return [ round(x, sigx), round(y, sigx-1) ]
+		else:
+			return [ int(round(x, sigx)), int(round(y, sigx)) ]
+
 	def _fitfunc(self, t, a, tau):
 		return a * np.exp(-t/tau)
 
