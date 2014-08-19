@@ -5,6 +5,7 @@
 	Created:	4/22/2013
 
 	ChangeLog:
+		8/18/14		AB 	Fixed parallel processing cleanup.
 		5/17/14		AB 	Delete Plotting support
 		6/22/13		AB 	Added two function hooks to allow plotting 
 						results in real-time. The first InitPlot must 
