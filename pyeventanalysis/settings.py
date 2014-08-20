@@ -5,6 +5,8 @@
 	Created:	9/24/2012
 
 	ChangeLog:
+		8/20/14		AB 	Changed precedence of settings file search to datpath/.settings,
+						datpath/settings, coderoot/.settings and coderoot/settings
 		8/6/14		AB 	Add a function to parse a settings string.
 		9/5/13		AB 	Check for either .settings or settings in data directory
 						and code root. Warn when using default settings
@@ -28,10 +30,10 @@ class settings:
 			self.settingsFile=datpath+"/settings"
 		elif os.path.isfile('.settings'):
 			print "Settings file not found in data directory. Default settings will be used."
-			self.settingsFile=os.getcwd()+"/settings"
+			self.settingsFile=os.getcwd()+"/.settings"
 		elif os.path.isfile('settings'):
 			print "Settings file not found in data directory. Default settings will be used."
-			self.settingsFile=os.getcwd()+"/.settings"
+			self.settingsFile=os.getcwd()+"/settings"
 
 		self.parseSettingsString( "".join((open(self.settingsFile, 'r').readlines())) )
 
