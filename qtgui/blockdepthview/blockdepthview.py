@@ -42,6 +42,9 @@ class BlockDepthWindow(QtGui.QDialog):
 		self.nBins=200
 		self.binsSpinBox.setValue(self.nBins)
 
+		# Set the default text in the Filter LineEdit
+		self.sqlQueryLineEdit.setText("BlockDepth < 0.8 and ResTime > 0.1")
+		
 		QtCore.QObject.connect(self.updateButton, QtCore.SIGNAL('clicked()'), self.OnUpdateButton)
 		QtCore.QObject.connect(self.sqlQueryLineEdit, QtCore.SIGNAL('textChanged ( const QString & )'), self.OnQueryTextChange)
 		QtCore.QObject.connect(self.binsSpinBox, QtCore.SIGNAL('valueChanged ( int )'), self.OnBinsChange)
