@@ -39,12 +39,14 @@ class BlockDepthWindow(QtGui.QDialog):
 		self.queryError=False
 		self.lastGoodQueryString=""
 
+		self.queryDatabase=None
+
 		self.nBins=200
 		self.binsSpinBox.setValue(self.nBins)
 
 		# Set the default text in the Filter LineEdit
 		self.sqlQueryLineEdit.setText("BlockDepth < 0.8 and ResTime > 0.1")
-		
+
 		QtCore.QObject.connect(self.updateButton, QtCore.SIGNAL('clicked()'), self.OnUpdateButton)
 		QtCore.QObject.connect(self.sqlQueryLineEdit, QtCore.SIGNAL('textChanged ( const QString & )'), self.OnQueryTextChange)
 		QtCore.QObject.connect(self.binsSpinBox, QtCore.SIGNAL('valueChanged ( int )'), self.OnBinsChange)
@@ -58,7 +60,8 @@ class BlockDepthWindow(QtGui.QDialog):
 		QtCore.QObject.connect(self.idleTimer, QtCore.SIGNAL('timeout()'), self.OnAppIdle)
 
 	def closeDB(self):
-		self.queryDatabase.closeDB()
+		if self.queryDatabase:
+			self.queryDatabase.closeDB()
 
 	def _positionWindow(self):
 		"""

@@ -27,6 +27,8 @@ class StatisticsWindow(QtGui.QDialog):
 		uic.loadUi(os.path.join(os.path.dirname(os.path.abspath(__file__)),"statisticsview.ui"), self)
 		self._positionWindow()
 
+		self.queryDatabase=None
+
 		self.idleTimer=QtCore.QTimer()
 		self.idleTimer.start(3000)
 
@@ -43,7 +45,8 @@ class StatisticsWindow(QtGui.QDialog):
 		QtCore.QObject.connect(self.idleTimer, QtCore.SIGNAL('timeout()'), self.OnAppIdle)
 
 	def closeDB(self):
-		self.queryDatabase.closeDB()
+		if self.queryDatabase:
+			self.queryDatabase.closeDB()
 
 	def _positionWindow(self):
 		"""

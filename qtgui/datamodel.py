@@ -162,7 +162,9 @@ class guiDataModel(dict):
 								"Rfb" 					: float,
 								"Cfb" 					: float,
 								"ProcessingAlgorithm"	: str,
-								"PartitionAlgorithm"	: str
+								"PartitionAlgorithm"	: str,
+								"lastMeanOpenCurr"		: str,
+								"lastSDOpenCurr"		: str
 							}
 		self.eventSegmentKeys={
 								"blockSizeSec" 			: float,

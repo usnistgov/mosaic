@@ -49,6 +49,10 @@ class settingsview(QtGui.QMainWindow):
 		# Setup and initialize the data model for the settings view
 		self.analysisDataModel=qtgui.datamodel.guiDataModel()
 
+		# temp keys
+		self.analysisDataModel["lastMeanOpenCurr"]=""
+		self.analysisDataModel["lastSDOpenCurr"]=""
+
 		# default settings
 		self._updateControls()
 
@@ -288,6 +292,10 @@ class settingsview(QtGui.QMainWindow):
 		if self.updateDialogs:
 			# print value
 			if value:
+				self.analysisDataModel["lastMeanOpenCurr"]=self.baselineMeanLineEdit.text()
+				self.analysisDataModel["lastSDOpenCurr"]=self.baselineSDLineEdit.text()
+
+
 				self.baselineMeanLineEdit.setText("")
 				self.baselineSDLineEdit.setText("")
 
@@ -306,6 +314,10 @@ class settingsview(QtGui.QMainWindow):
 			else:
 				self.baselineMeanLineEdit.setPlaceholderText("")
 				self.baselineSDLineEdit.setPlaceholderText("")
+
+				self.baselineMeanLineEdit.setText(self.analysisDataModel["lastMeanOpenCurr"])
+				self.baselineSDLineEdit.setText(self.analysisDataModel["lastSDOpenCurr"])
+
 
 				self.baselineMeanLineEdit.setEnabled(True)
 				self.baselineSDLineEdit.setEnabled(True)
