@@ -4,6 +4,7 @@ import glob
 import json
 import types
 import multiprocessing
+import webbrowser
 
 from PyQt4 import QtCore, QtGui, uic
 from qtgui.redirectSTDOUT import redirectSTDOUT
@@ -90,6 +91,9 @@ class settingsview(QtGui.QMainWindow):
 		QtCore.QObject.connect(self.actionTrajectory_Viewer, QtCore.SIGNAL('triggered()'), self.OnShowTrajectoryViewer)
 		QtCore.QObject.connect(self.actionBlockade_Depth_Histogram, QtCore.SIGNAL('triggered()'), self.OnShowBlockDepthViewer)
 		QtCore.QObject.connect(self.actionStatistics, QtCore.SIGNAL('triggered()'), self.OnShowStatisticsWindow)
+
+		# Help Menu signals
+		QtCore.QObject.connect(self.actionPyEventAnalysis_Help, QtCore.SIGNAL('triggered()'), self.OnShowHelp)
 
 		# Dialog signals and slots
 		QtCore.QObject.connect(self.advancedSettingsDialog, QtCore.SIGNAL('rejected()'), self.OnAdvancedModeCancel)
@@ -404,6 +408,9 @@ class settingsview(QtGui.QMainWindow):
 
 	def OnShowStatisticsWindow(self):
 		self.statisticsView.show()
+
+	def OnShowHelp(self):
+		webbrowser.open('file://'+os.getcwd()+'/doc/html/index.html', new=0, autoraise=True)
 
 	# Dialog SLOTS
 	def OnShowTrajectoryViewer(self):

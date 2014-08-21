@@ -10,6 +10,7 @@ import sqlite3
 from PyQt4 import QtCore, QtGui, uic
 
 import pyeventanalysis.sqlite3MDIO as sqlite
+import qtgui.autocompleteedit as autocomplete
 
 import matplotlib.ticker as ticker
 # from qtgui.trajview.trajviewui import Ui_Dialog
@@ -40,12 +41,15 @@ class BlockDepthWindow(QtGui.QDialog):
 		self.lastGoodQueryString=""
 
 		self.queryDatabase=None
+		self.queryCompleter=None
 
 		self.nBins=200
 		self.binsSpinBox.setValue(self.nBins)
 
 		# Set the default text in the Filter LineEdit
+		self.sqlQueryLineEdit.setCompleterValues([])
 		self.sqlQueryLineEdit.setText("BlockDepth < 0.8 and ResTime > 0.1")
+
 
 		QtCore.QObject.connect(self.updateButton, QtCore.SIGNAL('clicked()'), self.OnUpdateButton)
 		QtCore.QObject.connect(self.sqlQueryLineEdit, QtCore.SIGNAL('textChanged ( const QString & )'), self.OnQueryTextChange)
@@ -55,6 +59,8 @@ class BlockDepthWindow(QtGui.QDialog):
 	def openDB(self, dbpath):
 		self.queryDatabase=sqlite.sqlite3MDIO()
 		self.queryDatabase.openDB(glob.glob(dbpath+"/*sqlite")[-1])
+
+		self.sqlQueryLineEdit.setCompleterValues(self.queryDatabase.dbColumnNames)
 
 		# Idle processing
 		QtCore.QObject.connect(self.idleTimer, QtCore.SIGNAL('timeout()'), self.OnAppIdle)

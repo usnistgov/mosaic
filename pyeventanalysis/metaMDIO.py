@@ -70,8 +70,16 @@ class metaMDIO(object):
 		pass
 
 	@abstractmethod
+	def _colnames(self):
+		pass
+
+	@abstractmethod
 	def queryDB(self, query):
 		pass
+
+	@property 
+	def dbColumnNames(self):
+		return self._colnames()
 
 	def _generateRecordKey(self):
 		return float(time.time()+self.pid)

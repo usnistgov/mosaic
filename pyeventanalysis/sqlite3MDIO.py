@@ -112,6 +112,11 @@ class sqlite3MDIO(metaMDIO.metaMDIO):
 		except sqlite3.OperationalError, err:
 			raise
 
+	def _colnames(self):
+		c = self.db.cursor()
+
+		return [ str(row[1]) for row in c.execute('PRAGMA table_info('+self.tableName+'_t)').fetchall() ]
+
 	def _col_names(self, query, c, tablename):
 			cols=[]
 			for word in query.split()[1:]:
@@ -183,6 +188,8 @@ if __name__=="__main__":
 		'/Users/arvind/Research/Experiments/PEG29EBSRefData/20120323/singleChan/eventMD-20140617-083530_single.sqlite'
 		)
 	
+	print c.colNames
+
 	q=c.queryDB( "select BlockDepth from metadata where ResTime > 0.1 order by ResTime ASC" )[:10]
 	print "results:"
 	print q
