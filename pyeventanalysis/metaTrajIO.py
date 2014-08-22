@@ -125,7 +125,7 @@ class metaTrajIO(object):
 			self.dcOffset=float(self.dcOffset)
 
 		# Track current filename
-		self.currentFilename=""
+		self.currentFilename=self.dataFiles[0]
 
 		# initialize an empty data pipeline
 		self.currDataPipe=np.array([])

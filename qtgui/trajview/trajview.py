@@ -80,8 +80,9 @@ class TrajectoryWindow(QtGui.QDialog):
 				# 	del self.IOObject
 
 				# print self.IOArgs
+				# print self.iohnd
 				self.IOObject=self.iohnd(**self.IOArgs)
-				
+
 				# By default display 250 ms second of data
 				self.nPoints=int(self.blockSize*self.IOObject.FsHz)
 				self.nUpdate=0
@@ -146,6 +147,10 @@ class TrajectoryWindow(QtGui.QDialog):
 				self.mpl_hist.canvas.ax.set_ylabel('|i| (pA)', fontsize=10)
 			
 				self.mpl_hist.canvas.draw()
+
+				#update the window title
+				self._windowtitle()
+
 		except EmptyDataPipeError:
 			pass
 
@@ -178,6 +183,14 @@ class TrajectoryWindow(QtGui.QDialog):
 		if event.key() == QtCore.Qt.Key_Right:
 			self.OnNextButton()
 		
+	def _windowtitle(self):
+		try:
+			fname = self.IOObject.LastDataFile.split('/')[-1]		# *nixes
+		except IndexError:
+			fname = self.IOObject.LastDataFile.split('\\')[-1]		# windows
+
+		self.setWindowTitle(fname)
+
 if __name__ == '__main__':
 	app = QtGui.QApplication(sys.argv)
 	dmw = TrajectoryWindow()
