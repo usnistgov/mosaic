@@ -35,7 +35,7 @@ class BlockDepthWindow(QtGui.QDialog):
 		# Set error line edit color to red
 		self.errorLabel.setStyleSheet(css)
 
-		self.queryString="select BlockDepth from metadata where ProcessingStatus='normal' and BlockDepth > 0 and BlockDepth < 0.8 and ResTime > 0.1"
+		self.queryString="select BlockDepth from metadata where ProcessingStatus='normal' and BlockDepth > 0 and ResTime > 0.025"
 		self.queryData=[]
 		self.queryError=False
 		self.lastGoodQueryString=""
@@ -43,12 +43,12 @@ class BlockDepthWindow(QtGui.QDialog):
 		self.queryDatabase=None
 		self.queryCompleter=None
 
-		self.nBins=200
+		self.nBins=500
 		self.binsSpinBox.setValue(self.nBins)
 
 		# Set the default text in the Filter LineEdit
 		self.sqlQueryLineEdit.setCompleterValues([])
-		self.sqlQueryLineEdit.setText("BlockDepth < 0.8 and ResTime > 0.1")
+		self.sqlQueryLineEdit.setText("ResTime > 0.025")
 
 
 		QtCore.QObject.connect(self.updateButton, QtCore.SIGNAL('clicked()'), self.OnUpdateButton)
@@ -103,6 +103,12 @@ class BlockDepthWindow(QtGui.QDialog):
 						rwidth=0.1,
 						color=c
 					)
+			# Set limits on the X-axis from 0 to 1
+			xmin=max(0, min(self.queryData))
+			xmax=min(1, max(self.queryData))
+			self.mpl_hist.canvas.ax.set_xlim(xmin,xmax)
+
+
 			self.mpl_hist.canvas.ax.set_xlabel('<i>/<i0>', fontsize=10)
 			self.mpl_hist.canvas.ax.set_ylabel('counts', fontsize=10)
 			
@@ -127,8 +133,11 @@ class BlockDepthWindow(QtGui.QDialog):
 
 	def _updatequery(self):
 		try:
-			self.queryData=np.array(self.queryDatabase.queryDB(self.queryString)).flatten()
-	
+			self.queryData=np.hstack( np.hstack( np.array( self.queryDatabase.queryDB(self.queryString) ) ) )
+		
+			# print self.queryData
+			# print 
+			# print
 			if not self.queryError:
 				self.errorLabel.setText("")
 

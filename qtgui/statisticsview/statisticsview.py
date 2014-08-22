@@ -32,7 +32,7 @@ class StatisticsWindow(QtGui.QDialog):
 		self.idleTimer=QtCore.QTimer()
 		self.idleTimer.start(3000)
 
-		self.queryString="select AbsEventStart from metadata where ProcessingStatus='normal' and BlockDepth > 0 and BlockDepth < 1 order by AbsEventStart ASC"
+		self.queryString="select AbsEventStart from metadata where ProcessingStatus='normal' and ResTime > 0.025 order by AbsEventStart ASC"
 		self.queryData=[]
 
 	def openDB(self, dbpath):
@@ -80,8 +80,11 @@ class StatisticsWindow(QtGui.QDialog):
 		# print counts
 
 		# print counts/float(counts[0])
-		popt, pcov = curve_fit(self._fitfunc, bins[:len(counts)], counts/counts[0])
-		perr=np.sqrt(np.diag(pcov))
+		try:
+			popt, pcov = curve_fit(self._fitfunc, bins[:len(counts)], counts/counts[0])
+			perr=np.sqrt(np.diag(pcov))
+		except:
+			return [0,0]
 
 		return self._roundcaprate([ 1/(popt[1]/1000.), 1/(perr[1]/1000. * math.sqrt(len(arrtimes))) ])
 	

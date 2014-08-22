@@ -5,6 +5,8 @@
 	Created:	4/18/2013
 
 	ChangeLog:
+		8/21/14		AB 	Added AbsEventStart and BlockDepth (constructed from mdCurrentStep
+						and mdOpenChCurrent) metadata.
 		5/17/14		AB  Modified md interface functions for metaMDIO support
 		9/26/13		AB	Initial version
 """
@@ -55,6 +57,8 @@ class multiStateAnalysis(metaEventProcessor.metaEventProcessor):
 		self.mdOpenChCurrent=-1
 		self.mdCurrentStep=[-1]
 
+		self.mdBlockDepth=[-1]
+
 		self.mdEventDelay=[-1]
 
 		self.mdEventStart=-1
@@ -63,6 +67,8 @@ class multiStateAnalysis(metaEventProcessor.metaEventProcessor):
 		self.mdResTime = -1
 
 		self.mdRCConst=-1
+
+		self.mdAbsEventStart = -1
 
 		self.mdRedChiSq=-1
 
@@ -97,14 +103,16 @@ class multiStateAnalysis(metaEventProcessor.metaEventProcessor):
 			control the order of the data to keep formatting consistent. 				
 		"""
 		return [
-					self. mdProcessingStatus, 
+					self.mdProcessingStatus, 
 					self.mdOpenChCurrent, 
 					self.mdCurrentStep,
+					self.mdBlockDepth,
 					self.mdEventStart,
 					self.mdEventEnd,
 					self.mdEventDelay,
 					self.mdResTime,
 					self.mdRCConst,
+					self.mdAbsEventStart,
 					self.mdRedChiSq
 				]
 		
@@ -116,9 +124,11 @@ class multiStateAnalysis(metaEventProcessor.metaEventProcessor):
 					'TEXT', 
 					'REAL', 
 					'REAL_LIST',
+					'REAL_LIST',
 					'REAL',
 					'REAL',
 					'REAL_LIST',
+					'REAL',
 					'REAL',
 					'REAL',
 					'REAL'
@@ -132,11 +142,13 @@ class multiStateAnalysis(metaEventProcessor.metaEventProcessor):
 					'ProcessingStatus', 
 					'OpenChCurrent', 
 					'CurrentStep',
+					'BlockDepth',
 					'EventStart', 
 					'EventEnd', 
 					'EventDelay', 
 					'ResTime', 
 					'RCConstant', 
+					'AbsEventStart',
 					'ReducedChiSquared' 
 				]
 
@@ -262,6 +274,8 @@ class multiStateAnalysis(metaEventProcessor.metaEventProcessor):
 			raise
 
 	def __recordevent(self, optfit):
+		dt = 1000./self.Fs 	# time-step in ms.
+
 		if self.nStates<2:
 			self.rejectEvent('eInvalidFitParams')
 		elif optfit.params['mu0'].value < 0.0 or optfit.params['mu'+str(self.nStates-1)].value < 0.0:
@@ -273,6 +287,8 @@ class multiStateAnalysis(metaEventProcessor.metaEventProcessor):
 			self.mdOpenChCurrent 	= optfit.params['b'].value 
 			self.mdCurrentStep		= [ optfit.params['a'+str(i)].value for i in range(self.nStates) ]
 			
+			self.mdBlockDepth 		= np.cumsum( self.mdCurrentStep[:-1] )/self.mdOpenChCurrent + 1
+
 			self.mdEventDelay		= [ optfit.params['mu'+str(i)].value for i in range(self.nStates) ]
 
 			self.mdEventStart		= optfit.params['mu0'].value
@@ -280,6 +296,8 @@ class multiStateAnalysis(metaEventProcessor.metaEventProcessor):
 			self.mdRCConst			= optfit.params['tau'].value
 
 			self.mdResTime			= self.mdEventEnd - self.mdEventStart
+
+			self.mdAbsEventStart	= self.mdEventStart + self.absDataStartIndex * dt
 			
 			self.mdRedChiSq			= sum(np.array(optfit.residual)**2/self.baseSD**2)/optfit.nfree
 				

@@ -7,6 +7,8 @@
 	Created:	7/17/2012
 
 	ChangeLog:
+		8/22/14 	AB 	Setup a new property ('LastDataFile') that tracks the current
+						data file being processed.
 		5/27/14		AB 	Added dcOffset kwarg to initialization to allow 
 						for offset correction in the ionic current data.
 		2/13/14		AB 	Fixed a potential infinite recursion bug in the
@@ -64,8 +66,9 @@ class metaTrajIO(object):
 			Returns:
 				None
 			Properties:
-				FsHz		sampling frequency in Hz. If the data was decimated, this property will hold the
-							sampling frequency after decimation.
+				FsHz			sampling frequency in Hz. If the data was decimated, this property will hold the
+								sampling frequency after decimation.
+				LastDataFile	return the data file currently being processed.
 			Errors:
 				IncompatibleArgumentsError when conflicting arguments are used.
 		"""
@@ -121,6 +124,9 @@ class metaTrajIO(object):
 		else:
 			self.dcOffset=float(self.dcOffset)
 
+		# Track current filename
+		self.currentFilename=""
+
 		# initialize an empty data pipeline
 		self.currDataPipe=np.array([])
 		# Track the start point of the queue. This var is used to manage
@@ -146,6 +152,10 @@ class metaTrajIO(object):
 			return self.Fs
 		else:
 			return self.dataFilterObj.filterFs
+
+	@property 
+	def LastDataFile(self):
+		return self.currentFilename
 
 	def popdata(self, n):
 		"""
@@ -185,6 +195,7 @@ class metaTrajIO(object):
 		except IndexError, err:
 			fnames=self.popfnames(1)
 			if len(fnames) > 0:
+				self.currentFilename=fnames[0]		#update the last successfully read fname
 				self.appenddata(fnames)
 				return self.popdata(n)
 			else:
@@ -223,6 +234,7 @@ class metaTrajIO(object):
 		except IndexError, err:
 			fnames=self.popfnames(1)
 			if len(fnames) > 0:
+				self.currentFilename=fnames[0]		#update the last successfully read fname
 				self.appenddata(fnames)
 				return self.previewdata(n)
 			else:
