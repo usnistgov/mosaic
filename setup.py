@@ -4,7 +4,7 @@ import numpy
 
 setup(
     name='pyEventAnalysis',
-    version='1.0.0a4.6',
+    version='1.0.0a5',
     author='Arvind Balijepalli',
     author_email='arvind.balijepalli@nist.gov',
     packages=[
@@ -18,7 +18,8 @@ setup(
             'qtgui.advancedsettings',
             'qtgui.consolelog',
             'qtgui.blockdepthview',
-            'qtgui.statisticsview'
+            'qtgui.statisticsview',
+            'qtgui.fiteventsview'
             ],
     scripts=[
             '.settings',
@@ -33,7 +34,8 @@ setup(
             'qtgui/advancedsettings/advancedSettingsDialog.ui',
             'qtgui/consolelog/consoleDialog.ui',
             'qtgui/blockdepthview/blockdepthview.ui',
-            'qtgui/statisticsview/statisticsview.ui'
+            'qtgui/statisticsview/statisticsview.ui',
+            'qtgui/fiteventsview/fiteventsview.ui'
             ],
     url='http://pypi.python.org/pypi/pyEventAnalysis/',
     license='LICENSE.txt',

@@ -34,6 +34,7 @@ class StatisticsWindow(QtGui.QDialog):
 
 		self.queryString="select AbsEventStart from metadata where ProcessingStatus='normal' and ResTime > 0.025 order by AbsEventStart ASC"
 		self.queryData=[]
+		self.totalEvents=0
 
 	def openDB(self, dbpath):
 		self.queryDatabase=sqlite.sqlite3MDIO()
@@ -53,16 +54,21 @@ class StatisticsWindow(QtGui.QDialog):
 			Position settings window at the top left corner
 		"""
 		screen = QtGui.QDesktopWidget().screenGeometry()
-		self.setGeometry(1050, 0, 300, 200)
+		self.setGeometry(1050, 0, 375, 200)
 		# self.move( (-screen.width()/2)+200, -screen.height()/2 )
 
 	def _updatequery(self):
 		try:
 			self.queryData=np.array(self.queryDatabase.queryDB(self.queryString)).flatten()
+
+			self.totalEvents=len( self.queryDatabase.queryDB("select ProcessingStatus from metadata") )
 			c=self._caprate()
 
 			self.neventsLabel.setText( str(len(self.queryData)) )
+			self.errorrateLabel.setText( str(round(100.*(1 - len(self.queryData)/float(self.totalEvents)), 2)) + ' %' )
 			self.caprateLabel.setText( str(c[0]) + " +/- " + str(c[1]) )
+		except ZeroDivisionError:
+			pass
 		except:
 			raise
 
@@ -72,16 +78,17 @@ class StatisticsWindow(QtGui.QDialog):
 
 		arrtimes=np.diff(self.queryData)
 		nbins=100
-		binstart, binend = max([min(arrtimes),0.001]), min([max(arrtimes), 1])
-		dbin=(binend-binstart)/float(nbins)
+		# binstart, binend = max([min(arrtimes),0.001]), min([max(arrtimes), 1])
+		# dbin=(binend-binstart)/float(nbins)
 
-		counts, bins = np.histogram(arrtimes, bins=np.arange(*[binstart, binend, dbin]))
+		# counts, bins = np.histogram(arrtimes, bins=np.arange(*[binstart, binend, dbin]))
+		counts, bins = np.histogram(arrtimes, bins=nbins, density=True)
 
 		# print counts
 
 		# print counts/float(counts[0])
 		try:
-			popt, pcov = curve_fit(self._fitfunc, bins[:len(counts)], counts/counts[0])
+			popt, pcov = curve_fit(self._fitfunc, bins[:len(counts)], counts, p0=[1, np.mean(arrtimes)])
 			perr=np.sqrt(np.diag(pcov))
 		except:
 			return [0,0]

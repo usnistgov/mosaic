@@ -26,11 +26,18 @@
    <item>
     <layout class="QHBoxLayout" name="horizontalLayout">
      <item>
-      <layout class="QVBoxLayout" name="verticalLayout_2">
+      <layout class="QVBoxLayout" name="verticalLayout_3">
        <item>
         <widget class="QLabel" name="Label_3">
          <property name="text">
           <string>Events processed:</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="Label_5">
+         <property name="text">
+          <string>Processing error rate:</string>
          </property>
         </widget>
        </item>
@@ -44,9 +51,16 @@
       </layout>
      </item>
      <item>
-      <layout class="QVBoxLayout" name="verticalLayout">
+      <layout class="QVBoxLayout" name="verticalLayout_2">
        <item>
         <widget class="QLabel" name="neventsLabel">
+         <property name="text">
+          <string>n/a</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="errorrateLabel">
          <property name="text">
           <string>n/a</string>
          </property>
@@ -62,7 +76,7 @@
       </layout>
      </item>
      <item>
-      <layout class="QVBoxLayout" name="verticalLayout_3">
+      <layout class="QVBoxLayout" name="verticalLayout">
        <item>
         <widget class="QLabel" name="Label_4">
          <property name="text">
@@ -71,9 +85,22 @@
         </widget>
        </item>
        <item>
-        <widget class="QLabel" name="Label_2">
+        <widget class="QLabel" name="Label_6">
          <property name="text">
-          <string>s&lt;sup&gt;-1&lt;/sup&gt;</string>
+          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="Label_2">
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>32</height>
+          </size>
+         </property>
+         <property name="text">
+          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:14pt;&quot;&gt;s&lt;/span&gt;&lt;span style=&quot; font-size:14pt; vertical-align:super;&quot;&gt;-1&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
          </property>
         </widget>
        </item>

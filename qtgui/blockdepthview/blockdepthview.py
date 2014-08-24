@@ -148,6 +148,8 @@ class BlockDepthWindow(QtGui.QDialog):
 			self.errorLabel.setText(str(err))
 			self.queryString=self.lastGoodQueryString
 			self.queryError=True
+		except IndexError:
+			pass
 
 	def OnQueryTextChange(self, text):
 		qtext=str(text)
