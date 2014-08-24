@@ -17,6 +17,7 @@ import qtgui.advancedsettings.advancedsettings
 import qtgui.blockdepthview.blockdepthview
 import qtgui.statisticsview.statisticsview
 import qtgui.consolelog.consolelog
+import qtgui.fiteventsview.fiteventsview
 import qtgui.datamodel
 
 class settingsview(QtGui.QMainWindow):
@@ -38,8 +39,10 @@ class settingsview(QtGui.QMainWindow):
 		self.consoleLog = qtgui.consolelog.consolelog.AnalysisLogDialog(parent=self)
 		self.blockDepthWindow = qtgui.blockdepthview.blockdepthview.BlockDepthWindow(parent=self)
 		self.statisticsView = qtgui.statisticsview.statisticsview.StatisticsWindow(parent=self)
-		
+		self.fitEventsView = qtgui.fiteventsview.fiteventsview.FitEventWindow(parent=self)
+
 		self.showBlockDepthWindow=False
+		self.showFitEventsWindow=False
 		# redirect stdout and stderr
 		# sys.stdout = redirectSTDOUT( edit=self.consoleLog.consoleLogTextEdit, out=sys.stdout, color=QtGui.QColor(0,0,0) )
 		# sys.stderr = redirectSTDOUT( edit=self.consoleLog.consoleLogTextEdit, out=sys.stderr, color=QtGui.QColor(255,0,0) )
@@ -85,11 +88,13 @@ class settingsview(QtGui.QMainWindow):
 		
 		# Plots signals
 		QtCore.QObject.connect(self.plotBlockDepthHistCheckBox, QtCore.SIGNAL('clicked(bool)'), self.OnPlotBlockDepth)
+		QtCore.QObject.connect(self.plotEventFitsCheckBox, QtCore.SIGNAL('clicked(bool)'), self.OnPlotFitEvent)
 
 		# View Menu signals
 		QtCore.QObject.connect(self.actionAdvanced_Settings_Mode, QtCore.SIGNAL('triggered()'), self.OnAdvancedModeMenuAction)
 		QtCore.QObject.connect(self.actionTrajectory_Viewer, QtCore.SIGNAL('triggered()'), self.OnShowTrajectoryViewer)
 		QtCore.QObject.connect(self.actionBlockade_Depth_Histogram, QtCore.SIGNAL('triggered()'), self.OnShowBlockDepthViewer)
+		QtCore.QObject.connect(self.actionEvent_Fits, QtCore.SIGNAL('triggered()'), self.OnShowFitEventsViewer)
 		QtCore.QObject.connect(self.actionStatistics, QtCore.SIGNAL('triggered()'), self.OnShowStatisticsWindow)
 
 		# Help Menu signals
@@ -366,6 +371,12 @@ class settingsview(QtGui.QMainWindow):
 	def OnWriteEvents(self, value):
 		self.analysisDataModel["writeEventTS"]=int(value)
 
+		self.plotEventFitsCheckBox.setEnabled(value)
+		if not value:
+			self.plotEventFitsCheckBox.setChecked(value)
+			self.showFitEventsWindow=value
+
+
 	def OnParallelProcessing(self, value):
 		if self.parallelCheckBox.isChecked():
 			self.analysisDataModel["parallelProc"]=1
@@ -400,6 +411,14 @@ class settingsview(QtGui.QMainWindow):
 		else:
 			self.blockDepthWindow.hide()
 
+	def OnPlotFitEvent(self, value):
+		self.showFitEventsWindow=value
+		if value:
+			self.fitEventsView.show()
+		else:
+			self.fitEventsView.hide()
+
+
 	# Menu SLOTs
 	def OnAdvancedModeMenuAction(self):
 		if self.advancedModeCheckBox.isChecked():
@@ -419,6 +438,10 @@ class settingsview(QtGui.QMainWindow):
 	def OnShowBlockDepthViewer(self):
 		self.blockDepthWindow.show()
 		self.plotBlockDepthHistCheckBox.setChecked(True)
+
+	def OnShowFitEventsViewer(self):
+		self.fitEventsView.show()
+		self.plotEventFitsCheckBox.setChecked(True)
 
 	def OnAdvancedModeCancel(self):
 		if not self.analysisRunning:

@@ -22,7 +22,10 @@ class TrajectoryWindow(QtGui.QDialog):
 		super(TrajectoryWindow, self).__init__(parent)
 
 		uic.loadUi(os.path.join(os.path.dirname(os.path.abspath(__file__)),"trajviewui.ui"), self)
-		# self.setupUi(self)
+		
+		# Add a toolbar the matplolib widget
+		self.mpl_hist.addToolbar()
+
 		self._positionWindow()
 
 		QtCore.QObject.connect(self.nextBtn, QtCore.SIGNAL("clicked()"), self.OnNextButton)
@@ -53,7 +56,13 @@ class TrajectoryWindow(QtGui.QDialog):
 		self.setGeometry(405, 0, 500, 350)
 		# self.move( (-screen.width()/2)+200, -screen.height()/2 )
 
-
+	@property
+	def FskHz(self):
+		if self.IOObject:
+			return self.IOObject.FsHz/1000.
+		else:
+			return 0.0
+			
 	def refreshPlot(self):
 		try:
 			path=str(self.datadict["DataFilesPath"])
@@ -74,7 +83,7 @@ class TrajectoryWindow(QtGui.QDialog):
 				self.IOArgs["dcOffset"]=float(self.datadict["dcOffset"])
 
 				if hasattr(self, 'IOObject'):
-					self.IOOBject=None
+					self.IOObject=None
 
 				# if self.IOObject:
 				# 	del self.IOObject

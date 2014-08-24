@@ -65,6 +65,10 @@ class qtAnalysisGUI(qtgui.settingsview.settingsview):
 					self.statisticsView.openDB( self.analysisObject.DataPath )
 					self.statisticsView.show()
 
+					self.fitEventsView.openDB( self.analysisObject.DataPath, self.trajViewerWindow.FskHz )
+					if self.showFitEventsWindow:
+						self.fitEventsView.show()
+
 					self.analysisRunning=True	
 			else:
 				self.analysisObject.Stop()

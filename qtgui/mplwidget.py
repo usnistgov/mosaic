@@ -101,6 +101,9 @@ class MplWidget(QWidget):
 		self.canvas = MplCanvas()
 		self.vbl = QVBoxLayout()
 		self.vbl.addWidget(self.canvas)
+
+		self.setLayout(self.vbl)
+
+	def addToolbar(self):
 		# self.vbl.addWidget( NavigationToolbar2QTAgg(self.canvas, self) )
 		self.vbl.addWidget( NavigationToolbar(self.canvas, self) )
-		self.setLayout(self.vbl)

@@ -184,14 +184,16 @@ class sqlite3MDIO(metaMDIO.metaMDIO):
 
 if __name__=="__main__":
 	c=sqlite3MDIO()
-	c.openDB(
-		'/Users/arvind/Research/Experiments/PEG29EBSRefData/20120323/singleChan/eventMD-20140617-083530_single.sqlite'
-		)
-	
-	print c.colNames
+	c.openDB('/Users/arvind/Desktop/POM ph5.45 m120_6/eventMD-20140822-210930.sqlite')
 
-	q=c.queryDB( "select BlockDepth from metadata where ResTime > 0.1 order by ResTime ASC" )[:10]
-	print "results:"
-	print q
-	
-	
+	# print c.dbColumnNames
+
+	import time
+
+	t1=time.time()
+	q=c.queryDB( "select BlockDepth, TimeSeries from metadata where ProcessingStatus = 'normal' order by ResTime ASC" )
+	t2=time.time()
+
+	print "Timing: ", round((t2-t1)*1000, 2), " ms"
+	print "Results:", len(q)
+
