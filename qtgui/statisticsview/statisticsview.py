@@ -88,14 +88,17 @@ class StatisticsWindow(QtGui.QDialog):
 		return self._roundcaprate([ 1/popt[1], 1/(popt[1]*math.sqrt(len(self.queryData))) ])
 	
 	def _roundcaprate(self, caprate):
-		x,y=caprate
+		try:
+			x,y=caprate
 
-		sigx=int(min(0, math.log10(x)))
+			sigx=int(min(0, math.log10(x)))
 
-		if x<10:
-			return [ round(x, sigx), round(y, sigx-1) ]
-		else:
-			return [ int(round(x, sigx)), int(round(y, sigx)) ]
+			if x<10:
+				return [ round(x, sigx), round(y, sigx-1) ]
+			else:
+				return [ int(round(x, sigx)), int(round(y, sigx)) ]
+		except:
+			return [0,0]
 
 	def _fitfunc(self, t, a, tau):
 		return a * np.exp(-t/tau)
