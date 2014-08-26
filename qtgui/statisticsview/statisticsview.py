@@ -32,7 +32,7 @@ class StatisticsWindow(QtGui.QDialog):
 		self.idleTimer=QtCore.QTimer()
 		self.idleTimer.start(3000)
 
-		self.queryString="select AbsEventStart from metadata where ProcessingStatus='normal' and ResTime > 0.025 order by AbsEventStart ASC"
+		self.queryString="select AbsEventStart from metadata where ProcessingStatus='normal' and ResTime > 0.025 and BlockDepth > 0 and BlockDepth < 1 order by AbsEventStart ASC"
 		self.queryData=[]
 		self.totalEvents=0
 
@@ -66,7 +66,7 @@ class StatisticsWindow(QtGui.QDialog):
 
 			self.neventsLabel.setText( str(len(self.queryData)) )
 			self.errorrateLabel.setText( str(round(100.*(1 - len(self.queryData)/float(self.totalEvents)), 2)) + ' %' )
-			self.caprateLabel.setText( str(c[0]) + " +/- " + str(c[1]) )
+			self.caprateLabel.setText( str(c[0]) + " &#177; " + str(c[1]) + " s<sup>-1</sup>" )
 		except ZeroDivisionError:
 			pass
 		except:
@@ -76,24 +76,16 @@ class StatisticsWindow(QtGui.QDialog):
 		if len(self.queryData) < 200:
 			return [0,0]
 
-		arrtimes=np.diff(self.queryData)
-		nbins=100
-		# binstart, binend = max([min(arrtimes),0.001]), min([max(arrtimes), 1])
-		# dbin=(binend-binstart)/float(nbins)
-
-		# counts, bins = np.histogram(arrtimes, bins=np.arange(*[binstart, binend, dbin]))
-		counts, bins = np.histogram(arrtimes, bins=nbins, density=True)
-
-		# print counts
-
-		# print counts/float(counts[0])
+		arrtimes=np.diff(self.queryData)/1000.		
+		counts, bins = np.histogram(arrtimes, bins=100, density=True)
+		
 		try:
 			popt, pcov = curve_fit(self._fitfunc, bins[:len(counts)], counts, p0=[1, np.mean(arrtimes)])
 			perr=np.sqrt(np.diag(pcov))
 		except:
 			return [0,0]
 
-		return self._roundcaprate([ 1/(popt[1]/1000.), 1/(perr[1]/1000. * math.sqrt(len(arrtimes))) ])
+		return self._roundcaprate([ 1/popt[1], 1/(popt[1]*math.sqrt(len(self.queryData))) ])
 	
 	def _roundcaprate(self, caprate):
 		x,y=caprate
