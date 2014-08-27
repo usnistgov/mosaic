@@ -32,9 +32,14 @@ class StatisticsWindow(QtGui.QDialog):
 		self.idleTimer=QtCore.QTimer()
 		self.idleTimer.start(3000)
 
-		self.queryString="select AbsEventStart from metadata where ProcessingStatus='normal' and ResTime > 0.025 and BlockDepth > 0 and BlockDepth < 1 order by AbsEventStart ASC"
+		self.queryString="select AbsEventStart from metadata where ProcessingStatus='normal'"
 		self.queryData=[]
 		self.totalEvents=0
+
+		# Set QLabel properties
+		self.neventsLabel.setTextInteractionFlags(QtCore.Qt.TextSelectableByMouse)
+		self.errorrateLabel.setTextInteractionFlags(QtCore.Qt.TextSelectableByMouse)
+		self.caprateLabel.setTextInteractionFlags(QtCore.Qt.TextSelectableByMouse)
 
 	def openDB(self, dbpath):
 		self.queryDatabase=sqlite.sqlite3MDIO()
@@ -107,9 +112,12 @@ class StatisticsWindow(QtGui.QDialog):
 		self._updatequery()
 
 if __name__ == '__main__':
+	from os.path import expanduser
+	dbpath=expanduser('~')+'/Research/Experiments/PEG29EBSRefData/20120323/singleChan/'
+
 	app = QtGui.QApplication(sys.argv)
 	dmw = StatisticsWindow()
-	dmw.openDB('/Users/arvind/Desktop/POM ph5.45 m120_6/')
+	dmw.openDB(dbpath)
 	dmw.show()
 	dmw.raise_()
 	sys.exit(app.exec_())

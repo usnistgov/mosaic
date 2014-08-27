@@ -195,11 +195,13 @@ class FitEventWindow(QtGui.QDialog):
 		}
 
 if __name__ == '__main__':
+	from os.path import expanduser
+	dbpath=expanduser('~')+'/Research/Experiments/PEG29EBSRefData/20120323/singleChan/'
+
 	app = QtGui.QApplication(sys.argv)
 	dmw = FitEventWindow()
-	# d='/Users/arvind/Desktop/POM ph5.45 m120_6'
-	d='/Users/arvind/Research/Experiments/PEG29EBSRefData/20120323/singleChan/'
-	dmw.openDB(d, 500)
+	
+	dmw.openDB(dbpath, 500)
 	dmw.show()
 	dmw.raise_()
 	sys.exit(app.exec_())

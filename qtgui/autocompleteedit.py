@@ -2,6 +2,10 @@
 	This code is from:
 		https://bitbucket.org/3david/qtodotxt/src/ec1e74eef575/qtodotxt/ui/controls/autocomplete_lineedit.py
 
+	ChangeLog:
+		8/26/14		AB 	Changed autocomplete behavior in the filter widget so it is case insensitive
+		8/20/14		AB	Initial version
+
 """
 from PyQt4 import QtCore, QtGui
 
@@ -14,6 +18,7 @@ class autocompleteedit(QtGui.QLineEdit):
 		self._addSpaceAfterCompleting = addSpaceAfterCompleting
 		self._completer = QtGui.QCompleter(model)
 		self._completer.setWidget(self)
+		self._completer.setCaseSensitivity(QtCore.Qt.CaseInsensitive)
 		self.connect(
 				self._completer,
 				QtCore.SIGNAL('activated(QString)'),
@@ -28,11 +33,16 @@ class autocompleteedit(QtGui.QLineEdit):
 		This is the event handler for the QCompleter.activated(QString) signal,
 		it is called when the user selects an item in the completer popup.
 		"""
-		extra = len(completion) - len(self._completer.completionPrefix())
-		extra_text = completion[-extra:]
+		# extra = len(completion) - len(self._completer.completionPrefix())
+		# extra_text = completion[-extra:]
+		# if self._addSpaceAfterCompleting:
+		# 	extra_text += ' '
+		# self.setText(self.text() + extra_text)
+		widget_text = self.text()[:-len(self._completer.completionPrefix())] + completion
 		if self._addSpaceAfterCompleting:
-			extra_text += ' '
-		self.setText(self.text() + extra_text)
+			widget_text += ' '
+		self.setText(widget_text)
+
 
 	def textUnderCursor(self):
 		text = self.text()

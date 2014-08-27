@@ -139,12 +139,14 @@ class BlockDepthWindow(QtGui.QDialog):
 			# print 
 			# print
 			if not self.queryError:
+				self.errorPrefixLabel.setText("")
 				self.errorLabel.setText("")
 
 			self.lastGoodQueryString=self.queryString
 
 			self.update_graph()
 		except sqlite3.OperationalError, err:
+			self.errorPrefixLabel.setText("  Query Error: ")
 			self.errorLabel.setText(str(err))
 			self.queryString=self.lastGoodQueryString
 			self.queryError=True
@@ -173,9 +175,12 @@ class BlockDepthWindow(QtGui.QDialog):
 		self._updatequery()
 
 if __name__ == '__main__':
+	from os.path import expanduser
+	dbpath=expanduser('~')+'/Research/Experiments/PEGModelData/JoesData/PEGMixture/3.44M_1413/m40mv_long/set1'
+
 	app = QtGui.QApplication(sys.argv)
 	dmw = BlockDepthWindow()
-	dmw.openDB('/Users/arvind/Research/Experiments/PEGModelData/JoesData/PEGMixture/3.44M_1413/m40mv_long/set1')
+	dmw.openDB(dbpath)
 	dmw.show()
 	dmw.raise_()
 	sys.exit(app.exec_())
