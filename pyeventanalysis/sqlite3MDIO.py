@@ -88,13 +88,20 @@ class sqlite3MDIO(metaMDIO.metaMDIO):
 		self.db.commit()
 		self.db.close()
 		
-	def writeRecord(self, data):
+	def writeRecord(self, data, table=None):
+		if not table:
+			tabname=self.tableName
+			cols=self.colNames
+		else:
+			tabname=table
+			cols=self.colNames
+
 		placeholders_list=','.join(['?' for i in range(len(data))])
 
 		with self.db:
 			self.db.execute(	'INSERT INTO ' + 
-						self.tableName + 
-						'('+', '.join(self.colNames)+') VALUES('+
+						tabname + 
+						'('+', '.join(cols)+') VALUES('+
 						placeholders_list+')', self._datalist(data)
 					)
 
@@ -160,6 +167,18 @@ class sqlite3MDIO(metaMDIO.metaMDIO):
 					'(recIDX, '+', '.join(self.colNames)+') VALUES('+
 					placeholders_list+')', ('REAL',)+tuple(self.colNames_t)
 				)
+
+			# create a table that stores global info about the analysis
+			# data path, data type, partition/processing algorithms etc
+			c.execute("create table analysisinfo ( \
+					recIDX TEXT, \
+					datPath TEXT, \
+					dataType TEXT, \
+					partitionAlgorithm TEXT, \
+					processingAlgorithm TEXT, \
+					filteringAlgorithm TEXT, \
+					PRIMARY KEY (recIDX) \
+				)")
 
 			self.db.commit()
 

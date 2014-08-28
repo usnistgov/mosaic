@@ -1,5 +1,5 @@
 """
-	This code is from:
+	This code is taken and adapted from:
 		https://bitbucket.org/3david/qtodotxt/src/ec1e74eef575/qtodotxt/ui/controls/autocomplete_lineedit.py
 
 	ChangeLog:

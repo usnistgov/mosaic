@@ -66,7 +66,12 @@ class metaMDIO(object):
 		pass
 
 	@abstractmethod
-	def writeRecord(self, data):
+	def writeRecord(self, data, table=None):
+		"""
+			Write data to a specified table. By default table 
+			is None. In this case sub-classes should fall back 
+			to writing data to a default table.
+		"""
 		pass
 
 	@abstractmethod

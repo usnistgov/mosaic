@@ -41,7 +41,9 @@ class FitEventWindow(QtGui.QDialog):
 		QtCore.QObject.connect(self.nextEventToolButton, QtCore.SIGNAL("clicked()"), self.OnNextButton)
 		QtCore.QObject.connect(self.previousEventToolButton, QtCore.SIGNAL("clicked()"), self.OnPreviousButton)
 		QtCore.QObject.connect(self.eventIndexLineEdit, QtCore.SIGNAL('editingFinished()'), self.OnEventIndexLineEditChange)
-		
+		QtCore.QObject.connect(self.eventIndexLineEdit, QtCore.SIGNAL('editingFinished()'), self.OnEventIndexLineEditChange)
+		QtCore.QObject.connect(self.eventIndexHorizontalSlider, QtCore.SIGNAL('valueChanged ( int )'), self.OnEventIndexSliderChange)
+
 
 	def openDB(self, dbpath, FskHz):
 		self.queryDatabase=sqlite.sqlite3MDIO()
@@ -95,6 +97,7 @@ class FitEventWindow(QtGui.QDialog):
 				self.mpl_hist.canvas.ax.cla()
 				self.mpl_hist.canvas.ax.plot( xdat, ydat, linestyle='None', marker='o', color='r', markersize=8, markeredgecolor='none', alpha=0.6)
 
+			self._ticks(5)
 
 			self.mpl_hist.canvas.ax.set_xlabel('t (ms)', fontsize=10)
 			self.mpl_hist.canvas.ax.set_ylabel('|i| (pA)', fontsize=10)
@@ -130,6 +133,7 @@ class FitEventWindow(QtGui.QDialog):
 			self._updatequery()
 
 		self.eventIndex+=1
+		self.eventIndexHorizontalSlider.setValue( self.eventIndex )
 		self.update_graph()
 
 	def OnPreviousButton(self):
@@ -137,10 +141,15 @@ class FitEventWindow(QtGui.QDialog):
 			self._updatequery()
 
 		self.eventIndex= max(0, self.eventIndex-1)
+		self.eventIndexHorizontalSlider.setValue( self.eventIndex )
 		self.update_graph()
 
 	def OnEventIndexLineEditChange(self):
 		self.eventIndex=int(self.eventIndexLineEdit.text())
+		self.update_graph()
+
+	def OnEventIndexSliderChange(self, value):
+		self.eventIndex=int(value)
 		self.update_graph()
 
 	def OnAppIdle(self):
@@ -156,9 +165,10 @@ class FitEventWindow(QtGui.QDialog):
 		axes.xaxis.set_ticks( np.arange( start, end+dx, dx ) )
 		axes.xaxis.set_major_formatter(ticker.FormatStrFormatter('%0.2f'))
 
+		# set the y-axis limits from 0 to ymax
 		start, end = axes.get_ylim()
-		dy=(end-start)/(nticks-1)
-		axes.yaxis.set_ticks( np.arange( start, end+dy, dy ) ) 
+		dy=end/(nticks-1)
+		axes.yaxis.set_ticks( np.arange( 0, end+dy, dy ) ) 
 		axes.yaxis.set_major_formatter(ticker.FormatStrFormatter('%d'))
 
 	def _updatequery(self):
@@ -168,6 +178,8 @@ class FitEventWindow(QtGui.QDialog):
 
 				# update the QLineEdit validator
 				self.eventIndexLineEdit.setValidator( QtGui.QIntValidator(0, len(self.queryData)-1, self) )
+				self.eventIndexHorizontalSlider.setMaximum( len(self.queryData)-1 )
+
 		except sqlite3.OperationalError, err:
 			raise err
 		except:
@@ -176,6 +188,9 @@ class FitEventWindow(QtGui.QDialog):
 	def _sraFunc(self, t, tau, mu1, mu2, a, b):
 		try:
 			return a*( (np.exp((mu1-t)/tau)-1)*self._heaviside(t-mu1)+(1-np.exp((mu2-t)/tau))*self._heaviside(t-mu2) ) + b
+		except RuntimeWarning:
+			print self.eventIndex
+			pass
 		except:
 			raise
 
