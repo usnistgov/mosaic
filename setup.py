@@ -23,6 +23,7 @@ setup(
             ],
     scripts=[
             '.settings',
+            'install-test-sh',
             'bin/analysis.py', 
             'dependencies/build-deps-sh', 
             'pyeventanalysis/utest/run-tests-sh', 
