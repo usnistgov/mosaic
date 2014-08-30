@@ -203,14 +203,15 @@ class sqlite3MDIO(metaMDIO.metaMDIO):
 
 if __name__=="__main__":
 	c=sqlite3MDIO()
-	c.openDB('/Users/arvind/Desktop/POM ph5.45 m120_6/eventMD-20140822-210930.sqlite')
+	c.openDB('/Users/arvind/Desktop/POM ph5.45 m120_6/eventMD-20140823-215341.sqlite')
 
 	# print c.dbColumnNames
 
 	import time
 
 	t1=time.time()
-	q=c.queryDB( "select BlockDepth, TimeSeries from metadata where ProcessingStatus = 'normal' order by ResTime ASC" )
+	# q=c.queryDB( "select BlockDepth, TimeSeries from metadata where ProcessingStatus = 'normal' order by ResTime ASC" )
+	q=c.queryDB( "select TimeSeries from metadata limit 100, 200" )
 	t2=time.time()
 
 	print "Timing: ", round((t2-t1)*1000, 2), " ms"

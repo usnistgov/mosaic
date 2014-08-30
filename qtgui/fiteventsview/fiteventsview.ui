@@ -97,6 +97,9 @@
        <property name="focusPolicy">
         <enum>Qt::StrongFocus</enum>
        </property>
+       <property name="placeholderText">
+        <string>1</string>
+       </property>
       </widget>
      </item>
      <item>
@@ -144,11 +147,15 @@
     </layout>
    </item>
    <item>
-    <widget class="QSlider" name="eventIndexHorizontalSlider">
-     <property name="orientation">
-      <enum>Qt::Horizontal</enum>
-     </property>
-    </widget>
+    <layout class="QHBoxLayout" name="horizontalLayout_2">
+     <item>
+      <widget class="QSlider" name="eventIndexHorizontalSlider">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+      </widget>
+     </item>
+    </layout>
    </item>
   </layout>
  </widget>

@@ -9,6 +9,7 @@
 	Created:	7/16/2012
 
 	ChangeLog:
+		8/30/14		AB 	Added a timeout/retry to handle DB locked error.
 		5/17/14		AB  Add metaMDIO support for meta-data and time-series storage
 		2/16/14		AB 	Define new kwarg, absdatidx to allow capture rate estimation.
 		6/28/13		AB 	Added a new keyword argument 'savets'. When set to False, the event time-series
@@ -18,6 +19,7 @@
 from abc import ABCMeta, abstractmethod
 import types
 import sys
+import time
 
 # custom errors
 class MissingMDIOError(Exception):
@@ -141,8 +143,13 @@ class metaEventProcessor(object):
 		"""
 			Write event meta data to a metaMDIO object.
 		"""
-		if self.dataFileHnd:
-			self.dataFileHnd.writeRecord( (self.mdList())+[self.eventData] )
+		try:
+			if self.dataFileHnd:
+				self.dataFileHnd.writeRecord( (self.mdList())+[self.eventData] )
+		except sqlite.OperationalError:
+			# If the db is locked, wait 1 s and try again.
+			time.sleep(1)
+			self.writeEvent()
 		# else:
 		# 	raise MissingMDIOError("Meta-data I/O object not initialized.")
 
