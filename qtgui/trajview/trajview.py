@@ -95,7 +95,8 @@ class TrajectoryWindow(QtGui.QDialog):
 				# By default display 250 ms second of data
 				self.nPoints=int(self.blockSize*self.IOObject.FsHz)
 				self.nUpdate=0
-				self.trajData=self.IOObject.popdata(self.nPoints)
+
+				self._loaddata()
 
 				self.dataLoaded=True
 
@@ -128,7 +129,7 @@ class TrajectoryWindow(QtGui.QDialog):
 		try:
 			if self.dataLoaded:
 				ydat=np.abs(self.trajData)
-				xdat=np.arange(float(self.nUpdate)*self.blockSize,float(self.nUpdate+1)*self.blockSize,1/float(self.IOObject.FsHz))[:len(ydat)]
+				xdat=np.arange(float(self.nUpdate)*self.blockSize,float(self.nUpdate+1)*self.blockSize,self.decimate/float(self.IOObject.FsHz))[:len(ydat)]
 	
 				c='#%02x%02x%02x' % (72,91,144)
 				self.mpl_hist.canvas.ax.plot( xdat, ydat, color=c, markersize='1.')
@@ -180,7 +181,7 @@ class TrajectoryWindow(QtGui.QDialog):
 		if hasattr(self,'IOObject'):
 			# pop more data on key press
 			try:
-				self.trajData=self.IOObject.popdata(self.nPoints)
+				self._loaddata()
 				self.nUpdate+=1
 
 				# self.mpl_hist.canvas.ax.set_autoscale_on(False)
@@ -192,6 +193,11 @@ class TrajectoryWindow(QtGui.QDialog):
 		if event.key() == QtCore.Qt.Key_Right:
 			self.OnNextButton()
 		
+	def _loaddata(self):
+		tdat=self.IOObject.popdata(self.nPoints)
+		self.decimate=max(1, int(round(len(tdat)/5e5)))
+		self.trajData=tdat[::self.decimate]
+
 	def _windowtitle(self):
 		try:
 			fname = self.IOObject.LastDataFile.split('/')[-1]		# *nixes

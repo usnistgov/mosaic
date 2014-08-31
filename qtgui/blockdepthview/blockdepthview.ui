@@ -66,23 +66,16 @@
        <property name="enabled">
         <bool>false</bool>
        </property>
+       <property name="maximumSize">
+        <size>
+         <width>87</width>
+         <height>16777215</height>
+        </size>
+       </property>
        <property name="text">
         <string>Update</string>
        </property>
       </widget>
-     </item>
-     <item>
-      <spacer name="horizontalSpacer">
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
-       </property>
-       <property name="sizeHint" stdset="0">
-        <size>
-         <width>40</width>
-         <height>20</height>
-        </size>
-       </property>
-      </spacer>
      </item>
     </layout>
    </item>
