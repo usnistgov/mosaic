@@ -20,6 +20,7 @@ from abc import ABCMeta, abstractmethod
 import types
 import sys
 import time
+import sqlite3
 
 # custom errors
 class MissingMDIOError(Exception):
@@ -146,8 +147,9 @@ class metaEventProcessor(object):
 		try:
 			if self.dataFileHnd:
 				self.dataFileHnd.writeRecord( (self.mdList())+[self.eventData] )
-		except sqlite.OperationalError:
+		except sqlite3.OperationalError, err:
 			# If the db is locked, wait 1 s and try again.
+			print err
 			time.sleep(1)
 			self.writeEvent()
 		# else:

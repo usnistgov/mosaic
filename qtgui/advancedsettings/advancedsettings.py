@@ -30,7 +30,7 @@ class AdvancedSettingsDialog(QtGui.QDialog):
 			Position settings window at the top left corner
 		"""
 		screen = QtGui.QDesktopWidget().screenGeometry()
-		self.setGeometry(405, 425, 500, 300)
+		self.setGeometry(405, 475, 500, 300)
 		# self.move( (-screen.width()/2)+200, -screen.height()/2 )
 
 	def updateSettingsString(self, str):

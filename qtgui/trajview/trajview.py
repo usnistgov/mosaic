@@ -32,6 +32,7 @@ class TrajectoryWindow(QtGui.QDialog):
 		self.nextBtn.setArrowType(QtCore.Qt.RightArrow)
 
 		self.trajData=""
+		self.trajDataDenoise=""
 
 
 		# Set a counter for number of updates
@@ -45,6 +46,7 @@ class TrajectoryWindow(QtGui.QDialog):
 		self.thr_line = None
 
 		self.IOObject=None
+		self.DenoiseIOObj=None
 		self.IOArgs={}
 
 
@@ -53,7 +55,7 @@ class TrajectoryWindow(QtGui.QDialog):
 			Position settings window at the top left corner
 		"""
 		screen = QtGui.QDesktopWidget().screenGeometry()
-		self.setGeometry(405, 0, 500, 350)
+		self.setGeometry(405, 0, 500, 400)
 		# self.move( (-screen.width()/2)+200, -screen.height()/2 )
 
 	@property
@@ -119,8 +121,9 @@ class TrajectoryWindow(QtGui.QDialog):
   		# self.mpl_hist.canvas.ax.set_autoscale_on(False)
   		self.update_graph()
 
-  	def setTrajdata(self, datadict):
+  	def setTrajdata(self, datadict, denoiseobj):
   		self.datadict=datadict
+  		self.DenoiseIOObj=denoiseobj
 
   		# set block size
   		self.blockSize=self.datadict.pop( "blockSizeSec", 0.25)
@@ -131,8 +134,6 @@ class TrajectoryWindow(QtGui.QDialog):
 				ydat=np.abs(self.trajData)
 				xdat=np.arange(float(self.nUpdate)*self.blockSize,float(self.nUpdate+1)*self.blockSize,self.decimate/float(self.IOObject.FsHz))[:len(ydat)]
 	
-				c='#%02x%02x%02x' % (72,91,144)
-				self.mpl_hist.canvas.ax.plot( xdat, ydat, color=c, markersize='1.')
 				if float(self.datadict["meanOpenCurr"]) == -1 and float(self.datadict["sdOpenCurr"]) == -1:
 					mu=np.mean(ydat)
 					sd=np.std(ydat)
@@ -144,10 +145,27 @@ class TrajectoryWindow(QtGui.QDialog):
 
 				# display the mean current val and thr
 				self.ionicCurrentLabel.setText(
-					"Mean: {0:.2f} pA\tStd. Dev: {1:.2f} pA\tThreshold: {2:.2f} pA".format(mu, sd, mu-thr*sd)
+					"Mean: {0:.2f} pA  Std. Dev: {1:.2f} pA\n\nThreshold: {2:.2f} pA".format(mu, sd, mu-thr*sd)
 					)
 
-				self.mu_line = self.mpl_hist.canvas.ax.axhline(mu, color='0.75', linestyle='--', lw=1.5)
+				# plot data
+				if self.DenoiseIOObj:
+					c='0.65'
+					cd='#%02x%02x%02x' % (72,91,144)
+					self.mpl_hist.canvas.ax.cla()
+					self.mpl_hist.canvas.ax.hold(True)
+
+					self.mpl_hist.canvas.ax.plot( xdat, ydat, color=c, markersize='1.')
+
+					ydatd=np.abs(self.trajDataDenoise)
+					self.mpl_hist.canvas.ax.plot( xdat, ydatd, color=cd, markersize='1.')
+				else:
+					c='#%02x%02x%02x' % (72,91,144)
+					self.mpl_hist.canvas.ax.cla()
+					self.mpl_hist.canvas.ax.plot( xdat, ydat, color=c, markersize='1.')
+
+
+				self.mu_line = self.mpl_hist.canvas.ax.axhline(mu, color='0.', linestyle='--', lw=1.5)
 				c='#%02x%02x%02x' % (182,69,71)
 				self.mpl_hist.canvas.ax.axhline(mu-thr*sd, color=c, lw=1.5)
 
@@ -196,7 +214,12 @@ class TrajectoryWindow(QtGui.QDialog):
 	def _loaddata(self):
 		tdat=self.IOObject.popdata(self.nPoints)
 		self.decimate=max(1, int(round(len(tdat)/5e5)))
+		
 		self.trajData=tdat[::self.decimate]
+
+		if self.DenoiseIOObj:
+			tdatdenoise=self.DenoiseIOObj.popdata(self.nPoints)
+			self.trajDataDenoise=tdatdenoise[::self.decimate]
 
 	def _windowtitle(self):
 		try:

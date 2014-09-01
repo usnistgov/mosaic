@@ -32,6 +32,7 @@ class settingsview(QtGui.QMainWindow):
 
 		self.updateDialogs=False
 		self.analysisRunning=False
+		self.dataFilterDenoise=False
 
 		# setup handles and data structs for other application windows
 		self.trajViewerWindow = qtgui.trajview.trajview.TrajectoryWindow(parent=self)
@@ -101,10 +102,13 @@ class settingsview(QtGui.QMainWindow):
 		QtCore.QObject.connect(self.actionPyEventAnalysis_Help, QtCore.SIGNAL('triggered()'), self.OnShowHelp)
 
 		# Dialog signals and slots
+		QtCore.QObject.connect(self.trajViewerWindow.waveletLevelSpinBox, QtCore.SIGNAL('valueChanged ( int )'), self.OnWaveletLevelChange)
+		QtCore.QObject.connect(self.trajViewerWindow.denoiseCheckBox, QtCore.SIGNAL('clicked(bool)'), self.OnTrajDenoise)
+
 		QtCore.QObject.connect(self.advancedSettingsDialog, QtCore.SIGNAL('rejected()'), self.OnAdvancedModeCancel)
 		QtCore.QObject.connect(self.advancedSettingsDialog, QtCore.SIGNAL('accepted()'), self.OnAdvancedModeSave)	
 
-		QtCore.QObject.connect(self.blockDepthWindow, QtCore.SIGNAL('rejected()'), self.OnBlockDepthWindowClose)	
+		QtCore.QObject.connect(self.blockDepthWindow, QtCore.SIGNAL('rejected()'), self.OnBlockDepthWindowClose)
 
 
 	def _positionWindow(self):
@@ -163,12 +167,21 @@ class settingsview(QtGui.QMainWindow):
 
 		# If an advanced mode dialog exists, update its settings
 		if self.advancedSettingsDialog:
+			if self.dataFilterDenoise:
+				fltr=self.analysisDataModel["FilterAlgorithm"]
+			else:
+				fltr=None
 			self.advancedSettingsDialog.updateSettingsString(
 					model.GenerateSettingsView(
 							eventPartitionAlgo=str(self.partitionAlgorithmComboBox.currentText()), 
-							eventProcessingAlgo=str(self.processingAlgorithmComboBox.currentText())
+							eventProcessingAlgo=str(self.processingAlgorithmComboBox.currentText()),
+							dataFilterAlgo=fltr
 						)
 				)
+
+		# If the trajviewer is initialized, update the denoising settings
+		if self.trajViewerWindow:
+			self.trajViewerWindow.waveletLevelSpinBox.setValue(int(self.analysisDataModel["level"]))
 
 		self.updateDialogs=True
 
@@ -229,8 +242,19 @@ class settingsview(QtGui.QMainWindow):
 				self.analysisDataModel["slopeOpenCurr"]=-1
 
 			self.analysisDataModel["blockSizeSec"]=float(self.baselineBlockSizeDoubleSpinBox.value())
-			self.trajViewerWindow.setTrajdata(self.analysisDataModel.GenerateTrajView())
 
+			self._trajviewerdata()
+
+	def _trajviewerdata(self):
+		if self.dataFilterDenoise:
+			fltr=self.analysisDataModel.GenerateDataFilesObject(dataFilterAlgo=self.analysisDataModel["FilterAlgorithm"])
+		else:
+			fltr=None
+
+		self.trajViewerWindow.setTrajdata(
+				self.analysisDataModel.GenerateTrajView(),
+				fltr
+			)
 	# SLOTS
 
 	# Data settings SLOTS
@@ -257,7 +281,7 @@ class settingsview(QtGui.QMainWindow):
 			self._loadEBSState()
 			self._updateControls()
 
-			self.trajViewerWindow.setTrajdata(self.analysisDataModel.GenerateTrajView())
+			self._trajviewerdata()
 			self.trajViewerWindow.refreshPlot()
 			self.blockDepthWindow.hide()
 			self.trajViewerWindow.show()
@@ -276,7 +300,7 @@ class settingsview(QtGui.QMainWindow):
 
 			self.analysisDataModel["DataFilesType"]=str(item)
 
-			self.trajViewerWindow.setTrajdata(self.analysisDataModel.GenerateTrajView())
+			self._trajviewerdata()
 			self.trajViewerWindow.refreshPlot()
 
 
@@ -286,14 +310,14 @@ class settingsview(QtGui.QMainWindow):
 
 			# print self.analysisDataModel["dcOffset"]
 			# self.trajViewerWindow.updatePlot(self.analysisDataModel.GenerateTrajView())
-			self.trajViewerWindow.setTrajdata(self.analysisDataModel.GenerateTrajView())
+			self._trajviewerdata()
 			self.trajViewerWindow.refreshPlot()
 
 	def OnDataStartIndexChange(self, item):
 		if self.updateDialogs:
 			self.analysisDataModel["start"]=int(item)
 			
-			self.trajViewerWindow.setTrajdata(self.analysisDataModel.GenerateTrajView())
+			self._trajviewerdata()
 			self.trajViewerWindow.refreshPlot()
 
 	# Baseline detection SLOTS
@@ -334,7 +358,7 @@ class settingsview(QtGui.QMainWindow):
 	def OnBlockSizeChangeSpinbox(self, value):
 		if self.updateDialogs:
 			self.analysisDataModel["blockSizeSec"]=float(value)
-			self.trajViewerWindow.setTrajdata(self.analysisDataModel.GenerateTrajView())
+			self._trajviewerdata()
 			self.trajViewerWindow.refreshPlot()
 
 	def OnBaselineMeanChange(self, value):
@@ -387,10 +411,16 @@ class settingsview(QtGui.QMainWindow):
 
 	def OnAdvancedMode(self, value):
 		if value:
+			if self.dataFilterDenoise:
+				fltr=self.analysisDataModel["FilterAlgorithm"]
+			else:
+				fltr=None
+
 			self.advancedSettingsDialog.updateSettingsString(
 					self.analysisDataModel.GenerateSettingsView(
 						eventPartitionAlgo=str(self.partitionAlgorithmComboBox.currentText()), 
-						eventProcessingAlgo=str(self.processingAlgorithmComboBox.currentText())
+						eventProcessingAlgo=str(self.processingAlgorithmComboBox.currentText()),
+						dataFilterAlgo=fltr
 					)
 				)
 			self.advancedSettingsDialog.show()
@@ -448,6 +478,30 @@ class settingsview(QtGui.QMainWindow):
 			self.advancedModeCheckBox.setChecked(False)
 			self._setEnableSettingsWidgets(True)
 
+	def OnTrajDenoise(self, value):
+		self.dataFilterDenoise=value
+
+		if value:
+			self.analysisDataModel["FilterAlgorithm"]="waveletDenoiseFilter"
+		
+		self._trajviewerdata()
+		self.trajViewerWindow.refreshPlot()
+
+	def OnWaveletLevelChange(self, value):
+		self.analysisDataModel["level"]=value
+
+		with open(self.analysisDataModel["DataFilesPath"]+"/.settings", 'w') as f:
+			f.write(
+				self.analysisDataModel.GenerateSettingsView(
+					eventPartitionAlgo=str(self.partitionAlgorithmComboBox.currentText()), 
+					eventProcessingAlgo=str(self.processingAlgorithmComboBox.currentText()),
+					dataFilterAlgo=self.analysisDataModel["FilterAlgorithm"]
+				)
+			)
+
+		self._trajviewerdata()
+		self.trajViewerWindow.refreshPlot()
+
 	def OnBlockDepthWindowClose(self):
 		self.plotBlockDepthHistCheckBox.setChecked(False)
 
@@ -458,7 +512,7 @@ class settingsview(QtGui.QMainWindow):
 		self._updateControls()
 		
 		# update trajviewer
-		self.trajViewerWindow.setTrajdata(self.analysisDataModel.GenerateTrajView())
+		self._trajviewerdata()
 		self.trajViewerWindow.refreshPlot()
 
 		self.advancedModeCheckBox.setChecked(False)

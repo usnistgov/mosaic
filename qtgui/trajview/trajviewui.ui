@@ -36,7 +36,68 @@
    <item>
     <layout class="QHBoxLayout" name="horizontalLayout">
      <item>
+      <widget class="QCheckBox" name="denoiseCheckBox">
+       <property name="focusPolicy">
+        <enum>Qt::ClickFocus</enum>
+       </property>
+       <property name="layoutDirection">
+        <enum>Qt::LeftToRight</enum>
+       </property>
+       <property name="text">
+        <string>Denoise</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="Line" name="line_2">
+       <property name="orientation">
+        <enum>Qt::Vertical</enum>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="label">
+       <property name="text">
+        <string>Level</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QSpinBox" name="waveletLevelSpinBox">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+       <property name="focusPolicy">
+        <enum>Qt::ClickFocus</enum>
+       </property>
+       <property name="keyboardTracking">
+        <bool>false</bool>
+       </property>
+       <property name="minimum">
+        <number>1</number>
+       </property>
+       <property name="maximum">
+        <number>20</number>
+       </property>
+       <property name="value">
+        <number>3</number>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="Line" name="line">
+       <property name="orientation">
+        <enum>Qt::Vertical</enum>
+       </property>
+      </widget>
+     </item>
+     <item>
       <widget class="QLabel" name="ionicCurrentLabel">
+       <property name="font">
+        <font>
+         <family>Helvetica</family>
+        </font>
+       </property>
        <property name="text">
         <string>Mean</string>
        </property>
@@ -71,6 +132,9 @@
     </layout>
    </item>
   </layout>
+  <zorder>mpl_hist</zorder>
+  <zorder>horizontalSpacer_2</zorder>
+  <zorder>denoiseCheckBox</zorder>
  </widget>
  <customwidgets>
   <customwidget>
@@ -80,6 +144,27 @@
    <container>1</container>
   </customwidget>
  </customwidgets>
+ <tabstops>
+  <tabstop>nextBtn</tabstop>
+  <tabstop>denoiseCheckBox</tabstop>
+ </tabstops>
  <resources/>
- <connections/>
+ <connections>
+  <connection>
+   <sender>denoiseCheckBox</sender>
+   <signal>clicked(bool)</signal>
+   <receiver>waveletLevelSpinBox</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>79</x>
+     <y>365</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>147</x>
+     <y>357</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
 </ui>

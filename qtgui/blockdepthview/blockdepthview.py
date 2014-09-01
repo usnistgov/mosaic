@@ -74,7 +74,7 @@ class BlockDepthWindow(QtGui.QDialog):
 			Position settings window at the top left corner
 		"""
 		screen = QtGui.QDesktopWidget().screenGeometry()
-		self.setGeometry(405, 0, 500, 350)
+		self.setGeometry(405, 0, 500, 400)
 		# self.move( (-screen.width()/2)+200, -screen.height()/2 )
 
 

@@ -12,6 +12,7 @@ import pyeventanalysis.qdfTrajIO
 import pyeventanalysis.abfTrajIO
 
 from pyeventanalysis.besselLowpassFilter import *
+import pyeventanalysis.waveletDenoiseFilter
 from pyeventanalysis.metaTrajIO import FileNotFoundError, EmptyDataPipeError
 
 class guiDataModel(dict):
@@ -50,7 +51,7 @@ class guiDataModel(dict):
 		for k, v in dict(*args, **kwargs).iteritems():
 			self[k] = v
 
-	def GenerateSettingsView(self, eventPartitionAlgo, eventProcessingAlgo):
+	def GenerateSettingsView(self, eventPartitionAlgo, eventProcessingAlgo, dataFilterAlgo):
 		settingsdict={}
 		
 		partAlgo=self.eventPartitionAlgoKeys[eventPartitionAlgo]
@@ -59,6 +60,7 @@ class guiDataModel(dict):
 		if partAlgo=="eventSegment":
 			settingsdict[partAlgo]={}
 			partKeys=self.eventSegmentKeys
+
 		if procAlgo=="stepResponseAnalysis":
 			settingsdict[procAlgo]={}
 			procKeys=self.stepResponseAnalysisKeys
@@ -71,6 +73,15 @@ class guiDataModel(dict):
 		for k in procKeys.keys():
 			settingsdict[procAlgo][k]=self[k]
 
+
+		# Lastly check if data filtering is enabled
+		if dataFilterAlgo:
+			filterAlgo=self.filterAlgoKeys[dataFilterAlgo]
+			if filterAlgo=="waveletDenoiseFilter":
+				settingsdict[filterAlgo]={}
+				for k in self.denoiseFilterKeys.keys():
+					settingsdict[filterAlgo][k]=self[k]
+
 		return json.dumps(settingsdict, indent=4)
 
 	def GenerateTrajView(self):
@@ -80,14 +91,14 @@ class guiDataModel(dict):
 
 		return settingsdict		
 
-	def GenerateAnalysisObject(self, eventPartitionAlgo, eventProcessingAlgo):
+	def GenerateAnalysisObject(self, eventPartitionAlgo, eventProcessingAlgo, dataFilterAlgo):
 		return self.analysisSetupKeys["SingleChannelAnalysis"](
-				self.GenerateDataFilesObject(),
+				self.GenerateDataFilesObject(dataFilterAlgo),
 				self.analysisSetupKeys[str(eventPartitionAlgo)],
 				self.analysisSetupKeys[str(eventProcessingAlgo)]
 			)
 
-	def GenerateDataFilesObject(self):
+	def GenerateDataFilesObject(self, dataFilterAlgo):
 		keys=["start", "dcOffset"]
 		dargs={"dirname" : str(self["DataFilesPath"])}
 
@@ -99,6 +110,9 @@ class guiDataModel(dict):
 
 		for k in keys:
 			dargs[k]=self.trajviewerKeys[k](self[k])
+
+		if dataFilterAlgo:
+			dargs["datafilter"]=self.analysisSetupKeys[str(dataFilterAlgo)]
 
 		return self.analysisSetupKeys[self["DataFilesType"]](**dargs)
 
@@ -126,6 +140,8 @@ class guiDataModel(dict):
 				self["PartitionAlgorithm"]=section
 			elif section in self.eventProcessingAlgoKeys.values():
 				self["ProcessingAlgorithm"]=section
+			elif section in self.filterAlgoKeys.values():
+				self["FilterAlgorithm"]=section
 
 			# print vals
 			self.update(vals)
@@ -163,8 +179,13 @@ class guiDataModel(dict):
 								"Cfb" 					: float,
 								"ProcessingAlgorithm"	: str,
 								"PartitionAlgorithm"	: str,
+								"FilterAlgorithm"		: str,
 								"lastMeanOpenCurr"		: str,
-								"lastSDOpenCurr"		: str
+								"lastSDOpenCurr"		: str,
+								"wavelet"				: str,
+								"level"					: int,
+								"thresholdType"			: str,
+								"thresholdSubType"		: str
 							}
 		self.eventSegmentKeys={
 								"blockSizeSec" 			: float,
@@ -193,6 +214,13 @@ class guiDataModel(dict):
 								"filterCutoff" 			: float,
 								"decimate" 				: int
 							}
+		self.denoiseFilterKeys={
+								"wavelet"				: str,
+								"level"					: int,
+								"thresholdType"			: str,
+								"thresholdSubType"		: str,
+								"sdOpenCurr"			: float
+							}
 
 		self.trajviewerKeys={
 								"DataFilesType" 		: str,
@@ -215,14 +243,20 @@ class guiDataModel(dict):
 								"multiStateAnalysis" 	: "multiStateAnalysis"
 							}
 
+		self.filterAlgoKeys={
+								"waveletDenoiseFilter"	: "waveletDenoiseFilter"
+		}
+
 		self.analysisSetupKeys={
 								"QDF" 					: pyeventanalysis.qdfTrajIO.qdfTrajIO,
 								"ABF" 					: pyeventanalysis.abfTrajIO.abfTrajIO,
 								"SingleChannelAnalysis" : pyeventanalysis.SingleChannelAnalysis.SingleChannelAnalysis,
 								"CurrentThreshold" 		: pyeventanalysis.eventSegment.eventSegment,
 								"stepResponseAnalysis" 	: pyeventanalysis.stepResponseAnalysis.stepResponseAnalysis,
-								"multiStateAnalysis" 	: pyeventanalysis.multiStateAnalysis.multiStateAnalysis
+								"multiStateAnalysis" 	: pyeventanalysis.multiStateAnalysis.multiStateAnalysis,
+								"waveletDenoiseFilter"	: pyeventanalysis.waveletDenoiseFilter.waveletDenoiseFilter
 							}
+
 
 if __name__ == "__main__":
 	g=guiDataModel()

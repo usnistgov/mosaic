@@ -36,6 +36,13 @@
 		"filterOrder"		: "6",
 		"filterCutoff"		: "10000",
 		"decimate"		: "1"	
+	},
+	"waveletDenoiseFilter" : {
+		"wavelet"		: "haar",
+		"level"			: "7",
+		"thresholdType"		: "soft",
+		"thresholdSubType"	: "heursure",
+		"sdOpenCurr"		: "-1"
 	}
 }
 

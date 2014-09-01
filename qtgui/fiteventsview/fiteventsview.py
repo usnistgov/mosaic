@@ -204,7 +204,7 @@ class FitEventWindow(QtGui.QDialog):
 
 	def _sraFunc(self, t, tau, mu1, mu2, a, b):
 		try:
-			np.seterr(over='ignore')
+			np.seterr(over='ignore', invalid='ignore')
 			return a*( (np.exp((mu1-t)/tau)-1)*self._heaviside(t-mu1)+(1-np.exp((mu2-t)/tau))*self._heaviside(t-mu2) ) + b
 		except RuntimeWarning:
 			# print self.eventIndex

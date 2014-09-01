@@ -198,6 +198,9 @@
           <layout class="QHBoxLayout" name="horizontalLayout_5">
            <item>
             <widget class="QDoubleSpinBox" name="dcOffsetDoubleSpinBox">
+             <property name="keyboardTracking">
+              <bool>false</bool>
+             </property>
              <property name="minimum">
               <double>-99.989999999999995</double>
              </property>
@@ -306,6 +309,9 @@
             <layout class="QHBoxLayout" name="horizontalLayout_12">
              <item>
               <widget class="QDoubleSpinBox" name="baselineBlockSizeDoubleSpinBox">
+               <property name="keyboardTracking">
+                <bool>false</bool>
+               </property>
                <property name="decimals">
                 <number>2</number>
                </property>
@@ -521,6 +527,9 @@
              <height>16777215</height>
             </size>
            </property>
+           <property name="keyboardTracking">
+            <bool>false</bool>
+           </property>
            <property name="maximum">
             <double>25.000000000000000</double>
            </property>
@@ -663,6 +672,9 @@
            <widget class="QSpinBox" name="parallelCoresSpinBox">
             <property name="enabled">
              <bool>true</bool>
+            </property>
+            <property name="keyboardTracking">
+             <bool>false</bool>
             </property>
             <property name="value">
              <number>2</number>

@@ -35,11 +35,17 @@ class qtAnalysisGUI(qtgui.settingsview.settingsview):
 					self._setEnableSettingsWidgets(False)
 					self._setEnableDataSettingsWidgets(False)
 
+					if self.dataFilterDenoise:
+						fltr=self.analysisDataModel["FilterAlgorithm"]
+					else:
+						fltr=None
+
 					with open(self.analysisDataModel["DataFilesPath"]+"/.settings", 'w') as f:
 						f.write(
 							self.analysisDataModel.GenerateSettingsView(
 								eventPartitionAlgo=str(self.partitionAlgorithmComboBox.currentText()), 
-								eventProcessingAlgo=str(self.processingAlgorithmComboBox.currentText())
+								eventProcessingAlgo=str(self.processingAlgorithmComboBox.currentText()),
+								dataFilterAlgo=fltr
 							)
 						)
 
@@ -51,13 +57,14 @@ class qtAnalysisGUI(qtgui.settingsview.settingsview):
 
 					self.analysisObject=self.analysisDataModel.GenerateAnalysisObject(
 						eventPartitionAlgo=str(self.partitionAlgorithmComboBox.currentText()), 
-						eventProcessingAlgo=str(self.processingAlgorithmComboBox.currentText())
+						eventProcessingAlgo=str(self.processingAlgorithmComboBox.currentText()),
+						dataFilterAlgo=fltr
 					)
 
 					self.analysisThreadObj=analysisThread( self.analysisObject, parent=self )
 					self.analysisThreadObj.start()
 					
-					time.sleep(3)
+					time.sleep(5)
 
 					self.blockDepthWindow.openDB( self.analysisObject.DataPath )
 					if self.showBlockDepthWindow:	

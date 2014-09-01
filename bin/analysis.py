@@ -20,17 +20,15 @@ from pyeventanalysis.tsvTrajIO import *
 from pyeventanalysis.binTrajIO import *
 
 from pyeventanalysis.besselLowpassFilter import *
+from pyeventanalysis.waveletDenoiseFilter import *
 
 
 
-q=pyeventanalysis.SingleChannelAnalysis.SingleChannelAnalysis(
-			qdfTrajIO(dirname='/Users/arvind/Research/Experiments/PEG29EBSRefData/20120323/singleChan',filter='*qdf', Rfb=9.1E+9, Cfb=1.07E-12), 
+pyeventanalysis.SingleChannelAnalysis.SingleChannelAnalysis(
+			qdfTrajIO(dirname='/Users/arvind/Research/Experiments/PEG29EBSRefData/20120323/singleChan',filter='*qdf', Rfb=9.1E+9, Cfb=1.07E-12, datafilter=waveletDenoiseFilter), 
 			es.eventSegment,
 			sra.stepResponseAnalysis
-		)
-q.Run(forkProcess=True)
-q.subProc.join()
-
+		).Run()
 
 # pyeventanalysis.SingleChannelAnalysis.SingleChannelAnalysis(
 # 			tsvTrajIO(dirname='/Users/arvind/Research/Experiments/AnalysisTools/Wavelet Denoising/raw data', filter='*.tsv', Fs=500000, headers=False),
