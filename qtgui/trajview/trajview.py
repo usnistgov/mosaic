@@ -165,7 +165,7 @@ class TrajectoryWindow(QtGui.QDialog):
 					self.mpl_hist.canvas.ax.plot( xdat, ydat, color=c, markersize='1.')
 
 
-				self.mu_line = self.mpl_hist.canvas.ax.axhline(mu, color='0.', linestyle='--', lw=1.5)
+				self.mu_line = self.mpl_hist.canvas.ax.axhline(mu, color='0.25', linestyle='--', lw=1.5)
 				c='#%02x%02x%02x' % (182,69,71)
 				self.mpl_hist.canvas.ax.axhline(mu-thr*sd, color=c, lw=1.5)
 

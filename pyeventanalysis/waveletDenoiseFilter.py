@@ -56,10 +56,53 @@ class waveletDenoiseFilter(metaIOFilter.metaIOFilter):
 		thrtype=self.thrtypedict[self.waveletThresholdType]
 
 		wcoeff = pywt.wavedec(icurr, self.waveletType, level=self.waveletLevel)
-		threshold=sd*np.sqrt(2*np.log2(len(icurr)))
+		# threshold=sd*np.sqrt(2*np.log2(len(icurr)))
+		threshold=sd*self._thselect(icurr, self.waveletThresholdSubType)
 		newcoeff = map(lambda x: thrtype(x, threshold), wcoeff)
 
 		self.eventData = pywt.waverec( newcoeff, self.waveletType)
+
+	def _thselect(self, dat, thtype):
+		def _rigrsure(x, n):
+			sx2 = np.sort(np.abs(x))**2
+			risks = (n-(2*np.arange(1,n+1))+(np.cumsum(sx2)+np.arange(n-1,-1,-1)*sx2))/n
+			print risks
+			[risk,best] = np.min(risks)
+			return np.sqrt(sx2[best])
+
+		def _heursure(x, n):
+			hthr = np.sqrt(2*np.log(n))
+			eta = (np.linalg.norm(x)**2-n)/n
+			crit = (np.log(n)/np.log(2))**(1.5)/np.sqrt(n)
+			if eta < crit:
+				thr = hthr
+			else:
+				thr = np.min(self._thselect(x,'rigrsure'),hthr)
+
+			return thr
+
+		def _sqtwolog(x, n):
+			return np.sqrt(2*np.log(n));
+
+		def _minimaxi(x, n):
+			if n <= 32:
+				thr = 0
+			else:
+				thr = 0.3936 + 0.1829*(np.log(n)/np.log(2))
+			
+			return thr
+
+		try:
+			thalgo={
+					# 'rigrsure' 	: _rigrsure, 
+					# 'heursure'	: _heursure,
+					'sqtwolog'	: _sqtwolog,
+					'minimaxi'	: _minimaxi
+			 	}[thtype]
+			return thalgo(dat, len(dat))
+		except KeyError:
+			# default
+			return _sqtwolog(dat, len(dat))
 
 	def formatsettings(self):
 		"""

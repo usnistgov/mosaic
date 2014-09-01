@@ -39,9 +39,9 @@
 	},
 	"waveletDenoiseFilter" : {
 		"wavelet"		: "haar",
-		"level"			: "7",
+		"level"			: "2",
 		"thresholdType"		: "soft",
-		"thresholdSubType"	: "heursure",
+		"thresholdSubType"	: "sqtwolog",
 		"sdOpenCurr"		: "-1"
 	}
 }

@@ -484,6 +484,15 @@ class settingsview(QtGui.QMainWindow):
 		if value:
 			self.analysisDataModel["FilterAlgorithm"]="waveletDenoiseFilter"
 		
+		with open(self.analysisDataModel["DataFilesPath"]+"/.settings", 'w') as f:
+			f.write(
+				self.analysisDataModel.GenerateSettingsView(
+					eventPartitionAlgo=str(self.partitionAlgorithmComboBox.currentText()), 
+					eventProcessingAlgo=str(self.processingAlgorithmComboBox.currentText()),
+					dataFilterAlgo=self.analysisDataModel["FilterAlgorithm"]
+				)
+			)
+			
 		self._trajviewerdata()
 		self.trajViewerWindow.refreshPlot()
 
