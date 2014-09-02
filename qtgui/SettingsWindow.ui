@@ -315,8 +315,11 @@
                <property name="decimals">
                 <number>2</number>
                </property>
+               <property name="minimum">
+                <double>0.100000000000000</double>
+               </property>
                <property name="maximum">
-                <double>50.000000000000000</double>
+                <double>10.000000000000000</double>
                </property>
                <property name="singleStep">
                 <double>0.250000000000000</double>
@@ -530,6 +533,9 @@
            <property name="keyboardTracking">
             <bool>false</bool>
            </property>
+           <property name="minimum">
+            <double>0.500000000000000</double>
+           </property>
            <property name="maximum">
             <double>25.000000000000000</double>
            </property>
@@ -675,6 +681,9 @@
             </property>
             <property name="keyboardTracking">
              <bool>false</bool>
+            </property>
+            <property name="minimum">
+             <number>1</number>
             </property>
             <property name="value">
              <number>2</number>

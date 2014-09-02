@@ -102,6 +102,12 @@ class TrajectoryWindow(QtGui.QDialog):
 
 				self.dataLoaded=True
 
+				if self.DenoiseIOObj:
+  					# set the max level value in the level spinner
+  					# print int(self.DenoiseIOObj.dataFilterObj.maxWaveletLevel)
+					self.waveletLevelSpinBox.setMaximum(int(self.DenoiseIOObj.dataFilterObj.maxWaveletLevel))
+
+
 				# self.mpl_hist.canvas.ax.set_autoscale_on(True)
 				self.update_graph()
 		except AttributeError:

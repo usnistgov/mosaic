@@ -10,6 +10,7 @@
 import numpy as np 
 import scipy.signal as sig
 import pywt
+import pyeventanalysis.iswt
 
 import metaIOFilter
 
@@ -31,6 +32,7 @@ class waveletDenoiseFilter(metaIOFilter.metaIOFilter):
 			self.waveletThresholdType=str(kwargs['thresholdType'])
 			self.waveletThresholdSubType=str(kwargs['thresholdSubType'])
 			self.sdOpenCurr=float(kwargs['sdOpenCurr'])
+			self.maxWaveletLevel=self.waveletLevel
 		except KeyError:
 			print "Missing mandatory arguments 'wavelet', 'level' or 'threshold'"
 
@@ -55,14 +57,26 @@ class waveletDenoiseFilter(metaIOFilter.metaIOFilter):
 
 		thrtype=self.thrtypedict[self.waveletThresholdType]
 
-		wcoeff = pywt.wavedec(icurr, self.waveletType, level=self.waveletLevel)
-		# threshold=sd*np.sqrt(2*np.log2(len(icurr)))
-		threshold=sd*self._thselect(icurr, self.waveletThresholdSubType)
-		newcoeff = map(lambda x: thrtype(x, threshold), wcoeff)
+		p=len(icurr)%2
+		padcurr=np.pad( icurr, ((0, p)), mode='constant' )
+		self.maxWaveletLevel=pywt.swt_max_level(len(padcurr))
 
-		self.eventData = pywt.waverec( newcoeff, self.waveletType)
+		output = pywt.swt(padcurr, self.waveletType, level=min(self.maxWaveletLevel, self.waveletLevel))
+		thr_levels=pyeventanalysis.iswt.measure_threshold(output, scaler=sd)
+		pyeventanalysis.iswt.apply_threshold(output, scaler=sd, input=thr_levels, threshold_type=thrtype )
+		self.eventData = pyeventanalysis.iswt.iswt(output, self.waveletType)[:len(icurr)]
+
+		# wcoeff = pywt.wavedec(icurr, self.waveletType, level=self.waveletLevel)
+		# threshold=sd*np.sqrt(2*np.log2(len(icurr)))
+		# threshold=sd*self._thselect(icurr, self.waveletThresholdSubType)
+		# newcoeff = map(lambda x: thrtype(x, threshold), wcoeff)
+
+		# self.eventData = pywt.waverec( newcoeff, self.waveletType)
 
 	def _thselect(self, dat, thtype):
+		"""
+			A python port of Matlab thselect.m
+		"""
 		def _rigrsure(x, n):
 			sx2 = np.sort(np.abs(x))**2
 			risks = (n-(2*np.arange(1,n+1))+(np.cumsum(sx2)+np.arange(n-1,-1,-1)*sx2))/n
