@@ -1,5 +1,6 @@
 import sys
 import time
+import string
 
 from PyQt4 import QtCore
 from PyQt4 import QtGui
@@ -22,6 +23,7 @@ class qtAnalysisGUI(qtgui.settingsview.settingsview):
 		# Start Analysis Signals
 		QtCore.QObject.connect(self.startAnalysisPushButton, QtCore.SIGNAL('clicked()'), self.OnStartAnalysis)
 		QtCore.QObject.connect(self.actionStart_Analysis, QtCore.SIGNAL('triggered()'), self.OnStartAnalysis)
+		QtCore.QObject.connect(self.actionOpen_Analysis, QtCore.SIGNAL('triggered()'), self.OnLoadAnalysis)
 
 		QtCore.QObject.connect(self.analysisThreadObj, QtCore.SIGNAL('finished(bool)'), self.OnAnalysisFinished)
 
@@ -111,7 +113,53 @@ class qtAnalysisGUI(qtgui.settingsview.settingsview):
 
 			self.analysisRunning=False
 
+	def OnLoadAnalysis(self):
+		fd=QtGui.QFileDialog(parent=self, caption=QtCore.QString('Open Analysis Results'))
+		
+		if self.datPathLineEdit.text() != "":
+			fd.setDirectory( self.datPathLineEdit.text() )
+
+		fd.setNameFilters(['SQLite databases (*.sqlite)'])
+		analysisfile=str(fd.getOpenFileName())
+
+		if analysisfile != "":
+			analysisdir= '/'.join( (str(analysisfile).split('/'))[:-1] )
+			
+			# Load settings from the analysis directory
+			# self.ShowTrajectory=False
+			self.datPathLineEdit.setText(analysisdir)
+
+			# Disable widgets
+			self.trajViewerWindow.hide()
+			self._setEnableSettingsWidgets(False)
+			self._setEnableDataSettingsWidgets(False)
+			
+			# Load analysis
+			if self.blockDepthWindow:
+				del self.blockDepthWindow
+				self.blockDepthWindow = qtgui.blockdepthview.blockdepthview.BlockDepthWindow(parent=self)
+			if self.statisticsView:
+				del self.statisticsView
+				self.statisticsView = qtgui.statisticsview.statisticsview.StatisticsWindow(parent=self)
+			if self.fitEventsView:
+				del self.fitEventsView
+				self.fitEventsView = qtgui.fiteventsview.fiteventsview.FitEventWindow(parent=self)
+		
+			self.blockDepthWindow.openDBFile( analysisfile )
+			self.blockDepthWindow.show()
+			
+			self.statisticsView.openDBFile( analysisfile )
+			self.statisticsView.show()
+
+			self.fitEventsView.openDBFile( analysisfile, self.trajViewerWindow.FskHz )
+			if self.showFitEventsWindow:
+				self.fitEventsView.show()
+
+		self.ShowTrajectory=True
+		
+
 	def OnAppIdle(self):
+		# QtGui.QApplication.processEvents()
 		if self.analysisThreadObj.isFinished() and self.analysisRunning:
 			# print "finished"
 			self.OnAnalysisFinished(True)

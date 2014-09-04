@@ -32,10 +32,13 @@ class BlockDepthWindow(QtGui.QDialog):
 		self.idleTimer=QtCore.QTimer()
 		self.idleTimer.start(2500)
 
+		self.processeEventsTimer=QtCore.QTimer()
+		self.processeEventsTimer.start(500)
+
 		# Set error line edit color to red
 		self.errorLabel.setStyleSheet(css)
 
-		self.queryString="select BlockDepth from metadata where ProcessingStatus='normal' and BlockDepth > 0 and ResTime > 0.025"
+		self.queryString="select BlockDepth from metadata where ProcessingStatus='normal' and BlockDepth between 0 and 1 and ResTime > 0.025"
 		self.queryData=[]
 		self.queryError=False
 		self.lastGoodQueryString=""
@@ -54,11 +57,23 @@ class BlockDepthWindow(QtGui.QDialog):
 		QtCore.QObject.connect(self.updateButton, QtCore.SIGNAL('clicked()'), self.OnUpdateButton)
 		QtCore.QObject.connect(self.sqlQueryLineEdit, QtCore.SIGNAL('textChanged ( const QString & )'), self.OnQueryTextChange)
 		QtCore.QObject.connect(self.binsSpinBox, QtCore.SIGNAL('valueChanged ( int )'), self.OnBinsChange)
+
+		QtCore.QObject.connect(self.processeEventsTimer, QtCore.SIGNAL('timeout()'), self.OnProcessEvents)
+		
 		
 
 	def openDB(self, dbpath):
+		"""
+			Open the latest sqlite file in a directory
+		"""
+		self.openDBFile(glob.glob(dbpath+"/*sqlite")[-1])
+
+	def openDBFile(self, dbfile):
+		"""
+			Open a specific database file.
+		"""
 		self.queryDatabase=sqlite.sqlite3MDIO()
-		self.queryDatabase.openDB(glob.glob(dbpath+"/*sqlite")[-1])
+		self.queryDatabase.openDB(dbfile)
 
 		self.sqlQueryLineEdit.setCompleterValues(self.queryDatabase.dbColumnNames)
 
@@ -163,7 +178,7 @@ class BlockDepthWindow(QtGui.QDialog):
 	def OnUpdateButton(self):
 		qtext=str(self.sqlQueryLineEdit.text())
 		if qtext:
-			self.queryString="select BlockDepth from metadata where ProcessingStatus='normal' and BlockDepth > 0 and " + qtext
+			self.queryString="select BlockDepth from metadata where ProcessingStatus='normal' and BlockDepth between 0 and 1 and " + qtext
 			self.queryError=False
 
 			self._updatequery()
@@ -173,6 +188,9 @@ class BlockDepthWindow(QtGui.QDialog):
 
 	def OnAppIdle(self):
 		self._updatequery()
+
+	def OnProcessEvents(self):
+		QtGui.QApplication.sendPostedEvents()
 
 if __name__ == '__main__':
 	from os.path import expanduser

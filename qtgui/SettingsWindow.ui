@@ -790,6 +790,7 @@
     <property name="title">
      <string>File</string>
     </property>
+    <addaction name="actionOpen_Analysis"/>
     <addaction name="actionStart_Analysis"/>
    </widget>
    <widget class="QMenu" name="menuHelp">
@@ -872,6 +873,14 @@
   <action name="actionStatistics">
    <property name="text">
     <string>Statistics Window</string>
+   </property>
+  </action>
+  <action name="actionOpen_Analysis">
+   <property name="text">
+    <string>Open Analysis</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+O</string>
    </property>
   </action>
  </widget>

@@ -16,4 +16,4 @@ pip install pyzmq==14.3.1
 pip install matplotlib==1.3.1
 pip install lmfit==0.7.4
 pip install uncertainties==2.4.6
-pip install pywt=0.2.2
+pip install PyWavelets==0.2.2

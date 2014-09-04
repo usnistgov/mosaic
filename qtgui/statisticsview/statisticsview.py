@@ -42,10 +42,17 @@ class StatisticsWindow(QtGui.QDialog):
 		self.caprateLabel.setTextInteractionFlags(QtCore.Qt.TextSelectableByMouse)
 
 	def openDB(self, dbpath):
-		self.queryDatabase=sqlite.sqlite3MDIO()
-		self.queryDatabase.openDB(glob.glob(dbpath+"/*sqlite")[-1])
+		"""
+			Open the latest sqlite file in a directory
+		"""
+		self.openDBFile(glob.glob(dbpath+"/*sqlite")[-1])
 
-		self._updatequery()
+	def openDBFile(self, dbfile):
+		"""
+			Open a specific database file.
+		"""
+		self.queryDatabase=sqlite.sqlite3MDIO()
+		self.queryDatabase.openDB(dbfile)
 
 		# Idle processing
 		QtCore.QObject.connect(self.idleTimer, QtCore.SIGNAL('timeout()'), self.OnAppIdle)
@@ -69,7 +76,7 @@ class StatisticsWindow(QtGui.QDialog):
 			self.totalEvents=len( self.queryDatabase.queryDB("select ProcessingStatus from metadata") )
 			c=self._caprate()
 
-			self.neventsLabel.setText( str(len(self.queryData)) )
+			self.neventsLabel.setText( str(self.totalEvents) )
 			self.errorrateLabel.setText( str(round(100.*(1 - len(self.queryData)/float(self.totalEvents)), 2)) + ' %' )
 			self.caprateLabel.setText( str(c[0]) + " &#177; " + str(c[1]) + " s<sup>-1</sup>" )
 		except ZeroDivisionError:

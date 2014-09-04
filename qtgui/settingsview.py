@@ -44,6 +44,7 @@ class settingsview(QtGui.QMainWindow):
 
 		self.showBlockDepthWindow=False
 		self.showFitEventsWindow=False
+		self.ShowTrajectory=True
 		# redirect stdout and stderr
 		# sys.stdout = redirectSTDOUT( edit=self.consoleLog.consoleLogTextEdit, out=sys.stdout, color=QtGui.QColor(0,0,0) )
 		# sys.stderr = redirectSTDOUT( edit=self.consoleLog.consoleLogTextEdit, out=sys.stderr, color=QtGui.QColor(255,0,0) )
@@ -281,10 +282,11 @@ class settingsview(QtGui.QMainWindow):
 			self._loadEBSState()
 			self._updateControls()
 
-			self._trajviewerdata()
-			self.trajViewerWindow.refreshPlot()
-			self.blockDepthWindow.hide()
-			self.trajViewerWindow.show()
+			if self.ShowTrajectory:
+				self._trajviewerdata()
+				self.trajViewerWindow.refreshPlot()
+				self.blockDepthWindow.hide()
+				self.trajViewerWindow.show()
 
 	def OnDataTypeChange(self, item):
 		if self.updateDialogs:
@@ -483,7 +485,7 @@ class settingsview(QtGui.QMainWindow):
 
 		if value:
 			self.analysisDataModel["FilterAlgorithm"]="waveletDenoiseFilter"
-		
+
 		with open(self.analysisDataModel["DataFilesPath"]+"/.settings", 'w') as f:
 			f.write(
 				self.analysisDataModel.GenerateSettingsView(

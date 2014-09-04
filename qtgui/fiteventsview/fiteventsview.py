@@ -33,6 +33,7 @@ class FitEventWindow(QtGui.QDialog):
 
 		self.queryDatabase=None
 		self.EndOfData=False
+		self.DataInitialized=False
 		
 
 		self.idleTimer=QtCore.QTimer()
@@ -49,8 +50,13 @@ class FitEventWindow(QtGui.QDialog):
 
 
 	def openDB(self, dbpath, FskHz):
+		self.openDBFile(glob.glob(dbpath+"/*sqlite")[-1], FskHz)
+
+	def openDBFile(self, dbfile, FskHz):
+		self.DataInitialized=False
+		
 		self.queryDatabase=sqlite.sqlite3MDIO()
-		self.queryDatabase.openDB(glob.glob(dbpath+"/*sqlite")[-1])
+		self.queryDatabase.openDB(dbfile)
 
 		self.FskHz=float(FskHz)
 
@@ -156,8 +162,8 @@ class FitEventWindow(QtGui.QDialog):
 		self.update_graph(self._eventdata())
 
 	def OnEventIndexSliderChange(self, value):
-		# print "slider change"
 		self.eventIndex=int(value)
+		# print "slider change", value, self.eventIndex, self.totalEvents
 		self.update_graph(self._eventdata())
 
 	def OnAppIdle(self):
@@ -172,7 +178,8 @@ class FitEventWindow(QtGui.QDialog):
 		self.eventIndexLineEdit.setValidator( QtGui.QIntValidator(0, self.totalEvents-1, self) )
 
 		# update slider max
-		self.eventIndexHorizontalSlider.setMaximum( self.totalEvents-1 )
+		if self.totalEvents>0:
+			self.eventIndexHorizontalSlider.setMaximum( self.totalEvents-1 )
 		
 	def _ticks(self, nticks):
 		axes=self.mpl_hist.canvas.ax
@@ -228,10 +235,16 @@ class FitEventWindow(QtGui.QDialog):
 				return self.queryData[lidx]
 			else:
 				# print "_eventdata Lower limit reached (lidx={0}, eventIndex={1}, eventCacheStart={2}, len(queryData)={3})".format(lidx, self.eventIndex, self.eventCacheStart, len(self.queryData) )
-				self._updatequery()
-				return self._eventdata()
+				if self.eventIndex < 0:
+					self.eventIndex=0
+					return self.queryData[0]
+				else:
+					self._updatequery()
+					return self._eventdata()
 		except IndexError:
-			# print "_eventdata Upper limit reached (lidx={0}, eventIndex={1}, eventCacheStart={2}, len(queryData)={3})".format(lidx, self.eventIndex, self.eventCacheStart, len(self.queryData) )
+			# print "_eventdata Upper limit reached (lidx={0}, eventIndex={1}, eventCacheStart={2}, len(queryData)={3}, totalEvents={4})".format(lidx, self.eventIndex, self.eventCacheStart, len(self.queryData), self.totalEvents )
+			if self.totalEvents == 0:
+				return []
 
 			# If end of data
 			if self.eventIndex >= self.totalEvents:
@@ -246,7 +259,14 @@ class FitEventWindow(QtGui.QDialog):
 		return "select ProcessingStatus, TimeSeries, RCConstant, EventStart, EventEnd, BlockedCurrent, OpenChCurrent from metadata limit {0}, 200".format(self.eventCacheStart)
 
 	def _getrecordcount(self):
-		self.totalEvents=self.queryDatabase.queryDB("select count(*) from metadata")[0][0]
+		tempRecCount=self.queryDatabase.queryDB("select count(*) from metadata")[0][0]
+
+		if not self.DataInitialized and tempRecCount-self.totalEvents > 0:
+			self._updatequery()
+			self.update_graph(self._eventdata())
+			self.DataInitialized=True
+
+		self.totalEvents=tempRecCount
 
 	def _updatewindowtitle(self):
 		self.setWindowTitle( "Event Viewer - " + str(self.eventIndex+1) + "/" + str(self.totalEvents) )
