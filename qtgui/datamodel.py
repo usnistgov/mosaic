@@ -22,7 +22,8 @@ class guiDataModel(dict):
 
 		self["DataFilesType"]="ABF"
 		self["DataFilesPath"]=""
-		self["start"]=1
+		self["start"]=0.
+		self["end"]=-1
 		self["dcOffset"]=0.0
 		self["Rfb"]=0.0
 		self["Cfb"]=0.0
@@ -35,9 +36,9 @@ class guiDataModel(dict):
 		dat=val
 
 		# Add special rules to modify data here
-		if key == "start":		# the start index cannot be set to 0
-			if val == 0:
-				dat=1
+		# if key == "start":		# the start index cannot be set to 0
+		# 	if val == 0:
+		# 		dat=1
 
 		try:
 			dict.__setitem__(self, key, self.keyTypesDict[key](dat) )
@@ -108,6 +109,9 @@ class guiDataModel(dict):
 		else:
 			dargs.update({"filter"	: "*.abf"})
 
+		if self["end"]!=-1.:
+			dargs["end"]=self["end"]
+
 		for k in keys:
 			dargs[k]=self.trajviewerKeys[k](self[k])
 
@@ -174,7 +178,8 @@ class guiDataModel(dict):
 								"meanOpenCurr" 			: float,
 								"sdOpenCurr" 			: float,
 								"dcOffset" 				: float,
-								"start" 				: int,
+								"start" 				: float,
+								"end"	 				: float,
 								"Rfb" 					: float,
 								"Cfb" 					: float,
 								"ProcessingAlgorithm"	: str,

@@ -62,14 +62,19 @@ class settingsview(QtGui.QMainWindow):
 		# default settings
 		self._updateControls()
 
+		# Setup validators
+		self.startIndexLineEdit.setValidator( QtGui.QDoubleValidator(0, 999999,2, self) )
+		self.endIndexLineEdit.setValidator( QtGui.QDoubleValidator(0, 999999,2, self) )
+
 		# Connect signals and slots
 
 		# Data settings signals
 		QtCore.QObject.connect(self.datPathToolButton, QtCore.SIGNAL('clicked()'), self.OnSelectPath)
-		QtCore.QObject.connect(self.datPathLineEdit, QtCore.SIGNAL('textChanged ( const QString & )'), self.OnDataPathChange)
+		QtCore.QObject.connect(self.datPathLineEdit, QtCore.SIGNAL('editingFinished()'), self.OnDataPathChange)
 		QtCore.QObject.connect(self.datTypeComboBox, QtCore.SIGNAL('currentIndexChanged(const QString &)'), self.OnDataTypeChange)
 		QtCore.QObject.connect(self.dcOffsetDoubleSpinBox, QtCore.SIGNAL('valueChanged ( double )'), self.OnDataOffsetChange)
-		QtCore.QObject.connect(self.startIndexLineEdit, QtCore.SIGNAL('textChanged ( const QString & )'), self.OnDataStartIndexChange)
+		QtCore.QObject.connect(self.startIndexLineEdit, QtCore.SIGNAL('editingFinished()'), self.OnDataStartIndexChange)
+		QtCore.QObject.connect(self.endIndexLineEdit, QtCore.SIGNAL('editingFinished()'), self.OnDataEndIndexChange)
 
 		# Baseline detection signals
 		QtCore.QObject.connect(self.baselineAutoCheckBox, QtCore.SIGNAL('clicked(bool)'), self.OnBaselineAutoCheckbox)
@@ -138,6 +143,11 @@ class settingsview(QtGui.QMainWindow):
 		model["DataFilesType"] = str(self.datTypeComboBox.currentText())
 
 		self.startIndexLineEdit.setText(str(model["start"]))
+		if model["end"]==-1:
+			self.endIndexLineEdit.setText("")
+		else:
+			self.endIndexLineEdit.setText(str(model["end"]))
+
 		self.dcOffsetDoubleSpinBox.setValue(model["dcOffset"])
 
 		if float(model["meanOpenCurr"]) == -1 or float(model["sdOpenCurr"]) == -1:
@@ -272,11 +282,11 @@ class settingsview(QtGui.QMainWindow):
 		path=fd.getExistingDirectory()
 		if path:
 			self.datPathLineEdit.setText(path)
-			self.OnDataPathChange(path)
+			self.OnDataPathChange()
 
-	def OnDataPathChange(self, value):
+	def OnDataPathChange(self):
 		if self.updateDialogs:
-			self.analysisDataModel["DataFilesPath"]=str(value)
+			self.analysisDataModel["DataFilesPath"]=str(self.datPathLineEdit.text())
 			self.analysisDataModel.UpdateDataModelFromSettings()
 
 			self._loadEBSState()
@@ -308,19 +318,23 @@ class settingsview(QtGui.QMainWindow):
 
 	def OnDataOffsetChange(self, item):
 		if self.updateDialogs:
-			self.analysisDataModel["dcOffset"]=float(item)
+			self.analysisDataModel["dcOffset"]=item
 
 			# print self.analysisDataModel["dcOffset"]
 			# self.trajViewerWindow.updatePlot(self.analysisDataModel.GenerateTrajView())
 			self._trajviewerdata()
 			self.trajViewerWindow.refreshPlot()
 
-	def OnDataStartIndexChange(self, item):
+	def OnDataStartIndexChange(self):
 		if self.updateDialogs:
-			self.analysisDataModel["start"]=int(item)
+			self.analysisDataModel["start"]=self.startIndexLineEdit.text()
 			
-			self._trajviewerdata()
-			self.trajViewerWindow.refreshPlot()
+			# self._trajviewerdata()
+			# self.trajViewerWindow.refreshPlot()
+
+	def OnDataEndIndexChange(self):
+		if self.updateDialogs:
+			self.analysisDataModel["end"]=self.endIndexLineEdit.text()
 
 	# Baseline detection SLOTS
 	def OnBaselineAutoCheckbox(self, value):

@@ -57,20 +57,23 @@ class metaTrajIO(object):
 							cannot be used in conjuction with dirname/nfiles. The filter 
 							argument is ignored when used in combination with fnames. 
 
-				filter		'<wildcard filter>' (optional, filter is '*'' if not specified)
-				start 		Data start point. This allows the first 'n' specified to be skipped
-							and excluded from any data analysis
+				filter		'<wildcard filter>' (optional, filter is '*' if not specified)
+				start 		Data start point in seconds.
+				end 		Data end point in seconds.
 				datafilter	Handle to the algorithm to use to filter the data. If no algorithm is specified, datafilter
 							is None and no filtering is performed.
 				dcOffset	Subtract a DC offset from the ionic current data.
 			Returns:
 				None
 			Properties:
-				FsHz			sampling frequency in Hz. If the data was decimated, this property will hold the
-								sampling frequency after decimation.
-				LastDataFile	return the data file currently being processed.
+				FsHz				sampling frequency in Hz. If the data was decimated, this 
+									property will hold the sampling frequency after decimation.
+				LastFileProcessed	return the data file that was last processed.
 			Errors:
 				IncompatibleArgumentsError when conflicting arguments are used.
+				EmptyDataPipeError when out of data.
+				FileNotFoundError when data files do not exist in the specified path.
+				InsufficientArgumentsError when incompatible arguments are passed
 		"""
 		# start by setting all passed keyword arguments as class attributes
 		for (k,v) in kwargs.iteritems():
@@ -135,6 +138,9 @@ class metaTrajIO(object):
 		# exceeds 1 million data points.
 		self.currDataIdx=0
 
+		# A global index that tracks the number of data points retrieved.
+		self.gloabDataIndex=0
+
 		self.initPipe=False
 
 		# Call sub-class init
@@ -153,8 +159,15 @@ class metaTrajIO(object):
 		else:
 			return self.dataFilterObj.filterFs
 
+	@property
+	def ElapsedTimeSeconds(self):
+		return self.gloabDataIndex*self.Fs
+
 	@property 
-	def LastDataFile(self):
+	def LastFileProcessed(self):
+		"""
+			Return the last data file that was processed
+		"""
 		return self.currentFilename
 
 	def popdata(self, n):
@@ -174,6 +187,10 @@ class metaTrajIO(object):
 		if not self.initPipe:
 			self._initPipe()
 
+		# If the global index exceeds the specied end point, raise an EmptyDataPipError
+		if hasattr(self, "end"):
+			if self.gloabDataIndex > self.endIndex:
+				raise EmptyDataPipeError("End of data.")
 
 		try:
 			# Get the elements to return: index to (index+n)
@@ -181,8 +198,9 @@ class metaTrajIO(object):
 			if len(t) < n:
 				raise IndexError
 
-			# If the required data points were obtained, update the queue index
+			# If the required data points were obtained, update the queue and global indices
 			self.currDataIdx+=n
+			self.gloabDataIndex+=n
 			
 			# delete them from the pipe if the index exceeds 1 million
 			if self.currDataIdx>1000000:
@@ -340,11 +358,15 @@ class metaTrajIO(object):
 
 		self.initPipe=True
 
+		# Set the end point
+		if hasattr(self, 'end'):
+			self.endIndex=int((self.end-1)*self.Fs)
+
 		# Drop the first 'n' points specified by the start keyword
 		if hasattr(self, 'start'):
-			n=int( getattr(self, 'start') )
-			self.popdata(n-1)
-
+			self.startIndex=int(self.start*self.Fs)
+			if self.startIndex > 0:
+				self.popdata(self.startIndex-1)
 
 	def _setupDataFilter(self):
 		filtsettings=settings.settings( self.datPath ).getSettings(self.datafilter.__name__)

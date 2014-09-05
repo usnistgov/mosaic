@@ -229,9 +229,9 @@ class TrajectoryWindow(QtGui.QDialog):
 
 	def _windowtitle(self):
 		try:
-			fname = self.IOObject.LastDataFile.split('/')[-1]		# *nixes
+			fname = self.IOObject.LastFileProcessed.split('/')[-1]		# *nixes
 		except IndexError:
-			fname = self.IOObject.LastDataFile.split('\\')[-1]		# windows
+			fname = self.IOObject.LastFileProcessed.split('\\')[-1]		# windows
 
 		self.setWindowTitle(fname)
 
