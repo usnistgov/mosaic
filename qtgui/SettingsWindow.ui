@@ -56,6 +56,9 @@
          </item>
          <item>
           <widget class="QLineEdit" name="datPathLineEdit">
+           <property name="focusPolicy">
+            <enum>Qt::ClickFocus</enum>
+           </property>
            <property name="readOnly">
             <bool>true</bool>
            </property>

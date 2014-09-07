@@ -38,9 +38,9 @@
 		"decimate"		: "1"	
 	},
 	"waveletDenoiseFilter" : {
-		"wavelet"		: "haar",
-		"level"			: "2",
-		"thresholdType"		: "soft",
+		"wavelet"		: "sym7",
+		"level"			: "6",
+		"thresholdType"		: "hard",
 		"thresholdSubType"	: "sqtwolog",
 		"sdOpenCurr"		: "-1"
 	}

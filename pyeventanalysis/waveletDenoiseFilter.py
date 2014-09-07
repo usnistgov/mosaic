@@ -10,7 +10,6 @@
 import numpy as np 
 import scipy.signal as sig
 import pywt
-import pyeventanalysis.iswt
 
 import metaIOFilter
 
@@ -50,28 +49,22 @@ class waveletDenoiseFilter(metaIOFilter.metaIOFilter):
 		# self.eventData=icurr
 		self.Fs=Fs
 
-		if self.sdOpenCurr==-1:
-			sd=np.std(icurr)
-		else:
-			sd=self.sdOpenCurr
+		# Set up the wavelet
+		w=pywt.Wavelet(self.waveletType)
 
-		thrtype=self.thrtypedict[self.waveletThresholdType]
+		# Calculate the maximum wavelet level for the data length
+		self.maxWaveletLevel=pywt.dwt_max_level(len(icurr), filter_len=w.dec_len)
 
-		p=len(icurr)%2
-		padcurr=np.pad( icurr, ((0, p)), mode='constant' )
-		self.maxWaveletLevel=pywt.swt_max_level(len(padcurr))
+		# Perform a wavelet decomposition to the specified level
+		wcoeff = pywt.wavedec(icurr, w, mode='sym', level=self.waveletLevel)
 
-		output = pywt.swt(padcurr, self.waveletType, level=min(self.maxWaveletLevel, self.waveletLevel))
-		thr_levels=pyeventanalysis.iswt.measure_threshold(output, scaler=sd)
-		pyeventanalysis.iswt.apply_threshold(output, scaler=sd, input=thr_levels, threshold_type=thrtype )
-		self.eventData = pyeventanalysis.iswt.iswt(output, self.waveletType)[:len(icurr)]
+		# Perform a simple hard threshold by setting all the detailed coefficients
+		# up to level n-1 to zero
+		for i in range(1, self.waveletLevel):
+			wcoeff[-i]=np.zeros(len(wcoeff[-i]))
 
-		# wcoeff = pywt.wavedec(icurr, self.waveletType, level=self.waveletLevel)
-		# threshold=sd*np.sqrt(2*np.log2(len(icurr)))
-		# threshold=sd*self._thselect(icurr, self.waveletThresholdSubType)
-		# newcoeff = map(lambda x: thrtype(x, threshold), wcoeff)
-
-		# self.eventData = pywt.waverec( newcoeff, self.waveletType)
+		# Reconstruct the signal with the thresholded wavelet coefficients
+		self.eventData = pywt.waverec(wcoeff, self.waveletType, mode='sym')
 
 	def _thselect(self, dat, thtype):
 		"""
@@ -128,8 +121,65 @@ class waveletDenoiseFilter(metaIOFilter.metaIOFilter):
 		fmtstr+='\t\tFilter type = {0}\n'.format(self.__class__.__name__)
 		fmtstr+='\t\tWavelet type = {0}\n'.format(self.waveletType)
 		fmtstr+='\t\tWavelet level = {0}\n'.format(self.waveletLevel)
-		fmtstr+='\t\tWavelet threshold type = {0}\n'.format(self.waveletThresholdType)
-		fmtstr+='\t\tWavelet threshold sub-type = {0}\n'.format(self.waveletThresholdSubType)
+		# fmtstr+='\t\tWavelet threshold type = {0}\n'.format(self.waveletThresholdType)
+		# fmtstr+='\t\tWavelet threshold sub-type = {0}\n'.format(self.waveletThresholdSubType)
 		fmtstr+='\t\tDecimation = {0}\n'.format(self.decimate)
 
 		return fmtstr
+
+if __name__ == '__main__':
+	import csv
+	from os.path import expanduser
+
+	root=expanduser('~')+'/Research/Experiments/AnalysisTools/Wavelet Denoising/waveletsteps/'
+	rawfile=root+'shortevent.csv'
+	rawdat=[]
+	with open(rawfile, 'rb') as eventfile:
+		eventreader = csv.reader(eventfile, delimiter=',')
+		for row in eventreader:
+			rawdat+=[float(row[1])]
+
+	
+	wavefilter=waveletDenoiseFilter(
+				wavelet='sym7', 
+				level=6, 
+				thresholdType='hard', 
+				thresholdSubType='sqtwolog', 
+				sdOpenCurr='-1'
+			)
+	wavefilter.filterData(rawdat, 1000)
+	print wavefilter.formatsettings()
+	np.savetxt(root+'rec_event.csv', np.asarray(wavefilter.filteredData), delimiter=",")
+	
+
+
+
+
+	# rawdatpad=np.lib.pad(rawdat, (0,1024-len(rawdat)), 'constant')
+	# print len(rawdatpad)
+	# sym5 = pywt.Wavelet('sym5')
+	# print sym5
+	# ca1, cd5, cd4, cd3, cd2, cd1 = pywt.wavedec(rawdat, 'sym5', mode='sym', level=5)
+	# coeff = pywt.wavedec(rawdat, 'sym5', mode='sym', level=5)
+	# print np.array(coeff).shape
+
+	# np.savetxt(root+'cd1.csv', np.asarray(cd1), delimiter=",")
+	# np.savetxt(root+'cd2.csv', np.asarray(cd1), delimiter=",")
+	# np.savetxt(root+'cd3.csv', np.asarray(cd1), delimiter=",")
+	# np.savetxt(root+'cd4.csv', np.asarray(cd1), delimiter=",")
+	# np.savetxt(root+'cd5.csv', np.asarray(cd1), delimiter=",")
+	# np.savetxt(root+'ca1.csv', np.asarray(cd1), delimiter=",")
+
+	# mcd1=np.zeros(len(cd1))
+	# mcd2=np.zeros(len(cd2))
+	# mcd3=np.zeros(len(cd3))
+	# mcd4=np.zeros(len(cd4))
+
+	# for i in range(1,5):
+	# 	coeff[-i]=np.zeros(len(coeff[-i]))
+
+	# print coeff
+	# # rec=pywt.waverec([ca1, cd5, mcd4, mcd3, mcd2, mcd1], sym5, mode='sym')
+	# rec=pywt.waverec(coeff, sym5, mode='sym')
+	# np.savetxt(root+'rec_event.csv', np.asarray(rec), delimiter=",")
+
