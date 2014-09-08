@@ -69,11 +69,16 @@ class guiDataModel(dict):
 			settingsdict[procAlgo]={}
 			procKeys=self.multiStateAnalysisKeys
 
+		# Add a section for data files
+		settingsdict[self.dataTypeKeys[self["DataFilesType"]]]=self.GenerateDataFilesView()
+		# print self.dataTypeKeys[self["DataFilesType"]]
+		# print self.GenerateDataFilesView(dataFilterAlgo)
+		# print settingsdict
+
 		for k in partKeys.keys():
 			settingsdict[partAlgo][k]=self[k]
 		for k in procKeys.keys():
 			settingsdict[procAlgo][k]=self[k]
-
 
 		# Lastly check if data filtering is enabled
 		if dataFilterAlgo:
@@ -82,7 +87,7 @@ class guiDataModel(dict):
 				settingsdict[filterAlgo]={}
 				for k in self.denoiseFilterKeys.keys():
 					settingsdict[filterAlgo][k]=self[k]
-
+		
 		return json.dumps(settingsdict, indent=4)
 
 	def GenerateTrajView(self):
@@ -92,14 +97,7 @@ class guiDataModel(dict):
 
 		return settingsdict		
 
-	def GenerateAnalysisObject(self, eventPartitionAlgo, eventProcessingAlgo, dataFilterAlgo):
-		return self.analysisSetupKeys["SingleChannelAnalysis"](
-				self.GenerateDataFilesObject(dataFilterAlgo),
-				self.analysisSetupKeys[str(eventPartitionAlgo)],
-				self.analysisSetupKeys[str(eventProcessingAlgo)]
-			)
-
-	def GenerateDataFilesObject(self, dataFilterAlgo):
+	def GenerateDataFilesView(self):
 		keys=["start", "dcOffset"]
 		dargs={"dirname" : str(self["DataFilesPath"])}
 
@@ -114,6 +112,18 @@ class guiDataModel(dict):
 
 		for k in keys:
 			dargs[k]=self.trajviewerKeys[k](self[k])
+
+		return dargs
+
+	def GenerateAnalysisObject(self, eventPartitionAlgo, eventProcessingAlgo, dataFilterAlgo):
+		return self.analysisSetupKeys["SingleChannelAnalysis"](
+				self.GenerateDataFilesObject(dataFilterAlgo),
+				self.analysisSetupKeys[str(eventPartitionAlgo)],
+				self.analysisSetupKeys[str(eventProcessingAlgo)]
+			)
+
+	def GenerateDataFilesObject(self, dataFilterAlgo):
+		dargs=self.GenerateDataFilesView()
 
 		if dataFilterAlgo:
 			dargs["datafilter"]=self.analysisSetupKeys[str(dataFilterAlgo)]
@@ -226,7 +236,6 @@ class guiDataModel(dict):
 								"thresholdSubType"		: str,
 								"sdOpenCurr"			: float
 							}
-
 		self.trajviewerKeys={
 								"DataFilesType" 		: str,
 								"DataFilesPath" 		: str,
@@ -235,7 +244,7 @@ class guiDataModel(dict):
 								"meanOpenCurr" 			: float,
 								"sdOpenCurr" 			: float,
 								"dcOffset" 				: float,
-								"start" 				: int,
+								"start" 				: float,
 								"Rfb" 					: float,
 								"Cfb" 					: float
 							}
@@ -251,7 +260,10 @@ class guiDataModel(dict):
 		self.filterAlgoKeys={
 								"waveletDenoiseFilter"	: "waveletDenoiseFilter"
 		}
-
+		self.dataTypeKeys={
+								"QDF" 					: "qdfTrajIO",
+								"ABF" 					: "abfTrajIO"
+							}
 		self.analysisSetupKeys={
 								"QDF" 					: pyeventanalysis.qdfTrajIO.qdfTrajIO,
 								"ABF" 					: pyeventanalysis.abfTrajIO.abfTrajIO,
@@ -271,12 +283,12 @@ if __name__ == "__main__":
 	g["Rfb"]=9.1E+9
 	g["Cfb"]=1.07E-12
 
-	q=g.GenerateDataFilesObject()
+	q=g.GenerateDataFilesObject(None)
 	print q.formatsettings()
 	print q.popdata(10)
 
 
-	print g.GenerateSettingsView("CurrentThreshold", "stepResponseAnalysis")
-	print g.GenerateTrajView()
+	print g.GenerateSettingsView("CurrentThreshold", "stepResponseAnalysis", None)
+	# print g.GenerateTrajView()
 	# for k,v in g.iteritems():
 	# 	print k, "=", v

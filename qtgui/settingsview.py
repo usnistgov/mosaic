@@ -391,6 +391,7 @@ class settingsview(QtGui.QMainWindow):
 
 	# Event partition SLOTS
 	def OnThresholdChange(self, value):
+		# print "value=", value, "type(value)=", type(value)
 		if self.updateDialogs:
 			[min,max]=[self.ThresholdDoubleSpinBox.minimum(), self.ThresholdDoubleSpinBox.maximum()]
 			[smin,smax]=[self.partitionThresholdHorizontalSlider.minimum(),self.partitionThresholdHorizontalSlider.maximum()]
@@ -400,10 +401,14 @@ class settingsview(QtGui.QMainWindow):
 
 			if type(value)==types.FloatType:
 				self.analysisDataModel["eventThreshold"]=value
+				self.updateDialogs=False
 				self.partitionThresholdHorizontalSlider.setValue( (int(smax-smin)*value/float(max-min)) )
+				self.updateDialogs=True
 			else:
 				self.analysisDataModel["eventThreshold"]=float((int((max-min))*value/float(smax-smin)))
+				self.updateDialogs=False
 				self.ThresholdDoubleSpinBox.setValue( (int((max-min))*value/float(smax-smin)) )
+				self.updateDialogs=True
 
 			self.trajViewerWindow.updatePlot(self.analysisDataModel.GenerateTrajView())
 

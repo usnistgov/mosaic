@@ -352,13 +352,6 @@
         </layout>
        </item>
       </layout>
-      <zorder>horizontalSpacer_7</zorder>
-      <zorder>label_21</zorder>
-      <zorder>horizontalSpacer_9</zorder>
-      <zorder>endIndexLineEdit</zorder>
-      <zorder>label_22</zorder>
-      <zorder>label_23</zorder>
-      <zorder>horizontalSpacer_7</zorder>
      </widget>
     </item>
     <item>
@@ -405,6 +398,9 @@
             <layout class="QHBoxLayout" name="horizontalLayout_12">
              <item>
               <widget class="QDoubleSpinBox" name="baselineBlockSizeDoubleSpinBox">
+               <property name="buttonSymbols">
+                <enum>QAbstractSpinBox::UpDownArrows</enum>
+               </property>
                <property name="keyboardTracking">
                 <bool>false</bool>
                </property>
@@ -626,8 +622,14 @@
              <height>16777215</height>
             </size>
            </property>
+           <property name="frame">
+            <bool>true</bool>
+           </property>
+           <property name="correctionMode">
+            <enum>QAbstractSpinBox::CorrectToNearestValue</enum>
+           </property>
            <property name="keyboardTracking">
-            <bool>false</bool>
+            <bool>true</bool>
            </property>
            <property name="minimum">
             <double>0.500000000000000</double>
@@ -989,12 +991,12 @@
    <slot>setDisabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>58</x>
-     <y>210</y>
+     <x>82</x>
+     <y>259</y>
     </hint>
     <hint type="destinationlabel">
-     <x>94</x>
-     <y>251</y>
+     <x>161</x>
+     <y>298</y>
     </hint>
    </hints>
   </connection>
@@ -1005,12 +1007,12 @@
    <slot>setDisabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>79</x>
-     <y>227</y>
+     <x>82</x>
+     <y>259</y>
     </hint>
     <hint type="destinationlabel">
-     <x>284</x>
-     <y>251</y>
+     <x>303</x>
+     <y>298</y>
     </hint>
    </hints>
   </connection>
