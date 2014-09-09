@@ -48,6 +48,13 @@
          </property>
         </widget>
        </item>
+       <item>
+        <widget class="QLabel" name="Label_7">
+         <property name="text">
+          <string>Analysis Time:</string>
+         </property>
+        </widget>
+       </item>
       </layout>
      </item>
      <item>
@@ -73,6 +80,13 @@
          </property>
         </widget>
        </item>
+       <item>
+        <widget class="QLabel" name="elapsedtimeLabel">
+         <property name="text">
+          <string>n/a</string>
+         </property>
+        </widget>
+       </item>
       </layout>
      </item>
      <item>
@@ -93,6 +107,19 @@
        </item>
        <item>
         <widget class="QLabel" name="Label_2">
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>32</height>
+          </size>
+         </property>
+         <property name="text">
+          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="Label_8">
          <property name="minimumSize">
           <size>
            <width>0</width>

@@ -79,6 +79,7 @@ class StatisticsWindow(QtGui.QDialog):
 			self.neventsLabel.setText( str(self.totalEvents) )
 			self.errorrateLabel.setText( str(round(100.*(1 - len(self.queryData)/float(self.totalEvents)), 2)) + ' %' )
 			self.caprateLabel.setText( str(c[0]) + " &#177; " + str(c[1]) + " s<sup>-1</sup>" )
+			self.elapsedtimeLabel.setText( self._formatelapsedtime() )
 		except ZeroDivisionError:
 			pass
 		except:
@@ -112,6 +113,20 @@ class StatisticsWindow(QtGui.QDialog):
 		except:
 			return [0,0]
 
+	def _formatelapsedtime(self):
+		etime=self.queryData[-1]/1000.
+
+		if etime <= 60:
+			elaptime=str(round(etime, 2)) + " s"
+		elif etime > 60 and etime < 600:
+			m=int(round(etime/60))
+			s=int(round(etime%60))
+			elaptime=str(m) + " min " + str(s) + " s"
+		else:
+			elaptime=str(round(etime/60.)) + " min"
+
+		return elaptime
+		
 	def _fitfunc(self, t, a, tau):
 		return a * np.exp(-t/tau)
 
