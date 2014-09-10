@@ -73,8 +73,8 @@ class settingsview(QtGui.QMainWindow):
 		QtCore.QObject.connect(self.datPathLineEdit, QtCore.SIGNAL('editingFinished()'), self.OnDataPathChange)
 		QtCore.QObject.connect(self.datTypeComboBox, QtCore.SIGNAL('currentIndexChanged(const QString &)'), self.OnDataTypeChange)
 		QtCore.QObject.connect(self.dcOffsetDoubleSpinBox, QtCore.SIGNAL('valueChanged ( double )'), self.OnDataOffsetChange)
-		QtCore.QObject.connect(self.startIndexLineEdit, QtCore.SIGNAL('editingFinished()'), self.OnDataStartIndexChange)
-		QtCore.QObject.connect(self.endIndexLineEdit, QtCore.SIGNAL('editingFinished()'), self.OnDataEndIndexChange)
+		QtCore.QObject.connect(self.startIndexLineEdit, QtCore.SIGNAL('textChanged ( const QString & )'), self.OnDataStartIndexChange)
+		QtCore.QObject.connect(self.endIndexLineEdit, QtCore.SIGNAL('textChanged ( const QString & )'), self.OnDataEndIndexChange)
 
 		# Baseline detection signals
 		QtCore.QObject.connect(self.baselineAutoCheckBox, QtCore.SIGNAL('clicked(bool)'), self.OnBaselineAutoCheckbox)
@@ -320,16 +320,19 @@ class settingsview(QtGui.QMainWindow):
 			self._trajviewerdata()
 			self.trajViewerWindow.refreshPlot()
 
-	def OnDataStartIndexChange(self):
+	def OnDataStartIndexChange(self, text):
 		if self.updateDialogs:
-			self.analysisDataModel["start"]=self.startIndexLineEdit.text()
+			if text:
+				self.analysisDataModel["start"]=text
+			else:
+				self.analysisDataModel["start"]=0
 			
-			# self._trajviewerdata()
-			# self.trajViewerWindow.refreshPlot()
-
-	def OnDataEndIndexChange(self):
+	def OnDataEndIndexChange(self, text):
 		if self.updateDialogs:
-			self.analysisDataModel["end"]=self.endIndexLineEdit.text()
+			if text:
+				self.analysisDataModel["end"]=text
+			else:
+				self.analysisDataModel["end"]=-1
 
 	# Baseline detection SLOTS
 	def OnBaselineAutoCheckbox(self, value):

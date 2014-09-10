@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
+ <author>Arvind Balijepalli</author>
  <class>SettingsWindow</class>
  <widget class="QMainWindow" name="SettingsWindow">
   <property name="enabled">
@@ -698,11 +699,6 @@
           <string>stepResponseAnalysis</string>
          </property>
         </item>
-        <item>
-         <property name="text">
-          <string>multiStateAnalysis</string>
-         </property>
-        </item>
        </widget>
       </item>
       <item>
@@ -888,6 +884,7 @@
     <property name="title">
      <string>File</string>
     </property>
+    <addaction name="actionLoad_Data"/>
     <addaction name="actionOpen_Analysis"/>
     <addaction name="actionStart_Analysis"/>
    </widget>
@@ -932,6 +929,9 @@
    <property name="text">
     <string>Start Analysis</string>
    </property>
+   <property name="shortcut">
+    <string>Ctrl+Alt+S</string>
+   </property>
   </action>
   <action name="actionPyEventAnalysis_Help">
    <property name="text">
@@ -951,6 +951,9 @@
   <action name="actionAnalysis_Log">
    <property name="text">
     <string>Analysis Log</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Shift+L</string>
    </property>
   </action>
   <action name="actionSettings_Window">
@@ -975,7 +978,15 @@
   </action>
   <action name="actionOpen_Analysis">
    <property name="text">
-    <string>Open Analysis</string>
+    <string>Open Previous Analysis</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Shift+O</string>
+   </property>
+  </action>
+  <action name="actionLoad_Data">
+   <property name="text">
+    <string>Load Data</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+O</string>
