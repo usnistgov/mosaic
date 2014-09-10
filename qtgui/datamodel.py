@@ -6,7 +6,7 @@ import pyeventanalysis.SingleChannelAnalysis
 import pyeventanalysis.eventSegment
 
 import pyeventanalysis.stepResponseAnalysis
-import pyeventanalysis.multiStateAnalysis
+# import pyeventanalysis.multiStateAnalysis
 
 import pyeventanalysis.qdfTrajIO
 import pyeventanalysis.abfTrajIO
@@ -65,9 +65,9 @@ class guiDataModel(dict):
 		if procAlgo=="stepResponseAnalysis":
 			settingsdict[procAlgo]={}
 			procKeys=self.stepResponseAnalysisKeys
-		elif procAlgo=="multiStateAnalysis":
-			settingsdict[procAlgo]={}
-			procKeys=self.multiStateAnalysisKeys
+		# elif procAlgo=="multiStateAnalysis":
+		# 	settingsdict[procAlgo]={}
+		# 	procKeys=self.multiStateAnalysisKeys
 
 		# Add a section for data files
 		settingsdict[self.dataTypeKeys[self["DataFilesType"]]]=self.GenerateDataFilesView()
@@ -200,7 +200,8 @@ class guiDataModel(dict):
 								"wavelet"				: str,
 								"level"					: int,
 								"thresholdType"			: str,
-								"thresholdSubType"		: str
+								"thresholdSubType"		: str,
+								"decimate"				: int
 							}
 		self.eventSegmentKeys={
 								"blockSizeSec" 			: float,
@@ -222,7 +223,7 @@ class guiDataModel(dict):
 								"FitIters" 				: int,
 								"BlockRejectRatio" 		: float
 							}
-		self.multiStateAnalysisKeys=self.stepResponseAnalysisKeys
+		# self.multiStateAnalysisKeys=self.stepResponseAnalysisKeys
 
 		self.besselLowpassFilterKeys={
 								"filterOrder" 			: int,
@@ -234,7 +235,7 @@ class guiDataModel(dict):
 								"level"					: int,
 								"thresholdType"			: str,
 								"thresholdSubType"		: str,
-								"sdOpenCurr"			: float
+								"decimate"				: int
 							}
 		self.trajviewerKeys={
 								"DataFilesType" 		: str,
@@ -253,8 +254,7 @@ class guiDataModel(dict):
 							}
 
 		self.eventProcessingAlgoKeys={
-								"stepResponseAnalysis" 	: "stepResponseAnalysis",
-								"multiStateAnalysis" 	: "multiStateAnalysis"
+								"stepResponseAnalysis" 	: "stepResponseAnalysis"
 							}
 
 		self.filterAlgoKeys={
@@ -270,10 +270,12 @@ class guiDataModel(dict):
 								"SingleChannelAnalysis" : pyeventanalysis.SingleChannelAnalysis.SingleChannelAnalysis,
 								"CurrentThreshold" 		: pyeventanalysis.eventSegment.eventSegment,
 								"stepResponseAnalysis" 	: pyeventanalysis.stepResponseAnalysis.stepResponseAnalysis,
-								"multiStateAnalysis" 	: pyeventanalysis.multiStateAnalysis.multiStateAnalysis,
 								"waveletDenoiseFilter"	: pyeventanalysis.waveletDenoiseFilter.waveletDenoiseFilter
 							}
 
+# ,
+# 								"multiStateAnalysis" 	: "multiStateAnalysis"
+# "multiStateAnalysis" 	: pyeventanalysis.multiStateAnalysis.multiStateAnalysis,
 
 if __name__ == "__main__":
 	g=guiDataModel()

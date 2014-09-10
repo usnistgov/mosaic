@@ -23,14 +23,13 @@ class waveletDenoiseFilter(metaIOFilter.metaIOFilter):
 				wavelet		the type of wavelet
 				level		wavelet level
 				threshold	threshold type
-				sdOpenCurr	signal noise standard deviation (can be the same as sdOpenCurr in eventSegment)
 		"""
 		try:
 			self.waveletType=str(kwargs['wavelet'])
 			self.waveletLevel=int(kwargs['level'])
 			self.waveletThresholdType=str(kwargs['thresholdType'])
 			self.waveletThresholdSubType=str(kwargs['thresholdSubType'])
-			self.sdOpenCurr=float(kwargs['sdOpenCurr'])
+
 			self.maxWaveletLevel=self.waveletLevel
 		except KeyError:
 			print "Missing mandatory arguments 'wavelet', 'level' or 'threshold'"
@@ -58,10 +57,15 @@ class waveletDenoiseFilter(metaIOFilter.metaIOFilter):
 		# Perform a wavelet decomposition to the specified level
 		wcoeff = pywt.wavedec(icurr, w, mode='sym', level=self.waveletLevel)
 
-		# Perform a simple hard threshold by setting all the detailed coefficients
+		# Perform a simple threshold by setting all the detailed coefficients
 		# up to level n-1 to zero
-		for i in range(1, self.waveletLevel):
-			wcoeff[-i]=np.zeros(len(wcoeff[-i]))
+		thresh=np.std(wcoeff[-1])*self._thselect(wcoeff, self.waveletThresholdSubType)
+		thrfunc=self.thrtypedict[self.waveletThresholdType]
+
+		# print thresh, np.std(wcoeff[-1])
+		wcoeff[1:] = [ thrfunc(wc, thresh) for wc in wcoeff[1:] ]
+		# for i in range(1, self.waveletLevel):
+		# 	wcoeff[-i]=np.zeros(len(wcoeff[-i]))
 
 		# Reconstruct the signal with the thresholded wavelet coefficients
 		self.eventData = pywt.waverec(wcoeff, self.waveletType, mode='sym')
@@ -107,8 +111,10 @@ class waveletDenoiseFilter(metaIOFilter.metaIOFilter):
 					'minimaxi'	: _minimaxi
 			 	}[thtype]
 			return thalgo(dat, len(dat))
-		except KeyError:
+		except KeyError, err:
+			print "Thresholding algorithm '" + thtype + "' is not available. Using default threshold (sqtwolog).\n"
 			# default
+			self.waveletThresholdSubType='sqtwolog'
 			return _sqtwolog(dat, len(dat))
 
 	def formatsettings(self):
@@ -121,8 +127,8 @@ class waveletDenoiseFilter(metaIOFilter.metaIOFilter):
 		fmtstr+='\t\tFilter type = {0}\n'.format(self.__class__.__name__)
 		fmtstr+='\t\tWavelet type = {0}\n'.format(self.waveletType)
 		fmtstr+='\t\tWavelet level = {0}\n'.format(self.waveletLevel)
-		# fmtstr+='\t\tWavelet threshold type = {0}\n'.format(self.waveletThresholdType)
-		# fmtstr+='\t\tWavelet threshold sub-type = {0}\n'.format(self.waveletThresholdSubType)
+		fmtstr+='\t\tWavelet threshold type = {0}\n'.format(self.waveletThresholdType)
+		fmtstr+='\t\tWavelet threshold sub-type = {0}\n'.format(self.waveletThresholdSubType)
 		fmtstr+='\t\tDecimation = {0}\n'.format(self.decimate)
 
 		return fmtstr
@@ -132,24 +138,25 @@ if __name__ == '__main__':
 	from os.path import expanduser
 
 	root=expanduser('~')+'/Research/Experiments/AnalysisTools/Wavelet Denoising/waveletsteps/'
-	rawfile=root+'shortevent.csv'
+	rawfile=root+'DenoisedSym5Long/testEventPartition1.csv'
 	rawdat=[]
 	with open(rawfile, 'rb') as eventfile:
 		eventreader = csv.reader(eventfile, delimiter=',')
 		for row in eventreader:
-			rawdat+=[float(row[1])]
+			# rawdat+=[float(row[1])]
+			rawdat+=[float(row[0])]
 
 	
 	wavefilter=waveletDenoiseFilter(
-				wavelet='sym7', 
-				level=6, 
-				thresholdType='hard', 
-				thresholdSubType='sqtwolog', 
+				wavelet='sym5', 
+				level=5, 
+				thresholdType='soft', 
+				thresholdSubType='minimaxi', 
 				sdOpenCurr='-1'
 			)
 	wavefilter.filterData(rawdat, 1000)
 	print wavefilter.formatsettings()
-	np.savetxt(root+'rec_event.csv', np.asarray(wavefilter.filteredData), delimiter=",")
+	np.savetxt(root+'DenoisedSym5Long/testEventPartition1_denoised.csv', np.asarray(wavefilter.filteredData), delimiter=",")
 	
 
 

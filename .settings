@@ -38,11 +38,10 @@
 		"decimate"		: "1"	
 	},
 	"waveletDenoiseFilter" : {
-		"wavelet"		: "sym7",
-		"level"			: "6",
-		"thresholdType"		: "hard",
-		"thresholdSubType"	: "sqtwolog",
-		"sdOpenCurr"		: "-1"
+		"wavelet"		: "sym5",
+		"level"			: "5",
+		"thresholdType"		: "soft",
+		"thresholdSubType"	: "sqtwolog"
 	}
 }
 

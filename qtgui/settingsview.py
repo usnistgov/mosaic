@@ -216,14 +216,9 @@ class settingsview(QtGui.QMainWindow):
 				self.analysisDataModel["Cfb"]=cfb
 
 	def _setThreshold(self, mean, sd, threshold):
+		self.updateDialogs=True
 		self.ThresholdDoubleSpinBox.setValue(threshold)
-
-		# [min,max]=[self.ThresholdDoubleSpinBox.minimum(), self.ThresholdDoubleSpinBox.maximum()]
-		# [smin,smax]=[self.partitionThresholdHorizontalSlider.minimum(),self.partitionThresholdHorizontalSlider.maximum()]
-
-		# self.ThresholdDoubleSpinBox.setValue( (int((max-min))*threshold/float(smax-smin)) )
-
-		# self.OnThresholdChangeSpinbox(threshold)
+		self.updateDialogs=False
 
 	def _setEnableSettingsWidgets(self, state):
 		self.baselineGroupBox.setEnabled(state)

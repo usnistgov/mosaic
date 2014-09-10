@@ -32,7 +32,7 @@ class StatisticsWindow(QtGui.QDialog):
 		self.idleTimer=QtCore.QTimer()
 		self.idleTimer.start(3000)
 
-		self.queryString="select AbsEventStart from metadata where ProcessingStatus='normal'"
+		self.queryString="select AbsEventStart from metadata where ProcessingStatus='normal' order by AbsEventStart ASC"
 		self.queryData=[]
 		self.totalEvents=0
 
@@ -118,12 +118,13 @@ class StatisticsWindow(QtGui.QDialog):
 
 		if etime <= 60:
 			elaptime=str(round(etime, 2)) + " s"
-		elif etime > 60 and etime < 600:
+		# elif etime > 60 and etime < 600:
+		else:
 			m=int(round(etime/60))
 			s=int(round(etime%60))
 			elaptime=str(m) + " min " + str(s) + " s"
-		else:
-			elaptime=str(round(etime/60.)) + " min"
+		# else:
+		# 	elaptime=str(round(etime/60., 1)) + " min"
 
 		return elaptime
 		

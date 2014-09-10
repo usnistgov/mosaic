@@ -92,7 +92,10 @@ class FitEventWindow(QtGui.QDialog):
 			q=edat
 			fs=self.FskHz
 
-			# time-series data
+			# print len(edat)
+			# print len(edat[1])
+			# print fs
+			# # time-series data
 			ydat=np.abs(q[1])
 			xdat=np.arange(0,float((len(q[1]))/fs), float(1/fs))[:len(ydat)]
 

@@ -1,6 +1,8 @@
 import sys
 import time
 import string
+import glob
+from sqlite3 import DatabaseError
 
 from PyQt4 import QtCore
 from PyQt4 import QtGui
@@ -14,6 +16,8 @@ class qtAnalysisGUI(qtgui.settingsview.settingsview):
 		super(qtAnalysisGUI, self).__init__(parent)
 
 		self.analysisObject=None
+		self.nDBFiles=0
+		self.startButtonClicked=False
 
 		self.analysisThreadObj=analysisThread(None)
 		self.idleTimer=QtCore.QTimer()
@@ -24,6 +28,8 @@ class qtAnalysisGUI(qtgui.settingsview.settingsview):
 		QtCore.QObject.connect(self.startAnalysisPushButton, QtCore.SIGNAL('clicked()'), self.OnStartAnalysis)
 		QtCore.QObject.connect(self.actionStart_Analysis, QtCore.SIGNAL('triggered()'), self.OnStartAnalysis)
 		QtCore.QObject.connect(self.actionOpen_Analysis, QtCore.SIGNAL('triggered()'), self.OnLoadAnalysis)
+		QtCore.QObject.connect(self.actionLoad_Data, QtCore.SIGNAL('triggered()'), self.OnSelectPath)
+		
 
 		QtCore.QObject.connect(self.analysisThreadObj, QtCore.SIGNAL('finished(bool)'), self.OnAnalysisFinished)
 
@@ -51,9 +57,12 @@ class qtAnalysisGUI(qtgui.settingsview.settingsview):
 							)
 						)
 
+					self.startAnalysisPushButton.setEnabled(False)
+					self.actionStart_Analysis.setEnabled(False)
 
-					self.startAnalysisPushButton.setText("Stop Analysis")
-					self.actionStart_Analysis.setText("Stop Analysis")
+					self.startAnalysisPushButton.setStyleSheet("")
+					self.startAnalysisPushButton.setText("Starting...")
+					self.actionStart_Analysis.setText("Starting...")
 
 					self.trajViewerWindow.hide()
 
@@ -64,21 +73,11 @@ class qtAnalysisGUI(qtgui.settingsview.settingsview):
 					)
 
 					self.analysisThreadObj=analysisThread( self.analysisObject, parent=self )
-					self.analysisThreadObj.start()
-					
-					time.sleep(5)
+					self.analysisThreadObj.start()	
 
-					self.blockDepthWindow.openDB( self.analysisObject.DataPath )
-					if self.showBlockDepthWindow:	
-						self.blockDepthWindow.show()
-					self.statisticsView.openDB( self.analysisObject.DataPath )
-					self.statisticsView.show()
+					self.nDBFiles=len(self._getdbfiles())	
 
-					self.fitEventsView.openDB( self.analysisObject.DataPath, self.trajViewerWindow.FskHz )
-					if self.showFitEventsWindow:
-						self.fitEventsView.show()
-
-					self.analysisRunning=True	
+					self.startButtonClicked=True	
 			else:
 				self.analysisObject.Stop()
 
@@ -87,6 +86,7 @@ class qtAnalysisGUI(qtgui.settingsview.settingsview):
 				# self._setEnableSettingsWidgets(True)
 				# self._setEnableDataSettingsWidgets(True)
 
+				self.startAnalysisPushButton.setStyleSheet("")
 				self.startAnalysisPushButton.setText("Stopping...")
 				self.actionStart_Analysis.setText("Stopping...")
 
@@ -97,6 +97,7 @@ class qtAnalysisGUI(qtgui.settingsview.settingsview):
 			self._setEnableSettingsWidgets(True)
 			self._setEnableDataSettingsWidgets(True)
 
+			self.startAnalysisPushButton.setStyleSheet("")
 			self.startAnalysisPushButton.setText("Start Analysis")
 			self.actionStart_Analysis.setText("Start Analysis")
 
@@ -105,6 +106,7 @@ class qtAnalysisGUI(qtgui.settingsview.settingsview):
 			self._setEnableSettingsWidgets(True)
 			self._setEnableDataSettingsWidgets(True)
 
+			self.startAnalysisPushButton.setStyleSheet("")
 			self.startAnalysisPushButton.setText("Start Analysis")
 			self.actionStart_Analysis.setText("Start Analysis")
 
@@ -122,44 +124,84 @@ class qtAnalysisGUI(qtgui.settingsview.settingsview):
 		fd.setNameFilters(['SQLite databases (*.sqlite)'])
 		analysisfile=str(fd.getOpenFileName())
 
-		if analysisfile != "":
-			analysisdir= '/'.join( (str(analysisfile).split('/'))[:-1] )
-			
-			# Load settings from the analysis directory
-			# self.ShowTrajectory=False
-			self.datPathLineEdit.setText(analysisdir)
+		# self.ShowTrajectory=False
 
-			# Disable widgets
-			self.trajViewerWindow.hide()
+		try:
+			if analysisfile != "":
+				analysisdir= '/'.join( (str(analysisfile).split('/'))[:-1] )
+				
+				# Load settings from the analysis directory
+				self.datPathLineEdit.setText(analysisdir)
+				self.OnDataPathChange()
+
+				# Disable widgets
+				self.trajViewerWindow.hide()
+				self._setEnableSettingsWidgets(False)
+				self._setEnableDataSettingsWidgets(False)
+				
+				# Load analysis
+				if self.blockDepthWindow:
+					del self.blockDepthWindow
+					self.blockDepthWindow = qtgui.blockdepthview.blockdepthview.BlockDepthWindow(parent=self)
+				if self.statisticsView:
+					del self.statisticsView
+					self.statisticsView = qtgui.statisticsview.statisticsview.StatisticsWindow(parent=self)
+				if self.fitEventsView:
+					del self.fitEventsView
+					self.fitEventsView = qtgui.fiteventsview.fiteventsview.FitEventWindow(parent=self)
+			
+				self.blockDepthWindow.openDBFile( analysisfile )
+				self.blockDepthWindow.show()
+				
+				self.statisticsView.openDBFile( analysisfile )
+				self.statisticsView.show()
+
+				self.fitEventsView.openDBFile( analysisfile, self.trajViewerWindow.FskHz )
+				if self.showFitEventsWindow:
+					self.fitEventsView.show()
+
+				# enable the path select button to allow a new alaysis to be started
+				self.datPathLineEdit.setEnabled(True)
+		except DatabaseError:
+			QtGui.QMessageBox.warning(self, "File Error", analysisfile+" is not a valid sqlite database.")
 			self._setEnableSettingsWidgets(False)
 			self._setEnableDataSettingsWidgets(False)
-			
-			# Load analysis
-			if self.blockDepthWindow:
-				del self.blockDepthWindow
-				self.blockDepthWindow = qtgui.blockdepthview.blockdepthview.BlockDepthWindow(parent=self)
-			if self.statisticsView:
-				del self.statisticsView
-				self.statisticsView = qtgui.statisticsview.statisticsview.StatisticsWindow(parent=self)
-			if self.fitEventsView:
-				del self.fitEventsView
-				self.fitEventsView = qtgui.fiteventsview.fiteventsview.FitEventWindow(parent=self)
-		
-			self.blockDepthWindow.openDBFile( analysisfile )
-			self.blockDepthWindow.show()
-			
-			self.statisticsView.openDBFile( analysisfile )
-			self.statisticsView.show()
-
-			self.fitEventsView.openDBFile( analysisfile, self.trajViewerWindow.FskHz )
-			if self.showFitEventsWindow:
-				self.fitEventsView.show()
 
 		self.ShowTrajectory=True
 		
+	def _getdbfiles(self):
+		path=self.analysisDataModel["DataFilesPath"]
+		return glob.glob(path+'/*sqlite')
+
+	def _launchAnalysisWindows(self):
+		self.blockDepthWindow.openDBFile( self.DataFile )
+		if self.showBlockDepthWindow:	
+			self.blockDepthWindow.show()
+		self.statisticsView.openDBFile( self.DataFile )
+		self.statisticsView.show()
+
+		self.fitEventsView.openDBFile( self.DataFile, self.trajViewerWindow.FskHz )
+		if self.showFitEventsWindow:
+			self.fitEventsView.show()
+
+		# self.startAnalysisPushButton.setStyleSheet('QPushButton {color: white; background-color: qlineargradient(spread:pad, x1:0, y1:1, x2:0, y2:0, stop:0 rgba(190, 49, 8), stop:1 rgba(255, 10, 4));}')
+		self.startAnalysisPushButton.setStyleSheet('QPushButton {color: red;}')
+		self.startAnalysisPushButton.setText("Stop Analysis")
+		self.actionStart_Analysis.setText("Stop Analysis")
+
+		self.startAnalysisPushButton.setEnabled(True)
+		self.actionStart_Analysis.setEnabled(True)
+
+		self.analysisRunning=True	
 
 	def OnAppIdle(self):
 		# QtGui.QApplication.processEvents()
+		if not self.analysisRunning and self.startButtonClicked:
+			dbfiles=self._getdbfiles()
+			if len(dbfiles)>self.nDBFiles:
+				self.DataFile=dbfiles[-1]
+				self._launchAnalysisWindows()
+				self.startButtonClicked=False
 		if self.analysisThreadObj.isFinished() and self.analysisRunning:
 			# print "finished"
 			self.OnAnalysisFinished(True)
