@@ -132,15 +132,12 @@
     </layout>
    </item>
   </layout>
-  <zorder>mpl_hist</zorder>
-  <zorder>horizontalSpacer_2</zorder>
-  <zorder>denoiseCheckBox</zorder>
  </widget>
  <customwidgets>
   <customwidget>
    <class>MplWidget</class>
    <extends>QWidget</extends>
-   <header>mplwidget.h</header>
+   <header>qtgui.mplwidget</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

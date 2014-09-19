@@ -35,8 +35,6 @@ import singleStepEvent as sse
 import stepResponseAnalysis as sra 
 import metaTrajIO
 import sqlite3MDIO
-import zmqWorker
-import zmqIO
 
 # custom errors
 class ExcessiveDriftError(Exception):
@@ -232,6 +230,15 @@ class metaEventPartition(object):
 	# Internal functions
 	#################################################################
 	def _setupparallel(self):
+		# check if parallel is available
+		try:
+			import zmqWorker
+			import zmqIO
+		except ImportError:
+			print "Parallel processing is not available.\n"
+			self.parallelProc=False
+			return
+
 		# setup parallel processing here
 		self.parallelProcDict={}
 

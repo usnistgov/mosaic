@@ -6,7 +6,6 @@ import os
 import csv
 import glob
 import sqlite3
-import time
 
 from PyQt4 import QtCore, QtGui, uic
 
@@ -26,18 +25,17 @@ class FitEventWindow(QtGui.QDialog):
 		self._positionWindow()
 
 		self.eventIndex=0
-		self.totalEvents=0
-		self.eventCacheStart=1
 
+		# Limit the number of events to 10000
+		self.viewerLimit=10000
+		self.queryString="select ProcessingStatus, TimeSeries, RCConstant, EventStart, EventEnd, BlockedCurrent, OpenChCurrent from metadata limit " + str(self.viewerLimit)
 		self.queryData=[]
 
 		self.queryDatabase=None
 		self.EndOfData=False
-		self.DataInitialized=False
-		
 
 		self.idleTimer=QtCore.QTimer()
-		self.idleTimer.start(5000)
+		self.idleTimer.start(3000)
 
 		# setup hash tables used in this class
 		self._setupdict()
@@ -50,23 +48,21 @@ class FitEventWindow(QtGui.QDialog):
 
 
 	def openDB(self, dbpath, FskHz):
-		self.openDBFile(glob.glob(dbpath+"/*sqlite")[-1], FskHz)
+		"""
+			Open the latest sqlite file in a directory
+		"""
+		self.openDBFile(glob.glob(dbpath+"/*sqlite")[-1])
 
 	def openDBFile(self, dbfile, FskHz):
-		self.DataInitialized=False
-		
 		self.queryDatabase=sqlite.sqlite3MDIO()
 		self.queryDatabase.openDB(dbfile)
 
 		self.FskHz=float(FskHz)
-
+		print self.FskHz
 		self._updatequery()
-		self.update_graph(self._eventdata())
+		self.update_graph()
 
-		self._getrecordcount()
-		self._updatewindowtitle()
-
-		self.eventIndexLineEdit.setText(str(self.eventIndex+1))
+		self.eventIndexLineEdit.setText(str(self.eventIndex))
 
 		# Idle processing
 		QtCore.QObject.connect(self.idleTimer, QtCore.SIGNAL('timeout()'), self.OnAppIdle)
@@ -85,17 +81,12 @@ class FitEventWindow(QtGui.QDialog):
 		# self.move( (-screen.width()/2)+200, -screen.height()/2 )
 
 
-	def update_graph(self, edat):
+	def update_graph(self):
 		try:
-			# q=self.queryData[self.eventIndex]
-			# q=self._eventdata()
-			q=edat
+			q=self.queryData[self.eventIndex]
 			fs=self.FskHz
 
-			# print len(edat)
-			# print len(edat[1])
-			# print fs
-			# # time-series data
+			# time-series data
 			ydat=np.abs(q[1])
 			xdat=np.arange(0,float((len(q[1]))/fs), float(1/fs))[:len(ydat)]
 
@@ -121,11 +112,14 @@ class FitEventWindow(QtGui.QDialog):
 			
 			self.mpl_hist.canvas.draw()
 
-			self.eventIndexLineEdit.setText( str( int(self.eventIndex) + 1 ) )
-			self._updatewindowtitle()
+			self.eventIndexLineEdit.setText(str(self.eventIndex))
+			if self.EndOfData:
+				limittxt=" (at viewer limit)"
+			else:
+				limittxt=""
+			self.setWindowTitle( "Event Viewer - " + str(self.eventIndex) + "/" + str(len(self.queryData)-1) + limittxt)
 		except ValueError:
 			self.EndOfData=True
-			raise
 		except IndexError:
 			pass
 		except:
@@ -146,44 +140,36 @@ class FitEventWindow(QtGui.QDialog):
 			pass
 
 	def OnNextButton(self):
-		# print "next button"
-		self.eventIndex += 1
-		self.update_graph(self._eventdata())
+		# If we run out of data query the DB again
+		if self.eventIndex ==  len(self.queryData)-1 or len(self.queryData) == 0:
+			self._updatequery()
 
+		self.eventIndex+=1
 		self.eventIndexHorizontalSlider.setValue( self.eventIndex )
+		self.update_graph()
 
 	def OnPreviousButton(self):
-		# print "prev button"
-		self.eventIndex -= 1
-		self.update_graph(self._eventdata())
+		if len(self.queryData) == 0:
+			self._updatequery()
 
+		self.eventIndex= max(0, self.eventIndex-1)
 		self.eventIndexHorizontalSlider.setValue( self.eventIndex )
+		self.update_graph()
 
 	def OnEventIndexLineEditChange(self):
-		# "print line edit change"
-		self.eventIndex=int(self.eventIndexLineEdit.text())-1
-		self.update_graph(self._eventdata())
+		self.eventIndex=int(self.eventIndexLineEdit.text())
+		self.update_graph()
 
 	def OnEventIndexSliderChange(self, value):
 		self.eventIndex=int(value)
-		# print "slider change", value, self.eventIndex, self.totalEvents
-		self.update_graph(self._eventdata())
+		self.update_graph()
 
 	def OnAppIdle(self):
 		# if len(self.queryData) == 0:
-		# 	self._updatequery()
-		# 	self.update_graph()
+		if not self.EndOfData:
+			self._updatequery()
+			self.update_graph()
 
-		self._getrecordcount()
-		self._updatewindowtitle()
-
-		# update the QLineEdit validator
-		self.eventIndexLineEdit.setValidator( QtGui.QIntValidator(0, self.totalEvents-1, self) )
-
-		# update slider max
-		if self.totalEvents>0:
-			self.eventIndexHorizontalSlider.setMaximum( self.totalEvents-1 )
-		
 	def _ticks(self, nticks):
 		axes=self.mpl_hist.canvas.ax
 
@@ -199,14 +185,15 @@ class FitEventWindow(QtGui.QDialog):
 		axes.yaxis.set_major_formatter(ticker.FormatStrFormatter('%d'))
 
 	def _updatequery(self):
-		
 		try:
 			if not self.EndOfData:
-				t1=time.time()
-				q=self._generatequery()
-				self.queryData=self.queryDatabase.queryDB(q)
-				t2=time.time()
-				# print "_updatequery ({0:0.2f} ms)".format(1000*(t2-t1))
+				self.queryData=self.queryDatabase.queryDB(self.queryString)
+
+				if len(self.queryData)>=self.viewerLimit: self.EndOfData=True
+				# update the QLineEdit validator
+				self.eventIndexLineEdit.setValidator( QtGui.QIntValidator(0, len(self.queryData)-1, self) )
+				self.eventIndexHorizontalSlider.setMaximum( len(self.queryData)-1 )
+
 		except sqlite3.OperationalError, err:
 			raise err
 		except:
@@ -214,10 +201,9 @@ class FitEventWindow(QtGui.QDialog):
 
 	def _sraFunc(self, t, tau, mu1, mu2, a, b):
 		try:
-			np.seterr(over='ignore', invalid='ignore')
 			return a*( (np.exp((mu1-t)/tau)-1)*self._heaviside(t-mu1)+(1-np.exp((mu2-t)/tau))*self._heaviside(t-mu2) ) + b
 		except RuntimeWarning:
-			# print self.eventIndex
+			print self.eventIndex
 			pass
 		except:
 			raise
@@ -231,49 +217,6 @@ class FitEventWindow(QtGui.QDialog):
 
 		return out
 
-	def _eventdata(self):
-		try:
-			lidx=self.eventIndex-self.eventCacheStart
-			if lidx>=0:
-				return self.queryData[lidx]
-			else:
-				# print "_eventdata Lower limit reached (lidx={0}, eventIndex={1}, eventCacheStart={2}, len(queryData)={3})".format(lidx, self.eventIndex, self.eventCacheStart, len(self.queryData) )
-				if self.eventIndex < 0:
-					self.eventIndex=0
-					return self.queryData[0]
-				else:
-					self._updatequery()
-					return self._eventdata()
-		except IndexError:
-			# print "_eventdata Upper limit reached (lidx={0}, eventIndex={1}, eventCacheStart={2}, len(queryData)={3}, totalEvents={4})".format(lidx, self.eventIndex, self.eventCacheStart, len(self.queryData), self.totalEvents )
-			if self.totalEvents == 0:
-				return []
-
-			# If end of data
-			if self.eventIndex >= self.totalEvents:
-				self.eventIndex -= 1
-				return self.queryData[-1]
-			else:
-				self._updatequery()
-				return self._eventdata()
-
-	def _generatequery(self):
-		self.eventCacheStart=max(0, self.eventIndex-101)
-		return "select ProcessingStatus, TimeSeries, RCConstant, EventStart, EventEnd, BlockedCurrent, OpenChCurrent from metadata limit {0}, 200".format(self.eventCacheStart)
-
-	def _getrecordcount(self):
-		tempRecCount=self.queryDatabase.queryDB("select count(*) from metadata")[0][0]
-
-		if not self.DataInitialized and tempRecCount-self.totalEvents > 0:
-			self._updatequery()
-			self.update_graph(self._eventdata())
-			self.DataInitialized=True
-
-		self.totalEvents=tempRecCount
-
-	def _updatewindowtitle(self):
-		self.setWindowTitle( "Event Viewer - " + str(self.eventIndex+1) + "/" + str(self.totalEvents) )
-
 	def _setupdict(self):
 		self.keyDict={
 			QtCore.Qt.Key_Right : 	self.OnNextButton,
@@ -282,15 +225,13 @@ class FitEventWindow(QtGui.QDialog):
 
 if __name__ == '__main__':
 	from os.path import expanduser
-	dbpath=expanduser('~')+'/Research/Experiments/PEG29EBSRefData/20120323/singleChan/'
+	# dbpath=expanduser('~')+'/Research/Experiments/PEG29EBSRefData/20120323/singleChan/'
+	dbpath=expanduser('~')+'/Research/Experiments/Nanoclusters/PW9O34/20140916/m120mV1/'
 
 	app = QtGui.QApplication(sys.argv)
 	dmw = FitEventWindow()
 	
 	dmw.openDB(dbpath, 500)
-
-	print dmw._generatequery()
-
 	dmw.show()
 	dmw.raise_()
 	sys.exit(app.exec_())

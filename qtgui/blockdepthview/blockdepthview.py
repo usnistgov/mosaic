@@ -3,14 +3,16 @@ from __future__ import with_statement
 import numpy as np
 import sys
 import os
+import gc
 import csv
 import glob
-import sqlite3
 
 from PyQt4 import QtCore, QtGui, uic
+from PyQt4.QtCore import Qt
 
 import pyeventanalysis.sqlite3MDIO as sqlite
 import qtgui.autocompleteedit as autocomplete
+import qtgui.sqlQueryWorker as sqlworker
 
 import matplotlib.ticker as ticker
 # from qtgui.trajview.trajviewui import Ui_Dialog
@@ -30,7 +32,7 @@ class BlockDepthWindow(QtGui.QDialog):
 		self._positionWindow()
 
 		self.idleTimer=QtCore.QTimer()
-		self.idleTimer.start(2500)
+		self.idleTimer.start(10000)
 
 		self.processeEventsTimer=QtCore.QTimer()
 		self.processeEventsTimer.start(500)
@@ -42,8 +44,11 @@ class BlockDepthWindow(QtGui.QDialog):
 		self.queryData=[]
 		self.queryError=False
 		self.lastGoodQueryString=""
+		self.queryRunning=False
 
-		self.queryDatabase=None
+		self.qWorker=None
+		self.qThread=QtCore.QThread()
+
 		self.queryCompleter=None
 
 		self.nBins=500
@@ -58,7 +63,7 @@ class BlockDepthWindow(QtGui.QDialog):
 		QtCore.QObject.connect(self.sqlQueryLineEdit, QtCore.SIGNAL('textChanged ( const QString & )'), self.OnQueryTextChange)
 		QtCore.QObject.connect(self.binsSpinBox, QtCore.SIGNAL('valueChanged ( int )'), self.OnBinsChange)
 
-		QtCore.QObject.connect(self.processeEventsTimer, QtCore.SIGNAL('timeout()'), self.OnProcessEvents)
+		# QtCore.QObject.connect(self.processeEventsTimer, QtCore.SIGNAL('timeout()'), self.OnProcessEvents)
 		
 		
 
@@ -72,17 +77,25 @@ class BlockDepthWindow(QtGui.QDialog):
 		"""
 			Open a specific database file.
 		"""
-		self.queryDatabase=sqlite.sqlite3MDIO()
-		self.queryDatabase.openDB(dbfile)
+		self.qWorker=sqlworker.sqlQueryWorker(dbfile)
+	
+		# Connect signals and slots
+		self.qWorker.resultsReady.connect(self.OnDataReady)
+		self.qWorker.dbColumnsReady.connect(self.OnColDBReady)
 
-		self.sqlQueryLineEdit.setCompleterValues(self.queryDatabase.dbColumnNames)
+		self.qWorker.moveToThread(self.qThread)
+	
+		self.qWorker.finished.connect(self.qThread.quit)
 
-		# Idle processing
-		QtCore.QObject.connect(self.idleTimer, QtCore.SIGNAL('timeout()'), self.OnAppIdle)
+		self.qThread.start()
+
+		# Query the DB cols
+		QtCore.QMetaObject.invokeMethod(self.qWorker, 'dbColumnNames', Qt.QueuedConnection)
+		QtCore.QMetaObject.invokeMethod(self.qWorker, 'queryDB', Qt.QueuedConnection, QtCore.Q_ARG(str, self.queryString) )
+		self.queryRunning=True
 
 	def closeDB(self):
-		if self.queryDatabase:
-			self.queryDatabase.closeDB()
+		pass
 
 	def _positionWindow(self):
 		"""
@@ -128,6 +141,11 @@ class BlockDepthWindow(QtGui.QDialog):
 			self.mpl_hist.canvas.ax.set_ylabel('counts', fontsize=10)
 			
 			self.mpl_hist.canvas.draw()
+
+			# Once the canvas is updated flag the query as complete
+			self.queryRunning=False
+			self.updateButton.setEnabled(True)
+			self.updateButton.setText("Update")
 		except ValueError:
 			pass
 		except:
@@ -147,24 +165,38 @@ class BlockDepthWindow(QtGui.QDialog):
 		axes.yaxis.set_major_formatter(ticker.FormatStrFormatter('%d'))
 
 	def _updatequery(self):
+		# if self.queryRunning:
+		# 	return
+
+		self.qThread.start()
+		# print "update query: ", self.queryString
+		QtCore.QMetaObject.invokeMethod(self.qWorker, 'queryDB', Qt.QueuedConnection, QtCore.Q_ARG(str, self.queryString) )
+
+		self.queryRunning=True
+			
+	def OnColDBReady(self, cols):
+		self.sqlQueryLineEdit.setCompleterValues(cols)
+
+		# Idle processing
+		QtCore.QObject.connect(self.idleTimer, QtCore.SIGNAL('timeout()'), self.OnAppIdle)
+
+	def OnDataReady(self, results, errorstr):
+		# print len(results), errorstr
 		try:
-			self.queryData=np.hstack( np.hstack( np.array( self.queryDatabase.queryDB(self.queryString) ) ) )
-		
-			# print self.queryData
-			# print 
-			# print
-			if not self.queryError:
+			if not errorstr:
+				self.queryData=np.hstack( np.hstack( np.array( results ) ) )
+
 				self.errorPrefixLabel.setText("")
 				self.errorLabel.setText("")
 
-			self.lastGoodQueryString=self.queryString
+				self.lastGoodQueryString=self.queryString
+			else:
+				self.errorPrefixLabel.setText("  Query Error: ")
+				self.errorLabel.setText(str(errorstr))
+				self.queryString=self.lastGoodQueryString
+				self.queryError=True
 
 			self.update_graph()
-		except sqlite3.OperationalError, err:
-			self.errorPrefixLabel.setText("  Query Error: ")
-			self.errorLabel.setText(str(err))
-			self.queryString=self.lastGoodQueryString
-			self.queryError=True
 		except IndexError:
 			pass
 
@@ -181,20 +213,25 @@ class BlockDepthWindow(QtGui.QDialog):
 			self.queryString="select BlockDepth from metadata where ProcessingStatus='normal' and BlockDepth between 0 and 1 and " + qtext
 			self.queryError=False
 
+			self.updateButton.setEnabled(False)
+			self.updateButton.setText("Updating...")
 			self._updatequery()
 
 	def OnBinsChange(self, value):
 		self.nBins=int(value)
 
 	def OnAppIdle(self):
-		self._updatequery()
+		if not self.queryRunning:
+			self._updatequery()
 
 	def OnProcessEvents(self):
-		QtGui.QApplication.sendPostedEvents()
+		pass
+		# QtGui.QApplication.sendPostedEvents()
 
 if __name__ == '__main__':
 	from os.path import expanduser
-	dbpath=expanduser('~')+'/Research/Experiments/PEGModelData/JoesData/PEGMixture/3.44M_1413/m40mv_long/set1'
+	dbpath=expanduser('~')+'/Research/Experiments/Nanoclusters/PW9O34/20140916/m120mV1/'
+	# dbpath=expanduser('~')+'/Research/Experiments/PEG29EBSRefData/20120323/singleChan/'
 
 	app = QtGui.QApplication(sys.argv)
 	dmw = BlockDepthWindow()

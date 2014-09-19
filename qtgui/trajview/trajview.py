@@ -114,7 +114,7 @@ class TrajectoryWindow(QtGui.QDialog):
 			QtGui.QMessageBox.warning(self, "Path Error","Data path not set")
 			raise
 		except FileNotFoundError:
-			QtGui.QMessageBox.warning(self, "Data Error","Files not found")
+			QtGui.QMessageBox.warning(self, "Data Error", "No data files found in " + path)
 		except:
 			raise
 

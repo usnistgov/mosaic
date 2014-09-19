@@ -167,8 +167,16 @@ class settingsview(QtGui.QMainWindow):
 		
 		# Populate misc parameters
 		self.writeEventsCheckBox.setChecked(int(model["writeEventTS"]))
-		self.parallelCheckBox.setChecked(int(model["parallelProc"]))				
-		self.parallelCoresSpinBox.setValue(multiprocessing.cpu_count()-int(model["reserveNCPU"]))
+		# check if parallel is available
+		try:
+			import zmq
+			
+			self.parallelCheckBox.setChecked(int(model["parallelProc"]))				
+			self.parallelCoresSpinBox.setValue(multiprocessing.cpu_count()-int(model["reserveNCPU"]))
+		except ImportError:
+			self.parallelCheckBox.hide()
+			self.parallelCoresSpinBox.hide()
+			self.parallelCoresLabel.hide()	
 
 		procidx= {}
 		for v in self.analysisDataModel.eventProcessingAlgoKeys.values():

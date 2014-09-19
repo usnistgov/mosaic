@@ -10,8 +10,10 @@ import sqlite3
 import numpy as np
 from scipy.optimize import curve_fit
 from PyQt4 import QtCore, QtGui, uic
+from PyQt4.QtCore import Qt
 
 import pyeventanalysis.sqlite3MDIO as sqlite
+import qtgui.sqlQueryWorker as sqlworker
 
 css = """QLabel {
       color: black;
@@ -27,14 +29,15 @@ class StatisticsWindow(QtGui.QDialog):
 		uic.loadUi(os.path.join(os.path.dirname(os.path.abspath(__file__)),"statisticsview.ui"), self)
 		self._positionWindow()
 
-		self.queryDatabase=None
-
 		self.idleTimer=QtCore.QTimer()
 		self.idleTimer.start(3000)
 
 		self.queryString="select AbsEventStart from metadata where ProcessingStatus='normal' order by AbsEventStart ASC"
 		self.queryData=[]
 		self.totalEvents=0
+
+		self.qWorker=None
+		self.qThread=QtCore.QThread()
 
 		# Set QLabel properties
 		self.neventsLabel.setTextInteractionFlags(QtCore.Qt.TextSelectableByMouse)
@@ -51,15 +54,25 @@ class StatisticsWindow(QtGui.QDialog):
 		"""
 			Open a specific database file.
 		"""
-		self.queryDatabase=sqlite.sqlite3MDIO()
-		self.queryDatabase.openDB(dbfile)
+		self.qWorker=sqlworker.sqlQueryWorker(dbfile)
+	
+		# Connect signals and slots
+		self.qWorker.resultsReady2.connect(self.OnDataReady)
+
+		self.qWorker.moveToThread(self.qThread)
+	
+		self.qWorker.finished.connect(self.qThread.quit)
+
+		self.qThread.start()
+
+		# Query the DB
+		self._updatequery()
 
 		# Idle processing
 		QtCore.QObject.connect(self.idleTimer, QtCore.SIGNAL('timeout()'), self.OnAppIdle)
 
 	def closeDB(self):
-		if self.queryDatabase:
-			self.queryDatabase.closeDB()
+		pass
 
 	def _positionWindow(self):
 		"""
@@ -70,20 +83,32 @@ class StatisticsWindow(QtGui.QDialog):
 		# self.move( (-screen.width()/2)+200, -screen.height()/2 )
 
 	def _updatequery(self):
-		try:
-			self.queryData=np.array(self.queryDatabase.queryDB(self.queryString)).flatten()
+		self.qThread.start()
+		QtCore.QMetaObject.invokeMethod(self.qWorker, 'queryDB2', Qt.QueuedConnection, 
+				QtCore.Q_ARG(str, self.queryString),
+				QtCore.Q_ARG(str, "select ProcessingStatus from metadata") 
+			)
+		self.queryRunning=True
 
-			self.totalEvents=len( self.queryDatabase.queryDB("select ProcessingStatus from metadata") )
-			c=self._caprate()
+	def OnDataReady(self, res1, res2, errorstr):
+		if not errorstr:
+			try:
+				self.queryData=np.hstack(res1)
+				self.totalEvents=len( res2 )
 
-			self.neventsLabel.setText( str(self.totalEvents) )
-			self.errorrateLabel.setText( str(round(100.*(1 - len(self.queryData)/float(self.totalEvents)), 2)) + ' %' )
-			self.caprateLabel.setText( str(c[0]) + " &#177; " + str(c[1]) + " s<sup>-1</sup>" )
-			self.elapsedtimeLabel.setText( self._formatelapsedtime() )
-		except ZeroDivisionError:
-			pass
-		except:
-			raise
+				c=self._caprate()
+
+				self.neventsLabel.setText( str(self.totalEvents) )
+				self.errorrateLabel.setText( str(round(100.*(1 - len(self.queryData)/float(self.totalEvents)), 2)) + ' %' )
+				self.caprateLabel.setText( str(c[0]) + " &#177; " + str(c[1]) + " s<sup>-1</sup>" )
+				self.elapsedtimeLabel.setText( self._formatelapsedtime() )
+
+				self.queryRunning=False
+			except ZeroDivisionError:
+				print "zero"
+				pass
+			except:
+				raise
 
 	def _caprate(self):
 		if len(self.queryData) < 200:
@@ -132,11 +157,13 @@ class StatisticsWindow(QtGui.QDialog):
 		return a * np.exp(-t/tau)
 
 	def OnAppIdle(self):
-		self._updatequery()
+		if not self.queryRunning:
+			self._updatequery()
 
 if __name__ == '__main__':
 	from os.path import expanduser
-	dbpath=expanduser('~')+'/Research/Experiments/PEG29EBSRefData/20120323/singleChan/'
+	dbpath=expanduser('~')+'/Research/Experiments/Nanoclusters/PW9O34/20140916/m120mV1/'
+	# dbpath=expanduser('~')+'/Research/Experiments/PEG29EBSRefData/20120323/singleChan/'
 
 	app = QtGui.QApplication(sys.argv)
 	dmw = StatisticsWindow()
