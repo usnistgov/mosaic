@@ -21,13 +21,10 @@ math-iface:
 tests:
 	sh install-test-sh
 	
-dist:
-	python setup.py sdist
+bin-dist:
 	sh pyinstaller-sh
+	python setup.py sdist
 
-distclean:
-	rm -rf pyinstaller/dist/*
-	rm -rf pyinstaller/build/
 		
 
 clean-math-iface:
