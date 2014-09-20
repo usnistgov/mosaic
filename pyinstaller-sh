@@ -6,9 +6,43 @@ if [ $plat == 'Darwin' ]; then
         export FFLAGS="-ff2c"
 fi
 
+ver=$(<version)
+read -d '' info1 <<-"EOF"
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CFBundleIdentifier</key>
+	<string>pyEventAnalysis</string>
+	<key>CFBundleShortVersionString</key>
+	<string>
+EOF
+read -d '' info2 <<-"EOF"
+	</string>
+	<key>CFBundleExecutable</key>
+	<string>MacOS/pyEventAnalysis</string>
+	<key>CFBundleName</key>
+	<string>pyEventAnalysis</string>
+	<key>NSHighResolutionCapable</key>
+	<string>True</string>
+	<key>CFBundleInfoDictionaryVersion</key>
+	<string>6.0</string>
+	<key>CFBundleDisplayName</key>
+	<string>pyEventAnalysis</string>
+	<key>CFBundleIconFile</key>
+	<string>icon-windowed.icns</string>
+	<key>CFBundlePackageType</key>
+	<string>APPL</string>
+	<key>LSBackgroundOnly</key>
+	<true/>
+</dict>
+</plist>
+EOF
+infoplist="$info1$ver$info2"
+
 cd pyinstaller
 rm -rf dist/*
 pyinstaller pyEventAnalysis.spec
-cp Info.plist dist/pyEventAnalysis.app/Contents/
+echo ${infoplist}>dist/pyEventAnalysis.app/Contents/Info.plist
 cd ..
 

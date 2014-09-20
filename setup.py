@@ -2,9 +2,15 @@ from distutils.core import setup
 from Cython.Build import cythonize
 import numpy
 
+def read_version():
+    with open('version', 'r') as f:
+        a=f.read()
+
+    return a.rstrip()
+
 setup(
     name='pyEventAnalysis',
-    version='1.0.0a6',
+    version=read_version(),
     author='Arvind Balijepalli',
     author_email='arvind.balijepalli@nist.gov',
     packages=[

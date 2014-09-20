@@ -13,8 +13,7 @@ exe = EXE(pyz,
           debug=False,
           strip=None,
           upx=True,
-          console=False,
-          icon='logo.icns' )
+          console=False )
 coll = COLLECT(exe,
                a.binaries,
                Tree('../qtgui/ui', prefix='ui'),
