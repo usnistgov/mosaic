@@ -4,9 +4,9 @@ import numpy
 
 def read_version():
     with open('version', 'r') as f:
-        a=f.read()
+        ver=f.read()
 
-    return a.rstrip()
+    return ver.rstrip()
 
 setup(
     name='pyEventAnalysis',
@@ -36,13 +36,13 @@ setup(
             'mathematica/nanoporeAnalysis.m', 
             'mathematica/Util.m', 
             'Makefile',
-            'qtgui/SettingsWindow.ui',
-            'qtgui/trajview/trajviewui.ui',
-            'qtgui/advancedsettings/advancedSettingsDialog.ui',
-            'qtgui/consolelog/consoleDialog.ui',
-            'qtgui/blockdepthview/blockdepthview.ui',
-            'qtgui/statisticsview/statisticsview.ui',
-            'qtgui/fiteventsview/fiteventsview.ui'
+            'qtgui/ui/SettingsWindow.ui',
+            'qtgui/ui/trajviewui.ui',
+            'qtgui/ui/advancedSettingsDialog.ui',
+            'qtgui/ui/consoleDialog.ui',
+            'qtgui/ui/blockdepthview.ui',
+            'qtgui/ui/statisticsview.ui',
+            'qtgui/ui/fiteventsview.ui'
             ],
     url='http://pypi.python.org/pypi/pyEventAnalysis/',
     license='LICENSE.txt',
