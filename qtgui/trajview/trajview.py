@@ -10,6 +10,7 @@ from PyQt4 import QtCore, QtGui, uic
 import pyeventanalysis.abfTrajIO as abf
 import pyeventanalysis.qdfTrajIO as qdf
 from pyeventanalysis.metaTrajIO import FileNotFoundError, EmptyDataPipeError
+from  qtgui.resource_path import resource_path
 
 import matplotlib.ticker as ticker
 # from qtgui.trajview.trajviewui import Ui_Dialog
@@ -21,7 +22,8 @@ class TrajectoryWindow(QtGui.QDialog):
 
 		super(TrajectoryWindow, self).__init__(parent)
 
-		uic.loadUi(os.path.join(os.path.dirname(os.path.abspath(__file__)),"trajviewui.ui"), self)
+		# uic.loadUi(os.path.join(os.path.dirname(os.path.abspath(__file__)),"trajviewui.ui"), self)
+		uic.loadUi(resource_path("trajviewui.ui"), self)
 		
 		# Add a toolbar the matplolib widget
 		self.mpl_hist.addToolbar()

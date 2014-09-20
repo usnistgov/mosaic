@@ -8,6 +8,7 @@ import webbrowser
 
 from PyQt4 import QtCore, QtGui, uic
 from qtgui.redirectSTDOUT import redirectSTDOUT
+from  qtgui.resource_path import resource_path
 import qtgui.EBSStateFileDict
 import pyeventanalysis.settings
 # import AnalysisSettings
@@ -16,7 +17,7 @@ import qtgui.trajview.trajview
 import qtgui.advancedsettings.advancedsettings
 import qtgui.blockdepthview.blockdepthview
 import qtgui.statisticsview.statisticsview
-import qtgui.consolelog.consolelog
+# import qtgui.consolelog.consolelog
 import qtgui.fiteventsview.fiteventsview
 import qtgui.datamodel
 
@@ -24,7 +25,10 @@ class settingsview(QtGui.QMainWindow):
 	def __init__(self, parent = None):
 		super(settingsview, self).__init__(parent)
 
-		uic.loadUi(os.path.join(os.path.dirname(os.path.abspath(__file__)),"SettingsWindow.ui"), self)
+		# uic.loadUi(os.path.join(os.path.dirname(os.path.abspath(__file__)),"SettingsWindow.ui"), self)
+		uic.loadUi(resource_path("SettingsWindow.ui"), self)
+		
+	
 		# self.setupUi(self)
 
 		self.setMenuBar(self.menubar)
@@ -37,7 +41,7 @@ class settingsview(QtGui.QMainWindow):
 		# setup handles and data structs for other application windows
 		self.trajViewerWindow = qtgui.trajview.trajview.TrajectoryWindow(parent=self)
 		self.advancedSettingsDialog = qtgui.advancedsettings.advancedsettings.AdvancedSettingsDialog(parent=self)
-		self.consoleLog = qtgui.consolelog.consolelog.AnalysisLogDialog(parent=self)
+		# self.consoleLog = qtgui.consolelog.consolelog.AnalysisLogDialog(parent=self)
 		self.blockDepthWindow = qtgui.blockdepthview.blockdepthview.BlockDepthWindow(parent=self)
 		self.statisticsView = qtgui.statisticsview.statisticsview.StatisticsWindow(parent=self)
 		self.fitEventsView = qtgui.fiteventsview.fiteventsview.FitEventWindow(parent=self)

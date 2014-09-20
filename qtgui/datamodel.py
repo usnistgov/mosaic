@@ -1,4 +1,5 @@
 import json
+import os
 
 import pyeventanalysis.settings
 
@@ -14,6 +15,7 @@ import pyeventanalysis.abfTrajIO
 from pyeventanalysis.besselLowpassFilter import *
 import pyeventanalysis.waveletDenoiseFilter
 from pyeventanalysis.metaTrajIO import FileNotFoundError, EmptyDataPipeError
+from  qtgui.resource_path import resource_path
 
 class guiDataModel(dict):
 	def __init__(self):
@@ -134,7 +136,8 @@ class guiDataModel(dict):
 		if self["DataFilesPath"]:
 			self.jsonSettingsObj=pyeventanalysis.settings.settings(self["DataFilesPath"])
 		else:
-			self.jsonSettingsObj=pyeventanalysis.settings.settings(".")
+			# print "res_path", 
+			self.jsonSettingsObj=pyeventanalysis.settings.settings(resource_path(".settings"))
 
 		self._updateSettings()
 

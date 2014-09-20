@@ -13,7 +13,7 @@ from PyQt4.QtCore import Qt
 import pyeventanalysis.sqlite3MDIO as sqlite
 import qtgui.autocompleteedit as autocomplete
 import qtgui.sqlQueryWorker as sqlworker
-
+from  qtgui.resource_path import resource_path
 import matplotlib.ticker as ticker
 # from qtgui.trajview.trajviewui import Ui_Dialog
 
@@ -28,7 +28,10 @@ class BlockDepthWindow(QtGui.QDialog):
 
 		super(BlockDepthWindow, self).__init__(parent)
 
-		uic.loadUi(os.path.join(os.path.dirname(os.path.abspath(__file__)),"blockdepthview.ui"), self)
+
+		# uic.loadUi(os.path.join(os.path.dirname(os.path.abspath(__file__)),"blockdepthview.ui"), self)
+		uic.loadUi(resource_path("blockdepthview.ui"), self)
+
 		self._positionWindow()
 
 		self.idleTimer=QtCore.QTimer()

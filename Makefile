@@ -21,6 +21,15 @@ math-iface:
 tests:
 	sh install-test-sh
 	
+dist:
+	python setup.py sdist
+	sh pyinstaller-sh
+
+distclean:
+	rm -rf pyinstaller/dist/*
+	rm -rf pyinstaller/build/
+		
+
 clean-math-iface:
 	rm ${mathbase}/nanoporeAnalysis.m
 	rm ${mathbase}/Util.m

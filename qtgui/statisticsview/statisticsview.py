@@ -13,6 +13,7 @@ from PyQt4 import QtCore, QtGui, uic
 from PyQt4.QtCore import Qt
 
 import pyeventanalysis.sqlite3MDIO as sqlite
+from  qtgui.resource_path import resource_path
 import qtgui.sqlQueryWorker as sqlworker
 
 css = """QLabel {
@@ -26,7 +27,9 @@ class StatisticsWindow(QtGui.QDialog):
 
 		super(StatisticsWindow, self).__init__(parent)
 
-		uic.loadUi(os.path.join(os.path.dirname(os.path.abspath(__file__)),"statisticsview.ui"), self)
+		# uic.loadUi(os.path.join(os.path.dirname(os.path.abspath(__file__)),"statisticsview.ui"), self)
+		uic.loadUi(resource_path("statisticsview.ui"), self)
+		
 		self._positionWindow()
 
 		self.idleTimer=QtCore.QTimer()

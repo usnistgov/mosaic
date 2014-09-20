@@ -11,6 +11,7 @@ from PyQt4 import QtCore, QtGui, uic
 
 import pyeventanalysis.sqlite3MDIO as sqlite
 import qtgui.autocompleteedit as autocomplete
+from  qtgui.resource_path import resource_path
 
 import matplotlib.ticker as ticker
 # from qtgui.trajview.trajviewui import Ui_Dialog
@@ -21,7 +22,8 @@ class FitEventWindow(QtGui.QDialog):
 
 		super(FitEventWindow, self).__init__(parent)
 
-		uic.loadUi(os.path.join(os.path.dirname(os.path.abspath(__file__)),"fiteventsview.ui"), self)
+		# uic.loadUi(os.path.join(os.path.dirname(os.path.abspath(__file__)),"fiteventsview.ui"), self)
+		uic.loadUi(resource_path("fiteventsview.ui"), self)
 		self._positionWindow()
 
 		self.eventIndex=0
@@ -51,14 +53,14 @@ class FitEventWindow(QtGui.QDialog):
 		"""
 			Open the latest sqlite file in a directory
 		"""
-		self.openDBFile(glob.glob(dbpath+"/*sqlite")[-1])
+		self.openDBFile(glob.glob(dbpath+"/*sqlite")[-1], FskHz)
 
 	def openDBFile(self, dbfile, FskHz):
 		self.queryDatabase=sqlite.sqlite3MDIO()
 		self.queryDatabase.openDB(dbfile)
 
 		self.FskHz=float(FskHz)
-		print self.FskHz
+		# print self.FskHz
 		self._updatequery()
 		self.update_graph()
 
@@ -190,6 +192,7 @@ class FitEventWindow(QtGui.QDialog):
 				self.queryData=self.queryDatabase.queryDB(self.queryString)
 
 				if len(self.queryData)>=self.viewerLimit: self.EndOfData=True
+
 				# update the QLineEdit validator
 				self.eventIndexLineEdit.setValidator( QtGui.QIntValidator(0, len(self.queryData)-1, self) )
 				self.eventIndexHorizontalSlider.setMaximum( len(self.queryData)-1 )

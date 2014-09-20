@@ -10,6 +10,7 @@ from PyQt4 import QtCore, QtGui, uic
 import pyeventanalysis.abfTrajIO as abf
 import pyeventanalysis.qdfTrajIO as qdf
 from pyeventanalysis.metaTrajIO import FileNotFoundError, EmptyDataPipeError
+from  qtgui.resource_path import resource_path
 
 # from advancedSettingsDialog import Ui_advancedSettingsDialog
 
@@ -18,7 +19,8 @@ class AdvancedSettingsDialog(QtGui.QDialog):
 	def __init__(self, parent = None):
 		super(AdvancedSettingsDialog, self).__init__(parent)
 
-		uic.loadUi(os.path.join(os.path.dirname(os.path.abspath(__file__)),"advancedSettingsDialog.ui"), self)
+		# uic.loadUi(os.path.join(os.path.dirname(os.path.abspath(__file__)),"advancedSettingsDialog.ui"), self)
+		uic.loadUi(resource_path("advancedSettingsDialog.ui"), self)
 		# self.setupUi(self)
 		self._positionWindow()
 
