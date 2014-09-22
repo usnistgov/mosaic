@@ -10,7 +10,7 @@ from PyQt4 import QtCore, QtGui, uic
 import pyeventanalysis.abfTrajIO as abf
 import pyeventanalysis.qdfTrajIO as qdf
 from pyeventanalysis.metaTrajIO import FileNotFoundError, EmptyDataPipeError
-from  qtgui.resource_path import resource_path
+from utilities.resource_path import resource_path
 
 # from advancedSettingsDialog import Ui_advancedSettingsDialog
 
@@ -31,8 +31,10 @@ class AdvancedSettingsDialog(QtGui.QDialog):
 		"""
 			Position settings window at the top left corner
 		"""
-		screen = QtGui.QDesktopWidget().screenGeometry()
-		self.setGeometry(405, 475, 500, 300)
+		if sys.platform=='win32':
+			self.setGeometry(425, 475, 500, 300)
+		else:
+			self.setGeometry(405, 475, 500, 300)
 		# self.move( (-screen.width()/2)+200, -screen.height()/2 )
 
 	def updateSettingsString(self, str):

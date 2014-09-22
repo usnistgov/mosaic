@@ -4,7 +4,6 @@ import sys
 import math
 import os
 import csv
-import glob
 import sqlite3
 
 import numpy as np
@@ -13,7 +12,7 @@ from PyQt4 import QtCore, QtGui, uic
 from PyQt4.QtCore import Qt
 
 import pyeventanalysis.sqlite3MDIO as sqlite
-from  qtgui.resource_path import resource_path
+from utilities.resource_path import resource_path, last_file_in_directory
 import qtgui.sqlQueryWorker as sqlworker
 
 css = """QLabel {
@@ -51,7 +50,7 @@ class StatisticsWindow(QtGui.QDialog):
 		"""
 			Open the latest sqlite file in a directory
 		"""
-		self.openDBFile(glob.glob(dbpath+"/*sqlite")[-1])
+		self.openDBFile( last_file_in_directory(dbpath, "*sqlite") )
 
 	def openDBFile(self, dbfile):
 		"""
@@ -81,8 +80,10 @@ class StatisticsWindow(QtGui.QDialog):
 		"""
 			Position settings window at the top left corner
 		"""
-		screen = QtGui.QDesktopWidget().screenGeometry()
-		self.setGeometry(1050, 0, 375, 200)
+		if sys.platform=='win32':
+			self.setGeometry(1050, 30, 375, 200)
+		else:
+			self.setGeometry(1050, 0, 375, 200)
 		# self.move( (-screen.width()/2)+200, -screen.height()/2 )
 
 	def _updatequery(self):
@@ -165,8 +166,9 @@ class StatisticsWindow(QtGui.QDialog):
 
 if __name__ == '__main__':
 	from os.path import expanduser
-	dbpath=expanduser('~')+'/Research/Experiments/Nanoclusters/PW9O34/20140916/m120mV1/'
+	# dbpath=expanduser('~')+'/Research/Experiments/Nanoclusters/PW9O34/20140916/m120mV1/'
 	# dbpath=expanduser('~')+'/Research/Experiments/PEG29EBSRefData/20120323/singleChan/'
+	dbpath='C:\\temp\\'
 
 	app = QtGui.QApplication(sys.argv)
 	dmw = StatisticsWindow()

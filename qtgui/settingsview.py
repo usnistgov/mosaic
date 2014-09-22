@@ -8,9 +8,9 @@ import webbrowser
 
 from PyQt4 import QtCore, QtGui, uic
 from qtgui.redirectSTDOUT import redirectSTDOUT
-from  qtgui.resource_path import resource_path
+from utilities.resource_path import resource_path, format_path
 import qtgui.EBSStateFileDict
-import pyeventanalysis.settings
+# import pyeventanalysis.settings
 # import AnalysisSettings
 # from qtgui.SettingsWindow import Ui_SettingsWindow
 import qtgui.trajview.trajview
@@ -28,7 +28,6 @@ class settingsview(QtGui.QMainWindow):
 		# uic.loadUi(os.path.join(os.path.dirname(os.path.abspath(__file__)),"SettingsWindow.ui"), self)
 		uic.loadUi(resource_path("SettingsWindow.ui"), self)
 		
-	
 		# self.setupUi(self)
 
 		self.setMenuBar(self.menubar)
@@ -45,6 +44,7 @@ class settingsview(QtGui.QMainWindow):
 		self.blockDepthWindow = qtgui.blockdepthview.blockdepthview.BlockDepthWindow(parent=self)
 		self.statisticsView = qtgui.statisticsview.statisticsview.StatisticsWindow(parent=self)
 		self.fitEventsView = qtgui.fiteventsview.fiteventsview.FitEventWindow(parent=self)
+		
 
 		self.showBlockDepthWindow=False
 		self.showFitEventsWindow=False
@@ -126,7 +126,8 @@ class settingsview(QtGui.QMainWindow):
 			Position settings window at the top left corner
 		"""
 		screen = QtGui.QDesktopWidget().screenGeometry()
-		self.move( -screen.width()/2, -screen.height()/2 )
+		# self.move( -screen.width()/2, -screen.height()/2 )
+		self.move( screen.x(), screen.y() )
 
 	def _updateControls(self):
 		self.updateDialogs=False
@@ -138,9 +139,9 @@ class settingsview(QtGui.QMainWindow):
 					"ABF" : self.datTypeComboBox.findText("ABF")
 				}
 		path=model["DataFilesPath"] 
-		if len(glob.glob(str(path)+'/*qdf')) > 0:
+		if len(glob.glob(format_path( str(path)+'/*qdf') )) > 0:
 			self.datTypeComboBox.setCurrentIndex( datidx["QDF"] )
-		elif len(glob.glob(str(path)+'/*abf')) > 0:
+		elif len(glob.glob( format_path(str(path)+'/*abf') )) > 0:
 			self.datTypeComboBox.setCurrentIndex( datidx["ABF"] )
 
 		# store the  data type in the trajviewer data struct
@@ -212,7 +213,7 @@ class settingsview(QtGui.QMainWindow):
 		path=self.analysisDataModel["DataFilesPath"] 
 
 		if path:
-			ebsFile=glob.glob(str(path)+'/*_?tate.txt')
+			ebsFile=glob.glob(format_path(str(path)+'/*_?tate.txt'))
 
 			if len(ebsFile) > 0:
 				ebsState=qtgui.EBSStateFileDict.EBSStateFileDict(ebsFile[0])
@@ -484,7 +485,7 @@ class settingsview(QtGui.QMainWindow):
 	def OnAdvancedModeMenuAction(self):
 		if self.advancedModeCheckBox.isChecked():
 			self.advancedSettingsDialog.show()
-		 	self.advancedSettingsDialog.raise_()
+			self.advancedSettingsDialog.raise_()
 
 	def OnShowStatisticsWindow(self):
 		self.statisticsView.show()
@@ -558,10 +559,14 @@ class settingsview(QtGui.QMainWindow):
 		self.advancedModeCheckBox.setChecked(False)
 		self._setEnableSettingsWidgets(True)
 
-if __name__ == '__main__':
+
+def main():
 	app = QtGui.QApplication(sys.argv)
 	dmw = settingsview()
 	dmw.show()
 	dmw.raise_()
 	sys.exit(app.exec_())
+
+if __name__ == '__main__':
+	main()
 

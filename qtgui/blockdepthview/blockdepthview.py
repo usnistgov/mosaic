@@ -5,7 +5,6 @@ import sys
 import os
 import gc
 import csv
-import glob
 
 from PyQt4 import QtCore, QtGui, uic
 from PyQt4.QtCore import Qt
@@ -13,7 +12,7 @@ from PyQt4.QtCore import Qt
 import pyeventanalysis.sqlite3MDIO as sqlite
 import qtgui.autocompleteedit as autocomplete
 import qtgui.sqlQueryWorker as sqlworker
-from  qtgui.resource_path import resource_path
+from utilities.resource_path import resource_path, last_file_in_directory
 import matplotlib.ticker as ticker
 # from qtgui.trajview.trajviewui import Ui_Dialog
 
@@ -74,7 +73,7 @@ class BlockDepthWindow(QtGui.QDialog):
 		"""
 			Open the latest sqlite file in a directory
 		"""
-		self.openDBFile(glob.glob(dbpath+"/*sqlite")[-1])
+		self.openDBFile( last_file_in_directory(dbpath, "*sqlite") )
 
 	def openDBFile(self, dbfile):
 		"""
@@ -105,7 +104,10 @@ class BlockDepthWindow(QtGui.QDialog):
 			Position settings window at the top left corner
 		"""
 		screen = QtGui.QDesktopWidget().screenGeometry()
-		self.setGeometry(405, 0, 500, 400)
+		if sys.platform=='win32':
+			self.setGeometry(425, 30, 500, 400)
+		else:
+			self.setGeometry(405, 0, 500, 400)
 		# self.move( (-screen.width()/2)+200, -screen.height()/2 )
 
 
@@ -233,8 +235,9 @@ class BlockDepthWindow(QtGui.QDialog):
 
 if __name__ == '__main__':
 	from os.path import expanduser
-	dbpath=expanduser('~')+'/Research/Experiments/Nanoclusters/PW9O34/20140916/m120mV1/'
+	# dbpath=expanduser('~')+'/Research/Experiments/Nanoclusters/PW9O34/20140916/m120mV1/'
 	# dbpath=expanduser('~')+'/Research/Experiments/PEG29EBSRefData/20120323/singleChan/'
+	dbpath='C:\\temp\\'
 
 	app = QtGui.QApplication(sys.argv)
 	dmw = BlockDepthWindow()

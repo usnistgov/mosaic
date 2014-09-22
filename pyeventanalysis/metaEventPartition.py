@@ -35,6 +35,7 @@ import singleStepEvent as sse
 import stepResponseAnalysis as sra 
 import metaTrajIO
 import sqlite3MDIO
+from utilities.resource_path import format_path
 
 # custom errors
 class ExcessiveDriftError(Exception):
@@ -89,7 +90,9 @@ class metaEventPartition(object):
 		except ValueError as err:
 			raise commonExceptions.SettingsTypeError( err )
 
-		self.logFileHnd=open(self.trajDataObj.datPath+'/eventProcessing.log','w')
+		sys.stdout.flush()
+
+		self.logFileHnd=open(format_path(self.trajDataObj.datPath+'/eventProcessing.log'),'w')
 		
 		self.tEventProcObj=self.eventProcHnd([], self.trajDataObj.FsHz, eventstart=0,eventend=0, baselinestats=[ 0,0,0 ], algosettingsdict=self.eventProcSettingsDict.copy(), savets=False, absdatidx=0, datafileHnd=None )
 

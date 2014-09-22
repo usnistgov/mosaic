@@ -10,7 +10,7 @@ from PyQt4 import QtCore, QtGui, uic
 import pyeventanalysis.abfTrajIO as abf
 import pyeventanalysis.qdfTrajIO as qdf
 from pyeventanalysis.metaTrajIO import FileNotFoundError, EmptyDataPipeError
-from  qtgui.resource_path import resource_path
+from utilities.resource_path import resource_path
 
 import matplotlib.ticker as ticker
 # from qtgui.trajview.trajviewui import Ui_Dialog
@@ -56,8 +56,10 @@ class TrajectoryWindow(QtGui.QDialog):
 		"""
 			Position settings window at the top left corner
 		"""
-		screen = QtGui.QDesktopWidget().screenGeometry()
-		self.setGeometry(405, 0, 500, 400)
+		if sys.platform=='win32':
+			self.setGeometry(425, 30, 500, 400)
+		else:
+			self.setGeometry(405, 0, 500, 400)
 		# self.move( (-screen.width()/2)+200, -screen.height()/2 )
 
 	@property

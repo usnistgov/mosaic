@@ -1,14 +1,14 @@
 from PyQt4.QtCore import *
 from PyQt4.QtGui import *
 from matplotlib.backends.backend_qt4agg import FigureCanvasQTAgg as FigureCanvas
-from matplotlib.backends.backend_qt4agg import NavigationToolbar2QTAgg #as NavigationToolbar
+from matplotlib.backends.backend_qt4agg import NavigationToolbar2QT #Agg #as NavigationToolbar
 from matplotlib.figure import Figure
 
-class NavigationToolbar( NavigationToolbar2QTAgg ):
+class NavigationToolbar( NavigationToolbar2QT ):
 	picked=pyqtSignal(int,name='picked')
 
 	def __init__(self, canvas, parent ):
-		NavigationToolbar2QTAgg.__init__(self,canvas,parent)
+		NavigationToolbar2QT.__init__(self,canvas,parent)
 		self.clearButtons=[]
 		# Search through existing buttons
 		# next use for placement of custom button

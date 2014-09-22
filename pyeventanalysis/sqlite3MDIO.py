@@ -5,6 +5,7 @@ import datetime
 
 import numpy
 import metaMDIO
+from utilities.resource_path import format_path
 
 class data_record(dict):
 	"""
@@ -59,7 +60,7 @@ class sqlite3MDIO(metaMDIO.metaMDIO):
 
 		dbTimeout=kwargs.pop('timeout', 11.0)
 
-		self.dbFilename=self.dbPath+'/'+'eventMD-' +str(datetime.datetime.now().strftime('%Y%m%d-%H%M%S'))+'.sqlite'
+		self.dbFilename=format_path(self.dbPath+'/'+'eventMD-' +str(datetime.datetime.now().strftime('%Y%m%d-%H%M%S'))+'.sqlite')
 		self.db = sqlite3.connect(self.dbFilename, detect_types=sqlite3.PARSE_DECLTYPES, timeout=dbTimeout)
 
 		self._setuptables()

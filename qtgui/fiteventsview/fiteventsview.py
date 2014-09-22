@@ -4,14 +4,13 @@ import numpy as np
 import sys
 import os
 import csv
-import glob
 import sqlite3
 
 from PyQt4 import QtCore, QtGui, uic
 
 import pyeventanalysis.sqlite3MDIO as sqlite
 import qtgui.autocompleteedit as autocomplete
-from  qtgui.resource_path import resource_path
+from utilities.resource_path import resource_path, last_file_in_directory
 
 import matplotlib.ticker as ticker
 # from qtgui.trajview.trajviewui import Ui_Dialog
@@ -53,7 +52,7 @@ class FitEventWindow(QtGui.QDialog):
 		"""
 			Open the latest sqlite file in a directory
 		"""
-		self.openDBFile(glob.glob(dbpath+"/*sqlite")[-1], FskHz)
+		self.openDBFile( last_file_in_directory(dbpath, "*sqlite"), FskHz)
 
 	def openDBFile(self, dbfile, FskHz):
 		self.queryDatabase=sqlite.sqlite3MDIO()
@@ -229,7 +228,8 @@ class FitEventWindow(QtGui.QDialog):
 if __name__ == '__main__':
 	from os.path import expanduser
 	# dbpath=expanduser('~')+'/Research/Experiments/PEG29EBSRefData/20120323/singleChan/'
-	dbpath=expanduser('~')+'/Research/Experiments/Nanoclusters/PW9O34/20140916/m120mV1/'
+	# dbpath=expanduser('~')+'/Research/Experiments/Nanoclusters/PW9O34/20140916/m120mV1/'
+	dbpath='C:\\temp\\'
 
 	app = QtGui.QApplication(sys.argv)
 	dmw = FitEventWindow()

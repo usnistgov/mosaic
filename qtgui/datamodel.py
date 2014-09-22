@@ -15,7 +15,7 @@ import pyeventanalysis.abfTrajIO
 from pyeventanalysis.besselLowpassFilter import *
 import pyeventanalysis.waveletDenoiseFilter
 from pyeventanalysis.metaTrajIO import FileNotFoundError, EmptyDataPipeError
-from  qtgui.resource_path import resource_path
+from utilities.resource_path import resource_path
 
 class guiDataModel(dict):
 	def __init__(self):
@@ -283,14 +283,14 @@ class guiDataModel(dict):
 if __name__ == "__main__":
 	g=guiDataModel()
 
-	g["DataFilesPath"]="/Users/arvind/Research/Experiments/PEG29EBSRefData/20120323/singleChan"
-	g["DataFilesType"]="QDF"
-	g["Rfb"]=9.1E+9
-	g["Cfb"]=1.07E-12
+	# g["DataFilesPath"]="/Users/arvind/Research/Experiments/PEG29EBSRefData/20120323/singleChan"
+	# g["DataFilesType"]="QDF"
+	# g["Rfb"]=9.1E+9
+	# g["Cfb"]=1.07E-12
 
-	q=g.GenerateDataFilesObject(None)
-	print q.formatsettings()
-	print q.popdata(10)
+	# q=g.GenerateDataFilesObject(None)
+	# print q.formatsettings()
+	# print q.popdata(10)
 
 
 	print g.GenerateSettingsView("CurrentThreshold", "stepResponseAnalysis", None)

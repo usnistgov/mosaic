@@ -25,9 +25,11 @@ setup(
             'qtgui.consolelog',
             'qtgui.blockdepthview',
             'qtgui.statisticsview',
-            'qtgui.fiteventsview'
+            'qtgui.fiteventsview',
+            'utilities'
             ],
     scripts=[
+            'version',
             '.settings',
             'install-test-sh',
             'bin/analysis.py', 
@@ -39,14 +41,14 @@ setup(
             'qtgui/ui/SettingsWindow.ui',
             'qtgui/ui/trajviewui.ui',
             'qtgui/ui/advancedSettingsDialog.ui',
-            'qtgui/ui/consoleDialog.ui',
             'qtgui/ui/blockdepthview.ui',
             'qtgui/ui/statisticsview.ui',
-            'qtgui/ui/fiteventsview.ui'
+            'qtgui/ui/fiteventsview.ui',
+            'pyinstaller/pyEventAnalysis.spec'
             ],
     url='http://pypi.python.org/pypi/pyEventAnalysis/',
     license='LICENSE.txt',
-    description='Nanopore analysis.',
+    description='Nanopore data analysis.',
     long_description=open('README.txt').read(),
     include_dirs=[numpy.get_include()],
 )

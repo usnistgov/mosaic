@@ -20,6 +20,7 @@ import glob
 import numpy as np
 
 import settings
+from utilities.resource_path import format_path, path_separator
 
 # define custom exceptions
 class IncompatibleArgumentsError(Exception):
@@ -95,12 +96,12 @@ class metaTrajIO(object):
 			try:
 				if hasattr(self, 'dirname') and hasattr(self,'nfiles'):
 					# N files from a directory
-					self.dataFiles=glob.glob(str(self.dirname)+"/"+str(self.filter))[:int(self.nfiles)]
+					self.dataFiles=glob.glob(format_path(str(self.dirname)+"/"+str(self.filter)))[:int(self.nfiles)]
 					delattr(self, 'dirname')
 					delattr(self, 'nfiles')
 				elif hasattr(self, 'dirname'):
 					# all files from a directory
-					self.dataFiles=glob.glob(str(self.dirname)+"/"+str(self.filter))
+					self.dataFiles=glob.glob(format_path(str(self.dirname)+"/"+str(self.filter)))
 					delattr(self, 'dirname')
 				else:
 					raise IncompatibleArgumentsError("Missing arguments: 'dirname' or 'fnames' must be supplied to initialize {0}".format(type(self).__name__))
@@ -111,7 +112,8 @@ class metaTrajIO(object):
 		self.nFiles = len(self.dataFiles)
 		self.fileFormat='N/A'
 		try:
-			self.datPath="/".join((self.dataFiles[0].split('/'))[:-1])
+			sep=path_separator()
+			self.datPath=format_path(sep.join((self.dataFiles[0].split( sep ))[:-1]))
 		except IndexError, err:
 			raise FileNotFoundError("Files not found.")
 

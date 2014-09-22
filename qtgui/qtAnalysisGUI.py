@@ -2,12 +2,15 @@ import sys
 import time
 import string
 import glob
+from  utilities.resource_path import format_path
 from sqlite3 import DatabaseError
 
 from PyQt4 import QtCore
+from PyQt4.QtCore import Qt
 from PyQt4 import QtGui
 
 import qtgui.settingsview
+import qtgui.analysisWorker as analysisworker
 
 from pyeventanalysis.metaTrajIO import FileNotFoundError
 
@@ -15,12 +18,14 @@ class qtAnalysisGUI(qtgui.settingsview.settingsview):
 	def __init__(self, parent = None):
 		super(qtAnalysisGUI, self).__init__(parent)
 
-		self.analysisObject=None
 		self.nDBFiles=0
 		self.startButtonClicked=False
 
-		self.analysisThreadObj=analysisThread(None)
 		self.idleTimer=QtCore.QTimer()
+
+		self.aWorker=None
+		self.aThread=None
+
 
 		self.idleTimer.start(5000)
 
@@ -30,9 +35,6 @@ class qtAnalysisGUI(qtgui.settingsview.settingsview):
 		QtCore.QObject.connect(self.actionOpen_Analysis, QtCore.SIGNAL('triggered()'), self.OnLoadAnalysis)
 		QtCore.QObject.connect(self.actionLoad_Data, QtCore.SIGNAL('triggered()'), self.OnSelectPath)
 		
-
-		QtCore.QObject.connect(self.analysisThreadObj, QtCore.SIGNAL('finished(bool)'), self.OnAnalysisFinished)
-
 		# Idle processing
 		QtCore.QObject.connect(self.idleTimer, QtCore.SIGNAL('timeout()'), self.OnAppIdle)
 
@@ -66,20 +68,35 @@ class qtAnalysisGUI(qtgui.settingsview.settingsview):
 
 					self.trajViewerWindow.hide()
 
-					self.analysisObject=self.analysisDataModel.GenerateAnalysisObject(
-						eventPartitionAlgo=str(self.partitionAlgorithmComboBox.currentText()), 
-						eventProcessingAlgo=str(self.processingAlgorithmComboBox.currentText()),
-						dataFilterAlgo=fltr
-					)
-
-					self.analysisThreadObj=analysisThread( self.analysisObject, parent=self )
-					self.analysisThreadObj.start()	
-
+					# Query the number of database files in the analysis directory
 					self.nDBFiles=len(self._getdbfiles())	
+
+					# setup the worker thread
+					self.aThread=QtCore.QThread(parent=self)
+					self.aWorker=analysisworker.analysisWorker(
+						self.analysisDataModel.GenerateAnalysisObject(
+								eventPartitionAlgo=str(self.partitionAlgorithmComboBox.currentText()), 
+								eventProcessingAlgo=str(self.processingAlgorithmComboBox.currentText()),
+								dataFilterAlgo=fltr
+							)
+						)
+					self.aWorker.moveToThread(self.aThread)
+
+					self.aWorker.analysisFinished.connect(self.OnAnalysisFinished)
+					
+					# Handle the threads finished signal
+					# self.aThread.finished.connect(self.OnThreadFinished)
+					# self.aThread.finished.connect(self.aThread.quit)
+
+					self.aThread.start()
+
+					# Start the analysis
+					QtCore.QMetaObject.invokeMethod(self.aWorker, 'startAnalysis', Qt.QueuedConnection)
 
 					self.startButtonClicked=True	
 			else:
-				self.analysisObject.Stop()
+				# Stop the analysis
+				QtCore.QMetaObject.invokeMethod(self.aWorker, 'stopAnalysis', Qt.QueuedConnection)
 
 				self.startAnalysisPushButton.setEnabled(False)
 				self.actionStart_Analysis.setEnabled(False)
@@ -101,7 +118,7 @@ class qtAnalysisGUI(qtgui.settingsview.settingsview):
 			self.startAnalysisPushButton.setText("Start Analysis")
 			self.actionStart_Analysis.setText("Start Analysis")
 
-	def OnAnalysisFinished(self, value):
+	def OnAnalysisFinished(self, value=True):
 		if value:
 			self._setEnableSettingsWidgets(True)
 			self._setEnableDataSettingsWidgets(True)
@@ -114,6 +131,10 @@ class qtAnalysisGUI(qtgui.settingsview.settingsview):
 			self.actionStart_Analysis.setEnabled(True)
 
 			self.analysisRunning=False
+
+			# reset the analysis workers
+			del self.aWorker
+			del self.aThread
 
 	def OnLoadAnalysis(self):
 		fd=QtGui.QFileDialog(parent=self, caption=QtCore.QString('Open Analysis Results'))
@@ -171,7 +192,7 @@ class qtAnalysisGUI(qtgui.settingsview.settingsview):
 		
 	def _getdbfiles(self):
 		path=self.analysisDataModel["DataFilesPath"]
-		return glob.glob(path+'/*sqlite')
+		return glob.glob(format_path(path+'/*sqlite'))
 
 	def _launchAnalysisWindows(self):
 		self.blockDepthWindow.openDBFile( self.DataFile )
@@ -202,9 +223,9 @@ class qtAnalysisGUI(qtgui.settingsview.settingsview):
 				self.DataFile=dbfiles[-1]
 				self._launchAnalysisWindows()
 				self.startButtonClicked=False
-		if self.analysisThreadObj.isFinished() and self.analysisRunning:
-			# print "finished"
-			self.OnAnalysisFinished(True)
+		# if self.aThread.isFinished() and self.analysisRunning:
+		# 	print "finished"
+		# 	self.OnAnalysisFinished(True)
 
 	def OnQuit(self):
 		if self.analysisRunning:
@@ -212,30 +233,19 @@ class qtAnalysisGUI(qtgui.settingsview.settingsview):
 		self.statisticsView.closeDB()
 		self.blockDepthWindow.closeDB()
 
-class analysisThread(QtCore.QThread):
-	def __init__(self, analysisObj, parent=None):
-		super(analysisThread, self).__init__(parent)
 
-		self.analysisObj=analysisObj
-
-	def run(self):
-		self.analysisObj.Run(forkProcess=True)
-		self.analysisObj.subProc.join()
-		self.exit()
-		self.emit(QtCore.SIGNAL("finished(bool)"), True)
-		# print "thread finished"
-
-
-if __name__ == '__main__':
-	# multiprocessing.freeze_support()
-	
+def main():
 	app = QtGui.QApplication(sys.argv)
 	dmw = qtAnalysisGUI()
 	dmw.show()
+	dmw.raise_()
 
 	# cleanup processing
 	app.connect(app, QtCore.SIGNAL("aboutToQuit()"), dmw.OnQuit)
-
-	dmw.raise_()
+	
 	sys.exit(app.exec_())
+
+if __name__ == '__main__':
+	# multiprocessing.freeze_support()
+	main()
 
