@@ -114,7 +114,7 @@ DecodeTimeSeries[ts_]:=ImportString[ImportString[ToString[ts],{"Base64","String"
 (*PrintMDKeys[FileNames["*sqlite","/Users/arvind/Research/Experiments/SBSTagsColumbia/dA6TP30odd/p100mV3/"][[-1]]]*)
 
 
-ts[dat_,FsKHz_]:=Transpose[{Range[0,Length[dat]-1]/FsKHz,dat}]
+ts[dat_,FsKHz_]:=Transpose[{Range[0,Length[dat]-1]/FsKHz,polarity[dat]*dat}]
 
 
 Options[PlotEvents]={AnalysisAlgorithm->"StepResponseAnalysis"};
@@ -140,15 +140,18 @@ Manipulate[plotmsa[q[[i]][[1]], ts[DecodeTimeSeries[q[[i]][[-1]]],FsKHz], {q[[i]
 
 (* ::Input:: *)
 (*Prolog->{Thick,Dashed,Darker[Red],*)
-(*Line[{{md[[3]],Abs[md[[1]]]},{md[[4]],Abs[md[[1]]]}}],*)
-(*Line[{{md[[3]],Abs[md[[2]]]},{md[[3]],Abs[md[[1]]]}}],*)
-(*Line[{{md[[4]],Abs[md[[2]]]},{md[[4]],Abs[md[[1]]]}}]*)
+(*Line[{{md[[3]],md[[1]]},{md[[4]],md[[1]]}}],*)
+(*Line[{{md[[3]],md[[2]]},{md[[3]],md[[1]]}}],*)
+(*Line[{{md[[4]],md[[2]]},{md[[4]],md[[1]]}}]*)
 (*}*)
+
+
+polarity[ts_]:=Sign[Mean[ts]]
 
 
 plotmsa[status_,ts_,md_,FsKHz_]:=Module[{t,a,\[Mu]1,\[Mu]2,\[Tau],b},
 Show[{
-ListPlot[Abs[ts],PlotRange->{-25,All},PlotStyle->Directive[RGBColor@@({41, 74,130}/255),Opacity[0.4]],PlotMarkers->{Automatic,14},Frame->True,FrameLabel->{Style["t (ms)",20,FontFamily->"Helvectica"],Style["|i| (pA)",20,FontFamily->"Helvectica"]},FrameTicksStyle->Directive[20,FontFamily->"Helvectica"]],
+ListPlot[ts,PlotRange->{-25,All},PlotStyle->Directive[RGBColor@@({41, 74,130}/255),Opacity[0.4]],PlotMarkers->{Automatic,14},Frame->True,FrameLabel->{Style["t (ms)",20,FontFamily->"Helvectica"],Style["i (pA)",20,FontFamily->"Helvectica"]},FrameTicksStyle->Directive[20,FontFamily->"Helvectica"]],
 ListPlot[{
 Table[{t,Evaluate[Abs[md[[1]]]+\!\(
 \*UnderoverscriptBox[\(\[Sum]\), \(i = 1\), \(Length[md[[2]]]\)]\((\(md[[2]]\)[[i]] HeavisideTheta[t - \(md[[3]]\)[[i]]])\)\)]},{t,ts[[1]][[1]],ts[[-1]][[1]],(1/FsKHz)/10}],
@@ -160,14 +163,14 @@ Table[{t,Evaluate[Abs[md[[1]]]+\!\(
 ]/;status=="normal"
  plotmsa[status_,ts_,md_,FsKHz_]:=Module[{t,a,\[Mu]1,\[Mu]2,\[Tau],b},
 Show[{
-ListPlot[Abs[ts],PlotRange->All,PlotStyle->Red,PlotMarkers->{Automatic,10},Frame->True,FrameLabel->{Style["t (ms)",20,FontFamily->"Helvectica"],Style["|i| (pA)",20,FontFamily->"Helvectica"]},FrameTicksStyle->Directive[20,FontFamily->"Helvectica"]]
+ListPlot[ts,PlotRange->All,PlotStyle->Red,PlotMarkers->{Automatic,10},Frame->True,FrameLabel->{Style["t (ms)",20,FontFamily->"Helvectica"],Style["i (pA)",20,FontFamily->"Helvectica"]},FrameTicksStyle->Directive[20,FontFamily->"Helvectica"]]
 },ImageSize->600]
 ]
 
 
 plotsra[status_,ts_,md_,FsKHz_]:=Module[{t,a,\[Mu]1,\[Mu]2,\[Tau],b},
 Show[{
-ListPlot[Abs[ts],PlotRange->{0,All},PlotStyle->Directive[RGBColor@@({41, 74,130}/255),Opacity[0.75]],PlotMarkers->{Automatic,14},Frame->True,FrameLabel->{Style["t (ms)",20,FontFamily->"Helvectica"],Style["|i| (pA)",20,FontFamily->"Helvectica"]},FrameTicksStyle->Directive[20,FontFamily->"Helvectica"],Prolog->{Thick,Dashed,Darker[Red],
+ListPlot[ts,PlotRange->{0,All},PlotStyle->Directive[RGBColor@@({41, 74,130}/255),Opacity[0.75]],PlotMarkers->{Automatic,14},Frame->True,FrameLabel->{Style["t (ms)",20,FontFamily->"Helvectica"],Style["i (pA)",20,FontFamily->"Helvectica"]},FrameTicksStyle->Directive[20,FontFamily->"Helvectica"],Prolog->{Thick,Dashed,Darker[Red],
 Line[{{md[[3]],Abs[md[[1]]]},{md[[4]],Abs[md[[1]]]}}],
 Line[{{md[[3]],Abs[md[[2]]]},{md[[3]],Abs[md[[1]]]}}],
 Line[{{md[[4]],Abs[md[[2]]]},{md[[4]],Abs[md[[1]]]}}]
@@ -179,7 +182,7 @@ Table[{t,Evaluate[(a( (-1+E^((-t+\[Mu]1)/\[Tau])) HeavisideTheta[t-\[Mu]1]+(1-E^
 ]/;status=="normal"
  plotsra[status_,ts_,md_,FsKHz_]:=Module[{t,a,\[Mu]1,\[Mu]2,\[Tau],b},
 Show[{
-ListPlot[Abs[ts],PlotRange->All,PlotStyle->Red,PlotMarkers->{Automatic,10},Frame->True,FrameLabel->{Style["t (ms)",20,FontFamily->"Helvectica"],Style["|i| (pA)",20,FontFamily->"Helvectica"]},FrameTicksStyle->Directive[20,FontFamily->"Helvectica"]]
+ListPlot[ts,PlotRange->All,PlotStyle->Red,PlotMarkers->{Automatic,10},Frame->True,FrameLabel->{Style["t (ms)",20,FontFamily->"Helvectica"],Style["i (pA)",20,FontFamily->"Helvectica"]},FrameTicksStyle->Directive[20,FontFamily->"Helvectica"]]
 },ImageSize->600]
 ]
 

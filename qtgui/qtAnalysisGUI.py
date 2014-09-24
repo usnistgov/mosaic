@@ -2,6 +2,7 @@ import sys
 import time
 import string
 import glob
+import multiprocessing
 from  utilities.resource_path import format_path
 from sqlite3 import DatabaseError
 
@@ -246,6 +247,7 @@ def main():
 	sys.exit(app.exec_())
 
 if __name__ == '__main__':
-	# multiprocessing.freeze_support()
+	if sys.platform.startswith('win'):
+		multiprocessing.freeze_support()
 	main()
 

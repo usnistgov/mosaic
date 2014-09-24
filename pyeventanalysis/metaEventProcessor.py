@@ -21,6 +21,7 @@ import types
 import sys
 import time
 import sqlite3
+import numpy as np
 
 # custom errors
 class MissingMDIOError(Exception):
@@ -83,6 +84,8 @@ class metaEventProcessor(object):
 		"""
 			This is the equivalent of a pure virtual function in C++. 
 		"""
+		self.dataPolarity=float(np.sign(np.mean(self.eventData)))
+
 		self._processEvent()
 
 		if not self.saveTS:

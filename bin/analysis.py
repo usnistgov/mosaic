@@ -22,13 +22,12 @@ from pyeventanalysis.binTrajIO import *
 from pyeventanalysis.besselLowpassFilter import *
 from pyeventanalysis.waveletDenoiseFilter import *
 
-
-
-# pyeventanalysis.SingleChannelAnalysis.SingleChannelAnalysis(
-# 			qdfTrajIO(dirname='/Users/arvind/Research/Experiments/PEG29EBSRefData/20120323/singleChan',filter='*qdf', Rfb=9.1E+9, Cfb=1.07E-12, datafilter=waveletDenoiseFilter), 
-# 			es.eventSegment,
-# 			sra.stepResponseAnalysis
-# 		).Run()
+# '/Users/arvind/Research/Experiments/PEG29EBSRefData/20120323/singleChan' Rfb=9.1E+9, Cfb=1.07E-12, datafilter=waveletDenoiseFilter
+pyeventanalysis.SingleChannelAnalysis.SingleChannelAnalysis(
+			qdfTrajIO(dirname='/Users/arvind/Desktop/POM ph5.45 m120_6',filter='*qdf', start=5, nfiles=10, Rfb=2.126E+9, Cfb=1.13E-12), 
+			es.eventSegment,
+			sra.stepResponseAnalysis
+		).Run()
 
 # pyeventanalysis.SingleChannelAnalysis.SingleChannelAnalysis(
 # 			tsvTrajIO(dirname='/Users/arvind/Research/Experiments/AnalysisTools/Wavelet Denoising/raw data', filter='*.tsv', Fs=500000, headers=False),
@@ -68,9 +67,9 @@ from pyeventanalysis.waveletDenoiseFilter import *
 # 		)
 # tt.Run(forkProcess=False)
 
-q=qdfTrajIO(fnames=['/Users/arvind/Desktop/m120mV/m120mV-0001.qdf'], Rfb=2.11E+9, Cfb=1.16E-12)
-with open('/Users/arvind/Desktop/m120mV/m120mV-0001.csv', 'wb') as csvfile:
-    csvwriter = csv.writer(csvfile, delimiter=',')
-    csvwriter.writerow(q.popdata(500000))
+# q=qdfTrajIO(fnames=['/Users/arvind/Desktop/m120mV/m120mV-0001.qdf'], Rfb=2.11E+9, Cfb=1.16E-12)
+# with open('/Users/arvind/Desktop/m120mV/m120mV-0001.csv', 'wb') as csvfile:
+#     csvwriter = csv.writer(csvfile, delimiter=',')
+#     csvwriter.writerow(q.popdata(500000))
 
 

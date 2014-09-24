@@ -180,7 +180,8 @@ class multiStateAnalysis(metaEventProcessor.metaEventProcessor):
 	def __FitEvent(self):
 		try:
 			dt = 1000./self.Fs 	# time-step in ms.
-			edat=np.asarray( np.abs(self.eventData),  dtype='float64' )
+			# edat=np.asarray( np.abs(self.eventData),  dtype='float64' )
+			edat=self.dataPolarity*np.asarray( self.eventData,  dtype='float64' )
 
 			# control numpy error reporting
 			np.seterr(invalid='ignore', over='ignore', under='ignore')

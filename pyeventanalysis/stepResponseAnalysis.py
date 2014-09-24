@@ -173,7 +173,8 @@ class stepResponseAnalysis(metaEventProcessor.metaEventProcessor):
 			i0=np.abs(self.baseMean)
 			i0sig=self.baseSD
 			dt = 1000./self.Fs 	# time-step in ms.
-			edat=np.asarray( np.abs(self.eventData),  dtype='float64' )
+			# edat=np.asarray( np.abs(self.eventData),  dtype='float64' )
+			edat=self.dataPolarity*np.asarray( self.eventData,  dtype='float64' )
 
 			estart 	= self.__eventStartIndex( self.__threadList( edat, range(0,len(edat)) ), i0, i0sig ) - 1
 			eend 	= self.__eventEndIndex( self.__threadList( edat, range(0,len(edat)) ), i0, i0sig ) - 2
@@ -225,6 +226,8 @@ class stepResponseAnalysis(metaEventProcessor.metaEventProcessor):
 					# 	self.rejectEvent('eBlockDepthHigh')
 						
 					if math.isnan(self.mdRedChiSq):
+						self.rejectEvent('eInvalidFitParams')
+					if self.mdBlockDepth < 0:
 						self.rejectEvent('eInvalidFitParams')
 
 					#print i0, i0sig, [optfit.params['a'].value, optfit.params['b'].value, optfit.params['mu1'].value, optfit.params['mu2'].value, optfit.params['tau'].value]

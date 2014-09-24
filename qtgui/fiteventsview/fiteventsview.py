@@ -88,7 +88,8 @@ class FitEventWindow(QtGui.QDialog):
 			fs=self.FskHz
 
 			# time-series data
-			ydat=np.abs(q[1])
+			datasign=float(np.sign(np.mean(q[1])))
+			ydat=datasign*np.array(q[1], dtype='float64')
 			xdat=np.arange(0,float((len(q[1]))/fs), float(1/fs))[:len(ydat)]
 
 			# fit function data

@@ -2,9 +2,7 @@
 
 plat=`uname`
 
-if [ $plat == 'Darwin' ]; then
-        export FFLAGS="-ff2c"
-fi
+
 
 ver=$(<version)
 read -d '' info1 <<-"EOF"
@@ -41,8 +39,19 @@ EOF
 infoplist="$info1$ver$info2"
 
 cd pyinstaller
-rm -rf dist/*
+rm -rf dist/* build/*
 pyinstaller pyEventAnalysis.spec
-echo ${infoplist}>dist/pyEventAnalysis.app/Contents/Info.plist
-cd ..
+
+if [ $plat == 'Darwin' ]; then
+	echo ${infoplist}>dist/pyEventAnalysis.app/Contents/Info.plist
+	cd dist
+	hdiutil create ./pyEventAnalysis-${ver}.dmg -srcfolder pyEventAnalysis.app -ov
+	mv ./pyEventAnalysis-${ver}.dmg ../../dist/
+else
+	cd dist
+	zip pyEventAnalysis-${ver}.zip pyEventAnalysis.exe
+	mv ./pyEventAnalysis-${ver}.zip ../../dist/
+fi
+
+cd ../..
 

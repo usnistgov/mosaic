@@ -141,7 +141,8 @@ class TrajectoryWindow(QtGui.QDialog):
 	def update_graph(self):
 		try:
 			if self.dataLoaded:
-				ydat=np.abs(self.trajData)
+				datasign=float(np.sign(np.mean(self.trajData)))
+				ydat=datasign*np.array(self.trajData, dtype='float64')
 				xdat=np.arange(float(self.nUpdate)*self.blockSize,float(self.nUpdate+1)*self.blockSize,self.decimate/float(self.IOObject.FsHz))[:len(ydat)]
 	
 				if float(self.datadict["meanOpenCurr"]) == -1 and float(self.datadict["sdOpenCurr"]) == -1:
@@ -203,7 +204,7 @@ class TrajectoryWindow(QtGui.QDialog):
 		start, end = axes.get_ylim()
 		dy=(end-start)/(nticks-1)
 		axes.yaxis.set_ticks( np.arange( start, end+dy, dy ) ) 
-		axes.yaxis.set_major_formatter(ticker.FormatStrFormatter('%d'))
+		axes.yaxis.set_major_formatter(ticker.FormatStrFormatter('%0.1f'))
 
 	def OnNextButton(self):
 		if hasattr(self,'IOObject'):

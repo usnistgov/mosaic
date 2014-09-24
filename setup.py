@@ -44,7 +44,8 @@ setup(
             'qtgui/ui/blockdepthview.ui',
             'qtgui/ui/statisticsview.ui',
             'qtgui/ui/fiteventsview.ui',
-            'pyinstaller/pyEventAnalysis.spec'
+            'pyinstaller/pyEventAnalysis.spec',
+            'pyinstaller-sh'
             ],
     url='http://pypi.python.org/pypi/pyEventAnalysis/',
     license='LICENSE.txt',

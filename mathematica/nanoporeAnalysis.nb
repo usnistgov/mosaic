@@ -10,10 +10,10 @@
 NotebookFileLineBreakTest
 NotebookFileLineBreakTest
 NotebookDataPosition[       157,          7]
-NotebookDataLength[     55550,       1340]
-NotebookOptionsPosition[     53822,       1280]
-NotebookOutlinePosition[     54205,       1297]
-CellTagsIndexPosition[     54162,       1294]
+NotebookDataLength[     56064,       1350]
+NotebookOptionsPosition[     54273,       1288]
+NotebookOutlinePosition[     54654,       1305]
+CellTagsIndexPosition[     54611,       1302]
 WindowFrame->Normal*)
 
 (* Beginning of Notebook Content *)
@@ -358,9 +358,14 @@ Cell[BoxData[
        RowBox[{"0", ",", 
         RowBox[{
          RowBox[{"Length", "[", "dat", "]"}], "-", "1"}]}], "]"}], "FsKHz"], 
-     ",", "dat"}], "}"}], "]"}]}]], "Input",
+     ",", 
+     RowBox[{
+      RowBox[{"polarity", "[", "dat", "]"}], "\[Times]", "dat"}]}], "}"}], 
+   "]"}]}]], "Input",
  InitializationCell->True,
- CellChangeTimes->{{3.609454949746669*^9, 3.609454986498221*^9}}],
+ CellChangeTimes->{{3.609454949746669*^9, 3.609454986498221*^9}, {
+  3.620463671176034*^9, 3.620463675230125*^9}, {3.62046385775742*^9, 
+  3.620463874020915*^9}}],
 
 Cell[BoxData[{
  RowBox[{
@@ -517,18 +522,16 @@ Cell[BoxData[
         RowBox[{
          RowBox[{"md", "\[LeftDoubleBracket]", "3", "\[RightDoubleBracket]"}],
           ",", 
-         RowBox[{"Abs", "[", 
-          RowBox[{
-          "md", "\[LeftDoubleBracket]", "1", "\[RightDoubleBracket]"}], 
-          "]"}]}], "}"}], ",", 
+         RowBox[{
+         "md", "\[LeftDoubleBracket]", "1", "\[RightDoubleBracket]"}]}], 
+        "}"}], ",", 
        RowBox[{"{", 
         RowBox[{
          RowBox[{"md", "\[LeftDoubleBracket]", "4", "\[RightDoubleBracket]"}],
           ",", 
-         RowBox[{"Abs", "[", 
-          RowBox[{
-          "md", "\[LeftDoubleBracket]", "1", "\[RightDoubleBracket]"}], 
-          "]"}]}], "}"}]}], "}"}], "]"}], ",", "\[IndentingNewLine]", 
+         RowBox[{
+         "md", "\[LeftDoubleBracket]", "1", "\[RightDoubleBracket]"}]}], 
+        "}"}]}], "}"}], "]"}], ",", "\[IndentingNewLine]", 
     RowBox[{"Line", "[", 
      RowBox[{"{", 
       RowBox[{
@@ -536,18 +539,16 @@ Cell[BoxData[
         RowBox[{
          RowBox[{"md", "\[LeftDoubleBracket]", "3", "\[RightDoubleBracket]"}],
           ",", 
-         RowBox[{"Abs", "[", 
-          RowBox[{
-          "md", "\[LeftDoubleBracket]", "2", "\[RightDoubleBracket]"}], 
-          "]"}]}], "}"}], ",", 
+         RowBox[{
+         "md", "\[LeftDoubleBracket]", "2", "\[RightDoubleBracket]"}]}], 
+        "}"}], ",", 
        RowBox[{"{", 
         RowBox[{
          RowBox[{"md", "\[LeftDoubleBracket]", "3", "\[RightDoubleBracket]"}],
           ",", 
-         RowBox[{"Abs", "[", 
-          RowBox[{
-          "md", "\[LeftDoubleBracket]", "1", "\[RightDoubleBracket]"}], 
-          "]"}]}], "}"}]}], "}"}], "]"}], ",", "\[IndentingNewLine]", 
+         RowBox[{
+         "md", "\[LeftDoubleBracket]", "1", "\[RightDoubleBracket]"}]}], 
+        "}"}]}], "}"}], "]"}], ",", "\[IndentingNewLine]", 
     RowBox[{"Line", "[", 
      RowBox[{"{", 
       RowBox[{
@@ -555,19 +556,26 @@ Cell[BoxData[
         RowBox[{
          RowBox[{"md", "\[LeftDoubleBracket]", "4", "\[RightDoubleBracket]"}],
           ",", 
-         RowBox[{"Abs", "[", 
-          RowBox[{
-          "md", "\[LeftDoubleBracket]", "2", "\[RightDoubleBracket]"}], 
-          "]"}]}], "}"}], ",", 
+         RowBox[{
+         "md", "\[LeftDoubleBracket]", "2", "\[RightDoubleBracket]"}]}], 
+        "}"}], ",", 
        RowBox[{"{", 
         RowBox[{
          RowBox[{"md", "\[LeftDoubleBracket]", "4", "\[RightDoubleBracket]"}],
           ",", 
-         RowBox[{"Abs", "[", 
-          RowBox[{
-          "md", "\[LeftDoubleBracket]", "1", "\[RightDoubleBracket]"}], 
-          "]"}]}], "}"}]}], "}"}], "]"}]}], "\[IndentingNewLine]", 
-   "}"}]}]], "Input"],
+         RowBox[{
+         "md", "\[LeftDoubleBracket]", "1", "\[RightDoubleBracket]"}]}], 
+        "}"}]}], "}"}], "]"}]}], "\[IndentingNewLine]", "}"}]}]], "Input",
+ CellChangeTimes->{{3.6204636940063887`*^9, 3.620463720498806*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"polarity", "[", "ts_", "]"}], ":=", 
+  RowBox[{"Sign", "[", 
+   RowBox[{"Mean", "[", "ts", "]"}], "]"}]}]], "Input",
+ InitializationCell->True,
+ CellChangeTimes->{{3.620463408261601*^9, 3.62046342756549*^9}, {
+   3.62046353378757*^9, 3.6204635372114553`*^9}, 3.620463879715486*^9}],
 
 Cell[BoxData[{
  RowBox[{
@@ -585,8 +593,7 @@ Cell[BoxData[{
        RowBox[{"{", "\[IndentingNewLine]", 
         RowBox[{
          RowBox[{"ListPlot", "[", 
-          RowBox[{
-           RowBox[{"Abs", "[", "ts", "]"}], ",", 
+          RowBox[{"ts", ",", 
            RowBox[{"PlotRange", "\[Rule]", 
             RowBox[{"{", 
              RowBox[{
@@ -612,7 +619,7 @@ Cell[BoxData[{
                 RowBox[{"FontFamily", "\[Rule]", "\"\<Helvectica\>\""}]}], 
                "]"}], ",", 
               RowBox[{"Style", "[", 
-               RowBox[{"\"\<|i| (pA)\>\"", ",", "20", ",", 
+               RowBox[{"\"\<i (pA)\>\"", ",", "20", ",", 
                 RowBox[{"FontFamily", "\[Rule]", "\"\<Helvectica\>\""}]}], 
                "]"}]}], "}"}]}], ",", 
            RowBox[{"FrameTicksStyle", "\[Rule]", 
@@ -769,8 +776,7 @@ Cell[BoxData[{
       RowBox[{
        RowBox[{"{", "\[IndentingNewLine]", 
         RowBox[{"ListPlot", "[", 
-         RowBox[{
-          RowBox[{"Abs", "[", "ts", "]"}], ",", 
+         RowBox[{"ts", ",", 
           RowBox[{"PlotRange", "\[Rule]", "All"}], ",", 
           RowBox[{"PlotStyle", "\[Rule]", "Red"}], ",", 
           RowBox[{"PlotMarkers", "\[Rule]", 
@@ -785,7 +791,7 @@ Cell[BoxData[{
                RowBox[{"FontFamily", "\[Rule]", "\"\<Helvectica\>\""}]}], 
               "]"}], ",", 
              RowBox[{"Style", "[", 
-              RowBox[{"\"\<|i| (pA)\>\"", ",", "20", ",", 
+              RowBox[{"\"\<i (pA)\>\"", ",", "20", ",", 
                RowBox[{"FontFamily", "\[Rule]", "\"\<Helvectica\>\""}]}], 
               "]"}]}], "}"}]}], ",", 
           RowBox[{"FrameTicksStyle", "\[Rule]", 
@@ -816,7 +822,9 @@ Cell[BoxData[{
    3.614494488091107*^9, 3.614494488441135*^9}, {3.614494560520927*^9, 
    3.614494578334903*^9}, {3.61449466839638*^9, 3.614494672194643*^9}, {
    3.614494788882308*^9, 3.6144947925816507`*^9}, {3.614501350330645*^9, 
-   3.614501352530095*^9}, 3.614501397908681*^9}],
+   3.614501352530095*^9}, 3.614501397908681*^9, {3.620463437968935*^9, 
+   3.62046346432027*^9}, {3.620463640444215*^9, 3.6204636452651043`*^9}, {
+   3.620463809255232*^9, 3.6204638136164303`*^9}}],
 
 Cell[BoxData[{
  RowBox[{
@@ -834,8 +842,7 @@ Cell[BoxData[{
        RowBox[{"{", "\[IndentingNewLine]", 
         RowBox[{
          RowBox[{"ListPlot", "[", 
-          RowBox[{
-           RowBox[{"Abs", "[", "ts", "]"}], ",", 
+          RowBox[{"ts", ",", 
            RowBox[{"PlotRange", "\[Rule]", 
             RowBox[{"{", 
              RowBox[{"0", ",", "All"}], "}"}]}], ",", 
@@ -860,7 +867,7 @@ Cell[BoxData[{
                 RowBox[{"FontFamily", "\[Rule]", "\"\<Helvectica\>\""}]}], 
                "]"}], ",", 
               RowBox[{"Style", "[", 
-               RowBox[{"\"\<|i| (pA)\>\"", ",", "20", ",", 
+               RowBox[{"\"\<i (pA)\>\"", ",", "20", ",", 
                 RowBox[{"FontFamily", "\[Rule]", "\"\<Helvectica\>\""}]}], 
                "]"}]}], "}"}]}], ",", 
            RowBox[{"FrameTicksStyle", "\[Rule]", 
@@ -1050,8 +1057,7 @@ Cell[BoxData[{
       RowBox[{
        RowBox[{"{", "\[IndentingNewLine]", 
         RowBox[{"ListPlot", "[", 
-         RowBox[{
-          RowBox[{"Abs", "[", "ts", "]"}], ",", 
+         RowBox[{"ts", ",", 
           RowBox[{"PlotRange", "\[Rule]", "All"}], ",", 
           RowBox[{"PlotStyle", "\[Rule]", "Red"}], ",", 
           RowBox[{"PlotMarkers", "\[Rule]", 
@@ -1066,7 +1072,7 @@ Cell[BoxData[{
                RowBox[{"FontFamily", "\[Rule]", "\"\<Helvectica\>\""}]}], 
               "]"}], ",", 
              RowBox[{"Style", "[", 
-              RowBox[{"\"\<|i| (pA)\>\"", ",", "20", ",", 
+              RowBox[{"\"\<i (pA)\>\"", ",", "20", ",", 
                RowBox[{"FontFamily", "\[Rule]", "\"\<Helvectica\>\""}]}], 
               "]"}]}], "}"}]}], ",", 
           RowBox[{"FrameTicksStyle", "\[Rule]", 
@@ -1089,7 +1095,9 @@ Cell[BoxData[{
    3.610438731568367*^9}, {3.610438865866276*^9, 3.6104389404008017`*^9}, {
    3.610438983863574*^9, 3.6104391026730537`*^9}, {3.610439137656186*^9, 
    3.610439189105474*^9}, {3.6104392321691427`*^9, 3.610439273877078*^9}, {
-   3.610439309969619*^9, 3.6104393124882717`*^9}}],
+   3.610439309969619*^9, 3.6104393124882717`*^9}, {3.620463467873844*^9, 
+   3.6204634738709097`*^9}, {3.620463649626034*^9, 3.620463655560005*^9}, {
+   3.6204637608875237`*^9, 3.6204638060303297`*^9}}],
 
 Cell[BoxData[
  RowBox[{
@@ -1281,8 +1289,8 @@ Cell[BoxData[
 NotebookEventActions->None,
 WindowSize->{1043, 673},
 WindowMargins->{{0, Automatic}, {Automatic, 0}},
-FrontEndVersion->"9.0 for Mac OS X x86 (32-bit, 64-bit Kernel) (January 25, \
-2013)",
+FrontEndVersion->"10.0 for Mac OS X x86 (32-bit, 64-bit Kernel) (June 27, \
+2014)",
 StyleDefinitions->"Default.nb"
 ]
 (* End of Notebook Content *)
@@ -1302,7 +1310,7 @@ Cell[CellGroupData[{
 Cell[726, 27, 107, 1, 35, "Subsubsection"],
 Cell[836, 30, 773, 14, 284, "Input",
  InitializationCell->True],
-Cell[1612, 46, 834, 16, 114, "Input",
+Cell[1612, 46, 834, 16, 97, "Input",
  InitializationCell->True],
 Cell[2449, 64, 702, 17, 63, "Input",
  InitializationCell->True],
@@ -1323,23 +1331,25 @@ Cell[CellGroupData[{
 Cell[13610, 327, 316, 8, 28, "Input"],
 Cell[13929, 337, 420, 8, 46, "Output"]
 }, Open  ]],
-Cell[14364, 348, 460, 14, 49, "Input",
+Cell[14364, 348, 635, 19, 49, "Input",
  InitializationCell->True],
-Cell[14827, 364, 6587, 141, 386, "Input",
+Cell[15002, 369, 6587, 141, 386, "Input",
  InitializationCell->True],
-Cell[21417, 507, 2209, 62, 97, "Input"],
-Cell[23629, 571, 11191, 247, 615, "Input",
+Cell[21592, 512, 2027, 56, 97, "Input"],
+Cell[23622, 570, 316, 7, 28, "Input",
  InitializationCell->True],
-Cell[34823, 820, 11767, 271, 546, "Input",
+Cell[23941, 579, 11259, 247, 615, "Input",
  InitializationCell->True],
-Cell[46593, 1093, 5643, 135, 431, "Input",
+Cell[35203, 828, 11838, 271, 546, "Input",
  InitializationCell->True],
-Cell[52239, 1230, 805, 21, 63, "Input",
+Cell[47044, 1101, 5643, 135, 432, "Input",
  InitializationCell->True],
-Cell[53047, 1253, 499, 13, 28, "Input",
+Cell[52690, 1238, 805, 21, 63, "Input",
+ InitializationCell->True],
+Cell[53498, 1261, 499, 13, 28, "Input",
  InitializationCell->True,
  InitializationGroup->True],
-Cell[53549, 1268, 257, 9, 28, "Input",
+Cell[54000, 1276, 257, 9, 28, "Input",
  InitializationCell->True]
 }, Open  ]]
 }
