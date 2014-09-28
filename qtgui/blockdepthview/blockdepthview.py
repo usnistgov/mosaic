@@ -105,9 +105,9 @@ class BlockDepthWindow(QtGui.QDialog):
 		"""
 		screen = QtGui.QDesktopWidget().screenGeometry()
 		if sys.platform=='win32':
-			self.setGeometry(425, 30, 500, 400)
+			self.setGeometry(425, 30, 640, 400)
 		else:
-			self.setGeometry(405, 0, 500, 400)
+			self.setGeometry(405, 0, 640, 400)
 		# self.move( (-screen.width()/2)+200, -screen.height()/2 )
 
 

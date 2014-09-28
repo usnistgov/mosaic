@@ -18,7 +18,7 @@
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
-    <widget class="MplWidget" name="mpl_hist" native="true">
+    <widget class="MplWidget2" name="mpl_hist" native="true">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Expanding" vsizetype="MinimumExpanding">
        <horstretch>0</horstretch>
@@ -101,6 +101,9 @@
        <property name="text">
         <string>Mean</string>
        </property>
+       <property name="textFormat">
+        <enum>Qt::RichText</enum>
+       </property>
       </widget>
      </item>
      <item>
@@ -135,7 +138,7 @@
  </widget>
  <customwidgets>
   <customwidget>
-   <class>MplWidget</class>
+   <class>MplWidget2</class>
    <extends>QWidget</extends>
    <header>qtgui.mplwidget</header>
    <container>1</container>

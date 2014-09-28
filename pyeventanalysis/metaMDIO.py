@@ -75,6 +75,13 @@ class metaMDIO(object):
 		pass
 
 	@abstractmethod
+	def writeSettings(self, settingsstring):
+		"""
+			Write the settings JSON object into a settings database/table.
+		"""
+		pass
+
+	@abstractmethod
 	def _colnames(self):
 		pass
 

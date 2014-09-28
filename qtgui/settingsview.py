@@ -17,7 +17,7 @@ import qtgui.trajview.trajview
 import qtgui.advancedsettings.advancedsettings
 import qtgui.blockdepthview.blockdepthview
 import qtgui.statisticsview.statisticsview
-# import qtgui.consolelog.consolelog
+import qtgui.consolelog.consolelog
 import qtgui.fiteventsview.fiteventsview
 import qtgui.datamodel
 
@@ -40,7 +40,7 @@ class settingsview(QtGui.QMainWindow):
 		# setup handles and data structs for other application windows
 		self.trajViewerWindow = qtgui.trajview.trajview.TrajectoryWindow(parent=self)
 		self.advancedSettingsDialog = qtgui.advancedsettings.advancedsettings.AdvancedSettingsDialog(parent=self)
-		# self.consoleLog = qtgui.consolelog.consolelog.AnalysisLogDialog(parent=self)
+		self.consoleLog = qtgui.consolelog.consolelog.AnalysisLogDialog(parent=self)
 		self.blockDepthWindow = qtgui.blockdepthview.blockdepthview.BlockDepthWindow(parent=self)
 		self.statisticsView = qtgui.statisticsview.statisticsview.StatisticsWindow(parent=self)
 		self.fitEventsView = qtgui.fiteventsview.fiteventsview.FitEventWindow(parent=self)
@@ -60,8 +60,8 @@ class settingsview(QtGui.QMainWindow):
 		self.analysisDataModel=qtgui.datamodel.guiDataModel()
 
 		# temp keys
-		self.analysisDataModel["lastMeanOpenCurr"]=""
-		self.analysisDataModel["lastSDOpenCurr"]=""
+		self.analysisDataModel["lastMeanOpenCurr"]=-1.
+		self.analysisDataModel["lastSDOpenCurr"]=-1.
 
 		# default settings
 		self._updateControls()
@@ -107,6 +107,8 @@ class settingsview(QtGui.QMainWindow):
 		QtCore.QObject.connect(self.actionBlockade_Depth_Histogram, QtCore.SIGNAL('triggered()'), self.OnShowBlockDepthViewer)
 		QtCore.QObject.connect(self.actionEvent_Fits, QtCore.SIGNAL('triggered()'), self.OnShowFitEventsViewer)
 		QtCore.QObject.connect(self.actionStatistics, QtCore.SIGNAL('triggered()'), self.OnShowStatisticsWindow)
+		QtCore.QObject.connect(self.actionAnalysis_Log, QtCore.SIGNAL('triggered()'), self.OnShowConsoleLog)
+		
 
 		# Help Menu signals
 		QtCore.QObject.connect(self.actionPyEventAnalysis_Help, QtCore.SIGNAL('triggered()'), self.OnShowHelp)
@@ -230,7 +232,19 @@ class settingsview(QtGui.QMainWindow):
 
 	def _setThreshold(self, mean, sd, threshold):
 		self.updateDialogs=True
-		self.ThresholdDoubleSpinBox.setValue(threshold)
+		if self.baselineAutoCheckBox.isChecked():
+			try:
+				mu=self.trajViewerWindow.meanCurr
+				sig=self.trajViewerWindow.sdCurr
+			except AttributeError:
+				mu=self.analysisDataModel["lastMeanOpenCurr"]
+				sig=self.analysisDataModel["lastSDOpenCurr"]
+			self.ThresholdDoubleSpinBox.setMaximum(mu)
+			self.ThresholdDoubleSpinBox.setValue(mu-sig*threshold)
+		else:
+			self.ThresholdDoubleSpinBox.setValue(mean-sd*threshold)
+			self.ThresholdDoubleSpinBox.setMaximum(mean)
+			
 		self.updateDialogs=False
 
 	def _setEnableSettingsWidgets(self, state):
@@ -292,19 +306,20 @@ class settingsview(QtGui.QMainWindow):
 			self.datPathLineEdit.setText(path)
 			self.OnDataPathChange()
 
-	def OnDataPathChange(self):
+	def OnDataPathChange(self, dbfile=None):
 		if self.updateDialogs:
 			self.analysisDataModel["DataFilesPath"]=str(self.datPathLineEdit.text())
-			self.analysisDataModel.UpdateDataModelFromSettings()
+			self.analysisDataModel.UpdateDataModelFromSettings(dbfile)
 
 			self._loadEBSState()
 			self._updateControls()
-
 			if self.ShowTrajectory:
 				self._trajviewerdata()
 				self.trajViewerWindow.refreshPlot()
 				self.blockDepthWindow.hide()
 				self.trajViewerWindow.show()
+			self._updateControls()
+
 
 	def OnDataTypeChange(self, item):
 		if self.updateDialogs:
@@ -375,12 +390,13 @@ class settingsview(QtGui.QMainWindow):
 				self.baselineMeanLineEdit.setPlaceholderText("")
 				self.baselineSDLineEdit.setPlaceholderText("")
 
-				self.baselineMeanLineEdit.setText(self.analysisDataModel["lastMeanOpenCurr"])
-				self.baselineSDLineEdit.setText(self.analysisDataModel["lastSDOpenCurr"])
+				self.baselineMeanLineEdit.setText(str(self.analysisDataModel["lastMeanOpenCurr"]))
+				self.baselineSDLineEdit.setText(str(self.analysisDataModel["lastSDOpenCurr"]))
 
 
 				self.baselineMeanLineEdit.setEnabled(True)
 				self.baselineSDLineEdit.setEnabled(True)
+
 
 	def OnBlockSizeChangeSpinbox(self, value):
 		if self.updateDialogs:
@@ -410,13 +426,21 @@ class settingsview(QtGui.QMainWindow):
 			# The trajectory window needs the update threshold
 			self.analysisDataModel["blockSizeSec"]=self.baselineBlockSizeDoubleSpinBox.value()
 
+			if self.baselineAutoCheckBox.isChecked():
+				mu=self.trajViewerWindow.meanCurr
+				sigma=self.trajViewerWindow.sdCurr
+			else:
+				mu=self.analysisDataModel["meanOpenCurr"]
+				sigma=self.analysisDataModel["sdOpenCurr"]
+
 			if type(value)==types.FloatType:
-				self.analysisDataModel["eventThreshold"]=value
+				self.analysisDataModel["eventThreshold"]=(mu-value)/sigma
 				self.updateDialogs=False
 				self.partitionThresholdHorizontalSlider.setValue( (int(smax-smin)*value/float(max-min)) )
 				self.updateDialogs=True
 			else:
-				self.analysisDataModel["eventThreshold"]=float((int((max-min))*value/float(smax-smin)))
+				v=float((int((max-min))*value/float(smax-smin)))
+				self.analysisDataModel["eventThreshold"]=(mu-v)/sigma
 				self.updateDialogs=False
 				self.ThresholdDoubleSpinBox.setValue( (int((max-min))*value/float(smax-smin)) )
 				self.updateDialogs=True
@@ -489,6 +513,9 @@ class settingsview(QtGui.QMainWindow):
 
 	def OnShowStatisticsWindow(self):
 		self.statisticsView.show()
+
+	def OnShowConsoleLog(self):
+		self.consoleLog.show()
 
 	def OnShowHelp(self):
 		webbrowser.open('file://'+os.getcwd()+'/doc/html/index.html', new=0, autoraise=True)

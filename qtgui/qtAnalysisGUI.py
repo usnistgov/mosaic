@@ -69,6 +69,9 @@ class qtAnalysisGUI(qtgui.settingsview.settingsview):
 
 					self.trajViewerWindow.hide()
 
+					# set data path in the console viewer
+					self.consoleLog.dataPath(self.analysisDataModel["DataFilesPath"])
+
 					# Query the number of database files in the analysis directory
 					self.nDBFiles=len(self._getdbfiles())	
 
@@ -133,6 +136,9 @@ class qtAnalysisGUI(qtgui.settingsview.settingsview):
 
 			self.analysisRunning=False
 
+			# Force an update of the console log
+			self.consoleLog.Update()
+
 			# reset the analysis workers
 			del self.aWorker
 			del self.aThread
@@ -154,33 +160,40 @@ class qtAnalysisGUI(qtgui.settingsview.settingsview):
 				
 				# Load settings from the analysis directory
 				self.datPathLineEdit.setText(analysisdir)
-				self.OnDataPathChange()
+				self.OnDataPathChange(analysisfile)
 
 				# Disable widgets
 				self.trajViewerWindow.hide()
-				self._setEnableSettingsWidgets(False)
-				self._setEnableDataSettingsWidgets(False)
+				# self._setEnableSettingsWidgets(False)
+				# self._setEnableDataSettingsWidgets(False)
 				
 				# Load analysis
 				if self.blockDepthWindow:
+					self.blockDepthWindow.hide()
 					del self.blockDepthWindow
 					self.blockDepthWindow = qtgui.blockdepthview.blockdepthview.BlockDepthWindow(parent=self)
 				if self.statisticsView:
+					self.statisticsView.hide()
 					del self.statisticsView
 					self.statisticsView = qtgui.statisticsview.statisticsview.StatisticsWindow(parent=self)
 				if self.fitEventsView:
+					self.fitEventsView.hide()
 					del self.fitEventsView
 					self.fitEventsView = qtgui.fiteventsview.fiteventsview.FitEventWindow(parent=self)
 			
 				self.blockDepthWindow.openDBFile( analysisfile )
 				self.blockDepthWindow.show()
+				self.plotBlockDepthHistCheckBox.setChecked(True)
 				
 				self.statisticsView.openDBFile( analysisfile )
 				self.statisticsView.show()
 
 				self.fitEventsView.openDBFile( analysisfile, self.trajViewerWindow.FskHz )
-				if self.showFitEventsWindow:
-					self.fitEventsView.show()
+				self.fitEventsView.show()
+				self.plotEventFitsCheckBox.setChecked(True)
+
+				# set data path in the console viewer
+				self.consoleLog.dataPath(self.analysisDataModel["DataFilesPath"])
 
 				# enable the path select button to allow a new alaysis to be started
 				self.datPathLineEdit.setEnabled(True)

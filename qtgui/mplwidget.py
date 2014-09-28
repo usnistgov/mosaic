@@ -3,6 +3,11 @@ from PyQt4.QtGui import *
 from matplotlib.backends.backend_qt4agg import FigureCanvasQTAgg as FigureCanvas
 from matplotlib.backends.backend_qt4agg import NavigationToolbar2QT #Agg #as NavigationToolbar
 from matplotlib.figure import Figure
+import matplotlib.pyplot as plt
+from matplotlib import gridspec
+import warnings
+
+warnings.filterwarnings(action="ignore", category=UserWarning)
 
 class NavigationToolbar( NavigationToolbar2QT ):
 	picked=pyqtSignal(int,name='picked')
@@ -78,15 +83,25 @@ class NavigationToolbar( NavigationToolbar2QT ):
 
 
 class MplCanvas(FigureCanvas):
-	def __init__(self):
+	def __init__(self, nsubplots=1):
 		self.dpi=100
+			
 		self.fig = Figure(dpi=self.dpi, tight_layout=True)
-		
-		self.ax = self.fig.add_subplot(111)
-		self.ax.hold(False)
+		if nsubplots==2:
+			# self.fig, (self.ax, self.ax2) = plt.subplots(1,2, sharey=True)
+			# self.fig.set_tight_layout(True)
+			self.gs= gridspec.GridSpec(1, 2, width_ratios=[5, 1]) 
+			self.gs.update(left=0.15, right=0.97, bottom=0.22, top=0.94, wspace=0.07)
+			self.ax = self.fig.add_subplot(self.gs[0])
+			self.ax2 = self.fig.add_subplot(self.gs[1], sharey=self.ax)
+			self.ax.hold(False)
+			self.ax2.hold(False)
+		else:
+			self.ax = self.fig.add_subplot(1,1,1)
+			self.ax.hold(False)
 
 		FigureCanvas.__init__(self, self.fig)
-		
+
 		FigureCanvas.setSizePolicy(self, 
 				QSizePolicy.Expanding, 
 				QSizePolicy.Expanding
@@ -107,3 +122,20 @@ class MplWidget(QWidget):
 	def addToolbar(self):
 		# self.vbl.addWidget( NavigationToolbar2QTAgg(self.canvas, self) )
 		self.vbl.addWidget( NavigationToolbar(self.canvas, self) )
+
+class MplWidget2(QWidget):
+	def __init__(self, parent = None):
+		QWidget.__init__(self, parent)
+
+		self.canvas = MplCanvas(nsubplots=2)
+		self.vbl = QVBoxLayout()
+		self.vbl.addWidget(self.canvas)
+
+		self.setLayout(self.vbl)
+
+	def addToolbar(self):
+		# self.vbl.addWidget( NavigationToolbar2QTAgg(self.canvas, self) )
+		self.vbl.addWidget( NavigationToolbar(self.canvas, self) )
+
+
+# warnings.resetwarnings()

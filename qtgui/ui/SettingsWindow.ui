@@ -360,8 +360,8 @@
       <property name="title">
        <string>Baseline Current Detection</string>
       </property>
-      <layout class="QGridLayout" name="gridLayout">
-       <item row="0" column="0">
+      <layout class="QHBoxLayout" name="horizontalLayout_18">
+       <item>
         <layout class="QVBoxLayout" name="verticalLayout">
          <item>
           <layout class="QHBoxLayout" name="horizontalLayout_14">
@@ -438,7 +438,7 @@
            <item>
             <widget class="QLabel" name="label_9">
              <property name="text">
-              <string>Mean</string>
+              <string>μ</string>
              </property>
             </widget>
            </item>
@@ -459,9 +459,29 @@
             </widget>
            </item>
            <item>
+            <widget class="QLabel" name="label_6">
+             <property name="text">
+              <string>pA</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <spacer name="horizontalSpacer_14">
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>20</width>
+               <height>10</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+           <item>
             <widget class="QLabel" name="label_10">
              <property name="text">
-              <string>Std. Dev.</string>
+              <string>σ</string>
              </property>
             </widget>
            </item>
@@ -481,19 +501,39 @@
              </property>
             </widget>
            </item>
+           <item>
+            <widget class="QLabel" name="label_12">
+             <property name="text">
+              <string>pA</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <spacer name="horizontalSpacer_13">
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>30</width>
+               <height>20</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
           </layout>
          </item>
         </layout>
        </item>
-       <item row="0" column="1">
+       <item>
         <spacer name="horizontalSpacer_4">
          <property name="orientation">
           <enum>Qt::Horizontal</enum>
          </property>
          <property name="sizeHint" stdset="0">
           <size>
-           <width>64</width>
-           <height>20</height>
+           <width>49</width>
+           <height>65</height>
           </size>
          </property>
         </spacer>
@@ -501,6 +541,7 @@
       </layout>
       <zorder></zorder>
       <zorder>horizontalSpacer_4</zorder>
+      <zorder>eventPartitionGroupBox</zorder>
      </widget>
     </item>
     <item>
@@ -590,7 +631,7 @@
             <number>1</number>
            </property>
            <property name="value">
-            <number>4</number>
+            <number>0</number>
            </property>
            <property name="orientation">
             <enum>Qt::Horizontal</enum>
@@ -633,23 +674,23 @@
             <bool>true</bool>
            </property>
            <property name="minimum">
-            <double>0.500000000000000</double>
+            <double>0.000000000000000</double>
            </property>
            <property name="maximum">
-            <double>25.000000000000000</double>
+            <double>999.000000000000000</double>
            </property>
            <property name="singleStep">
             <double>0.100000000000000</double>
            </property>
            <property name="value">
-            <double>4.000000000000000</double>
+            <double>75.000000000000000</double>
            </property>
           </widget>
          </item>
          <item>
           <widget class="QLabel" name="label_4">
            <property name="text">
-            <string>SD</string>
+            <string>pA</string>
            </property>
           </widget>
          </item>

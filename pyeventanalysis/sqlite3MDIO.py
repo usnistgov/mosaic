@@ -31,7 +31,7 @@ class data_record(dict):
 				dat = list(struct.unpack( packstr % int(len(decoded_data)/bytes), decoded_data ))
 			else:
 				dat = base64.b64encode(struct.pack( packstr % len(val[1]), *val[1] ))
-		
+
 		dict.__setitem__(self, key, dat)
 
 	def __getitem__(self, key):
@@ -105,6 +105,24 @@ class sqlite3MDIO(metaMDIO.metaMDIO):
 						'('+', '.join(cols)+') VALUES('+
 						placeholders_list+')', self._datalist(data)
 					)
+	def writeSettings(self, settingsstring):
+		# settstr=base64.b64encode(settingsstring)
+		with self.db:
+			self.db.execute( 'INSERT INTO analysissettings VALUES(?, ?)', (settingsstring, None,) )
+
+	def readSettings(self):
+		try:
+			self.db.commit()
+			c = self.db.cursor()
+
+			c.execute( 'select settings from analysissettings' )
+			settstr=c.fetchall()
+			
+			return list(settstr[0])[0]
+			# return base64.b64decode(list(settstr[0])[0])
+		except sqlite3.OperationalError, err:
+			raise
+		
 
 	def queryDB(self, query):
 		try:
@@ -181,6 +199,11 @@ class sqlite3MDIO(metaMDIO.metaMDIO):
 					PRIMARY KEY (recIDX) \
 				)")
 
+			c.execute("create table analysissettings ( \
+					settings TEXT, \
+					recIDX INTEGER PRIMARY KEY AUTOINCREMENT \
+				)")
+
 			self.db.commit()
 
 	def _sqltypes(self):
@@ -203,8 +226,11 @@ class sqlite3MDIO(metaMDIO.metaMDIO):
 		return [ d[col] for col in colnames ]
 
 if __name__=="__main__":
+	dbname='/Users/arvind/Research/Experiments/PEG29EBSRefData/20120323/singleChan/eventMD-20140928-160026.sqlite'
+	# dbname='/Users/arvind/Desktop/POM ph5.45 m120_6/eventMD-20140928-190058.sqlite'
 	c=sqlite3MDIO()
-	c.openDB('/Users/arvind/Desktop/POM ph5.45 m120_6/eventMD-20140823-215341.sqlite')
+	c.openDB(dbname)
+
 
 	# print c.dbColumnNames
 
@@ -218,3 +244,5 @@ if __name__=="__main__":
 	print "Timing: ", round((t2-t1)*1000, 2), " ms"
 	print "Results:", len(q)
 
+
+	print c.readSettings()

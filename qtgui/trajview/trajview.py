@@ -13,6 +13,7 @@ from pyeventanalysis.metaTrajIO import FileNotFoundError, EmptyDataPipeError
 from utilities.resource_path import resource_path
 
 import matplotlib.ticker as ticker
+from matplotlib import pylab as plt
 # from qtgui.trajview.trajviewui import Ui_Dialog
 
 class TrajectoryWindow(QtGui.QDialog):
@@ -68,7 +69,19 @@ class TrajectoryWindow(QtGui.QDialog):
 			return self.IOObject.FsHz/1000.
 		else:
 			return 0.0
-			
+	
+	@property 
+	def meanCurr(self):
+		return self.mu
+
+	@property 
+	def sdCurr(self):
+		return self.sd
+
+	@property 
+	def Threshold(self):
+		return self.thr
+
 	def refreshPlot(self):
 		try:
 			path=str(self.datadict["DataFilesPath"])
@@ -145,18 +158,13 @@ class TrajectoryWindow(QtGui.QDialog):
 				ydat=datasign*np.array(self.trajData, dtype='float64')
 				xdat=np.arange(float(self.nUpdate)*self.blockSize,float(self.nUpdate+1)*self.blockSize,self.decimate/float(self.IOObject.FsHz))[:len(ydat)]
 	
-				if float(self.datadict["meanOpenCurr"]) == -1 and float(self.datadict["sdOpenCurr"]) == -1:
-					mu=np.mean(ydat)
-					sd=np.std(ydat)
-				else:
-					mu=abs(float(self.datadict["meanOpenCurr"]))
-					sd=float(self.datadict["sdOpenCurr"])
-
-				thr=float(self.datadict["eventThreshold"])
+				self._calculateThreshold(ydat)
 
 				# display the mean current val and thr
-				self.ionicCurrentLabel.setText(
-					"Mean: {0:.2f} pA  Std. Dev: {1:.2f} pA\n\nThreshold: {2:.2f} pA".format(mu, sd, mu-thr*sd)
+				self.ionicCurrentLabel.setText( 
+						"&#956;={0:.1f} pA, \
+						&#963;={1:.1f} pA<br><br>\
+						Threshold={2:.1f} pA ({3:.2f}&#963;)".format(self.mu, self.sd, self.mu-self.thr*self.sd, self.thr) 
 					)
 
 				# plot data
@@ -170,20 +178,62 @@ class TrajectoryWindow(QtGui.QDialog):
 
 					ydatd=np.abs(self.trajDataDenoise)
 					self.mpl_hist.canvas.ax.plot( xdat, ydatd, color=cd, markersize='1.')
+
+					self.mpl_hist.canvas.ax2.cla()
+					self.mpl_hist.canvas.ax2.hold(True)
+					self.mpl_hist.canvas.ax2.hist( 
+						ydat, 
+						bins=400, 
+						normed=1, 
+						histtype='step',
+						rwidth=0.1,
+						color=c,
+						orientation='horizontal'
+					)
+					self.mpl_hist.canvas.ax2.hist( 
+						ydatd, 
+						bins=200, 
+						normed=1, 
+						histtype='step',
+						rwidth=0.1,
+						color=cd,
+						orientation='horizontal'
+					)
 				else:
 					c='#%02x%02x%02x' % (72,91,144)
 					self.mpl_hist.canvas.ax.cla()
 					self.mpl_hist.canvas.ax.plot( xdat, ydat, color=c, markersize='1.')
 
+					self.mpl_hist.canvas.ax2.cla()
+					self.mpl_hist.canvas.ax2.hist( 
+						ydat, 
+						bins=200, 
+						normed=1, 
+						histtype='step',
+						rwidth=0.1,
+						color=c,
+						orientation='horizontal'
+					)
 
-				self.mu_line = self.mpl_hist.canvas.ax.axhline(mu, color='0.25', linestyle='--', lw=1.5)
-				c='#%02x%02x%02x' % (182,69,71)
-				self.mpl_hist.canvas.ax.axhline(mu-thr*sd, color=c, lw=1.5)
+
+				self.mu_line = self.mpl_hist.canvas.ax.axhline(self.mu, color='0.25', linestyle='--', lw=1.5)
+				cl='#%02x%02x%02x' % (182,69,71)
+				self.mpl_hist.canvas.ax.axhline(self.mu-self.thr*self.sd, color=cl, lw=1.5)
+
+				self.mu_line = self.mpl_hist.canvas.ax2.axhline(self.mu, color='0.25', linestyle='--', lw=1.5)
+				self.mpl_hist.canvas.ax2.axhline(self.mu-self.thr*self.sd, color=cl, lw=1.5)
 
 				self._ticks(5)
 
-				self.mpl_hist.canvas.ax.set_xlabel('t (s)', fontsize=10)
-				self.mpl_hist.canvas.ax.set_ylabel('|i| (pA)', fontsize=10)
+				# self.mpl_hist.canvas.ax2.set_xticklabels([])
+				# self.mpl_hist.canvas.ax2.set_yticklabels([])
+				plt.setp( self.mpl_hist.canvas.ax2.get_xticklabels(), visible=False)
+				plt.setp( self.mpl_hist.canvas.ax2.get_yticklabels(), visible=False)
+				
+
+				ilabel={1:'i (pA)', -1:'-i (pA)'}[int(datasign)]
+				self.mpl_hist.canvas.ax.set_xlabel('t (s)', fontsize=12)
+				self.mpl_hist.canvas.ax.set_ylabel(ilabel, fontsize=12)
 			
 				self.mpl_hist.canvas.draw()
 
@@ -192,6 +242,28 @@ class TrajectoryWindow(QtGui.QDialog):
 
 		except EmptyDataPipeError:
 			pass
+
+	def _calculateThreshold(self, dat):
+		if float(self.datadict["meanOpenCurr"]) == -1 and float(self.datadict["sdOpenCurr"]) == -1:
+			try:
+				m1=self.mu
+				s1=self.sd
+				t1=self.thr
+				icurr=m1-t1*s1
+
+				self.mu=np.mean(dat)
+				self.sd=np.std(dat)
+				# self.thr=(self.mu-icurr)/self.sd
+				self.thr=float(self.datadict["eventThreshold"])
+				# print icurr, self.thr
+			except AttributeError:
+				self.mu=np.mean(dat)
+				self.sd=np.std(dat)
+				self.thr=float(self.datadict["eventThreshold"])
+		else:
+			self.mu=abs(float(self.datadict["meanOpenCurr"]))
+			self.sd=float(self.datadict["sdOpenCurr"])
+			self.thr=float(self.datadict["eventThreshold"])
 
 	def _ticks(self, nticks):
 		axes=self.mpl_hist.canvas.ax
@@ -204,7 +276,7 @@ class TrajectoryWindow(QtGui.QDialog):
 		start, end = axes.get_ylim()
 		dy=(end-start)/(nticks-1)
 		axes.yaxis.set_ticks( np.arange( start, end+dy, dy ) ) 
-		axes.yaxis.set_major_formatter(ticker.FormatStrFormatter('%0.1f'))
+		axes.yaxis.set_major_formatter(ticker.FormatStrFormatter('%d'))
 
 	def OnNextButton(self):
 		if hasattr(self,'IOObject'):

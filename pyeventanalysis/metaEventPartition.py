@@ -54,7 +54,7 @@ class metaEventPartition(object):
 	"""
 	__metaclass__=ABCMeta
 
-	def __init__(self, trajDataObj, eventProcHnd, eventPartitionSettings, eventProcSettings):
+	def __init__(self, trajDataObj, eventProcHnd, eventPartitionSettings, eventProcSettings, settingsString):
 		"""
 			Initialize a new event segment object
 			Args:
@@ -64,6 +64,7 @@ class metaEventPartition(object):
 										this class are initialized as necessary
 				eventPartitionSettings	settings dictionary for the partition algorithm.
 				eventProcSettings 		settings dictionary for the event processing algorithm.
+				settingsString			settings dictionary in JSON format 
 			Returns:
 				None
 			
@@ -103,6 +104,7 @@ class metaEventPartition(object):
 								colNames=(self.tEventProcObj.mdHeadings())+['TimeSeries'],
 								colNames_t=(self.tEventProcObj.mdHeadingDataType())+['REAL_LIST']
 							)
+		self.mdioDBHnd.writeSettings(settingsString)
 
 		if self.parallelProc:
 			self._setupparallel()

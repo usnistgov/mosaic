@@ -18,9 +18,9 @@
     <widget class="QTextEdit" name="consoleLogTextEdit">
      <property name="font">
       <font>
-       <family>Helvetica</family>
+       <family>Helvetica Neue</family>
        <pointsize>12</pointsize>
-       <italic>true</italic>
+       <italic>false</italic>
       </font>
      </property>
      <property name="readOnly">

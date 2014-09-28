@@ -3,6 +3,8 @@ import os
 
 import pyeventanalysis.settings
 
+import pyeventanalysis.sqlite3MDIO
+
 import pyeventanalysis.SingleChannelAnalysis
 import pyeventanalysis.eventSegment
 
@@ -16,6 +18,7 @@ from pyeventanalysis.besselLowpassFilter import *
 import pyeventanalysis.waveletDenoiseFilter
 from pyeventanalysis.metaTrajIO import FileNotFoundError, EmptyDataPipeError
 from utilities.resource_path import resource_path
+from sqlite3 import OperationalError
 
 class guiDataModel(dict):
 	def __init__(self):
@@ -132,12 +135,23 @@ class guiDataModel(dict):
 
 		return self.analysisSetupKeys[self["DataFilesType"]](**dargs)
 
-	def UpdateDataModelFromSettings(self):
+	def UpdateDataModelFromSettings(self, dbfile=None):
+		# Load settings from the data directory
 		if self["DataFilesPath"]:
 			self.jsonSettingsObj=pyeventanalysis.settings.settings(self["DataFilesPath"])
 		else:
 			# print "res_path", 
 			self.jsonSettingsObj=pyeventanalysis.settings.settings(resource_path(".settings"))
+
+		# if a dbfile
+		if dbfile:
+			try:
+				db=pyeventanalysis.sqlite3MDIO.sqlite3MDIO()
+				db.openDB(dbfile)
+				self.jsonSettingsObj=pyeventanalysis.settings.settings(self["DataFilesPath"])
+				self.jsonSettingsObj.parseSettingsString( db.readSettings() )
+			except OperationalError:
+				print "Settings not found in ", dbfile, "\n"
 
 		self._updateSettings()
 
@@ -198,8 +212,8 @@ class guiDataModel(dict):
 								"ProcessingAlgorithm"	: str,
 								"PartitionAlgorithm"	: str,
 								"FilterAlgorithm"		: str,
-								"lastMeanOpenCurr"		: str,
-								"lastSDOpenCurr"		: str,
+								"lastMeanOpenCurr"		: float,
+								"lastSDOpenCurr"		: float,
 								"wavelet"				: str,
 								"level"					: int,
 								"thresholdType"			: str,

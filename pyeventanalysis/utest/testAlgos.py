@@ -76,7 +76,8 @@ class PEGEventPartitionTest(unittest.TestCase):
 							dat, 
 							sra.stepResponseAnalysis, 
 							epartsettings,
-							sett["stepResponseAnalysis"]
+							sett["stepResponseAnalysis"],
+							json.dumps(sett, indent=4)
 						)
 		testobj.PartitionEvents()
 

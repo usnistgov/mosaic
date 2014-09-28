@@ -2,6 +2,7 @@ import settings
 import multiprocessing
 import os
 import signal
+import json
 
 def run_eventpartition( trajdataObj, eventPartHnd, eventProcHnd, settingsdict):
 	try:
@@ -9,7 +10,8 @@ def run_eventpartition( trajdataObj, eventPartHnd, eventProcHnd, settingsdict):
 							trajdataObj, 
 							eventProcHnd, 
 							settingsdict.getSettings(eventPartHnd.__name__),
-							settingsdict.getSettings(eventProcHnd.__name__)
+							settingsdict.getSettings(eventProcHnd.__name__),
+							json.dumps(settingsdict.settingsDict, indent=4)
 						) as EventPartition:
 			EventPartition.PartitionEvents()
 	except KeyboardInterrupt:
