@@ -230,6 +230,23 @@ class settingsview(QtGui.QMainWindow):
 				self.analysisDataModel["Rfb"]=rfb
 				self.analysisDataModel["Cfb"]=cfb
 
+				# Show QDF specific widgets
+				self.qdfCfbLineEdit.show()				
+				self.qdfRfbLineEdit.show()
+				self.CfbLabel.show()
+				self.RfbLabel.show()
+				self.CfbUnitsLabel.show()
+				self.RfbUnitsLabel.show()
+			else:
+				# Hide QDF specific widgets
+				self.qdfCfbLineEdit.hide()				
+				self.qdfRfbLineEdit.hide()
+				self.CfbLabel.hide()
+				self.RfbLabel.hide()
+				self.CfbUnitsLabel.hide()
+				self.RfbUnitsLabel.hide()
+
+
 	def _setThreshold(self, mean, sd, threshold):
 		self.updateDialogs=True
 		if self.baselineAutoCheckBox.isChecked():
@@ -507,9 +524,8 @@ class settingsview(QtGui.QMainWindow):
 
 	# Menu SLOTs
 	def OnAdvancedModeMenuAction(self):
-		if self.advancedModeCheckBox.isChecked():
-			self.advancedSettingsDialog.show()
-			self.advancedSettingsDialog.raise_()
+		self.advancedModeCheckBox.setChecked(True)
+		self.OnAdvancedMode(True)
 
 	def OnShowStatisticsWindow(self):
 		self.statisticsView.show()

@@ -61,6 +61,8 @@ class AnalysisLogDialog(QtGui.QDialog):
 				self.consoleLogTextEdit.setText( logtxt )
 		except AttributeError:
 			pass
+		except OSError:
+			pass
 
 if __name__ == '__main__':
 	app = QtGui.QApplication(sys.argv)

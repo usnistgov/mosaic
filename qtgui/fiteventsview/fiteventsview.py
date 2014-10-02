@@ -109,8 +109,9 @@ class FitEventWindow(QtGui.QDialog):
 
 			self._ticks(5)
 
-			self.mpl_hist.canvas.ax.set_xlabel('t (ms)', fontsize=10)
-			self.mpl_hist.canvas.ax.set_ylabel('|i| (pA)', fontsize=10)
+			ilabel={-1:'-i', 1:'i'}[int(datasign)]
+			self.mpl_hist.canvas.ax.set_xlabel('t (ms)', fontsize=12)
+			self.mpl_hist.canvas.ax.set_ylabel(ilabel+' (pA)', fontsize=12)
 			
 			self.mpl_hist.canvas.draw()
 
@@ -203,6 +204,7 @@ class FitEventWindow(QtGui.QDialog):
 			raise
 
 	def _sraFunc(self, t, tau, mu1, mu2, a, b):
+		np.seterr(invalid='ignore', over='ignore', under='ignore')
 		try:
 			return a*( (np.exp((mu1-t)/tau)-1)*self._heaviside(t-mu1)+(1-np.exp((mu2-t)/tau))*self._heaviside(t-mu2) ) + b
 		except RuntimeWarning:

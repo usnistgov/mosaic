@@ -201,6 +201,7 @@ class qtAnalysisGUI(qtgui.settingsview.settingsview):
 			QtGui.QMessageBox.warning(self, "File Error", analysisfile+" is not a valid sqlite database.")
 			self._setEnableSettingsWidgets(False)
 			self._setEnableDataSettingsWidgets(False)
+			raise
 
 		self.ShowTrajectory=True
 		

@@ -231,9 +231,9 @@ class TrajectoryWindow(QtGui.QDialog):
 				plt.setp( self.mpl_hist.canvas.ax2.get_yticklabels(), visible=False)
 				
 
-				ilabel={1:'i (pA)', -1:'-i (pA)'}[int(datasign)]
+				ilabel={1:'i', -1:'-i'}[int(datasign)]
 				self.mpl_hist.canvas.ax.set_xlabel('t (s)', fontsize=12)
-				self.mpl_hist.canvas.ax.set_ylabel(ilabel, fontsize=12)
+				self.mpl_hist.canvas.ax.set_ylabel(ilabel+' (pA)', fontsize=12)
 			
 				self.mpl_hist.canvas.draw()
 

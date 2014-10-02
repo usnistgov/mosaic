@@ -170,14 +170,25 @@ class stepResponseAnalysis(metaEventProcessor.metaEventProcessor):
 	###########################################################################
 	def __FitEvent(self):
 		try:
+			varyBlockedCurrent=True
+
 			i0=np.abs(self.baseMean)
 			i0sig=self.baseSD
 			dt = 1000./self.Fs 	# time-step in ms.
 			# edat=np.asarray( np.abs(self.eventData),  dtype='float64' )
 			edat=self.dataPolarity*np.asarray( self.eventData,  dtype='float64' )
 
+			blockedCurrent=min(edat)
+			tauVal=dt
+
 			estart 	= self.__eventStartIndex( self.__threadList( edat, range(0,len(edat)) ), i0, i0sig ) - 1
 			eend 	= self.__eventEndIndex( self.__threadList( edat, range(0,len(edat)) ), i0, i0sig ) - 2
+
+			# For long events, fix the blocked current to speed up the fit
+			if (eend-estart) > 1000:
+				blockedCurrent=np.mean(edat[estart+50:eend-50])
+				tauVal=2.*dt
+				# varyBlockedCurrent=False
 
 			# control numpy error reporting
 			np.seterr(invalid='ignore', over='ignore', under='ignore')
@@ -190,9 +201,9 @@ class stepResponseAnalysis(metaEventProcessor.metaEventProcessor):
 
 			params.add('mu1', value=estart * dt)
 			params.add('mu2', value=eend * dt)
-			params.add('a', value=(i0-min(edat)))
+			params.add('a', value=(i0-blockedCurrent), vary=varyBlockedCurrent)
 			params.add('b', value = i0)
-			params.add('tau', value = dt)
+			params.add('tau', value = tauVal)
 
 			optfit=Minimizer(self.__objfunc, params, fcn_args=(ts,edat,))
 			optfit.prepare_fit()
@@ -202,11 +213,11 @@ class stepResponseAnalysis(metaEventProcessor.metaEventProcessor):
 			# print optfit.params['b'].value, optfit.params['b'].value - optfit.params['a'].value, optfit.params['mu1'].value, optfit.params['mu2'].value
 			if optfit.success:
 				if optfit.params['mu1'].value < 0.0 or optfit.params['mu2'].value < 0.0:
-					# print 'eInvalidFitParams', optfit.params['b'].value, optfit.params['b'].value - optfit.params['a'].value, optfit.params['mu1'].value, optfit.params['mu2'].value
+					# print 'eInvalidFitParams1', optfit.params['b'].value, optfit.params['b'].value - optfit.params['a'].value, optfit.params['mu1'].value, optfit.params['mu2'].value
 					self.rejectEvent('eInvalidFitParams')
 				# The start of the event is set past the length of the data
 				elif optfit.params['mu1'].value > ts[-1]:
-					# print 'eInvalidFitParams', optfit.params['b'].value, optfit.params['b'].value - optfit.params['a'].value, optfit.params['mu1'].value, optfit.params['mu2'].value
+					# print 'eInvalidFitParams2', optfit.params['b'].value, optfit.params['b'].value - optfit.params['a'].value, optfit.params['mu1'].value, optfit.params['mu2'].value
 					self.rejectEvent('eInvalidFitParams')
 				else:
 					self.mdOpenChCurrent 	= optfit.params['b'].value 
@@ -221,24 +232,27 @@ class stepResponseAnalysis(metaEventProcessor.metaEventProcessor):
 					
 					self.mdRedChiSq			= optfit.chisqr/( np.var(optfit.residual) * (len(self.eventData) - optfit.nvarys -1) )
 
+					# if (eend-estart) > 1000:
+					# 	print blockedCurrent, self.mdBlockedCurrent, self.mdOpenChCurrent, self.mdResTime, self.mdRiseTime, self.mdRedChiSq, optfit.chisqr
 					# if self.mdBlockDepth > self.BlockRejectRatio:
 					# 	# print 'eBlockDepthHigh', optfit.params['b'].value, optfit.params['b'].value - optfit.params['a'].value, optfit.params['mu1'].value, optfit.params['mu2'].value
 					# 	self.rejectEvent('eBlockDepthHigh')
 						
 					if math.isnan(self.mdRedChiSq):
 						self.rejectEvent('eInvalidFitParams')
-					if self.mdBlockDepth < 0:
+					if self.mdBlockDepth < 0 or self.mdBlockDepth > 1:
 						self.rejectEvent('eInvalidFitParams')
 
 					#print i0, i0sig, [optfit.params['a'].value, optfit.params['b'].value, optfit.params['mu1'].value, optfit.params['mu2'].value, optfit.params['tau'].value]
 			else:
-				#print optfit.message, optfit.lmdif_message
+				# print optfit.message, optfit.lmdif_message
 				self.rejectEvent('eFitConvergence')
+
 		except KeyboardInterrupt:
 			self.rejectEvent('eFitUserStop')
 			raise
 		except:
-			#print optfit.message, optfit.lmdif_message
+			print optfit.message, optfit.lmdif_message
 	 		self.rejectEvent('eFitFailure')
 
 	def __threadList(self, l1, l2):

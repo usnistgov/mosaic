@@ -56,6 +56,9 @@ class StatisticsWindow(QtGui.QDialog):
 		"""
 			Open a specific database file.
 		"""
+		# Create an index to speed up queries
+		self._createDBIndex(dbfile)
+		
 		self.qWorker=sqlworker.sqlQueryWorker(dbfile)
 	
 		# Connect signals and slots
@@ -85,6 +88,14 @@ class StatisticsWindow(QtGui.QDialog):
 		else:
 			self.setGeometry(1050, 0, 375, 200)
 		# self.move( (-screen.width()/2)+200, -screen.height()/2 )
+
+	def _createDBIndex(self, dbfile):
+		db = sqlite3.connect(dbfile, detect_types=sqlite3.PARSE_DECLTYPES)
+		with db:
+			db.execute('CREATE INDEX IF NOT EXISTS statisticsAbsEventStartIndex ON metadata (AbsEventStart, ProcessingStatus)')
+			db.execute('CREATE INDEX IF NOT EXISTS statisticsProcessingStatusIndex ON metadata (ProcessingStatus)')
+		db.commit()
+		db.close()
 
 	def _updatequery(self):
 		self.qThread.start()
