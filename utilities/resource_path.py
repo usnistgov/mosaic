@@ -10,7 +10,7 @@ def path_separator():
 	"""
 		Automatically detect the current OS and return the appropriate file separator
 	"""
-	return {'darwin' : '/', 'linux' : '/', 'win32' : '\\', 'win64' : '\\'}[sys.platform]
+	return {'darwin' : '/', 'linux' : '/', 'linux2' : '/', 'win32' : '\\', 'win64' : '\\'}[sys.platform]
 
 def resource_path(filename):
 	"""

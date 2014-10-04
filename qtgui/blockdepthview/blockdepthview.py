@@ -326,13 +326,13 @@ class BlockDepthWindow(QtGui.QDialog):
 if __name__ == '__main__':
 	from os.path import expanduser
 	# dbpath=expanduser('~')+'/Research/Experiments/Nanoclusters/PW9O34/20140916/m120mV1/'
-	dbpath=expanduser('~')+'/Research/Experiments/PEG29EBSRefData/20120323/singleChan/'
+	# dbpath=expanduser('~')+'/Research/Experiments/PEG29EBSRefData/20120323/singleChan/'
 	# dbpath='C:\\temp\\'
 
 	app = QtGui.QApplication(sys.argv)
 	dmw = BlockDepthWindow()
-	# dmw.openDBFile('/Users/arvind/Desktop/untitled folder/eventMD-20140923-155414.sqlite')
-	dmw.openDB(dbpath)
+	dmw.openDBFile('/Users/arvind/Desktop/untitled folder/eventMD-20140923-155414.sqlite')
+	# dmw.openDB(dbpath)
 	dmw.show()
 	dmw.raise_()
 	sys.exit(app.exec_())
