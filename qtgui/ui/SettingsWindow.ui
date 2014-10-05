@@ -541,7 +541,6 @@
       </layout>
       <zorder></zorder>
       <zorder>horizontalSpacer_4</zorder>
-      <zorder>eventPartitionGroupBox</zorder>
      </widget>
     </item>
     <item>
@@ -927,6 +926,7 @@
     </property>
     <addaction name="actionLoad_Data"/>
     <addaction name="actionOpen_Analysis"/>
+    <addaction name="actionSave_Settings"/>
     <addaction name="actionStart_Analysis"/>
    </widget>
    <widget class="QMenu" name="menuHelp">
@@ -1031,6 +1031,14 @@
    </property>
    <property name="shortcut">
     <string>Ctrl+O</string>
+   </property>
+  </action>
+  <action name="actionSave_Settings">
+   <property name="text">
+    <string>Save Settings</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Shift+S</string>
    </property>
   </action>
  </widget>

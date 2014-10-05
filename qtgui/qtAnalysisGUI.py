@@ -35,6 +35,8 @@ class qtAnalysisGUI(qtgui.settingsview.settingsview):
 		QtCore.QObject.connect(self.actionStart_Analysis, QtCore.SIGNAL('triggered()'), self.OnStartAnalysis)
 		QtCore.QObject.connect(self.actionOpen_Analysis, QtCore.SIGNAL('triggered()'), self.OnLoadAnalysis)
 		QtCore.QObject.connect(self.actionLoad_Data, QtCore.SIGNAL('triggered()'), self.OnSelectPath)
+		QtCore.QObject.connect(self.actionSave_Settings, QtCore.SIGNAL('triggered()'), self.OnSaveSettings)
+		
 		
 		# Idle processing
 		QtCore.QObject.connect(self.idleTimer, QtCore.SIGNAL('timeout()'), self.OnAppIdle)
@@ -121,6 +123,26 @@ class qtAnalysisGUI(qtgui.settingsview.settingsview):
 			self.startAnalysisPushButton.setStyleSheet("")
 			self.startAnalysisPushButton.setText("Start Analysis")
 			self.actionStart_Analysis.setText("Start Analysis")
+
+	def OnSaveSettings(self):
+		if not self.analysisRunning:
+			if self.analysisDataModel["DataFilesPath"]:
+				
+				if self.dataFilterDenoise:
+					fltr=self.analysisDataModel["FilterAlgorithm"]
+				else:
+					fltr=None
+
+				with open(self.analysisDataModel["DataFilesPath"]+"/.settings", 'w') as f:
+					f.write(
+						self.analysisDataModel.GenerateSettingsView(
+							eventPartitionAlgo=str(self.partitionAlgorithmComboBox.currentText()), 
+							eventProcessingAlgo=str(self.processingAlgorithmComboBox.currentText()),
+							dataFilterAlgo=fltr
+						)
+					)
+				# QtGui.QMessageBox.information(self, "Settings Saved", "Settings file "+self.analysisDataModel["DataFilesPath"]+"/.settings saved.")
+				QtGui.QMessageBox.information(self, "Settings Saved", "Settings file saved.")
 
 	def OnAnalysisFinished(self, value=True):
 		if value:

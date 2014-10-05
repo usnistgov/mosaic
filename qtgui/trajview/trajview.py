@@ -265,6 +265,11 @@ class TrajectoryWindow(QtGui.QDialog):
 			self.sd=float(self.datadict["sdOpenCurr"])
 			self.thr=float(self.datadict["eventThreshold"])
 
+		# When loading more data, update the parent window
+		# threshold spinbox maximum
+		self.parent().ThresholdDoubleSpinBox.setMaximum(self.mu)
+
+
 	def _ticks(self, nticks):
 		axes=self.mpl_hist.canvas.ax
 

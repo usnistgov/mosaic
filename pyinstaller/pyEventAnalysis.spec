@@ -4,7 +4,7 @@ from utilities.resource_path import resource_path, format_path
 
 a = Analysis(['../qtgui/qtAnalysisGUI.py'],
 			 pathex=[resource_path('.settings')],
-			 hiddenimports=['scipy.special._ufuncs_cxx', 'qtgui.mplwidget'],
+			 hiddenimports=['scipy.special._ufuncs_cxx', 'qtgui.mplwidget','Tkinter','FixTk','_tkinter','Tkconstants','FileDialog','Dialog'],
 			 hookspath=None,
 			 runtime_hooks=None)
 a.datas += [('.settings', '../.settings',  'DATA')]

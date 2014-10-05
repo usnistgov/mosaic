@@ -44,6 +44,7 @@ setup(
             'qtgui/ui/blockdepthview.ui',
             'qtgui/ui/statisticsview.ui',
             'qtgui/ui/fiteventsview.ui',
+            'qtgui/ui/consoleDialog.ui',
             'pyinstaller/pyEventAnalysis.spec',
             'pyinstaller-sh'
             ],

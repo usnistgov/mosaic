@@ -256,7 +256,7 @@ class settingsview(QtGui.QMainWindow):
 			except AttributeError:
 				mu=self.analysisDataModel["lastMeanOpenCurr"]
 				sig=self.analysisDataModel["lastSDOpenCurr"]
-			self.ThresholdDoubleSpinBox.setMaximum(mu)
+			self.ThresholdDoubleSpinBox.setMaximum(max(0,mu))
 			self.ThresholdDoubleSpinBox.setValue(mu-sig*threshold)
 		else:
 			self.ThresholdDoubleSpinBox.setValue(mean-sd*threshold)
@@ -424,7 +424,7 @@ class settingsview(QtGui.QMainWindow):
 	def OnBaselineMeanChange(self, value):
 		if self.updateDialogs:
 			self._baselineupdate("meanOpenCurr")
-
+			# self.ThresholdDoubleSpinBox.setMaximum(float(value))
 			self.trajViewerWindow.updatePlot(self.analysisDataModel.GenerateTrajView())
 
 	def OnBaselineSDChange(self, value):
