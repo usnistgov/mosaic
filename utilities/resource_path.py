@@ -20,13 +20,20 @@ def resource_path(filename):
 	sep=path_separator()
 	dirlist=string.split( os.path.dirname( os.path.abspath(__file__) ), sep )[:-1]
 
-	if filename==".settings" or filename=="settings":
+	if filename in [ ".settings", "settings"]:
 		if os.path.isfile ( str(sep.join( dirlist ))+sep+filename ):
 			return str(sep.join( dirlist ))
 		elif os.path.isfile ( str(sep.join( dirlist[:-1] ))+sep+filename ):
 			return str(sep.join( dirlist[:-1] ))
 		else:
-			NotFoundError('.settings')
+			NotFoundError(filename)
+	elif filename in ["icon.png"]:
+		if os.path.isfile ( str(sep.join( dirlist ))+sep+filename ):
+			return str(sep.join( dirlist )+sep+filename)
+		elif os.path.isfile ( str(sep.join( dirlist[:-1] ))+sep+filename ):
+			return str(sep.join( dirlist[:-1] )+sep+filename)
+		else:
+			NotFoundError(filename)
 	else:
 		# print os.environ.get("_MEIPASS2", os.path.abspath(".") )
 		if os.path.isfile( format_path(str(sep.join( dirlist ))+'/qtgui/ui/'+filename) ):

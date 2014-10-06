@@ -7,7 +7,7 @@ a = Analysis(['../qtgui/qtAnalysisGUI.py'],
 			 hiddenimports=['scipy.special._ufuncs_cxx', 'qtgui.mplwidget','Tkinter','FixTk','_tkinter','Tkconstants','FileDialog','Dialog'],
 			 hookspath=None,
 			 runtime_hooks=None)
-a.datas += [('.settings', '../.settings',  'DATA')]
+a.datas += [('.settings', '../.settings',  'DATA'), ('icon.png', '../icon.png',  'DATA')]
 pyz = PYZ(a.pure)
 # On OS X, collect data files and  build an application bundle
 if sys.platform=='darwin':
@@ -19,7 +19,7 @@ if sys.platform=='darwin':
 		  strip=None,
 		  upx=True,
 		  console=False,
-		  icon='logo.icns' )
+		  icon='icon.png' )
 	coll = COLLECT(exe,
 				   a.binaries,
 				   Tree('../qtgui/ui', prefix='ui'),
@@ -45,7 +45,8 @@ elif sys.platform=='win32' or sys.platform=='win64':
 		debug=False,
 		strip=None,
 		upx=True,
-		console=False )
+		console=False,
+		icon='icon.png' )
 	# coll = COLLECT(exe,
 	# 	a.binaries,
 	# 	Tree(format_path('../qtgui/ui'), prefix='ui'),

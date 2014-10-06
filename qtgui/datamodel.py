@@ -141,7 +141,8 @@ class guiDataModel(dict):
 			self.jsonSettingsObj=pyeventanalysis.settings.settings(self["DataFilesPath"])
 		else:
 			# print "res_path", 
-			self.jsonSettingsObj=pyeventanalysis.settings.settings(resource_path(".settings"))
+			# self.jsonSettingsObj=pyeventanalysis.settings.settings(resource_path(".settings"))
+			self.jsonSettingsObj=pyeventanalysis.settings.settings('', defaultwarn=False)
 
 		# if a dbfile
 		if dbfile:
