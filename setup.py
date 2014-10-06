@@ -26,6 +26,7 @@ setup(
             'qtgui.blockdepthview',
             'qtgui.statisticsview',
             'qtgui.fiteventsview',
+            'qtgui.aboutdialog',
             'utilities'
             ],
     scripts=[
@@ -45,7 +46,9 @@ setup(
             'qtgui/ui/statisticsview.ui',
             'qtgui/ui/fiteventsview.ui',
             'qtgui/ui/consoleDialog.ui',
+            'qtgui/ui/aboutdialog.ui',
             'pyinstaller/pyEventAnalysis.spec',
+            'icon.png',
             'pyinstaller-sh'
             ],
     url='http://pypi.python.org/pypi/pyEventAnalysis/',

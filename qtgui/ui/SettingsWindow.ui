@@ -933,6 +933,7 @@
     <property name="title">
      <string>Help</string>
     </property>
+    <addaction name="actionAbout_app"/>
     <addaction name="actionPyEventAnalysis_Help"/>
    </widget>
    <widget class="QMenu" name="menuView">
@@ -1039,6 +1040,11 @@
    </property>
    <property name="shortcut">
     <string>Ctrl+Shift+S</string>
+   </property>
+  </action>
+  <action name="actionAbout_app">
+   <property name="text">
+    <string>About pyEventAnalysis</string>
    </property>
   </action>
  </widget>

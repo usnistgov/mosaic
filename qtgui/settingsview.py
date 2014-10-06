@@ -19,6 +19,7 @@ import qtgui.blockdepthview.blockdepthview
 import qtgui.statisticsview.statisticsview
 import qtgui.consolelog.consolelog
 import qtgui.fiteventsview.fiteventsview
+import qtgui.aboutdialog.aboutdialog
 import qtgui.datamodel
 
 class settingsview(QtGui.QMainWindow):
@@ -44,6 +45,7 @@ class settingsview(QtGui.QMainWindow):
 		self.blockDepthWindow = qtgui.blockdepthview.blockdepthview.BlockDepthWindow(parent=self)
 		self.statisticsView = qtgui.statisticsview.statisticsview.StatisticsWindow(parent=self)
 		self.fitEventsView = qtgui.fiteventsview.fiteventsview.FitEventWindow(parent=self)
+		self.aboutDialog = qtgui.aboutdialog.aboutdialog.AboutDialog(parent=self)
 		
 
 		self.showBlockDepthWindow=False

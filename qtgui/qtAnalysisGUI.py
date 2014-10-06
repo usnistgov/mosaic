@@ -36,6 +36,8 @@ class qtAnalysisGUI(qtgui.settingsview.settingsview):
 		QtCore.QObject.connect(self.actionOpen_Analysis, QtCore.SIGNAL('triggered()'), self.OnLoadAnalysis)
 		QtCore.QObject.connect(self.actionLoad_Data, QtCore.SIGNAL('triggered()'), self.OnSelectPath)
 		QtCore.QObject.connect(self.actionSave_Settings, QtCore.SIGNAL('triggered()'), self.OnSaveSettings)
+		QtCore.QObject.connect(self.actionAbout_app, QtCore.SIGNAL('triggered()'), self.OnAboutApp)
+		
 		
 		
 		# Idle processing
@@ -227,6 +229,9 @@ class qtAnalysisGUI(qtgui.settingsview.settingsview):
 
 		self.ShowTrajectory=True
 		
+	def OnAboutApp(self):
+		self.aboutDialog.show()
+
 	def _getdbfiles(self):
 		path=self.analysisDataModel["DataFilesPath"]
 		return glob.glob(format_path(path+'/*sqlite'))
