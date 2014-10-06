@@ -4,7 +4,8 @@ plat=`uname`
 
 
 
-ver=$(<version)
+v1=$(<pyeventanalysis/_version.py)
+ver=`echo $v1 | cut -d= -f2 | cut -d\" -f2`
 read -d '' info1 <<-"EOF"
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">

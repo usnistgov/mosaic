@@ -24,24 +24,19 @@ class AboutDialog(QtGui.QDialog):
 		self._setVersion()
 
 	def _setVersion(self):
-		with open('version', 'r') as f:
-			ver=f.read()
+		import pyeventanalysis
 
-		self.versionLabel.setText( "Version " + ver.rstrip() )
+		self.versionLabel.setText( "Version " + pyeventanalysis.__version__ )
 
 	def _positionWindow(self):
 		"""
 			Position settings window at the top left corner
 		"""
-		# if sys.platform=='win32':
-		# 	self.setGeometry(38, 350, 300, 200)
-		# else:
-		# 	self.setGeometry(38, 350, 300, 200)
-		screen = QtGui.QDesktopWidget().screenGeometry()
-		# print screen.x(), screen.y(), screen.width()/2., screen.height()/2., screen.center()
-		# self.move( screen.center() )
-		self.move( 38, 250 )
-
+		if sys.platform=='win32':
+			self.setGeometry(38, 250, 300, 200)
+		else:
+			self.setGeometry(38, 250, 300, 200)
+		
 if __name__ == '__main__':
 	app = QtGui.QApplication(sys.argv)
 	dmw = AboutDialog()

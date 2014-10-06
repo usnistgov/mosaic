@@ -2,15 +2,10 @@ from distutils.core import setup
 from Cython.Build import cythonize
 import numpy
 
-def read_version():
-    with open('version', 'r') as f:
-        ver=f.read()
-
-    return ver.rstrip()
-
+exec(open('pyeventanalysis/_version.py').read())
 setup(
     name='pyEventAnalysis',
-    version=read_version(),
+    version=__version__,
     author='Arvind Balijepalli',
     author_email='arvind.balijepalli@nist.gov',
     packages=[
@@ -30,7 +25,6 @@ setup(
             'utilities'
             ],
     scripts=[
-            'version',
             '.settings',
             'install-test-sh',
             'bin/analysis.py', 
