@@ -1,1 +1,98 @@
-===========pyEventAnalysis ===========Description::Running the code requires a python file as shown below and a settings file located in the data directory. Installation=========The code is tested under OS X and Ubuntu. Installation instructions for both platforms are below.Dependencies-------------The following manual dependencies are needed before the code will run. Once they are installed, type ‘sh dependencies/dependencies/build-deps-sh’ to install additional dependencies.* OS X	First install Homebrew. Then install python using brew		brew install python	Next install the Fortran compiler from <http://hpc.sourceforge.net/>* Ubuntu	Under Ubuntu in addition to gfortran, the BLAS and LAPACK libraries are requiredapt-get install libblas-dev liblapack-dev gfortran libfreetype6-devMathematica Scripts-------------To install the Mathematica analysis scripts type "make math-iface" from the root of the source directory.Testing the Installation-------------Type "make tests" from the root of the source directory to test if the code was installed correctly.Settings=========The code processes events in two stages. The first stage is a simple threshold that identifies events. This stage is controlled by the ‘eventSegment’ section in the settings file. The second stage performs a least squares fit of the model to each identified event and is controlled by the ‘stepResponseAnalysis’ section.{        "eventSegment" : {                "blockSizeSec"          : "0.5",                "eventPad"              : "50",                "minEventLength"        : "5",                "eventThreshold"        : "4.0",                "driftThreshold"        : "999",                "maxDriftRate"          : "999",                "meanOpenCurr"          : "134.0",                "sdOpenCurr"            : "4.0",                "slopeOpenCurr"         : "0",                "writeEventTS"          : "1",                "parallelProc"          : "0",                "reserveNCPU"           : "3",                "plotResults"           : "0"        },        "stepResponseAnalysis" : {                "FitTol"                : "1.e-7",                "FitIters"              : "10000",                "BlockRejectRatio"      : "0.9"        }}Running the Code=========The code should be run from the root of the source directory. Type python bin/analysis.py. The analysis.py file  is below:   	import sys	import os	import glob	import time	import signal	import resource	import pyeventanalysis.SingleChannelAnalysis	import pyeventanalysis.eventSegment as es	import pyeventanalysis.stepResponseAnalysis as sra 	import pyeventanalysis.multiStateAnalysis as msa	from pyeventanalysis.qdfTrajIO import *	from pyeventanalysis.abfTrajIO import *	from pyeventanalysis.besselLowpassFilter import *	pyeventanalysis.SingleChannelAnalysis.SingleChannelAnalysis(				abfTrajIO(dirname='/Volumes/DATA/PEG1500/PEG29/',filter='*abf', nfiles=1, start=1000), 				es.eventSegment,				sra.stepResponseAnalysis	 		).Run()
+===========
+pyEventAnalysis 
+===========
+
+Description::
+
+Running the code requires a python file as shown below and a settings file located in the data directory. 
+
+
+
+Installation
+=========
+
+The code is tested under OS X and Ubuntu. Installation instructions for both platforms are below.
+
+Dependencies
+-------------
+The following manual dependencies are needed before the code will run. Once they are installed, type ‘sh dependencies/dependencies/build-deps-sh’ to install additional dependencies.
+
+* OS X
+	First install Homebrew. Then install python using brew
+		brew install python
+
+	Next install the Fortran compiler from <http://hpc.sourceforge.net/>
+
+* Ubuntu
+	Under Ubuntu in addition to gfortran, the BLAS and LAPACK libraries are required
+apt-get install libblas-dev liblapack-dev gfortran libfreetype6-dev
+
+Mathematica Scripts
+-------------
+
+To install the Mathematica analysis scripts type "make math-iface" from the root of the source directory.
+
+Testing the Installation
+-------------
+
+Type "make tests" from the root of the source directory to test if the code was installed correctly.
+
+
+Settings
+=========
+
+The code processes events in two stages. The first stage is a simple threshold that identifies events. This stage is controlled by the ‘eventSegment’ section in the settings file. The second stage performs a least squares fit of the model to each identified event and is controlled by the ‘stepResponseAnalysis’ section.
+
+{
+        "eventSegment" : {
+                "blockSizeSec"          : "0.5",
+                "eventPad"              : "50",
+                "minEventLength"        : "5",
+                "eventThreshold"        : "4.0",
+                "driftThreshold"        : "999",
+                "maxDriftRate"          : "999",
+                "meanOpenCurr"          : "134.0",
+                "sdOpenCurr"            : "4.0",
+                "slopeOpenCurr"         : "0",
+                "writeEventTS"          : "1",
+                "parallelProc"          : "0",
+                "reserveNCPU"           : "3",
+                "plotResults"           : "0"
+        },
+        "stepResponseAnalysis" : {
+                "FitTol"                : "1.e-7",
+                "FitIters"              : "10000",
+                "BlockRejectRatio"      : "0.9"
+        }
+}
+
+Running the Code
+=========
+
+The code should be run from the root of the source directory. Type python bin/analysis.py. The analysis.py file  is below:
+   	import sys
+	import os
+	import glob
+	import time
+	import signal
+	import resource
+
+	import pyeventanalysis.SingleChannelAnalysis
+
+	import pyeventanalysis.eventSegment as es
+
+	import pyeventanalysis.stepResponseAnalysis as sra 
+	import pyeventanalysis.multiStateAnalysis as msa
+
+	from pyeventanalysis.qdfTrajIO import *
+	from pyeventanalysis.abfTrajIO import *
+
+	from pyeventanalysis.besselLowpassFilter import *
+
+
+
+	pyeventanalysis.SingleChannelAnalysis.SingleChannelAnalysis(
+				abfTrajIO(dirname='/Volumes/DATA/PEG1500/PEG29/',filter='*abf', nfiles=1, start=1000), 
+				es.eventSegment,
+				sra.stepResponseAnalysis
+	 		).Run()
