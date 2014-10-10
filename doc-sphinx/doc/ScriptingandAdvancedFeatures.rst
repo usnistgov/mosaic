@@ -103,7 +103,7 @@ Scripting with Python allows transforming the output of the *<name>* further to 
 It is useful to visualize time-series data to highlight unique characteristics of a sample. For example the sample code above was used to load 1 second of monodisperse PEG28 data, sampled at 500 kHz. The data was read using a *abfTrajIO* object similar to the examples above. The *previewdata* command was used to preview 500k data points (or 1 second) and then plot a time-series using `matplotlib <http://matplotlib.org>`_ (see figure below). Finally, the *popdata* function of *abfTrajIO* was used to take the same 500k points and save them to a comma separated text file. Note that *popdata* removes the points from the data pipeline. Calling popdata second time will return the next *n* points.
 
 
-.. image:: ../wiki/images/advancedFig2.png
+.. image:: ../images/advancedFig2.png
    :width: 500 px
    :align: center
 
@@ -187,6 +187,6 @@ In the code above, we first process all the ABF files in a specified directory s
 
 Next, we generate a two pane plot using `matplotlib <http://matplotlib.org>`_. The top pane contains a histogram of the blockade depth, while the bottom pane plots a 2D histogram of residence time vs. blockade depth.
 
-.. image:: ../wiki/images/advancedFig3.png
+.. image:: ../images/advancedFig3.png
    :width: 500 px
    :align: center
