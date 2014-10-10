@@ -1,14 +1,14 @@
-"""
-	An implementation of metaTrajIO that reads tab separated valued (TSV) files
+# """
+# 	An implementation of metaTrajIO that reads tab separated valued (TSV) files
 
-	Author: Arvind Balijepalli
-	Created: 7/31/2012
+# 	Author: Arvind Balijepalli
+# 	Created: 7/31/2012
 
-	ChangeLog:
-		7/31/12		AB	Initial version
-		6/30/13		AB 	Added the 'seprator' kwarg to the class initializer to allow any delimited 
-						files to be read. e.g. '\t' (default), ',', etc.
-"""
+# 	ChangeLog:
+# 		7/31/12		AB	Initial version
+# 		6/30/13		AB 	Added the 'seprator' kwarg to the class initializer to allow any delimited 
+# 						files to be read. e.g. '\t' (default), ',', etc.
+# """
 import numpy as np 
 
 import metaTrajIO
@@ -16,28 +16,26 @@ import csv
 
 class tsvTrajIO(metaTrajIO.metaTrajIO):
 	"""
-	"""
+		Perform additional initialization checks. Check if kwarg 'timeCol' is set to a number.
+
+		In addition to metaTrajIO.__init__ args,
+		:Optional Parameters:
+			- `headers` :		If True, the first row is ignored (default: True)
+			- `separator` :	set the data separator (defualt: '\t')
+			
+			Either:
+				- `Fs` : 			Sampling frequency in Hz. If set, all other options are ignored
+							and the first column in the file is assumed to be the current in pA.
+			Or:
+				- `nCols` :		number of columns in TSV file (default:2, first column is time 
+							in ms and second is current in pA) 
+				- `timeCol` :		explicitly set the time column (default: 0, first col)
+				- `currCol` :		explicitly set the position of the current column (default: 1)
+
+			If neither 'Fs' nor {'nCols', 'timeCol','currCol'} are set then the latter 
+			is assumed with the listed default values.
+		"""
 	def _init(self, **kwargs):
-		"""
-			Perform additional initialization checks. Check if kwarg 'timeCol' is set to a number.
-
-			In addition to metaTrajIO.__init__ args,
-			Optional Args:
-				headers		If True, the first row is ignored (default: True)
-				separator	set the data separator (defualt: '\t')
-				
-				Either:
-					Fs 			Sampling frequency in Hz. If set, all other options are ignored
-								and the first column in the file is assumed to be the current in pA.
-				Or:
-					nCols		number of columns in TSV file (default:2, first column is time 
-								in ms and second is current in pA) 
-					timeCol		explicitly set the time column (default: 0, first col)
-					currCol		explicitly set the position of the current column (default: 1)
-
-				If neither 'Fs' nor {'nCols', 'timeCol','currCol'} are set then the latter 
-				is assumed with the listed default values.
-		"""
 		# Check if headers are present
 		self.hasHeaders=kwargs.pop('headers', True)
 		try:
@@ -68,12 +66,12 @@ class tsvTrajIO(metaTrajIO.metaTrajIO):
 			Read a single TSV file and append its data to the data pipeline.
 			Set/update a class attribute Fs with the sampling frequency in Hz.
 
-			Args:
-				fname  list of data files to read
-			Returns:
+			:Parameters:
+				- `fname` :  list of data files to read
+			:Returns:
 				None
-			Errors:
-				SamplingRateChangedError if the sampling rate for any data file differs from previous
+			:Errors:
+				- `SamplingRateChangedError` : if the sampling rate for any data file differs from previous
 		"""
 		data=np.array([])
 		# Add new data to the existing array

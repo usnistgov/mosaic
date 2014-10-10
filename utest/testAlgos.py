@@ -6,7 +6,7 @@ import time
 import os
 import glob
 
-import pyeventanalysis.settings
+import pyeventanalysis.settings as settings
 import pyeventanalysis.stepResponseAnalysis as sra
 import pyeventanalysis.singleStepEvent as sse
 
@@ -27,7 +27,8 @@ class PEGAlgorithmTest(unittest.TestCase):
 		dat=testutil.readcsv(datfile)
 		prm=testutil.readparams(prmfile)
 
-		sett=json.loads( "".join((open('../../.settings', 'r').readlines())) )[algoHnd.__name__]
+		# sett=json.loads( "".join((open('../../.settings', 'r').readlines())) )[algoHnd.__name__]
+		sett = (settings.settings('.', defaultwarn=False).settingsDict)[algoHnd.__name__]
 
 		dt=int(1e6/dat[0])
 
@@ -57,7 +58,8 @@ class PEGEventPartitionTest(unittest.TestCase):
 		prm=testutil.readparams(prmfile)
 		dat=tsvTrajIO(fnames=[datfile], Fs=prm['Fs'], separator=',')
 
-		sett=json.loads( "".join((open('../../.settings', 'r').readlines())) )
+		# sett=json.loads( "".join((open('../../.settings', 'r').readlines())) )
+		sett = (settings.settings('.', defaultwarn=False).settingsDict)
 
 		epartsettings = sett[eventPartHnd.__name__]
 

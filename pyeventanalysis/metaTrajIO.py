@@ -1,12 +1,10 @@
-##@package pyeventanalysis.metaTrajIO
-#Meta class to allow import of ionic current data from a variety of sources.
 """
 	Read binary ionic current data into numpy arrays
 
-	Author: Arvind Balijepalli
-	Created:	7/17/2012
-
-	ChangeLog:
+	:Author: Arvind Balijepalli
+	:Created:	7/17/2012
+	:ChangeLog:
+	.. line-block::
 		8/22/14 	AB 	Setup a new property ('LastDataFile') that tracks the current
 						data file being processed.
 		5/27/14		AB 	Added dcOffset kwarg to initialization to allow 
@@ -39,10 +37,9 @@ class FileNotFoundError(Exception):
 	pass
 
 class metaTrajIO(object):
-	__metaclass__=ABCMeta
+	"""
+			.. warning:: This is a metaclass that must be subclassed.
 
-	def __init__(self, **kwargs):
-		"""
 			Initialize a TrajIO object. The object can load all the data in a directory,
 			N files from a directory or from an explicit list of filenames. In addition 
 			to the arguments defined below, implementations of this meta class may require 
@@ -50,31 +47,35 @@ class metaTrajIO(object):
 			for what those may be. For example, the qdfTrajIO implementation of metaTrajIO also requires
 			the feedback resistance (Rfb) and feedback capacitance (Cfb) to be passed at initialization.
 
-			Common Args:
-				dirname		all files from a directory ('<full path to data directory>')
-				nfiles		if requesting N files (in addition to dirname) from a specified directory
+			:Keyword Args:
+				- `dirname` :		all files from a directory ('<full path to data directory>')
+				- `nfiles` :		if requesting N files (in addition to dirname) from a specified directory
 				
-				fnames 		explicit list of filenames ([file1, file2,...]). This argument 
+				- `fnames` : 		explicit list of filenames ([file1, file2,...]). This argument 
 							cannot be used in conjuction with dirname/nfiles. The filter 
 							argument is ignored when used in combination with fnames. 
 
-				filter		'<wildcard filter>' (optional, filter is '*' if not specified)
-				start 		Data start point in seconds.
-				end 		Data end point in seconds.
-				datafilter	Handle to the algorithm to use to filter the data. If no algorithm is specified, datafilter
+				- `filter` :		'<wildcard filter>' (optional, filter is '*' if not specified)
+				- `start` : 		Data start point in seconds.
+				- `end` : 		Data end point in seconds.
+				- `datafilter` :	Handle to the algorithm to use to filter the data. If no algorithm is specified, datafilter
 							is None and no filtering is performed.
-				dcOffset	Subtract a DC offset from the ionic current data.
-			Returns:
-				None
-			Properties:
-				FsHz				sampling frequency in Hz. If the data was decimated, this 
+				- `dcOffset` :	Subtract a DC offset from the ionic current data.
+			:Properties:
+				- `FsHz` :				sampling frequency in Hz. If the data was decimated, this 
 									property will hold the sampling frequency after decimation.
-				LastFileProcessed	return the data file that was last processed.
-			Errors:
-				IncompatibleArgumentsError when conflicting arguments are used.
-				EmptyDataPipeError when out of data.
-				FileNotFoundError when data files do not exist in the specified path.
-				InsufficientArgumentsError when incompatible arguments are passed
+				- `LastFileProcessed` :	return the data file that was last processed.
+				- `ElapsedTimeSeconds` : return the analysis time in sec.
+			:Errors:
+				- `IncompatibleArgumentsError` : when conflicting arguments are used.
+				- `EmptyDataPipeError` : when out of data.
+				- `FileNotFoundError` : when data files do not exist in the specified path.
+				- `InsufficientArgumentsError` : when incompatible arguments are passed
+	"""
+	__metaclass__=ABCMeta
+
+	def __init__(self, **kwargs):
+		"""
 		"""
 		# start by setting all passed keyword arguments as class attributes
 		for (k,v) in kwargs.iteritems():
@@ -179,12 +180,12 @@ class metaTrajIO(object):
 			than the requested data points. When all data files are read, an
 			EmptyDataPipeError is thrown.
 
-			Args:
-				n number of requested data points
-			Returns:
+			:Parameters:
+				- `n` : number of requested data points
+			:Returns:
 				numpy array with requested data
-			Errors:
-				EmptyDataPipeError if the queue has fewer data points than requested.
+			:Errors:
+				- `EmptyDataPipeError` : if the queue has fewer data points than requested.
 		"""
 		if not self.initPipe:
 			self._initPipe()
@@ -235,12 +236,12 @@ class metaTrajIO(object):
 			when the queue length is shorter than the requested data points. When all 
 			data files are read, an	EmptyDataPipeError is thrown.
 
-			Args:
-				n number of requested data points
-			Returns:
+			:Parameters:
+				`n` : number of requested data points
+			:Returns:
 				numpy array with requested data
-			Errors:
-				EmptyDataPipeError if the queue has fewer data points than requested.
+			:Errors:
+				- `EmptyDataPipeError` : if the queue has fewer data points than requested.
 		"""
 		if not self.initPipe:
 			self._initPipe()
@@ -296,11 +297,11 @@ class metaTrajIO(object):
 			Read the specified data file(s) and append its data to the data pipeline. Set 
 			a class property FsHz with the sampling frequency in Hz.
 
-			Args:
-				fname	list of filenames
+			:Parameters:
+				- `fname` :	list of filenames
 
 			
-			See implementations of metaTrajIO for specfic documentation.
+			.. seealso:: See implementations of metaTrajIO for specfic documentation.
 		"""
 		data=self.readdata(fname)
 		if self.dataFilter:
@@ -323,8 +324,8 @@ class metaTrajIO(object):
 			Read the specified data file(s) and  return the data as an array. Set 
 			a class property Fs with the sampling frequency in Hz.
 
-			Args:
-				fname	list of filenames
+			:Parameters:
+				- `fname` :	list of filenames
 		"""
 		pass
 
@@ -332,12 +333,11 @@ class metaTrajIO(object):
 		"""
 			Pop n filenames from the start of self.dataFiles. If filenames run out, 
 			simply return the available names. 
-			Args:
-				n 	number of requested filenames
-			Returns:
+			
+			:Parameters:
+				- `n` : 	number of requested filenames
+			:Returns:
 				List of filenames if successful, empty list if not files remain
-			Errors:
-				None
 		"""
 		poplist=[]
 		try:

@@ -1,32 +1,32 @@
-"""
-	Partition a trajectory into individual events and pass each event 
-	to an implementation of eventProcessor
+# """
+# 	Partition a trajectory into individual events and pass each event 
+# 	to an implementation of eventProcessor
 
-	Author: 	Arvind Balijepalli
-	Created:	7/17/2012
+# 	Author: 	Arvind Balijepalli
+# 	Created:	7/17/2012
 
-	ChangeLog:
-		5/17/14		AB  Delete plotting support
-		5/17/14		AB  Add metaMDIO support for meta-data and time-series storage
-		2/14/14		AB 	Pass absdatidx argument to event processing to track absolute time of 
-						event start for capture rate estimation.
-		6/22/13		AB 	Use plotting hooks in metaEventPartition to plot blockade depth histogram in 
-						real-time using matplotlib.
-		4/22/13		AB 	Rewrote this class as an implementation of the base class metaEventPartition.
-						Included event processing parallelization using ZMQ.
-		9/26/12		AB  Allowed automatic open channel state calculation to be overridden.
-						To do this the settings "meanOpenCurr","sdOpenCurr" and "slopeOpenCurr"
-						must be set manually. If all three settings are absent or 
-						set to 01, they are autuomatically estimated.
-						Added "writeEventTS" boolean setting to control whether raw
-						events are written to file. Default is ON (1)
-		8/24/12		AB 	Settings are now read from a settings file that
-						is located either with the data or in the working directory 
-						that the program is run from. Each class that relies on the 
-						settings file will fallback to default values if the file
-						is not found.
-		7/17/12		AB	Initial version
-"""
+# 	ChangeLog:
+# 		5/17/14		AB  Delete plotting support
+# 		5/17/14		AB  Add metaMDIO support for meta-data and time-series storage
+# 		2/14/14		AB 	Pass absdatidx argument to event processing to track absolute time of 
+# 						event start for capture rate estimation.
+# 		6/22/13		AB 	Use plotting hooks in metaEventPartition to plot blockade depth histogram in 
+# 						real-time using matplotlib.
+# 		4/22/13		AB 	Rewrote this class as an implementation of the base class metaEventPartition.
+# 						Included event processing parallelization using ZMQ.
+# 		9/26/12		AB  Allowed automatic open channel state calculation to be overridden.
+# 						To do this the settings "meanOpenCurr","sdOpenCurr" and "slopeOpenCurr"
+# 						must be set manually. If all three settings are absent or 
+# 						set to 01, they are autuomatically estimated.
+# 						Added "writeEventTS" boolean setting to control whether raw
+# 						events are written to file. Default is ON (1)
+# 		8/24/12		AB 	Settings are now read from a settings file that
+# 						is located either with the data or in the working directory 
+# 						that the program is run from. Each class that relies on the 
+# 						settings file will fallback to default values if the file
+# 						is not found.
+# 		7/17/12		AB	Initial version
+# """
 import util
 from  collections import deque
 

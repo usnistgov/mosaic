@@ -1,14 +1,14 @@
-"""
-	A TrajIO class that supports ABF1 and ABF2 file formats via abf/abf.py. Currently, only
-	gap-free mode and single channel recordings are supported.
+# """
+# 	A TrajIO class that supports ABF1 and ABF2 file formats via abf/abf.py. Currently, only
+# 	gap-free mode and single channel recordings are supported.
 
-	Author: Arvind Balijepalli
-	Created: 5/23/2013
+# 	Author: Arvind Balijepalli
+# 	Created: 5/23/2013
 
-	ChangeLog:
-		5/23/13		AB	Initial version
+# 	ChangeLog:
+# 		5/23/13		AB	Initial version
 
-"""
+# """
 import metaTrajIO
 import abf.abf as abf
 
@@ -17,17 +17,11 @@ import numpy as np
 
 class abfTrajIO(metaTrajIO.metaTrajIO):
 	"""
-	"""
+		:Parameters:
+			In addition to metaTrajIO.__init__ args,
+				None
+		"""
 	def _init(self, **kwargs):
-		"""
-			Args:
-				In addition to metaTrajIO.__init__ args,
-					None
-			Returns:
-				None
-			Errors:
-				None
-		"""
 		pass
 	
 	def readdata(self, fname):
@@ -35,12 +29,12 @@ class abfTrajIO(metaTrajIO.metaTrajIO):
 			Read one or more files and append their data to the data pipeline.
 			Set a class attribute Fs with the sampling frequency in Hz.
 
-			Args:
-				fname  list of data files to read
-			Returns:
+			:Parameters:
+				- `fname` :  list of data files to read
+			:Returns:
 				None
-			Errors:
-				SamplingRateChangedError if the sampling rate for any data file differs from previous
+			:Errors:
+				- `SamplingRateChangedError` : if the sampling rate for any data file differs from previous
 		"""
 		tempdata=np.array([])
 		

@@ -1,3 +1,11 @@
+#
+#	Top level module to run a single channel analysis.
+#
+#	:Author: 	Arvind Balijepalli
+#	:Created:	05/15/2014
+#
+__docformat__ = 'restructuredtext'
+
 import settings
 import multiprocessing
 import os
@@ -19,6 +27,7 @@ def run_eventpartition( trajdataObj, eventPartHnd, eventProcHnd, settingsdict):
 
 class SingleChannelAnalysis(object):
 	"""
+		Run a single channel analysis. 
 	"""
 	def __init__(self, trajDataObj, eventPartitionHnd, eventProcHnd):
 		"""

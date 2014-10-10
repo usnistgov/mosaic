@@ -1,16 +1,16 @@
-"""
-Binary file implementation of metaTrajIO. Read raw binary files with specified record sizes
+# """
+# Binary file implementation of metaTrajIO. Read raw binary files with specified record sizes
 
-	Author: Arvind Balijepalli
-	Created: 4/22/2013
+# 	Author: Arvind Balijepalli
+# 	Created: 4/22/2013
 
-	ChangeLog:
-		7/27/14		AB 	Update interface to specify python PythonStructCode instead of 
-						RecordSize. This will allow any binary file to be decoded
-						The AmplifierScale and AmplifierOffset are set to 1 and 0
-						respectively if PythonStructCode is an integer or short.
-		4/22/13		AB	Initial version
-"""
+# 	ChangeLog:
+# 		7/27/14		AB 	Update interface to specify python PythonStructCode instead of 
+# 						RecordSize. This will allow any binary file to be decoded
+# 						The AmplifierScale and AmplifierOffset are set to 1 and 0
+# 						respectively if PythonStructCode is an integer or short.
+# 		4/22/13		AB	Initial version
+# """
 import struct
 
 import metaTrajIO
@@ -24,21 +24,20 @@ class binTrajIO(metaTrajIO.metaTrajIO):
 	"""
 		Read a binary file that contains single channel ionic current data and calculate the current in pA 
 		after scaling by the amplifier scale factor and removing any offsets.
-	"""
-	def _init(self, **kwargs):
-		"""
-			Args:
+
+		:Parameters:
 				In addition to metaTrajIO.__init__ args,
-					AmplifierScale		full scale of amplifier (in pA) that varies with the gain
-					AmplifierOffset		current offset in the recorded data
-					SamplingFrequency	sampling rate of data in the file in Hz
-					HeaderOffset		ignore first 'n' bytes of the file for header (default: 0 bytes).
-					PythonStructCode	Single character code for a python struct (see Python struct docs).
+					- `AmplifierScale` :		full scale of amplifier (in pA) that varies with the gain
+					- `AmplifierOffset` :		current offset in the recorded data
+					- `SamplingFrequency` :	sampling rate of data in the file in Hz
+					- `HeaderOffset` :		ignore first 'n' bytes of the file for header (default: 0 bytes).
+					- `PythonStructCode` :	Single character code for a python struct (see `Python struct docs <https://docs.python.org/2/library/struct.html>`_).
 			Returns:
 				None
 			Errors:
-				InsufficientArgumentsError if the mandatory arguments Rfb and Cfb are not set
-		"""
+				- `InsufficientArgumentsError` : if the mandatory arguments Rfb and Cfb are not set
+	"""
+	def _init(self, **kwargs):
 		if not hasattr(self, 'SamplingFrequency'):
 			raise metaTrajIO.InsufficientArgumentsError("{0} requires the sampling rate in Hz to be defined.".format(type(self).__name__))
 		if not hasattr(self, 'PythonStructCode'):
@@ -70,11 +69,11 @@ class binTrajIO(metaTrajIO.metaTrajIO):
 			Read one or more files and append their data to the data pipeline.
 			Set a class attribute Fs with the sampling frequency in Hz.
 
-			Args:
-				fname  list of data files to read
-			Returns:
+			:Parameters:
+				- `fname` :  list of data files to read
+			:Returns:
 				None
-			Errors:
+			:Errors:
 				None
 		"""
 		tempdata=np.array([])

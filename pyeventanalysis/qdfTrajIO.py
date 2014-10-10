@@ -1,15 +1,15 @@
-"""
-	QDF implementation of metaTrajIO. Uses the readqdf module from EBS to 
-	read individual qdf files.
+# """
+# 	QDF implementation of metaTrajIO. Uses the readqdf module from EBS to 
+# 	read individual qdf files.
 
-	Author: Arvind Balijepalli
-	Created: 7/18/2012
+# 	Author: Arvind Balijepalli
+# 	Created: 7/18/2012
 
-	ChangeLog:
-		7/18/12		AB	Initial version
-		2/11/14		AB 	Support qdf files that save the current in pA. This needs 
-						format='pA' argument.
-"""
+# 	ChangeLog:
+# 		7/18/12		AB	Initial version
+# 		2/11/14		AB 	Support qdf files that save the current in pA. This needs 
+# 						format='pA' argument.
+# """
 import types
 
 import numpy as np 
@@ -19,23 +19,22 @@ import qdf.readqdf as qdf
 
 class qdfTrajIO(metaTrajIO.metaTrajIO):
 	"""
-	"""
-	def _init(self, **kwargs):
-		"""
-			In addition to the base class init, check if the 
-			feedback resistance (Rfb) and feedback capacitance (Cfb)
-			are defined to convert qdf binary data into pA
+		In addition to the base class init, check if the 
+		feedback resistance (Rfb) and feedback capacitance (Cfb)
+		are defined to convert qdf binary data into pA
 
-			Args:
-				In addition to metaTrajIO.__init__ args,
-					Rfb		feedback resistance of amplifier
-					Cfb		feedback capacitance of amplifier
-					format 	'V' for voltage or 'pA' for current. Default is 'V'
-			Returns:
-				None
-			Errors:
-				InsufficientArgumentsError if the mandatory arguments Rfb and Cfb are not set
-		"""
+		:Parameters:
+			In addition to metaTrajIO.__init__ args,
+				- `Rfb` :		feedback resistance of amplifier
+				- `Cfb` :		feedback capacitance of amplifier
+				- `format` : 	'V' for voltage or 'pA' for current. Default is 'V'
+		:Returns:
+			None
+		:Errors:
+			- `InsufficientArgumentsError` : if the mandatory arguments Rfb and Cfb are not set
+	"""	
+	
+	def _init(self, **kwargs):
 		if not hasattr(self, 'Rfb') or not hasattr(self, 'Cfb'):
 			raise metaTrajIO.InsufficientArgumentsError("{0} requires the feedback resistance (Rfb) and feedback capacitance (Cfb) to be defined.".format(type(self).__name__))
 
@@ -50,12 +49,12 @@ class qdfTrajIO(metaTrajIO.metaTrajIO):
 			Read one or more files and append their data to the data pipeline.
 			Set a class attribute Fs with the sampling frequency in Hz.
 
-			Args:
-				fname  list of data files to read
-			Returns:
+			:Parameters:
+				- `fname` :  list of data files to read
+			:Returns:
 				None
-			Errors:
-				SamplingRateChangedError if the sampling rate for any data file differs from previous
+			:Errors:
+				- `SamplingRateChangedError` : if the sampling rate for any data file differs from previous
 		"""
 		# Read a single file or a list of files. By setting scale_data 
 		# and time_scale to 0, we get back times in ms and current in pA.

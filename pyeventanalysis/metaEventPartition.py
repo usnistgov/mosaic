@@ -1,19 +1,19 @@
-"""
-	A meta class that quickly partitions trajectories into individual events.
+# """
+# 	A meta class that quickly partitions trajectories into individual events.
 
-	Author: 	Arvind Balijepalli
-	Created:	4/22/2013
-
-	ChangeLog:
-		8/18/14		AB 	Fixed parallel processing cleanup.
-		5/17/14		AB 	Delete Plotting support
-		6/22/13		AB 	Added two function hooks to allow plotting 
-						results in real-time. The first InitPlot must 
-						be implemented to initialize a plot. The second
-						UpdatePlot is used to update the plot data in 
-						real-time and refresh the graphics. 
-		4/22/13		AB	Initial version
-"""
+# 	:Author: 	Arvind Balijepalli
+# 	:Created:	4/22/2013
+# 	:ChangeLog:
+# 	.. line-block::
+# 		8/18/14		AB 	Fixed parallel processing cleanup.
+# 		5/17/14		AB 	Delete Plotting support
+# 		6/22/13		AB 	Added two function hooks to allow plotting 
+# 						results in real-time. The first InitPlot must 
+# 						be implemented to initialize a plot. The second
+# 						UpdatePlot is used to update the plot data in 
+# 						real-time and refresh the graphics. 
+# 		4/22/13		AB	Initial version
+# """
 from abc import ABCMeta, abstractmethod
 
 import sys
@@ -46,36 +46,34 @@ class DriftRateError(Exception):
 
 class metaEventPartition(object):
 	"""
+		.. warning:: This is a metaclass that must be subclassed.
+
 		A class to abstract partitioning individual events. Once a single 
 		molecule event is identified, it is handed off to to an event processor.
 		If parallel processing is requested, detailed event processing will commence
 		immediately. If not, detailed event processing is performed after the event 
 		partition has completed.
+
+		:Parameters:
+				- `trajDataObj` :		properly initialized object instantiated from a sub-class 
+										of metaTrajIO.
+				- `eventProcHnd` :		handle to a sub-class of metaEventProcessor. Objects of 
+										this class are initialized as necessary
+				- `eventPartitionSettings` :	settings dictionary for the partition algorithm.
+				- `eventProcSettings` :		settings dictionary for the event processing algorithm.
+				- `settingsString` :			settings dictionary in JSON format 
+			
+		Common algorithm parameters from settings file (.settings in the data path or 
+		current working directory):
+			writeEventTS	Write event current data to file. (default: 1, write data to file)
+			parallelProc	Process events in parallel using the pproc module. (default: 1, Yes)
+			reserveNCPU		Reserve the specified number of CPUs and exclude them from the parallel pool
 	"""
 	__metaclass__=ABCMeta
 
 	def __init__(self, trajDataObj, eventProcHnd, eventPartitionSettings, eventProcSettings, settingsString):
 		"""
 			Initialize a new event segment object
-			Args:
-				trajDataObj:			properly initialized object instantiated from a sub-class 
-										of metaTrajIO.
-				eventProcHnd:			handle to a sub-class of metaEventProcessor. Objects of 
-										this class are initialized as necessary
-				eventPartitionSettings	settings dictionary for the partition algorithm.
-				eventProcSettings 		settings dictionary for the event processing algorithm.
-				settingsString			settings dictionary in JSON format 
-			Returns:
-				None
-			
-			Errors:
-				None
-
-			Common algorithm parameters from settings file (.settings in the data path or 
-			current working directory):
-				writeEventTS	Write event current data to file. (default: 1, write data to file)
-				parallelProc	Process events in parallel using the pproc module. (default: 1, Yes)
-				reserveNCPU		Reserve the specified number of CPUs and exclude them from the parallel pool
 		"""
 		# Required arguments
 		self.trajDataObj=trajDataObj
@@ -120,6 +118,9 @@ class metaEventPartition(object):
 		self.Stop()
 
 	def Stop(self):
+		"""
+			Stop processing data.
+		"""
 		if self.parallelProc:
 			# send a STOP message to all the processes
 			for i in range(len(self.parallelProcDict)):
