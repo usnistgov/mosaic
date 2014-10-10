@@ -25,7 +25,8 @@ bin-dist:
 	sh pyinstaller-sh
 	python setup.py sdist
 
-		
+docs:
+	make -C doc-sphinx html latexpdf
 
 clean-math-iface:
 	rm ${mathbase}/nanoporeAnalysis.m

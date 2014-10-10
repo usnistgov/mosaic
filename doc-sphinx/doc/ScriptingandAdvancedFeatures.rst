@@ -247,8 +247,8 @@ This final example shows how one can use *<name>* to process an ionic current ti
     pl.ylim([0.19, 2])
     
     pl.show()
-    
-In the code above, we first process all the ABF files in a specified directory similar to the examples in previous sections. Upon completion of the analysis, the results are stored in a :ref:`working-with-sqlite-page`, which can be then queried using the `structured query language (SQL) <http://en.wikipedia.org/wiki/SQL>`_. 
+
+In the code above, we first process all the ABF files in a specified directory similar to the examples in previous sections. Upon completion of the analysis, the results are stored in a SQLite database, which can be then queried using the `structured query language (SQL) <http://en.wikipedia.org/wiki/SQL>`_. 
 
 Next, we generate a two pane plot using `matplotlib <http://matplotlib.org>`_. The top pane contains a histogram of the blockade depth, while the bottom pane plots a 2D histogram of residence time vs. blockade depth.
 
