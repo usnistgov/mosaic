@@ -1,6 +1,9 @@
 .. _eventpartition-page:
 
 Partition Events
-=================================
+---------------------------------------------
 
-.. include:: ../wiki/eventSegment.rst
+.. autoclass:: pyeventanalysis.metaEventPartition.metaEventPartition
+
+
+.. include:: ../doc/eventSegment.rst

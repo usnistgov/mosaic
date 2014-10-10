@@ -1,5 +1,10 @@
-Process Events
-=================================
+.. _eventprocess-page:
 
-.. include:: ../wiki/stepResponse.rst
-.. include:: ../wiki/multiState.rst
+Process Events
+---------------------------------------------
+
+.. autoclass:: pyeventanalysis.metaEventProcessor.metaEventProcessor
+
+
+.. include:: ../doc/stepResponse.rst
+.. include:: ../doc/multiState.rst

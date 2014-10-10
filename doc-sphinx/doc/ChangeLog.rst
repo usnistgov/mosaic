@@ -3,12 +3,10 @@
 Change Log
 =================================
 
-v1.0.0b2
----------------------------------------------
+**v1.0.0b2**
 
 
-v1.0.0b1
----------------------------------------------
+**v1.0.0b1**
 
 - Added a menu option to save a settings file prior to starting the analysis.
 - Current threshold is now defined by an ionic current. The trajectory viewer displays the deviation of the threshold from the mean current.

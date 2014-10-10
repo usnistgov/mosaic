@@ -64,10 +64,11 @@ class metaEventPartition(object):
 				- `settingsString` :			settings dictionary in JSON format 
 			
 		Common algorithm parameters from settings file (.settings in the data path or 
-		current working directory):
-			writeEventTS	Write event current data to file. (default: 1, write data to file)
-			parallelProc	Process events in parallel using the pproc module. (default: 1, Yes)
-			reserveNCPU		Reserve the specified number of CPUs and exclude them from the parallel pool
+		current working directory)
+
+			- `writeEventTS` :	Write event current data to file. (default: 1, write data to file)
+			- `parallelProc` :	Process events in parallel using the pproc module. (default: 1, Yes)
+			- `reserveNCPU` :		Reserve the specified number of CPUs and exclude them from the parallel pool
 	"""
 	__metaclass__=ABCMeta
 

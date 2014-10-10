@@ -29,29 +29,93 @@ Once the required modules are imported, a basic analysis can be run with the cod
 
     # Process all ABF files in a directory
     <name>.SingleChannelAnalysis.SingleChannelAnalysis(
-    			abf.abfTrajIO(dirname='~/ReferenceData/abfSet1', filter='*abf'), 
-    			es.eventSegment,
-    			sra.stepResponseAnalysis
-    		).Run()
+                abf.abfTrajIO(dirname='~/ReferenceData/abfSet1', filter='*abf'), 
+                es.eventSegment,
+                sra.stepResponseAnalysis
+            ).Run()
     
 
 
-The code listing above analyzes all ABF files in the specified directory. The *abfTrajIO* object requires the *dirname* argument that specifies the location of the data. The files included in the analysis can be filtered using the *filter* argument. The *filter* argument accepts `regular expressions <http://en.wikipedia.org/wiki/Regular_expression>`_ that allow the files included in the analysis to be further restricted. A detailed description of the  arguments allowed by *TrajIO* are included in the :ref:`api-docs-page`.
-
-
+The code listing above analyzes all ABF files in the specified directory. The *abfTrajIO* object requires the *dirname* argument that specifies the location of the data. The files included in the analysis can be filtered using the *filter* argument. The *filter* argument accepts `regular expressions <http://en.wikipedia.org/wiki/Regular_expression>`_ that allow the files included in the analysis to be further restricted. A detailed description of the  arguments allowed by *TrajIO* are included in the :ref:`api-docs-page`. 
 
 .. sourcecode:: python
 
     # Process all QDF files in a directory
     <name>.SingleChannelAnalysis.SingleChannelAnalysis(
-    			qdf.qdfTrajIO(  dirname='~/ReferenceData/qdfSet1',filter='*qdf', 
+                qdf.qdfTrajIO(  dirname='~/ReferenceData/qdfSet1',filter='*qdf', 
                                 Rfb=2.126E+9, Cfb=1.13E-12), 
-    			es.eventSegment,
-    			sra.stepResponseAnalysis
-    		).Run()
-    
+                es.eventSegment,
+                sra.stepResponseAnalysis
+            ).Run() 
 
 *<name>* also supports the QUB QDF file format used by the `Electronic Biosciences <http://electronicbio.com>`_ Nanopatch system. This is accomplished by replacing *abfTrajIO* in the previous example with *qdfTrajIO*.  Two additional parameters, the feedback resistance (Rfb) in Ohms and capacitance (Cfb) in Farads are required.
+
+Upon completion the analysis writes a log file to the directory containing the data. The log file summarizes the conditions under which the analysis were run, the settings used and timing information. 
+
+::
+
+    Start time: 2014-10-05 11:53 AM
+
+    [Status]
+        Segment trajectory: ***USER STOP***
+        Process events: ***NORMAL***
+
+
+    [Summary]
+        Baseline open channel conductance:
+            Mean    = 136.0 pA
+            SD  = 5.5 pA
+            Slope   = 0.0 pA/s
+
+        Event segment stats:
+            Events detected = 11306
+
+            Open channel drift (max) = 0.0 * SD
+            Open channel drift rate (min/max) = (-2.77/3.0) pA/s
+
+
+    [Settings]
+        Trajectory I/O settings: 
+            Files processed = 27
+            Data path = ~/ReferenceData/qdfSet1
+            File format = qdf
+            Sampling frequency = 500.0 kHz
+
+            Feedback resistance = 9.1 GOhm
+            Feedback capacitance = 1.07 pF
+
+        Event segment settings:
+            Window size for block operations = 0.5 s
+            Event padding = 50 points
+            Min. event rejection length = 5 points
+            Event trigger threshold = 2.36363636364 * SD
+
+            Drift error threshold = 999.0 * SD
+            Drift rate error threshold = 999.0 pA/s
+
+
+        Event processing settings:
+            Algorithm = stepResponseAnalysis
+
+            Max. iterations  = 50000
+            Fit tolerance (rel. err in leastsq)  = 1e-07
+            Blockade Depth Rejection = 0.9
+
+
+
+    [Output]
+        Output path = ~/ReferenceData/qdfSet1
+        Event characterization data = ~/ReferenceData/qdfSet1/eventMD-20141005-115324.sqlite
+        Event time-series = ***enabled***
+        Log file = eventProcessing.log
+
+    [Timing]
+        Segment trajectory = 98.03 s
+        Process events = 0.0 s
+
+        Total = 98.03 s
+        Time per event = 8.67 ms
+
 
 Filter Data
 ---------------------------------------------
@@ -60,11 +124,11 @@ Filter Data
 
     # Filter data with a Bessel filter before processing
     <name>.SingleChannelAnalysis.SingleChannelAnalysis(
-    			abf.abfTrajIO(  dirname='~/ReferenceData/abfSet1',filter='*abf', 
+                abf.abfTrajIO(  dirname='~/ReferenceData/abfSet1',filter='*abf', 
                                 datafilter=bessel.besselLowpassFilter), 
-    			es.eventSegment,
-    			sra.stepResponseAnalysis
-    		).Run()
+                es.eventSegment,
+                sra.stepResponseAnalysis
+            ).Run()
 
 *<name>* supports filtering data prior to analysis. This is achieved by passing the *datafilter* argument to the *TrajIO* object. In the code above, the ABF data is filtered using a *BesselLowpassFilter*. Parameters for the filter are defined within the settings file as described in the :ref:`settings-page` section.
 
@@ -115,13 +179,13 @@ It is useful to visualize time-series data to highlight unique characteristics o
     import numpy as np
 
     def estimateGatingDuration( trajioobj, gatingcurrentpa, blocksz, totaltime, fshz ):
-   	    npts = int((fshz)*blocksz)
-	    nblk = int(totaltime/blocksz)-1
+        npts = int((fshz)*blocksz)
+        nblk = int(totaltime/blocksz)-1
 
-	    gEvents = filter(  lambda x:x<float(gatingcurrentpa), 
+        gEvents = filter(  lambda x:x<float(gatingcurrentpa), 
                            [ np.mean(trajioobj.popdata(npts)) for i in range(nblk) ])
 
-	    return len(gEvents)*blocksz
+        return len(gEvents)*blocksz
 
     abfObj=abf.abfTrajIO(dirname='~/abfSet1',filter='*.abf')
     print estimateGatingDuration( abfObj, 20., 0.25, 100, abfObj.FsHz )
@@ -149,10 +213,10 @@ This final example shows how one can use *<name>* to process an ionic current ti
     
     # Process all ABF files in a directory
     <name>.SingleChannelAnalysis.SingleChannelAnalysis(
-    			abf.abfTrajIO(dirname='~/ReferenceData/abfSet1',filter='*abf'), 
-    			es.eventSegment,
-    			sra.stepResponseAnalysis
-    		).Run()
+                abf.abfTrajIO(dirname='~/ReferenceData/abfSet1',filter='*abf'), 
+                es.eventSegment,
+                sra.stepResponseAnalysis
+            ).Run()
     
     
     # Load the results of the analysis
@@ -183,6 +247,7 @@ This final example shows how one can use *<name>* to process an ionic current ti
     pl.ylim([0.19, 2])
     
     pl.show()
+    
 In the code above, we first process all the ABF files in a specified directory similar to the examples in previous sections. Upon completion of the analysis, the results are stored in a :ref:`working-with-sqlite-page`, which can be then queried using the `structured query language (SQL) <http://en.wikipedia.org/wiki/SQL>`_. 
 
 Next, we generate a two pane plot using `matplotlib <http://matplotlib.org>`_. The top pane contains a histogram of the blockade depth, while the bottom pane plots a 2D histogram of residence time vs. blockade depth.

@@ -3,6 +3,10 @@
 Settings File
 =================================
 
+
+*<name>* stores its settings in the `JavaScript Object Notation (JSON) <http://json.org/>`_ format. When using the graphical interface, a settings file is generated automatically upon starting an analysis, or by clicking *Save Settings* in the *File menu*  (see :ref:`gui-page`).
+
+
 .. sourcecode:: javascript
 
 	{
@@ -35,10 +39,10 @@ Settings File
 			"BlockRejectRatio"		: "0.9"
 		},
 		"multiStateAnalysis" : {
-	        "FitTol"				: "1.e-7",
-	        "FitIters"				: "50000",
-	        "InitThreshold"				: "5.0"
-	        },
+			"FitTol"			: "1.e-7",
+			"FitIters"			: "50000",
+			"InitThreshold"			: "5.0"
+		},
 		"besselLowpassFilter" : {
 			"filterOrder"			: "6",
 			"filterCutoff"			: "10000",

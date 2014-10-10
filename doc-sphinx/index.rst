@@ -22,17 +22,14 @@ Nanometer-scale pores have demonstrated potential use in biotechnology applicati
 
 .. toctree::
    :maxdepth: 3
+   :numbered:
 
    doc/Introduction
    doc/GraphicalInterface
    doc/ScriptingandAdvancedFeatures
    doc/settingsFile
    doc/DatabaseStructure
-   doc/trajectoryIO
-   doc/dataFiltering
-   doc/eventPartition
-   doc/eventProcessing
-   doc/WorkingWithSQLite
+   doc/DetailedDescritpion
    doc/ChangeLog
    doc/examples
    doc/apidocs
