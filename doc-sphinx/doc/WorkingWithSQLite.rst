@@ -3,7 +3,7 @@
 Work with SQLite
 ---------------------------------------------
 
-*<name>* stores the output of an analysis in a SQLite database as described in the :ref:`database-page` section. Interacting with the data through the `Structured Query Language (SQL) <http://en.wikipedia.org/wiki/SQL>`_ is a flexible approach to further analyze or plot the output. Here we provide a few detailed examples of the common ways in which the output of *<name>* can be queried for further processing.
+|projname| stores the output of an analysis in a SQLite database as described in the :ref:`database-page` section. Interacting with the data through the `Structured Query Language (SQL) <http://en.wikipedia.org/wiki/SQL>`_ is a flexible approach to further analyze or plot the output. Here we provide a few detailed examples of the common ways in which the output of |projname| can be queried for further processing.
 
 SQL queries are run using the *select* command. In its simplest form, a query can return the entire contents of a table using the syntax below. The statement below selects all columns *(select \*)* from the table specified by *<tablename>*.
 
@@ -13,7 +13,7 @@ SQL queries are run using the *select* command. In its simplest form, a query ca
 
 The power of SQL lies in its ability to restrict results to match specific criteria. This is accomplished with the *where* clause described next. SQL queries can be very fast event for large databases. 
 
-It is often desirable to only include events that were successfully fit in a plot or other analysis. All :ref:`eventprocess-page` algorithms implemented in *<name>* store a *ProcessingStatus* column in the output database. This enables one to easily query events that were successfully processed. This is easily accomplished with the query below, which returns all columns for events that were successfully processed (*ProcessingStatus=normal*).
+It is often desirable to only include events that were successfully fit in a plot or other analysis. All :ref:`eventprocess-page` algorithms implemented in |projname| store a *ProcessingStatus* column in the output database. This enables one to easily query events that were successfully processed. This is easily accomplished with the query below, which returns all columns for events that were successfully processed (*ProcessingStatus=normal*).
 
 .. sourcecode:: sql
    

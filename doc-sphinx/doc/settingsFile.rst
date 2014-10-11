@@ -4,8 +4,53 @@ Settings File
 =================================
 
 
-*<name>* stores its settings in the `JavaScript Object Notation (JSON) <http://json.org/>`_ format. When using the graphical interface, a settings file is generated automatically upon starting an analysis, or by clicking *Save Settings* in the *File menu*  (see :ref:`gui-page`).
+|projname| stores its settings in the |json| format. When using the graphical interface, a settings file is generated automatically upon starting an analysis, or by clicking *Save Settings* in the *File menu*  (see :ref:`gui-page`).
 
+Settings Layout
+---------------------------------------------
+
+|json| is a human readable file format that consists of key-value pairs separated by sections. Each section in a JSON object consists of a section  name and a list of string key-value pairs. 
+
+.. sourcecode:: javascript
+
+	{
+		"<section name>" : {
+			"key1" : "value1",
+			"key2" : "value2",
+			...
+		}
+
+	}
+
+|projname| settings define a new section for each class, with key-value pairs corresponding to class attributes set upon initialization. This is illustrated below for the stepResponseAnalysis class. The settings file defines a section corresponding to the class name *stepResponseAnalysis*. Three parameters are then defined within the section that control the behavior of the class.
+
+.. sourcecode:: javascript
+
+	{
+		"stepResponseAnalysis" : {
+			"FitTol"			: "1.e-7",
+			"FitIters"			: "50000",
+			"BlockRejectRatio"		: "0.9"
+		}
+	}
+
+The code below from the initialization of *stepResponseAnalysis* in :class:`pyeventanalysis.stepResponseAnalysis` sets three class attributes corresponding to the key-value pairs in the settings file.
+
+.. sourcecode:: python
+	
+	try:
+			self.FitTol=float(self.settingsDict.pop("FitTol", 1.e-7))
+			self.FitIters=int(self.settingsDict.pop("FitIters", 5000))
+
+			self.BlockRejectRatio=float(self.settingsDict.pop("BlockRejectRatio", 0.8))
+		
+	except ValueError as err:
+		raise commonExceptions.SettingsTypeError( err )
+
+
+
+Default Settings
+---------------------------------------------
 
 .. sourcecode:: javascript
 

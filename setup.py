@@ -1,9 +1,22 @@
-from distutils.core import setup
+from distutils.core import setup, Command
 from Cython.Build import cythonize
 import numpy
+import os
+import sys
+
+class UnitTests(Command):
+    description = "run unit test suite."
+    user_options = []
+    def initialize_options(self):
+        self.cwd = None
+    def finalize_options(self):
+        self.cwd = os.getcwd()
+    def run(self):
+        os.system('nosetests -v -w utest/ testAlgos.py')
 
 exec(open('pyeventanalysis/_version.py').read())
 setup(
+    cmdclass={'test': UnitTests},
     name='pyEventAnalysis',
     version=__version__,
     author='Arvind Balijepalli',

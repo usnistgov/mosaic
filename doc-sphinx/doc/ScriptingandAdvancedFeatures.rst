@@ -4,7 +4,7 @@ Scripting and Advanced Features
 =================================
 
 
-The analysis can be run from the command line by setting up a Python script. Scripting in Python allows one to build additional analysis tools on top of *<name>*. The first step is to import the relevant modules, which can be accomplished with the import command. All the relevant modules required to run an analysis are contained within the top level *<name>* module.
+The analysis can be run from the command line by setting up a Python script. Scripting in Python allows one to build additional analysis tools on top of |projname|. The first step is to import the relevant modules, which can be accomplished with the import command. All the relevant modules required to run an analysis are contained within the top level |projname| module.
 
 
 .. sourcecode:: python
@@ -48,7 +48,7 @@ The code listing above analyzes all ABF files in the specified directory. The *a
                 sra.stepResponseAnalysis
             ).Run() 
 
-*<name>* also supports the QUB QDF file format used by the `Electronic Biosciences <http://electronicbio.com>`_ Nanopatch system. This is accomplished by replacing *abfTrajIO* in the previous example with *qdfTrajIO*.  Two additional parameters, the feedback resistance (Rfb) in Ohms and capacitance (Cfb) in Farads are required.
+|projname| also supports the QUB QDF file format used by the `Electronic Biosciences <http://electronicbio.com>`_ Nanopatch system. This is accomplished by replacing *abfTrajIO* in the previous example with *qdfTrajIO*.  Two additional parameters, the feedback resistance (Rfb) in Ohms and capacitance (Cfb) in Farads are required.
 
 Upon completion the analysis writes a log file to the directory containing the data. The log file summarizes the conditions under which the analysis were run, the settings used and timing information. 
 
@@ -130,7 +130,7 @@ Filter Data
                 sra.stepResponseAnalysis
             ).Run()
 
-*<name>* supports filtering data prior to analysis. This is achieved by passing the *datafilter* argument to the *TrajIO* object. In the code above, the ABF data is filtered using a *BesselLowpassFilter*. Parameters for the filter are defined within the settings file as described in the :ref:`settings-page` section.
+|projname| supports filtering data prior to analysis. This is achieved by passing the *datafilter* argument to the *TrajIO* object. In the code above, the ABF data is filtered using a *BesselLowpassFilter*. Parameters for the filter are defined within the settings file as described in the :ref:`settings-page` section.
 
 .. sourcecode:: javascript
 
@@ -145,7 +145,7 @@ Filter Data
 Leverage Python Scripting
 ---------------------------------------------
 
-Scripting with Python allows transforming the output of the *<name>* further to generate plots, perform additional analysis or extend functionality. Moreover, individual components of the *<name>* module, which forms the back end code executed in the data processing pipeline, can be used for specific tasks. In this section, we highlight a few typical use cases. 
+Scripting with Python allows transforming the output of the |projname| further to generate plots, perform additional analysis or extend functionality. Moreover, individual components of the |projname| module, which forms the back end code executed in the data processing pipeline, can be used for specific tasks. In this section, we highlight a few typical use cases. 
 
 **Plot the Ionic Current Time-Series**
 
@@ -190,11 +190,11 @@ It is useful to visualize time-series data to highlight unique characteristics o
     abfObj=abf.abfTrajIO(dirname='~/abfSet1',filter='*.abf')
     print estimateGatingDuration( abfObj, 20., 0.25, 100, abfObj.FsHz )
 
-Scripting can be used to obtain statistics from the raw time-series. In the above code snippet, we estimate the amount of time a channel spends in a gated state by combining modules defined within *<name>*. The analysis is performed in blocks for efficiency. We first define a Python function that takes multiple arguments including  *TrajIO* object, the threshold at which we want to define the gated state in pA (gatingcurrentpa), the block size in seconds (blocksz), the total time of the time-series being processed in seconds (totaltime) and the sampling rate of the data in Hz (fshz). The code then calculates the number of blocks in which the channel was in a gated state and returns the time spent in that state in seconds.
+Scripting can be used to obtain statistics from the raw time-series. In the above code snippet, we estimate the amount of time a channel spends in a gated state by combining modules defined within |projname|. The analysis is performed in blocks for efficiency. We first define a Python function that takes multiple arguments including  *TrajIO* object, the threshold at which we want to define the gated state in pA (gatingcurrentpa), the block size in seconds (blocksz), the total time of the time-series being processed in seconds (totaltime) and the sampling rate of the data in Hz (fshz). The code then calculates the number of blocks in which the channel was in a gated state and returns the time spent in that state in seconds.
 
 **Plot the Output of an Analysis**
 
-This final example shows how one can use *<name>* to process an ionic current time-series and then build a custom script that further analyses and plots the results. This example uses single-molecule mass spectrometry (SMMS) from `Robertson et al., PNAS 2007 <http://www.pnas.org/content/104/20/8207>`_.
+This final example shows how one can use |projname| to process an ionic current time-series and then build a custom script that further analyses and plots the results. This example uses single-molecule mass spectrometry (SMMS) from `Robertson et al., PNAS 2007 <http://www.pnas.org/content/104/20/8207>`_.
 
 
 .. sourcecode:: python
@@ -223,10 +223,12 @@ This final example shows how one can use *<name>* to process an ionic current ti
     s=sql.sqlite3MDIO()
     s.openDB(glob.glob("~/ReferenceData/abfSet1/*sqlite")[-1])
     
-    # Query the database to obtain the blockade depth and residence times
-    q = "ProcessingStatus='normal' and ResTime > 0.2 and BlockDepth between 0.15 and 0.55"
-    x=np.hstack( s.queryDB("select BlockDepth from metadata where " + q) )
-    y=np.hstack( s.queryDB("select ResTime from metadata where + q") )
+    # Query the database to obtain the blockade depth and residence times 
+    q = "select {col} from metadata where ProcessingStatus='normal' and ResTime > 0.2 \
+         and BlockDepth between 0.15 and 0.55"
+
+    x=np.hstack( s.queryDB( q.format(col='BlockDepth') ) )
+    y=np.hstack( s.queryDB( q.format(col='ResTime') ) )
     
     # Use matplotlib to plot the results with 2 views: 
     # i)  a 1D histogram of blockade depths and
