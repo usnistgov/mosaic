@@ -1,12 +1,12 @@
-"""
-	Implementation of an 'N' order Bessel filter
+# """
+# 	Implementation of an 'N' order Bessel filter
 
-	Author: Arvind Balijepalli
-	Created: 7/1/2013
+# 	Author: Arvind Balijepalli
+# 	Created: 7/1/2013
 
-	ChangeLog:
-		7/1/13		AB	Initial version
-"""
+# 	ChangeLog:
+# 		7/1/13		AB	Initial version
+# """
 import numpy as np 
 import scipy.signal as sig
 
@@ -14,13 +14,14 @@ import metaIOFilter
 
 class besselLowpassFilter(metaIOFilter.metaIOFilter):
 	"""
+		:Keyword Args:
+		In addition to metaIOFilter.__init__ args,
+			- `filterOrder` :		the filter order
+			- `filterCutoff` :	filter cutoff frequency in Hz
 	"""
+	
 	def _init(self, **kwargs):
 		"""
-			Keyword Args:
-			In addition to metaIOFilter.__init__ args,
-				filterOrder		the filter order
-				filterCutoff	filter cutoff frequency in Hz
 		"""
 		try:
 			self.filterOrder=float(kwargs['filterOrder'])
@@ -31,7 +32,11 @@ class besselLowpassFilter(metaIOFilter.metaIOFilter):
 
 	def filterData(self, icurr, Fs):
 		"""
-			Filter self.eventData with the filter model setup in __init__
+			Denoise an ionic current time-series and store it in self.eventData
+
+			:Parameters:
+				- `icurr` :	ionic current in pA
+				- `Fs` :	original sampling frequency in Hz
 		"""
 		self.eventData=icurr
 		self.Fs=Fs

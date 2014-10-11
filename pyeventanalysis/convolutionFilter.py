@@ -1,13 +1,13 @@
-"""
-	Implementation of a weighted moving average (tap delay line) filter
+# """
+# 	Implementation of a weighted moving average (tap delay line) filter
 
 
-	Author: Arvind Balijepalli
-	Created: 8/16/2013
+# 	Author: Arvind Balijepalli
+# 	Created: 8/16/2013
 
-	ChangeLog:
-		8/16/13		AB	Initial version
-"""
+# 	ChangeLog:
+# 		8/16/13		AB	Initial version
+# """
 import numpy as np 
 import scipy.signal as sig
 
@@ -15,13 +15,14 @@ import metaIOFilter
 
 class convolutionFilter(metaIOFilter.metaIOFilter):
 	"""
+		:Keyword Args:
+		In addition to metaIOFilter.__init__ args,
+			- `filterCoeff` :		filter coefficients (default is a 10 point uniform moving average)
 	"""
+
 	def _init(self, **kwargs):
 		"""
-			Keyword Args:
-			In addition to metaIOFilter.__init__ args,
-				filterCoeff		filter coefficients (default is a 10 point uniform moving average)
-		"""
+		"""		
 		try:
 			self.filterCoeff=eval(kwargs['filterCoeff'])
 		except KeyError:
@@ -31,7 +32,11 @@ class convolutionFilter(metaIOFilter.metaIOFilter):
 
 	def filterData(self, icurr, Fs):
 		"""
-			Filter self.eventData
+			Denoise an ionic current time-series and store it in self.eventData
+
+			:Parameters:
+				- `icurr` :	ionic current in pA
+				- `Fs` :	original sampling frequency in Hz
 		"""
 		self.filtBuf=np.hstack( (self.filtBuf, icurr) )
 		self.eventData=np.correlate(self.filtBuf, self.filterCoeff, 'valid')

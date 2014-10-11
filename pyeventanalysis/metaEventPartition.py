@@ -46,7 +46,7 @@ class DriftRateError(Exception):
 
 class metaEventPartition(object):
 	"""
-		.. warning:: This is a metaclass that must be subclassed.
+		.. warning:: |metaclass|
 
 		A class to abstract partitioning individual events. Once a single 
 		molecule event is identified, it is handed off to to an event processor.
@@ -142,13 +142,7 @@ class metaEventPartition(object):
 
 	def PartitionEvents(self):
 		"""
-			This is the equivalent of a pure virtual function in C++. Specific event processing
-			algorithms must implement this method. 
-
-			An implementation of this function should separate individual events of interest from 
-			a time-series of ionic current recordings. The data pertaining to each event is then passed
-			to an instance of metaEventProcessor for detailed analysis. The function will collect the 
-			results of this analysis.
+			Partition events within a time-series.
 		"""
 		self.outputString="Start time: "+str(datetime.datetime.now().strftime('%Y-%m-%d %I:%M %p'))+"\n\n"
 		# write out first stage results
@@ -207,15 +201,27 @@ class metaEventPartition(object):
 	#################################################################
 	@abstractmethod
 	def _init(self, trajDataObj, eventProcHnd, eventPartitionSettings, eventProcSettings):
+		"""
+			.. important:: |abstractmethod|
+
+			This function is called at the end of the class constructor to perform additional initialization specific to the algorithm being implemented. The arguments to this function are identical to those passed to the class constructor.
+		"""
 		pass
 
 	@abstractmethod
 	def _stop(self):
+		"""
+			.. important:: |abstractmethod|
+
+			Stop partitioning events froma time-series
+		"""
 		pass
 
 	@abstractmethod
 	def formatsettings(self):
 		"""
+			.. important:: |abstractmethod|
+
 			Return a formatted string of settings for display
 		"""
 		pass
@@ -223,6 +229,8 @@ class metaEventPartition(object):
 	@abstractmethod
 	def formatstats(self):
 		"""
+			.. important:: |abstractmethod|
+
 			Return a formatted string of statistics for display
 		"""
 		pass
@@ -230,9 +238,19 @@ class metaEventPartition(object):
 	@abstractmethod
 	def formatoutputfiles(self):
 		"""
+			.. important:: |abstractmethod|
+
 			Return a formatted string of output files.
 		"""
 
+	@abstractmethod
+	def _eventsegment(self):
+		"""
+			.. important:: |abstractmethod|
+
+			An implementation of this function should separate individual events of interest from a time-series of ionic current recordings. The data pertaining to each event is then passed 		to an instance of metaEventProcessor for detailed analysis. The function will collect the results of this analysis.
+		"""
+		pass
 	#################################################################
 	# Internal functions
 	#################################################################

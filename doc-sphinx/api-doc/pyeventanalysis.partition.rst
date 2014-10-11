@@ -8,6 +8,5 @@ pyeventanalysis.eventSegment module
    :parts: 2
    
 .. automodule:: pyeventanalysis.eventSegment
-    :members:
-    :show-inheritance:
-
+	:show-inheritance:
+	:members:

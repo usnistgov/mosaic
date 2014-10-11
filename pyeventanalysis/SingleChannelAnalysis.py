@@ -27,7 +27,12 @@ def run_eventpartition( trajdataObj, eventPartHnd, eventProcHnd, settingsdict):
 
 class SingleChannelAnalysis(object):
 	"""
-		Run a single channel analysis. 
+		Run a single channel analysis. This is the entry point class for the analysis.
+
+		:Parameters:
+			- `trajDataObj` : an initialized object to an implementation of :class:`~pyeventanalysis.metaTrajIO`
+			- `eventPartitionHnd` : a handle to a sub-class of :class:`~pyeventanalysis.metaEventPartition`
+			- `eventProcHnd` : a handle to a sub-class of :class:`~pyeventanalysis.metaEventProcessor`
 	"""
 	def __init__(self, trajDataObj, eventPartitionHnd, eventProcHnd):
 		"""
@@ -43,6 +48,10 @@ class SingleChannelAnalysis(object):
 
 	def Run(self, forkProcess=False):
 		"""
+			Start an analysis. 
+
+			:Parameters:
+				- `forkProcess` : start the analysis in a separate process if *True*. This option is useful when the main thread is used for other processing (e.g. GUI implementations).
 		"""
 		if forkProcess:
 			try:
@@ -59,6 +68,9 @@ class SingleChannelAnalysis(object):
 			run_eventpartition( self.trajDataObj, self.eventPartitionHnd, self.eventProcHnd, self.settingsDict )
 
 	def Stop(self):
+		"""
+			Stop a running analysis.
+		"""
 		if self.subProc:
 			os.kill( self.subProc.pid, signal.SIGINT )
 		else:

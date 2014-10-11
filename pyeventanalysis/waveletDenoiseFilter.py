@@ -1,12 +1,12 @@
-"""
-	Implementation of a wavelet based denoising filter
+# """
+# 	Implementation of a wavelet based denoising filter
 
-	Author: Arvind Balijepalli
-	Created: 8/31/2014
+# 	Author: Arvind Balijepalli
+# 	Created: 8/31/2014
 
-	ChangeLog:
-		8/31/14		AB	Initial version
-"""
+# 	ChangeLog:
+# 		8/31/14		AB	Initial version
+# """
 import numpy as np 
 import scipy.signal as sig
 import pywt
@@ -15,15 +15,16 @@ import metaIOFilter
 
 class waveletDenoiseFilter(metaIOFilter.metaIOFilter):
 	"""
+		:Keyword Args:
+			In addition to metaIOFilter args,
+				- `wavelet` :		the type of wavelet
+				- `level` :		wavelet level
+				- `threshold` :	threshold type
 	"""
+
 	def _init(self, **kwargs):
 		"""
-			Keyword Args:
-			In addition to metaIOFilter.__init__ args,
-				wavelet		the type of wavelet
-				level		wavelet level
-				threshold	threshold type
-		"""
+		"""	
 		try:
 			self.waveletType=str(kwargs['wavelet'])
 			self.waveletLevel=int(kwargs['level'])
@@ -43,7 +44,11 @@ class waveletDenoiseFilter(metaIOFilter.metaIOFilter):
 
 	def filterData(self, icurr, Fs):
 		"""
-			Denoise self.eventData
+			Denoise an ionic current time-series and store it in self.eventData
+
+			:Parameters:
+				- `icurr` :	ionic current in pA
+				- `Fs` :	original sampling frequency in Hz
 		"""
 		# self.eventData=icurr
 		self.Fs=Fs

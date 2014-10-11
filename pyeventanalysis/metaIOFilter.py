@@ -13,7 +13,7 @@ import util
 
 class metaIOFilter(object):
 	"""
-		.. warning:: This is a metaclass that must be subclassed.
+		.. warning:: |metaclass|
 
 		Defines the interface for specific filter implementations. Each filtering
 		algorithm must sub-class metaIOFilter and implement the following abstract
@@ -39,11 +39,16 @@ class metaIOFilter(object):
 
 	@abstractmethod
 	def _init(self, **kwargs):
+		"""
+			.. important:: |abstractmethod|
+		"""
 		pass
 
 	@abstractmethod
 	def filterData(self, icurr, Fs):
 		"""
+			.. important:: |abstractmethod|
+
 			This is the equivalent of a pure virtual function in C++. 
 
 			Implementations of this method MUST store (1) a ref to the raw event data in self.eventData AND 
@@ -58,6 +63,8 @@ class metaIOFilter(object):
 	@abstractmethod
 	def formatsettings(self):
 		"""
+			.. important:: |abstractmethod|
+
 			Return a formatted string of filter settings
 		"""
 		pass

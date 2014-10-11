@@ -1,18 +1,18 @@
-"""
-	Read binary ionic current data into numpy arrays
+# """
+# 	Read binary ionic current data into numpy arrays
 
-	:Author: Arvind Balijepalli
-	:Created:	7/17/2012
-	:ChangeLog:
-	.. line-block::
-		8/22/14 	AB 	Setup a new property ('LastDataFile') that tracks the current
-						data file being processed.
-		5/27/14		AB 	Added dcOffset kwarg to initialization to allow 
-						for offset correction in the ionic current data.
-		2/13/14		AB 	Fixed a potential infinite recursion bug in the
-						initialization. 
-		7/17/12		AB	Initial version
-"""
+# 	:Author: Arvind Balijepalli
+# 	:Created:	7/17/2012
+# 	:ChangeLog:
+# 	.. line-block::
+# 		8/22/14 	AB 	Setup a new property ('LastDataFile') that tracks the current
+# 						data file being processed.
+# 		5/27/14		AB 	Added dcOffset kwarg to initialization to allow 
+# 						for offset correction in the ionic current data.
+# 		2/13/14		AB 	Fixed a potential infinite recursion bug in the
+# 						initialization. 
+# 		7/17/12		AB	Initial version
+# """
 from abc import ABCMeta, abstractmethod
 import glob
 import numpy as np
@@ -38,7 +38,7 @@ class FileNotFoundError(Exception):
 
 class metaTrajIO(object):
 	"""
-			.. warning:: This is a metaclass that must be subclassed.
+			.. warning:: |metaclass|
 
 			Initialize a TrajIO object. The object can load all the data in a directory,
 			N files from a directory or from an explicit list of filenames. In addition 
@@ -312,15 +312,27 @@ class metaTrajIO(object):
 		
 	@abstractmethod
 	def _formatsettings(self):
+		"""
+			.. important:: |abstractmethod|
+
+			Return a formatted string of settings for display
+		"""
 		pass
 		
 	@abstractmethod
-	def _init(self, **Kwargs):
+	def _init(self, **kwargs):
+		"""
+			.. important:: |abstractmethod|
+
+			This function is called at the end of the class constructor to perform additional initialization specific to the algorithm being implemented. The arguments to this function are identical to those passed to the class constructor.
+		"""
 		pass
 
 	@abstractmethod
 	def readdata(self, fname):
 		"""
+			.. important:: |abstractmethod|
+
 			Read the specified data file(s) and  return the data as an array. Set 
 			a class property Fs with the sampling frequency in Hz.
 
@@ -333,7 +345,7 @@ class metaTrajIO(object):
 		"""
 			Pop n filenames from the start of self.dataFiles. If filenames run out, 
 			simply return the available names. 
-			
+
 			:Parameters:
 				- `n` : 	number of requested filenames
 			:Returns:

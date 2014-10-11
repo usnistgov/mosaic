@@ -33,7 +33,8 @@ extensions = [
     'sphinx.ext.doctest',
     'sphinx.ext.mathjax',
     'sphinx.ext.inheritance_diagram',
-    'sphinx.ext.graphviz'
+    'sphinx.ext.graphviz',
+    'sphinx.ext.viewcode',
 ]
 
 # Add any paths that contain templates here, relative to this directory.
@@ -105,6 +106,8 @@ pygments_style = 'sphinx'
 rst_prolog = """
 .. |projname| replace:: *pyEventAnalysis*
 .. |pymodulename| replace:: pyeventanalysis
+.. |abstractmethod| replace:: Abstract method.
+.. |metaclass| replace:: This metaclass must be sub-classed. All abstract methods within this metaclass must be implemented.
 """
 
 # -- Options for HTML output ----------------------------------------------

@@ -34,30 +34,32 @@ import metaEventPartition
 
 class eventSegment(metaEventPartition.metaEventPartition):
 	"""
-		Segment a trajectory
+		Implement an event partitioning algorithm by sub-classing the metaEventPartition class
+
+		:Settings: In addition to the parameters described in :class:`~pyeventanalysis.metaEventPartition`, the following parameters from are read from the settings file (.settings in the data path or current working directory):
+
+			- `blockSizeSec` :	Functions that perform block processing use this value to set the size of 
+							their windows in seconds. For example, open channel conductance is processed
+							for windows with a size specified by this parameter. (default: 1 second)
+			- `eventPad` :		Number of points to include before and after a detected event. (default: 500)
+			- `minEventLength` :	Minimum number points in the blocked state to qualify as an event (default: 5)
+			- `eventThreshold` :	Threshold, number of SD away from the open channel mean. If the abs(curr) is less
+							than 'abs(mean)-(eventThreshold*SD)' a new event is registered (default: 6)
+			- `driftThreshold` :	Trigger a drift warning when the mean open channel current deviates by 'driftThreshold'*
+							SD from the baseline open channel current (default: 2)
+			- `maxDriftRate` :	Trigger a warning when the open channel conductance changes at a rate faster 
+							than that specified. (default: 2 pA/s)
+			- `meanOpenCurr` :	Explicitly set mean open channel current. (pA) (default: -1, to 
+							calculate automatically)
+			- `sdOpenCurr` :		Explicitly set open channel current SD. (pA) (default: -1, to 
+							calculate automatically)
+			- `slopeOpenCurr` :	Explicitly set open channel current slope. (default: -1, to 
+							calculate automatically)
 	"""
+
 	def _init(self, trajDataObj, eventProcHnd, eventPartitionSettings, eventProcSettings):
 		"""
-			Implement an event partitioning algorithm by sub-classing the metaEventPartition class
-	
-			Parameters from settings file (.settings in the data path or current working directory):
-				blockSizeSec:	Functions that perform block processing use this value to set the size of 
-								their windows in seconds. For example, open channel conductance is processed
-								for windows with a size specified by this parameter. (default: 1 second)
-				eventPad		Number of points to include before and after a detected event. (default: 500)
-				minEventLength	Minimum number points in the blocked state to qualify as an event (default: 5)
-				eventThreshold	Threshold, number of SD away from the open channel mean. If the abs(curr) is less
-								than 'abs(mean)-(eventThreshold*SD)' a new event is registered (default: 6)
-				driftThreshold	Trigger a drift warning when the mean open channel current deviates by 'driftThreshold'*
-								SD from the baseline open channel current (default: 2)
-				maxDriftRate	Trigger a warning when the open channel conductance changes at a rate faster 
-								than that specified. (default: 2 pA/s)
-				meanOpenCurr	Explicitly set mean open channel current. (pA) (default: -1, to 
-								calculate automatically)
-				sdOpenCurr		Explicitly set open channel current SD. (pA) (default: -1, to 
-								calculate automatically)
-				slopeOpenCurr	Explicitly set open channel current slope. (default: -1, to 
-								calculate automatically)
+			Segment a trajectory
 		"""
 		# parse algorithm specific settings from the settings dict
 		try:
@@ -85,7 +87,7 @@ class eventSegment(metaEventPartition.metaEventPartition):
 
 	def formatsettings(self):
 		"""
-			Return a formatted string of settings for display
+			Return a formatted string of settings for display in the output log.
 		"""
 		fmtstr=""
 
@@ -100,6 +102,9 @@ class eventSegment(metaEventPartition.metaEventPartition):
 		return fmtstr	
 
 	def formatstats(self):
+		"""
+			Return a formatted string of statistics for display in the output log.
+		"""
 		fmtstr=""
 
 		fmtstr+='\tBaseline open channel conductance:\n'

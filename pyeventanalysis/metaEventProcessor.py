@@ -27,7 +27,7 @@ class MissingMDIOError(Exception):
 
 class metaEventProcessor(object):
 	"""
-		.. warning:: This is a metaclass that must be subclassed.
+		.. warning:: |metaclass|
 
 		Defines the interface for specific event processing algorithms. Each event processing
 		algorithm must sub-class metaEventProcessor and implement the following abstract
@@ -98,15 +98,23 @@ class metaEventProcessor(object):
 
 	@abstractmethod
 	def _init(self, **kwargs):
+		"""
+			.. important:: |abstractmethod|
+		"""
 		pass
 
 	@abstractmethod
 	def _processEvent(self):
+		"""
+			.. important:: |abstractmethod|
+		"""
 		pass
 
 	@abstractmethod
 	def mdList(self):
 		"""
+			.. important:: |abstractmethod|
+
 			Return a list of meta-data set by event processing.  				
 		"""
 		pass
@@ -114,6 +122,8 @@ class metaEventProcessor(object):
 	@abstractmethod
 	def mdHeadings(self):
 		"""
+			.. important:: |abstractmethod|
+
 			Return a list of meta-data tags for display purposes.
 		"""
 		pass
@@ -121,6 +131,8 @@ class metaEventProcessor(object):
 	@abstractmethod
 	def mdHeadingDataType(self):
 		"""
+			.. important:: |abstractmethod|
+
 			Return a list of meta-data tags data types.
 		"""
 		pass
@@ -128,6 +140,8 @@ class metaEventProcessor(object):
 	@abstractmethod
 	def mdAveragePropertiesList(self):
 		"""
+			.. important:: |abstractmethod|
+
 			Return a list of meta-data properties that will be averaged 
 			and displayed at the end of a run. This function must be overridden
 			by sub-classes of metaEventProcessor. As a failsafe, an empty list
