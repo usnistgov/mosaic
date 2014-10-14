@@ -1,29 +1,62 @@
-from distutils.core import setup, Command
+from setuptools import setup, Command
+# from distutils.core import setup, Command
 from Cython.Build import cythonize
-import numpy
+# import numpy
 import os
 import sys
 
 class UnitTests(Command):
-    description = "run unit test suite."
+    description = "run the unit test suite."
     user_options = []
+
     def initialize_options(self):
         self.cwd = None
+
     def finalize_options(self):
         self.cwd = os.getcwd()
+
     def run(self):
         os.system('nosetests -v -w utest/ testAlgos.py')
 
+class BuildDocs(Command):
+    description = "build pyEventAnalysis documentation."
+    user_options = [ ('html', None, "build HTML documentation"),
+                     ('pdf', None, "build PDF documentation"),
+                     ('all', None, "build HTML and PDF documentation"),
+                     ('rebuild', None, "rebuild HTML and PDF documentation"),
+                    ]
+
+    def initialize_options(self):
+        self.html = 0
+        self.pdf = 0
+        self.all = 0
+        self.rebuild = 0
+
+    def finalize_options(self):
+        pass
+
+    def run(self):
+        if self.html:
+            os.system("make -C doc-sphinx html")
+        if self.pdf:
+            os.system("make -C doc-sphinx latexpdf")
+        if self.all:
+            os.system("make -C doc-sphinx html latexpdf")
+        if self.rebuild:
+            os.system("make -C doc-sphinx clean html latexpdf")
+
+
+
 exec(open('pyeventanalysis/_version.py').read())
 setup(
-    cmdclass={'test': UnitTests},
+    cmdclass={'unittest': UnitTests, 'docs': BuildDocs},
     name='pyEventAnalysis',
     version=__version__,
     author='Arvind Balijepalli',
     author_email='arvind.balijepalli@nist.gov',
     packages=[
             'pyeventanalysis', 
-            'pyeventanalysis.utest', 
+            'utest', 
             'pyeventanalysis.trajviewer',
             'pyeventanalysis.qdf',
             'pyeventanalysis.abf',
@@ -38,11 +71,10 @@ setup(
             'utilities'
             ],
     scripts=[
-            '.settings',
             'install-test-sh',
             'bin/analysis.py', 
             'dependencies/build-deps-sh', 
-            'pyeventanalysis/utest/run-tests-sh', 
+            'utest/run-tests-sh', 
             'mathematica/nanoporeAnalysis.m', 
             'mathematica/Util.m', 
             'Makefile',
@@ -62,7 +94,7 @@ setup(
     license='LICENSE.txt',
     description='Nanopore data analysis.',
     long_description=open('README.txt').read(),
-    include_dirs=[numpy.get_include()],
+    # include_dirs=[numpy.get_include()],
 )
 
 #ext_modules = cythonize("pyeventanalysis/characterizeEvent.pyx"),

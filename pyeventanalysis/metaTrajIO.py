@@ -217,7 +217,7 @@ class metaTrajIO(object):
 			fnames=self.popfnames(1)
 			if len(fnames) > 0:
 				self.currentFilename=fnames[0]		#update the last successfully read fname
-				self.appenddata(fnames)
+				self._appenddata(fnames)
 				return self.popdata(n)
 			else:
 				if len(self.currDataPipe)-self.currDataIdx > 0:
@@ -256,7 +256,7 @@ class metaTrajIO(object):
 			fnames=self.popfnames(1)
 			if len(fnames) > 0:
 				self.currentFilename=fnames[0]		#update the last successfully read fname
-				self.appenddata(fnames)
+				self._appenddata(fnames)
 				return self.previewdata(n)
 			else:
 				if len(self.currDataPipe)-self.currDataIdx > 0:
@@ -292,7 +292,7 @@ class metaTrajIO(object):
 	# Private API: Interface functions, implemented by sub-classes.
 	# Should not be called from external classes
 	#################################################################
-	def appenddata(self, fname):
+	def _appenddata(self, fname):
 		"""
 			Read the specified data file(s) and append its data to the data pipeline. Set 
 			a class property FsHz with the sampling frequency in Hz.
@@ -366,7 +366,7 @@ class metaTrajIO(object):
 		# the sampling frequency FsHz to be set on startup
 		fnames=self.popfnames(1)
 		if len(fnames) > 0:
-			self.appenddata(fnames)
+			self._appenddata(fnames)
 		else:
 			raise EmptyDataPipeError("End of data.")
 
