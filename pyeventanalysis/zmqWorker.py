@@ -48,7 +48,7 @@ def zmqWorker(inchdict, outchdict, workfuncname, dbSpec):
 				outchan.zmqSendData(outchanname, 'DONE')
 
 		except KeyboardInterrupt:
-			pass
+			break
 
 	inchan.zmqShutdown()
 	outchan.zmqShutdown()

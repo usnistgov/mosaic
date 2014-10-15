@@ -154,6 +154,11 @@ class metaTrajIO(object):
 	#################################################################
 	@property
 	def FsHz(self):
+		"""
+			.. important:: |property|
+
+			Return the sampling frequency in Hz.
+		"""
 		if not self.initPipe:
 			self._initPipe()
 
@@ -164,11 +169,18 @@ class metaTrajIO(object):
 
 	@property
 	def ElapsedTimeSeconds(self):
+		"""
+			.. important:: |property|
+
+			Return the elapsed time in the time-series in seconds.
+		"""
 		return self.gloabDataIndex*self.Fs
 
 	@property 
 	def LastFileProcessed(self):
 		"""
+			.. important:: |property|
+			
 			Return the last data file that was processed
 		"""
 		return self.currentFilename
