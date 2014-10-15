@@ -50,19 +50,26 @@ class ConvertToCSV(object):
 
 	def _creategenerator(self):
 		"""
-			Create a new filename generator if the file prefix has changed
+			Create a new filename generator if the file prefix has changed. 
+			The generator returns a filename incremented by a counter each time 
+			its next() function is called.
 		"""
 		f=self._fileprefix()
 		if f != self.filePrefix:
 			self.filePrefix=f
 
-			p=self.filePrefix+"_%d"
-			self.fileGenerator=itertools.imap(p.__mod__, itertools.count(1))
+			self.fileGenerator=itertools.imap( 
+							lambda n : self.filePrefix+"_"+str(n), 
+							itertools.count(1)
+						)
 
 	def _fileprefix(self):
 		return string.split(string.split(self.trajDataObj.LastFileProcessed,'/')[-1],'.')[0]
 
 	def _filename(self):
+		"""
+			Return a output filename that contains the data file prefix and and the block index.
+		"""
 		self._creategenerator()
 
 		return self.outDir+'/'+next(self.fileGenerator)+'.csv'
