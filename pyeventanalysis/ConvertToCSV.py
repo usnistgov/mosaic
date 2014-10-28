@@ -40,8 +40,6 @@ class ConvertToCSV(object):
 			:Parameters:
 				- `blockSize` : number of data points to convert.
 		"""
-		data=numpy.array([], dtype=numpy.float64)
-
 		try:
 			while(True):
 				(self.trajDataObj.popdata(blockSize)).tofile(self._filename(), sep=',')

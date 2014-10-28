@@ -37,6 +37,7 @@ class StatisticsWindow(QtGui.QDialog):
 		self.queryString="select AbsEventStart from metadata where ProcessingStatus='normal' order by AbsEventStart ASC"
 		self.queryData=[]
 		self.totalEvents=0
+		self.elapsedTime=0.0
 
 		self.qWorker=None
 		self.qThread=QtCore.QThread()
@@ -154,17 +155,22 @@ class StatisticsWindow(QtGui.QDialog):
 			return [0,0]
 
 	def _formatelapsedtime(self):
-		etime=self.queryData[-1]/1000.
+		oneMin=60
+		oneSec=1
 
-		if etime <= 60:
-			elaptime=str(round(etime, 2)) + " s"
-		# elif etime > 60 and etime < 600:
+		etime=self.queryData[-1]/1000.
+		if etime > self.elapsedTime:
+			self.elapsedTime=etime
+
+		if self.elapsedTime < oneMin:
+			elaptime=str(round(self.elapsedTime, 2)) + " s"
+		# elif self.elapsedTime > 60 and self.elapsedTime < 600:
 		else:
-			m=int(round(etime/60))
-			s=int(round(etime%60))
+			m=int(self.elapsedTime/oneMin)
+			s=int(self.elapsedTime%oneMin)
 			elaptime=str(m) + " min " + str(s) + " s"
 		# else:
-		# 	elaptime=str(round(etime/60., 1)) + " min"
+		# 	elaptime=str(round(self.elapsedTime/60., 1)) + " min"
 
 		return elaptime
 		
