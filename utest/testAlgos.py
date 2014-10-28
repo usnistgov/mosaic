@@ -6,16 +6,16 @@ import time
 import os
 import glob
 
-import pyeventanalysis.settings as settings
-import pyeventanalysis.stepResponseAnalysis as sra
-import pyeventanalysis.singleStepEvent as sse
+import mosaic.settings as settings
+import mosaic.stepResponseAnalysis as sra
+import mosaic.singleStepEvent as sse
 
-import pyeventanalysis.eventSegment as es
+import mosaic.eventSegment as es
 
-from pyeventanalysis.qdfTrajIO import *
-from pyeventanalysis.abfTrajIO import *
-from pyeventanalysis.tsvTrajIO import *
-from pyeventanalysis.binTrajIO import *
+from mosaic.qdfTrajIO import *
+from mosaic.abfTrajIO import *
+from mosaic.tsvTrajIO import *
+from mosaic.binTrajIO import *
 
 
 class PEGAlgorithmTest(unittest.TestCase):

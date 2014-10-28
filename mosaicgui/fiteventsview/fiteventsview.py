@@ -8,7 +8,7 @@ import sqlite3
 
 from PyQt4 import QtCore, QtGui, uic
 
-import pyeventanalysis.sqlite3MDIO as sqlite
+import mosaic.sqlite3MDIO as sqlite
 import qtgui.autocompleteedit as autocomplete
 from utilities.resource_path import resource_path, last_file_in_directory
 

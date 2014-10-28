@@ -7,9 +7,9 @@ import csv
 
 from PyQt4 import QtCore, QtGui, uic
 
-import pyeventanalysis.abfTrajIO as abf
-import pyeventanalysis.qdfTrajIO as qdf
-from pyeventanalysis.metaTrajIO import FileNotFoundError, EmptyDataPipeError
+import mosaic.abfTrajIO as abf
+import mosaic.qdfTrajIO as qdf
+from mosaic.metaTrajIO import FileNotFoundError, EmptyDataPipeError
 from utilities.resource_path import resource_path
 
 # from advancedSettingsDialog import Ui_advancedSettingsDialog

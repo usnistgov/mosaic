@@ -1,22 +1,22 @@
 import json
 import os
 
-import pyeventanalysis.settings
+import mosaic.settings
 
-import pyeventanalysis.sqlite3MDIO
+import mosaic.sqlite3MDIO
 
-import pyeventanalysis.SingleChannelAnalysis
-import pyeventanalysis.eventSegment
+import mosaic.SingleChannelAnalysis
+import mosaic.eventSegment
 
-import pyeventanalysis.stepResponseAnalysis
-# import pyeventanalysis.multiStateAnalysis
+import mosaic.stepResponseAnalysis
+# import mosaic.multiStateAnalysis
 
-import pyeventanalysis.qdfTrajIO
-import pyeventanalysis.abfTrajIO
+import mosaic.qdfTrajIO
+import mosaic.abfTrajIO
 
-from pyeventanalysis.besselLowpassFilter import *
-import pyeventanalysis.waveletDenoiseFilter
-from pyeventanalysis.metaTrajIO import FileNotFoundError, EmptyDataPipeError
+from mosaic.besselLowpassFilter import *
+import mosaic.waveletDenoiseFilter
+from mosaic.metaTrajIO import FileNotFoundError, EmptyDataPipeError
 from utilities.resource_path import resource_path
 from sqlite3 import OperationalError
 
@@ -138,18 +138,18 @@ class guiDataModel(dict):
 	def UpdateDataModelFromSettings(self, dbfile=None):
 		# Load settings from the data directory
 		if self["DataFilesPath"]:
-			self.jsonSettingsObj=pyeventanalysis.settings.settings(self["DataFilesPath"])
+			self.jsonSettingsObj=mosaic.settings.settings(self["DataFilesPath"])
 		else:
 			# print "res_path", 
-			# self.jsonSettingsObj=pyeventanalysis.settings.settings(resource_path(".settings"))
-			self.jsonSettingsObj=pyeventanalysis.settings.settings('', defaultwarn=False)
+			# self.jsonSettingsObj=mosaic.settings.settings(resource_path(".settings"))
+			self.jsonSettingsObj=mosaic.settings.settings('', defaultwarn=False)
 
 		# if a dbfile
 		if dbfile:
 			try:
-				db=pyeventanalysis.sqlite3MDIO.sqlite3MDIO()
+				db=mosaic.sqlite3MDIO.sqlite3MDIO()
 				db.openDB(dbfile)
-				self.jsonSettingsObj=pyeventanalysis.settings.settings(self["DataFilesPath"])
+				self.jsonSettingsObj=mosaic.settings.settings(self["DataFilesPath"])
 				self.jsonSettingsObj.parseSettingsString( db.readSettings() )
 			except OperationalError:
 				print "Settings not found in ", dbfile, "\n"
@@ -283,17 +283,17 @@ class guiDataModel(dict):
 								"ABF" 					: "abfTrajIO"
 							}
 		self.analysisSetupKeys={
-								"QDF" 					: pyeventanalysis.qdfTrajIO.qdfTrajIO,
-								"ABF" 					: pyeventanalysis.abfTrajIO.abfTrajIO,
-								"SingleChannelAnalysis" : pyeventanalysis.SingleChannelAnalysis.SingleChannelAnalysis,
-								"CurrentThreshold" 		: pyeventanalysis.eventSegment.eventSegment,
-								"stepResponseAnalysis" 	: pyeventanalysis.stepResponseAnalysis.stepResponseAnalysis,
-								"waveletDenoiseFilter"	: pyeventanalysis.waveletDenoiseFilter.waveletDenoiseFilter
+								"QDF" 					: mosaic.qdfTrajIO.qdfTrajIO,
+								"ABF" 					: mosaic.abfTrajIO.abfTrajIO,
+								"SingleChannelAnalysis" : mosaic.SingleChannelAnalysis.SingleChannelAnalysis,
+								"CurrentThreshold" 		: mosaic.eventSegment.eventSegment,
+								"stepResponseAnalysis" 	: mosaic.stepResponseAnalysis.stepResponseAnalysis,
+								"waveletDenoiseFilter"	: mosaic.waveletDenoiseFilter.waveletDenoiseFilter
 							}
 
 # ,
 # 								"multiStateAnalysis" 	: "multiStateAnalysis"
-# "multiStateAnalysis" 	: pyeventanalysis.multiStateAnalysis.multiStateAnalysis,
+# "multiStateAnalysis" 	: mosaic.multiStateAnalysis.multiStateAnalysis,
 
 if __name__ == "__main__":
 	g=guiDataModel()

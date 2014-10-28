@@ -36,7 +36,7 @@ class eventSegment(metaEventPartition.metaEventPartition):
 	"""
 		Implement an event partitioning algorithm by sub-classing the metaEventPartition class
 
-		:Settings: In addition to the parameters described in :class:`~pyeventanalysis.metaEventPartition`, the following parameters from are read from the settings file (.settings in the data path or current working directory):
+		:Settings: In addition to the parameters described in :class:`~mosaic.metaEventPartition`, the following parameters from are read from the settings file (.settings in the data path or current working directory):
 
 			- `blockSizeSec` :	Functions that perform block processing use this value to set the size of 
 							their windows in seconds. For example, open channel conductance is processed

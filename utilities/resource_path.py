@@ -36,9 +36,9 @@ def resource_path(filename):
 			NotFoundError(filename)
 	else:
 		# print os.environ.get("_MEIPASS2", os.path.abspath(".") )
-		if os.path.isfile( format_path(str(sep.join( dirlist ))+'/qtgui/ui/'+filename) ):
-			# print format_path(str(sep.join( dirlist ))+'/qtgui/ui/'+filename)
-			return format_path(str(sep.join( dirlist ))+'/qtgui/ui/'+filename)
+		if os.path.isfile( format_path(str(sep.join( dirlist ))+'/mosaicgui/ui/'+filename) ):
+			# print format_path(str(sep.join( dirlist ))+'/mosaicgui/ui/'+filename)
+			return format_path(str(sep.join( dirlist ))+'/mosaicgui/ui/'+filename)
 		elif os.path.isfile ( format_path(sep.join( dirlist )+'/ui/'+filename) ):
 			# print format_path(str(sep.join( dirlist ))+'/ui/'+filename)
 			return format_path(str(sep.join( dirlist ))+'/ui/'+filename)

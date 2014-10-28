@@ -7,14 +7,14 @@ import csv
 
 from PyQt4 import QtCore, QtGui, uic
 
-import pyeventanalysis.abfTrajIO as abf
-import pyeventanalysis.qdfTrajIO as qdf
-from pyeventanalysis.metaTrajIO import FileNotFoundError, EmptyDataPipeError
+import mosaic.abfTrajIO as abf
+import mosaic.qdfTrajIO as qdf
+from mosaic.metaTrajIO import FileNotFoundError, EmptyDataPipeError
 from utilities.resource_path import resource_path
 
 import matplotlib.ticker as ticker
 from matplotlib import pylab as plt
-# from qtgui.trajview.trajviewui import Ui_Dialog
+# from mosaicgui.trajview.trajviewui import Ui_Dialog
 
 class TrajectoryWindow(QtGui.QDialog):
 

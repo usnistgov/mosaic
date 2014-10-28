@@ -10,12 +10,12 @@ from PyQt4 import QtCore
 from PyQt4.QtCore import Qt
 from PyQt4 import QtGui
 
-import qtgui.settingsview
-import qtgui.analysisWorker as analysisworker
+import mosaicgui.settingsview
+import mosaicgui.analysisWorker as analysisworker
 
-from pyeventanalysis.metaTrajIO import FileNotFoundError
+from mosaic.metaTrajIO import FileNotFoundError
 
-class qtAnalysisGUI(qtgui.settingsview.settingsview):
+class qtAnalysisGUI(mosaicgui.settingsview.settingsview):
 	def __init__(self, parent = None):
 		super(qtAnalysisGUI, self).__init__(parent)
 
@@ -36,7 +36,7 @@ class qtAnalysisGUI(qtgui.settingsview.settingsview):
 		QtCore.QObject.connect(self.actionOpen_Analysis, QtCore.SIGNAL('triggered()'), self.OnLoadAnalysis)
 		QtCore.QObject.connect(self.actionLoad_Data, QtCore.SIGNAL('triggered()'), self.OnSelectPath)
 		QtCore.QObject.connect(self.actionSave_Settings, QtCore.SIGNAL('triggered()'), self.OnSaveSettings)
-		QtCore.QObject.connect(self.actionAbout_app, QtCore.SIGNAL('triggered()'), self.OnAboutApp)
+		QtCore.QObject.connect(self.actionAbout_MOSAIC, QtCore.SIGNAL('triggered()'), self.OnAboutApp)
 		
 		
 		
@@ -195,15 +195,15 @@ class qtAnalysisGUI(qtgui.settingsview.settingsview):
 				if self.blockDepthWindow:
 					self.blockDepthWindow.hide()
 					del self.blockDepthWindow
-					self.blockDepthWindow = qtgui.blockdepthview.blockdepthview.BlockDepthWindow(parent=self)
+					self.blockDepthWindow = mosaicgui.blockdepthview.blockdepthview.BlockDepthWindow(parent=self)
 				if self.statisticsView:
 					self.statisticsView.hide()
 					del self.statisticsView
-					self.statisticsView = qtgui.statisticsview.statisticsview.StatisticsWindow(parent=self)
+					self.statisticsView = mosaicgui.statisticsview.statisticsview.StatisticsWindow(parent=self)
 				if self.fitEventsView:
 					self.fitEventsView.hide()
 					del self.fitEventsView
-					self.fitEventsView = qtgui.fiteventsview.fiteventsview.FitEventWindow(parent=self)
+					self.fitEventsView = mosaicgui.fiteventsview.fiteventsview.FitEventWindow(parent=self)
 			
 				self.blockDepthWindow.openDBFile( analysisfile )
 				self.blockDepthWindow.show()

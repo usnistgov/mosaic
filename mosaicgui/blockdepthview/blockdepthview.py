@@ -12,12 +12,12 @@ from scipy import signal
 from PyQt4 import QtCore, QtGui, uic
 from PyQt4.QtCore import Qt
 
-import pyeventanalysis.sqlite3MDIO as sqlite
-import qtgui.autocompleteedit as autocomplete
-import qtgui.sqlQueryWorker as sqlworker
+import mosaic.sqlite3MDIO as sqlite
+import mosaicgui.autocompleteedit as autocomplete
+import mosaicgui.sqlQueryWorker as sqlworker
 from utilities.resource_path import resource_path, last_file_in_directory
 import matplotlib.ticker as ticker
-# from qtgui.trajview.trajviewui import Ui_Dialog
+# from mosaicgui.trajview.trajviewui import Ui_Dialog
 
 css = """QLabel {
       color: red;

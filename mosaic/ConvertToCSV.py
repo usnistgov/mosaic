@@ -9,7 +9,7 @@ __docformat__ = 'restructuredtext'
 import itertools
 import string
 
-from pyeventanalysis.metaTrajIO import EmptyDataPipeError
+from mosaic.metaTrajIO import EmptyDataPipeError
 import numpy
 
 class ConvertToCSV(object):

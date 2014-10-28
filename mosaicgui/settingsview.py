@@ -7,20 +7,20 @@ import multiprocessing
 import webbrowser
 
 from PyQt4 import QtCore, QtGui, uic
-from qtgui.redirectSTDOUT import redirectSTDOUT
+from mosaicgui.redirectSTDOUT import redirectSTDOUT
 from utilities.resource_path import resource_path, format_path
-import qtgui.EBSStateFileDict
-# import pyeventanalysis.settings
+import mosaicgui.EBSStateFileDict
+# import mosaic.settings
 # import AnalysisSettings
-# from qtgui.SettingsWindow import Ui_SettingsWindow
-import qtgui.trajview.trajview
-import qtgui.advancedsettings.advancedsettings
-import qtgui.blockdepthview.blockdepthview
-import qtgui.statisticsview.statisticsview
-import qtgui.consolelog.consolelog
-import qtgui.fiteventsview.fiteventsview
-import qtgui.aboutdialog.aboutdialog
-import qtgui.datamodel
+# from mosaicgui.SettingsWindow import Ui_SettingsWindow
+import mosaicgui.trajview.trajview
+import mosaicgui.advancedsettings.advancedsettings
+import mosaicgui.blockdepthview.blockdepthview
+import mosaicgui.statisticsview.statisticsview
+import mosaicgui.consolelog.consolelog
+import mosaicgui.fiteventsview.fiteventsview
+import mosaicgui.aboutdialog.aboutdialog
+import mosaicgui.datamodel
 
 class settingsview(QtGui.QMainWindow):
 	def __init__(self, parent = None):
@@ -39,13 +39,13 @@ class settingsview(QtGui.QMainWindow):
 		self.dataFilterDenoise=False
 
 		# setup handles and data structs for other application windows
-		self.trajViewerWindow = qtgui.trajview.trajview.TrajectoryWindow(parent=self)
-		self.advancedSettingsDialog = qtgui.advancedsettings.advancedsettings.AdvancedSettingsDialog(parent=self)
-		self.consoleLog = qtgui.consolelog.consolelog.AnalysisLogDialog(parent=self)
-		self.blockDepthWindow = qtgui.blockdepthview.blockdepthview.BlockDepthWindow(parent=self)
-		self.statisticsView = qtgui.statisticsview.statisticsview.StatisticsWindow(parent=self)
-		self.fitEventsView = qtgui.fiteventsview.fiteventsview.FitEventWindow(parent=self)
-		self.aboutDialog = qtgui.aboutdialog.aboutdialog.AboutDialog(parent=self)
+		self.trajViewerWindow = mosaicgui.trajview.trajview.TrajectoryWindow(parent=self)
+		self.advancedSettingsDialog = mosaicgui.advancedsettings.advancedsettings.AdvancedSettingsDialog(parent=self)
+		self.consoleLog = mosaicgui.consolelog.consolelog.AnalysisLogDialog(parent=self)
+		self.blockDepthWindow = mosaicgui.blockdepthview.blockdepthview.BlockDepthWindow(parent=self)
+		self.statisticsView = mosaicgui.statisticsview.statisticsview.StatisticsWindow(parent=self)
+		self.fitEventsView = mosaicgui.fiteventsview.fiteventsview.FitEventWindow(parent=self)
+		self.aboutDialog = mosaicgui.aboutdialog.aboutdialog.AboutDialog(parent=self)
 		
 
 		self.showBlockDepthWindow=False
@@ -59,7 +59,7 @@ class settingsview(QtGui.QMainWindow):
 		# self.consoleLog.raise_()
 
 		# Setup and initialize the data model for the settings view
-		self.analysisDataModel=qtgui.datamodel.guiDataModel()
+		self.analysisDataModel=mosaicgui.datamodel.guiDataModel()
 
 		# temp keys
 		self.analysisDataModel["lastMeanOpenCurr"]=-1.
@@ -113,7 +113,7 @@ class settingsview(QtGui.QMainWindow):
 		
 
 		# Help Menu signals
-		QtCore.QObject.connect(self.actionPyEventAnalysis_Help, QtCore.SIGNAL('triggered()'), self.OnShowHelp)
+		QtCore.QObject.connect(self.actionMOSAIC_Help, QtCore.SIGNAL('triggered()'), self.OnShowHelp)
 
 		# Dialog signals and slots
 		QtCore.QObject.connect(self.trajViewerWindow.waveletLevelSpinBox, QtCore.SIGNAL('valueChanged ( int )'), self.OnWaveletLevelChange)
@@ -220,7 +220,7 @@ class settingsview(QtGui.QMainWindow):
 			ebsFile=glob.glob(format_path(str(path)+'/*_?tate.txt'))
 
 			if len(ebsFile) > 0:
-				ebsState=qtgui.EBSStateFileDict.EBSStateFileDict(ebsFile[0])
+				ebsState=mosaicgui.EBSStateFileDict.EBSStateFileDict(ebsFile[0])
 				
 				rfb=ebsState.pop('FB Resistance',1.0)
 				cfb=ebsState.pop('FB Capacitance',1.0)

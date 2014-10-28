@@ -11,9 +11,9 @@ from scipy.optimize import curve_fit
 from PyQt4 import QtCore, QtGui, uic
 from PyQt4.QtCore import Qt
 
-import pyeventanalysis.sqlite3MDIO as sqlite
+import mosaic.sqlite3MDIO as sqlite
 from utilities.resource_path import resource_path, last_file_in_directory
-import qtgui.sqlQueryWorker as sqlworker
+import mosaicgui.sqlQueryWorker as sqlworker
 
 css = """QLabel {
       color: black;

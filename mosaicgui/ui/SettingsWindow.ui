@@ -33,7 +33,7 @@
    </size>
   </property>
   <property name="windowTitle">
-   <string>pyEventAnalysis</string>
+   <string>MOSAIC</string>
   </property>
   <property name="unifiedTitleAndToolBarOnMac">
    <bool>false</bool>
@@ -933,8 +933,8 @@
     <property name="title">
      <string>Help</string>
     </property>
-    <addaction name="actionAbout_app"/>
-    <addaction name="actionPyEventAnalysis_Help"/>
+    <addaction name="actionAbout_MOSAIC"/>
+    <addaction name="actionMOSAIC_Help"/>
    </widget>
    <widget class="QMenu" name="menuView">
     <property name="title">
@@ -975,9 +975,9 @@
     <string>Ctrl+Alt+S</string>
    </property>
   </action>
-  <action name="actionPyEventAnalysis_Help">
+  <action name="actionMOSAIC_Help">
    <property name="text">
-    <string>pyEventAnalysis Help</string>
+    <string>MOSAIC Help</string>
    </property>
   </action>
   <action name="actionEvent_Fits">
@@ -1042,9 +1042,9 @@
     <string>Ctrl+Shift+S</string>
    </property>
   </action>
-  <action name="actionAbout_app">
+  <action name="actionAbout_MOSAIC">
    <property name="text">
-    <string>About pyEventAnalysis</string>
+    <string>About MOSAIC</string>
    </property>
   </action>
  </widget>

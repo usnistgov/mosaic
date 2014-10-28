@@ -30,9 +30,9 @@ class SingleChannelAnalysis(object):
 		Run a single channel analysis. This is the entry point class for the analysis.
 
 		:Parameters:
-			- `trajDataObj` : an initialized object to an implementation of :class:`~pyeventanalysis.metaTrajIO`
-			- `eventPartitionHnd` : a handle to a sub-class of :class:`~pyeventanalysis.metaEventPartition`
-			- `eventProcHnd` : a handle to a sub-class of :class:`~pyeventanalysis.metaEventProcessor`
+			- `trajDataObj` : an initialized object to an implementation of :class:`~mosaic.metaTrajIO`
+			- `eventPartitionHnd` : a handle to a sub-class of :class:`~mosaic.metaEventPartition`
+			- `eventProcHnd` : a handle to a sub-class of :class:`~mosaic.metaEventProcessor`
 	"""
 	def __init__(self, trajDataObj, eventPartitionHnd, eventProcHnd):
 		"""

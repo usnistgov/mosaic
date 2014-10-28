@@ -3,7 +3,7 @@ import sys
 import sqlite3
 import time
 from os.path import expanduser
-import pyeventanalysis.sqlite3MDIO as sqlite
+import mosaic.sqlite3MDIO as sqlite
 from PyQt4 import QtCore, QtGui
 from PyQt4.QtCore import Qt
 
