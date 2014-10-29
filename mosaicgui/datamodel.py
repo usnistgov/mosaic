@@ -298,7 +298,8 @@ class guiDataModel(dict):
 if __name__ == "__main__":
 	g=guiDataModel()
 
-	# g["DataFilesPath"]="/Users/arvind/Research/Experiments/PEG29EBSRefData/20120323/singleChan"
+	import expanduser 
+	# g["DataFilesPath"]=expanduser('~')+"/Research/Experiments/PEG29EBSRefData/20120323/singleChan"
 	# g["DataFilesType"]="QDF"
 	# g["Rfb"]=9.1E+9
 	# g["Cfb"]=1.07E-12

@@ -226,8 +226,9 @@ class sqlite3MDIO(metaMDIO.metaMDIO):
 		return [ d[col] for col in colnames ]
 
 if __name__=="__main__":
-	dbname='/Users/arvind/Research/Experiments/PEG29EBSRefData/20120323/singleChan/eventMD-20140928-160026.sqlite'
-	# dbname='/Users/arvind/Desktop/POM ph5.45 m120_6/eventMD-20140928-190058.sqlite'
+	import expanduser
+	dbname=expanduser('~')+'/Desktop/POM ph5.45 m120_6/eventMD-20140928-190058.sqlite'
+	
 	c=sqlite3MDIO()
 	c.openDB(dbname)
 

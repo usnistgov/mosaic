@@ -29,7 +29,8 @@ class EBSStateFileDict(dict):
 			return default
 			
 if __name__ == "__main__":
-	# s=EBSStateFileDict('/Users/arvind/Research/Experiments/PEG29EBSRefData/20120323/singleChan/SingleChan-0001_state.txt')
+	# import expanduser
+	# s=EBSStateFileDict(expanduser('~')+'/Research/Experiments/PEG29EBSRefData/20120323/singleChan/SingleChan-0001_state.txt')
 	s=EBSStateFileDict('C:\\temp\\SingleChan-0001_state.txt')
 
 	print s
@@ -41,7 +42,7 @@ if __name__ == "__main__":
 	print 'FB Capacitance =', float(s['FB Capacitance'])/1e-12, "pF"
 	print 'Sample Rate (Hz) = ', int(s['Sample Rate (Hz)'])/1e6, "MHz"
 
-	# s=EBSStateFileDict('/Users/arvind/Desktop/POM ph5.45 m60_6/POM ph5.45 m60_6-0001_State.txt')
+	# s=EBSStateFileDict(expanduser('~')+'/Desktop/POM ph5.45 m60_6/POM ph5.45 m60_6-0001_State.txt')
 
 	# print s
 
