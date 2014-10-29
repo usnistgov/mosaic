@@ -12,34 +12,8 @@ MOSAIC is written in Python and developed in the Semiconductor and Device Metrol
 
 A. Balijepalli, J., Ettedgui, A. T. Cornio, J. W. F. Robertson K. P. Cheung, J. J. Kasianowicz & C. Vaz, "`Quantifying Short-Lived Events in Multistate Ionic Current Measurements. <http://pubs.acs.org/doi/abs/10.1021/nn405761y>`_" *ACS Nano* 2014, **8**, 1547–1553.
 
-**Downloads**
-
-*Binaries:*
-
-Mac OS X (64-bit, > 10.6) `MOSAIC-v1.0.0.dmg <link>`_
-
-Windows (64-bit) `MOSAIC-v1.0.0.zip <link>`_
-
-*Source Code:*
-
-`MOSAIC-v1.0.0.tar.gz <link>`_
-
-`MOSAIC-v1.0.0.zip <link>`_
-
-`Change Log <https://bitbucket.org/abalijepalli/pyeventanalysis/wiki/Change%20Log>`_
 
 
-**Documentation**
-
-Download the documentation as a `PDF <link>`_. The API documentation is available via `Github <link>`_.
-
-**Source Code**
-
-Contribute to the development of MOSAIC via our GitHub repository. Detailed instructions on contributing code to MOSAIC are available.
-
-GitHub repository: `MOSAIC on GitHub <link>`_
-
-Instructions on how to contribute code: `Develop MOSAIC <link>`_
 
 
 
