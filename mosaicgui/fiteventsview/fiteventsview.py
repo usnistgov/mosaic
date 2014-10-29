@@ -9,11 +9,11 @@ import sqlite3
 from PyQt4 import QtCore, QtGui, uic
 
 import mosaic.sqlite3MDIO as sqlite
-import qtgui.autocompleteedit as autocomplete
+import mosaicgui.autocompleteedit as autocomplete
 from utilities.resource_path import resource_path, last_file_in_directory
 
 import matplotlib.ticker as ticker
-# from qtgui.trajview.trajviewui import Ui_Dialog
+# from mosaicgui.trajview.trajviewui import Ui_Dialog
 
 class FitEventWindow(QtGui.QDialog):
 	def __init__(self, parent = None):
