@@ -2,19 +2,20 @@
 import sys
 from utilities.resource_path import resource_path, format_path
 
-a = Analysis(['../qtgui/qtAnalysisGUI.py'],
-			 pathex=[resource_path('.settings')],
-			 hiddenimports=['scipy.special._ufuncs_cxx', 'qtgui.mplwidget','Tkinter','FixTk','_tkinter','Tkconstants','FileDialog','Dialog'],
+a = Analysis(['../mosaicgui/mosaicGUI.py'],
+			 pathex=['..'], 		# resource_path('.settings')
+			 hiddenimports=['scipy.special._ufuncs_cxx', 'mosaicgui.mplwidget','Tkinter','FixTk','_tkinter','Tkconstants','FileDialog','Dialog'],
 			 hookspath=None,
 			 runtime_hooks=None)
-a.datas += [('.settings', '../.settings',  'DATA'), ('icon.png', '../icon.png',  'DATA')]
+# ('.settings', '../.settings',  'DATA'),
+a.datas += [ ('icon.png', '../icon.png',  'DATA')]
 pyz = PYZ(a.pure)
 # On OS X, collect data files and  build an application bundle
 if sys.platform=='darwin':
 	exe = EXE(pyz,
 		  a.scripts,
 		  exclude_binaries=True,
-		  name='pyEventAnalysis',
+		  name='MOSAIC',
 		  debug=False,
 		  strip=None,
 		  upx=True,
@@ -22,14 +23,14 @@ if sys.platform=='darwin':
 		  icon='icon.png' )
 	coll = COLLECT(exe,
 				   a.binaries,
-				   Tree('../qtgui/ui', prefix='ui'),
+				   Tree('../mosaicgui/ui', prefix='ui'),
 				   a.zipfiles,
 				   a.datas,
 				   strip=None,
 				   upx=True,
-				   name=os.path.join('dist', 'pyEventAnalysis'))
+				   name=os.path.join('dist', 'MOSAIC'))
 	app = BUNDLE(coll,
-				   name=os.path.join('dist', 'pyEventAnalysis.app'))
+				   name=os.path.join('dist', 'MOSAIC.app'))
 elif sys.platform=='win32' or sys.platform=='win64':
 	for d in a.datas:
 		if 'pyconfig' in d[0]: 
@@ -38,20 +39,19 @@ elif sys.platform=='win32' or sys.platform=='win64':
 	exe = EXE(pyz,
 		a.scripts,
 		a.binaries,
-		Tree(format_path('../qtgui/ui'), prefix='ui'),
+		Tree(format_path('../mosaicgui/ui'), prefix='ui'),
 		a.zipfiles,
 		a.datas,
-		name='pyEventAnalysis.exe',
+		name='MOSAIC.exe',
 		debug=False,
 		strip=None,
 		upx=True,
-		console=False,
-		icon='icon.png' )
+		console=False )
 	# coll = COLLECT(exe,
 	# 	a.binaries,
-	# 	Tree(format_path('../qtgui/ui'), prefix='ui'),
+	# 	Tree(format_path('../mosaicgui/ui'), prefix='ui'),
 	# 	a.zipfiles,
 	# 	a.datas,
 	# 	strip=None,
 	# 	upx=True,
-	# 	name=os.path.join('dist', 'pyEventAnalysis'))
+	# 	name=os.path.join('dist', 'MOSAIC'))

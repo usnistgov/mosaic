@@ -4,7 +4,7 @@ plat=`uname`
 
 
 
-v1=$(<pyeventanalysis/_version.py)
+v1=$(<mosaic/_version.py)
 ver=`echo $v1 | cut -d= -f2 | cut -d\" -f2`
 read -d '' info1 <<-"EOF"
 <?xml version="1.0" encoding="UTF-8"?>
@@ -12,22 +12,22 @@ read -d '' info1 <<-"EOF"
 <plist version="1.0">
 <dict>
 	<key>CFBundleIdentifier</key>
-	<string>pyEventAnalysis</string>
+	<string>MOSAIC</string>
 	<key>CFBundleShortVersionString</key>
 	<string>
 EOF
 read -d '' info2 <<-"EOF"
 	</string>
 	<key>CFBundleExecutable</key>
-	<string>MacOS/pyEventAnalysis</string>
+	<string>MacOS/MOSAIC</string>
 	<key>CFBundleName</key>
-	<string>pyEventAnalysis</string>
+	<string>MOSAIC</string>
 	<key>NSHighResolutionCapable</key>
 	<string>True</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleDisplayName</key>
-	<string>pyEventAnalysis</string>
+	<string>MOSAIC</string>
 	<key>CFBundleIconFile</key>
 	<string>icon-windowed.icns</string>
 	<key>CFBundlePackageType</key>
@@ -41,17 +41,17 @@ infoplist="$info1$ver$info2"
 
 cd pyinstaller
 rm -rf dist/* build/*
-pyinstaller pyEventAnalysis.spec
+pyinstaller mosaic.spec
 
 if [ $plat == 'Darwin' ]; then
-	echo ${infoplist}>dist/pyEventAnalysis.app/Contents/Info.plist
+	echo ${infoplist}>dist/MOSAIC.app/Contents/Info.plist
 	cd dist
-	hdiutil create ./pyEventAnalysis-${ver}.dmg -srcfolder pyEventAnalysis.app -ov
-	mv ./pyEventAnalysis-${ver}.dmg ../../dist/
+	hdiutil create ./mosaic-${ver}.dmg -srcfolder MOSAIC.app -ov
+	mv ./mosaic-${ver}.dmg ../../dist/
 else
 	cd dist
-	zip pyEventAnalysis-${ver}.zip pyEventAnalysis.exe
-	mv ./pyEventAnalysis-${ver}.zip ../../dist/
+	zip mosaic-${ver}.zip MOSAIC.exe
+	mv ./mosaic-${ver}.zip ../../dist/
 fi
 
 cd ../..

@@ -95,7 +95,7 @@
         <number>1</number>
        </property>
        <property name="text">
-        <string>pyEventAnalysis</string>
+        <string>MOSAIC</string>
        </property>
        <property name="textFormat">
         <enum>Qt::RichText</enum>

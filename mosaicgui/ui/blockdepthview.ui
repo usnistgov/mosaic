@@ -352,15 +352,15 @@
  </widget>
  <customwidgets>
   <customwidget>
-   <class>autocompleteedit</class>
-   <extends>QLineEdit</extends>
-   <header>qtgui.autocompleteedit</header>
-  </customwidget>
-  <customwidget>
    <class>MplWidget</class>
    <extends>QWidget</extends>
-   <header>qtgui.mplwidget</header>
+   <header>mosaicgui.mplwidget</header>
    <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>autocompleteedit</class>
+   <extends>QLineEdit</extends>
+   <header>mosaicgui.autocompleteedit</header>
   </customwidget>
  </customwidgets>
  <tabstops>
