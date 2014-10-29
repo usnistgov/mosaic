@@ -1,3 +1,10 @@
+"""
+	A class that defines the main mosaicGUI window.
+
+	:Created:	4/22/2013
+	:Author: 	Arvind Balijepalli <arvind.balijepalli@nist.gov>
+	:License:	See LICENSE.TXT
+"""	
 import sys
 import os
 import glob

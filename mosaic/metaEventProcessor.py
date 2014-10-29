@@ -1,19 +1,20 @@
-# """ 
-# 	A meta class that defines the interface for event processing functions. The class object stores the 
-# 	raw data for the event as well as meta-data after processing individual events. The meta-data is
-# 	defined by specfic implementations of this class.
+""" 
+	A meta class that defines the interface for event processing functions. The class object stores the 
+	raw data for the event as well as meta-data after processing individual events. The meta-data is
+	defined by specfic implementations of this class.
 
-# 	:Author: 	Arvind Balijepalli
-# 	:Created:	7/16/2012
-# 	:ChangeLog:
-# 	.. line-block::
-# 		8/30/14		AB 	Added a timeout/retry to handle DB locked error.
-# 		5/17/14		AB  Add metaMDIO support for meta-data and time-series storage
-# 		2/16/14		AB 	Define new kwarg, absdatidx to allow capture rate estimation.
-# 		6/28/13		AB 	Added a new keyword argument 'savets'. When set to False, the event time-series
-# 						is set to None. This can save a lot of memory when handling large data sets. 
-# 		7/16/12		AB	Initial version
-# """
+	:Created:	7/16/2012
+ 	:Author: 	Arvind Balijepalli <arvind.balijepalli@nist.gov>
+	:License:	See LICENSE.TXT
+	:ChangeLog:
+	.. line-block::
+		8/30/14		AB 	Added a timeout/retry to handle DB locked error.
+		5/17/14		AB  Add metaMDIO support for meta-data and time-series storage
+		2/16/14		AB 	Define new kwarg, absdatidx to allow capture rate estimation.
+		6/28/13		AB 	Added a new keyword argument 'savets'. When set to False, the event time-series
+						is set to None. This can save a lot of memory when handling large data sets. 
+		7/16/12		AB	Initial version
+"""
 from abc import ABCMeta, abstractmethod
 import types
 import sys

@@ -1,12 +1,13 @@
-# """
-# 	Interface class to write and query metadata 
+"""
+	Interface class to write and query metadata 
 
-# 	:Author: Arvind Balijepalli
-# 	:Created:	3/1/2014
-# 	:ChangeLog:
-# 	.. line-block::
-# 		3/1/14		AB	Initial version
-# """
+	:Created:	3/1/2014
+ 	:Author: 	Arvind Balijepalli <arvind.balijepalli@nist.gov>
+	:License:	See LICENSE.TXT
+	:ChangeLog:
+	.. line-block::
+		3/1/14		AB	Initial version
+"""
 import os
 import time
 from abc import ABCMeta, abstractmethod

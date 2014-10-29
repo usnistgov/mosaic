@@ -1,14 +1,15 @@
-# """
-# 	An implementation of metaTrajIO that reads tab separated valued (TSV) files
+"""
+	An implementation of metaTrajIO that reads tab separated valued (TSV) files
 
-# 	Author: Arvind Balijepalli
-# 	Created: 7/31/2012
-
-# 	ChangeLog:
-# 		7/31/12		AB	Initial version
-# 		6/30/13		AB 	Added the 'seprator' kwarg to the class initializer to allow any delimited 
-# 						files to be read. e.g. '\t' (default), ',', etc.
-# """
+	:Created: 	7/31/2012
+	:Author: 	Arvind Balijepalli <arvind.balijepalli@nist.gov>
+	:License:	See LICENSE.TXT
+	:ChangeLog:
+	.. line-block::
+		7/31/12		AB	Initial version
+		6/30/13		AB 	Added the 'seprator' kwarg to the class initializer to allow any delimited 
+						files to be read. e.g. '\t' (default), ',', etc.
+"""
 import numpy as np 
 
 import metaTrajIO

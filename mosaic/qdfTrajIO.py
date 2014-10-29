@@ -1,15 +1,16 @@
-# """
-# 	QDF implementation of metaTrajIO. Uses the readqdf module from EBS to 
-# 	read individual qdf files.
+"""
+	QDF implementation of metaTrajIO. Uses the readqdf module from EBS to 
+	read individual qdf files.
 
-# 	Author: Arvind Balijepalli
-# 	Created: 7/18/2012
-
-# 	ChangeLog:
-# 		7/18/12		AB	Initial version
-# 		2/11/14		AB 	Support qdf files that save the current in pA. This needs 
-# 						format='pA' argument.
-# """
+	:Created: 7/18/2012
+ 	:Author: 	Arvind Balijepalli <arvind.balijepalli@nist.gov>
+	:License:	See LICENSE.TXT
+	:ChangeLog:
+	.. line-block::
+		7/18/12		AB	Initial version
+		2/11/14		AB 	Support qdf files that save the current in pA. This needs 
+						format='pA' argument.
+"""
 import types
 
 import numpy as np 

@@ -1,12 +1,14 @@
-# """
-# 	Implementation of a wavelet based denoising filter
+"""
+	Implementation of a wavelet based denoising filter
 
-# 	Author: Arvind Balijepalli
-# 	Created: 8/31/2014
-
-# 	ChangeLog:
-# 		8/31/14		AB	Initial version
-# """
+	:Created: 8/31/2014
+	:Author: 	Arvind Balijepalli <arvind.balijepalli@nist.gov>
+	:License:	See LICENSE.TXT
+	Author: Arvind Balijepalli
+	:ChangeLog:
+	.. line-block::
+		8/31/14		AB	Initial version
+"""
 import numpy as np 
 import scipy.signal as sig
 import pywt

@@ -1,17 +1,18 @@
-# """
-# 	Load settings for the system from a JSON file. 
+"""
+	Load analysis settings from a JSON file. 
 
-# 	Author: 	Arvind Balijepalli
-# 	Created:	9/24/2012
-
-# 	ChangeLog:
-# 		8/20/14		AB 	Changed precedence of settings file search to datpath/.settings,
-# 						datpath/settings, coderoot/.settings and coderoot/settings
-# 		8/6/14		AB 	Add a function to parse a settings string.
-# 		9/5/13		AB 	Check for either .settings or settings in data directory
-# 						and code root. Warn when using default settings
-# 		8/24/12		AB	Initial version	
-# """
+	:Created:	8/24/2012
+ 	:Author: 	Arvind Balijepalli <arvind.balijepalli@nist.gov>
+	:License:	See LICENSE.TXT
+	:ChangeLog:
+	.. line-block::
+		8/20/14		AB 	Changed precedence of settings file search to datpath/.settings,
+						datpath/settings, coderoot/.settings and coderoot/settings
+		8/6/14		AB 	Add a function to parse a settings string.
+		9/5/13		AB 	Check for either .settings or settings in data directory
+						and code root. Warn when using default settings
+		8/24/12		AB	Initial version	
+"""
 import json
 import os
 import os.path

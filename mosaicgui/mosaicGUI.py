@@ -1,3 +1,11 @@
+"""
+	Graphical User Interface for Mosaic written in Python and Qt4. 
+
+	Usage from project root: python mosaicgui/mosaicGUI.py
+
+	:Author: 	Arvind Balijepalli <arvind.balijepalli@nist.gov>
+	:License:	See LICENSE.TXT
+"""	
 import sys
 import time
 import string

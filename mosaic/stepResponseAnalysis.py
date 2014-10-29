@@ -1,15 +1,18 @@
-# """
-# 	Author: 	Arvind Balijepalli
-# 	Created:	4/18/2013
+"""
+	A class that extends metaEventProcessing to implement the step response algorithm from :cite:`Balijepalli:2014`
 
-# 	ChangeLog:
-# 		5/17/14		AB  Modified md interface functions for metaMDIO support
-# 		2/16/14		AB 	Added new metadata field, 'AbsEventStart' to track 
-# 						global time of event start to allow capture rate estimation.
-# 		6/20/13		AB 	Added an additional check to reject events 
-# 						with blockade depths > BlockRejectRatio (default: 0.8)
-# 		4/18/13		AB	Initial version
-# """
+	:Created:	4/18/2013
+	:Author: 	Arvind Balijepalli <arvind.balijepalli@nist.gov>
+	:License:	See LICENSE.TXT
+	:ChangeLog:
+	.. line-block::
+		5/17/14		AB  Modified md interface functions for metaMDIO support
+		2/16/14		AB 	Added new metadata field, 'AbsEventStart' to track 
+						global time of event start to allow capture rate estimation.
+		6/20/13		AB 	Added an additional check to reject events 
+						with blockade depths > BlockRejectRatio (default: 0.8)
+		4/18/13		AB	Initial version
+"""
 import commonExceptions
 import metaEventProcessor
 import util

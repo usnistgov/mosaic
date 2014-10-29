@@ -1,13 +1,14 @@
-# """
-# 	A meta class that defines the interface for filtering data that is read in by any 
-# 	implementation of metaTrajIO
+"""
+	A meta class that defines the interface for filtering data that is read in by any 
+	implementation of metaTrajIO
 
-# 	:Author: 	Arvind Balijepalli
-# 	:Created:	7/1/2013
-# 	:ChangeLog:
-# 	.. line-block::
-# 		7/1/13		AB	Initial version
-# """
+	:Created:	7/1/2013
+ 	:Author: 	Arvind Balijepalli <arvind.balijepalli@nist.gov>
+	:License:	See LICENSE.TXT
+	:ChangeLog:
+	.. line-block::
+		7/1/13		AB	Initial version
+"""
 from abc import ABCMeta, abstractmethod
 import util
 

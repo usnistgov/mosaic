@@ -1,9 +1,10 @@
-#
-#	Top level module to convert any data file readble by TrajIO objects into a comma separated value text file.
-#
-#	:Author: 	Arvind Balijepalli
-#	:Created:	10/13/2014
-#
+"""
+	Top level module to convert any data file readble by TrajIO objects into a comma separated value text file.
+
+	:Created:	10/13/2014
+ 	:Author: 	Arvind Balijepalli <arvind.balijepalli@nist.gov>
+	:License:	See LICENSE.TXT	
+"""
 __docformat__ = 'restructuredtext'
 
 import itertools

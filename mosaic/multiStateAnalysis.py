@@ -1,10 +1,11 @@
 """
 	Analyze a multi-step event 
 
-	Author: 	Arvind Balijepalli
-	Created:	4/18/2013
-
-	ChangeLog:
+	:Created:	4/18/2013
+ 	:Author: 	Arvind Balijepalli <arvind.balijepalli@nist.gov>
+	:License:	See LICENSE.TXT
+	:ChangeLog:
+	.. line-block::
 		8/21/14		AB 	Added AbsEventStart and BlockDepth (constructed from mdCurrentStep
 						and mdOpenChCurrent) metadata.
 		5/17/14		AB  Modified md interface functions for metaMDIO support

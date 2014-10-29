@@ -3,10 +3,11 @@
 	asycnhronously apply a processing function to a Queue of class
 	objects.
 
-	Author: 	Arvind Balijepalli
-	Created:	9/28/2012
-
-	ChangeLog:
+	:Created:	9/28/2012
+ 	:Author: 	Arvind Balijepalli <arvind.balijepalli@nist.gov>
+	:License:	See LICENSE.TXT
+	:ChangeLog:
+	.. line-block::
 		9/28/12		AB	Initial version
 """
 from numpy import arange,sqrt, random, linalg

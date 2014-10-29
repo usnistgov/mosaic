@@ -1,3 +1,13 @@
+"""
+	A class to parse EBS state files and retrieve experiment parameters.
+
+	:Created:	9/21/2014
+	:Author: 	Arvind Balijepalli <arvind.balijepalli@nist.gov>
+	:License:	See LICENSE.TXT
+	:ChangeLog:
+	.. line-block::
+		9/21/14		AB	Initial version
+"""
 import csv
 
 class EBSStateFileDict(dict):

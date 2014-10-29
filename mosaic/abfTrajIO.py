@@ -1,14 +1,15 @@
-# """
-# 	A TrajIO class that supports ABF1 and ABF2 file formats via abf/abf.py. Currently, only
-# 	gap-free mode and single channel recordings are supported.
+"""
+	A TrajIO class that supports ABF1 and ABF2 file formats via abf/abf.py. Currently, only
+	gap-free mode and single channel recordings are supported.
 
-# 	Author: Arvind Balijepalli
-# 	Created: 5/23/2013
+	:Created: 5/23/2013
+ 	:Author: 	Arvind Balijepalli <arvind.balijepalli@nist.gov>
+	:License:	See LICENSE.TXT
+	:ChangeLog:
+	.. line-block::
+		5/23/13		AB	Initial version
 
-# 	ChangeLog:
-# 		5/23/13		AB	Initial version
-
-# """
+"""
 import metaTrajIO
 import abf.abf as abf
 

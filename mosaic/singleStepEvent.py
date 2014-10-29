@@ -1,8 +1,11 @@
 """
-	Author: 	Arvind Balijepalli
-	Created:	7/16/2012
-
-	ChangeLog:
+	A class that extends metaEventProcessor and uses a histogram method to analyze nanopore data.
+	
+	:Created:	7/16/2012
+ 	:Author: 	Arvind Balijepalli <arvind.balijepalli@nist.gov>
+	:License:	See LICENSE.TXT
+	:ChangeLog:
+	.. line-block::
 		5/17/14		AB  Modified md interface functions for metaMDIO support
 		8/24/12 	AB 	Settings are read from a settings file and passed
 						to this class as the settingsDict class attr set

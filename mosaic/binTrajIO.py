@@ -1,16 +1,17 @@
-# """
-# Binary file implementation of metaTrajIO. Read raw binary files with specified record sizes
+"""
+Binary file implementation of metaTrajIO. Read raw binary files with specified record sizes
 
-# 	Author: Arvind Balijepalli
-# 	Created: 4/22/2013
-
-# 	ChangeLog:
-# 		7/27/14		AB 	Update interface to specify python PythonStructCode instead of 
-# 						RecordSize. This will allow any binary file to be decoded
-# 						The AmplifierScale and AmplifierOffset are set to 1 and 0
-# 						respectively if PythonStructCode is an integer or short.
-# 		4/22/13		AB	Initial version
-# """
+	:Created: 4/22/2013
+ 	:Author: 	Arvind Balijepalli <arvind.balijepalli@nist.gov>
+	:License:	See LICENSE.TXT
+	:ChangeLog:
+	.. line-block::
+		7/27/14		AB 	Update interface to specify python PythonStructCode instead of 
+						RecordSize. This will allow any binary file to be decoded
+						The AmplifierScale and AmplifierOffset are set to 1 and 0
+						respectively if PythonStructCode is an integer or short.
+		4/22/13		AB	Initial version
+"""
 import struct
 
 import metaTrajIO

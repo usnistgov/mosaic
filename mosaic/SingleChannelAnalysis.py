@@ -1,9 +1,10 @@
-#
-#	Top level module to run a single channel analysis.
-#
-#	:Author: 	Arvind Balijepalli
-#	:Created:	05/15/2014
-#
+"""
+	Top level module to run a single channel analysis.
+
+	:Created:	05/15/2014
+ 	:Author: 	Arvind Balijepalli <arvind.balijepalli@nist.gov>
+	:License:	See LICENSE.TXT	
+"""
 __docformat__ = 'restructuredtext'
 
 import settings

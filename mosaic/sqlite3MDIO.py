@@ -1,3 +1,15 @@
+"""
+	A class that extends metaMDIO to implement SQLite support for metadata storage.
+
+	:Created:	9/28/2014
+ 	:Author: 	Arvind Balijepalli <arvind.balijepalli@nist.gov>
+	:License:	See LICENSE.TXT
+	:ChangeLog:
+	.. line-block::
+		9/28/14		AB 	Initial version
+"""
+
+
 import sqlite3
 import base64
 import struct

@@ -1,12 +1,13 @@
-# """
-# 	Implementation of an 'N' order Bessel filter
+"""
+	Implementation of an 'N' order Bessel filter
 
-# 	Author: Arvind Balijepalli
-# 	Created: 7/1/2013
-
-# 	ChangeLog:
-# 		7/1/13		AB	Initial version
-# """
+	:Created: 7/1/2013
+ 	:Author: 	Arvind Balijepalli <arvind.balijepalli@nist.gov>
+	:License:	See LICENSE.TXT
+	:ChangeLog:
+	.. line-block::
+		7/1/13		AB	Initial version
+"""
 import numpy as np 
 import scipy.signal as sig
 

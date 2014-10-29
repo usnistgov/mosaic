@@ -1,13 +1,13 @@
-# """
-# 	Implementation of a weighted moving average (tap delay line) filter
+"""
+	Implementation of a weighted moving average (tap delay line) filter
 
-
-# 	Author: Arvind Balijepalli
-# 	Created: 8/16/2013
-
-# 	ChangeLog:
-# 		8/16/13		AB	Initial version
-# """
+	:Created: 	8/16/2013
+ 	:Author: 	Arvind Balijepalli <arvind.balijepalli@nist.gov>
+	:License:	See LICENSE.TXT
+	:ChangeLog:
+	.. line-block::
+		8/16/13		AB	Initial version
+"""
 import numpy as np 
 import scipy.signal as sig
 

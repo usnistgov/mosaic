@@ -1,18 +1,19 @@
-# """
-# 	Read binary ionic current data into numpy arrays
+"""
+	Read binary ionic current data into numpy arrays
 
-# 	:Author: Arvind Balijepalli
-# 	:Created:	7/17/2012
-# 	:ChangeLog:
-# 	.. line-block::
-# 		8/22/14 	AB 	Setup a new property ('LastDataFile') that tracks the current
-# 						data file being processed.
-# 		5/27/14		AB 	Added dcOffset kwarg to initialization to allow 
-# 						for offset correction in the ionic current data.
-# 		2/13/14		AB 	Fixed a potential infinite recursion bug in the
-# 						initialization. 
-# 		7/17/12		AB	Initial version
-# """
+	:Created:	7/17/2012
+ 	:Author: 	Arvind Balijepalli <arvind.balijepalli@nist.gov>
+	:License:	See LICENSE.TXT	
+	:ChangeLog:
+	.. line-block::
+		8/22/14 	AB 	Setup a new property ('LastDataFile') that tracks the current
+						data file being processed.
+		5/27/14		AB 	Added dcOffset kwarg to initialization to allow 
+						for offset correction in the ionic current data.
+		2/13/14		AB 	Fixed a potential infinite recursion bug in the
+						initialization. 
+		7/17/12		AB	Initial version
+"""
 from abc import ABCMeta, abstractmethod
 import glob
 import numpy as np

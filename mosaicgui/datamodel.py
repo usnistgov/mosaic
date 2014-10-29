@@ -1,3 +1,9 @@
+"""
+	A class that stores and formats the data for mosaicGUI.
+
+	:Author: 	Arvind Balijepalli <arvind.balijepalli@nist.gov>
+	:License:	See LICENSE.TXT
+"""	
 import json
 import os
 
