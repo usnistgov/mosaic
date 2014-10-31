@@ -15,7 +15,7 @@
 """
 import commonExceptions
 import metaEventProcessor
-import util
+import mosaic.utilities.util as util
 import sys
 import math
 

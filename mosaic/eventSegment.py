@@ -28,7 +28,7 @@
 						is not found.
 		7/17/12		AB	Initial version
 """
-import util
+import mosaic.utilities.util as util
 from  collections import deque
 
 import metaEventPartition

@@ -10,7 +10,7 @@
 		7/1/13		AB	Initial version
 """
 from abc import ABCMeta, abstractmethod
-import util
+import mosaic.utilities.util as util
 
 class metaIOFilter(object):
 	"""
