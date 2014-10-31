@@ -183,6 +183,10 @@ class settingsview(QtGui.QMainWindow):
 		
 		# Populate misc parameters
 		self.writeEventsCheckBox.setChecked(int(model["writeEventTS"]))
+
+		# Populate plot widgets
+		self.plotEventFitsCheckBox.setEnabled(int(model["writeEventTS"]))
+
 		# check if parallel is available
 		try:
 			import zmq
