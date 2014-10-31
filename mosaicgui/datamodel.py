@@ -23,7 +23,7 @@ import mosaic.abfTrajIO
 from mosaic.besselLowpassFilter import *
 import mosaic.waveletDenoiseFilter
 from mosaic.metaTrajIO import FileNotFoundError, EmptyDataPipeError
-from utilities.resource_path import resource_path
+from mosaic.utilities.resource_path import resource_path
 from sqlite3 import OperationalError
 
 class guiDataModel(dict):

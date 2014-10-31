@@ -16,7 +16,7 @@ class UnitTests(Command):
         self.cwd = os.getcwd()
 
     def run(self):
-        os.system('nosetests -v -w utest/ testAlgos.py')
+        os.system('nosetests -v -w mosaic/utest/ mosaicTests.py')
 
 class BuildDocs(Command):
     description = "build pyEventAnalysis documentation."
@@ -92,7 +92,7 @@ setup(
     url='http://pypi.python.org/pypi/MOSAIC/',
     license='LICENSE.txt',
     description='A Modular Single-Molecule Analysis Interface.',
-    long_description=open('README.txt').read(),
+    long_description=open('README.rst').read(),
     # include_dirs=[numpy.get_include()],
 )
 

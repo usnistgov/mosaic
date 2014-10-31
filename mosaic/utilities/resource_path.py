@@ -15,10 +15,9 @@ def path_separator():
 def resource_path(filename):
 	"""
 		Find the location of a file in the source tree and return its absolute path.
-		If the code is runthe function is called from (e.g. from within pyinstaller)
 	"""
 	sep=path_separator()
-	dirlist=string.split( os.path.dirname( os.path.abspath(__file__) ), sep )[:-1]
+	dirlist=string.split( os.path.dirname( os.path.abspath(__file__) ), sep )[:-2]
 
 	if filename in [ ".settings", "settings"]:
 		if os.path.isfile ( str(sep.join( dirlist ))+sep+filename ):

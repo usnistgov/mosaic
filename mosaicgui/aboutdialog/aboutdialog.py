@@ -1,7 +1,7 @@
 from __future__ import with_statement
 
 import sys
-from utilities.resource_path import resource_path
+from mosaic.utilities.resource_path import resource_path
 
 from PyQt4 import QtCore, QtGui, uic
 from PyQt4.QtCore import Qt
@@ -19,7 +19,7 @@ class AboutDialog(QtGui.QDialog):
 		uic.loadUi(resource_path("aboutdialog.ui"), self)
 		
 		self.setWindowTitle("")
-		self.iconLabel.setPixmap( QtGui.QPixmap(resource_path("icon.png")) )
+		self.iconLabel.setPixmap( QtGui.QPixmap(resource_path("icon.png")).scaled(100,100) )
 
 		self._positionWindow()
 		self._setVersion()

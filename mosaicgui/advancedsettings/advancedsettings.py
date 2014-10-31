@@ -10,7 +10,7 @@ from PyQt4 import QtCore, QtGui, uic
 import mosaic.abfTrajIO as abf
 import mosaic.qdfTrajIO as qdf
 from mosaic.metaTrajIO import FileNotFoundError, EmptyDataPipeError
-from utilities.resource_path import resource_path
+from mosaic.utilities.resource_path import resource_path
 
 # from advancedSettingsDialog import Ui_advancedSettingsDialog
 

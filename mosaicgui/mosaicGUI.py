@@ -11,7 +11,7 @@ import time
 import string
 import glob
 import multiprocessing
-from  utilities.resource_path import format_path
+from  mosaic.utilities.resource_path import format_path
 from sqlite3 import DatabaseError
 
 from PyQt4 import QtCore

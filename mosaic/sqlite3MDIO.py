@@ -17,7 +17,7 @@ import datetime
 
 import numpy
 import metaMDIO
-from utilities.resource_path import format_path
+from mosaic.utilities.resource_path import format_path
 
 class data_record(dict):
 	"""

@@ -10,7 +10,7 @@ from PyQt4 import QtCore, QtGui, uic
 
 import mosaic.sqlite3MDIO as sqlite
 import mosaicgui.autocompleteedit as autocomplete
-from utilities.resource_path import resource_path, last_file_in_directory
+from mosaic.utilities.resource_path import resource_path, last_file_in_directory
 
 import matplotlib.ticker as ticker
 # from mosaicgui.trajview.trajviewui import Ui_Dialog

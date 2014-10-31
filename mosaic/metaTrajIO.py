@@ -19,7 +19,7 @@ import glob
 import numpy as np
 
 import settings
-from utilities.resource_path import format_path, path_separator
+from mosaic.utilities.resource_path import format_path, path_separator
 
 # define custom exceptions
 class IncompatibleArgumentsError(Exception):

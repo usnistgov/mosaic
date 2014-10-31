@@ -12,7 +12,7 @@ from PyQt4 import QtCore, QtGui, uic
 from PyQt4.QtCore import Qt
 
 import mosaic.sqlite3MDIO as sqlite
-from utilities.resource_path import resource_path, last_file_in_directory
+from mosaic.utilities.resource_path import resource_path, last_file_in_directory
 import mosaicgui.sqlQueryWorker as sqlworker
 
 css = """QLabel {
@@ -70,6 +70,9 @@ class StatisticsWindow(QtGui.QDialog):
 		self.qWorker.finished.connect(self.qThread.quit)
 
 		self.qThread.start()
+
+		# reset elapsed time
+		self.elapsedTime=0.0
 
 		# Query the DB
 		self._updatequery()

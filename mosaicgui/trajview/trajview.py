@@ -10,7 +10,8 @@ from PyQt4 import QtCore, QtGui, uic
 import mosaic.abfTrajIO as abf
 import mosaic.qdfTrajIO as qdf
 from mosaic.metaTrajIO import FileNotFoundError, EmptyDataPipeError
-from utilities.resource_path import resource_path
+from mosaic.utilities.resource_path import resource_path
+from mosaic.utilities.ionic_current_stats import OpenCurrentDist
 
 import matplotlib.ticker as ticker
 from matplotlib import pylab as plt
@@ -223,7 +224,7 @@ class TrajectoryWindow(QtGui.QDialog):
 				self.mu_line = self.mpl_hist.canvas.ax2.axhline(self.mu, color='0.25', linestyle='--', lw=1.5)
 				self.mpl_hist.canvas.ax2.axhline(self.mu-self.thr*self.sd, color=cl, lw=1.5)
 
-				self._ticks(5)
+				# self._ticks(5)
 
 				# self.mpl_hist.canvas.ax2.set_xticklabels([])
 				# self.mpl_hist.canvas.ax2.set_yticklabels([])
@@ -251,14 +252,16 @@ class TrajectoryWindow(QtGui.QDialog):
 				t1=self.thr
 				icurr=m1-t1*s1
 
-				self.mu=np.mean(dat)
-				self.sd=np.std(dat)
+				# self.mu=np.mean(dat)
+				# self.sd=np.std(dat)
+				self.mu, self.sd = OpenCurrentDist(dat, 0.5)
 				# self.thr=(self.mu-icurr)/self.sd
 				self.thr=float(self.datadict["eventThreshold"])
 				# print icurr, self.thr
 			except AttributeError:
-				self.mu=np.mean(dat)
-				self.sd=np.std(dat)
+				# self.mu=np.mean(dat)
+				# self.sd=np.std(dat)
+				self.mu, self.sd = OpenCurrentDist(dat, 0.5)
 				self.thr=float(self.datadict["eventThreshold"])
 		else:
 			self.mu=abs(float(self.datadict["meanOpenCurr"]))

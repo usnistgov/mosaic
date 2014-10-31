@@ -5,7 +5,7 @@ import os
 import csv
 
 from PyQt4 import QtCore, QtGui, uic
-from utilities.resource_path import resource_path, last_file_in_directory, format_path
+from mosaic.utilities.resource_path import resource_path, last_file_in_directory, format_path
 
 class AnalysisLogDialog(QtGui.QDialog):
 	def __init__(self, parent = None):

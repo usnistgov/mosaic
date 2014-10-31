@@ -36,7 +36,8 @@ import singleStepEvent as sse
 import stepResponseAnalysis as sra 
 import metaTrajIO
 import sqlite3MDIO
-from utilities.resource_path import format_path
+from mosaic.utilities.resource_path import format_path
+from mosaic.utilities.ionic_current_stats import OpenCurrentDist
 
 # custom errors
 class ExcessiveDriftError(Exception):
@@ -426,6 +427,8 @@ class metaEventPartition(object):
 
 		#print "nPoints=", n, "len(tstamp)=", len(tstamp), "type(curr)", type(curr)
 		
+		# Calculate the mean and standard deviation of the open state
+		mu, sig=OpenCurrentDist(curr, 0.5)
 
 		# Fit the data to a straight line to calculate the slope
 		# ft[0]: slope
@@ -433,7 +436,7 @@ class metaEventPartition(object):
 		ft = np.polyfit(tstamp, curr, 1)
 
 		# Return stats
-		return [ ft[1], np.std(curr), ft[0] ]
+		return [ mu, sig, ft[0] ]
 	
 		
 	def _checkdrift(self, curr):
