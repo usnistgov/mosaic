@@ -42,7 +42,7 @@ if __name__ == '__main__':
 	import pylab
 	from os.path import expanduser
 
-	d=qdf.qdfTrajIO(dirname=expanduser('~')+'/Research/Experiments/AnalysisTools/ReferenceData/POM ph5.45 m120_6',filter='*qdf', start=5, nfiles=10, Rfb=2.126E+9, Cfb=1.13E-12)
+	d=qdf.qdfTrajIO(dirname='../../data/',filter='*qdf', Rfb=9.1E+9, Cfb=1.07E-12)
 
 	print OpenCurrentDist(d.popdata(500000), 0.5)	
 	

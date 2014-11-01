@@ -39,9 +39,9 @@ class EBSStateFileDict(dict):
 			return default
 			
 if __name__ == "__main__":
-	# import expanduser
-	# s=EBSStateFileDict(expanduser('~')+'/Research/Experiments/PEG29EBSRefData/20120323/singleChan/SingleChan-0001_state.txt')
-	s=EBSStateFileDict('C:\\temp\\SingleChan-0001_state.txt')
+	from mosaic.utilities.resource_path import resource_path
+
+	s=EBSStateFileDict(resource_path('SingleChan-0001_state.txt'))
 
 	print s
 
@@ -52,13 +52,4 @@ if __name__ == "__main__":
 	print 'FB Capacitance =', float(s['FB Capacitance'])/1e-12, "pF"
 	print 'Sample Rate (Hz) = ', int(s['Sample Rate (Hz)'])/1e6, "MHz"
 
-	# s=EBSStateFileDict(expanduser('~')+'/Desktop/POM ph5.45 m60_6/POM ph5.45 m60_6-0001_State.txt')
-
-	# print s
-
-	# print
-	# print
-
-	# print 'FB Resistance =', float(s['FB Resistance'])/1e9, "GOhm"
-	# print 'FB Capacitance =', float(s['FB Capacitance'])/1e-12, "pF"
-	# print 'Sample Rate = ', int(s['Sample Rate'])/1e6, "MHz"
+	

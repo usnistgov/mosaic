@@ -24,15 +24,16 @@ def resource_path(filename):
 			return str(sep.join( dirlist ))
 		elif os.path.isfile ( str(sep.join( dirlist[:-1] ))+sep+filename ):
 			return str(sep.join( dirlist[:-1] ))
-		else:
-			NotFoundError(filename)
 	elif filename in ["icon.png"]:
 		if os.path.isfile ( str(sep.join( dirlist ))+sep+filename ):
 			return str(sep.join( dirlist )+sep+filename)
 		elif os.path.isfile ( str(sep.join( dirlist[:-1] ))+sep+filename ):
 			return str(sep.join( dirlist[:-1] )+sep+filename)
-		else:
-			NotFoundError(filename)
+	elif filename.endswith(('.sqlite', 'state.txt')):
+		if os.path.isfile ( str(sep.join( dirlist ))+sep+'data'+sep+filename ):
+			return str(sep.join( dirlist )+sep+'data'+sep+filename)
+		elif os.path.isfile ( str(sep.join( dirlist[:-1] ))+sep+'data'+sep+filename ):
+			return str(sep.join( dirlist[:-1] )+sep+'data'+sep+filename)
 	else:
 		# print os.environ.get("_MEIPASS2", os.path.abspath(".") )
 		if os.path.isfile( format_path(str(sep.join( dirlist ))+'/mosaicgui/ui/'+filename) ):
@@ -63,6 +64,7 @@ def format_path(path):
 
 if __name__ == '__main__':
 	print resource_path('.settings')
+	print resource_path('eventMD-PEG29-Reference.sqlite')
 	print last_file_in_directory('C:\\temp\\', '*sqlite')
 	print format_path('C:\\temp\\*sqlite')
 	# return os.path.join(

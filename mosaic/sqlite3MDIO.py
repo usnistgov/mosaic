@@ -17,7 +17,7 @@ import datetime
 
 import numpy
 import metaMDIO
-from mosaic.utilities.resource_path import format_path
+from mosaic.utilities.resource_path import resource_path, format_path
 
 class data_record(dict):
 	"""
@@ -238,24 +238,20 @@ class sqlite3MDIO(metaMDIO.metaMDIO):
 		return [ d[col] for col in colnames ]
 
 if __name__=="__main__":
-	import expanduser
-	dbname=expanduser('~')+'/Desktop/POM ph5.45 m120_6/eventMD-20140928-190058.sqlite'
-	
+	from os.path import abspath
+
+	dbname=resource_path('eventMD-PEG29-Reference.sqlite')
+
 	c=sqlite3MDIO()
 	c.openDB(dbname)
-
-
-	# print c.dbColumnNames
 
 	import time
 
 	t1=time.time()
-	# q=c.queryDB( "select BlockDepth, TimeSeries from metadata where ProcessingStatus = 'normal' order by ResTime ASC" )
 	q=c.queryDB( "select TimeSeries from metadata limit 100, 200" )
 	t2=time.time()
 
 	print "Timing: ", round((t2-t1)*1000, 2), " ms"
 	print "Results:", len(q)
-
 
 	print c.readSettings()

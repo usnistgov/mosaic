@@ -1,0 +1,38 @@
+ DAQ Settings
+AI Range = 10.0
+Sample Rate (Hz) = 1000000
+
+Signal/Bandwidth Settings
+LPF Type = Bessel
+LPF Poles = 8
+LPF Freq (Hz) = 100000
+Re-sampled Rate (Hz) = 500000
+Source DC Bias = 0.040
+
+Sensor/Hardware Settings
+FB Resistance = 9.1E+9
+FB Capacitance = 1.07E-12
+Signal Gain = -1.000
+Source DC Atten = 8.008
+Source AC Atten = 0.000
+
+Capacitance Measurements
+Test Freq 1 (Hz) = 0
+Test Freq 2 (Hz) = 0
+Source Capacitance 1 = 0.00E+0
+Source Capacitance 2 = 0.00E+0
+
+Solution Description
+Electrolyte:
+Analyte:
+Lipid:
+Protein:
+
+Electrode/System Description
+Sensor System: 4-001
+Test Cell: Revision 2
+Electrode: Material, SN, Pore Size, Glass Size
+
+Experiment Description
+Date:
+Purpose:

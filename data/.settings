@@ -1,0 +1,30 @@
+{
+    "stepResponseAnalysis": {
+        "FitTol": 1e-07, 
+        "BlockRejectRatio": 0.9, 
+        "FitIters": 50000
+    }, 
+    "qdfTrajIO": {
+        "Rfb": 9100000000.0, 
+        "Cfb": 1.07e-12, 
+        "dcOffset": 0.0, 
+        "filter": "*.qdf", 
+        "start": 0.0, 
+        "dirname": "/Users/arvind/Research/Experiments/AnalysisTools/mosaic/data"
+    }, 
+    "eventSegment": {
+        "meanOpenCurr": -1.0, 
+        "slopeOpenCurr": -1.0, 
+        "eventPad": 50, 
+        "driftThreshold": 999.0, 
+        "plotResults": 0, 
+        "maxDriftRate": 999.0, 
+        "eventThreshold": 3.9373285666187976, 
+        "writeEventTS": 0, 
+        "minEventLength": 5, 
+        "sdOpenCurr": -1.0, 
+        "reserveNCPU": 3, 
+        "parallelProc": 1, 
+        "blockSizeSec": 0.5
+    }
+}
