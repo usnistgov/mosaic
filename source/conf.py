@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 #
 # MOSAIC documentation build configuration file, created by
-# sphinx-quickstart on Sat Nov  1 08:50:46 2014.
+# sphinx-quickstart on Sat Nov  1 08:56:47 2014.
 #
 # This file is execfile()d with the current directory set to its
 # containing dir.
