@@ -57,7 +57,13 @@ class guiDataModel(dict):
 			dict.__setitem__(self, key, dat )
 
 	def __getitem__(self, key):
-		return dict.__getitem__(self, key)
+		try:
+			return dict.__getitem__(self, key)
+		except KeyError:
+			# If a key doesn't exist, set its initial value to -1
+			self[key]=-1
+			return self[key]
+
 
 	def update(self, *args, **kwargs):
 		for k, v in dict(*args, **kwargs).iteritems():
@@ -198,7 +204,6 @@ class guiDataModel(dict):
 								"writeEventTS"			: int,
 								"parallelProc"			: int,
 								"reserveNCPU" 			: int,
-								"plotResults" 			: int,
 								"FitTol" 				: float,
 								"FitIters" 				: int,
 								"BlockRejectRatio" 		: float,
@@ -208,6 +213,7 @@ class guiDataModel(dict):
 								"DataFilesType" 		: str,
 								"DataFilesPath" 		: str,
 								"eventThreshold"		: float,
+								"eventThresholdpA"		: float,
 								"blockSizeSec" 			: float,
 								"meanOpenCurr" 			: float,
 								"sdOpenCurr" 			: float,
@@ -239,8 +245,7 @@ class guiDataModel(dict):
 								"slopeOpenCurr"			: float,
 								"writeEventTS"			: int,
 								"parallelProc"			: int,
-								"reserveNCPU" 			: int,
-								"plotResults" 			: int
+								"reserveNCPU" 			: int
 							}
 		self.stepResponseAnalysisKeys={
 								"FitTol" 				: float,
@@ -265,6 +270,7 @@ class guiDataModel(dict):
 								"DataFilesType" 		: str,
 								"DataFilesPath" 		: str,
 								"eventThreshold"		: float,
+								"eventThresholdpA"		: float,
 								"blockSizeSec" 			: float,
 								"meanOpenCurr" 			: float,
 								"sdOpenCurr" 			: float,

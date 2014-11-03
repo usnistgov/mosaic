@@ -299,9 +299,11 @@ class settingsview(QtGui.QMainWindow):
 
 			try:
 				self.analysisDataModel[value] = float(control.text())
+				self.analysisDataModel["eventThresholdpA"]=float(self.ThresholdDoubleSpinBox.value())
 				self.analysisDataModel["slopeOpenCurr"]=0.0
 			except:
 				self.analysisDataModel[value]=-1
+				self.analysisDataModel["eventThresholdpA"]=float(self.ThresholdDoubleSpinBox.value())
 				self.analysisDataModel["slopeOpenCurr"]=-1
 
 			self.analysisDataModel["blockSizeSec"]=float(self.baselineBlockSizeDoubleSpinBox.value())
@@ -348,6 +350,7 @@ class settingsview(QtGui.QMainWindow):
 				self.trajViewerWindow.refreshPlot()
 				self.blockDepthWindow.hide()
 				self.trajViewerWindow.show()
+			self.analysisDataModel["eventThresholdpA"]=self.trajViewerWindow.thrCurr
 			self._updateControls()
 
 
@@ -395,7 +398,6 @@ class settingsview(QtGui.QMainWindow):
 	# Baseline detection SLOTS
 	def OnBaselineAutoCheckbox(self, value):
 		if self.updateDialogs:
-			# print value
 			if value:
 				self.analysisDataModel["lastMeanOpenCurr"]=self.baselineMeanLineEdit.text()
 				self.analysisDataModel["lastSDOpenCurr"]=self.baselineSDLineEdit.text()
@@ -420,9 +422,20 @@ class settingsview(QtGui.QMainWindow):
 				self.baselineMeanLineEdit.setPlaceholderText("")
 				self.baselineSDLineEdit.setPlaceholderText("")
 
-				self.baselineMeanLineEdit.setText(str(self.analysisDataModel["lastMeanOpenCurr"]))
-				self.baselineSDLineEdit.setText(str(self.analysisDataModel["lastSDOpenCurr"]))
+				self.updateDialogs=False
+				self.analysisDataModel["slopeOpenCurr"]=0.0
+				
+				if float(self.analysisDataModel["lastMeanOpenCurr"])==-1. or float(self.analysisDataModel["lastSDOpenCurr"])==-1.:
+					self.analysisDataModel["meanOpenCurr"]=self.trajViewerWindow.meanCurr
+					self.analysisDataModel["sdOpenCurr"]=self.trajViewerWindow.sdCurr
+					self.analysisDataModel["eventThresholdpA"]=self.ThresholdDoubleSpinBox.value()
 
+					self.baselineMeanLineEdit.setText(str(round(self.trajViewerWindow.meanCurr,1)))
+					self.baselineSDLineEdit.setText(str(round(self.trajViewerWindow.sdCurr,1)))
+				else:
+					self.baselineMeanLineEdit.setText(str(self.analysisDataModel["lastMeanOpenCurr"]))
+					self.baselineSDLineEdit.setText(str(self.analysisDataModel["lastSDOpenCurr"]))
+				self.updateDialogs=True
 
 				self.baselineMeanLineEdit.setEnabled(True)
 				self.baselineSDLineEdit.setEnabled(True)
@@ -465,12 +478,14 @@ class settingsview(QtGui.QMainWindow):
 
 			if type(value)==types.FloatType:
 				self.analysisDataModel["eventThreshold"]=(mu-value)/sigma
+				self.analysisDataModel["eventThresholdpA"]=value
 				self.updateDialogs=False
 				self.partitionThresholdHorizontalSlider.setValue( (int(smax-smin)*value/float(max-min)) )
 				self.updateDialogs=True
 			else:
 				v=float((int((max-min))*value/float(smax-smin)))
 				self.analysisDataModel["eventThreshold"]=(mu-v)/sigma
+				self.analysisDataModel["eventThresholdpA"]=v
 				self.updateDialogs=False
 				self.ThresholdDoubleSpinBox.setValue( (int((max-min))*value/float(smax-smin)) )
 				self.updateDialogs=True
@@ -547,7 +562,7 @@ class settingsview(QtGui.QMainWindow):
 		self.consoleLog.show()
 
 	def OnShowHelp(self):
-		webbrowser.open('file://'+os.getcwd()+'/doc/html/index.html', new=0, autoraise=True)
+		webbrowser.open('http://usnistgov.github.io/mosaic', new=0, autoraise=True)
 
 	# Dialog SLOTS
 	def OnShowTrajectoryViewer(self):

@@ -17,7 +17,6 @@
         "slopeOpenCurr": -1.0, 
         "eventPad": 50, 
         "driftThreshold": 999.0, 
-        "plotResults": 0, 
         "maxDriftRate": 999.0, 
         "eventThreshold": 3.9373285666187976, 
         "writeEventTS": 0, 

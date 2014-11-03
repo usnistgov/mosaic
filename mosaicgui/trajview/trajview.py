@@ -80,8 +80,8 @@ class TrajectoryWindow(QtGui.QDialog):
 		return self.sd
 
 	@property 
-	def Threshold(self):
-		return self.thr
+	def thrCurr(self):
+		return self.thrCurrPicoA
 
 	def refreshPlot(self):
 		try:
@@ -141,6 +141,9 @@ class TrajectoryWindow(QtGui.QDialog):
   		# print self.datadict
   		# set block size
   		self.blockSize=self.datadict.pop( "blockSizeSec", 0.25)
+  		self.thrCurrPicoA=self.datadict.pop("eventThresholdpA",0.0)
+
+	  	# print self.thrCurrPicoA
 
   		# self.mpl_hist.canvas.ax.set_autoscale_on(False)
   		self.update_graph()
@@ -151,6 +154,8 @@ class TrajectoryWindow(QtGui.QDialog):
 
   		# set block size
   		self.blockSize=self.datadict.pop( "blockSizeSec", 0.25)
+  		self.thrCurrPicoA=self.datadict.pop("eventThresholdpA",0.0)
+	  	# print self.thrCurrPicoA
 
 	def update_graph(self):
 		try:
@@ -159,6 +164,7 @@ class TrajectoryWindow(QtGui.QDialog):
 				ydat=datasign*np.array(self.trajData, dtype='float64')
 				xdat=np.arange(float(self.nUpdate)*self.blockSize,float(self.nUpdate+1)*self.blockSize,self.decimate/float(self.IOObject.FsHz))[:len(ydat)]
 	
+				# print "update_graph: ", self.thrCurrPicoA
 				self._calculateThreshold(ydat)
 
 				# display the mean current val and thr
@@ -245,32 +251,39 @@ class TrajectoryWindow(QtGui.QDialog):
 			pass
 
 	def _calculateThreshold(self, dat):
-		if float(self.datadict["meanOpenCurr"]) == -1 and float(self.datadict["sdOpenCurr"]) == -1:
+		if float(self.datadict["meanOpenCurr"]) == -1 or float(self.datadict["sdOpenCurr"]) == -1:
 			try:
-				m1=self.mu
-				s1=self.sd
-				t1=self.thr
-				icurr=m1-t1*s1
-
-				# self.mu=np.mean(dat)
-				# self.sd=np.std(dat)
 				self.mu, self.sd = OpenCurrentDist(dat, 0.5)
-				# self.thr=(self.mu-icurr)/self.sd
-				self.thr=float(self.datadict["eventThreshold"])
+				# print "_calculateThreshold: ", self.thrCurrPicoA
+				if self.thrCurrPicoA==0.:
+					self.thr=float(self.datadict["eventThreshold"])
+
+					# if eventThresholdpA is not set, the program was initialized with 
+					# baseline auto. Store the threshold current in pA in self.thrCurrPicoA.
+					# The settings window will then pick it up on the first controls update.
+					self.thrCurrPicoA=self.mu-self.sd*self.thr
+				else:
+					# If self.thrCurrPicoA is set, then calculate a new threshold in SD 
+					# so as to keep self.thrCurrPicoA constant.
+					self.thr=(self.mu-self.thrCurrPicoA)/self.sd
+
+				# self.thr=float(self.datadict["eventThreshold"])
 				# print icurr, self.thr
 			except AttributeError:
 				# self.mu=np.mean(dat)
 				# self.sd=np.std(dat)
 				self.mu, self.sd = OpenCurrentDist(dat, 0.5)
-				self.thr=float(self.datadict["eventThreshold"])
+				# self.thr=float(self.datadict["eventThreshold"])
+				self.thr=(self.mu-self.thrCurrPicoA)/self.sd
 		else:
 			self.mu=abs(float(self.datadict["meanOpenCurr"]))
 			self.sd=float(self.datadict["sdOpenCurr"])
-			self.thr=float(self.datadict["eventThreshold"])
+			# self.thr=float(self.datadict["eventThreshold"])
+			self.thr=(self.mu-self.thrCurrPicoA)/self.sd
 
 		# When loading more data, update the parent window
 		# threshold spinbox maximum
-		self.parent().ThresholdDoubleSpinBox.setMaximum(self.mu)
+		# self.parent().ThresholdDoubleSpinBox.setMaximum(self.mu)
 
 
 	def _ticks(self, nticks):

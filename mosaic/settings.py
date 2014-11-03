@@ -75,8 +75,7 @@ __settings__="""
 			"slopeOpenCurr"			: "-1",
 			"writeEventTS"			: "1",
 			"parallelProc"			: "0",
-			"reserveNCPU"			: "2",
-			"plotResults"			: "0"
+			"reserveNCPU"			: "2"
 		},
 		"singleStepEvent" : {
 			"binSize" 				: "1.0",
