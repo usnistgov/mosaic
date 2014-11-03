@@ -56,7 +56,7 @@ setup(
     author_email='arvind.balijepalli@nist.gov',
     packages=[
             'mosaic', 
-            'utest', 
+            'mosaic.utest', 
             'mosaic.qdf',
             'mosaic.abf',
             'mosaicgui',
@@ -67,7 +67,7 @@ setup(
             'mosaicgui.statisticsview',
             'mosaicgui.fiteventsview',
             'mosaicgui.aboutdialog',
-            'utilities'
+            'mosaic.utilities'
             ],
     scripts=[
             'install-test-sh',
