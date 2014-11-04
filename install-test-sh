@@ -1,5 +1,5 @@
 #!/bin/sh
 
 #python test-depend.py
-cd utest
-nosetests testAlgos.py -v
+cd mosaic/utest/
+nosetests mosaicTests.py -v
