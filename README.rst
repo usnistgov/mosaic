@@ -14,7 +14,7 @@ A. Balijepalli, J., Ettedgui, A. T. Cornio, J. W. F. Robertson K. P. Cheung, J. 
 
 
 
-What's new in |release|
+What's new in v1.0b2
 =================================
 
 - Fixed threshold update error from 1.0b1.
