@@ -14,6 +14,15 @@ A. Balijepalli, J., Ettedgui, A. T. Cornio, J. W. F. Robertson K. P. Cheung, J. 
 
 
 
+What's new in |release|
+=================================
+
+- Fixed threshold update error from 1.0b1.
+- Considerably improved automatic open channel state detection.
+- The default settings string is now included within the source code.
+- Implemented new top-level class ConvertToCSV that allows conversion of data read by any TrajIO object to comma separated files.
+- Updated build system and unit testing framework.
+- Misc UI updates.
 
 
 
