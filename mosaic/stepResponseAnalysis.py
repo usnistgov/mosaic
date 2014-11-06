@@ -6,6 +6,8 @@
 	:License:	See LICENSE.TXT
 	:ChangeLog:
 	.. line-block::
+		11/5/14		AB 	Fixed a fixed precision bug in the event fitting logic that prevented 
+						long events from being correctly analyzed.
 		5/17/14		AB  Modified md interface functions for metaMDIO support
 		2/16/14		AB 	Added new metadata field, 'AbsEventStart' to track 
 						global time of event start to allow capture rate estimation.
@@ -190,7 +192,7 @@ class stepResponseAnalysis(metaEventProcessor.metaEventProcessor):
 			# For long events, fix the blocked current to speed up the fit
 			if (eend-estart) > 1000:
 				blockedCurrent=np.mean(edat[estart+50:eend-50])
-				tauVal=2.*dt
+				# tauVal=2.*dt
 				# varyBlockedCurrent=False
 
 			# control numpy error reporting
@@ -288,7 +290,15 @@ class stepResponseAnalysis(metaEventProcessor.metaEventProcessor):
 		
 	def __eventFunc(self, t, tau, mu1, mu2, a, b):
 		try:
-			return a*( (np.exp((mu1-t)/tau)-1)*self.__heaviside(t-mu1)+(1-np.exp((mu2-t)/tau))*self.__heaviside(t-mu2) ) + b
+			t1=(np.exp((mu1-t)/tau)-1)*self.__heaviside(t-mu1)
+			t2=(1-np.exp((mu2-t)/tau))*self.__heaviside(t-mu2)
+
+			# Either t1, t2 or both could contain NaN due to fixed precision arithmetic errors.
+			# In this case, we can set those values to zero.
+			t1[np.isnan(t1)]=0
+			t2[np.isnan(t2)]=0
+
+			return a*( t1+t2 ) + b
 		except:
 			raise
 
