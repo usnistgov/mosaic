@@ -11,6 +11,7 @@ from PyQt4 import QtCore, QtGui, uic
 import mosaic.sqlite3MDIO as sqlite
 import mosaicgui.autocompleteedit as autocomplete
 from mosaic.utilities.resource_path import resource_path, last_file_in_directory
+import mosaic.stepResponseAnalysis as sra
 
 import matplotlib.ticker as ticker
 # from mosaicgui.trajview.trajviewui import Ui_Dialog
@@ -94,15 +95,17 @@ class FitEventWindow(QtGui.QDialog):
 
 			# fit function data
 			# ProcessingStatus, TimeSeries, RCConstant, EventStart, EventEnd, CurrentStep, OpenChCurrent
+			# print len(q[1]), float((len(q[1]))/fs), float(1/(100*fs))
 			xfit=np.arange(0,float((len(q[1]))/fs), float(1/(100*fs)))
 			yfit=self._sraFunc( xfit, q[2], q[3], q[4], abs(q[6]-q[5]), q[6])
 
 			if str(q[0])=="normal":
 				c='#%02x%02x%02x' % (72,91,144)
+				cf='#%02x%02x%02x' % (50,50,47)
 				self.mpl_hist.canvas.ax.cla()
 				self.mpl_hist.canvas.ax.hold(True)
 				self.mpl_hist.canvas.ax.plot( xdat, ydat, linestyle='None', marker='o', color=c, markersize=8, markeredgecolor='none', alpha=0.6)
-				self.mpl_hist.canvas.ax.plot( xfit, yfit, 'k-')
+				self.mpl_hist.canvas.ax.plot( xfit, yfit, linestyle='-', linewidth='2.0', color=cf)
 			else:
 				self.mpl_hist.canvas.ax.cla()
 				self.mpl_hist.canvas.ax.plot( xdat, ydat, linestyle='None', marker='o', color='r', markersize=8, markeredgecolor='none', alpha=0.6)
@@ -206,7 +209,16 @@ class FitEventWindow(QtGui.QDialog):
 	def _sraFunc(self, t, tau, mu1, mu2, a, b):
 		np.seterr(invalid='ignore', over='ignore', under='ignore')
 		try:
-			return a*( (np.exp((mu1-t)/tau)-1)*self._heaviside(t-mu1)+(1-np.exp((mu2-t)/tau))*self._heaviside(t-mu2) ) + b
+			t1=(np.exp((mu1-t)/tau)-1)*self._heaviside(t-mu1)
+			t2=(1-np.exp((mu2-t)/tau))*self._heaviside(t-mu2)
+
+			# Either t1, t2 or both could contain NaN due to fixed precision arithmetic errors.
+			# In this case, we can set those values to zero.
+			t1[np.isnan(t1)]=0
+			t2[np.isnan(t2)]=0
+
+			return a*( t1+t2 ) + b
+			# return a*( (np.exp((mu1-t)/tau)-1)*self._heaviside(t-mu1)+(1-np.exp((mu2-t)/tau))*self._heaviside(t-mu2) ) + b
 		except RuntimeWarning:
 			print self.eventIndex
 			pass
@@ -229,15 +241,12 @@ class FitEventWindow(QtGui.QDialog):
 		}
 
 if __name__ == '__main__':
-	from os.path import expanduser
-	# dbpath=expanduser('~')+'/Research/Experiments/PEG29EBSRefData/20120323/singleChan/'
-	# dbpath=expanduser('~')+'/Research/Experiments/Nanoclusters/PW9O34/20140916/m120mV1/'
-	dbpath='C:\\temp\\'
+	dbfile='data/eventMD-PEG29-Reference.sqlite'
 
 	app = QtGui.QApplication(sys.argv)
 	dmw = FitEventWindow()
 	
-	dmw.openDB(dbpath, 500)
+	dmw.openDBFile(dbfile, 500)
 	dmw.show()
 	dmw.raise_()
 	sys.exit(app.exec_())

@@ -19,7 +19,7 @@
         "driftThreshold": 999.0, 
         "maxDriftRate": 999.0, 
         "eventThreshold": 3.9373285666187976, 
-        "writeEventTS": 0, 
+        "writeEventTS": 1, 
         "minEventLength": 5, 
         "sdOpenCurr": -1.0, 
         "reserveNCPU": 3, 
