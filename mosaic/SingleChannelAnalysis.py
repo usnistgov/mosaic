@@ -50,7 +50,7 @@ class SingleChannelAnalysis(object):
 		trajSettings=self.settingsDict.getSettings(trajDataHnd.__name__)
 		
 		if dataFilterHnd:
-			self.trajDataObj=trajDataHnd( datafilter=dataFilterHnd, **trajSettings )
+			self.trajDataObj=trajDataHnd( datafilter=dataFilterHnd, dirname=dataPath, **trajSettings )
 		else:
 			self.trajDataObj=trajDataHnd( **trajSettings )
 		self.eventPartitionHnd=eventPartitionHnd

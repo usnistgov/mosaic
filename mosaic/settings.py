@@ -105,6 +105,18 @@ __settings__="""
 			"level"					: "5",
 			"thresholdType"			: "soft",
 			"thresholdSubType"		: "sqtwolog"
+		},
+		"abfTrajIO" : {
+			"filter"				: "*.abf", 
+			"start"					: 0.0, 
+			"dcOffset"				: 0.0
+		},
+		"qdfTrajIO": {
+			"Rfb": 9.1e+12, 
+			"Cfb": 1.07e-12, 
+			"dcOffset": 0.0, 
+			"filter": "*.qdf", 
+			"start": 0.0
 		}
 	}
 """
