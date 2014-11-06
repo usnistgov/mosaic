@@ -4,6 +4,9 @@
 	:Created:	05/15/2014
  	:Author: 	Arvind Balijepalli <arvind.balijepalli@nist.gov>
 	:License:	See LICENSE.TXT	
+	:ChangeLog:
+	.. line-block::
+		5/15/14		AB	Initial version
 """
 __docformat__ = 'restructuredtext'
 
@@ -31,17 +34,25 @@ class SingleChannelAnalysis(object):
 		Run a single channel analysis. This is the entry point class for the analysis.
 
 		:Parameters:
-			- `trajDataObj` : an initialized object to an implementation of :class:`~mosaic.metaTrajIO`
+			- `dataPath` : full path to the data directory
+			- `trajDataHnd` : a handle to an implementation of :class:`~mosaic.metaTrajIO`
+			- `dataFilterHnd` : a handle to an impementation of :class:`~mosaic.metaIOFilter`
 			- `eventPartitionHnd` : a handle to a sub-class of :class:`~mosaic.metaEventPartition`
 			- `eventProcHnd` : a handle to a sub-class of :class:`~mosaic.metaEventProcessor`
 	"""
-	def __init__(self, trajDataObj, eventPartitionHnd, eventProcHnd):
+	def __init__(self, dataPath, trajDataHnd, dataFilterHnd, eventPartitionHnd, eventProcHnd):
 		"""
 		"""
 		# Read and parse the settings file
-		self.settingsDict=settings.settings( trajDataObj.datPath )
+		self.settingsDict=settings.settings( dataPath )
 
-		self.trajDataObj=trajDataObj
+		# Pull out trajectory settings to construct an IO object
+		trajSettings=self.settingsDict.getSettings(trajDataHnd.__name__)
+		
+		if dataFilterHnd:
+			self.trajDataObj=trajDataHnd( datafilter=dataFilterHnd, **trajSettings )
+		else:
+			self.trajDataObj=trajDataHnd( **trajSettings )
 		self.eventPartitionHnd=eventPartitionHnd
 		self.eventProcHnd=eventProcHnd
 

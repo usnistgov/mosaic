@@ -6,51 +6,36 @@ import signal
 import resource
 import csv
 
-import pyeventanalysis.SingleChannelAnalysis
+import mosaic.SingleChannelAnalysis
 
-import pyeventanalysis.eventSegment as es
+import mosaic.eventSegment as es
 
-import pyeventanalysis.singleStepEvent as sse
-import pyeventanalysis.stepResponseAnalysis as sra 
-import pyeventanalysis.multiStateAnalysis as msa
+import mosaic.singleStepEvent as sse
+import mosaic.stepResponseAnalysis as sra 
+import mosaic.multiStateAnalysis as msa
 
-from pyeventanalysis.qdfTrajIO import *
-from pyeventanalysis.abfTrajIO import *
-from pyeventanalysis.tsvTrajIO import *
-from pyeventanalysis.binTrajIO import *
+from mosaic.qdfTrajIO import *
+from mosaic.abfTrajIO import *
+from mosaic.tsvTrajIO import *
+from mosaic.binTrajIO import *
 
-from pyeventanalysis.besselLowpassFilter import *
-from pyeventanalysis.waveletDenoiseFilter import *
+from mosaic.besselLowpassFilter import *
+from mosaic.waveletDenoiseFilter import *
 
 # '/Users/arvind/Research/Experiments/PEG29EBSRefData/20120323/singleChan' Rfb=9.1E+9, Cfb=1.07E-12, datafilter=waveletDenoiseFilter
-pyeventanalysis.SingleChannelAnalysis.SingleChannelAnalysis(
-			qdfTrajIO(dirname='/Users/arvind/Research/Experiments/AnalysisTools/ReferenceData/POM ph5.45 m120_6',filter='*qdf', start=5, nfiles=10, Rfb=2.126E+9, Cfb=1.13E-12), 
+# qdfTrajIO(dirname='/Users/arvind/Research/Experiments/AnalysisTools/ReferenceData/POM ph5.45 m120_6',filter='*qdf', start=5, nfiles=10, Rfb=2.126E+9, Cfb=1.13E-12), 
+mosaic.SingleChannelAnalysis.SingleChannelAnalysis(
+			'/Users/arvind/Research/Experiments/AnalysisTools/ReferenceData/POM ph5.45 m120_6',
+			qdfTrajIO, 
+			None,
 			es.eventSegment,
 			sra.stepResponseAnalysis
 		).Run()
 
-# pyeventanalysis.SingleChannelAnalysis.SingleChannelAnalysis(
-# 			tsvTrajIO(dirname='/Users/arvind/Research/Experiments/AnalysisTools/Wavelet Denoising/raw data', filter='*.tsv', Fs=500000, headers=False),
-# 			es.eventSegment,
-# 			sra.stepResponseAnalysis
-#  		).Run() 
-# pyeventanalysis.SingleChannelAnalysis.SingleChannelAnalysis(
-# 			tsvTrajIO(dirname='/Users/arvind/Research/Experiments/AnalysisTools/Wavelet Denoising/Haar 5 Levels Hard Default Threshold', filter='*.csv', Fs=500000, headers=False),
-# 			es.eventSegment,
-# 			sra.stepResponseAnalysis
-#  		).Run() 
-# pyeventanalysis.SingleChannelAnalysis.SingleChannelAnalysis(
-# 			tsvTrajIO(dirname='/Users/arvind/Research/Experiments/AnalysisTools/Wavelet Denoising/Haar 5 Levels Soft Penalize High Threshold', filter='*.csv', Fs=500000, headers=False),
-# 			es.eventSegment,
-# 			sra.stepResponseAnalysis
-#  		).Run() 
-# pyeventanalysis.SingleChannelAnalysis.SingleChannelAnalysis(
-# 			tsvTrajIO(dirname='/Users/arvind/Research/Experiments/AnalysisTools/Wavelet Denoising/Haar 5 Levels Soft Default Threshold', filter='*.csv', Fs=500000, headers=False),
-# 			es.eventSegment,
-# 			sra.stepResponseAnalysis
-#  		).Run() 
-# pyeventanalysis.SingleChannelAnalysis.SingleChannelAnalysis(
-# 			tsvTrajIO(dirname='/Users/arvind/Research/Experiments/AnalysisTools/Wavelet Denoising/Haar 5 Levels Soft Heuristic Band Threshold', filter='*.csv', Fs=500000, headers=False),
+# mosaic.SingleChannelAnalysis.SingleChannelAnalysis(
+#			'/Users/arvind/Research/Experiments/AnalysisTools/Wavelet Denoising/raw data',
+# 			tsvTrajIO,
+#			None,
 # 			es.eventSegment,
 # 			sra.stepResponseAnalysis
 #  		).Run() 
@@ -60,7 +45,7 @@ pyeventanalysis.SingleChannelAnalysis.SingleChannelAnalysis(
 # print b.popdata(10)
 # print b.formatsettings()
 # '/Users/arvind/Research/Experiments/jan_doublets/'
-# tt=pyeventanalysis.SingleChannelAnalysis.SingleChannelAnalysis(
+# tt=mosaic.SingleChannelAnalysis.SingleChannelAnalysis(
 # 			qdfTrajIO(dirname='/Users/arvind/Research/Experiments/SBSTagsColumbia/dA6TP30odd/p100mV3/', filter='*.qdf', Rfb=9.1E+9, Cfb=1.07E-12),
 # 			es.eventSegment,
 # 			msa.multiStateAnalysis

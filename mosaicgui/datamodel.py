@@ -133,8 +133,15 @@ class guiDataModel(dict):
 		return dargs
 
 	def GenerateAnalysisObject(self, eventPartitionAlgo, eventProcessingAlgo, dataFilterAlgo):
+		try:
+			filterHnd=self.analysisSetupKeys[str(dataFilterAlgo)]
+		except KeyError:
+			filterHnd=None
+
 		return self.analysisSetupKeys["SingleChannelAnalysis"](
-				self.GenerateDataFilesObject(dataFilterAlgo),
+				self["DataFilesPath"],
+				self.analysisSetupKeys[self["DataFilesType"]], 	#self.GenerateDataFilesObject(dataFilterAlgo),
+				filterHnd,
 				self.analysisSetupKeys[str(eventPartitionAlgo)],
 				self.analysisSetupKeys[str(eventProcessingAlgo)]
 			)
