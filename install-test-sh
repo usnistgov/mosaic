@@ -1,5 +1,0 @@
-#!/bin/sh
-
-#python test-depend.py
-cd mosaic/utest/
-nosetests mosaicTests.py -v

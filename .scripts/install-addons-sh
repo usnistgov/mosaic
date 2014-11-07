@@ -1,0 +1,15 @@
+#!/bin/sh
+
+plat=`uname -s`
+
+if [ $plat=='Darwin' ]; then
+    mathbase=~/Library/Mathematica/Applications/
+elif [ $plat=='Linux' ]; then
+	mathbase = ~/.Mathematica/Applications/
+fi
+
+cp mathematica/nanoporeAnalysis.m ${mathbase}
+cp mathematica/Util.m ${mathbase}
+
+echo "Installed Mathematica addons in" $mathbase	
+

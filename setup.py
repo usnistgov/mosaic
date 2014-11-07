@@ -5,8 +5,8 @@ from Cython.Build import cythonize
 import os
 import sys
 
-class UnitTests(Command):
-    description = "run the unit test suite."
+class mosaicUnitTests(Command):
+    description = "run the MOSAIC unit test suite."
     user_options = []
 
     def initialize_options(self):
@@ -18,11 +18,56 @@ class UnitTests(Command):
     def run(self):
         os.system('nosetests -v -w mosaic/utest/ mosaicTests.py')
 
-class BuildDocs(Command):
-    description = "build pyEventAnalysis documentation."
-    user_options = [ ('html', None, "build HTML documentation"),
+class mosaicBinaries(Command):
+    description = "build MOSAIC binaries."
+    user_options = []
+
+    def initialize_options(self):
+        pass
+
+    def finalize_options(self):
+        pass
+
+    def run(self):
+        os.system('sh .scripts/pyinstaller-sh')
+
+class mosaicDependencies(Command):
+    description = "install MOSAIC dependencies."
+    user_options = []
+
+    def initialize_options(self):
+        pass
+
+    def finalize_options(self):
+        pass
+
+    def run(self):
+        os.system('sh .scripts/build-deps-sh')
+
+class mosaicAddons(Command):
+    description = "install MOSAIC addons (Mathematica, Igor and Matlab scripts)."
+    user_options = [ ('mathematica', None, "install Mathematica scripts"),
+                     ('all', None, "install all scripts"),
+                    ]
+
+    def initialize_options(self):
+        self.mathematica = 0
+        self.all = 0
+
+    def finalize_options(self):
+        pass
+
+    def run(self):
+        if self.mathematica:
+            os.system('sh .scripts/install-addons-sh ')
+        else:
+            os.system('sh .scripts/install-addons-sh ')
+
+class mosaicDocs(Command):
+    description = "build MOSAIC documentation."
+    user_options = [ ('all', None, "build HTML and PDF documentation (default)"),
+                     ('html', None, "build HTML documentation"),
                      ('pdf', None, "build PDF documentation"),
-                     ('all', None, "build HTML and PDF documentation"),
                      ('rebuild', None, "rebuild HTML and PDF documentation"),
                     ]
 
@@ -37,19 +82,20 @@ class BuildDocs(Command):
 
     def run(self):
         if self.html:
-            os.system("make -C doc-sphinx html")
-        if self.pdf:
-            os.system("make -C doc-sphinx latexpdf")
-        if self.all:
-            os.system("make -C doc-sphinx html latexpdf")
-        if self.rebuild:
-            os.system("make -C doc-sphinx clean html latexpdf")
+            os.system("make -C _docs html")
+        elif self.pdf:
+            os.system("make -C _docs latexpdf")
+        elif self.rebuild:
+            os.system("make -C _docs clean html latexpdf")
+        else:
+            os.system("make -C _docs html latexpdf")
+        
 
 
 
 exec(open('mosaic/_version.py').read())
 setup(
-    cmdclass={'unittest': UnitTests, 'docs': BuildDocs},
+    cmdclass={'mosaic_tests': mosaicUnitTests, 'mosaic_docs': mosaicDocs, 'mosaic_bin': mosaicBinaries, 'mosaic_deps': mosaicDependencies, 'mosaic_addons': mosaicAddons},
     name='mosaic',
     version=__version__,
     author='Arvind Balijepalli',
@@ -73,7 +119,7 @@ setup(
             'install-test-sh',
             'bin/analysis.py', 
             'dependencies/build-deps-sh', 
-            'utest/run-tests-sh', 
+            'mosaic/utest/run-tests-sh', 
             'mathematica/nanoporeAnalysis.m', 
             'mathematica/Util.m', 
             'Makefile',
