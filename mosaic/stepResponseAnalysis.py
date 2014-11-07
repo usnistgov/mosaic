@@ -6,7 +6,8 @@
 	:License:	See LICENSE.TXT
 	:ChangeLog:
 	.. line-block::
-		11/5/14		AB 	Fixed a fixed precision bug in the event fitting logic that prevented 
+		11/7/14		AB 	Error codes describing event rejection are now more specific.
+		11/5/14		AB 	Fixed a bug in the event fitting logic that prevented 
 						long events from being correctly analyzed.
 		5/17/14		AB  Modified md interface functions for metaMDIO support
 		2/16/14		AB 	Added new metadata field, 'AbsEventStart' to track 
@@ -192,8 +193,6 @@ class stepResponseAnalysis(metaEventProcessor.metaEventProcessor):
 			# For long events, fix the blocked current to speed up the fit
 			if (eend-estart) > 1000:
 				blockedCurrent=np.mean(edat[estart+50:eend-50])
-				# tauVal=2.*dt
-				# varyBlockedCurrent=False
 
 			# control numpy error reporting
 			np.seterr(invalid='ignore', over='ignore', under='ignore')
@@ -219,11 +218,11 @@ class stepResponseAnalysis(metaEventProcessor.metaEventProcessor):
 			if optfit.success:
 				if optfit.params['mu1'].value < 0.0 or optfit.params['mu2'].value < 0.0:
 					# print 'eInvalidFitParams1', optfit.params['b'].value, optfit.params['b'].value - optfit.params['a'].value, optfit.params['mu1'].value, optfit.params['mu2'].value
-					self.rejectEvent('eInvalidFitParams')
+					self.rejectEvent('eInvalidResTime')
 				# The start of the event is set past the length of the data
 				elif optfit.params['mu1'].value > ts[-1]:
 					# print 'eInvalidFitParams2', optfit.params['b'].value, optfit.params['b'].value - optfit.params['a'].value, optfit.params['mu1'].value, optfit.params['mu2'].value
-					self.rejectEvent('eInvalidFitParams')
+					self.rejectEvent('eInvalidEventStart')
 				else:
 					self.mdOpenChCurrent 	= optfit.params['b'].value 
 					self.mdBlockedCurrent	= optfit.params['b'].value - optfit.params['a'].value
@@ -244,9 +243,9 @@ class stepResponseAnalysis(metaEventProcessor.metaEventProcessor):
 					# 	self.rejectEvent('eBlockDepthHigh')
 						
 					if math.isnan(self.mdRedChiSq):
-						self.rejectEvent('eInvalidFitParams')
+						self.rejectEvent('eInvalidChiSq')
 					if self.mdBlockDepth < 0 or self.mdBlockDepth > 1:
-						self.rejectEvent('eInvalidFitParams')
+						self.rejectEvent('eInvalidBlockDepth')
 
 					#print i0, i0sig, [optfit.params['a'].value, optfit.params['b'].value, optfit.params['mu1'].value, optfit.params['mu2'].value, optfit.params['tau'].value]
 			else:
@@ -257,7 +256,7 @@ class stepResponseAnalysis(metaEventProcessor.metaEventProcessor):
 			self.rejectEvent('eFitUserStop')
 			raise
 		except:
-			print optfit.message, optfit.lmdif_message
+			# print optfit.message, optfit.lmdif_message
 	 		self.rejectEvent('eFitFailure')
 
 	def __threadList(self, l1, l2):
