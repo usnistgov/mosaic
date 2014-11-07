@@ -23,4 +23,10 @@ def readparams(fname):
 	dat.extend([ row for row in r1 ])
 	d1=[ p[0].split('=') for p in dat ]
 
-	return dict([ ( p[0], float(p[1]) ) for p in d1])
+	def _formatstr(s):
+		if s.startswith('List'):
+			return list(eval(s.replace('List','')))
+		else:
+			return float(s)
+
+	return dict([ ( p[0], _formatstr(p[1]) ) for p in d1])

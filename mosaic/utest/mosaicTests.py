@@ -9,6 +9,7 @@ import glob
 import mosaic.settings as settings
 import mosaic.stepResponseAnalysis as sra
 import mosaic.singleStepEvent as sse
+import mosaic.multiStateAnalysis as msa
 
 import mosaic.eventSegment as es
 
@@ -17,37 +18,49 @@ from mosaic.abfTrajIO import *
 from mosaic.tsvTrajIO import *
 from mosaic.binTrajIO import *
 
-
-class PEGAlgorithmTest(unittest.TestCase):
+class ProcessingAlgorithmsCommon(unittest.TestCase):
 
 	def setUp(self):
 		self.datapath = 'testdata'
 
 	def runTestCase(self, datfile, prmfile, algoHnd):
-		dat=testutil.readcsv(datfile)
-		prm=testutil.readparams(prmfile)
+		self.dat=testutil.readcsv(datfile)
+		self.prm=testutil.readparams(prmfile)
 
-		# sett=json.loads( "".join((open('../../.settings', 'r').readlines())) )[algoHnd.__name__]
 		sett = (settings.settings('.', defaultwarn=False).settingsDict)[algoHnd.__name__]
 
-		dt=int(1e6/dat[0])
+		dt=int(1e6/self.dat[0])
 
-		testobj=algoHnd(
-							dat[1], 
-							dat[0],
-							eventstart=int(prm['tau1']/dt),			# event start point
-							eventend=int(prm['tau2']/dt),    		# event end point
+		self.testobj=algoHnd(
+							self.dat[1], 
+							self.dat[0],
+							eventstart=int(self.prm['tau1']/dt),			# event start point
+							eventend=int(self.prm['tau2']/dt),    		# event end point
 							baselinestats=[ 1.0, 0.01, 0.0 ],
 							algosettingsdict=sett,
 							savets=0,
 							absdatidx=0.0,
 							datafileHnd=None
 						)
-		testobj.processEvent()
+		self.testobj.processEvent()
 
-		self.assertEqual( testobj.mdProcessingStatus, 'normal' )
-		self.assertEqual( round(testobj.mdBlockDepth,1), 1.0-abs(prm['a']) )
-		self.assertEqual( round(testobj.mdResTime,1), (prm['tau2']-prm['tau1'])/1000. )
+
+class SRATest(ProcessingAlgorithmsCommon):
+	def runTestCase(self, datfile, prmfile, algoHnd):
+		super(SRATest, self).runTestCase(datfile, prmfile, algoHnd)
+
+		self.assertEqual( self.testobj.mdProcessingStatus, 'normal' )
+		self.assertEqual( round(self.testobj.mdBlockDepth,1), 1.0-abs(self.prm['a']) )
+		self.assertEqual( round(self.testobj.mdResTime,1), (self.prm['tau2']-self.prm['tau1'])/1000. )
+
+class MSATest(ProcessingAlgorithmsCommon):
+	def runTestCase(self, datfile, prmfile, algoHnd):
+		super(MSATest, self).runTestCase(datfile, prmfile, algoHnd)
+
+		self.assertEqual( self.testobj.mdProcessingStatus, 'normal' )
+		# self.assertEqual( round(self.testobj.mdBlockDepth,1), 1.0-abs(self.prm['a']) )
+		self.assertEqual( round(self.testobj.mdResTime,1), round((self.prm['tau2']-self.prm['tau1'])/1000.,1) )
+
 
 class PEGEventPartitionTest(unittest.TestCase):
 
@@ -90,7 +103,7 @@ class PEGEventPartitionTest(unittest.TestCase):
 		for f in glob.glob('testdata/*.sqlite'):
 			os.remove(f)
 
-class PEGSegmentTests(PEGEventPartitionTest):
+class EventPartitionTests(PEGEventPartitionTest):
 	def test_e1seg(self):
 		self.runTestCase('testdata/testEventPartition1.csv', 'testdata/testEventPartition1.prm', es.eventSegment, False)
 
@@ -121,7 +134,18 @@ class PEGSegmentTests(PEGEventPartitionTest):
 	def test_e5segP(self):
 		self.runTestCase('testdata/testEventPartition5.csv', 'testdata/testEventPartition5.prm', es.eventSegment, True)
 
-class PEGSRATests(PEGAlgorithmTest):
+class MSATestSuite(MSATest):
+	def test_e1msa(self):
+		self.runTestCase('testdata/msaTest1.csv', 'testdata/msaTest1.prm', msa.multiStateAnalysis)
+
+	def test_e2msa(self):
+		self.runTestCase('testdata/msaTest2.csv', 'testdata/msaTest2.prm', msa.multiStateAnalysis)
+
+	def test_e3msa(self):
+		self.runTestCase('testdata/msaTest3.csv', 'testdata/msaTest3.prm', msa.multiStateAnalysis)
+
+
+class SRATestSuite(SRATest):
 	def test_e1sra(self):
 		self.runTestCase('testdata/test1.csv', 'testdata/test1.prm', sra.stepResponseAnalysis)
 
