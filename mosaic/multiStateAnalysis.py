@@ -6,6 +6,9 @@
 	:License:	See LICENSE.TXT
 	:ChangeLog:
 	.. line-block::
+		11/7/14 	AB 	Error codes describing event rejection are now more specific.
+		11/6/14 	AB 	Fixed a bug in the event fitting logic that prevents the
+						analysis of long states.
 		8/21/14		AB 	Added AbsEventStart and BlockDepth (constructed from mdCurrentStep
 						and mdOpenChCurrent) metadata.
 		5/17/14		AB  Modified md interface functions for metaMDIO support
@@ -256,8 +259,14 @@ class multiStateAnalysis(metaEventProcessor.metaEventProcessor):
 		try:
 			func=b
 			for i in range(self.nStates):
-				func += a[i]*self.__heaviside(t-mu[i])*(1-np.exp((mu[i]-t)/tau))
-			
+				t1=(1-np.exp((mu[i]-t)/tau))
+
+				# For long events, t1 could contain NaN due to fixed precision arithmetic errors.
+				# In this case, we can set those values to zero.
+				t1[np.isnan(t1)]=0
+				
+				func += a[i]*self.__heaviside(t-mu[i])*t1
+
 			return func
 		except:
 			raise
@@ -279,12 +288,12 @@ class multiStateAnalysis(metaEventProcessor.metaEventProcessor):
 		dt = 1000./self.Fs 	# time-step in ms.
 
 		if self.nStates<2:
-			self.rejectEvent('eInvalidFitParams')
+			self.rejectEvent('eInvalidStates')
 		elif optfit.params['mu0'].value < 0.0 or optfit.params['mu'+str(self.nStates-1)].value < 0.0:
-			self.rejectEvent('eInvalidFitParams')
+			self.rejectEvent('eInvalidResTime')
 		# The start of the event is set past the length of the data
 		elif optfit.params['mu'+str(self.nStates-1)].value > (1000./self.Fs)*(len(self.eventData)-1):
-			self.rejectEvent('eInvalidFitParams')
+			self.rejectEvent('eInvalidStartTime')
 		else:
 			self.mdOpenChCurrent 	= optfit.params['b'].value 
 			self.mdCurrentStep		= [ optfit.params['a'+str(i)].value for i in range(self.nStates) ]
@@ -304,7 +313,7 @@ class multiStateAnalysis(metaEventProcessor.metaEventProcessor):
 			self.mdRedChiSq			= sum(np.array(optfit.residual)**2/self.baseSD**2)/optfit.nfree
 				
 			if math.isnan(self.mdRedChiSq):
-				self.rejectEvent('eInvalidFitParams')
+				self.rejectEvent('eInvalidRedChiSq')
 
 
 	def _levelchange(self, dat, sMean, sSD, nSD, blksz):
