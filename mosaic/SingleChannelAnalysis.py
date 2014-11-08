@@ -52,7 +52,7 @@ class SingleChannelAnalysis(object):
 		if dataFilterHnd:
 			self.trajDataObj=trajDataHnd( datafilter=dataFilterHnd, dirname=dataPath, **trajSettings )
 		else:
-			self.trajDataObj=trajDataHnd( **trajSettings )
+			self.trajDataObj=trajDataHnd( dirname=dataPath, **trajSettings )
 		self.eventPartitionHnd=eventPartitionHnd
 		self.eventProcHnd=eventProcHnd
 

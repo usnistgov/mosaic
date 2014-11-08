@@ -116,7 +116,8 @@ class guiDataModel(dict):
 
 	def GenerateDataFilesView(self):
 		keys=["start", "dcOffset"]
-		dargs={"dirname" : str(self["DataFilesPath"])}
+		# dargs={"dirname" : str(self["DataFilesPath"])}
+		dargs={}
 
 		if self["DataFilesType"]=="QDF":
 			keys.extend(["Rfb", "Cfb"])
@@ -152,7 +153,7 @@ class guiDataModel(dict):
 		if dataFilterAlgo:
 			dargs["datafilter"]=self.analysisSetupKeys[str(dataFilterAlgo)]
 
-		return self.analysisSetupKeys[self["DataFilesType"]](**dargs)
+		return self.analysisSetupKeys[self["DataFilesType"]](dirname=self["DataFilesPath"], **dargs)
 
 	def UpdateDataModelFromSettings(self, dbfile=None):
 		# Load settings from the data directory

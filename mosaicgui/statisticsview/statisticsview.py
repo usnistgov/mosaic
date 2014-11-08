@@ -124,11 +124,10 @@ class StatisticsWindow(QtGui.QDialog):
 
 				self.queryRunning=False
 			except ZeroDivisionError:
-				print "zero"
 				pass
-			# except IndexError:
-			# 	# If no data is returned do nothing and wait for the next update
-			# 	self.queryRunning=False
+			except IndexError:
+				# If no data is returned do nothing and wait for the next update
+				self.queryRunning=False
 			except:
 				raise
 
