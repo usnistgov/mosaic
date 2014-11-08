@@ -50,6 +50,11 @@ class guiDataModel(dict):
 		# if key == "start":		# the start index cannot be set to 0
 		# 	if val == 0:
 		# 		dat=1
+		if key == "meanOpenCurr":
+			if dat != -1: dat=abs(self.keyTypesDict[key](val))
+		if key == "sdOpenCurr":
+			if dat != -1: dat=abs(self.keyTypesDict[key](val))
+
 
 		try:
 			dict.__setitem__(self, key, self.keyTypesDict[key](dat) )

@@ -166,9 +166,19 @@ class settingsview(QtGui.QMainWindow):
 
 		self.dcOffsetDoubleSpinBox.setValue(model["dcOffset"])
 
-		if float(model["meanOpenCurr"]) == -1 or float(model["sdOpenCurr"]) == -1:
+		if float(model["meanOpenCurr"]) == -1. or float(model["sdOpenCurr"]) == -1.:
 			self.baselineAutoCheckBox.setChecked(True)
-			self.OnBaselineAutoCheckbox(True)			
+			self.OnBaselineAutoCheckbox(True)
+
+			# Manually disable baseline mean and SD controls
+			self.baselineMeanLineEdit.setText("")
+			self.baselineSDLineEdit.setText("")
+
+			self.baselineMeanLineEdit.setPlaceholderText("<auto>")
+			self.baselineSDLineEdit.setPlaceholderText("<auto>")
+
+			self.baselineMeanLineEdit.setEnabled(False)
+			self.baselineSDLineEdit.setEnabled(False)			
 		else:
 			# Populate baseline parameters
 			self.baselineAutoCheckBox.setChecked(False)
@@ -177,6 +187,10 @@ class settingsview(QtGui.QMainWindow):
 			self.baselineMeanLineEdit.setText(str(model["meanOpenCurr"]))
 			self.baselineSDLineEdit.setText(str(model["sdOpenCurr"]))
 			self.baselineBlockSizeDoubleSpinBox.setValue(float(model["blockSizeSec"]))
+
+			# Manually enable baseline mean and SD controls
+			self.baselineMeanLineEdit.setEnabled(True)
+			self.baselineSDLineEdit.setEnabled(True)
 	
 		# Populate EventSegment parameters
 		self._setThreshold(float(model["meanOpenCurr"]), float(model["sdOpenCurr"]), float(model["eventThreshold"]))
@@ -272,7 +286,10 @@ class settingsview(QtGui.QMainWindow):
 			self.ThresholdDoubleSpinBox.setMaximum(max(0,mu))
 			self.ThresholdDoubleSpinBox.setValue(mu-sig*threshold)
 		else:
+			self.updateDialogs=False
 			self.ThresholdDoubleSpinBox.setValue(mean-sd*threshold)
+			self.updateDialogs=True
+			self.OnThresholdChange(float(mean-sd*threshold))
 			self.ThresholdDoubleSpinBox.setMaximum(mean)
 			
 		self.updateDialogs=False
@@ -417,7 +434,6 @@ class settingsview(QtGui.QMainWindow):
 				self.baselineSDLineEdit.setEnabled(False)
 
 				self.analysisDataModel["blockSizeSec"]=float(self.baselineBlockSizeDoubleSpinBox.value())
-				self.trajViewerWindow.updatePlot(self.analysisDataModel.GenerateTrajView())
 			else:
 				self.baselineMeanLineEdit.setPlaceholderText("")
 				self.baselineSDLineEdit.setPlaceholderText("")
@@ -433,12 +449,18 @@ class settingsview(QtGui.QMainWindow):
 					self.baselineMeanLineEdit.setText(str(round(self.trajViewerWindow.meanCurr,1)))
 					self.baselineSDLineEdit.setText(str(round(self.trajViewerWindow.sdCurr,1)))
 				else:
+					self.analysisDataModel["meanOpenCurr"]=self.analysisDataModel["lastMeanOpenCurr"]
+					self.analysisDataModel["sdOpenCurr"]=self.analysisDataModel["lastSDOpenCurr"]
+
 					self.baselineMeanLineEdit.setText(str(self.analysisDataModel["lastMeanOpenCurr"]))
 					self.baselineSDLineEdit.setText(str(self.analysisDataModel["lastSDOpenCurr"]))
 				self.updateDialogs=True
 
 				self.baselineMeanLineEdit.setEnabled(True)
 				self.baselineSDLineEdit.setEnabled(True)
+
+			# Update trajviewer
+			self.trajViewerWindow.updatePlot(self.analysisDataModel.GenerateTrajView())
 
 
 	def OnBlockSizeChangeSpinbox(self, value):
