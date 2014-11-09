@@ -62,7 +62,7 @@ def selectS(dat, nSigma, mu, sd):
 	"""
 	#sigma=min( numpy.std(dat), sd )
 
-	return [ d for d in dat if d>(mu-sd) and d<(mu+sd) ]
+	return [ d for d in dat if abs(d)>(mu-sd) and abs(d)<(mu+sd) ]
 
 def flat2(dat):
 	"""
