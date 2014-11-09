@@ -103,9 +103,37 @@ class metaMDIO(object):
 		"""
 			.. important:: |abstractmethod|
 
-			Write the settings JSON object into a settings database/table.
+			Write the settings JSON object to the database.
 		"""
 		pass
+
+	@abstractmethod
+	def writeAnalysisLog(self, analysislog):
+		"""
+			.. important:: |abstractmethod|
+
+			Write the analysis log string to the database.
+		"""
+		pass
+
+	@abstractmethod
+	def readSettings(self):
+		"""
+			.. important:: |abstractmethod|
+
+			Read JSON settings from the database.
+		"""
+		pass
+
+	@abstractmethod
+	def readAnalysisLog(self):
+		"""
+			.. important:: |abstractmethod|
+
+			Read the analysis log from the database.
+		"""
+		pass
+
 
 	@abstractmethod
 	def _colnames(self):

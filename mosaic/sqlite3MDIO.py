@@ -107,7 +107,7 @@ class sqlite3MDIO(metaMDIO.metaMDIO):
 			cols=self.colNames
 		else:
 			tabname=table
-			cols=self.colNames
+			cols=self._colnames(table)
 
 		placeholders_list=','.join(['?' for i in range(len(data))])
 
@@ -118,9 +118,12 @@ class sqlite3MDIO(metaMDIO.metaMDIO):
 						placeholders_list+')', self._datalist(data)
 					)
 	def writeSettings(self, settingsstring):
-		# settstr=base64.b64encode(settingsstring)
 		with self.db:
 			self.db.execute( 'INSERT INTO analysissettings VALUES(?, ?)', (settingsstring, None,) )
+
+	def writeAnalysisLog(self, analysislog):
+		with self.db:
+			self.db.execute( 'INSERT INTO analysislog VALUES(?, ?)', (analysislog, None,) )
 
 	def readSettings(self):
 		try:
@@ -135,6 +138,19 @@ class sqlite3MDIO(metaMDIO.metaMDIO):
 		except sqlite3.OperationalError, err:
 			raise
 		
+	def readAnalysisLog(self):
+		try:
+			self.db.commit()
+			c = self.db.cursor()
+
+			c.execute( 'select logstring from analysislog' )
+			settstr=c.fetchall()
+			
+			return list(settstr[0])[0]
+			# return base64.b64decode(list(settstr[0])[0])
+		except sqlite3.OperationalError, err:
+			raise
+
 
 	def queryDB(self, query):
 		try:
@@ -150,10 +166,14 @@ class sqlite3MDIO(metaMDIO.metaMDIO):
 		except sqlite3.OperationalError, err:
 			raise
 
-	def _colnames(self):
+	def _colnames(self, table=None):
+		if table:
+			tname=table
+		else:
+			tname=self.tableName+'_t'
 		c = self.db.cursor()
 
-		return [ str(row[1]) for row in c.execute('PRAGMA table_info('+self.tableName+'_t)').fetchall() ]
+		return [ str(row[1]) for row in c.execute('PRAGMA table_info('+tname+')').fetchall() ]
 
 	def _col_names(self, query, c, tablename):
 			cols=[]
@@ -211,8 +231,16 @@ class sqlite3MDIO(metaMDIO.metaMDIO):
 					PRIMARY KEY (recIDX) \
 				)")
 
+			# create a table to store the analysis settings string in JSON format
+			# No validation of the data is performed when storing this string.
 			c.execute("create table analysissettings ( \
 					settings TEXT, \
+					recIDX INTEGER PRIMARY KEY AUTOINCREMENT \
+				)")
+
+			# create a table to store the analysis output log.
+			c.execute("create table analysislog ( \
+					logstring TEXT, \
 					recIDX INTEGER PRIMARY KEY AUTOINCREMENT \
 				)")
 
@@ -238,8 +266,6 @@ class sqlite3MDIO(metaMDIO.metaMDIO):
 		return [ d[col] for col in colnames ]
 
 if __name__=="__main__":
-	from os.path import abspath
-
 	dbname=resource_path('eventMD-PEG29-Reference.sqlite')
 
 	c=sqlite3MDIO()
@@ -255,3 +281,5 @@ if __name__=="__main__":
 	print "Results:", len(q)
 
 	print c.readSettings()
+	print c.readAnalysisLog()
+
