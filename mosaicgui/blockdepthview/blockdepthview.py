@@ -324,15 +324,12 @@ class BlockDepthWindow(QtGui.QDialog):
 		# QtGui.QApplication.sendPostedEvents()
 
 if __name__ == '__main__':
-	from os.path import expanduser
-	# dbpath=expanduser('~')+'/Research/Experiments/Nanoclusters/PW9O34/20140916/m120mV1/'
-	# dbpath=expanduser('~')+'/Research/Experiments/PEG29EBSRefData/20120323/singleChan/'
-	# dbpath='C:\\temp\\'
+	dbfile=resource_path('eventMD-PEG29-Reference.sqlite')
 
 	app = QtGui.QApplication(sys.argv)
 	dmw = BlockDepthWindow()
-	dmw.openDBFile('/Users/arvind/Desktop/untitled folder/eventMD-20140923-155414.sqlite')
-	# dmw.openDB(dbpath)
+	dmw.openDBFile(dbfile)
+
 	dmw.show()
 	dmw.raise_()
 	sys.exit(app.exec_())

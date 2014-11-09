@@ -241,7 +241,7 @@ class FitEventWindow(QtGui.QDialog):
 		}
 
 if __name__ == '__main__':
-	dbfile='data/eventMD-PEG29-Reference.sqlite'
+	dbfile=resource_path('eventMD-PEG29-Reference.sqlite')
 
 	app = QtGui.QApplication(sys.argv)
 	dmw = FitEventWindow()

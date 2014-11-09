@@ -67,7 +67,7 @@ class AnalysisLogDialog(QtGui.QDialog):
 if __name__ == '__main__':
 	app = QtGui.QApplication(sys.argv)
 	dmw = AnalysisLogDialog()
-	dmw.dataPath("/Users/arvind/Research/Experiments/PEG29EBSRefData/20120323/singleChan/")
+	dmw.dataPath("data")
 
 	dmw.show()
 	dmw.raise_()
