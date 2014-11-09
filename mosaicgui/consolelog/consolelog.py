@@ -7,6 +7,7 @@ import csv
 from PyQt4 import QtCore, QtGui, uic
 import mosaic.sqlite3MDIO as sqlite
 from mosaic.utilities.resource_path import resource_path, last_file_in_directory, format_path
+from sqlite3 import OperationalError
 
 class AnalysisLogDialog(QtGui.QDialog):
 	def __init__(self, parent = None):
@@ -69,6 +70,8 @@ class AnalysisLogDialog(QtGui.QDialog):
 		except AttributeError:
 			pass
 		except OSError:
+			pass
+		except OperationalError:
 			pass
 
 if __name__ == '__main__':

@@ -539,11 +539,8 @@
         </spacer>
        </item>
       </layout>
-      <zorder></zorder>
       <zorder>horizontalSpacer_4</zorder>
       <zorder></zorder>
-      <zorder>label_13</zorder>
-      <zorder>horizontalSpacer_10</zorder>
      </widget>
     </item>
     <item>
@@ -930,6 +927,7 @@
     <addaction name="actionLoad_Data"/>
     <addaction name="actionOpen_Analysis"/>
     <addaction name="actionSave_Settings"/>
+    <addaction name="actionSave_Histogram"/>
     <addaction name="actionStart_Analysis"/>
    </widget>
    <widget class="QMenu" name="menuHelp">
@@ -1025,6 +1023,9 @@
    <property name="text">
     <string>Open Previous Analysis</string>
    </property>
+   <property name="toolTip">
+    <string>Open a previously run analysis for display</string>
+   </property>
    <property name="shortcut">
     <string>Ctrl+Shift+O</string>
    </property>
@@ -1032,6 +1033,9 @@
   <action name="actionLoad_Data">
    <property name="text">
     <string>Load Data</string>
+   </property>
+   <property name="toolTip">
+    <string>Load a data set for analysis</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+O</string>
@@ -1041,6 +1045,9 @@
    <property name="text">
     <string>Save Settings</string>
    </property>
+   <property name="toolTip">
+    <string>Save the analysis settings to disk</string>
+   </property>
    <property name="shortcut">
     <string>Ctrl+Shift+S</string>
    </property>
@@ -1048,6 +1055,17 @@
   <action name="actionAbout_MOSAIC">
    <property name="text">
     <string>About MOSAIC</string>
+   </property>
+  </action>
+  <action name="actionSave_Histogram">
+   <property name="text">
+    <string>Save Histogram</string>
+   </property>
+   <property name="toolTip">
+    <string>Save the current blockade depth histogram</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Shift+H</string>
    </property>
   </action>
  </widget>

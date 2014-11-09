@@ -201,6 +201,17 @@ class BlockDepthWindow(QtGui.QDialog):
 		except:
 			raise
 
+	def saveHistogram(self, datpath):
+		# if the histogram exists, save it to disk
+		if self.blockDepthHist:
+			with open(datpath+'/histogram.csv', 'wb') as f:
+				histWriter = csv.writer(f)
+				histWriter.writerow(('<i>/<i0>','counts'))
+				for row in zip( self.blockDepthHist[1], self.blockDepthHist[0] ):
+				    histWriter.writerow(row)
+			self.peakLabel.setText("Saved histogram.csv")
+
+
 	def _mplOnPick(self, event):
 		if self.peakDetectCheckBox.isChecked():
 			peakind=self.peakLocations

@@ -44,6 +44,7 @@ class qtAnalysisGUI(mosaicgui.settingsview.settingsview):
 		QtCore.QObject.connect(self.actionOpen_Analysis, QtCore.SIGNAL('triggered()'), self.OnLoadAnalysis)
 		QtCore.QObject.connect(self.actionLoad_Data, QtCore.SIGNAL('triggered()'), self.OnSelectPath)
 		QtCore.QObject.connect(self.actionSave_Settings, QtCore.SIGNAL('triggered()'), self.OnSaveSettings)
+		QtCore.QObject.connect(self.actionSave_Histogram, QtCore.SIGNAL('triggered()'), self.OnSaveHistogram)
 		QtCore.QObject.connect(self.actionAbout_MOSAIC, QtCore.SIGNAL('triggered()'), self.OnAboutApp)
 		
 		
@@ -150,6 +151,11 @@ class qtAnalysisGUI(mosaicgui.settingsview.settingsview):
 					)
 				# QtGui.QMessageBox.information(self, "Settings Saved", "Settings file "+self.analysisDataModel["DataFilesPath"]+"/.settings saved.")
 				QtGui.QMessageBox.information(self, "Settings Saved", "Settings file saved.")
+
+	def OnSaveHistogram(self):
+		if self.blockDepthWindow:
+			self.blockDepthWindow.saveHistogram(self.analysisDataModel["DataFilesPath"])
+
 
 	def OnAnalysisFinished(self, value=True):
 		if value:
