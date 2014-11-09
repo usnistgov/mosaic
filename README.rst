@@ -14,15 +14,21 @@ A. Balijepalli, J., Ettedgui, A. T. Cornio, J. W. F. Robertson K. P. Cheung, J. 
 
 
 
-What's new in v1.0b2
+What's new in v1.0b3
 =================================
 
-- Fixed threshold update error from 1.0b1.
-- Considerably improved automatic open channel state detection.
-- The default settings string is now included within the source code.
-- Implemented new top-level class ConvertToCSV that allows conversion of data read by any TrajIO object to comma separated files.
-- Updated build system and unit testing framework.
-- Misc UI updates.
+- Fixed a bug that prevented events longer than ~700 data points from being correctly analyzed.
+- Fixed a problem that prevented event data from being correctly padded before analysis.
+- Resolves #2. TrajIO settings are now read in from the settings file.
+- [GUI] Resolves #3. Threshold entry box in GUI becomes nonresponsive when meanOpenCurr is negative.
+- [GUI] Resolves #4. Analysis fails when using wavletDenioseFilter from GUI.
+- [GUI] Histogram in BlockDepthViewer window can be saved to a CSV file from the File Menu.
+- Analysis log is saved to the MDIO database.
+- [GUI] ConsoleLogViwer displays the analysis log saved in the MDIO database.
+- [GUI] Added a new dialog that displays an experimental feature warning wavelet-based denoising is selected.
+- Updated error codes reported in database to be more descriptive of the failure.
+- Improved and expanded unit testing framework.
+- Moved installation and testing to setuptools.
 
 
 
