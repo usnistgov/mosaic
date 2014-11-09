@@ -81,9 +81,6 @@ class qtAnalysisGUI(mosaicgui.settingsview.settingsview):
 
 					self.trajViewerWindow.hide()
 
-					# set data path in the console viewer
-					self.consoleLog.dataPath(self.analysisDataModel["DataFilesPath"])
-
 					# Query the number of database files in the analysis directory
 					self.nDBFiles=len(self._getdbfiles())	
 
@@ -225,7 +222,7 @@ class qtAnalysisGUI(mosaicgui.settingsview.settingsview):
 				self.plotEventFitsCheckBox.setChecked(True)
 
 				# set data path in the console viewer
-				self.consoleLog.dataPath(self.analysisDataModel["DataFilesPath"])
+				self.consoleLog.openDBFile(analysisfile)
 
 				# enable the path select button to allow a new alaysis to be started
 				self.datPathLineEdit.setEnabled(True)
@@ -254,6 +251,8 @@ class qtAnalysisGUI(mosaicgui.settingsview.settingsview):
 		self.fitEventsView.openDBFile( self.DataFile, self.trajViewerWindow.FskHz )
 		if self.showFitEventsWindow:
 			self.fitEventsView.show()
+
+		self.consoleLog.openDBFile( self.DataFile )
 
 		# self.startAnalysisPushButton.setStyleSheet('QPushButton {color: white; background-color: qlineargradient(spread:pad, x1:0, y1:1, x2:0, y2:0, stop:0 rgba(190, 49, 8), stop:1 rgba(255, 10, 4));}')
 		self.startAnalysisPushButton.setStyleSheet('QPushButton {color: red;}')

@@ -5,6 +5,7 @@ import os
 import csv
 
 from PyQt4 import QtCore, QtGui, uic
+import mosaic.sqlite3MDIO as sqlite
 from mosaic.utilities.resource_path import resource_path, last_file_in_directory, format_path
 
 class AnalysisLogDialog(QtGui.QDialog):
@@ -26,12 +27,24 @@ class AnalysisLogDialog(QtGui.QDialog):
 		QtCore.QObject.connect(self.idleTimer, QtCore.SIGNAL('timeout()'), self.OnAppIdle)
 
 
-	def dataPath(self, path):
-		self.logFileTimeStamp=0.0
-		self.logfile=format_path(path+'/eventProcessing.log')
-
 	def Update(self):
 		self.OnAppIdle()
+
+	def openDB(self, dbpath):
+		"""
+			Open the latest sqlite file in a directory
+		"""
+		self.openDBFile( last_file_in_directory(dbpath, "*sqlite") )
+
+	def openDBFile(self, dbfile):
+		"""
+			Open a specific database file.
+		"""
+		self.queryDatabase=sqlite.sqlite3MDIO()
+		self.queryDatabase.openDB(dbfile)
+
+	def closeDB(self):
+		self.queryDatabase.closeDB()
 
 	def _positionWindow(self):
 		"""
@@ -51,14 +64,8 @@ class AnalysisLogDialog(QtGui.QDialog):
 
 	def OnAppIdle(self):
 		try:
-			t1=os.stat(self.logfile).st_mtime
-			if t1 > self.logFileTimeStamp:
-				self.logFileTimeStamp=t1
-
-				with open(self.logfile, 'r') as logfile:
-					logtxt = logfile.read()
 				self.consoleLogTextEdit.clear()
-				self.consoleLogTextEdit.setText( logtxt )
+				self.consoleLogTextEdit.setText( self.queryDatabase.readAnalysisLog() )
 		except AttributeError:
 			pass
 		except OSError:
@@ -67,7 +74,7 @@ class AnalysisLogDialog(QtGui.QDialog):
 if __name__ == '__main__':
 	app = QtGui.QApplication(sys.argv)
 	dmw = AnalysisLogDialog()
-	dmw.dataPath("data")
+	dmw.openDBFile(resource_path("eventMD-PEG29-Reference.sqlite"))
 
 	dmw.show()
 	dmw.raise_()

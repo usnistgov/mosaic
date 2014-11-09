@@ -150,6 +150,8 @@ class metaEventPartition(object):
 		# write out first stage results
 		sys.stdout.write(self.outputString)
 		self.logFileHnd.write(self.outputString)
+		# write the start time to the database
+		self.mdioDBHnd.writeAnalysisLog(self.outputString)
 
 		# Initialize segmentation
 		self._setuppartition()
@@ -188,7 +190,8 @@ class metaEventPartition(object):
 		self.logFileHnd.write(self.outputString)
 
 		# write the first stage output log to the database
-		self.mdioDBHnd.writeAnalysisLog(self.outputString)
+		tstr=self.mdioDBHnd.readAnalysisLog()+self.outputString
+		self.mdioDBHnd.writeAnalysisLog(tstr)
 		
 		# Finish processing events
 		self._cleanupeventprocessing()
