@@ -604,6 +604,12 @@ class settingsview(QtGui.QMainWindow):
 			self._setEnableSettingsWidgets(True)
 
 	def OnTrajDenoise(self, value):
+		# If the checkbox was just checked, display a warning
+		if self.trajViewerWindow.denoiseCheckBox.isChecked():
+			if self.trajViewerWindow.DenoiseWarning():
+				self.trajViewerWindow.denoiseCheckBox.setChecked(False)
+				return
+
 		self.dataFilterDenoise=value
 
 		if value:

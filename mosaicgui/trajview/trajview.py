@@ -311,6 +311,15 @@ class TrajectoryWindow(QtGui.QDialog):
 			except EmptyDataPipeError:
 				pass
 
+	def DenoiseWarning(self):
+		denoiseWarnBox = QtGui.QMessageBox()
+		denoiseWarnBox.setText('Denoising is an experimental feature. Do you want to continue?')
+		denoiseWarnBox.setIcon(QtGui.QMessageBox.Warning)
+		denoiseWarnBox.addButton(QtGui.QPushButton('Continue'), QtGui.QMessageBox.YesRole)
+		denoiseWarnBox.addButton(QtGui.QPushButton('Cancel'), QtGui.QMessageBox.RejectRole)
+		return denoiseWarnBox.exec_()
+
+
 	def keyReleaseEvent(self, event):
 		if event.key() == QtCore.Qt.Key_Right:
 			self.OnNextButton()
@@ -338,5 +347,6 @@ if __name__ == '__main__':
 	dmw = TrajectoryWindow()
 	dmw.show()
 	dmw.raise_()
+	print dmw.DenoiseWarning()
 	sys.exit(app.exec_())
 
