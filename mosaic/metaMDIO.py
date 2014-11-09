@@ -6,6 +6,7 @@
 	:License:	See LICENSE.TXT
 	:ChangeLog:
 	.. line-block::
+		11/9/14 	AB 	Added an interface to read/write the output log of an analysis from/to a DB.
 		3/1/14		AB	Initial version
 """
 import os

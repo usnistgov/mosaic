@@ -6,6 +6,7 @@
 	:License:	See LICENSE.TXT
 	:ChangeLog:
 	.. line-block::
+		11/9/14 	AB  Implemented the analysis log I/O interface for sqlite3 databases.
 		9/28/14		AB 	Initial version
 """
 
@@ -123,6 +124,8 @@ class sqlite3MDIO(metaMDIO.metaMDIO):
 
 	def writeAnalysisLog(self, analysislog):
 		with self.db:
+			# first delete any old records because we want analysis log to only have one entry.
+			self.db.execute('DELETE FROM analysislog')
 			self.db.execute( 'INSERT INTO analysislog VALUES(?, ?)', (analysislog, None,) )
 
 	def readSettings(self):

@@ -186,6 +186,9 @@ class metaEventPartition(object):
 		# write out first stage results
 		sys.stdout.write(self.outputString)
 		self.logFileHnd.write(self.outputString)
+
+		# write the first stage output log to the database
+		self.mdioDBHnd.writeAnalysisLog(self.outputString)
 		
 		# Finish processing events
 		self._cleanupeventprocessing()
@@ -195,6 +198,10 @@ class metaEventPartition(object):
 	
 		self.logFileHnd.write(self.outputString)
 		self.logFileHnd.close()
+
+		# write the output log to the database
+		tstr=self.mdioDBHnd.readAnalysisLog()+self.outputString
+		self.mdioDBHnd.writeAnalysisLog(tstr)
 
 		self.mdioDBHnd.closeDB()
 
