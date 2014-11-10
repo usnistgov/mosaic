@@ -1,5 +1,5 @@
-include .settings
 include *.txt
+include *.rst
 recursive-include dependencies *.txt
-recursive-include pyeventanalysis/utest/testdata *.prm
-recursive-include pyeventanalysis/utest/testdata *.csv
+recursive-include mosaic/utest/testdata *.prm
+recursive-include mosaic/utest/testdata *.csv
