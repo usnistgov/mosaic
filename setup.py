@@ -116,13 +116,9 @@ setup(
             'mosaic.utilities'
             ],
     scripts=[
-            'install-test-sh',
             'bin/analysis.py', 
-            'dependencies/build-deps-sh', 
-            'mosaic/utest/run-tests-sh', 
-            'mathematica/nanoporeAnalysis.m', 
-            'mathematica/Util.m', 
-            'Makefile',
+            'addons/mathematica/nanoporeAnalysis.m', 
+            'addons/mathematica/Util.m', 
             'mosaicgui/ui/SettingsWindow.ui',
             'mosaicgui/ui/trajviewui.ui',
             'mosaicgui/ui/advancedSettingsDialog.ui',
@@ -133,7 +129,9 @@ setup(
             'mosaicgui/ui/aboutdialog.ui',
             'pyinstaller/mosaic.spec',
             'icon.png',
-            'pyinstaller-sh'
+            '.scripts/install-addons-sh',
+            '.scripts/build-deps-sh', 
+            '.scripts/pyinstaller-sh'
             ],
     url='http://pypi.python.org/pypi/MOSAIC/',
     license='LICENSE.txt',
