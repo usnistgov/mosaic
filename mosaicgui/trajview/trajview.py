@@ -312,11 +312,11 @@ class TrajectoryWindow(QtGui.QDialog):
 				pass
 
 	def DenoiseWarning(self):
-		denoiseWarnBox = QtGui.QMessageBox()
+		denoiseWarnBox = QtGui.QMessageBox(parent=self)
 		denoiseWarnBox.setText('Denoising is an experimental feature. Do you want to continue?')
 		denoiseWarnBox.setIcon(QtGui.QMessageBox.Warning)
-		denoiseWarnBox.addButton(QtGui.QPushButton('Continue'), QtGui.QMessageBox.YesRole)
-		denoiseWarnBox.addButton(QtGui.QPushButton('Cancel'), QtGui.QMessageBox.RejectRole)
+		denoiseWarnBox.addButton(QtGui.QPushButton('Yes'), QtGui.QMessageBox.YesRole)
+		denoiseWarnBox.addButton(QtGui.QPushButton('No'), QtGui.QMessageBox.RejectRole)
 		return denoiseWarnBox.exec_()
 
 
