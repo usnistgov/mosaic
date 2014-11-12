@@ -1,5 +1,5 @@
 """
-	:Created:	10/30/2012
+	:Created:	10/30/2014
  	:Author: 	Arvind Balijepalli <arvind.balijepalli@nist.gov>
 	:License:	See LICENSE.TXT	
 	:ChangeLog:
@@ -11,7 +11,8 @@ from scipy.optimize import curve_fit
 
 def OpenCurrentDist(dat, limit):
 	"""
-		Calculate the mean and standard deviation of a time-series
+		Calculate the mean and standard deviation of a time-series.
+		
 		:Args:
 			- `dat` 	: time-series data
 			- `limit`	: limit the calculation to the top 50% (+0.5) of the range, bottom 50% (-0.5) or the entire range (0). Any other value of `limit` will cause it to be reset to 0 (i.e. full range).

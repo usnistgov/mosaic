@@ -18,13 +18,16 @@ import os
 import os.path
 
 class settings:
+	"""
+			Initialize a settings object. 
+
+			:Args: 
+				- `datpath` :	Specify the location of the settings file. If a settings file is not found, return default settings.
+				- `defaultwarn` :	If `True` warn the user if a settings file was not found in the path specified by `datpath`.
+	"""
 	def __init__(self, datpath, defaultwarn=True):
 		"""
-			Initialize a settings object. Look for a settings/.settings file first
-			in the directory where the data is stored passed by datpath and
-			then in the current working directory. If a settings/.settings file is not
-			found in either location return without an error
-		"""
+		"""	
 		self.settingsFile=None
 
 		if os.path.isfile(datpath+'/.settings'):
@@ -52,9 +55,10 @@ class settings:
 
 	def getSettings(self, section):
 		"""
-			Get settings for a specified section as a Python dict.
-			Return an empty dictionary if the settings file doesn't exist
-			the section is not found.
+			Return settings for a specified section as a Python dict.
+
+			:Args:
+				- `section` : 	specifies the section for which settings are requested. Returns an empty dictionary if the settings file doesn't exist the section is not found.
 		"""
 		try:
 			return self.settingsDict[section]
