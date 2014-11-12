@@ -99,7 +99,7 @@ class TrajectoryWindow(QtGui.QDialog):
 
 					self.IOArgs["filter"]="*abf"
 
-				# self.IOArgs["start"]=int(self.datadict["start"])
+				self.IOArgs["start"]=int(self.datadict["start"])
 				self.IOArgs["dcOffset"]=float(self.datadict["dcOffset"])
 
 				if hasattr(self, 'IOObject'):
