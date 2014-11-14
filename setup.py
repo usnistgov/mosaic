@@ -2,6 +2,7 @@ from setuptools import setup, Command
 # from distutils.core import setup, Command
 from Cython.Build import cythonize
 # import numpy
+import mosaic
 import os
 import sys
 
@@ -91,13 +92,10 @@ class mosaicDocs(Command):
             os.system("make -C _docs html latexpdf")
         
 
-
-
-exec(open('mosaic/_version.py').read())
 setup(
     cmdclass={'mosaic_tests': mosaicUnitTests, 'mosaic_docs': mosaicDocs, 'mosaic_bin': mosaicBinaries, 'mosaic_deps': mosaicDependencies, 'mosaic_addons': mosaicAddons},
     name='mosaic',
-    version=__version__,
+    version=mosaic.__version__,
     author='Arvind Balijepalli',
     author_email='arvind.balijepalli@nist.gov',
     packages=[
