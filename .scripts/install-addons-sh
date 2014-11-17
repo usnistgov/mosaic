@@ -8,7 +8,8 @@ elif [ $plat=='Linux' ]; then
 	mathbase = ~/.Mathematica/Applications/
 fi
 
-cp addons/mathematica/nanoporeAnalysis.m ${mathbase}
+cp addons/mathematica/MosaicUtils.m ${mathbase}
+cp addons/mathematica/MosaicAnalysis.m ${mathbase}
 cp addons/mathematica/Util.m ${mathbase}
 
 echo "Installed Mathematica addons in" $mathbase	
