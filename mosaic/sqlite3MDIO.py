@@ -122,6 +122,13 @@ class sqlite3MDIO(metaMDIO.metaMDIO):
 		with self.db:
 			self.db.execute( 'INSERT INTO analysissettings VALUES(?, ?)', (settingsstring, None,) )
 
+	def writeAnalysisInfo(self, infolist):
+		with self.db:
+			# allow only one entry in this table
+			self.db.execute('DELETE FROM analysislog')
+			self.db.execute( 'INSERT INTO analysisinfo VALUES(?, ?, ?, ?, ?, ?)',  (infolist+[None]))
+
+
 	def writeAnalysisLog(self, analysislog):
 		with self.db:
 			# first delete any old records because we want analysis log to only have one entry.
@@ -150,6 +157,20 @@ class sqlite3MDIO(metaMDIO.metaMDIO):
 			settstr=c.fetchall()
 			
 			return list(settstr[0])[0]
+			# return base64.b64decode(list(settstr[0])[0])
+		except sqlite3.OperationalError, err:
+			raise
+
+
+	def readAnalysisInfo(self):
+		try:
+			self.db.commit()
+			c = self.db.cursor()
+
+			c.execute( 'select * from analysisinfo' )
+			infolist=c.fetchall()
+			
+			return list(infolist[0])[:-1]
 			# return base64.b64decode(list(settstr[0])[0])
 		except sqlite3.OperationalError, err:
 			raise
@@ -225,13 +246,12 @@ class sqlite3MDIO(metaMDIO.metaMDIO):
 			# create a table that stores global info about the analysis
 			# data path, data type, partition/processing algorithms etc
 			c.execute("create table analysisinfo ( \
-					recIDX TEXT, \
 					datPath TEXT, \
 					dataType TEXT, \
 					partitionAlgorithm TEXT, \
 					processingAlgorithm TEXT, \
 					filteringAlgorithm TEXT, \
-					PRIMARY KEY (recIDX) \
+					recIDX INTEGER PRIMARY KEY AUTOINCREMENT \
 				)")
 
 			# create a table to store the analysis settings string in JSON format
@@ -285,4 +305,5 @@ if __name__=="__main__":
 
 	print c.readSettings()
 	print c.readAnalysisLog()
+	print c.readAnalysisInfo()
 

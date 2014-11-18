@@ -106,6 +106,17 @@ class metaEventPartition(object):
 								colNames_t=(self.tEventProcObj.mdHeadingDataType())+['REAL_LIST']
 							)
 		self.mdioDBHnd.writeSettings(settingsString)
+		if self.trajDataObj.dataFilter:
+			fstring=self.trajDataObj.dataFilter.__name__
+		else:
+			fstring='None'
+		self.mdioDBHnd.writeAnalysisInfo([
+							self.trajDataObj.datPath,
+							self.trajDataObj.fileFormat,
+							type(self).__name__,
+							type(self.tEventProcObj).__name__,
+							fstring,
+						])
 
 		if self.parallelProc:
 			self._setupparallel()

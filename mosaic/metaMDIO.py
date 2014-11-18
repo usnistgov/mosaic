@@ -105,6 +105,9 @@ class metaMDIO(object):
 			.. important:: |abstractmethod|
 
 			Write the settings JSON object to the database.
+
+			:Args:
+				- `settingsstring` : a JSON_ formatted settings string.
 		"""
 		pass
 
@@ -113,7 +116,31 @@ class metaMDIO(object):
 		"""
 			.. important:: |abstractmethod|
 
-			Write the analysis log string to the database.
+			Write the analysis log string to the database. Note that subsequent calls to this method will overwrite the analysis log entry.
+
+			:Args:
+				- `analysislog` :	analysis log string to save
+		"""
+		pass
+
+	@abstractmethod
+	def writeAnalysisInfo(self, infolist):
+		"""
+			.. important:: |abstractmethod|
+
+			Write analysis information to the database. Note that subsequent calls to this method will overwrite the analysis inoformation entry in the table.
+
+			:Args:
+				- `infolist` : A list of strings in the following order	[ datPath, dataType, partitionAlgorithm, processingAlgorithm, filteringAlgorithm].
+								`datPath` 				: full path to the data directory
+
+								`dataType`				: type of data processed (e.g. ABF, QDF, etc.)
+								
+								`partitionAlgorithm`	: name of partition algorithm (e.g. eventSegment)
+								
+								`processingAlgorithm`	: name of event processing algorithm (e.g. multStateAnalysis)
+								
+								`filteringAlgorithm`	: name of filtering algorithm (e.g. waveletDenoiseFilter) or None if no filtering was performed.
 		"""
 		pass
 
@@ -135,6 +162,14 @@ class metaMDIO(object):
 		"""
 		pass
 
+	@abstractmethod
+	def readAnalysisInfo(self):
+		"""
+			.. important:: |abstractmethod|
+
+			Read analysis information from the database.
+		"""
+		pass
 
 	@abstractmethod
 	def _colnames(self):
