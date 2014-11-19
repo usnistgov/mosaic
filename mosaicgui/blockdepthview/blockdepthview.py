@@ -45,7 +45,8 @@ class BlockDepthWindow(QtGui.QDialog):
 		# self.processeEventsTimer=QtCore.QTimer()
 		# self.processeEventsTimer.start(500)
 
-		self.queryString="select BlockDepth from metadata where ProcessingStatus='normal' and BlockDepth between 0 and 1 and ResTime > 0.025"
+		 # and BlockDepth between 0 and 1 
+		self.queryString="select BlockDepth from metadata where ProcessingStatus='normal'and ResTime > 0.025"
 		self.queryData=[]
 		self.queryError=False
 		self.lastGoodQueryString=""
@@ -108,7 +109,7 @@ class BlockDepthWindow(QtGui.QDialog):
 		self.qThread.start()
 
 		# Query the DB cols
-		QtCore.QMetaObject.invokeMethod(self.qWorker, 'dbColumnNames', Qt.QueuedConnection)
+		QtCore.QMetaObject.invokeMethod(self.qWorker, 'dbColumnNames', Qt.QueuedConnection, QtCore.Q_ARG(bool, True))
 		QtCore.QMetaObject.invokeMethod(self.qWorker, 'queryDB', Qt.QueuedConnection, QtCore.Q_ARG(str, self.queryString) )
 		self.queryRunning=True
 
@@ -261,6 +262,13 @@ class BlockDepthWindow(QtGui.QDialog):
 			self.updateButton.setEnabled(False)
 			self.updateButton.setText("Updating...")
 
+	def _decode(self, queryres):
+		try:
+			print queryres
+			return [ base64.b64decode(q) for q in queryres ]
+		except:
+			return queryres
+
 	def OnlevelSliderChange(self, value):
 		self.maxLevel=int(value)
 		self.update_graph()
@@ -278,7 +286,7 @@ class BlockDepthWindow(QtGui.QDialog):
 		# print len(results), errorstr
 		try:
 			if not errorstr:
-				self.queryData=np.hstack( np.hstack( np.array( results ) ) )
+				self.queryData= np.hstack( np.hstack( np.array( results ) ) )
 
 				# self.errorPrefixLabel.setText("")
 				self.setWindowTitle("Blockade Depth Histogram")
@@ -313,7 +321,8 @@ class BlockDepthWindow(QtGui.QDialog):
 	def OnUpdateButton(self):
 		qtext=str(self.sqlQueryLineEdit.text())
 		if qtext:
-			self.queryString="select BlockDepth from metadata where ProcessingStatus='normal' and BlockDepth between 0 and 1 and " + qtext
+			 # and BlockDepth between 0 and 1
+			self.queryString="select BlockDepth from metadata where ProcessingStatus='normal' and " + qtext
 			self.queryError=False
 
 			self.updateButton.setEnabled(False)
@@ -335,7 +344,8 @@ class BlockDepthWindow(QtGui.QDialog):
 		# QtGui.QApplication.sendPostedEvents()
 
 if __name__ == '__main__':
-	dbfile=resource_path('eventMD-PEG29-Reference.sqlite')
+	# dbfile=resource_path('eventMD-PEG29-Reference.sqlite')
+	dbfile=resource_path('tempMSA.sqlite')
 
 	app = QtGui.QApplication(sys.argv)
 	dmw = BlockDepthWindow()

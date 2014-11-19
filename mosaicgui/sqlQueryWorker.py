@@ -18,11 +18,14 @@ class sqlQueryWorker(QtCore.QObject):
 		super(sqlQueryWorker, self).__init__(**kwargs)
 		self.dbFile=dbfile
 
-	@QtCore.pyqtSlot()
-	def dbColumnNames(self):
+	@QtCore.pyqtSlot(bool)
+	def dbColumnNames(self, filterRealList):
 		self.queryDatabase=sqlite.sqlite3MDIO()
 		self.queryDatabase.openDB(self.dbFile)
-		self.dbColumnsReady.emit(self.queryDatabase.dbColumnNames)
+		if filterRealList:
+			self.dbColumnsReady.emit( [ col[0] for col in zip( self.queryDatabase.mdColumnNames, self.queryDatabase.mdColumnTypes ) if col[1] != 'REAL_LIST' ] )
+		else:
+			self.dbColumnsReady.emit(self.queryDatabase.mdColumnNames)
 		self.queryDatabase.closeDB()
 		self.finished.emit()
 
