@@ -199,6 +199,15 @@ class sqlite3MDIO(metaMDIO.metaMDIO):
 
 		return [ str(row[1]) for row in c.execute('PRAGMA table_info('+tname+')').fetchall() ]
 
+	def _coltypes(self, table=None):
+		if table:
+			tname=table
+		else:
+			tname=self.tableName+'_t'
+
+		c = self.db.cursor()
+		return (c.execute('SELECT * from '+tname).fetchall())[0]
+
 	def _col_names(self, query, c, tablename):
 			cols=[]
 			for word in query.split()[1:]:
@@ -306,4 +315,8 @@ if __name__=="__main__":
 	print c.readSettings()
 	print c.readAnalysisLog()
 	print c.readAnalysisInfo()
+
+	print zip( c.mdColumnNames, c.mdColumnTypes )
+	print
+	print [ c for c in zip( c.mdColumnNames, c.mdColumnTypes ) if c[1] != 'REAL_LIST' ]
 

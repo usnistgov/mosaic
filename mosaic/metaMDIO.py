@@ -172,7 +172,14 @@ class metaMDIO(object):
 		pass
 
 	@abstractmethod
-	def _colnames(self):
+	def _colnames(self, table=None):
+		"""
+			.. important:: |abstractmethod|
+		"""
+		pass
+
+	@abstractmethod
+	def _coltypes(self, table=None):
 		"""
 			.. important:: |abstractmethod|
 		"""
@@ -192,8 +199,12 @@ class metaMDIO(object):
 		pass
 
 	@property 
-	def dbColumnNames(self):
+	def mdColumnNames(self):
 		return self._colnames()
+
+	@property 
+	def mdColumnTypes(self):
+		return self._coltypes()
 
 	def _generateRecordKey(self):
 		return float(time.time()+self.pid)
