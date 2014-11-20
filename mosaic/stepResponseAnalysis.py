@@ -19,6 +19,7 @@
 import commonExceptions
 import metaEventProcessor
 import mosaic.utilities.util as util
+import mosaic.utilities.fit_funcs as fit_funcs
 import sys
 import math
 
@@ -278,29 +279,6 @@ class stepResponseAnalysis(metaEventProcessor.metaEventProcessor):
 		except IndexError:
 			return -1
 
-	def __heaviside(self, x):
-		out=np.array(x)
-
-		out[out==0]=0.5
-		out[out<0]=0
-		out[out>0]=1
-
-		return out
-		
-	def __eventFunc(self, t, tau, mu1, mu2, a, b):
-		try:
-			t1=(np.exp((mu1-t)/tau)-1)*self.__heaviside(t-mu1)
-			t2=(1-np.exp((mu2-t)/tau))*self.__heaviside(t-mu2)
-
-			# Either t1, t2 or both could contain NaN due to fixed precision arithmetic errors.
-			# In this case, we can set those values to zero.
-			t1[np.isnan(t1)]=0
-			t2[np.isnan(t2)]=0
-
-			return a*( t1+t2 ) + b
-		except:
-			raise
-
 	def __objfunc(self, params, t, data):
 		""" model decaying sine wave, subtract data"""
 		try:
@@ -310,7 +288,8 @@ class stepResponseAnalysis(metaEventProcessor.metaEventProcessor):
 			a = params['a'].value
 			b = params['b'].value
 		    
-			model = self.__eventFunc(t, tau, mu1, mu2, a, b)
+			model = fit_funcs.stepResponseFunc(t, tau, mu1, mu2, a, b)
+
 			return model - data
 		except KeyboardInterrupt:
 			raise

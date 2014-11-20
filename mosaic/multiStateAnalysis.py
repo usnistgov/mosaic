@@ -17,6 +17,7 @@
 import commonExceptions
 import metaEventProcessor
 import mosaic.utilities.util as util
+import mosaic.utilities.fit_funcs as fit_funcs
 import sys
 import math
 
@@ -246,31 +247,6 @@ class multiStateAnalysis(metaEventProcessor.metaEventProcessor):
 		except IndexError:
 			return -1
 
-	def __heaviside(self, x):
-		out=np.array(x)
-
-		out[out==0]=0.5
-		out[out<0]=0
-		out[out>0]=1
-
-		return out
-		
-	def __eventFunc(self, t, tau, mu, a, b):
-		try:
-			func=b
-			for i in range(self.nStates):
-				t1=(1-np.exp((mu[i]-t)/tau))
-
-				# For long events, t1 could contain NaN due to fixed precision arithmetic errors.
-				# In this case, we can set those values to zero.
-				t1[np.isnan(t1)]=0
-				
-				func += a[i]*self.__heaviside(t-mu[i])*t1
-
-			return func
-		except:
-			raise
-
 	def __objfunc(self, params, t, data):
 		""" model decaying sine wave, subtract data"""
 		try:
@@ -279,7 +255,7 @@ class multiStateAnalysis(metaEventProcessor.metaEventProcessor):
 			a=[params['a'+str(i)].value for i in range(self.nStates)]
 			mu=[params['mu'+str(i)].value for i in range(self.nStates)]
 
-			model = self.__eventFunc(t, tau, mu, a, b)
+			model = fit_funcs.multiStateFunc(t, tau, mu, a, b, self.nStates)
 			return model - data
 		except KeyboardInterrupt:
 			raise

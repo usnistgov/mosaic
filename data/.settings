@@ -5,11 +5,11 @@
         "FitIters": 50000
     }, 
     "qdfTrajIO": {
-        "Rfb": 9100000000.0, 
+        "filter": "*.qdf", 
+        "start": 0.0, 
         "Cfb": 1.07e-12, 
         "dcOffset": 0.0, 
-        "filter": "*.qdf", 
-        "start": 0.0 
+        "Rfb": 9100000000.0
     }, 
     "eventSegment": {
         "meanOpenCurr": -1.0, 
@@ -22,7 +22,7 @@
         "minEventLength": 5, 
         "sdOpenCurr": -1.0, 
         "reserveNCPU": 3, 
-        "parallelProc": 1, 
+        "parallelProc": 0, 
         "blockSizeSec": 0.5
     }
 }

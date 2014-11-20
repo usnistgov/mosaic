@@ -24,12 +24,20 @@ from mosaic.waveletDenoiseFilter import *
 
 # '/Users/arvind/Research/Experiments/PEG29EBSRefData/20120323/singleChan' Rfb=9.1E+9, Cfb=1.07E-12, datafilter=waveletDenoiseFilter
 # qdfTrajIO(dirname='/Users/arvind/Research/Experiments/AnalysisTools/ReferenceData/POM ph5.45 m120_6',filter='*qdf', start=5, nfiles=10, Rfb=2.126E+9, Cfb=1.13E-12), 
+# mosaic.SingleChannelAnalysis.SingleChannelAnalysis(
+# 			'/Users/arvind/Research/Experiments/AnalysisTools/ReferenceData/POM ph5.45 m120_6',
+# 			qdfTrajIO, 
+# 			None,
+# 			es.eventSegment,
+# 			sra.stepResponseAnalysis
+# 		).Run()
+
 mosaic.SingleChannelAnalysis.SingleChannelAnalysis(
-			'/Users/arvind/Research/Experiments/AnalysisTools/ReferenceData/POM ph5.45 m120_6',
+			'/Volumes/DATA/Genia-ColumbiaSBSTags/dA6TP30odd/20130924/p140mV/',
 			qdfTrajIO, 
 			None,
 			es.eventSegment,
-			sra.stepResponseAnalysis
+			msa.multiStateAnalysis
 		).Run()
 
 # mosaic.SingleChannelAnalysis.SingleChannelAnalysis(
