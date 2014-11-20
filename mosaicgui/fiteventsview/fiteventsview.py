@@ -11,6 +11,7 @@ from PyQt4 import QtCore, QtGui, uic
 import mosaic.sqlite3MDIO as sqlite
 import mosaicgui.autocompleteedit as autocomplete
 from mosaic.utilities.resource_path import resource_path, last_file_in_directory
+import mosaic.utilities.fit_funcs as fit_funcs
 import mosaic.stepResponseAnalysis as sra
 
 import matplotlib.ticker as ticker
@@ -30,7 +31,7 @@ class FitEventWindow(QtGui.QDialog):
 
 		# Limit the number of events to 10000
 		self.viewerLimit=10000
-		self.queryString="select ProcessingStatus, TimeSeries, RCConstant, EventStart, EventEnd, BlockedCurrent, OpenChCurrent from metadata limit " + str(self.viewerLimit)
+		self.queryString=""
 		self.queryData=[]
 
 		self.queryDatabase=None
@@ -58,6 +59,21 @@ class FitEventWindow(QtGui.QDialog):
 	def openDBFile(self, dbfile, FskHz):
 		self.queryDatabase=sqlite.sqlite3MDIO()
 		self.queryDatabase.openDB(dbfile)
+
+		# Store the analysis algorithm
+		try:
+			self.analysisAlgorithm=str(self.queryDatabase.readAnalysisInfo()[3])
+		except:
+			# If the database doesn't have information on the alogirthm type, 
+			# default to stepResponseAnalysis
+			self.analysisAlgorithm="stepResponseAnalysis"
+
+		# Generate the query string based on the algorithm in the database
+		self.queryString=self.queryStringDict[self.analysisAlgorithm]
+
+		# Setup the fit function based on the algorithm
+		self.fitFuncHnd=self.queryAlgoHndDict[self.analysisAlgorithm]
+		self.fitFuncArgs=self.queryAlgoArgsDict[self.analysisAlgorithm]
 
 		self.FskHz=float(FskHz)
 		# print self.FskHz
@@ -93,11 +109,12 @@ class FitEventWindow(QtGui.QDialog):
 			ydat=datasign*np.array(q[1], dtype='float64')
 			xdat=np.arange(0,float((len(q[1]))/fs), float(1/fs))[:len(ydat)]
 
+			np.seterr(invalid='ignore', over='ignore', under='ignore')
 			# fit function data
 			# ProcessingStatus, TimeSeries, RCConstant, EventStart, EventEnd, CurrentStep, OpenChCurrent
 			# print len(q[1]), float((len(q[1]))/fs), float(1/(100*fs))
 			xfit=np.arange(0,float((len(q[1]))/fs), float(1/(100*fs)))
-			yfit=self._sraFunc( xfit, q[2], q[3], q[4], abs(q[6]-q[5]), q[6])
+			yfit=self.fitFuncHnd( *eval(self.fitFuncArgs) )
 
 			if str(q[0])=="normal":
 				c='#%02x%02x%02x' % (72,91,144)
@@ -206,25 +223,6 @@ class FitEventWindow(QtGui.QDialog):
 		except:
 			raise
 
-	def _sraFunc(self, t, tau, mu1, mu2, a, b):
-		np.seterr(invalid='ignore', over='ignore', under='ignore')
-		try:
-			t1=(np.exp((mu1-t)/tau)-1)*self._heaviside(t-mu1)
-			t2=(1-np.exp((mu2-t)/tau))*self._heaviside(t-mu2)
-
-			# Either t1, t2 or both could contain NaN due to fixed precision arithmetic errors.
-			# In this case, we can set those values to zero.
-			t1[np.isnan(t1)]=0
-			t2[np.isnan(t2)]=0
-
-			return a*( t1+t2 ) + b
-			# return a*( (np.exp((mu1-t)/tau)-1)*self._heaviside(t-mu1)+(1-np.exp((mu2-t)/tau))*self._heaviside(t-mu2) ) + b
-		except RuntimeWarning:
-			print self.eventIndex
-			pass
-		except:
-			raise
-
 	def _heaviside(self, x):
 		out=np.array(x)
 
@@ -240,8 +238,25 @@ class FitEventWindow(QtGui.QDialog):
 			QtCore.Qt.Key_Left	:	self.OnPreviousButton
 		}
 
+		self.queryStringDict={
+			"stepResponseAnalysis" 	: "select ProcessingStatus, TimeSeries, RCConstant, EventStart, EventEnd, BlockedCurrent, OpenChCurrent from metadata limit " + str(self.viewerLimit),
+			"multiStateAnalysis" 	: "select ProcessingStatus, TimeSeries, RCConstant, EventDelay, CurrentStep, OpenChCurrent from metadata limit " + str(self.viewerLimit)
+		}
+
+		self.queryAlgoHndDict={
+			"stepResponseAnalysis" 	: fit_funcs.stepResponseFunc,
+			"multiStateAnalysis" 	: fit_funcs.multiStateFunc
+		}
+
+		self.queryAlgoArgsDict={
+			"stepResponseAnalysis" 	: "[xfit, q[2], q[3], q[4], abs(q[6]-q[5]), q[6]]",
+			"multiStateAnalysis" 	: "[xfit, q[2], q[3], q[4], q[5], len(q[3])]"
+		}
+
+
 if __name__ == '__main__':
-	dbfile=resource_path('eventMD-PEG29-Reference.sqlite')
+	# dbfile=resource_path('eventMD-PEG29-Reference.sqlite')
+	dbfile=resource_path('eventMD-tempMSA.sqlite')
 
 	app = QtGui.QApplication(sys.argv)
 	dmw = FitEventWindow()
