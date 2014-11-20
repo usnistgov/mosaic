@@ -327,8 +327,7 @@ class guiDataModel(dict):
 if __name__ == "__main__":
 	g=guiDataModel()
 
-	import expanduser 
-	# g["DataFilesPath"]=expanduser('~')+"/Research/Experiments/PEG29EBSRefData/20120323/singleChan"
+	# g["DataFilesPath"]=resource_path('eventMD-PEG29-Reference.sqlite')
 	# g["DataFilesType"]="QDF"
 	# g["Rfb"]=9.1E+9
 	# g["Cfb"]=1.07E-12
