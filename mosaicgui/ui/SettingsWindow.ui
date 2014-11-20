@@ -739,6 +739,11 @@
           <string>stepResponseAnalysis</string>
          </property>
         </item>
+        <item>
+         <property name="text">
+          <string>multiStateAnalysis</string>
+         </property>
+        </item>
        </widget>
       </item>
       <item>

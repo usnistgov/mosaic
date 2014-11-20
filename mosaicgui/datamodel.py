@@ -15,7 +15,7 @@ import mosaic.SingleChannelAnalysis
 import mosaic.eventSegment
 
 import mosaic.stepResponseAnalysis
-# import mosaic.multiStateAnalysis
+import mosaic.multiStateAnalysis
 
 import mosaic.qdfTrajIO
 import mosaic.abfTrajIO
@@ -87,9 +87,9 @@ class guiDataModel(dict):
 		if procAlgo=="stepResponseAnalysis":
 			settingsdict[procAlgo]={}
 			procKeys=self.stepResponseAnalysisKeys
-		# elif procAlgo=="multiStateAnalysis":
-		# 	settingsdict[procAlgo]={}
-		# 	procKeys=self.multiStateAnalysisKeys
+		elif procAlgo=="multiStateAnalysis":
+			settingsdict[procAlgo]={}
+			procKeys=self.multiStateAnalysisKeys
 
 		# Add a section for data files
 		settingsdict[self.dataTypeKeys[self["DataFilesType"]]]=self.GenerateDataFilesView()
@@ -265,7 +265,13 @@ class guiDataModel(dict):
 								"FitIters" 				: int,
 								"BlockRejectRatio" 		: float
 							}
-		# self.multiStateAnalysisKeys=self.stepResponseAnalysisKeys
+		self.multiStateAnalysisKeys={
+								"FitTol" 				: float,
+								"FitIters" 				: int,
+								"BlockRejectRatio" 		: float,
+								"InitThreshold"			: float
+							}
+
 
 		self.besselLowpassFilterKeys={
 								"filterOrder" 			: int,
@@ -297,7 +303,8 @@ class guiDataModel(dict):
 							}
 
 		self.eventProcessingAlgoKeys={
-								"stepResponseAnalysis" 	: "stepResponseAnalysis"
+								"stepResponseAnalysis" 	: "stepResponseAnalysis",
+								"multiStateAnalysis"	: "multiStateAnalysis"
 							}
 
 		self.filterAlgoKeys={
@@ -313,12 +320,9 @@ class guiDataModel(dict):
 								"SingleChannelAnalysis" : mosaic.SingleChannelAnalysis.SingleChannelAnalysis,
 								"CurrentThreshold" 		: mosaic.eventSegment.eventSegment,
 								"stepResponseAnalysis" 	: mosaic.stepResponseAnalysis.stepResponseAnalysis,
+								"multiStateAnalysis"	: mosaic.multiStateAnalysis.multiStateAnalysis,
 								"waveletDenoiseFilter"	: mosaic.waveletDenoiseFilter.waveletDenoiseFilter
 							}
-
-# ,
-# 								"multiStateAnalysis" 	: "multiStateAnalysis"
-# "multiStateAnalysis" 	: mosaic.multiStateAnalysis.multiStateAnalysis,
 
 if __name__ == "__main__":
 	g=guiDataModel()

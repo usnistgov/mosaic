@@ -187,7 +187,8 @@ class StatisticsWindow(QtGui.QDialog):
 			self._updatequery()
 
 if __name__ == '__main__':
-	dbfile=resource_path('eventMD-PEG29-Reference.sqlite')
+	# dbfile=resource_path('eventMD-PEG29-Reference.sqlite')
+	dbfile=resource_path('eventMD-tempMSA.sqlite')
 
 	app = QtGui.QApplication(sys.argv)
 	dmw = StatisticsWindow()
