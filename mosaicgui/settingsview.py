@@ -79,6 +79,9 @@ class settingsview(QtGui.QMainWindow):
 		self.startIndexLineEdit.setValidator( QtGui.QDoubleValidator(0, 999999,2, self) )
 		self.endIndexLineEdit.setValidator( QtGui.QDoubleValidator(0, 999999,2, self) )
 
+		# Set the default processing algorithm to stepResponse
+		self.processingAlgorithmComboBox.setCurrentIndex( 0 )
+
 		# Connect signals and slots
 
 		# Data settings signals
@@ -87,7 +90,7 @@ class settingsview(QtGui.QMainWindow):
 		QtCore.QObject.connect(self.datTypeComboBox, QtCore.SIGNAL('currentIndexChanged(const QString &)'), self.OnDataTypeChange)
 		QtCore.QObject.connect(self.dcOffsetDoubleSpinBox, QtCore.SIGNAL('valueChanged ( double )'), self.OnDataOffsetChange)
 		QtCore.QObject.connect(self.startIndexLineEdit, QtCore.SIGNAL('editingFinished()'), self.OnDataStartIndexChange)
-		QtCore.QObject.connect(self.endIndexLineEdit, QtCore.SIGNAL('editingFinished()'), self.OnDataEndIndexChange)
+		QtCore.QObject.connect(self.endIndexLineEdit, QtCore.SIGNAL('textChanged ( const QString & )'), self.OnDataEndIndexChange)
 
 		# Baseline detection signals
 		QtCore.QObject.connect(self.baselineAutoCheckBox, QtCore.SIGNAL('clicked(bool)'), self.OnBaselineAutoCheckbox)
@@ -399,7 +402,7 @@ class settingsview(QtGui.QMainWindow):
 			self.trajViewerWindow.refreshPlot()
 
 	def OnDataStartIndexChange(self):
-		text=self.startIndexLineEdit.text()
+		text=str(self.startIndexLineEdit.text())
 		if self.updateDialogs:
 			if text:
 				self.analysisDataModel["start"]=text
@@ -410,11 +413,11 @@ class settingsview(QtGui.QMainWindow):
 			self._trajviewerdata()
 			self.trajViewerWindow.refreshPlot()
 			
-	def OnDataEndIndexChange(self):
-		text=self.startIndexLineEdit.text()
+	def OnDataEndIndexChange(self, text):
+		# text=str(self.endIndexLineEdit.text())
 		if self.updateDialogs:
 			if text:
-				self.analysisDataModel["end"]=text
+				self.analysisDataModel["end"]=float(text)
 			else:
 				self.analysisDataModel["end"]=-1
 
