@@ -3,15 +3,14 @@
 <<DatabaseLink`
 
 
-PrintMDKeys[filename_]:=Module[{db=Database`OpenDatabase[filename],keys},
-keys=Database`QueryDatabase[db,"PRAGMA table_info(metadata);"][[All,2]];
-Database`CloseDatabase[db];
+PrintMDKeys[filename_]:=Module[{db=OpenSQLConnection[JDBC["SQLite",filename]],keys},
+keys=SQLExecute[db,"PRAGMA table_info(metadata);"][[All,2]];
+CloseSQLConnection[db];
 Return[keys]
 ]
 
 
-QueryDB[filename_, query_]:=Module[{db=OpenSQLConnection[JDBC["SQLite",filename]],q,res},
-res=SQLExecute[db,query];
+QueryDB[filename_,query_]:=Module[{db=OpenSQLConnection[JDBC["SQLite",filename]],q,res},res=SQLExecute[db,query];
 CloseSQLConnection[db];
 Return[res]
 ]
