@@ -1,3 +1,13 @@
+"""
+	Fit functions used in processing algorithms.
+	
+	:Created:	10/30/2014
+ 	:Author: 	Arvind Balijepalli <arvind.balijepalli@nist.gov>
+	:License:	See LICENSE.TXT	
+	:ChangeLog:
+	.. line-block::
+		11/19/14	AB	Initial version
+"""
 import numpy as np
 
 def heaviside(x):

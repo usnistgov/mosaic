@@ -107,7 +107,7 @@ class metaEventPartition(object):
 							)
 		self.mdioDBHnd.writeSettings(settingsString)
 		if self.trajDataObj.dataFilter:
-			fstring=self.trajDataObj.dataFilter.__name__
+			fstring=type(self.trajDataObj.dataFilterObj).__name__
 		else:
 			fstring='None'
 		self.mdioDBHnd.writeAnalysisInfo([
