@@ -17,6 +17,16 @@ A. Balijepalli, J., Ettedgui, A. T. Cornio, J. W. F. Robertson K. P. Cheung, J. 
 What's new in v1.0b3
 =================================
 
+**v1.0b3.1**
+
+- [GUI] Added multiState support to mosaicgui.
+- Analysis information such as alogirthms used, data type, etc. are now stored within a MDIO database.
+- [GUI] Autocomplete in mosaicgui only suggests database columns that are valid when used in a query.
+- Reorganized Mathematica addon code.
+
+
+**v1.0b3**
+
 - Fixed a bug that prevented events longer than ~700 data points from being correctly analyzed.
 - Fixed a problem that prevented event data from being correctly padded before analysis.
 - Resolves #2. TrajIO settings are now read in from the settings file.
