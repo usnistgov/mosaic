@@ -1,4 +1,4 @@
-"""
+""" 
 	A class that defines the main mosaicGUI window.
 
 	:Created:	4/22/2013
@@ -135,7 +135,7 @@ class settingsview(QtGui.QMainWindow):
 
 
 	def _positionWindow(self):
-		"""
+		""" 
 			Position settings window at the top left corner
 		"""
 		screen = QtGui.QDesktopWidget().screenGeometry()
@@ -343,7 +343,7 @@ class settingsview(QtGui.QMainWindow):
 
 	# Data settings SLOTS
 	def OnSelectPath(self):
-		"""
+		""" 
 			Select the data directory. Once a folder is selected, 
 			call additional functions to read in settings if they exist.
 		"""
