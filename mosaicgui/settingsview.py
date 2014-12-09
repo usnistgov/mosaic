@@ -14,7 +14,6 @@ import multiprocessing
 import webbrowser
 
 from PyQt4 import QtCore, QtGui, uic
-from mosaicgui.redirectSTDOUT import redirectSTDOUT
 from mosaic.utilities.resource_path import resource_path, format_path
 import mosaicgui.EBSStateFileDict
 # import mosaic.settings
