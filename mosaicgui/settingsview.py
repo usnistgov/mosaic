@@ -1,4 +1,5 @@
-"""A class that defines the main mosaicGUI window.
+""" 
+	A class that defines the main mosaicGUI window.
 
 	:Created:	4/22/2013
 	:Author: 	Arvind Balijepalli <arvind.balijepalli@nist.gov>
@@ -135,7 +136,8 @@ class settingsview(QtGui.QMainWindow):
 
 
 	def _positionWindow(self):
-		"""Position settings window at the top left corner
+		""" 
+			Position settings window at the top left corner
 		"""
 		screen = QtGui.QDesktopWidget().screenGeometry()
 		# self.move( -screen.width()/2, -screen.height()/2 )
@@ -342,7 +344,8 @@ class settingsview(QtGui.QMainWindow):
 
 	# Data settings SLOTS
 	def OnSelectPath(self):
-		"""Select the data directory. Once a folder is selected, 
+		""" 
+			Select the data directory. Once a folder is selected, 
 			call additional functions to read in settings if they exist.
 		"""
 		fd=QtGui.QFileDialog()
