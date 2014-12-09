@@ -1,4 +1,4 @@
-"""
+""" 
 	A class to parse EBS state files and retrieve experiment parameters.
 
 	:Created:	9/21/2014
