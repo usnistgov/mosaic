@@ -1,4 +1,4 @@
-"""
+""" 
 	A class that extends metaEventProcessing to implement the step response algorithm from :cite:`Balijepalli:2014`
 
 	:Created:	4/18/2013
@@ -29,7 +29,7 @@ import scipy.optimize
 from lmfit import minimize, Parameters, Parameter, report_errors, Minimizer
 
 class datblock:
-	"""
+	""" 
 		Smart data block that holds a time-series of data and keeps track
 		of its mean and SD.
 	"""
@@ -40,7 +40,7 @@ class datblock:
 
 
 class stepResponseAnalysis(metaEventProcessor.metaEventProcessor):
-	"""
+	""" 
 		Analyze an event that is characteristic of PEG blockades. This method includes system 
 		information in the analysis, specifically the filtering effects (throught the RC constant)
 		of either amplifiers or the membrane/nanopore complex. The analysis generates several 
@@ -53,7 +53,7 @@ class stepResponseAnalysis(metaEventProcessor.metaEventProcessor):
 		When an event cannot be analyzed, the blockade depth, residence time and rise time are set to -1.
 	"""
 	def _init(self, **kwargs):
-		"""
+		""" 
 			Initialize the single step analysis class.
 		"""
 		# initialize the object's metadata (to -1) as class attributes
@@ -88,7 +88,7 @@ class stepResponseAnalysis(metaEventProcessor.metaEventProcessor):
 	# Interface functions implemented starting here
 	###########################################################################
 	def _processEvent(self):
-		"""
+		""" 
 			This function implements the core logic to analyze one single step-event.
 		"""
 		try:
@@ -98,7 +98,7 @@ class stepResponseAnalysis(metaEventProcessor.metaEventProcessor):
 			raise
 
 	def mdList(self):
-		"""
+		""" 
 			Return a list of meta-data from the analysis of single step events. We explicitly
 			control the order of the data to keep formatting consistent. 				
 		"""
@@ -116,7 +116,7 @@ class stepResponseAnalysis(metaEventProcessor.metaEventProcessor):
 				]
 		
 	def mdHeadingDataType(self):
-		"""
+		""" 
 			Return a list of meta-data tags data types.
 		"""
 		return [
@@ -133,7 +133,7 @@ class stepResponseAnalysis(metaEventProcessor.metaEventProcessor):
 				]
 
 	def mdHeadings(self):
-		"""
+		""" 
 			Explicity set the metadata to print out.
 		"""
 		return [
@@ -150,14 +150,14 @@ class stepResponseAnalysis(metaEventProcessor.metaEventProcessor):
 				]
 
 	def mdAveragePropertiesList(self):
-		"""
+		""" 
 			Return a list of meta-data properties that will be averaged 
 			and displayed at the end of a run. 
 		"""
 		pass
 
 	def formatsettings(self):
-		"""
+		""" 
 			Return a formatted string of settings for display
 		"""
 		fmtstr=""
@@ -261,7 +261,7 @@ class stepResponseAnalysis(metaEventProcessor.metaEventProcessor):
 	 		self.rejectEvent('eFitFailure')
 
 	def __threadList(self, l1, l2):
-		"""thread two lists	"""
+		""" thread two lists	"""
 		try:
 			return map( lambda x,y : (x,y), l1, l2 )
 		except KeyboardInterrupt:
@@ -280,7 +280,7 @@ class stepResponseAnalysis(metaEventProcessor.metaEventProcessor):
 			return -1
 
 	def __objfunc(self, params, t, data):
-		""" model decaying sine wave, subtract data"""
+		""" model decaying sine wave, subtract data	"""
 		try:
 			tau = params['tau'].value
 			mu1 = params['mu1'].value
