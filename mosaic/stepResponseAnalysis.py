@@ -261,7 +261,7 @@ class stepResponseAnalysis(metaEventProcessor.metaEventProcessor):
 	 		self.rejectEvent('eFitFailure')
 
 	def __threadList(self, l1, l2):
-		# thread two lists
+		""" thread two lists	"""
 		try:
 			return map( lambda x,y : (x,y), l1, l2 )
 		except KeyboardInterrupt:
@@ -280,7 +280,7 @@ class stepResponseAnalysis(metaEventProcessor.metaEventProcessor):
 			return -1
 
 	def __objfunc(self, params, t, data):
-		# model decaying sine wave, subtract data
+		""" model decaying sine wave, subtract data	"""
 		try:
 			tau = params['tau'].value
 			mu1 = params['mu1'].value
