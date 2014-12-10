@@ -1,5 +1,12 @@
 (* ::Package:: *)
 
+(* ::Text:: *)
+(*Utility functions for use within Mathematica*)
+(**)
+(*:created: 	11/1/2014*)
+(*:author: 	Arvind Balijepalli <arvind.balijepalli@nist.gov>*)
+(*:License:	See LICENSE.TXT	*)
+
 StandardError=StandardDeviation[#]/Sqrt[Length[#]]&;
 
 

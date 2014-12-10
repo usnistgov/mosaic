@@ -1,5 +1,13 @@
 (* ::Package:: *)
 
+(* ::Text:: *)
+(*Analysis functions that build on MosaicUtils*)
+(**)
+(*:created: 	11/15/2014*)
+(*:author: 	Arvind Balijepalli <arvind.balijepalli@nist.gov>*)
+(*:License:	See LICENSE.TXT	*)
+
+
 <<Util`
 
 

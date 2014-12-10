@@ -1,5 +1,13 @@
 (* ::Package:: *)
 
+(* ::Text:: *)
+(*Utilities to import MOSAIC output into Mathematica*)
+(**)
+(*:created: 	11/15/2014*)
+(*:author: 	Arvind Balijepalli <arvind.balijepalli@nist.gov>*)
+(*:License:	See LICENSE.TXT	*)
+
+
 <<DatabaseLink`
 
 
