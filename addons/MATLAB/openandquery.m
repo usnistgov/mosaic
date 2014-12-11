@@ -4,7 +4,7 @@
 % USAGE
 % 1.  Replace the example database path in line 20 with the correct path to
 %     your database
-% 2.  Replace the example queries in line 23 as relevant to your
+% 2.  Replace the example queries in line 24 as relevant to your
 %     database/project
 % 3.  Run the script
 % 
@@ -20,6 +20,7 @@
 dbname = 'C:\sqlite\eventMD-PEG29-Reference.sqlite';	% Enter the path, including the database name, within the quotes
 
 mksqlite('open',dbname);                                % Open the database
+fieldnames = mksqlite('PRAGMA table_info(metadata)');	  % Read in all fieldnames
 querytemp = mksqlite('select AbsEventStart, BlockDepth from metadata'); % Querying the database
 mksqlite('close');                                      % Close the database
 
