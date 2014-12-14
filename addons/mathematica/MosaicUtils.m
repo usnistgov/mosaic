@@ -18,6 +18,13 @@ Return[keys]
 ]
 
 
+PrintMDTypes[filename_]:=Module[{db=OpenSQLConnection[JDBC["SQLite",filename]],mdtypes},
+mdtypes=Flatten[SQLExecute[db,"select * from metadata_t limit 1"]];
+CloseSQLConnection[db];
+Return[mdtypes]
+]
+
+
 QueryDB[filename_,query_]:=Module[{db=OpenSQLConnection[JDBC["SQLite",filename]],q,res},res=SQLExecute[db,query];
 CloseSQLConnection[db];
 Return[res]
