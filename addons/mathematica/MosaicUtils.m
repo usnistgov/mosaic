@@ -29,6 +29,29 @@ QueryDB[filename_,query_]:=Module[{db=OpenSQLConnection[JDBC["SQLite",filename]]
 CloseSQLConnection[db];
 Return[res]
 ]
+QueryDB[filename_,query_]:=Module[{cols=ColNames[query], db=OpenSQLConnection[JDBC["SQLite",filename]],res,hash},
+hash=Association[#[[1]]->#[[2]]&/@Transpose[{SQLExecute[db,"PRAGMA table_info(metadata_t)"][[All,2]],First[SQLExecute[db,"select * from metadata_t limit 1"]]}]];
+res=DecodeRecord[#,cols, hash]&/@SQLExecute[db,query];
+CloseSQLConnection[db];
+Return[res]
+]/;StringMatchQ[query,RegularExpression["\\bselect\\b.*\\bmetadata\\b.*"]]
+
+
+ColNames[qstr_]:=Flatten[StringSplit[StringSplit[First[StringSplit[qstr,{"select","from"}]],","]]]
+
+
+DecodeRecord[rec_,cols_, colhash_]:=Module[{c=ExpandCols[cols,colhash],ct},
+ct=colhash/@c;
+Return[(DecodeColumn@@#)&/@Transpose[{rec,ct}]]
+]
+
+
+ExpandCols[cols_,colhash_]:=Keys[colhash]/;cols=={"*"}
+ExpandCols[cols_,colhash_]:=cols
+
+
+DecodeColumn[dat_,dtype_]:=DecodeTimeSeries[dat]/;dtype=="REAL_LIST"
+DecodeColumn[dat_,dtype_]:=dat
 
 
 DecodeTimeSeries[ts_]:=ImportString[ImportString[ToString[ts],{"Base64","String"}],"Real64"]
@@ -40,11 +63,11 @@ ts[dat_,FsKHz_]:=Transpose[{Range[0,Length[dat]-1]/FsKHz,polarity[dat]*dat}]
 Options[PlotEvents]={AnalysisAlgorithm->"StepResponseAnalysis"};
 PlotEvents[dbname_,FsKHz_,OptionsPattern[]]:=Module[{q},
 q=QueryDB[dbname, "select ProcessingStatus, BlockedCurrent, OpenChCurrent, EventStart, EventEnd, RCConstant, TimeSeries from metadata"];
-Manipulate[plotsra[q[[i]][[1]], ts[DecodeTimeSeries[q[[i]][[-1]]],FsKHz],q[[i]][[2;;-2]] ,FsKHz],{i,1,Length[q],1,Appearance->"Open"}]
+Manipulate[plotsra[q[[i]][[1]], ts[q[[i]][[-1]],FsKHz],q[[i]][[2;;-2]] ,FsKHz],{i,1,Length[q],1,Appearance->"Open"}]
 ]/;OptionValue[AnalysisAlgorithm]=="StepResponseAnalysis"
 PlotEvents[dbname_,FsKHz_,OptionsPattern[]]:=Module[{q},
 q=QueryDB[dbname,"select ProcessingStatus, OpenChCurrent, CurrentStep, EventDelay, RCConstant, TimeSeries from metadata"];
-Manipulate[plotmsa[q[[i]][[1]], ts[DecodeTimeSeries[q[[i]][[-1]]],FsKHz], {q[[i]][[2]],DecodeTimeSeries[q[[i]][[3]]],DecodeTimeSeries[q[[i]][[4]]],q[[i]][[5]]},FsKHz],{i,1,Length[q],1,Appearance->"Open"}]
+Manipulate[plotmsa[q[[i]][[1]], ts[q[[i]][[-1]],FsKHz], {q[[i]][[2]],q[[i]][[3]],q[[i]][[4]],q[[i]][[5]]},FsKHz],{i,1,Length[q],1,Appearance->"Open"}]
 ]/;OptionValue[AnalysisAlgorithm]=="MultiStateAnalysis"
 
 
