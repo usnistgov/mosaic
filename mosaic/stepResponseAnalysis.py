@@ -103,7 +103,7 @@ class stepResponseAnalysis(metaEventProcessor.metaEventProcessor):
 			control the order of the data to keep formatting consistent. 				
 		"""
 		return [
-					self. mdProcessingStatus, 
+					self.mdProcessingStatus, 
 					self.mdOpenChCurrent, 
 					self.mdBlockedCurrent,
 					self.mdEventStart,
