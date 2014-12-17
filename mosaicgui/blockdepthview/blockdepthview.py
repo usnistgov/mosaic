@@ -157,9 +157,13 @@ class BlockDepthWindow(QtGui.QDialog):
 			self.mpl_hist.canvas.ax.hold(True)
 
 			c='#%02x%02x%02x' % (72,91,144)
+			xrngmin=max( min(self.queryData), 0)
+			xrngmax=min( max(self.queryData), 1)
+
 			self.blockDepthHist=self.mpl_hist.canvas.ax.hist( 
 						self.queryData, 
 						bins=self.nBins, 
+						range=[xrngmin,xrngmax],
 						normed=0, 
 						histtype='step',
 						rwidth=0.1,
