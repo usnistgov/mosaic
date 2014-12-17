@@ -328,6 +328,7 @@ class settingsview(QtGui.QMainWindow):
 			self.analysisDataModel["blockSizeSec"]=float(self.baselineBlockSizeDoubleSpinBox.value())
 
 			self._trajviewerdata()
+		
 
 	def _trajviewerdata(self):
 		if self.dataFilterDenoise:
@@ -484,7 +485,7 @@ class settingsview(QtGui.QMainWindow):
 	def OnBaselineMeanChange(self, value):
 		if self.updateDialogs:
 			self._baselineupdate("meanOpenCurr")
-			# self.ThresholdDoubleSpinBox.setMaximum(float(value))
+
 			self.trajViewerWindow.updatePlot(self.analysisDataModel.GenerateTrajView())
 
 	def OnBaselineSDChange(self, value):
@@ -515,6 +516,7 @@ class settingsview(QtGui.QMainWindow):
 				self.analysisDataModel["eventThresholdpA"]=value
 				self.updateDialogs=False
 				self.partitionThresholdHorizontalSlider.setValue( (int(smax-smin)*value/float(max-min)) )
+				self.ThresholdDoubleSpinBox.setMaximum( mu )
 				self.updateDialogs=True
 			else:
 				v=float((int((max-min))*value/float(smax-smin)))
@@ -522,6 +524,7 @@ class settingsview(QtGui.QMainWindow):
 				self.analysisDataModel["eventThresholdpA"]=v
 				self.updateDialogs=False
 				self.ThresholdDoubleSpinBox.setValue( (int((max-min))*value/float(smax-smin)) )
+				self.ThresholdDoubleSpinBox.setMaximum( mu )
 				self.updateDialogs=True
 
 			self.trajViewerWindow.updatePlot(self.analysisDataModel.GenerateTrajView())
