@@ -29,7 +29,7 @@ read -d '' info2 <<-"EOF"
 	<key>CFBundleDisplayName</key>
 	<string>MOSAIC</string>
 	<key>CFBundleIconFile</key>
-	<string>icon-windowed.icns</string>
+	<string>icon.icns</string>
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>LSBackgroundOnly</key>
@@ -44,14 +44,16 @@ rm -rf dist/* build/*
 pyinstaller mosaic.spec
 
 if [ $plat == 'Darwin' ]; then
+	sh ../.scripts/create_osx_icons.sh
+	mv icon.icns dist/MOSAIC.app/Contents/Resources
 	echo ${infoplist}>dist/MOSAIC.app/Contents/Info.plist
 	cd dist
 	hdiutil create ./mosaic-${ver}.dmg -srcfolder MOSAIC.app -ov
 	mv ./mosaic-${ver}.dmg ../../dist/
 else
 	cd dist
-	zip mosaic-${ver}.zip MOSAIC.exe
-	mv ./mosaic-${ver}.zip ../../dist/
+	zip mosaic-x64-${ver}.zip MOSAIC.exe
+	mv ./mosaic-x64-${ver}.zip ../../dist/
 fi
 
 cd ../..

@@ -59,10 +59,10 @@
         <string/>
        </property>
        <property name="pixmap">
-        <pixmap>../../icon.png</pixmap>
+        <pixmap>../../icons/icon_100px.png</pixmap>
        </property>
        <property name="scaledContents">
-        <bool>true</bool>
+        <bool>false</bool>
        </property>
       </widget>
      </item>

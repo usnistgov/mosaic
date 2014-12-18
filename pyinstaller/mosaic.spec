@@ -46,7 +46,8 @@ elif sys.platform=='win32' or sys.platform=='win64':
 		debug=False,
 		strip=None,
 		upx=True,
-		console=False )
+		console=False,
+		icon='..\\icons\\icon_256px.ico' )
 	# coll = COLLECT(exe,
 	# 	a.binaries,
 	# 	Tree(format_path('../mosaicgui/ui'), prefix='ui'),
