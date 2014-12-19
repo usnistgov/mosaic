@@ -8,7 +8,7 @@ a = Analysis(['../mosaicgui/mosaicGUI.py'],
 			 hookspath=None,
 			 runtime_hooks=None)
 # ('.settings', '../.settings',  'DATA'),
-a.datas += [ ('icon.png', '../icon.png',  'DATA')]
+a.datas += [ ('icon.png', '../icons/icon.png',  'DATA')]
 pyz = PYZ(a.pure)
 # On OS X, collect data files and  build an application bundle
 if sys.platform=='darwin':
