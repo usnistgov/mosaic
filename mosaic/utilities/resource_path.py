@@ -24,7 +24,7 @@ def resource_path(filename):
 			return str(sep.join( dirlist ))
 		elif os.path.isfile ( str(sep.join( dirlist[:-1] ))+sep+filename ):
 			return str(sep.join( dirlist[:-1] ))
-	elif filename in ["icon.png"]:
+	elif filename in ["icon.png", "icons/icon_100px.png"]:
 		if os.path.isfile ( str(sep.join( dirlist ))+sep+filename ):
 			return str(sep.join( dirlist )+sep+filename)
 		elif os.path.isfile ( str(sep.join( dirlist[:-1] ))+sep+filename ):

@@ -19,7 +19,7 @@ class AboutDialog(QtGui.QDialog):
 		uic.loadUi(resource_path("aboutdialog.ui"), self)
 		
 		self.setWindowTitle("")
-		self.iconLabel.setPixmap( QtGui.QPixmap(resource_path("icon.png")).scaled(100,100) )
+		self.iconLabel.setPixmap( QtGui.QPixmap(resource_path("icons/icon_100px.png")).scaled(100,100) )
 
 		self._positionWindow()
 		self._setVersion()
