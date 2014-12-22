@@ -1,0 +1,155 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>1. Introduction &mdash; MOSAIC 1.0 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/rtd.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="top" title="MOSAIC 1.0 documentation" href="../index.html" />
+    <link rel="next" title="2. Getting Started" href="GettingStarted.html" />
+    <link rel="prev" title="MOSAIC: A Modular Single-Molecule Analysis Interface" href="../index.html" />
+ 
+<link href='http://fonts.googleapis.com/css?family=Roboto:100,300,100italic,300italic' rel='stylesheet' type='text/css'>
+
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="GettingStarted.html" title="2. Getting Started"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="../index.html" title="MOSAIC: A Modular Single-Molecule Analysis Interface"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">MOSAIC 1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="introduction">
+<h1>1. Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h1>
+<p><em>MOSAIC</em> is a modular toolbox for analyzing data from single molecule experiments. Primarily developed to analyze data from nanopore experiments <a class="reference internal" href="References.html#reiner-2012bg" id="id1">[RBR+12]</a>, <em>MOSAIC</em> can analyze any data that fit the form <a class="reference internal" href="References.html#balijepalli-2014ft" id="id2">[BEC+14]</a>:</p>
+<div class="math">
+\[i(t)=i_0 + \sum_{j=1}^{N} a_j\left(1-e^{-\left(t-\mu_j\right)/\tau_j}\right) H\left(t-\mu_j\right)\]</div>
+<p>The above functional form, which represents the response to a step change from one state to another is ubiqutous in many disciplines (e.g. RRRR). By fitting individual state changes to the equation above, <em>MOSAIC</em> is able to automatically identify the states corresponding to each change. Moreover this approach allows us to accurately characterize transient events before they asymptotically approach a steady state. In nanopore applications, this has resulted in a 20-fold improvement in the number of states identified per unit time <a class="reference internal" href="References.html#balijepalli-2014ft" id="id3">[BEC+14]</a>.</p>
+<p><em>MOSAIC</em> offers tremendous flexibility in how it can be used. Nanopore data can be analyzed and visualized using the <a class="reference internal" href="GraphicalInterface.html#gui-page"><em>MOSAIC GUI</em></a> (GUI), which is available as a stand-alone application (<a class="reference external" href="http://www.nist.gov">download binaries</a>). This is a convenient way for most users to analyze nanopore data. Advanced users can write their own Python scripts to include <em>MOSAIC</em> in their analysis workflow (see <a class="reference internal" href="ScriptingandAdvancedFeatures.html#scripting-page"><em>Scripting and Advanced Features</em></a>). Finally, because <em>MOSAIC</em> was designed from the start using object oriented design, developers can easily extend it by combining existing classes to define new functionality or writing their own classes (see <a class="reference internal" href="Extend.html#extend-page"><em>Extend MOSAIC</em></a>).</p>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/icon.png" alt="Logo"/>
+            </a></p>
+<h3><a href="../index.html">Table Of Contents</a></h3>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="">1. Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="GettingStarted.html">2. Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="GraphicalInterface.html">3. <em>MOSAIC</em> GUI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ScriptingandAdvancedFeatures.html">4. Scripting and Advanced Features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="settingsFile.html">5. Settings File</a></li>
+<li class="toctree-l1"><a class="reference internal" href="DatabaseStructure.html">6. Database Structure and Query Syntax</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Extend.html">7. Extend <em>MOSAIC</em></a></li>
+<li class="toctree-l1"><a class="reference internal" href="Addons.html">8. Addons</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples.html">9. Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="apidocs.html">10. API Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ChangeLog.html">11. Change Log</a></li>
+<li class="toctree-l1"><a class="reference internal" href="References.html">12. Bibliography</a></li>
+</ul>
+
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script><h3 class="searchheading" align="left">Questions/Suggestions</h3>
+<div class="sphinxsidebarsection" align="left">
+<p />
+<p class="logo">
+<a href="http://www.nist.gov/cgi-bin/wwwph/cso.nist.gov?Query=Arvind+Balijepalli" style=""><u>Contact Us</u></a><br />
+<!-- 
+http://www.nist.gov/cgi-bin/wwwph/cso.nist.gov?Query=Arvind+Balijepalli
+mailto:arvind.balijepalli@nist.gov
+ -->
+<!-- <em><small><br/> National Institute of Standards and Technology<br/>
+ 100 Bureau Drive<br/>
+ Gaithersburg, MD 20899<br/></small></em>
+ -->
+ <br/>
+You can report problems with <em>MOSAIC</em> using the<a class="" href="https://github.com/usnistgov/mosaic/issues" style=""><u>issue tracker.</u></a>
+</p>
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="GettingStarted.html" title="2. Getting Started"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="../index.html" title="MOSAIC: A Modular Single-Molecule Analysis Interface"
+             >previous</a> |</li>
+        <li><a href="../index.html">MOSAIC 1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+<!-- 
+    <div class="footer">
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.3.
+    </div> -->
+<div class="footer">
+National Institute of Standards and Technology,&nbsp;
+<a href="Disclaimer.html"><em>Terms of Use</em></a>
+</div>
+
+  </body>
+</html>

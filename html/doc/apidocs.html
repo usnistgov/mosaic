@@ -1,0 +1,258 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>10. API Documentation &mdash; MOSAIC 1.0 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/rtd.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="top" title="MOSAIC 1.0 documentation" href="../index.html" />
+    <link rel="next" title="10.1.1. Top-Level Interfaces" href="../api-doc/mosaic.html" />
+    <link rel="prev" title="9. Examples" href="examples.html" />
+ 
+<link href='http://fonts.googleapis.com/css?family=Roboto:100,300,100italic,300italic' rel='stylesheet' type='text/css'>
+
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../api-doc/mosaic.html" title="10.1.1. Top-Level Interfaces"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="examples.html" title="9. Examples"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">MOSAIC 1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="api-documentation">
+<span id="api-docs-page"></span><h1>10. API Documentation<a class="headerlink" href="#api-documentation" title="Permalink to this headline">¶</a></h1>
+<p><em>MOSAIC</em> is designed using object oriented tools, which makes it easy to extend. The API documentation provides class level descriptions of the different modules that can be used in customized code. Meta-Classes (in <em>blue</em> below) define interfaces to five key parts of MOSAIC: time-series IO (<a class="reference internal" href="../api-doc/mosaic.meta.html#mosaic.metaTrajIO.metaTrajIO" title="mosaic.metaTrajIO.metaTrajIO"><tt class="xref py py-class docutils literal"><span class="pre">metaTrajIO</span></tt></a>), time-series filtering (<a class="reference internal" href="../api-doc/mosaic.meta.html#mosaic.metaIOFilter.metaIOFilter" title="mosaic.metaIOFilter.metaIOFilter"><tt class="xref py py-class docutils literal"><span class="pre">metaIOFilter</span></tt></a>), analysis output (<a class="reference internal" href="../api-doc/mosaic.meta.html#mosaic.metaMDIO.metaMDIO" title="mosaic.metaMDIO.metaMDIO"><tt class="xref py py-class docutils literal"><span class="pre">metaMDIO</span></tt></a>), event partition and segmenting (<a class="reference internal" href="../api-doc/mosaic.meta.html#mosaic.metaEventPartition.metaEventPartition" title="mosaic.metaEventPartition.metaEventPartition"><tt class="xref py py-class docutils literal"><span class="pre">metaEventPartition</span></tt></a>), and event processing (<a class="reference internal" href="../api-doc/mosaic.meta.html#mosaic.metaEventProcessor.metaEventProcessor" title="mosaic.metaEventProcessor.metaEventProcessor"><tt class="xref py py-class docutils literal"><span class="pre">metaEventProcessor</span></tt></a>). Sub-classing any of these meta classes and implementing their interface functions allows one to extend <em>MOSAIC</em> while maintaining compatibility with other parts of the program. The diagram below shows the class inheritence in <em>MOSAIC</em>, with top-level classes in <em>gray</em>.</p>
+<blockquote>
+<div><p class="graphviz">
+<img src="../_images/graphviz-a7ff90617cbdc297c95ea68a78a8a9942d305962.png" alt="digraph &quot;Graphical Class Hierarchy&quot;
+{
+  graph [ dpi = 300 ];
+  size=&quot;7,5.75&quot;;
+  ratio=&quot;fill&quot;;
+  edge [fontname=&quot;Helvetica&quot;,fontsize=&quot;20&quot;,labelfontname=&quot;Helvetica&quot;,labelfontsize=&quot;20&quot;];
+  node [fontname=&quot;Helvetica&quot;,fontsize=&quot;20&quot;,shape=record];
+  rankdir=&quot;LR&quot;;
+  Node1 [label=&quot;object&quot;,height=0.2,width=0.4,color=&quot;grey75&quot;, fillcolor=&quot;white&quot;, style=&quot;filled&quot;];
+  Node1 -&gt; Node2 [dir=&quot;back&quot;,color=&quot;midnightblue&quot;,fontsize=&quot;20&quot;,style=&quot;solid&quot;,fontname=&quot;Helvetica&quot;];
+  Node2 [label=&quot;mosaic.ConvertToCSV.Convert\lToCSV&quot;,height=0.2,width=0.4,color=&quot;black&quot;, fillcolor=&quot;grey88&quot;, style=&quot;filled&quot;];
+  Node1 -&gt; Node3 [dir=&quot;back&quot;,color=&quot;midnightblue&quot;,fontsize=&quot;20&quot;,style=&quot;solid&quot;,fontname=&quot;Helvetica&quot;];
+  Node3 [label=&quot;mosaic.metaEventPartition.meta\lEventPartition&quot;,height=0.2,width=0.4,color=&quot;black&quot;, fillcolor=&quot;aliceblue&quot;, style=&quot;filled&quot;];
+  Node3 -&gt; Node4 [dir=&quot;back&quot;,color=&quot;midnightblue&quot;,fontsize=&quot;20&quot;,style=&quot;solid&quot;,fontname=&quot;Helvetica&quot;];
+  Node4 [label=&quot;mosaic.eventSegment.event\lSegment&quot;,height=0.2,width=0.4,color=&quot;black&quot;, fillcolor=&quot;white&quot;, style=&quot;filled&quot;];
+  Node1 -&gt; Node5 [dir=&quot;back&quot;,color=&quot;midnightblue&quot;,fontsize=&quot;20&quot;,style=&quot;solid&quot;,fontname=&quot;Helvetica&quot;];
+  Node5 [label=&quot;mosaic.metaEventProcessor.meta\lEventProcessor&quot;,height=0.2,width=0.4,color=&quot;black&quot;, fillcolor=&quot;aliceblue&quot;, style=&quot;filled&quot;];
+  Node5 -&gt; Node6 [dir=&quot;back&quot;,color=&quot;midnightblue&quot;,fontsize=&quot;20&quot;,style=&quot;solid&quot;,fontname=&quot;Helvetica&quot;];
+  Node6 [label=&quot;mosaic.multiStateAnalysis.multi\lStateAnalysis&quot;,height=0.2,width=0.4,color=&quot;black&quot;, fillcolor=&quot;white&quot;, style=&quot;filled&quot;];
+  Node5 -&gt; Node7 [dir=&quot;back&quot;,color=&quot;midnightblue&quot;,fontsize=&quot;20&quot;,style=&quot;solid&quot;,fontname=&quot;Helvetica&quot;];
+  Node7 [label=&quot;mosaic.singleStepEvent.single\lStepEvent&quot;,height=0.2,width=0.4,color=&quot;black&quot;, fillcolor=&quot;white&quot;, style=&quot;filled&quot;];
+  Node5 -&gt; Node8 [dir=&quot;back&quot;,color=&quot;midnightblue&quot;,fontsize=&quot;20&quot;,style=&quot;solid&quot;,fontname=&quot;Helvetica&quot;];
+  Node8 [label=&quot;mosaic.stepResponseAnalysis.step\lResponseAnalysis&quot;,height=0.2,width=0.4,color=&quot;black&quot;, fillcolor=&quot;white&quot;, style=&quot;filled&quot;];
+  Node1 -&gt; Node9 [dir=&quot;back&quot;,color=&quot;midnightblue&quot;,fontsize=&quot;20&quot;,style=&quot;solid&quot;,fontname=&quot;Helvetica&quot;];
+  Node9 [label=&quot;mosaic.metaIOFilter.meta\lIOFilter&quot;,height=0.2,width=0.4,color=&quot;black&quot;, fillcolor=&quot;aliceblue&quot;, style=&quot;filled&quot;];
+  Node9 -&gt; Node10 [dir=&quot;back&quot;,color=&quot;midnightblue&quot;,fontsize=&quot;20&quot;,style=&quot;solid&quot;,fontname=&quot;Helvetica&quot;];
+  Node10 [label=&quot;mosaic.besselLowpassFilter.bessel\lLowpassFilter&quot;,height=0.2,width=0.4,color=&quot;black&quot;, fillcolor=&quot;white&quot;, style=&quot;filled&quot;];
+  Node9 -&gt; Node11 [dir=&quot;back&quot;,color=&quot;midnightblue&quot;,fontsize=&quot;20&quot;,style=&quot;solid&quot;,fontname=&quot;Helvetica&quot;];
+  Node11 [label=&quot;mosaic.convolutionFilter.convolution\lFilter&quot;,height=0.2,width=0.4,color=&quot;black&quot;, fillcolor=&quot;white&quot;, style=&quot;filled&quot;];
+  Node9 -&gt; Node12 [dir=&quot;back&quot;,color=&quot;midnightblue&quot;,fontsize=&quot;20&quot;,style=&quot;solid&quot;,fontname=&quot;Helvetica&quot;];
+  Node12 [label=&quot;mosaic.waveletDenoiseFilter.wavelet\lDenoiseFilter&quot;,height=0.2,width=0.4,color=&quot;black&quot;, fillcolor=&quot;white&quot;, style=&quot;filled&quot;];
+  Node1 -&gt; Node13 [dir=&quot;back&quot;,color=&quot;midnightblue&quot;,fontsize=&quot;20&quot;,style=&quot;solid&quot;,fontname=&quot;Helvetica&quot;];
+  Node13 [label=&quot;mosaic.metaMDIO.metaMDIO&quot;,height=0.2,width=0.4,color=&quot;black&quot;, fillcolor=&quot;aliceblue&quot;, style=&quot;filled&quot;];
+  Node13 -&gt; Node14 [dir=&quot;back&quot;,color=&quot;midnightblue&quot;,fontsize=&quot;20&quot;,style=&quot;solid&quot;,fontname=&quot;Helvetica&quot;];
+  Node14 [label=&quot;mosaic.sqlite3MDIO.sqlite3MDIO&quot;,height=0.2,width=0.4,color=&quot;black&quot;, fillcolor=&quot;white&quot;, style=&quot;filled&quot;];
+  Node1 -&gt; Node15 [dir=&quot;back&quot;,color=&quot;midnightblue&quot;,fontsize=&quot;20&quot;,style=&quot;solid&quot;,fontname=&quot;Helvetica&quot;];
+  Node15 [label=&quot;mosaic.metaTrajIO.metaTrajIO&quot;,height=0.2,width=0.4,color=&quot;black&quot;, fillcolor=&quot;aliceblue&quot;, style=&quot;filled&quot;];
+  Node15 -&gt; Node16 [dir=&quot;back&quot;,color=&quot;midnightblue&quot;,fontsize=&quot;20&quot;,style=&quot;solid&quot;,fontname=&quot;Helvetica&quot;];
+  Node16 [label=&quot;mosaic.abfTrajIO.abfTrajIO&quot;,height=0.2,width=0.4,color=&quot;black&quot;, fillcolor=&quot;white&quot;, style=&quot;filled&quot;];
+  Node15 -&gt; Node17 [dir=&quot;back&quot;,color=&quot;midnightblue&quot;,fontsize=&quot;20&quot;,style=&quot;solid&quot;,fontname=&quot;Helvetica&quot;];
+  Node17 [label=&quot;mosaic.binTrajIO.binTrajIO&quot;,height=0.2,width=0.4,color=&quot;black&quot;, fillcolor=&quot;white&quot;, style=&quot;filled&quot;];
+  Node15 -&gt; Node18 [dir=&quot;back&quot;,color=&quot;midnightblue&quot;,fontsize=&quot;20&quot;,style=&quot;solid&quot;,fontname=&quot;Helvetica&quot;];
+  Node18 [label=&quot;mosaic.qdfTrajIO.qdfTrajIO&quot;,height=0.2,width=0.4,color=&quot;black&quot;, fillcolor=&quot;white&quot;, style=&quot;filled&quot;];
+  Node15 -&gt; Node19 [dir=&quot;back&quot;,color=&quot;midnightblue&quot;,fontsize=&quot;20&quot;,style=&quot;solid&quot;,fontname=&quot;Helvetica&quot;];
+  Node19 [label=&quot;mosaic.tsvTrajIO.tsvTrajIO&quot;,height=0.2,width=0.4,color=&quot;black&quot;, fillcolor=&quot;white&quot;, style=&quot;filled&quot;];
+  Node1 -&gt; Node20 [dir=&quot;back&quot;,color=&quot;midnightblue&quot;,fontsize=&quot;20&quot;,style=&quot;solid&quot;,fontname=&quot;Helvetica&quot;];
+  Node20 [label=&quot;mosaic.SingleChannelAnalysis.\lSingleChannelAnalysis&quot;,height=0.2,width=0.4,color=&quot;black&quot;, fillcolor=&quot;grey88&quot;, style=&quot;filled&quot;];
+}" />
+</p>
+</div></blockquote>
+<div class="section" id="projname-modules">
+<h2>10.1. <em>MOSAIC</em> Modules<a class="headerlink" href="#projname-modules" title="Permalink to this headline">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../api-doc/mosaic.html">10.1.1. Top-Level Interfaces</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../api-doc/mosaic.html#module-mosaic.SingleChannelAnalysis">10.1.1.1. mosaic.SingleChannelAnalysis module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api-doc/mosaic.html#module-mosaic.ConvertToCSV">10.1.1.2. mosaic.ConvertToCSV module</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../api-doc/mosaic.meta.html">10.1.2. Meta-Classes</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../api-doc/mosaic.meta.html#mosaic-metaeventpartition-module">10.1.2.1. mosaic.metaEventPartition module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api-doc/mosaic.meta.html#mosaic-metaeventprocessor-module">10.1.2.2. mosaic.metaEventProcessor module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api-doc/mosaic.meta.html#mosaic-metaiofilter-module">10.1.2.3. mosaic.metaIOFilter module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api-doc/mosaic.meta.html#mosaic-metamdio-module">10.1.2.4. mosaic.metaMDIO module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api-doc/mosaic.meta.html#mosaic-metatrajio-module">10.1.2.5. mosaic.metaTrajIO module</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../api-doc/mosaic.traj.html">10.1.3. Time-Series IO</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../api-doc/mosaic.traj.html#mosaic-abftrajio-module">10.1.3.1. mosaic.abfTrajIO module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api-doc/mosaic.traj.html#mosaic-qdftrajio-module">10.1.3.2. mosaic.qdfTrajIO module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api-doc/mosaic.traj.html#mosaic-bintrajio-module">10.1.3.3. mosaic.binTrajIO module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api-doc/mosaic.traj.html#mosaic-tsvtrajio-module">10.1.3.4. mosaic.tsvTrajIO module</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../api-doc/mosaic.filter.html">10.1.4. Time-Series Filters</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../api-doc/mosaic.filter.html#mosaic-waveletdenoisefilter-module">10.1.4.1. mosaic.waveletDenoiseFilter module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api-doc/mosaic.filter.html#mosaic-bessellowpassfilter-module">10.1.4.2. mosaic.besselLowpassFilter module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api-doc/mosaic.filter.html#mosaic-convolutionfilter-module">10.1.4.3. mosaic.convolutionFilter module</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../api-doc/mosaic.partition.html">10.1.5. Event Partition and Segment</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../api-doc/mosaic.partition.html#mosaic-eventsegment-module">10.1.5.1. mosaic.eventSegment module</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../api-doc/mosaic.processing.html">10.1.6. Event Processing</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../api-doc/mosaic.processing.html#mosaic-stepresponseanalysis-module">10.1.6.1. mosaic.stepResponseAnalysis module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api-doc/mosaic.processing.html#mosaic-multistateanalysis-module">10.1.6.2. mosaic.multiStateAnalysis module</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../api-doc/mosaic.output.html">10.1.7. Data Output</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../api-doc/mosaic.output.html#mosaic-sqlite3mdio-module">10.1.7.1. mosaic.sqlite3MDIO module</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../api-doc/mosaic.misc.html">10.1.8. Miscellaneous</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../api-doc/mosaic.misc.html#module-mosaic.settings">10.1.8.1. mosaic.settings module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api-doc/mosaic.misc.html#mosaic-utilities-ionic-current-stats-module">10.1.8.2. mosaic.utilities.ionic_current_stats module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api-doc/mosaic.misc.html#mosaic-utilities-util-module">10.1.8.3. mosaic.utilities.util module</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/icon.png" alt="Logo"/>
+            </a></p>
+<h3><a href="../index.html">Table Of Contents</a></h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="Introduction.html">1. Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="GettingStarted.html">2. Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="GraphicalInterface.html">3. <em>MOSAIC</em> GUI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ScriptingandAdvancedFeatures.html">4. Scripting and Advanced Features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="settingsFile.html">5. Settings File</a></li>
+<li class="toctree-l1"><a class="reference internal" href="DatabaseStructure.html">6. Database Structure and Query Syntax</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Extend.html">7. Extend <em>MOSAIC</em></a></li>
+<li class="toctree-l1"><a class="reference internal" href="Addons.html">8. Addons</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples.html">9. Examples</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="">10. API Documentation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#projname-modules">10.1. <em>MOSAIC</em> Modules</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="ChangeLog.html">11. Change Log</a></li>
+<li class="toctree-l1"><a class="reference internal" href="References.html">12. Bibliography</a></li>
+</ul>
+
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script><h3 class="searchheading" align="left">Questions/Suggestions</h3>
+<div class="sphinxsidebarsection" align="left">
+<p />
+<p class="logo">
+<a href="http://www.nist.gov/cgi-bin/wwwph/cso.nist.gov?Query=Arvind+Balijepalli" style=""><u>Contact Us</u></a><br />
+<!-- 
+http://www.nist.gov/cgi-bin/wwwph/cso.nist.gov?Query=Arvind+Balijepalli
+mailto:arvind.balijepalli@nist.gov
+ -->
+<!-- <em><small><br/> National Institute of Standards and Technology<br/>
+ 100 Bureau Drive<br/>
+ Gaithersburg, MD 20899<br/></small></em>
+ -->
+ <br/>
+You can report problems with <em>MOSAIC</em> using the<a class="" href="https://github.com/usnistgov/mosaic/issues" style=""><u>issue tracker.</u></a>
+</p>
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../api-doc/mosaic.html" title="10.1.1. Top-Level Interfaces"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="examples.html" title="9. Examples"
+             >previous</a> |</li>
+        <li><a href="../index.html">MOSAIC 1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+<!-- 
+    <div class="footer">
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.3.
+    </div> -->
+<div class="footer">
+National Institute of Standards and Technology,&nbsp;
+<a href="Disclaimer.html"><em>Terms of Use</em></a>
+</div>
+
+  </body>
+</html>

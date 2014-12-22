@@ -1,0 +1,229 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>mosaic.qdfTrajIO &mdash; MOSAIC 1.0 documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/rtd.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="shortcut icon" href="../../_static/favicon.ico"/>
+    <link rel="top" title="MOSAIC 1.0 documentation" href="../../index.html" />
+    <link rel="up" title="Module code" href="../index.html" />
+ 
+<link href='http://fonts.googleapis.com/css?family=Roboto:100,300,100italic,300italic' rel='stylesheet' type='text/css'>
+
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../index.html">MOSAIC 1.0 documentation</a> &raquo;</li>
+          <li><a href="../index.html" accesskey="U">Module code</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <h1>Source code for mosaic.qdfTrajIO</h1><div class="highlight"><pre>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">	QDF implementation of metaTrajIO. Uses the readqdf module from EBS to </span>
+<span class="sd">	read individual qdf files.</span>
+
+<span class="sd">	:Created: 7/18/2012</span>
+<span class="sd"> 	:Author: 	Arvind Balijepalli &lt;arvind.balijepalli@nist.gov&gt;</span>
+<span class="sd">	:License:	See LICENSE.TXT</span>
+<span class="sd">	:ChangeLog:</span>
+<span class="sd">	.. line-block::</span>
+<span class="sd">		7/18/12		AB	Initial version</span>
+<span class="sd">		2/11/14		AB 	Support qdf files that save the current in pA. This needs </span>
+<span class="sd">						format=&#39;pA&#39; argument.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">import</span> <span class="nn">types</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span> 
+
+<span class="kn">import</span> <span class="nn">metaTrajIO</span>
+<span class="kn">import</span> <span class="nn">qdf.readqdf</span> <span class="kn">as</span> <span class="nn">qdf</span>
+
+<div class="viewcode-block" id="qdfTrajIO"><a class="viewcode-back" href="../../api-doc/mosaic.traj.html#mosaic.qdfTrajIO.qdfTrajIO">[docs]</a><span class="k">class</span> <span class="nc">qdfTrajIO</span><span class="p">(</span><span class="n">metaTrajIO</span><span class="o">.</span><span class="n">metaTrajIO</span><span class="p">):</span>
+	<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">		In addition to the base class init, check if the </span>
+<span class="sd">		feedback resistance (Rfb) and feedback capacitance (Cfb)</span>
+<span class="sd">		are defined to convert qdf binary data into pA</span>
+
+<span class="sd">		:Parameters:</span>
+<span class="sd">			In addition to metaTrajIO.__init__ args,</span>
+<span class="sd">				- `Rfb` :		feedback resistance of amplifier</span>
+<span class="sd">				- `Cfb` :		feedback capacitance of amplifier</span>
+<span class="sd">				- `format` : 	&#39;V&#39; for voltage or &#39;pA&#39; for current. Default is &#39;V&#39;</span>
+<span class="sd">		:Returns:</span>
+<span class="sd">			None</span>
+<span class="sd">		:Errors:</span>
+<span class="sd">			- `InsufficientArgumentsError` : if the mandatory arguments Rfb and Cfb are not set</span>
+<span class="sd">	&quot;&quot;&quot;</span>	
+	
+	<span class="k">def</span> <span class="nf">_init</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+		<span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s">&#39;Rfb&#39;</span><span class="p">)</span> <span class="ow">or</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s">&#39;Cfb&#39;</span><span class="p">):</span>
+			<span class="k">raise</span> <span class="n">metaTrajIO</span><span class="o">.</span><span class="n">InsufficientArgumentsError</span><span class="p">(</span><span class="s">&quot;{0} requires the feedback resistance (Rfb) and feedback capacitance (Cfb) to be defined.&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__name__</span><span class="p">))</span>
+
+		<span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s">&#39;format&#39;</span><span class="p">):</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">format</span><span class="o">=</span><span class="s">&#39;V&#39;</span>
+
+		<span class="c"># additional meta data</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">fileFormat</span><span class="o">=</span><span class="s">&#39;qdf&#39;</span>
+
+<div class="viewcode-block" id="qdfTrajIO.readdata"><a class="viewcode-back" href="../../api-doc/mosaic.traj.html#mosaic.qdfTrajIO.qdfTrajIO.readdata">[docs]</a>	<span class="k">def</span> <span class="nf">readdata</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fname</span><span class="p">):</span>
+		<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">			Read one or more files and append their data to the data pipeline.</span>
+<span class="sd">			Set a class attribute Fs with the sampling frequency in Hz.</span>
+
+<span class="sd">			:Parameters:</span>
+<span class="sd">				- `fname` :  list of data files to read</span>
+<span class="sd">			:Returns:</span>
+<span class="sd">				None</span>
+<span class="sd">			:Errors:</span>
+<span class="sd">				- `SamplingRateChangedError` : if the sampling rate for any data file differs from previous</span>
+<span class="sd">		&quot;&quot;&quot;</span>
+		<span class="c"># Read a single file or a list of files. By setting scale_data </span>
+		<span class="c"># and time_scale to 0, we get back times in ms and current in pA.</span>
+		<span class="c"># Check if the files have current of voltage.</span>
+		<span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">format</span><span class="o">==</span><span class="s">&#39;V&#39;</span><span class="p">:</span>
+			<span class="n">q</span><span class="o">=</span><span class="n">qdf</span><span class="o">.</span><span class="n">qdf_V2I</span><span class="p">(</span><span class="n">fname</span><span class="p">,</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">Cfb</span><span class="p">),</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">Rfb</span><span class="p">),</span> <span class="n">scale_data</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">time_scale</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+		<span class="k">else</span><span class="p">:</span>
+			<span class="n">q</span><span class="o">=</span><span class="n">qdf</span><span class="o">.</span><span class="n">qdf_I</span><span class="p">(</span><span class="n">fname</span><span class="p">,</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">Cfb</span><span class="p">),</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">Rfb</span><span class="p">),</span> <span class="n">scale_data</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">time_scale</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+		<span class="c"># set the sampling frequency in Hz. The times are in ms.</span>
+		<span class="c"># If the Fs attribute doesn&#39;t exist set it</span>
+		<span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s">&#39;Fs&#39;</span><span class="p">):</span>	
+			<span class="bp">self</span><span class="o">.</span><span class="n">Fs</span><span class="o">=</span><span class="mf">1000.</span><span class="o">/</span><span class="p">(</span><span class="n">q</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">-</span><span class="n">q</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span>
+		<span class="c"># else check if it s the same as before</span>
+		<span class="k">else</span><span class="p">:</span>
+			<span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">Fs</span><span class="o">!=</span><span class="mf">1000.</span><span class="o">/</span><span class="p">(</span><span class="n">q</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">-</span><span class="n">q</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]):</span>
+				<span class="k">raise</span> <span class="n">metaTrajIO</span><span class="o">.</span><span class="n">SamplingRateChangedError</span><span class="p">(</span><span class="s">&quot;The sampling rate in the data file &#39;{0}&#39; has changed.&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">fname</span><span class="p">))</span>
+
+		<span class="c"># Slice the data to remove the time-stamps to conserve memory		</span>
+		<span class="c"># and add new data to the existing array</span>
+		<span class="c">#print &quot;last raw current val in file &quot;, fname, &quot; = &quot;, q[-1]</span>
+		<span class="k">return</span> <span class="n">q</span><span class="p">[</span> <span class="p">:</span> <span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+</div>
+	<span class="k">def</span> <span class="nf">_formatsettings</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+		<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">			Return a formatted string of settings for display</span>
+<span class="sd">		&quot;&quot;&quot;</span>
+		<span class="n">fmtstr</span><span class="o">=</span><span class="s">&quot;&quot;</span>
+		
+		<span class="c"># for qdf files, add the values of the feedback resistance and capacitance</span>
+		<span class="n">fmtstr</span><span class="o">+=</span><span class="s">&#39;</span><span class="se">\n\t\t</span><span class="s">Feedback resistance = {0} GOhm</span><span class="se">\n</span><span class="s">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">Rfb</span><span class="o">*</span><span class="mf">1e-9</span><span class="p">)</span>
+		<span class="n">fmtstr</span><span class="o">+=</span><span class="s">&#39;</span><span class="se">\t\t</span><span class="s">Feedback capacitance = {0} pF</span><span class="se">\n</span><span class="s">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">Cfb</span><span class="o">*</span><span class="mf">1e12</span><span class="p">)</span>
+	
+		<span class="k">return</span> <span class="n">fmtstr</span></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../../index.html">
+              <img class="logo" src="../../_static/icon.png" alt="Logo"/>
+            </a></p>
+<h3><a href="../../index.html">Table Of Contents</a></h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../doc/Introduction.html">1. Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../doc/GettingStarted.html">2. Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../doc/GraphicalInterface.html">3. <em>MOSAIC</em> GUI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../doc/ScriptingandAdvancedFeatures.html">4. Scripting and Advanced Features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../doc/settingsFile.html">5. Settings File</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../doc/DatabaseStructure.html">6. Database Structure and Query Syntax</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../doc/Extend.html">7. Extend <em>MOSAIC</em></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../doc/Addons.html">8. Addons</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../doc/examples.html">9. Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../doc/apidocs.html">10. API Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../doc/ChangeLog.html">11. Change Log</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../doc/References.html">12. Bibliography</a></li>
+</ul>
+
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script><h3 class="searchheading" align="left">Questions/Suggestions</h3>
+<div class="sphinxsidebarsection" align="left">
+<p />
+<p class="logo">
+<a href="http://www.nist.gov/cgi-bin/wwwph/cso.nist.gov?Query=Arvind+Balijepalli" style=""><u>Contact Us</u></a><br />
+<!-- 
+http://www.nist.gov/cgi-bin/wwwph/cso.nist.gov?Query=Arvind+Balijepalli
+mailto:arvind.balijepalli@nist.gov
+ -->
+<!-- <em><small><br/> National Institute of Standards and Technology<br/>
+ 100 Bureau Drive<br/>
+ Gaithersburg, MD 20899<br/></small></em>
+ -->
+ <br/>
+You can report problems with <em>MOSAIC</em> using the<a class="" href="https://github.com/usnistgov/mosaic/issues" style=""><u>issue tracker.</u></a>
+</p>
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../index.html">MOSAIC 1.0 documentation</a> &raquo;</li>
+          <li><a href="../index.html" >Module code</a> &raquo;</li> 
+      </ul>
+    </div>
+<!-- 
+    <div class="footer">
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.3.
+    </div> -->
+<div class="footer">
+National Institute of Standards and Technology,&nbsp;
+<a href="../../doc/Disclaimer.html"><em>Terms of Use</em></a>
+</div>
+
+  </body>
+</html>

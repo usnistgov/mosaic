@@ -1,0 +1,213 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>mosaic.ConvertToCSV &mdash; MOSAIC 1.0 documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/rtd.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="shortcut icon" href="../../_static/favicon.ico"/>
+    <link rel="top" title="MOSAIC 1.0 documentation" href="../../index.html" />
+    <link rel="up" title="Module code" href="../index.html" />
+ 
+<link href='http://fonts.googleapis.com/css?family=Roboto:100,300,100italic,300italic' rel='stylesheet' type='text/css'>
+
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../index.html">MOSAIC 1.0 documentation</a> &raquo;</li>
+          <li><a href="../index.html" accesskey="U">Module code</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <h1>Source code for mosaic.ConvertToCSV</h1><div class="highlight"><pre>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">	Top level module to convert any data file readble by TrajIO objects into a comma separated value text file.</span>
+
+<span class="sd">	:Created:	10/13/2014</span>
+<span class="sd"> 	:Author: 	Arvind Balijepalli &lt;arvind.balijepalli@nist.gov&gt;</span>
+<span class="sd">	:License:	See LICENSE.TXT	</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="n">__docformat__</span> <span class="o">=</span> <span class="s">&#39;restructuredtext&#39;</span>
+
+<span class="kn">import</span> <span class="nn">itertools</span>
+<span class="kn">import</span> <span class="nn">string</span>
+
+<span class="kn">from</span> <span class="nn">mosaic.metaTrajIO</span> <span class="kn">import</span> <span class="n">EmptyDataPipeError</span>
+<span class="kn">import</span> <span class="nn">numpy</span>
+
+<div class="viewcode-block" id="ConvertToCSV"><a class="viewcode-back" href="../../api-doc/mosaic.html#mosaic.ConvertToCSV.ConvertToCSV">[docs]</a><span class="k">class</span> <span class="nc">ConvertToCSV</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+	<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">		Convert data read from a sub-class of metaTrajIO to a comma separated text file</span>
+
+<span class="sd">		:Parameters:</span>
+<span class="sd">			- `trajDataObj` : a trajIO data object</span>
+<span class="sd">			- `outdir` : the output directory. Default is *None*, which causes the output to be saved in the same directory as the input data.</span>
+<span class="sd">	&quot;&quot;&quot;</span>
+	<span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">trajDataObj</span><span class="p">,</span> <span class="n">outdir</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">trajDataObj</span><span class="o">=</span><span class="n">trajDataObj</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">datPath</span><span class="o">=</span><span class="n">trajDataObj</span><span class="o">.</span><span class="n">datPath</span>
+
+		<span class="c"># If outdir is None, save the CSV files to the same directory as the data.</span>
+		<span class="k">if</span> <span class="n">outdir</span><span class="o">==</span><span class="bp">None</span><span class="p">:</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">outDir</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">datPath</span>
+		<span class="k">else</span><span class="p">:</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">outDir</span><span class="o">=</span><span class="n">outdir</span>
+		
+		<span class="bp">self</span><span class="o">.</span><span class="n">filePrefix</span><span class="o">=</span><span class="bp">None</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">_creategenerator</span><span class="p">()</span>
+
+<div class="viewcode-block" id="ConvertToCSV.Convert"><a class="viewcode-back" href="../../api-doc/mosaic.html#mosaic.ConvertToCSV.ConvertToCSV.Convert">[docs]</a>	<span class="k">def</span> <span class="nf">Convert</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">blockSize</span><span class="p">):</span>
+		<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">			Start converting data</span>
+
+<span class="sd">			:Parameters:</span>
+<span class="sd">				- `blockSize` : number of data points to convert.</span>
+<span class="sd">		&quot;&quot;&quot;</span>
+		<span class="k">try</span><span class="p">:</span>
+			<span class="k">while</span><span class="p">(</span><span class="bp">True</span><span class="p">):</span>
+				<span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">trajDataObj</span><span class="o">.</span><span class="n">popdata</span><span class="p">(</span><span class="n">blockSize</span><span class="p">))</span><span class="o">.</span><span class="n">tofile</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_filename</span><span class="p">(),</span> <span class="n">sep</span><span class="o">=</span><span class="s">&#39;,&#39;</span><span class="p">)</span>
+		<span class="k">except</span> <span class="n">EmptyDataPipeError</span><span class="p">:</span>
+			<span class="k">pass</span>
+</div>
+<div class="viewcode-block" id="ConvertToCSV._creategenerator"><a class="viewcode-back" href="../../api-doc/mosaic.html#mosaic.ConvertToCSV.ConvertToCSV._creategenerator">[docs]</a>	<span class="k">def</span> <span class="nf">_creategenerator</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+		<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">			Create a new filename generator if the file prefix has changed. </span>
+<span class="sd">			The generator returns a filename incremented by a counter each time </span>
+<span class="sd">			its next() function is called.</span>
+<span class="sd">		&quot;&quot;&quot;</span>
+		<span class="n">f</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_fileprefix</span><span class="p">()</span>
+		<span class="k">if</span> <span class="n">f</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">filePrefix</span><span class="p">:</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">filePrefix</span><span class="o">=</span><span class="n">f</span>
+
+			<span class="bp">self</span><span class="o">.</span><span class="n">fileGenerator</span><span class="o">=</span><span class="n">itertools</span><span class="o">.</span><span class="n">imap</span><span class="p">(</span> 
+							<span class="k">lambda</span> <span class="n">n</span> <span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">filePrefix</span><span class="o">+</span><span class="s">&quot;_&quot;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">n</span><span class="p">),</span> 
+							<span class="n">itertools</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+						<span class="p">)</span>
+</div>
+	<span class="k">def</span> <span class="nf">_fileprefix</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+		<span class="k">return</span> <span class="n">string</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">string</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">trajDataObj</span><span class="o">.</span><span class="n">LastFileProcessed</span><span class="p">,</span><span class="s">&#39;/&#39;</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span><span class="s">&#39;.&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+
+<div class="viewcode-block" id="ConvertToCSV._filename"><a class="viewcode-back" href="../../api-doc/mosaic.html#mosaic.ConvertToCSV.ConvertToCSV._filename">[docs]</a>	<span class="k">def</span> <span class="nf">_filename</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+		<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">			Return a output filename that contains the data file prefix and and the block index.</span>
+<span class="sd">		&quot;&quot;&quot;</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">_creategenerator</span><span class="p">()</span>
+
+		<span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">outDir</span><span class="o">+</span><span class="s">&#39;/&#39;</span><span class="o">+</span><span class="nb">next</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">fileGenerator</span><span class="p">)</span><span class="o">+</span><span class="s">&#39;.csv&#39;</span>
+
+		</div></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../../index.html">
+              <img class="logo" src="../../_static/icon.png" alt="Logo"/>
+            </a></p>
+<h3><a href="../../index.html">Table Of Contents</a></h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../doc/Introduction.html">1. Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../doc/GettingStarted.html">2. Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../doc/GraphicalInterface.html">3. <em>MOSAIC</em> GUI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../doc/ScriptingandAdvancedFeatures.html">4. Scripting and Advanced Features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../doc/settingsFile.html">5. Settings File</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../doc/DatabaseStructure.html">6. Database Structure and Query Syntax</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../doc/Extend.html">7. Extend <em>MOSAIC</em></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../doc/Addons.html">8. Addons</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../doc/examples.html">9. Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../doc/apidocs.html">10. API Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../doc/ChangeLog.html">11. Change Log</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../doc/References.html">12. Bibliography</a></li>
+</ul>
+
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script><h3 class="searchheading" align="left">Questions/Suggestions</h3>
+<div class="sphinxsidebarsection" align="left">
+<p />
+<p class="logo">
+<a href="http://www.nist.gov/cgi-bin/wwwph/cso.nist.gov?Query=Arvind+Balijepalli" style=""><u>Contact Us</u></a><br />
+<!-- 
+http://www.nist.gov/cgi-bin/wwwph/cso.nist.gov?Query=Arvind+Balijepalli
+mailto:arvind.balijepalli@nist.gov
+ -->
+<!-- <em><small><br/> National Institute of Standards and Technology<br/>
+ 100 Bureau Drive<br/>
+ Gaithersburg, MD 20899<br/></small></em>
+ -->
+ <br/>
+You can report problems with <em>MOSAIC</em> using the<a class="" href="https://github.com/usnistgov/mosaic/issues" style=""><u>issue tracker.</u></a>
+</p>
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../index.html">MOSAIC 1.0 documentation</a> &raquo;</li>
+          <li><a href="../index.html" >Module code</a> &raquo;</li> 
+      </ul>
+    </div>
+<!-- 
+    <div class="footer">
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.3.
+    </div> -->
+<div class="footer">
+National Institute of Standards and Technology,&nbsp;
+<a href="../../doc/Disclaimer.html"><em>Terms of Use</em></a>
+</div>
+
+  </body>
+</html>

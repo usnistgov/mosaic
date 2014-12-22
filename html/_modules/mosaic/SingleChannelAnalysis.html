@@ -1,0 +1,230 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>mosaic.SingleChannelAnalysis &mdash; MOSAIC 1.0 documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/rtd.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="shortcut icon" href="../../_static/favicon.ico"/>
+    <link rel="top" title="MOSAIC 1.0 documentation" href="../../index.html" />
+    <link rel="up" title="Module code" href="../index.html" />
+ 
+<link href='http://fonts.googleapis.com/css?family=Roboto:100,300,100italic,300italic' rel='stylesheet' type='text/css'>
+
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../index.html">MOSAIC 1.0 documentation</a> &raquo;</li>
+          <li><a href="../index.html" accesskey="U">Module code</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <h1>Source code for mosaic.SingleChannelAnalysis</h1><div class="highlight"><pre>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">	Top level module to run a single channel analysis.</span>
+
+<span class="sd">	:Created:	05/15/2014</span>
+<span class="sd"> 	:Author: 	Arvind Balijepalli &lt;arvind.balijepalli@nist.gov&gt;</span>
+<span class="sd">	:License:	See LICENSE.TXT	</span>
+<span class="sd">	:ChangeLog:</span>
+<span class="sd">	.. line-block::</span>
+<span class="sd">		5/15/14		AB	Initial version</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="n">__docformat__</span> <span class="o">=</span> <span class="s">&#39;restructuredtext&#39;</span>
+
+<span class="kn">import</span> <span class="nn">settings</span>
+<span class="kn">import</span> <span class="nn">multiprocessing</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">signal</span>
+<span class="kn">import</span> <span class="nn">json</span>
+
+<span class="k">def</span> <span class="nf">run_eventpartition</span><span class="p">(</span> <span class="n">trajdataObj</span><span class="p">,</span> <span class="n">eventPartHnd</span><span class="p">,</span> <span class="n">eventProcHnd</span><span class="p">,</span> <span class="n">settingsdict</span><span class="p">):</span>
+	<span class="k">try</span><span class="p">:</span>
+		<span class="k">with</span> <span class="n">eventPartHnd</span><span class="p">(</span>
+							<span class="n">trajdataObj</span><span class="p">,</span> 
+							<span class="n">eventProcHnd</span><span class="p">,</span> 
+							<span class="n">settingsdict</span><span class="o">.</span><span class="n">getSettings</span><span class="p">(</span><span class="n">eventPartHnd</span><span class="o">.</span><span class="n">__name__</span><span class="p">),</span>
+							<span class="n">settingsdict</span><span class="o">.</span><span class="n">getSettings</span><span class="p">(</span><span class="n">eventProcHnd</span><span class="o">.</span><span class="n">__name__</span><span class="p">),</span>
+							<span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">settingsdict</span><span class="o">.</span><span class="n">settingsDict</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+						<span class="p">)</span> <span class="k">as</span> <span class="n">EventPartition</span><span class="p">:</span>
+			<span class="n">EventPartition</span><span class="o">.</span><span class="n">PartitionEvents</span><span class="p">()</span>
+	<span class="k">except</span> <span class="ne">KeyboardInterrupt</span><span class="p">:</span>
+		<span class="k">raise</span>
+
+<div class="viewcode-block" id="SingleChannelAnalysis"><a class="viewcode-back" href="../../api-doc/mosaic.html#mosaic.SingleChannelAnalysis.SingleChannelAnalysis">[docs]</a><span class="k">class</span> <span class="nc">SingleChannelAnalysis</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+	<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">		Run a single channel analysis. This is the entry point class for the analysis.</span>
+
+<span class="sd">		:Parameters:</span>
+<span class="sd">			- `dataPath` : full path to the data directory</span>
+<span class="sd">			- `trajDataHnd` : a handle to an implementation of :class:`~mosaic.metaTrajIO`</span>
+<span class="sd">			- `dataFilterHnd` : a handle to an impementation of :class:`~mosaic.metaIOFilter`</span>
+<span class="sd">			- `eventPartitionHnd` : a handle to a sub-class of :class:`~mosaic.metaEventPartition`</span>
+<span class="sd">			- `eventProcHnd` : a handle to a sub-class of :class:`~mosaic.metaEventProcessor`</span>
+<span class="sd">	&quot;&quot;&quot;</span>
+	<span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dataPath</span><span class="p">,</span> <span class="n">trajDataHnd</span><span class="p">,</span> <span class="n">dataFilterHnd</span><span class="p">,</span> <span class="n">eventPartitionHnd</span><span class="p">,</span> <span class="n">eventProcHnd</span><span class="p">):</span>
+		<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">		&quot;&quot;&quot;</span>
+		<span class="c"># Read and parse the settings file</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">settingsDict</span><span class="o">=</span><span class="n">settings</span><span class="o">.</span><span class="n">settings</span><span class="p">(</span> <span class="n">dataPath</span> <span class="p">)</span>
+
+		<span class="c"># Pull out trajectory settings to construct an IO object</span>
+		<span class="n">trajSettings</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">settingsDict</span><span class="o">.</span><span class="n">getSettings</span><span class="p">(</span><span class="n">trajDataHnd</span><span class="o">.</span><span class="n">__name__</span><span class="p">)</span>
+		
+		<span class="k">if</span> <span class="n">dataFilterHnd</span><span class="p">:</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">trajDataObj</span><span class="o">=</span><span class="n">trajDataHnd</span><span class="p">(</span> <span class="n">datafilter</span><span class="o">=</span><span class="n">dataFilterHnd</span><span class="p">,</span> <span class="n">dirname</span><span class="o">=</span><span class="n">dataPath</span><span class="p">,</span> <span class="o">**</span><span class="n">trajSettings</span> <span class="p">)</span>
+		<span class="k">else</span><span class="p">:</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">trajDataObj</span><span class="o">=</span><span class="n">trajDataHnd</span><span class="p">(</span> <span class="n">dirname</span><span class="o">=</span><span class="n">dataPath</span><span class="p">,</span> <span class="o">**</span><span class="n">trajSettings</span> <span class="p">)</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">eventPartitionHnd</span><span class="o">=</span><span class="n">eventPartitionHnd</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">eventProcHnd</span><span class="o">=</span><span class="n">eventProcHnd</span>
+
+		<span class="bp">self</span><span class="o">.</span><span class="n">subProc</span><span class="o">=</span><span class="bp">None</span>
+
+<div class="viewcode-block" id="SingleChannelAnalysis.Run"><a class="viewcode-back" href="../../api-doc/mosaic.html#mosaic.SingleChannelAnalysis.SingleChannelAnalysis.Run">[docs]</a>	<span class="k">def</span> <span class="nf">Run</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">forkProcess</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
+		<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">			Start an analysis. </span>
+
+<span class="sd">			:Parameters:</span>
+<span class="sd">				- `forkProcess` : start the analysis in a separate process if *True*. This option is useful when the main thread is used for other processing (e.g. GUI implementations).</span>
+<span class="sd">		&quot;&quot;&quot;</span>
+		<span class="k">if</span> <span class="n">forkProcess</span><span class="p">:</span>
+			<span class="k">try</span><span class="p">:</span>
+				<span class="bp">self</span><span class="o">.</span><span class="n">subProc</span> <span class="o">=</span> <span class="n">multiprocessing</span><span class="o">.</span><span class="n">Process</span><span class="p">(</span> 
+						<span class="n">target</span><span class="o">=</span><span class="n">run_eventpartition</span><span class="p">,</span>
+						<span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">trajDataObj</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">eventPartitionHnd</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">eventProcHnd</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">settingsDict</span><span class="p">,)</span>
+					<span class="p">)</span>
+				<span class="bp">self</span><span class="o">.</span><span class="n">subProc</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+				<span class="c"># self.proc.join()</span>
+			<span class="k">except</span><span class="p">:</span>
+				<span class="bp">self</span><span class="o">.</span><span class="n">subProc</span><span class="o">.</span><span class="n">terminate</span><span class="p">()</span>
+				<span class="bp">self</span><span class="o">.</span><span class="n">subProc</span><span class="o">.</span><span class="n">join</span><span class="p">()</span>
+		<span class="k">else</span><span class="p">:</span>
+			<span class="n">run_eventpartition</span><span class="p">(</span> <span class="bp">self</span><span class="o">.</span><span class="n">trajDataObj</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">eventPartitionHnd</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">eventProcHnd</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">settingsDict</span> <span class="p">)</span>
+</div>
+<div class="viewcode-block" id="SingleChannelAnalysis.Stop"><a class="viewcode-back" href="../../api-doc/mosaic.html#mosaic.SingleChannelAnalysis.SingleChannelAnalysis.Stop">[docs]</a>	<span class="k">def</span> <span class="nf">Stop</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+		<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">			Stop a running analysis.</span>
+<span class="sd">		&quot;&quot;&quot;</span>
+		<span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">subProc</span><span class="p">:</span>
+			<span class="n">os</span><span class="o">.</span><span class="n">kill</span><span class="p">(</span> <span class="bp">self</span><span class="o">.</span><span class="n">subProc</span><span class="o">.</span><span class="n">pid</span><span class="p">,</span> <span class="n">signal</span><span class="o">.</span><span class="n">SIGINT</span> <span class="p">)</span>
+		<span class="k">else</span><span class="p">:</span>
+			<span class="n">os</span><span class="o">.</span><span class="n">kill</span><span class="p">(</span> <span class="n">os</span><span class="o">.</span><span class="n">getpid</span><span class="p">(),</span> <span class="n">signal</span><span class="o">.</span><span class="n">SIGINT</span> <span class="p">)</span>
+</div>
+	<span class="nd">@property</span> 
+	<span class="k">def</span> <span class="nf">DataPath</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+		<span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">trajDataObj</span><span class="o">.</span><span class="n">datPath</span>
+</pre></div></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../../index.html">
+              <img class="logo" src="../../_static/icon.png" alt="Logo"/>
+            </a></p>
+<h3><a href="../../index.html">Table Of Contents</a></h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../doc/Introduction.html">1. Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../doc/GettingStarted.html">2. Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../doc/GraphicalInterface.html">3. <em>MOSAIC</em> GUI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../doc/ScriptingandAdvancedFeatures.html">4. Scripting and Advanced Features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../doc/settingsFile.html">5. Settings File</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../doc/DatabaseStructure.html">6. Database Structure and Query Syntax</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../doc/Extend.html">7. Extend <em>MOSAIC</em></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../doc/Addons.html">8. Addons</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../doc/examples.html">9. Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../doc/apidocs.html">10. API Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../doc/ChangeLog.html">11. Change Log</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../doc/References.html">12. Bibliography</a></li>
+</ul>
+
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script><h3 class="searchheading" align="left">Questions/Suggestions</h3>
+<div class="sphinxsidebarsection" align="left">
+<p />
+<p class="logo">
+<a href="http://www.nist.gov/cgi-bin/wwwph/cso.nist.gov?Query=Arvind+Balijepalli" style=""><u>Contact Us</u></a><br />
+<!-- 
+http://www.nist.gov/cgi-bin/wwwph/cso.nist.gov?Query=Arvind+Balijepalli
+mailto:arvind.balijepalli@nist.gov
+ -->
+<!-- <em><small><br/> National Institute of Standards and Technology<br/>
+ 100 Bureau Drive<br/>
+ Gaithersburg, MD 20899<br/></small></em>
+ -->
+ <br/>
+You can report problems with <em>MOSAIC</em> using the<a class="" href="https://github.com/usnistgov/mosaic/issues" style=""><u>issue tracker.</u></a>
+</p>
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../index.html">MOSAIC 1.0 documentation</a> &raquo;</li>
+          <li><a href="../index.html" >Module code</a> &raquo;</li> 
+      </ul>
+    </div>
+<!-- 
+    <div class="footer">
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.3.
+    </div> -->
+<div class="footer">
+National Institute of Standards and Technology,&nbsp;
+<a href="../../doc/Disclaimer.html"><em>Terms of Use</em></a>
+</div>
+
+  </body>
+</html>

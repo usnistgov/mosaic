@@ -1,0 +1,458 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>mosaic.sqlite3MDIO &mdash; MOSAIC 1.0 documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/rtd.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="shortcut icon" href="../../_static/favicon.ico"/>
+    <link rel="top" title="MOSAIC 1.0 documentation" href="../../index.html" />
+    <link rel="up" title="Module code" href="../index.html" />
+ 
+<link href='http://fonts.googleapis.com/css?family=Roboto:100,300,100italic,300italic' rel='stylesheet' type='text/css'>
+
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../index.html">MOSAIC 1.0 documentation</a> &raquo;</li>
+          <li><a href="../index.html" accesskey="U">Module code</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <h1>Source code for mosaic.sqlite3MDIO</h1><div class="highlight"><pre>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">	A class that extends metaMDIO to implement SQLite support for metadata storage.</span>
+
+<span class="sd">	:Created:	9/28/2014</span>
+<span class="sd"> 	:Author: 	Arvind Balijepalli &lt;arvind.balijepalli@nist.gov&gt;</span>
+<span class="sd">	:License:	See LICENSE.TXT</span>
+<span class="sd">	:ChangeLog:</span>
+<span class="sd">	.. line-block::</span>
+<span class="sd">		11/9/14 	AB  Implemented the analysis log I/O interface for sqlite3 databases.</span>
+<span class="sd">		9/28/14		AB 	Initial version</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+
+<span class="kn">import</span> <span class="nn">sqlite3</span>
+<span class="kn">import</span> <span class="nn">base64</span>
+<span class="kn">import</span> <span class="nn">struct</span>
+<span class="kn">import</span> <span class="nn">datetime</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span>
+<span class="kn">import</span> <span class="nn">metaMDIO</span>
+<span class="kn">from</span> <span class="nn">mosaic.utilities.resource_path</span> <span class="kn">import</span> <span class="n">resource_path</span><span class="p">,</span> <span class="n">format_path</span>
+
+<div class="viewcode-block" id="data_record"><a class="viewcode-back" href="../../api-doc/mosaic.output.html#mosaic.sqlite3MDIO.data_record">[docs]</a><span class="k">class</span> <span class="nc">data_record</span><span class="p">(</span><span class="nb">dict</span><span class="p">):</span>
+	<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">		Smart data record structure that automatically encodes/decodes data for storage</span>
+<span class="sd">		in a sqlite3 DB.</span>
+<span class="sd">	&quot;&quot;&quot;</span>
+	<span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data_label</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">data_t</span><span class="p">):</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">update</span><span class="p">(</span> <span class="nb">dict</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span> <span class="n">data_label</span><span class="p">,</span> <span class="nb">zip</span><span class="p">(</span><span class="n">data_t</span><span class="p">,</span> <span class="n">data</span><span class="p">)))</span> <span class="p">)</span>
+
+		<span class="bp">self</span><span class="o">.</span><span class="n">dtypes</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span> <span class="nb">zip</span><span class="p">(</span><span class="n">data_label</span><span class="p">,</span> <span class="n">data_t</span><span class="p">)</span> <span class="p">)</span>
+
+	<span class="k">def</span> <span class="nf">__setitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">val</span><span class="p">):</span>
+		<span class="n">dat</span><span class="o">=</span><span class="n">val</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+
+		<span class="k">if</span> <span class="n">val</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s">&#39;_LIST&#39;</span><span class="p">):</span>
+			<span class="k">if</span> <span class="n">val</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">==</span><span class="s">&#39;REAL_LIST&#39;</span><span class="p">:</span>
+				<span class="p">(</span><span class="n">packstr</span><span class="p">,</span> <span class="nb">bytes</span><span class="p">)</span> <span class="o">=</span> <span class="p">(</span><span class="s">&#39;</span><span class="si">%s</span><span class="s">d&#39;</span><span class="p">,</span> <span class="mi">8</span><span class="p">)</span>
+			<span class="k">elif</span> <span class="n">val</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">==</span><span class="s">&#39;INTEGER_LIST&#39;</span><span class="p">:</span>
+				<span class="p">(</span><span class="n">packstr</span><span class="p">,</span> <span class="nb">bytes</span><span class="p">)</span> <span class="o">=</span> <span class="p">(</span><span class="s">&#39;</span><span class="si">%s</span><span class="s">i&#39;</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+
+			<span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">val</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="nb">unicode</span><span class="p">):</span>
+				<span class="n">decoded_data</span><span class="o">=</span><span class="n">base64</span><span class="o">.</span><span class="n">b64decode</span><span class="p">(</span><span class="n">val</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+				<span class="n">dat</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">struct</span><span class="o">.</span><span class="n">unpack</span><span class="p">(</span> <span class="n">packstr</span> <span class="o">%</span> <span class="nb">int</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">decoded_data</span><span class="p">)</span><span class="o">/</span><span class="nb">bytes</span><span class="p">),</span> <span class="n">decoded_data</span> <span class="p">))</span>
+			<span class="k">else</span><span class="p">:</span>
+				<span class="n">dat</span> <span class="o">=</span> <span class="n">base64</span><span class="o">.</span><span class="n">b64encode</span><span class="p">(</span><span class="n">struct</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span> <span class="n">packstr</span> <span class="o">%</span> <span class="nb">len</span><span class="p">(</span><span class="n">val</span><span class="p">[</span><span class="mi">1</span><span class="p">]),</span> <span class="o">*</span><span class="n">val</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="p">))</span>
+
+		<span class="nb">dict</span><span class="o">.</span><span class="n">__setitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">dat</span><span class="p">)</span>
+
+	<span class="k">def</span> <span class="nf">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
+		<span class="k">return</span> <span class="nb">dict</span><span class="o">.</span><span class="n">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">)</span>
+
+	<span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+		<span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="nb">dict</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
+			<span class="bp">self</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">v</span>
+</div>
+<div class="viewcode-block" id="sqlite3MDIO"><a class="viewcode-back" href="../../api-doc/mosaic.output.html#mosaic.sqlite3MDIO.sqlite3MDIO">[docs]</a><span class="k">class</span> <span class="nc">sqlite3MDIO</span><span class="p">(</span><span class="n">metaMDIO</span><span class="o">.</span><span class="n">metaMDIO</span><span class="p">):</span>
+	<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">	&quot;&quot;&quot;</span>
+	<span class="k">def</span> <span class="nf">_initdb</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+		<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">			Initialize the database tables</span>
+<span class="sd">			</span>
+<span class="sd">			Args:</span>
+<span class="sd">				tableName   name of database table. Default is &#39;metadata&#39;</span>
+<span class="sd">		&quot;&quot;&quot;</span>
+		<span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s">&#39;tableName&#39;</span><span class="p">):</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">tableName</span><span class="o">=</span><span class="s">&#39;metadata&#39;</span>
+		<span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s">&#39;colNames&#39;</span><span class="p">):</span>
+			<span class="k">raise</span> <span class="n">metaMDIO</span><span class="o">.</span><span class="n">InsufficientArgumentsError</span><span class="p">(</span><span class="s">&quot;Missing arguments: &#39;colNames&#39; must be supplied to initialize {0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__name__</span><span class="p">))</span>
+		<span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s">&#39;colNames_t&#39;</span><span class="p">):</span>
+			<span class="k">raise</span> <span class="n">metaMDIO</span><span class="o">.</span><span class="n">InsufficientArgumentsError</span><span class="p">(</span><span class="s">&quot;Missing arguments: &#39;colNames_t&#39; must be supplied to initialize {0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__name__</span><span class="p">))</span>
+
+		<span class="n">dbTimeout</span><span class="o">=</span><span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s">&#39;timeout&#39;</span><span class="p">,</span> <span class="mf">11.0</span><span class="p">)</span>
+
+		<span class="bp">self</span><span class="o">.</span><span class="n">dbFilename</span><span class="o">=</span><span class="n">format_path</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dbPath</span><span class="o">+</span><span class="s">&#39;/&#39;</span><span class="o">+</span><span class="s">&#39;eventMD-&#39;</span> <span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s">&#39;%Y%m</span><span class="si">%d</span><span class="s">-%H%M%S&#39;</span><span class="p">))</span><span class="o">+</span><span class="s">&#39;.sqlite&#39;</span><span class="p">)</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">db</span> <span class="o">=</span> <span class="n">sqlite3</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dbFilename</span><span class="p">,</span> <span class="n">detect_types</span><span class="o">=</span><span class="n">sqlite3</span><span class="o">.</span><span class="n">PARSE_DECLTYPES</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="n">dbTimeout</span><span class="p">)</span>
+
+		<span class="bp">self</span><span class="o">.</span><span class="n">_setuptables</span><span class="p">()</span>
+
+	<span class="k">def</span> <span class="nf">_opendb</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dbname</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+		<span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s">&#39;tableName&#39;</span><span class="p">):</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">tableName</span><span class="o">=</span><span class="s">&#39;metadata&#39;</span>
+
+		<span class="c"># colnames and colname types are needed for appending data. If they are not passed</span>
+		<span class="c"># as arguments, no exception is raised. In the future this can be retrieved from the </span>
+		<span class="c"># metadata_t table in the db.</span>
+		<span class="k">try</span><span class="p">:</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">colNames</span><span class="o">=</span><span class="n">kwargs</span><span class="p">[</span><span class="s">&#39;colNames&#39;</span><span class="p">]</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">colNames_t</span><span class="o">=</span><span class="n">kwargs</span><span class="p">[</span><span class="s">&#39;colNames_t&#39;</span><span class="p">]</span>
+		<span class="k">except</span><span class="p">:</span>
+			<span class="k">pass</span>
+		
+		<span class="c"># if not hasattr(self, &#39;colNames_t&#39;):</span>
+		<span class="c"># 	raise metaMDIO.InsufficientArgumentsError(&quot;Missing arguments: &#39;colNames_t&#39; must be supplied to initialize {0}&quot;.format(type(self).__name__))</span>
+		
+		<span class="bp">self</span><span class="o">.</span><span class="n">db</span> <span class="o">=</span> <span class="n">sqlite3</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">dbname</span><span class="p">,</span> <span class="n">detect_types</span><span class="o">=</span><span class="n">sqlite3</span><span class="o">.</span><span class="n">PARSE_DECLTYPES</span><span class="p">)</span>
+		
+		<span class="bp">self</span><span class="o">.</span><span class="n">_setuptables</span><span class="p">()</span>
+
+	<span class="k">def</span> <span class="nf">closeDB</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+		
+	<span class="k">def</span> <span class="nf">writeRecord</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">table</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+		<span class="k">if</span> <span class="ow">not</span> <span class="n">table</span><span class="p">:</span>
+			<span class="n">tabname</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">tableName</span>
+			<span class="n">cols</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">colNames</span>
+		<span class="k">else</span><span class="p">:</span>
+			<span class="n">tabname</span><span class="o">=</span><span class="n">table</span>
+			<span class="n">cols</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_colnames</span><span class="p">(</span><span class="n">table</span><span class="p">)</span>
+
+		<span class="n">placeholders_list</span><span class="o">=</span><span class="s">&#39;,&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="s">&#39;?&#39;</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">))])</span>
+
+		<span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="p">:</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span>	<span class="s">&#39;INSERT INTO &#39;</span> <span class="o">+</span> 
+						<span class="n">tabname</span> <span class="o">+</span> 
+						<span class="s">&#39;(&#39;</span><span class="o">+</span><span class="s">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">cols</span><span class="p">)</span><span class="o">+</span><span class="s">&#39;) VALUES(&#39;</span><span class="o">+</span>
+						<span class="n">placeholders_list</span><span class="o">+</span><span class="s">&#39;)&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_datalist</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+					<span class="p">)</span>
+	<span class="k">def</span> <span class="nf">writeSettings</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">settingsstring</span><span class="p">):</span>
+		<span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="p">:</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span> <span class="s">&#39;INSERT INTO analysissettings VALUES(?, ?)&#39;</span><span class="p">,</span> <span class="p">(</span><span class="n">settingsstring</span><span class="p">,</span> <span class="bp">None</span><span class="p">,)</span> <span class="p">)</span>
+
+	<span class="k">def</span> <span class="nf">writeAnalysisInfo</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">infolist</span><span class="p">):</span>
+		<span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="p">:</span>
+			<span class="c"># allow only one entry in this table</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s">&#39;DELETE FROM analysislog&#39;</span><span class="p">)</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span> <span class="s">&#39;INSERT INTO analysisinfo VALUES(?, ?, ?, ?, ?, ?)&#39;</span><span class="p">,</span>  <span class="p">(</span><span class="n">infolist</span><span class="o">+</span><span class="p">[</span><span class="bp">None</span><span class="p">]))</span>
+
+
+	<span class="k">def</span> <span class="nf">writeAnalysisLog</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">analysislog</span><span class="p">):</span>
+		<span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="p">:</span>
+			<span class="c"># first delete any old records because we want analysis log to only have one entry.</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s">&#39;DELETE FROM analysislog&#39;</span><span class="p">)</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span> <span class="s">&#39;INSERT INTO analysislog VALUES(?, ?)&#39;</span><span class="p">,</span> <span class="p">(</span><span class="n">analysislog</span><span class="p">,</span> <span class="bp">None</span><span class="p">,)</span> <span class="p">)</span>
+
+	<span class="k">def</span> <span class="nf">readSettings</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+		<span class="k">try</span><span class="p">:</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
+			<span class="n">c</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">cursor</span><span class="p">()</span>
+
+			<span class="n">c</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span> <span class="s">&#39;select settings from analysissettings&#39;</span> <span class="p">)</span>
+			<span class="n">settstr</span><span class="o">=</span><span class="n">c</span><span class="o">.</span><span class="n">fetchall</span><span class="p">()</span>
+			
+			<span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="n">settstr</span><span class="p">[</span><span class="mi">0</span><span class="p">])[</span><span class="mi">0</span><span class="p">]</span>
+			<span class="c"># return base64.b64decode(list(settstr[0])[0])</span>
+		<span class="k">except</span> <span class="n">sqlite3</span><span class="o">.</span><span class="n">OperationalError</span><span class="p">,</span> <span class="n">err</span><span class="p">:</span>
+			<span class="k">raise</span>
+		
+	<span class="k">def</span> <span class="nf">readAnalysisLog</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+		<span class="k">try</span><span class="p">:</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
+			<span class="n">c</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">cursor</span><span class="p">()</span>
+
+			<span class="n">c</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span> <span class="s">&#39;select logstring from analysislog&#39;</span> <span class="p">)</span>
+			<span class="n">settstr</span><span class="o">=</span><span class="n">c</span><span class="o">.</span><span class="n">fetchall</span><span class="p">()</span>
+			
+			<span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="n">settstr</span><span class="p">[</span><span class="mi">0</span><span class="p">])[</span><span class="mi">0</span><span class="p">]</span>
+			<span class="c"># return base64.b64decode(list(settstr[0])[0])</span>
+		<span class="k">except</span> <span class="n">sqlite3</span><span class="o">.</span><span class="n">OperationalError</span><span class="p">,</span> <span class="n">err</span><span class="p">:</span>
+			<span class="k">raise</span>
+
+
+	<span class="k">def</span> <span class="nf">readAnalysisInfo</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+		<span class="k">try</span><span class="p">:</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
+			<span class="n">c</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">cursor</span><span class="p">()</span>
+
+			<span class="n">c</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span> <span class="s">&#39;select * from analysisinfo&#39;</span> <span class="p">)</span>
+			<span class="n">infolist</span><span class="o">=</span><span class="n">c</span><span class="o">.</span><span class="n">fetchall</span><span class="p">()</span>
+			
+			<span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="n">infolist</span><span class="p">[</span><span class="mi">0</span><span class="p">])[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+			<span class="c"># return base64.b64decode(list(settstr[0])[0])</span>
+		<span class="k">except</span> <span class="n">sqlite3</span><span class="o">.</span><span class="n">OperationalError</span><span class="p">,</span> <span class="n">err</span><span class="p">:</span>
+			<span class="k">raise</span>
+
+
+	<span class="k">def</span> <span class="nf">queryDB</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">query</span><span class="p">):</span>
+		<span class="k">try</span><span class="p">:</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
+			<span class="n">c</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">cursor</span><span class="p">()</span>
+
+			<span class="n">colnames</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_col_names</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">tableName</span><span class="p">)</span>
+			<span class="n">colnames_t</span><span class="o">=</span><span class="nb">list</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">c</span><span class="p">)</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="p">(</span><span class="n">c</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span> <span class="s">&#39;select &#39;</span><span class="o">+</span><span class="s">&#39;,&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">colnames</span><span class="p">)</span><span class="o">+</span><span class="s">&#39; from &#39;</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">tableName</span><span class="o">+</span><span class="s">&#39;_t&#39;</span> <span class="p">)</span><span class="o">.</span><span class="n">fetchall</span><span class="p">())[</span><span class="mi">0</span><span class="p">])</span>
+
+			<span class="n">c</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">query</span><span class="p">))</span>
+		
+			<span class="k">return</span> <span class="p">[</span> <span class="bp">self</span><span class="o">.</span><span class="n">_decoderecord</span><span class="p">(</span><span class="n">colnames</span><span class="p">,</span> <span class="n">colnames_t</span><span class="p">,</span> <span class="n">rec</span><span class="p">)</span> <span class="k">for</span> <span class="n">rec</span> <span class="ow">in</span> <span class="n">c</span><span class="o">.</span><span class="n">fetchall</span><span class="p">()</span> <span class="p">]</span>
+		<span class="k">except</span> <span class="n">sqlite3</span><span class="o">.</span><span class="n">OperationalError</span><span class="p">,</span> <span class="n">err</span><span class="p">:</span>
+			<span class="k">raise</span>
+
+	<span class="k">def</span> <span class="nf">_colnames</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">table</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+		<span class="k">if</span> <span class="n">table</span><span class="p">:</span>
+			<span class="n">tname</span><span class="o">=</span><span class="n">table</span>
+		<span class="k">else</span><span class="p">:</span>
+			<span class="n">tname</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">tableName</span><span class="o">+</span><span class="s">&#39;_t&#39;</span>
+		<span class="n">c</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">cursor</span><span class="p">()</span>
+
+		<span class="k">return</span> <span class="p">[</span> <span class="nb">str</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">c</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s">&#39;PRAGMA table_info(&#39;</span><span class="o">+</span><span class="n">tname</span><span class="o">+</span><span class="s">&#39;)&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">fetchall</span><span class="p">()</span> <span class="p">]</span>
+
+	<span class="k">def</span> <span class="nf">_coltypes</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">table</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+		<span class="k">if</span> <span class="n">table</span><span class="p">:</span>
+			<span class="n">tname</span><span class="o">=</span><span class="n">table</span>
+		<span class="k">else</span><span class="p">:</span>
+			<span class="n">tname</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">tableName</span><span class="o">+</span><span class="s">&#39;_t&#39;</span>
+
+		<span class="n">c</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">cursor</span><span class="p">()</span>
+		<span class="k">return</span> <span class="p">(</span><span class="n">c</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s">&#39;SELECT * from &#39;</span><span class="o">+</span><span class="n">tname</span><span class="p">)</span><span class="o">.</span><span class="n">fetchall</span><span class="p">())[</span><span class="mi">0</span><span class="p">]</span>
+
+	<span class="k">def</span> <span class="nf">_col_names</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">query</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">tablename</span><span class="p">):</span>
+			<span class="n">cols</span><span class="o">=</span><span class="p">[]</span>
+			<span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">query</span><span class="o">.</span><span class="n">split</span><span class="p">()[</span><span class="mi">1</span><span class="p">:]:</span>
+				<span class="k">if</span> <span class="n">word</span> <span class="o">==</span> <span class="s">&#39;from&#39;</span><span class="p">:</span>
+					<span class="k">break</span>
+				
+				<span class="n">cols</span><span class="o">+=</span><span class="p">[</span><span class="n">word</span><span class="p">]</span>
+
+			<span class="n">c1</span><span class="o">=</span><span class="p">[</span> <span class="n">c</span><span class="o">.</span><span class="n">rstrip</span><span class="p">(</span><span class="s">&#39;,&#39;</span><span class="p">)</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">cols</span> <span class="p">]</span>
+			<span class="k">if</span> <span class="n">c1</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">==</span><span class="s">&#39;*&#39;</span><span class="p">:</span>
+				<span class="k">return</span> <span class="p">[</span> <span class="nb">str</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">c</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s">&#39;PRAGMA table_info(&#39;</span><span class="o">+</span><span class="n">tablename</span><span class="o">+</span><span class="s">&#39;_t)&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">fetchall</span><span class="p">()</span> <span class="p">]</span>
+			<span class="k">else</span><span class="p">:</span>
+				<span class="k">return</span> <span class="n">c1</span>
+
+	<span class="k">def</span> <span class="nf">_setuptables</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+		<span class="n">c</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">cursor</span><span class="p">()</span>
+		
+		<span class="c"># check to see if tables exist</span>
+		<span class="n">tables</span><span class="o">=</span><span class="p">[]</span>
+		<span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">c</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s">&quot;SELECT name FROM sqlite_master WHERE type=&#39;table&#39;&quot;</span><span class="p">):</span>
+			<span class="n">tables</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">row</span><span class="p">)</span>
+
+		
+		<span class="c"># create a new table for event meta-data</span>
+		<span class="k">if</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tableName</span><span class="p">,)</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">tables</span><span class="p">:</span>
+			<span class="n">c</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span> 
+				<span class="s">&#39;create table &#39;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">tableName</span> <span class="o">+</span> 
+				<span class="s">&#39; ( recIDX INTEGER PRIMARY KEY AUTOINCREMENT, &#39;</span> <span class="o">+</span> 
+				<span class="bp">self</span><span class="o">.</span><span class="n">_sqltypes</span><span class="p">()</span> <span class="o">+</span> <span class="s">&#39; );&#39;</span> 
+			<span class="p">)</span>
+			<span class="c"># create a second table with native types and store them</span>
+			<span class="n">c</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s">&#39;create table &#39;</span><span class="o">+</span>
+				<span class="bp">self</span><span class="o">.</span><span class="n">tableName</span><span class="o">+</span><span class="s">&#39;_t&#39;</span><span class="o">+</span>
+				<span class="s">&#39; (&#39;</span><span class="o">+</span><span class="s">&#39;recIDX TEXT, &#39;</span><span class="o">+</span> 
+				<span class="s">&#39;,&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">k</span><span class="o">+</span><span class="s">&#39; TEXT&#39;</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">colNames</span><span class="p">)</span> <span class="o">+</span>
+				<span class="s">&#39;, PRIMARY KEY (recIDX)&#39;</span><span class="o">+</span><span class="s">&#39;)&#39;</span>
+			<span class="p">)</span>
+			<span class="n">placeholders_list</span><span class="o">=</span><span class="s">&#39;,&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="s">&#39;?&#39;</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">colNames</span><span class="p">)</span><span class="o">+</span><span class="mi">1</span><span class="p">)])</span>
+			<span class="n">c</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span>	<span class="s">&#39;INSERT INTO &#39;</span> <span class="o">+</span> 
+					<span class="bp">self</span><span class="o">.</span><span class="n">tableName</span><span class="o">+</span><span class="s">&#39;_t&#39;</span> <span class="o">+</span> 
+					<span class="s">&#39;(recIDX, &#39;</span><span class="o">+</span><span class="s">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">colNames</span><span class="p">)</span><span class="o">+</span><span class="s">&#39;) VALUES(&#39;</span><span class="o">+</span>
+					<span class="n">placeholders_list</span><span class="o">+</span><span class="s">&#39;)&#39;</span><span class="p">,</span> <span class="p">(</span><span class="s">&#39;REAL&#39;</span><span class="p">,)</span><span class="o">+</span><span class="nb">tuple</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">colNames_t</span><span class="p">)</span>
+				<span class="p">)</span>
+
+			<span class="c"># create a table that stores global info about the analysis</span>
+			<span class="c"># data path, data type, partition/processing algorithms etc</span>
+			<span class="n">c</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s">&quot;create table analysisinfo ( </span><span class="se">\</span>
+<span class="s">					datPath TEXT, </span><span class="se">\</span>
+<span class="s">					dataType TEXT, </span><span class="se">\</span>
+<span class="s">					partitionAlgorithm TEXT, </span><span class="se">\</span>
+<span class="s">					processingAlgorithm TEXT, </span><span class="se">\</span>
+<span class="s">					filteringAlgorithm TEXT, </span><span class="se">\</span>
+<span class="s">					recIDX INTEGER PRIMARY KEY AUTOINCREMENT </span><span class="se">\</span>
+<span class="s">				)&quot;</span><span class="p">)</span>
+
+			<span class="c"># create a table to store the analysis settings string in JSON format</span>
+			<span class="c"># No validation of the data is performed when storing this string.</span>
+			<span class="n">c</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s">&quot;create table analysissettings ( </span><span class="se">\</span>
+<span class="s">					settings TEXT, </span><span class="se">\</span>
+<span class="s">					recIDX INTEGER PRIMARY KEY AUTOINCREMENT </span><span class="se">\</span>
+<span class="s">				)&quot;</span><span class="p">)</span>
+
+			<span class="c"># create a table to store the analysis output log.</span>
+			<span class="n">c</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s">&quot;create table analysislog ( </span><span class="se">\</span>
+<span class="s">					logstring TEXT, </span><span class="se">\</span>
+<span class="s">					recIDX INTEGER PRIMARY KEY AUTOINCREMENT </span><span class="se">\</span>
+<span class="s">				)&quot;</span><span class="p">)</span>
+
+			<span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
+
+	<span class="k">def</span> <span class="nf">_sqltypes</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+		<span class="n">sqlstring</span><span class="o">=</span><span class="p">[]</span>
+		<span class="k">for</span> <span class="p">(</span><span class="n">k</span><span class="p">,</span><span class="n">v</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">colNames</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">colNames_t</span><span class="p">):</span>
+			<span class="k">if</span> <span class="n">v</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s">&#39;_LIST&#39;</span><span class="p">):</span>
+				<span class="n">sqlstring</span><span class="o">.</span><span class="n">append</span><span class="p">(</span> <span class="nb">str</span><span class="p">(</span><span class="n">k</span><span class="p">)</span><span class="o">+</span><span class="s">&#39; BLOB&#39;</span> <span class="p">)</span>
+			<span class="k">else</span><span class="p">:</span>
+				<span class="n">sqlstring</span><span class="o">.</span><span class="n">append</span><span class="p">(</span> <span class="nb">str</span><span class="p">(</span><span class="n">k</span><span class="p">)</span><span class="o">+</span><span class="s">&#39; &#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">v</span><span class="p">)</span> <span class="p">)</span>
+
+		<span class="k">return</span> <span class="s">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">sqlstring</span><span class="p">)</span>
+
+	<span class="k">def</span> <span class="nf">_datalist</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+		<span class="c"># recidx=self._generateRecordKey()</span>
+		<span class="n">d</span><span class="o">=</span><span class="n">data_record</span><span class="p">(</span> <span class="bp">self</span><span class="o">.</span><span class="n">colNames</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">colNames_t</span> <span class="p">)</span>
+		<span class="k">return</span>  <span class="nb">tuple</span><span class="p">(</span> <span class="p">[</span> <span class="n">d</span><span class="p">[</span><span class="n">col</span><span class="p">]</span> <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">colNames</span> <span class="p">]</span> <span class="p">)</span>
+		
+	<span class="k">def</span> <span class="nf">_decoderecord</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">colnames</span><span class="p">,</span> <span class="n">colnames_t</span><span class="p">,</span> <span class="n">rec</span><span class="p">):</span>
+		<span class="n">d</span><span class="o">=</span><span class="n">data_record</span><span class="p">(</span> <span class="n">colnames</span><span class="p">,</span> <span class="n">rec</span><span class="p">,</span> <span class="n">colnames_t</span> <span class="p">)</span>
+		<span class="k">return</span> <span class="p">[</span> <span class="n">d</span><span class="p">[</span><span class="n">col</span><span class="p">]</span> <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">colnames</span> <span class="p">]</span>
+</div>
+<span class="k">if</span> <span class="n">__name__</span><span class="o">==</span><span class="s">&quot;__main__&quot;</span><span class="p">:</span>
+	<span class="n">dbname</span><span class="o">=</span><span class="n">resource_path</span><span class="p">(</span><span class="s">&#39;eventMD-PEG29-Reference.sqlite&#39;</span><span class="p">)</span>
+
+	<span class="n">c</span><span class="o">=</span><span class="n">sqlite3MDIO</span><span class="p">()</span>
+	<span class="n">c</span><span class="o">.</span><span class="n">openDB</span><span class="p">(</span><span class="n">dbname</span><span class="p">)</span>
+
+	<span class="kn">import</span> <span class="nn">time</span>
+
+	<span class="n">t1</span><span class="o">=</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+	<span class="n">q</span><span class="o">=</span><span class="n">c</span><span class="o">.</span><span class="n">queryDB</span><span class="p">(</span> <span class="s">&quot;select TimeSeries from metadata limit 100, 200&quot;</span> <span class="p">)</span>
+	<span class="n">t2</span><span class="o">=</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+
+	<span class="k">print</span> <span class="s">&quot;Timing: &quot;</span><span class="p">,</span> <span class="nb">round</span><span class="p">((</span><span class="n">t2</span><span class="o">-</span><span class="n">t1</span><span class="p">)</span><span class="o">*</span><span class="mi">1000</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="s">&quot; ms&quot;</span>
+	<span class="k">print</span> <span class="s">&quot;Results:&quot;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">q</span><span class="p">)</span>
+
+	<span class="k">print</span> <span class="n">c</span><span class="o">.</span><span class="n">readSettings</span><span class="p">()</span>
+	<span class="k">print</span> <span class="n">c</span><span class="o">.</span><span class="n">readAnalysisLog</span><span class="p">()</span>
+	<span class="k">print</span> <span class="n">c</span><span class="o">.</span><span class="n">readAnalysisInfo</span><span class="p">()</span>
+
+	<span class="k">print</span> <span class="nb">zip</span><span class="p">(</span> <span class="n">c</span><span class="o">.</span><span class="n">mdColumnNames</span><span class="p">,</span> <span class="n">c</span><span class="o">.</span><span class="n">mdColumnTypes</span> <span class="p">)</span>
+	<span class="k">print</span>
+	<span class="k">print</span> <span class="p">[</span> <span class="n">c</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span> <span class="n">c</span><span class="o">.</span><span class="n">mdColumnNames</span><span class="p">,</span> <span class="n">c</span><span class="o">.</span><span class="n">mdColumnTypes</span> <span class="p">)</span> <span class="k">if</span> <span class="n">c</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">!=</span> <span class="s">&#39;REAL_LIST&#39;</span> <span class="p">]</span>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../../index.html">
+              <img class="logo" src="../../_static/icon.png" alt="Logo"/>
+            </a></p>
+<h3><a href="../../index.html">Table Of Contents</a></h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../doc/Introduction.html">1. Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../doc/GettingStarted.html">2. Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../doc/GraphicalInterface.html">3. <em>MOSAIC</em> GUI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../doc/ScriptingandAdvancedFeatures.html">4. Scripting and Advanced Features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../doc/settingsFile.html">5. Settings File</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../doc/DatabaseStructure.html">6. Database Structure and Query Syntax</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../doc/Extend.html">7. Extend <em>MOSAIC</em></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../doc/Addons.html">8. Addons</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../doc/examples.html">9. Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../doc/apidocs.html">10. API Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../doc/ChangeLog.html">11. Change Log</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../doc/References.html">12. Bibliography</a></li>
+</ul>
+
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script><h3 class="searchheading" align="left">Questions/Suggestions</h3>
+<div class="sphinxsidebarsection" align="left">
+<p />
+<p class="logo">
+<a href="http://www.nist.gov/cgi-bin/wwwph/cso.nist.gov?Query=Arvind+Balijepalli" style=""><u>Contact Us</u></a><br />
+<!-- 
+http://www.nist.gov/cgi-bin/wwwph/cso.nist.gov?Query=Arvind+Balijepalli
+mailto:arvind.balijepalli@nist.gov
+ -->
+<!-- <em><small><br/> National Institute of Standards and Technology<br/>
+ 100 Bureau Drive<br/>
+ Gaithersburg, MD 20899<br/></small></em>
+ -->
+ <br/>
+You can report problems with <em>MOSAIC</em> using the<a class="" href="https://github.com/usnistgov/mosaic/issues" style=""><u>issue tracker.</u></a>
+</p>
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../index.html">MOSAIC 1.0 documentation</a> &raquo;</li>
+          <li><a href="../index.html" >Module code</a> &raquo;</li> 
+      </ul>
+    </div>
+<!-- 
+    <div class="footer">
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.3.
+    </div> -->
+<div class="footer">
+National Institute of Standards and Technology,&nbsp;
+<a href="../../doc/Disclaimer.html"><em>Terms of Use</em></a>
+</div>
+
+  </body>
+</html>

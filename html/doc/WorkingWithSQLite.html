@@ -1,0 +1,164 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Work with SQLite &mdash; MOSAIC 1.0 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/rtd.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="top" title="MOSAIC 1.0 documentation" href="../index.html" />
+ 
+<link href='http://fonts.googleapis.com/css?family=Roboto:100,300,100italic,300italic' rel='stylesheet' type='text/css'>
+
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../index.html">MOSAIC 1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="work-with-sqlite">
+<span id="working-with-sqlite-sec"></span><h1>Work with SQLite<a class="headerlink" href="#work-with-sqlite" title="Permalink to this headline">¶</a></h1>
+<p><em>MOSAIC</em> stores the output of an analysis in a SQLite database as described in the <a class="reference internal" href="DatabaseStructure.html#database-page"><em>Database Structure and Query Syntax</em></a> section. Interacting with the data through the <a class="reference external" href="http://en.wikipedia.org/wiki/SQL">Structured Query Language (SQL)</a> is a flexible approach to further analyze or plot the output. Here we provide a few detailed examples of the common ways in which the output of <em>MOSAIC</em> can be queried for further processing.</p>
+<p>SQL queries are run using the <em>select</em> command. In its simplest form, a query can return the entire contents of a table using the syntax below. The statement below selects all columns <em>(select *)</em> from the table specified by <em>&lt;tablename&gt;</em>.</p>
+<div class="highlight-sql"><div class="highlight"><pre><span class="k">select</span> <span class="o">*</span> <span class="k">from</span> <span class="o">&lt;</span><span class="n">tablename</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+<p>The power of SQL lies in its ability to restrict results to match specific criteria. This is accomplished with the <em>where</em> clause described next. SQL queries can be very fast event for large databases.</p>
+<p>It is often desirable to only include events that were successfully fit in a plot or other analysis. All <em class="xref std std-ref">eventprocess-page</em> algorithms implemented in <em>MOSAIC</em> store a <em>ProcessingStatus</em> column in the output database. This enables one to easily query events that were successfully processed. This is easily accomplished with the query below, which returns all columns for events that were successfully processed (<em>ProcessingStatus=normal</em>).</p>
+<div class="highlight-sql"><div class="highlight"><pre><span class="k">select</span> <span class="o">*</span> <span class="k">from</span> <span class="n">metadata</span> <span class="k">where</span> <span class="n">ProcessingStatus</span><span class="o">=</span><span class="s1">&#39;normal&#39;</span>
+</pre></div>
+</div>
+<p>It is not always necessary to retrieve every column for events that fit a certain criteria. For example, <em class="xref std std-ref">gui-blockdepth-sec</em> in the GUI displays a histogram of the blockade depths that match a user specified criteria. This is accomplished within the GUI by a query similar to the one shown below. There are two important differences between the query below and previous examples: i) by replacing * with <em>BlockDepth</em>, we only retrieve the <em>BlockDepth</em> column for events that meet the criteria specified after the <em>where</em> clause, and ii) selection criteria specified after where can be nested as seen further with the examples below.</p>
+<div class="highlight-sql"><div class="highlight"><pre><span class="k">select</span> <span class="n">BlockDepth</span> <span class="k">from</span> <span class="n">metadata</span> <span class="k">where</span> <span class="n">ProcessingStatus</span><span class="o">=</span><span class="s1">&#39;normal&#39;</span> <span class="k">and</span> <span class="n">ResTime</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">.</span><span class="mi">2</span>
+</pre></div>
+</div>
+<div class="highlight-sql"><div class="highlight"><pre><span class="k">select</span> <span class="n">BlockDepth</span> <span class="k">from</span> <span class="n">metadata</span> <span class="k">where</span> <span class="n">ProcessingStatus</span><span class="o">=</span><span class="s1">&#39;normal&#39;</span> <span class="k">and</span> <span class="n">ResTime</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">.</span><span class="mi">2</span>
+<span class="k">and</span> <span class="n">BlockDepth</span> <span class="k">between</span> <span class="mi">0</span><span class="p">.</span><span class="mi">1</span> <span class="k">and</span> <span class="mi">0</span><span class="p">.</span><span class="mi">5</span>
+</pre></div>
+</div>
+<p>Multiple columns can be retrieved from a table by providing a comma separated list of column names after the <em>select</em> clause. As in previous cases, only events that meet a specified criteria are returned. The results can be ordered using <em>order</em>. In this example we sort the results in ascending order by the <em>AbsEventStart</em> column.</p>
+<div class="highlight-sql"><div class="highlight"><pre><span class="k">select</span> <span class="n">BlockDepth</span><span class="p">,</span> <span class="n">ResTime</span><span class="p">,</span> <span class="n">AbsEventStart</span> <span class="k">from</span> <span class="n">metadata</span> <span class="k">where</span> <span class="n">ProcessingStatus</span><span class="o">=</span><span class="s1">&#39;normal&#39;</span>
+<span class="k">order</span> <span class="k">by</span> <span class="n">AbsEventStart</span> <span class="k">ASC</span>
+</pre></div>
+</div>
+<p>Finally, SQL allows the number of results returned to be limited using the <em>limit</em> clause. In this example, we limit the query results to the first 500 rows that meet our criteria.</p>
+<div class="highlight-sql"><div class="highlight"><pre><span class="k">select</span> <span class="n">AbsEventStart</span> <span class="k">from</span> <span class="n">metadata</span> <span class="k">where</span> <span class="n">ProcessingStatus</span><span class="o">=</span><span class="s1">&#39;normal&#39;</span>
+<span class="k">order</span> <span class="k">by</span> <span class="n">AbsEventStart</span> <span class="k">ASC</span> <span class="k">limit</span> <span class="mi">500</span>
+</pre></div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/icon.png" alt="Logo"/>
+            </a></p>
+<h3><a href="../index.html">Table Of Contents</a></h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="Introduction.html">1. Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="GettingStarted.html">2. Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="GraphicalInterface.html">3. <em>MOSAIC</em> GUI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ScriptingandAdvancedFeatures.html">4. Scripting and Advanced Features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="settingsFile.html">5. Settings File</a></li>
+<li class="toctree-l1"><a class="reference internal" href="DatabaseStructure.html">6. Database Structure and Query Syntax</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Extend.html">7. Extend <em>MOSAIC</em></a></li>
+<li class="toctree-l1"><a class="reference internal" href="Addons.html">8. Addons</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples.html">9. Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="apidocs.html">10. API Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ChangeLog.html">11. Change Log</a></li>
+<li class="toctree-l1"><a class="reference internal" href="References.html">12. Bibliography</a></li>
+</ul>
+
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script><h3 class="searchheading" align="left">Questions/Suggestions</h3>
+<div class="sphinxsidebarsection" align="left">
+<p />
+<p class="logo">
+<a href="http://www.nist.gov/cgi-bin/wwwph/cso.nist.gov?Query=Arvind+Balijepalli" style=""><u>Contact Us</u></a><br />
+<!-- 
+http://www.nist.gov/cgi-bin/wwwph/cso.nist.gov?Query=Arvind+Balijepalli
+mailto:arvind.balijepalli@nist.gov
+ -->
+<!-- <em><small><br/> National Institute of Standards and Technology<br/>
+ 100 Bureau Drive<br/>
+ Gaithersburg, MD 20899<br/></small></em>
+ -->
+ <br/>
+You can report problems with <em>MOSAIC</em> using the<a class="" href="https://github.com/usnistgov/mosaic/issues" style=""><u>issue tracker.</u></a>
+</p>
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../index.html">MOSAIC 1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+<!-- 
+    <div class="footer">
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.3.
+    </div> -->
+<div class="footer">
+National Institute of Standards and Technology,&nbsp;
+<a href="Disclaimer.html"><em>Terms of Use</em></a>
+</div>
+
+  </body>
+</html>

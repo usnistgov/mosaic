@@ -1,0 +1,252 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>mosaic.tsvTrajIO &mdash; MOSAIC 1.0 documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/rtd.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="shortcut icon" href="../../_static/favicon.ico"/>
+    <link rel="top" title="MOSAIC 1.0 documentation" href="../../index.html" />
+    <link rel="up" title="Module code" href="../index.html" />
+ 
+<link href='http://fonts.googleapis.com/css?family=Roboto:100,300,100italic,300italic' rel='stylesheet' type='text/css'>
+
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../index.html">MOSAIC 1.0 documentation</a> &raquo;</li>
+          <li><a href="../index.html" accesskey="U">Module code</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <h1>Source code for mosaic.tsvTrajIO</h1><div class="highlight"><pre>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">	An implementation of metaTrajIO that reads tab separated valued (TSV) files</span>
+
+<span class="sd">	:Created: 	7/31/2012</span>
+<span class="sd">	:Author: 	Arvind Balijepalli &lt;arvind.balijepalli@nist.gov&gt;</span>
+<span class="sd">	:License:	See LICENSE.TXT</span>
+<span class="sd">	:ChangeLog:</span>
+<span class="sd">	.. line-block::</span>
+<span class="sd">		7/31/12		AB	Initial version</span>
+<span class="sd">		6/30/13		AB 	Added the &#39;seprator&#39; kwarg to the class initializer to allow any delimited </span>
+<span class="sd">						files to be read. e.g. &#39;\t&#39; (default), &#39;,&#39;, etc.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span> 
+
+<span class="kn">import</span> <span class="nn">metaTrajIO</span>
+<span class="kn">import</span> <span class="nn">csv</span>
+
+<div class="viewcode-block" id="tsvTrajIO"><a class="viewcode-back" href="../../api-doc/mosaic.traj.html#mosaic.tsvTrajIO.tsvTrajIO">[docs]</a><span class="k">class</span> <span class="nc">tsvTrajIO</span><span class="p">(</span><span class="n">metaTrajIO</span><span class="o">.</span><span class="n">metaTrajIO</span><span class="p">):</span>
+	<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">		Perform additional initialization checks. Check if kwarg &#39;timeCol&#39; is set to a number.</span>
+
+<span class="sd">		In addition to metaTrajIO.__init__ args,</span>
+<span class="sd">		:Optional Parameters:</span>
+<span class="sd">			- `headers` :		If True, the first row is ignored (default: True)</span>
+<span class="sd">			- `separator` :	set the data separator (defualt: &#39;\t&#39;)</span>
+<span class="sd">			</span>
+<span class="sd">			Either:</span>
+<span class="sd">				- `Fs` : 			Sampling frequency in Hz. If set, all other options are ignored</span>
+<span class="sd">							and the first column in the file is assumed to be the current in pA.</span>
+<span class="sd">			Or:</span>
+<span class="sd">				- `nCols` :		number of columns in TSV file (default:2, first column is time </span>
+<span class="sd">							in ms and second is current in pA) </span>
+<span class="sd">				- `timeCol` :		explicitly set the time column (default: 0, first col)</span>
+<span class="sd">				- `currCol` :		explicitly set the position of the current column (default: 1)</span>
+
+<span class="sd">			If neither &#39;Fs&#39; nor {&#39;nCols&#39;, &#39;timeCol&#39;,&#39;currCol&#39;} are set then the latter </span>
+<span class="sd">			is assumed with the listed default values.</span>
+<span class="sd">		&quot;&quot;&quot;</span>
+	<span class="k">def</span> <span class="nf">_init</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+		<span class="c"># Check if headers are present</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">hasHeaders</span><span class="o">=</span><span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s">&#39;headers&#39;</span><span class="p">,</span> <span class="bp">True</span><span class="p">)</span>
+		<span class="k">try</span><span class="p">:</span>
+			<span class="c"># if the sampling frequency is set explicitly, currents </span>
+			<span class="c"># in pA will be in column 0.</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">Fs</span><span class="o">=</span><span class="n">kwargs</span><span class="p">[</span><span class="s">&quot;Fs&quot;</span><span class="p">]</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">currCol</span><span class="o">=</span><span class="mi">0</span>
+
+			<span class="bp">self</span><span class="o">.</span><span class="n">userSetFs</span><span class="o">=</span><span class="bp">True</span>
+		<span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+			<span class="c"># If Fs is not set explicitly assume by default two columns,</span>
+			<span class="c"># with time in sec in col 0 and current in pA in column 1, unless</span>
+			<span class="c"># specified otherwise by the user</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">nCols</span><span class="o">=</span><span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s">&#39;nCols&#39;</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">timeCol</span><span class="o">=</span><span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s">&#39;timeCol&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">currCol</span><span class="o">=</span><span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s">&#39;currCol&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+
+			<span class="bp">self</span><span class="o">.</span><span class="n">userSetFs</span><span class="o">=</span><span class="bp">True</span>
+
+		<span class="c"># The default data separator is a tab.</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">separator</span><span class="o">=</span><span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s">&#39;separator&#39;</span><span class="p">,</span> <span class="s">&#39;</span><span class="se">\t</span><span class="s">&#39;</span><span class="p">)</span>
+
+		<span class="c"># additional meta data</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">fileFormat</span><span class="o">=</span><span class="s">&#39;tsv&#39;</span>
+
+<div class="viewcode-block" id="tsvTrajIO.readdata"><a class="viewcode-back" href="../../api-doc/mosaic.traj.html#mosaic.tsvTrajIO.tsvTrajIO.readdata">[docs]</a>	<span class="k">def</span> <span class="nf">readdata</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fname</span><span class="p">):</span>
+		<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">			Read a single TSV file and append its data to the data pipeline.</span>
+<span class="sd">			Set/update a class attribute Fs with the sampling frequency in Hz.</span>
+
+<span class="sd">			:Parameters:</span>
+<span class="sd">				- `fname` :  list of data files to read</span>
+<span class="sd">			:Returns:</span>
+<span class="sd">				None</span>
+<span class="sd">			:Errors:</span>
+<span class="sd">				- `SamplingRateChangedError` : if the sampling rate for any data file differs from previous</span>
+<span class="sd">		&quot;&quot;&quot;</span>
+		<span class="n">data</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([])</span>
+		<span class="c"># Add new data to the existing array</span>
+		<span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">fname</span><span class="p">:</span>
+			<span class="n">data</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">hstack</span><span class="p">((</span><span class="n">data</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">__readtsv</span><span class="p">(</span><span class="n">f</span><span class="p">)))</span>
+
+		<span class="k">return</span> <span class="n">data</span>
+</div>
+	<span class="k">def</span> <span class="nf">_formatsettings</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+		<span class="k">return</span> <span class="s">&quot;&quot;</span>
+
+	<span class="k">def</span> <span class="nf">__readtsv</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fname</span><span class="p">):</span>
+		<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">		&quot;&quot;&quot;</span>
+		<span class="n">r1</span><span class="o">=</span><span class="n">csv</span><span class="o">.</span><span class="n">reader</span><span class="p">(</span><span class="nb">open</span><span class="p">(</span><span class="n">fname</span><span class="p">,</span><span class="s">&#39;rU&#39;</span><span class="p">),</span> <span class="n">delimiter</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">separator</span><span class="p">)</span>
+
+		<span class="c"># remove the file headers</span>
+		<span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">hasHeaders</span><span class="p">:</span> <span class="n">r1</span><span class="o">.</span><span class="n">next</span><span class="p">()</span>
+
+		<span class="c"># If the user explicitly set the sampling frequency,</span>
+		<span class="c"># self.currCol is set to 0 (current in pA). Stuff data </span>
+		<span class="c"># into a numpy array</span>
+		<span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">userSetFs</span><span class="p">:</span>
+			<span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span> <span class="p">[</span> <span class="nb">float</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">currCol</span><span class="p">])</span> <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">r1</span> <span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
+		<span class="k">else</span><span class="p">:</span>
+			<span class="c"># Calculate the sampling frequency from the first two points</span>
+			<span class="n">p1</span><span class="o">=</span><span class="n">r1</span><span class="o">.</span><span class="n">next</span><span class="p">()</span>
+			<span class="n">p2</span><span class="o">=</span><span class="n">r1</span><span class="o">.</span><span class="n">next</span><span class="p">()</span>
+
+			<span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s">&#39;Fs&#39;</span><span class="p">):</span>
+				<span class="bp">self</span><span class="o">.</span><span class="n">Fs</span><span class="o">=</span><span class="mf">1000.</span><span class="o">/</span><span class="p">(</span><span class="n">p2</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">timeCol</span><span class="p">]</span><span class="o">-</span><span class="n">p1</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">timeCol</span><span class="p">])</span>
+			<span class="c"># else check if it s the same as before</span>
+			<span class="k">else</span><span class="p">:</span>
+				<span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">Fs</span><span class="o">!=</span><span class="mf">1000.</span><span class="o">/</span><span class="p">(</span><span class="n">p2</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">timeCol</span><span class="p">]</span><span class="o">-</span><span class="n">p1</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">timeCol</span><span class="p">]):</span>
+					<span class="k">raise</span> <span class="n">metaTrajIO</span><span class="o">.</span><span class="n">SamplingRateChangedError</span><span class="p">(</span><span class="s">&quot;The sampling rate in the data file &#39;{0}&#39; has changed.&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">fname</span><span class="p">))</span>
+				
+			<span class="c"># Store the ionic currents for the first two points</span>
+			<span class="n">dat</span><span class="o">=</span><span class="p">[</span><span class="n">p1</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">currCol</span><span class="p">],</span> <span class="n">p2</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">currCol</span><span class="p">]]</span>
+
+			<span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span> <span class="n">dat</span><span class="o">.</span><span class="n">extend</span><span class="p">([</span> <span class="nb">float</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">currCol</span><span class="p">])</span> <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">r1</span> <span class="p">]),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../../index.html">
+              <img class="logo" src="../../_static/icon.png" alt="Logo"/>
+            </a></p>
+<h3><a href="../../index.html">Table Of Contents</a></h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../doc/Introduction.html">1. Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../doc/GettingStarted.html">2. Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../doc/GraphicalInterface.html">3. <em>MOSAIC</em> GUI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../doc/ScriptingandAdvancedFeatures.html">4. Scripting and Advanced Features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../doc/settingsFile.html">5. Settings File</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../doc/DatabaseStructure.html">6. Database Structure and Query Syntax</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../doc/Extend.html">7. Extend <em>MOSAIC</em></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../doc/Addons.html">8. Addons</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../doc/examples.html">9. Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../doc/apidocs.html">10. API Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../doc/ChangeLog.html">11. Change Log</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../doc/References.html">12. Bibliography</a></li>
+</ul>
+
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script><h3 class="searchheading" align="left">Questions/Suggestions</h3>
+<div class="sphinxsidebarsection" align="left">
+<p />
+<p class="logo">
+<a href="http://www.nist.gov/cgi-bin/wwwph/cso.nist.gov?Query=Arvind+Balijepalli" style=""><u>Contact Us</u></a><br />
+<!-- 
+http://www.nist.gov/cgi-bin/wwwph/cso.nist.gov?Query=Arvind+Balijepalli
+mailto:arvind.balijepalli@nist.gov
+ -->
+<!-- <em><small><br/> National Institute of Standards and Technology<br/>
+ 100 Bureau Drive<br/>
+ Gaithersburg, MD 20899<br/></small></em>
+ -->
+ <br/>
+You can report problems with <em>MOSAIC</em> using the<a class="" href="https://github.com/usnistgov/mosaic/issues" style=""><u>issue tracker.</u></a>
+</p>
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../index.html">MOSAIC 1.0 documentation</a> &raquo;</li>
+          <li><a href="../index.html" >Module code</a> &raquo;</li> 
+      </ul>
+    </div>
+<!-- 
+    <div class="footer">
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.3.
+    </div> -->
+<div class="footer">
+National Institute of Standards and Technology,&nbsp;
+<a href="../../doc/Disclaimer.html"><em>Terms of Use</em></a>
+</div>
+
+  </body>
+</html>

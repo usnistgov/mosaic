@@ -1,0 +1,23 @@
+{#
+    default/layout.html
+    ~~~~~~~~~~~~~~~~~~~
+
+    Sphinx layout template for the default theme.
+
+    :copyright: Copyright 2007-2014 by the Sphinx team, see AUTHORS.
+    :license: BSD, see LICENSE for details.
+#}
+{%- extends "!layout.html" %}
+
+{%- block extrahead %}
+{{ super() }}
+<link href='http://fonts.googleapis.com/css?family=Roboto:100,300,100italic,300italic' rel='stylesheet' type='text/css'>
+{% endblock %}
+
+{%- block footer %}
+<!-- {{ super() }} -->
+<div class="footer" style="vertical-align: center">
+National Institute of Standards and Technology,&nbsp;
+<a href="{{ pathto('doc/Disclaimer') }}"><em>Terms of Use</em></a>
+</div>
+{% endblock %}

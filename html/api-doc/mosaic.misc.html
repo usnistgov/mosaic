@@ -1,0 +1,315 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>10.1.8. Miscellaneous &mdash; MOSAIC 1.0 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/rtd.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="top" title="MOSAIC 1.0 documentation" href="../index.html" />
+    <link rel="up" title="10. API Documentation" href="../doc/apidocs.html" />
+    <link rel="next" title="11. Change Log" href="../doc/ChangeLog.html" />
+    <link rel="prev" title="10.1.7. Data Output" href="mosaic.output.html" />
+ 
+<link href='http://fonts.googleapis.com/css?family=Roboto:100,300,100italic,300italic' rel='stylesheet' type='text/css'>
+
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../doc/ChangeLog.html" title="11. Change Log"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="mosaic.output.html" title="10.1.7. Data Output"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">MOSAIC 1.0 documentation</a> &raquo;</li>
+          <li><a href="../doc/apidocs.html" accesskey="U">10. API Documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="miscellaneous">
+<h1>10.1.8. Miscellaneous<a class="headerlink" href="#miscellaneous" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="module-mosaic.settings">
+<span id="mosaic-settings-module"></span><h2>10.1.8.1. mosaic.settings module<a class="headerlink" href="#module-mosaic.settings" title="Permalink to this headline">¶</a></h2>
+<p>Load analysis settings from a JSON file.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Created:</th><td class="field-body">8/24/2012</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Author:</th><td class="field-body">Arvind Balijepalli &lt;<a class="reference external" href="mailto:arvind&#46;balijepalli&#37;&#52;&#48;nist&#46;gov">arvind<span>&#46;</span>balijepalli<span>&#64;</span>nist<span>&#46;</span>gov</a>&gt;</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">License:</th><td class="field-body">See LICENSE.TXT</td>
+</tr>
+<tr class="field-even field"><th class="field-name">ChangeLog:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+<div class="line-block">
+<div class="line">8/20/14         AB      Changed precedence of settings file search to datpath/.settings,</div>
+<div class="line-block">
+<div class="line">datpath/settings, coderoot/.settings and coderoot/settings</div>
+</div>
+<div class="line">8/6/14          AB      Add a function to parse a settings string.</div>
+<div class="line">9/5/13          AB      Check for either .settings or settings in data directory</div>
+<div class="line-block">
+<div class="line">and code root. Warn when using default settings</div>
+</div>
+<div class="line">8/24/12         AB      Initial version</div>
+</div>
+<dl class="class">
+<dt id="mosaic.settings.settings">
+<em class="property">class </em><tt class="descclassname">mosaic.settings.</tt><tt class="descname">settings</tt><big>(</big><em>datpath</em>, <em>defaultwarn=True</em><big>)</big><a class="reference internal" href="../_modules/mosaic/settings.html#settings"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mosaic.settings.settings" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initialize a settings object.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Args:</th><td class="field-body"><ul class="first last simple">
+<li><cite>datpath</cite> :   Specify the location of the settings file. If a settings file is not found, return default settings.</li>
+<li><cite>defaultwarn</cite> :       If <cite>True</cite> warn the user if a settings file was not found in the path specified by <cite>datpath</cite>.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="mosaic.settings.settings.getSettings">
+<tt class="descname">getSettings</tt><big>(</big><em>section</em><big>)</big><a class="reference internal" href="../_modules/mosaic/settings.html#settings.getSettings"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mosaic.settings.settings.getSettings" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return settings for a specified section as a Python dict.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Args:</th><td class="field-body"><ul class="first last simple">
+<li><cite>section</cite> :   specifies the section for which settings are requested. Returns an empty dictionary if the settings file doesn&#8217;t exist the section is not found.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="mosaic-utilities-ionic-current-stats-module">
+<h2>10.1.8.2. mosaic.utilities.ionic_current_stats module<a class="headerlink" href="#mosaic-utilities-ionic-current-stats-module" title="Permalink to this headline">¶</a></h2>
+<span class="target" id="module-mosaic.utilities.ionic_current_stats"></span><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Created:</th><td class="field-body">10/30/2014</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Author:</th><td class="field-body">Arvind Balijepalli &lt;<a class="reference external" href="mailto:arvind&#46;balijepalli&#37;&#52;&#48;nist&#46;gov">arvind<span>&#46;</span>balijepalli<span>&#64;</span>nist<span>&#46;</span>gov</a>&gt;</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">License:</th><td class="field-body">See LICENSE.TXT</td>
+</tr>
+<tr class="field-even field"><th class="field-name">ChangeLog:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+<div class="line-block">
+<div class="line">10/30/14        AB      Initial version</div>
+</div>
+<dl class="function">
+<dt id="mosaic.utilities.ionic_current_stats.OpenCurrentDist">
+<tt class="descclassname">mosaic.utilities.ionic_current_stats.</tt><tt class="descname">OpenCurrentDist</tt><big>(</big><em>dat</em>, <em>limit</em><big>)</big><a class="reference internal" href="../_modules/mosaic/utilities/ionic_current_stats.html#OpenCurrentDist"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mosaic.utilities.ionic_current_stats.OpenCurrentDist" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculate the mean and standard deviation of a time-series.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Args:</th><td class="field-body"><ul class="first last simple">
+<li><cite>dat</cite>         : time-series data</li>
+<li><cite>limit</cite>       : limit the calculation to the top 50% (+0.5) of the range, bottom 50% (-0.5) or the entire range (0). Any other value of <cite>limit</cite> will cause it to be reset to 0 (i.e. full range).</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="mosaic-utilities-util-module">
+<h2>10.1.8.3. mosaic.utilities.util module<a class="headerlink" href="#mosaic-utilities-util-module" title="Permalink to this headline">¶</a></h2>
+<span class="target" id="module-mosaic.utilities.util"></span><p>A collection of utility functions</p>
+<dl class="function">
+<dt id="mosaic.utilities.util.avg">
+<tt class="descclassname">mosaic.utilities.util.</tt><tt class="descname">avg</tt><big>(</big><em>dat</em><big>)</big><a class="reference internal" href="../_modules/mosaic/utilities/util.html#avg"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mosaic.utilities.util.avg" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculate the average of a list of reals</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="mosaic.utilities.util.commonest">
+<tt class="descclassname">mosaic.utilities.util.</tt><tt class="descname">commonest</tt><big>(</big><em>dat</em><big>)</big><a class="reference internal" href="../_modules/mosaic/utilities/util.html#commonest"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mosaic.utilities.util.commonest" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the most common element in a list.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="mosaic.utilities.util.decimate">
+<tt class="descclassname">mosaic.utilities.util.</tt><tt class="descname">decimate</tt><big>(</big><em>dat</em>, <em>size</em><big>)</big><a class="reference internal" href="../_modules/mosaic/utilities/util.html#decimate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mosaic.utilities.util.decimate" title="Permalink to this definition">¶</a></dt>
+<dd><p>Decimate dat for a specified window size.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="mosaic.utilities.util.filter">
+<tt class="descclassname">mosaic.utilities.util.</tt><tt class="descname">filter</tt><big>(</big><em>dat</em>, <em>windowSz</em><big>)</big><a class="reference internal" href="../_modules/mosaic/utilities/util.html#filter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mosaic.utilities.util.filter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Filter the data using a convolution. Returns an
+array of size len(dat)-windowSz+1 if dat is longer than 
+windowSz. If len(dat) &lt; windowSz, raise WindowSizeError</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="mosaic.utilities.util.flat2">
+<tt class="descclassname">mosaic.utilities.util.</tt><tt class="descname">flat2</tt><big>(</big><em>dat</em><big>)</big><a class="reference internal" href="../_modules/mosaic/utilities/util.html#flat2"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mosaic.utilities.util.flat2" title="Permalink to this definition">¶</a></dt>
+<dd><p>Flatten a 2D array to a list</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="mosaic.utilities.util.partition">
+<tt class="descclassname">mosaic.utilities.util.</tt><tt class="descname">partition</tt><big>(</big><em>dat</em>, <em>size</em><big>)</big><a class="reference internal" href="../_modules/mosaic/utilities/util.html#partition"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mosaic.utilities.util.partition" title="Permalink to this definition">¶</a></dt>
+<dd><p>Partition a list into sub-lists, each of length size. If the number of elements
+in dat does not partition evenly, the last sub-list will have fewer elements.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="mosaic.utilities.util.sd">
+<tt class="descclassname">mosaic.utilities.util.</tt><tt class="descname">sd</tt><big>(</big><em>dat</em><big>)</big><a class="reference internal" href="../_modules/mosaic/utilities/util.html#sd"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mosaic.utilities.util.sd" title="Permalink to this definition">¶</a></dt>
+<dd><p>Wrapper for numpy std</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="mosaic.utilities.util.selectS">
+<tt class="descclassname">mosaic.utilities.util.</tt><tt class="descname">selectS</tt><big>(</big><em>dat</em>, <em>nSigma</em>, <em>mu</em>, <em>sd</em><big>)</big><a class="reference internal" href="../_modules/mosaic/utilities/util.html#selectS"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mosaic.utilities.util.selectS" title="Permalink to this definition">¶</a></dt>
+<dd><p>Select and return data from a list that lie within
+nSigma * SD of the mean.</p>
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/icon.png" alt="Logo"/>
+            </a></p>
+<h3><a href="../index.html">Table Of Contents</a></h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../doc/Introduction.html">1. Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../doc/GettingStarted.html">2. Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../doc/GraphicalInterface.html">3. <em>MOSAIC</em> GUI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../doc/ScriptingandAdvancedFeatures.html">4. Scripting and Advanced Features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../doc/settingsFile.html">5. Settings File</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../doc/DatabaseStructure.html">6. Database Structure and Query Syntax</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../doc/Extend.html">7. Extend <em>MOSAIC</em></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../doc/Addons.html">8. Addons</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../doc/examples.html">9. Examples</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../doc/apidocs.html">10. API Documentation</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="../doc/apidocs.html#projname-modules">10.1. <em>MOSAIC</em> Modules</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../doc/ChangeLog.html">11. Change Log</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../doc/References.html">12. Bibliography</a></li>
+</ul>
+
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script><h3 class="searchheading" align="left">Questions/Suggestions</h3>
+<div class="sphinxsidebarsection" align="left">
+<p />
+<p class="logo">
+<a href="http://www.nist.gov/cgi-bin/wwwph/cso.nist.gov?Query=Arvind+Balijepalli" style=""><u>Contact Us</u></a><br />
+<!-- 
+http://www.nist.gov/cgi-bin/wwwph/cso.nist.gov?Query=Arvind+Balijepalli
+mailto:arvind.balijepalli@nist.gov
+ -->
+<!-- <em><small><br/> National Institute of Standards and Technology<br/>
+ 100 Bureau Drive<br/>
+ Gaithersburg, MD 20899<br/></small></em>
+ -->
+ <br/>
+You can report problems with <em>MOSAIC</em> using the<a class="" href="https://github.com/usnistgov/mosaic/issues" style=""><u>issue tracker.</u></a>
+</p>
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../doc/ChangeLog.html" title="11. Change Log"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="mosaic.output.html" title="10.1.7. Data Output"
+             >previous</a> |</li>
+        <li><a href="../index.html">MOSAIC 1.0 documentation</a> &raquo;</li>
+          <li><a href="../doc/apidocs.html" >10. API Documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+<!-- 
+    <div class="footer">
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.3.
+    </div> -->
+<div class="footer">
+National Institute of Standards and Technology,&nbsp;
+<a href="../doc/Disclaimer.html"><em>Terms of Use</em></a>
+</div>
+
+  </body>
+</html>

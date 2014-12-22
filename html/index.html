@@ -1,0 +1,198 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>MOSAIC: A Modular Single-Molecule Analysis Interface &mdash; MOSAIC 1.0 documentation</title>
+    
+    <link rel="stylesheet" href="_static/rtd.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="shortcut icon" href="_static/favicon.ico"/>
+    <link rel="top" title="MOSAIC 1.0 documentation" href="#" />
+    <link rel="next" title="1. Introduction" href="doc/Introduction.html" />
+ 
+<link href='http://fonts.googleapis.com/css?family=Roboto:100,300,100italic,300italic' rel='stylesheet' type='text/css'>
+
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="doc/Introduction.html" title="1. Introduction"
+             accesskey="N">next</a> |</li>
+        <li><a href="#">MOSAIC 1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="projname-projlongname">
+<h1><em>MOSAIC</em>: A Modular Single-Molecule Analysis Interface<a class="headerlink" href="#projname-projlongname" title="Permalink to this headline">¶</a></h1>
+<p><em>MOSAIC</em> is a single molecule analysis toolbox that automatically decodes multi-state nanopore data. By modeling the nanopore system with an equivalent circuit, <em>MOSAIC</em> leverages the transient response of a molecule entering the channel to quantify pore-molecule interactions. In contrast to existing techniques such as ionic current thresholding <a class="reference internal" href="doc/References.html#pedone-2009ds" id="id1">[PFR09]</a><a class="reference internal" href="doc/References.html#robertson-2010gm" id="id2">[RKR10]</a> or Viterbi decoding <a class="reference internal" href="doc/References.html#viterbi-1967hq" id="id3">[Vit67]</a>, this technique allows the estimation of short-lived transient events that are otherwise not analyzed.</p>
+<p>Nanometer-scale pores have demonstrated potential use in biotechnology applications, including DNA sequencing <a class="reference internal" href="doc/References.html#kasianowicz-1996us" id="id4">[KBBD96]</a>, single-molecule force spectroscopy <a class="reference internal" href="doc/References.html#vandorp-2009tg" id="id5">[VDKD+09]</a>, and single-molecule mass spectrometry <a class="reference internal" href="doc/References.html#robertson-2007jo" id="id6">[RRS+07]</a>. The data modeling and analysis methods implemented in <em>MOSAIC</em> allow for considerable improvements in the quantification of molecular interactions with the channel in each of these applications.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>If you use <em>MOSAIC</em> in your work, please cite:</p>
+<p class="last">A. Balijepalli, J., Ettedgui, A. T. Cornio, J. W. F. Robertson K. P. Cheung, J. J. Kasianowicz &amp; C. Vaz, &#8220;<a class="reference external" href="http://pubs.acs.org/doi/abs/10.1021/nn405761y">Quantifying Short-Lived Events in Multistate Ionic Current Measurements.</a>&#8221; <em>ACS Nano</em> 2014, <strong>8</strong>, 1547–1553.</p>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="doc/Introduction.html">1. Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="doc/GettingStarted.html">2. Getting Started</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="doc/GettingStarted.html#binary-installation">2.1. Binary Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="doc/GettingStarted.html#installation-from-source">2.2. Installation from Source</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="doc/GraphicalInterface.html">3. <em>MOSAIC</em> GUI</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="doc/GraphicalInterface.html#interface-overview">3.1. Interface Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="doc/GraphicalInterface.html#modules-a-b-analysis-setup-and-trajectory-viewer">3.2. Modules A &amp; B: Analysis Setup and Trajectory Viewer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="doc/GraphicalInterface.html#modules-c-d-e-blockade-depth-histogram-statistics-and-event-viewer">3.3. Modules C,D, &amp; E: Blockade Depth Histogram, Statistics, and Event Viewer</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="doc/ScriptingandAdvancedFeatures.html">4. Scripting and Advanced Features</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="doc/ScriptingandAdvancedFeatures.html#import-data-and-run-an-analysis">4.1. Import Data and Run an Analysis</a></li>
+<li class="toctree-l2"><a class="reference internal" href="doc/ScriptingandAdvancedFeatures.html#advanced-scripting">4.2. Advanced Scripting</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="doc/settingsFile.html">5. Settings File</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="doc/settingsFile.html#settings-layout">5.1. Settings Layout</a></li>
+<li class="toctree-l2"><a class="reference internal" href="doc/settingsFile.html#default-settings">5.2. Default Settings</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="doc/DatabaseStructure.html">6. Database Structure and Query Syntax</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="doc/DatabaseStructure.html#metadata-table">6.1. Metadata Table</a></li>
+<li class="toctree-l2"><a class="reference internal" href="doc/DatabaseStructure.html#analysis-settings-table">6.2. Analysis Settings Table</a></li>
+<li class="toctree-l2"><a class="reference internal" href="doc/DatabaseStructure.html#work-with-sqlite">6.3. Work with SQLite</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="doc/Extend.html">7. Extend <em>MOSAIC</em></a><ul>
+<li class="toctree-l2"><a class="reference internal" href="doc/Extend.html#read-arbitrary-binary-data-files">7.1. Read Arbitrary Binary Data Files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="doc/Extend.html#define-top-level-functionality">7.2. Define Top-Level Functionality</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="doc/Addons.html">8. Addons</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="doc/Addons.html#mathematica">8.1. Mathematica</a></li>
+<li class="toctree-l2"><a class="reference internal" href="doc/Addons.html#matlab-addons-sec">8.2. Matlab</a></li>
+<li class="toctree-l2"><a class="reference internal" href="doc/Addons.html#igor-addons-sec">8.3. IGOR</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="doc/examples.html">9. Examples</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="doc/examples.html#single-molecule-mass-spectrometry">9.1. Single Molecule Mass Spectrometry</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="doc/apidocs.html">10. API Documentation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="doc/apidocs.html#projname-modules">10.1. <em>MOSAIC</em> Modules</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="doc/ChangeLog.html">11. Change Log</a></li>
+<li class="toctree-l1"><a class="reference internal" href="doc/References.html">12. Bibliography</a></li>
+</ul>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="#">
+              <img class="logo" src="_static/icon.png" alt="Logo"/>
+            </a></p>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script><h3 class="searchheading" align="left">Questions/Suggestions</h3>
+<div class="sphinxsidebarsection" align="left">
+<p />
+<p class="logo">
+<a href="http://www.nist.gov/cgi-bin/wwwph/cso.nist.gov?Query=Arvind+Balijepalli" style=""><u>Contact Us</u></a><br />
+<!-- 
+http://www.nist.gov/cgi-bin/wwwph/cso.nist.gov?Query=Arvind+Balijepalli
+mailto:arvind.balijepalli@nist.gov
+ -->
+<!-- <em><small><br/> National Institute of Standards and Technology<br/>
+ 100 Bureau Drive<br/>
+ Gaithersburg, MD 20899<br/></small></em>
+ -->
+ <br/>
+You can report problems with <em>MOSAIC</em> using the<a class="" href="https://github.com/usnistgov/mosaic/issues" style=""><u>issue tracker.</u></a>
+</p>
+<h3 class="searchheading" align="left"><em>MOSAIC</em> Developers</h3>
+<div class="sphinxsidebarsection" align="left">
+<p />
+<p class="logo">
+Arvind Balijepalli<br />
+Jacob Forstater<br />
+Joseph Robertson<br />
+Canute Vaz<br />
+<br />
+<br />
+</p>
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="doc/Introduction.html" title="1. Introduction"
+             >next</a> |</li>
+        <li><a href="#">MOSAIC 1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+<!-- 
+    <div class="footer">
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.3.
+    </div> -->
+<div class="footer">
+National Institute of Standards and Technology,&nbsp;
+<a href="doc/Disclaimer.html"><em>Terms of Use</em></a>
+</div>
+
+  </body>
+</html>

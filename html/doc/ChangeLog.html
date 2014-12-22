@@ -1,0 +1,199 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>11. Change Log &mdash; MOSAIC 1.0 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/rtd.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="top" title="MOSAIC 1.0 documentation" href="../index.html" />
+    <link rel="next" title="12. Bibliography" href="References.html" />
+    <link rel="prev" title="10.1.8. Miscellaneous" href="../api-doc/mosaic.misc.html" />
+ 
+<link href='http://fonts.googleapis.com/css?family=Roboto:100,300,100italic,300italic' rel='stylesheet' type='text/css'>
+
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="References.html" title="12. Bibliography"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="../api-doc/mosaic.misc.html" title="10.1.8. Miscellaneous"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">MOSAIC 1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="change-log">
+<span id="changelog-page"></span><h1>11. Change Log<a class="headerlink" href="#change-log" title="Permalink to this headline">¶</a></h1>
+<p><strong>v1.0b3.2</strong></p>
+<ul class="simple">
+<li>[GUI] Misc bug fixes</li>
+<li>[Addons] Added code to import MOSAIC output into Matlab (pull requests #18 and #20)</li>
+<li>[Addons] Updated <a class="reference external" href="http://www.wolfram.com/mathematica/">Mathematica</a> addons to automatically decode multi-state data.</li>
+<li>Resolves issues #16 and #22</li>
+</ul>
+<p><strong>v1.0b3.1</strong></p>
+<ul class="simple">
+<li>[GUI] Added multiState support to mosaicgui.</li>
+<li>Analysis information such as alogirthms used, data type, etc. are now stored within a MDIO database.</li>
+<li>[GUI] Autocomplete in mosaicgui only suggests database columns that are valid when used in a query.</li>
+<li>Reorganized <a class="reference external" href="http://www.wolfram.com/mathematica/">Mathematica</a> addon code.</li>
+</ul>
+<p><strong>v1.0b3</strong></p>
+<ul class="simple">
+<li>Fixed a bug that prevented events longer than ~700 data points from being correctly analyzed.</li>
+<li>Fixed a problem that prevented event data from being correctly padded before analysis.</li>
+<li>Resolves #2. TrajIO settings are now read in from the settings file.</li>
+<li>[GUI] Resolves #3. Threshold entry box in GUI becomes nonresponsive when meanOpenCurr is negative.</li>
+<li>[GUI] Resolves #4. Analysis fails when using wavletDenioseFilter from GUI.</li>
+<li>[GUI] Histogram in BlockDepthViewer window can be saved to a CSV file from the File Menu.</li>
+<li>Analysis log is saved to the MDIO database.</li>
+<li>[GUI] ConsoleLogViwer displays the analysis log saved in the MDIO database.</li>
+<li>[GUI] Added a new dialog that displays an experimental feature warning wavelet-based denoising is selected.</li>
+<li>Updated error codes reported in database to be more descriptive of the failure.</li>
+<li>Improved and expanded unit testing framework.</li>
+<li>Moved installation and testing to setuptools.</li>
+</ul>
+<p><strong>v1.0b2</strong></p>
+<ul class="simple">
+<li>[GUI] Fixed threshold update error from 1.0b1.</li>
+<li>Considerably improved automatic open channel state detection.</li>
+<li>The default settings string is now included within the source code.</li>
+<li>Implemented new top-level class ConvertToCSV that allows conversion of data read by any TrajIO object to comma separated files.</li>
+<li>Updated build system and unit testing framework.</li>
+<li>[GUI] Misc UI updates.</li>
+</ul>
+<p><strong>v1.0b1</strong></p>
+<ul class="simple">
+<li>[GUI] Added a menu option to save a settings file prior to starting the analysis.</li>
+<li>[GUI] Current threshold is now defined by an ionic current. The trajectory viewer displays the deviation of the threshold from the mean current.</li>
+<li>Analysis settings are saved within the analysissettings table of the sqlite database. When an analysis database is loaded into the GUI, settings are parsed from within the database.</li>
+<li>When an analysis file is loaded, widgets in the main window remain enabled. This allows starting a new analysis run with the current settings.</li>
+<li>[GUI] Implemented an analysis log viewer that displays the event processing log.</li>
+<li>[GUI] Initial commit of wavelets based peak detection in blockdepthview.</li>
+<li>[GUI] Added all points histogram to trajectory viewer.</li>
+<li><em>Known Issues:</em> Selecting automatic baseline detection can sometimes cause the threshold in the trajectory viewer to change. Moving the slider will cause the settings and trajectory windows to synchronize.</li>
+</ul>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/icon.png" alt="Logo"/>
+            </a></p>
+<h3><a href="../index.html">Table Of Contents</a></h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="Introduction.html">1. Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="GettingStarted.html">2. Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="GraphicalInterface.html">3. <em>MOSAIC</em> GUI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ScriptingandAdvancedFeatures.html">4. Scripting and Advanced Features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="settingsFile.html">5. Settings File</a></li>
+<li class="toctree-l1"><a class="reference internal" href="DatabaseStructure.html">6. Database Structure and Query Syntax</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Extend.html">7. Extend <em>MOSAIC</em></a></li>
+<li class="toctree-l1"><a class="reference internal" href="Addons.html">8. Addons</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples.html">9. Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="apidocs.html">10. API Documentation</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="">11. Change Log</a></li>
+<li class="toctree-l1"><a class="reference internal" href="References.html">12. Bibliography</a></li>
+</ul>
+
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script><h3 class="searchheading" align="left">Questions/Suggestions</h3>
+<div class="sphinxsidebarsection" align="left">
+<p />
+<p class="logo">
+<a href="http://www.nist.gov/cgi-bin/wwwph/cso.nist.gov?Query=Arvind+Balijepalli" style=""><u>Contact Us</u></a><br />
+<!-- 
+http://www.nist.gov/cgi-bin/wwwph/cso.nist.gov?Query=Arvind+Balijepalli
+mailto:arvind.balijepalli@nist.gov
+ -->
+<!-- <em><small><br/> National Institute of Standards and Technology<br/>
+ 100 Bureau Drive<br/>
+ Gaithersburg, MD 20899<br/></small></em>
+ -->
+ <br/>
+You can report problems with <em>MOSAIC</em> using the<a class="" href="https://github.com/usnistgov/mosaic/issues" style=""><u>issue tracker.</u></a>
+</p>
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="References.html" title="12. Bibliography"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="../api-doc/mosaic.misc.html" title="10.1.8. Miscellaneous"
+             >previous</a> |</li>
+        <li><a href="../index.html">MOSAIC 1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+<!-- 
+    <div class="footer">
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.3.
+    </div> -->
+<div class="footer">
+National Institute of Standards and Technology,&nbsp;
+<a href="Disclaimer.html"><em>Terms of Use</em></a>
+</div>
+
+  </body>
+</html>

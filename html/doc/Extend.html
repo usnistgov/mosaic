@@ -1,0 +1,272 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>7. Extend MOSAIC &mdash; MOSAIC 1.0 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/rtd.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="top" title="MOSAIC 1.0 documentation" href="../index.html" />
+    <link rel="next" title="8. Addons" href="Addons.html" />
+    <link rel="prev" title="6. Database Structure and Query Syntax" href="DatabaseStructure.html" />
+ 
+<link href='http://fonts.googleapis.com/css?family=Roboto:100,300,100italic,300italic' rel='stylesheet' type='text/css'>
+
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="Addons.html" title="8. Addons"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="DatabaseStructure.html" title="6. Database Structure and Query Syntax"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">MOSAIC 1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="extend-projname">
+<span id="extend-page"></span><h1>7. Extend <em>MOSAIC</em><a class="headerlink" href="#extend-projname" title="Permalink to this headline">¶</a></h1>
+<p><em>MOSAIC</em> was designed from the start using object oriented tools, which makes it easy to extend. <a class="reference internal" href="../api-doc/mosaic.meta.html#api-metaclass-page"><em>Meta-Classes</em></a> define interfaces to five key parts of <em>MOSAIC</em>: time-series IO (<a class="reference internal" href="../api-doc/mosaic.meta.html#mosaic.metaTrajIO.metaTrajIO" title="mosaic.metaTrajIO.metaTrajIO"><tt class="xref py py-class docutils literal"><span class="pre">metaTrajIO</span></tt></a>), time-series filtering (<a class="reference internal" href="../api-doc/mosaic.meta.html#mosaic.metaIOFilter.metaIOFilter" title="mosaic.metaIOFilter.metaIOFilter"><tt class="xref py py-class docutils literal"><span class="pre">metaIOFilter</span></tt></a>), analysis output (<a class="reference internal" href="../api-doc/mosaic.meta.html#mosaic.metaMDIO.metaMDIO" title="mosaic.metaMDIO.metaMDIO"><tt class="xref py py-class docutils literal"><span class="pre">metaMDIO</span></tt></a>), event partition and segmenting (<a class="reference internal" href="../api-doc/mosaic.meta.html#mosaic.metaEventPartition.metaEventPartition" title="mosaic.metaEventPartition.metaEventPartition"><tt class="xref py py-class docutils literal"><span class="pre">metaEventPartition</span></tt></a>), and event processing (<a class="reference internal" href="../api-doc/mosaic.meta.html#mosaic.metaEventProcessor.metaEventProcessor" title="mosaic.metaEventProcessor.metaEventProcessor"><tt class="xref py py-class docutils literal"><span class="pre">metaEventProcessor</span></tt></a>). Sub-classing any of these meta classes and implementing their  interface functions allows one to extend <em>MOSAIC</em> while maintaining compatibility with other parts of the program. We highlight these capabilities via two examples. In the first example, we show how one can extend <a class="reference internal" href="../api-doc/mosaic.meta.html#mosaic.metaTrajIO.metaTrajIO" title="mosaic.metaTrajIO.metaTrajIO"><tt class="xref py py-class docutils literal"><span class="pre">metaTrajIO</span></tt></a> to read arbitrary binary files. In the second example, we implement a new top-level class that converts files to the comma separated value (CSV) format.</p>
+<div class="section" id="read-arbitrary-binary-data-files">
+<h2>7.1. Read Arbitrary Binary Data Files<a class="headerlink" href="#read-arbitrary-binary-data-files" title="Permalink to this headline">¶</a></h2>
+<p>In this first example, we implement a class that can read an arbitrary binary data file and make its data available via the interface functions in <a class="reference internal" href="../api-doc/mosaic.meta.html#mosaic.metaTrajIO.metaTrajIO" title="mosaic.metaTrajIO.metaTrajIO"><tt class="xref py py-class docutils literal"><span class="pre">metaTrajIO</span></tt></a>. This allows the newly implemented binary data to be used across <em>MOSAIC</em>. A complete listing of the code used in this example (<a class="reference internal" href="../api-doc/mosaic.traj.html#mosaic.binTrajIO.binTrajIO" title="mosaic.binTrajIO.binTrajIO"><tt class="xref py py-class docutils literal"><span class="pre">binTrajIO</span></tt></a>) is available in the API documentation.</p>
+<p>The new binary IO class is implemented by sub-classing <a class="reference internal" href="../api-doc/mosaic.meta.html#mosaic.metaTrajIO.metaTrajIO" title="mosaic.metaTrajIO.metaTrajIO"><tt class="xref py py-class docutils literal"><span class="pre">metaTrajIO</span></tt></a> as shown in the listing below.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">class</span> <span class="nc">binTrajIO</span><span class="p">(</span><span class="n">metaTrajIO</span><span class="o">.</span><span class="n">metaTrajIO</span><span class="p">):</span>
+</pre></div>
+</div>
+<p>Next, we must fully implement the <a class="reference internal" href="../api-doc/mosaic.meta.html#mosaic.metaTrajIO.metaTrajIO" title="mosaic.metaTrajIO.metaTrajIO"><tt class="xref py py-class docutils literal"><span class="pre">metaTrajIO</span></tt></a> interface functions (<a class="reference internal" href="../api-doc/mosaic.meta.html#mosaic.metaTrajIO.metaTrajIO._init" title="mosaic.metaTrajIO.metaTrajIO._init"><tt class="xref py py-meth docutils literal"><span class="pre">_init()</span></tt></a>, <a class="reference internal" href="../api-doc/mosaic.meta.html#mosaic.metaTrajIO.metaTrajIO.readdata" title="mosaic.metaTrajIO.metaTrajIO.readdata"><tt class="xref py py-meth docutils literal"><span class="pre">readdata()</span></tt></a> and <a class="reference internal" href="../api-doc/mosaic.meta.html#mosaic.metaTrajIO.metaTrajIO._formatsettings" title="mosaic.metaTrajIO.metaTrajIO._formatsettings"><tt class="xref py py-meth docutils literal"><span class="pre">_formatsettings()</span></tt></a>). Note that the arguments of each function must match their corresponding base-class versions. For example the <a class="reference internal" href="../api-doc/mosaic.meta.html#mosaic.metaTrajIO.metaTrajIO._init" title="mosaic.metaTrajIO.metaTrajIO._init"><tt class="xref py py-meth docutils literal"><span class="pre">_init()</span></tt></a> function only accepts keyword arguments and is defined as shown below.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">_init</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+</pre></div>
+</div>
+<p>The <a class="reference internal" href="../api-doc/mosaic.meta.html#mosaic.metaTrajIO.metaTrajIO._init" title="mosaic.metaTrajIO.metaTrajIO._init"><tt class="xref py py-meth docutils literal"><span class="pre">_init()</span></tt></a> function checks the arguments passed to <em>kwargs</em> and raises an exception if they are not defined.</p>
+<div class="highlight-python"><div class="highlight"><pre>        <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s">&#39;SamplingFrequency&#39;</span><span class="p">):</span>
+<span class="hll">                <span class="k">raise</span> <span class="n">metaTrajIO</span><span class="o">.</span><span class="n">InsufficientArgumentsError</span><span class="p">(</span><span class="s">&quot;{0} requires the sampling rate in Hz to be defined.&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__name__</span><span class="p">))</span>
+</span>        <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s">&#39;PythonStructCode&#39;</span><span class="p">):</span>
+<span class="hll">                <span class="k">raise</span> <span class="n">metaTrajIO</span><span class="o">.</span><span class="n">InsufficientArgumentsError</span><span class="p">(</span><span class="s">&quot;{0} requires the Python struct code to be defined.&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__name__</span><span class="p">))</span>
+</span></pre></div>
+</div>
+<p>Next we define the <a class="reference internal" href="../api-doc/mosaic.meta.html#mosaic.metaTrajIO.metaTrajIO.readdata" title="mosaic.metaTrajIO.metaTrajIO.readdata"><tt class="xref py py-meth docutils literal"><span class="pre">readdata()</span></tt></a> function that reads in the data and stores the results in a numpy array. This array is then passed back to the calling function.</p>
+<div class="highlight-python"><div class="highlight"><pre>     <span class="k">def</span> <span class="nf">readdata</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fname</span><span class="p">):</span>
+
+             <span class="n">tempdata</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([])</span>
+             <span class="c"># Read binary data and add it to the data pipe</span>
+             <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">fname</span><span class="p">:</span>
+<span class="hll">                     <span class="n">tempdata</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">hstack</span><span class="p">((</span> <span class="n">tempdata</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">readBinaryFile</span><span class="p">(</span><span class="n">f</span><span class="p">)</span> <span class="p">))</span>
+</span>
+             <span class="k">return</span> <span class="n">tempdata</span>
+</pre></div>
+</div>
+<p>Finally, we implement the <a class="reference internal" href="../api-doc/mosaic.meta.html#mosaic.metaTrajIO.metaTrajIO._formatsettings" title="mosaic.metaTrajIO.metaTrajIO._formatsettings"><tt class="xref py py-meth docutils literal"><span class="pre">_formatsettings()</span></tt></a> that returns a formatted string of the settings used to read in binary data.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">_formatsettings</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">                Return a formatted string of settings for display</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">fmtstr</span><span class="o">=</span><span class="s">&quot;&quot;</span>
+
+        <span class="n">fmtstr</span><span class="o">+=</span><span class="s">&#39;</span><span class="se">\n\t\t</span><span class="s">Amplifier scale = {0} pA</span><span class="se">\n</span><span class="s">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">AmplifierScale</span><span class="p">)</span>
+        <span class="n">fmtstr</span><span class="o">+=</span><span class="s">&#39;</span><span class="se">\t\t</span><span class="s">Amplifier offset = {0} pA</span><span class="se">\n</span><span class="s">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">AmplifierOffset</span><span class="p">)</span>
+        <span class="n">fmtstr</span><span class="o">+=</span><span class="s">&#39;</span><span class="se">\t\t</span><span class="s">Header offset = {0} bytes</span><span class="se">\n</span><span class="s">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">HeaderOffset</span><span class="p">)</span>
+        <span class="n">fmtstr</span><span class="o">+=</span><span class="s">&#39;</span><span class="se">\t\t</span><span class="s">Data type code = </span><span class="se">\&#39;</span><span class="s">{0}</span><span class="se">\&#39;\n</span><span class="s">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">PythonStructCode</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">fmtstr</span>
+</pre></div>
+</div>
+<p>The newly defined <a class="reference internal" href="../api-doc/mosaic.traj.html#mosaic.binTrajIO.binTrajIO" title="mosaic.binTrajIO.binTrajIO"><tt class="xref py py-class docutils literal"><span class="pre">binTrajIO</span></tt></a> class can then be used as shown below and in <a class="reference internal" href="ScriptingandAdvancedFeatures.html#scripting-page"><em>Scripting and Advanced Features</em></a>.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># Process all binary files in a directory</span>
+<span class="n">mosaic</span><span class="o">.</span><span class="n">SingleChannelAnalysis</span><span class="o">.</span><span class="n">SingleChannelAnalysis</span><span class="p">(</span>
+            <span class="s">&quot;~/RefData/binSet1/&quot;</span><span class="p">,</span>
+            <span class="nb">bin</span><span class="o">.</span><span class="n">binTrajIO</span><span class="p">,</span>
+            <span class="bp">None</span><span class="p">,</span>
+            <span class="n">es</span><span class="o">.</span><span class="n">eventSegment</span><span class="p">,</span>
+            <span class="n">sra</span><span class="o">.</span><span class="n">stepResponseAnalysis</span>
+        <span class="p">)</span><span class="o">.</span><span class="n">Run</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Similar to other <cite>TrajIO</cite> objects, parameters for <a class="reference internal" href="../api-doc/mosaic.traj.html#mosaic.binTrajIO.binTrajIO" title="mosaic.binTrajIO.binTrajIO"><tt class="xref py py-class docutils literal"><span class="pre">binTrajIO</span></tt></a> are obtained from the settings file when used with <a class="reference internal" href="../api-doc/mosaic.html#mosaic.SingleChannelAnalysis.SingleChannelAnalysis" title="mosaic.SingleChannelAnalysis.SingleChannelAnalysis"><tt class="xref py py-class docutils literal"><span class="pre">SingleChannelAnalysis</span></tt></a>. Example settings for <a class="reference internal" href="../api-doc/mosaic.traj.html#mosaic.binTrajIO.binTrajIO" title="mosaic.binTrajIO.binTrajIO"><tt class="xref py py-class docutils literal"><span class="pre">binTrajIO</span></tt></a> that read 16-bit intgers from a binary data file, assuming 50 <cite>kHz</cite> sampling, are shown below.</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="s2">&quot;binTrajIO&quot;</span> <span class="o">:</span> <span class="p">{</span>
+        <span class="s2">&quot;filter&quot;</span>                <span class="o">:</span> <span class="s2">&quot;*bin&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;AmplifierScale&quot;</span>        <span class="o">:</span> <span class="s2">&quot;1.0&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;AmplifierOffset&quot;</span>       <span class="o">:</span> <span class="s2">&quot;0.0&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;SamplingFrequency&quot;</span>     <span class="o">:</span> <span class="s2">&quot;50000&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;HeaderOffset&quot;</span>          <span class="o">:</span> <span class="s2">&quot;0&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;PythonStructCode&quot;</span>      <span class="o">:</span> <span class="s2">&quot;&#39;h&#39;&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="define-top-level-functionality">
+<h2>7.2. Define Top-Level Functionality<a class="headerlink" href="#define-top-level-functionality" title="Permalink to this headline">¶</a></h2>
+<p>New functionality can be added to <em>MOSAIC</em> by combining other parts of the code. One way of accomplishing this is by defining new top-level functionality as shown in the following example. We define a new class that converts data from one of the supported data formats to comma separated text files (CSV). A complete listing of the <a class="reference internal" href="../api-doc/mosaic.html#mosaic.ConvertToCSV.ConvertToCSV" title="mosaic.ConvertToCSV.ConvertToCSV"><tt class="xref py py-class docutils literal"><span class="pre">ConvertToCSV</span></tt></a> class in this example is available in the API documentation.</p>
+<p>The <em>__init__</em> function of <a class="reference internal" href="../api-doc/mosaic.html#mosaic.ConvertToCSV.ConvertToCSV" title="mosaic.ConvertToCSV.ConvertToCSV"><tt class="xref py py-class docutils literal"><span class="pre">ConvertToCSV</span></tt></a> class accepts two arguments: a trajIO object and the location to save the converted files. If the output directory is not specified, the data is saved in the same folder as the input data. The data conversion is performed by the <a class="reference internal" href="../api-doc/mosaic.html#mosaic.ConvertToCSV.ConvertToCSV.Convert" title="mosaic.ConvertToCSV.ConvertToCSV.Convert"><tt class="xref py py-meth docutils literal"><span class="pre">Convert()</span></tt></a> function, which saves the data in blocks controlled by the <em>blockSize</em> parameter. <a class="reference internal" href="../api-doc/mosaic.html#mosaic.ConvertToCSV.ConvertToCSV.Convert" title="mosaic.ConvertToCSV.ConvertToCSV.Convert"><tt class="xref py py-meth docutils literal"><span class="pre">Convert()</span></tt></a> saves each block to a new CSV file, named with the filename of the input data followed by an integer number (see the API documentation for <a class="reference internal" href="../api-doc/mosaic.html#mosaic.ConvertToCSV.ConvertToCSV._filename" title="mosaic.ConvertToCSV.ConvertToCSV._filename"><tt class="xref py py-meth docutils literal"><span class="pre">_filename()</span></tt></a> for additional details).</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">class</span> <span class="nc">ConvertToCSV</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+        <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">trajDataObj</span><span class="p">,</span> <span class="n">outdir</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">trajDataObj</span><span class="o">=</span><span class="n">trajDataObj</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">datPath</span><span class="o">=</span><span class="n">trajDataObj</span><span class="o">.</span><span class="n">datPath</span>
+
+                <span class="c"># If outdir is None, save the CSV files to the same directory as the data.</span>
+                <span class="k">if</span> <span class="n">outdir</span><span class="o">==</span><span class="bp">None</span><span class="p">:</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">outDir</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">datPath</span>
+                <span class="k">else</span><span class="p">:</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">outDir</span><span class="o">=</span><span class="n">outdir</span>
+
+                <span class="bp">self</span><span class="o">.</span><span class="n">filePrefix</span><span class="o">=</span><span class="bp">None</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_creategenerator</span><span class="p">()</span>
+
+        <span class="k">def</span> <span class="nf">Convert</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">blockSize</span><span class="p">):</span>
+                <span class="n">data</span><span class="o">=</span><span class="n">numpy</span><span class="o">.</span><span class="n">array</span><span class="p">([],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">numpy</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
+
+                <span class="k">try</span><span class="p">:</span>
+                        <span class="k">while</span><span class="p">(</span><span class="bp">True</span><span class="p">):</span>
+                                <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">trajDataObj</span><span class="o">.</span><span class="n">popdata</span><span class="p">(</span><span class="n">blockSize</span><span class="p">))</span><span class="o">.</span><span class="n">tofile</span><span class="p">(</span>
+<span class="hll">                                                <span class="bp">self</span><span class="o">.</span><span class="n">_filename</span><span class="p">(),</span>
+</span>                                                <span class="n">sep</span><span class="o">=</span><span class="s">&#39;,&#39;</span>
+                                        <span class="p">)</span>
+<span class="hll">                <span class="k">except</span> <span class="n">EmptyDataPipeError</span><span class="p">:</span>
+</span>                        <span class="k">pass</span>
+</pre></div>
+</div>
+<p>The <a class="reference internal" href="../api-doc/mosaic.html#mosaic.ConvertToCSV.ConvertToCSV" title="mosaic.ConvertToCSV.ConvertToCSV"><tt class="xref py py-class docutils literal"><span class="pre">ConvertToCSV</span></tt></a> class can now be used with any trajIO object as seen below.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">ConvertToCSV</span><span class="p">(</span> <span class="n">abfTrajIO</span><span class="p">(</span><span class="n">dirname</span><span class="o">=</span><span class="s">&quot;~/RefData/abfSet1/&quot;</span><span class="p">,</span> <span class="nb">filter</span><span class="o">=</span><span class="s">&quot;*abf&quot;</span><span class="p">)</span> <span class="p">)</span><span class="o">.</span><span class="n">Convert</span><span class="p">(</span>
+<span class="hll">                        <span class="n">blockSize</span><span class="o">=</span><span class="mi">50000</span><span class="p">)</span>
+</span>
+<span class="n">ConvertToCSV</span><span class="p">(</span> <span class="n">qdfTrajIO</span><span class="p">(</span><span class="n">dirname</span><span class="o">=</span><span class="s">&quot;~/RefData/qdfSet1/&quot;</span><span class="p">,</span> <span class="nb">filter</span><span class="o">=</span><span class="s">&quot;*qdf&quot;</span><span class="p">,</span> <span class="n">Rfb</span><span class="o">=</span><span class="s">&quot;2.1E+9&quot;</span><span class="p">,</span>
+                        <span class="n">Cfb</span><span class="o">=</span><span class="s">&quot;1.16E-12&quot;</span><span class="p">)</span> <span class="p">)</span><span class="o">.</span><span class="n">Convert</span><span class="p">(</span><span class="n">blockSize</span><span class="o">=</span><span class="mi">50000</span><span class="p">)</span>
+
+<span class="n">ConvertToCSV</span><span class="p">(</span> <span class="n">binTrajIO</span><span class="p">(</span><span class="n">dirname</span><span class="o">=</span><span class="s">&quot;~/RefData/binSet1/&quot;</span><span class="p">,</span> <span class="nb">filter</span><span class="o">=</span><span class="s">&quot;*bin&quot;</span><span class="p">,</span> <span class="n">AmplifierScale</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span>
+                        <span class="n">AmplifierOffset</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">SamplingFrequency</span><span class="o">=</span><span class="mi">50000</span><span class="p">,</span> <span class="n">HeaderOffset</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+                        <span class="n">PythonStructCode</span><span class="o">=</span><span class="s">&#39;h&#39;</span><span class="p">)</span> <span class="p">)</span><span class="o">.</span><span class="n">Convert</span><span class="p">(</span><span class="n">blockSize</span><span class="o">=</span><span class="mi">50000</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Finally, since <a class="reference internal" href="../api-doc/mosaic.html#mosaic.ConvertToCSV.ConvertToCSV" title="mosaic.ConvertToCSV.ConvertToCSV"><tt class="xref py py-class docutils literal"><span class="pre">ConvertToCSV</span></tt></a> accepts a trajIO object, we can apply a lowpass filter to the data before converting it to the CSV format. This is accomplished by passing the <em>datafilter</em> option to the trajIO object as described in the <a class="reference internal" href="ScriptingandAdvancedFeatures.html#scripting-filter-sec"><em>Filter Data</em></a> section. In the example below, we convert ABF files to the CSV format after applying a lowpass Bessel filter to the data.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">ConvertToCSV</span><span class="p">(</span> <span class="n">abfTrajIO</span><span class="p">(</span><span class="n">dirname</span><span class="o">=</span><span class="s">&quot;~/RefData/abfSet1/&quot;</span><span class="p">,</span> <span class="nb">filter</span><span class="o">=</span><span class="s">&quot;*abf&quot;</span><span class="p">,</span>
+<span class="hll">                <span class="n">datafilter</span><span class="o">=</span><span class="n">mosaic</span><span class="o">.</span><span class="n">besselFilter</span>
+</span>        <span class="p">)</span> <span class="p">)</span><span class="o">.</span><span class="n">Convert</span><span class="p">(</span><span class="n">blockSize</span><span class="o">=</span><span class="mi">50000</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/icon.png" alt="Logo"/>
+            </a></p>
+<h3><a href="../index.html">Table Of Contents</a></h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="Introduction.html">1. Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="GettingStarted.html">2. Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="GraphicalInterface.html">3. <em>MOSAIC</em> GUI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ScriptingandAdvancedFeatures.html">4. Scripting and Advanced Features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="settingsFile.html">5. Settings File</a></li>
+<li class="toctree-l1"><a class="reference internal" href="DatabaseStructure.html">6. Database Structure and Query Syntax</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="">7. Extend <em>MOSAIC</em></a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#read-arbitrary-binary-data-files">7.1. Read Arbitrary Binary Data Files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#define-top-level-functionality">7.2. Define Top-Level Functionality</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Addons.html">8. Addons</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples.html">9. Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="apidocs.html">10. API Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ChangeLog.html">11. Change Log</a></li>
+<li class="toctree-l1"><a class="reference internal" href="References.html">12. Bibliography</a></li>
+</ul>
+
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script><h3 class="searchheading" align="left">Questions/Suggestions</h3>
+<div class="sphinxsidebarsection" align="left">
+<p />
+<p class="logo">
+<a href="http://www.nist.gov/cgi-bin/wwwph/cso.nist.gov?Query=Arvind+Balijepalli" style=""><u>Contact Us</u></a><br />
+<!-- 
+http://www.nist.gov/cgi-bin/wwwph/cso.nist.gov?Query=Arvind+Balijepalli
+mailto:arvind.balijepalli@nist.gov
+ -->
+<!-- <em><small><br/> National Institute of Standards and Technology<br/>
+ 100 Bureau Drive<br/>
+ Gaithersburg, MD 20899<br/></small></em>
+ -->
+ <br/>
+You can report problems with <em>MOSAIC</em> using the<a class="" href="https://github.com/usnistgov/mosaic/issues" style=""><u>issue tracker.</u></a>
+</p>
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="Addons.html" title="8. Addons"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="DatabaseStructure.html" title="6. Database Structure and Query Syntax"
+             >previous</a> |</li>
+        <li><a href="../index.html">MOSAIC 1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+<!-- 
+    <div class="footer">
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.3.
+    </div> -->
+<div class="footer">
+National Institute of Standards and Technology,&nbsp;
+<a href="Disclaimer.html"><em>Terms of Use</em></a>
+</div>
+
+  </body>
+</html>

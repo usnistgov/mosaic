@@ -1,0 +1,523 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>10.1.3. Time-Series IO &mdash; MOSAIC 1.0 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/rtd.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="top" title="MOSAIC 1.0 documentation" href="../index.html" />
+    <link rel="up" title="10. API Documentation" href="../doc/apidocs.html" />
+    <link rel="next" title="10.1.4. Time-Series Filters" href="mosaic.filter.html" />
+    <link rel="prev" title="10.1.2. Meta-Classes" href="mosaic.meta.html" />
+ 
+<link href='http://fonts.googleapis.com/css?family=Roboto:100,300,100italic,300italic' rel='stylesheet' type='text/css'>
+
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="mosaic.filter.html" title="10.1.4. Time-Series Filters"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="mosaic.meta.html" title="10.1.2. Meta-Classes"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">MOSAIC 1.0 documentation</a> &raquo;</li>
+          <li><a href="../doc/apidocs.html" accesskey="U">10. API Documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="time-series-io">
+<h1>10.1.3. Time-Series IO<a class="headerlink" href="#time-series-io" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="mosaic-abftrajio-module">
+<h2>10.1.3.1. mosaic.abfTrajIO module<a class="headerlink" href="#mosaic-abftrajio-module" title="Permalink to this headline">¶</a></h2>
+<p class="graphviz">
+<img src="../_images/inheritance-0c556903e9be4b31d10bd209aad22444519b0de3.png" alt="Inheritance diagram of mosaic.abfTrajIO" usemap="#inheritanced4bc199e84" class="inheritance"/>
+<map id="inheritanced4bc199e84" name="inheritanced4bc199e84">
+<area shape="rect" id="node1" href="#mosaic.abfTrajIO.abfTrajIO" title=":Parameters:" alt="" coords="214,5,351,30"/>
+<area shape="rect" id="node2" href="mosaic.meta.html#mosaic.metaTrajIO.metaTrajIO" title=".. warning:: |metaclass|" alt="" coords="6,5,165,30"/>
+</map>
+</p>
+<span class="target" id="module-mosaic.abfTrajIO"></span><p>A TrajIO class that supports ABF1 and ABF2 file formats via abf/abf.py. Currently, only
+gap-free mode and single channel recordings are supported.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Created:</th><td class="field-body">5/23/2013</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Author:</th><td class="field-body">Arvind Balijepalli &lt;<a class="reference external" href="mailto:arvind&#46;balijepalli&#37;&#52;&#48;nist&#46;gov">arvind<span>&#46;</span>balijepalli<span>&#64;</span>nist<span>&#46;</span>gov</a>&gt;</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">License:</th><td class="field-body">See LICENSE.TXT</td>
+</tr>
+<tr class="field-even field"><th class="field-name">ChangeLog:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+<div class="line-block">
+<div class="line">5/23/13         AB      Initial version</div>
+</div>
+<dl class="class">
+<dt id="mosaic.abfTrajIO.abfTrajIO">
+<em class="property">class </em><tt class="descclassname">mosaic.abfTrajIO.</tt><tt class="descname">abfTrajIO</tt><big>(</big><em>**kwargs</em><big>)</big><a class="reference internal" href="../_modules/mosaic/abfTrajIO.html#abfTrajIO"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mosaic.abfTrajIO.abfTrajIO" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="mosaic.meta.html#mosaic.metaTrajIO.metaTrajIO" title="mosaic.metaTrajIO.metaTrajIO"><tt class="xref py py-class docutils literal"><span class="pre">mosaic.metaTrajIO.metaTrajIO</span></tt></a></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first last docutils">
+<dt>In addition to metaTrajIO.__init__ args,</dt>
+<dd><p class="first last">None</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="mosaic.abfTrajIO.abfTrajIO.readdata">
+<tt class="descname">readdata</tt><big>(</big><em>fname</em><big>)</big><a class="reference internal" href="../_modules/mosaic/abfTrajIO.html#abfTrajIO.readdata"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mosaic.abfTrajIO.abfTrajIO.readdata" title="Permalink to this definition">¶</a></dt>
+<dd><p>Read one or more files and append their data to the data pipeline.
+Set a class attribute Fs with the sampling frequency in Hz.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><cite>fname</cite> :  list of data files to read</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">None</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Errors:</th><td class="field-body"><ul class="first last simple">
+<li><cite>SamplingRateChangedError</cite> : if the sampling rate for any data file differs from previous</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="mosaic-qdftrajio-module">
+<h2>10.1.3.2. mosaic.qdfTrajIO module<a class="headerlink" href="#mosaic-qdftrajio-module" title="Permalink to this headline">¶</a></h2>
+<p class="graphviz">
+<img src="../_images/inheritance-0e350901ffb9b4975bf644cd0faddd00badef00a.png" alt="Inheritance diagram of mosaic.qdfTrajIO" usemap="#inheritancee54b23a53e" class="inheritance"/>
+<map id="inheritancee54b23a53e" name="inheritancee54b23a53e">
+<area shape="rect" id="node1" href="mosaic.meta.html#mosaic.metaTrajIO.metaTrajIO" title=".. warning:: |metaclass|" alt="" coords="6,5,165,30"/>
+<area shape="rect" id="node2" href="#mosaic.qdfTrajIO.qdfTrajIO" title="In addition to the base class init, check if the " alt="" coords="214,5,351,30"/>
+</map>
+</p>
+<span class="target" id="module-mosaic.qdfTrajIO"></span><p>QDF implementation of metaTrajIO. Uses the readqdf module from EBS to 
+read individual qdf files.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Created:</th><td class="field-body">7/18/2012</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Author:</th><td class="field-body">Arvind Balijepalli &lt;<a class="reference external" href="mailto:arvind&#46;balijepalli&#37;&#52;&#48;nist&#46;gov">arvind<span>&#46;</span>balijepalli<span>&#64;</span>nist<span>&#46;</span>gov</a>&gt;</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">License:</th><td class="field-body">See LICENSE.TXT</td>
+</tr>
+<tr class="field-even field"><th class="field-name">ChangeLog:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+<div class="line-block">
+<div class="line">7/18/12         AB      Initial version</div>
+<div class="line">2/11/14         AB      Support qdf files that save the current in pA. This needs</div>
+<div class="line-block">
+<div class="line">format=&#8217;pA&#8217; argument.</div>
+</div>
+</div>
+<dl class="class">
+<dt id="mosaic.qdfTrajIO.qdfTrajIO">
+<em class="property">class </em><tt class="descclassname">mosaic.qdfTrajIO.</tt><tt class="descname">qdfTrajIO</tt><big>(</big><em>**kwargs</em><big>)</big><a class="reference internal" href="../_modules/mosaic/qdfTrajIO.html#qdfTrajIO"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mosaic.qdfTrajIO.qdfTrajIO" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="mosaic.meta.html#mosaic.metaTrajIO.metaTrajIO" title="mosaic.metaTrajIO.metaTrajIO"><tt class="xref py py-class docutils literal"><span class="pre">mosaic.metaTrajIO.metaTrajIO</span></tt></a></p>
+<p>In addition to the base class init, check if the 
+feedback resistance (Rfb) and feedback capacitance (Cfb)
+are defined to convert qdf binary data into pA</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first docutils">
+<dt>In addition to metaTrajIO.__init__ args,</dt>
+<dd><ul class="first last simple">
+<li><cite>Rfb</cite> :               feedback resistance of amplifier</li>
+<li><cite>Cfb</cite> :               feedback capacitance of amplifier</li>
+<li><cite>format</cite> :    &#8216;V&#8217; for voltage or &#8216;pA&#8217; for current. Default is &#8216;V&#8217;</li>
+</ul>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">None</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Errors:</th><td class="field-body"><ul class="first last simple">
+<li><cite>InsufficientArgumentsError</cite> : if the mandatory arguments Rfb and Cfb are not set</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="mosaic.qdfTrajIO.qdfTrajIO.readdata">
+<tt class="descname">readdata</tt><big>(</big><em>fname</em><big>)</big><a class="reference internal" href="../_modules/mosaic/qdfTrajIO.html#qdfTrajIO.readdata"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mosaic.qdfTrajIO.qdfTrajIO.readdata" title="Permalink to this definition">¶</a></dt>
+<dd><p>Read one or more files and append their data to the data pipeline.
+Set a class attribute Fs with the sampling frequency in Hz.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><cite>fname</cite> :  list of data files to read</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">None</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Errors:</th><td class="field-body"><ul class="first last simple">
+<li><cite>SamplingRateChangedError</cite> : if the sampling rate for any data file differs from previous</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="mosaic-bintrajio-module">
+<h2>10.1.3.3. mosaic.binTrajIO module<a class="headerlink" href="#mosaic-bintrajio-module" title="Permalink to this headline">¶</a></h2>
+<p class="graphviz">
+<img src="../_images/inheritance-e8b738f81fc89132cdba990b777c9b7cb58c555f.png" alt="Inheritance diagram of mosaic.binTrajIO" usemap="#inheritance1574f1c52e" class="inheritance"/>
+<map id="inheritance1574f1c52e" name="inheritance1574f1c52e">
+<area shape="rect" id="node2" href="#mosaic.binTrajIO.binTrajIO" title="Read a binary file that contains single channel ionic current data and calculate the current in pA " alt="" coords="312,5,448,30"/>
+<area shape="rect" id="node3" href="mosaic.meta.html#mosaic.metaTrajIO.metaTrajIO" title=".. warning:: |metaclass|" alt="" coords="55,5,214,30"/>
+</map>
+</p>
+<span class="target" id="module-mosaic.binTrajIO"></span><p>Binary file implementation of metaTrajIO. Read raw binary files with specified record sizes</p>
+<blockquote>
+<div><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Created:</th><td class="field-body">4/22/2013</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Author:</th><td class="field-body">Arvind Balijepalli &lt;<a class="reference external" href="mailto:arvind&#46;balijepalli&#37;&#52;&#48;nist&#46;gov">arvind<span>&#46;</span>balijepalli<span>&#64;</span>nist<span>&#46;</span>gov</a>&gt;</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">License:</th><td class="field-body">See LICENSE.TXT</td>
+</tr>
+<tr class="field-even field"><th class="field-name">ChangeLog:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+<div class="line-block">
+<div class="line">7/27/14         AB      Update interface to specify python PythonStructCode instead of</div>
+<div class="line-block">
+<div class="line">RecordSize. This will allow any binary file to be decoded</div>
+<div class="line">The AmplifierScale and AmplifierOffset are set to 1 and 0</div>
+<div class="line">respectively if PythonStructCode is an integer or short.</div>
+</div>
+<div class="line">4/22/13         AB      Initial version</div>
+</div>
+</div></blockquote>
+<dl class="class">
+<dt id="mosaic.binTrajIO.binTrajIO">
+<em class="property">class </em><tt class="descclassname">mosaic.binTrajIO.</tt><tt class="descname">binTrajIO</tt><big>(</big><em>**kwargs</em><big>)</big><a class="reference internal" href="../_modules/mosaic/binTrajIO.html#binTrajIO"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mosaic.binTrajIO.binTrajIO" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="mosaic.meta.html#mosaic.metaTrajIO.metaTrajIO" title="mosaic.metaTrajIO.metaTrajIO"><tt class="xref py py-class docutils literal"><span class="pre">mosaic.metaTrajIO.metaTrajIO</span></tt></a></p>
+<p>Read a binary file that contains single channel ionic current data and calculate the current in pA 
+after scaling by the amplifier scale factor and removing any offsets.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><blockquote class="first">
+<div><dl class="docutils">
+<dt>In addition to metaTrajIO.__init__ args,</dt>
+<dd><ul class="first last simple">
+<li><cite>AmplifierScale</cite> :            full scale of amplifier (in pA) that varies with the gain</li>
+<li><cite>AmplifierOffset</cite> :           current offset in the recorded data</li>
+<li><cite>SamplingFrequency</cite> : sampling rate of data in the file in Hz</li>
+<li><cite>HeaderOffset</cite> :              ignore first &#8216;n&#8217; bytes of the file for header (default: 0 bytes).</li>
+<li><cite>PythonStructCode</cite> :  Single character code for a python struct (see <a class="reference external" href="https://docs.python.org/2/library/struct.html">Python struct docs</a>).</li>
+</ul>
+</dd>
+</dl>
+</div></blockquote>
+<dl class="last docutils">
+<dt>Returns:</dt>
+<dd><p class="first last">None</p>
+</dd>
+<dt>Errors:</dt>
+<dd><ul class="first last simple">
+<li><cite>InsufficientArgumentsError</cite> : if the mandatory arguments Rfb and Cfb are not set</li>
+</ul>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="mosaic.binTrajIO.binTrajIO.readdata">
+<tt class="descname">readdata</tt><big>(</big><em>fname</em><big>)</big><a class="reference internal" href="../_modules/mosaic/binTrajIO.html#binTrajIO.readdata"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mosaic.binTrajIO.binTrajIO.readdata" title="Permalink to this definition">¶</a></dt>
+<dd><p>Read one or more files and append their data to the data pipeline.
+Set a class attribute Fs with the sampling frequency in Hz.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><cite>fname</cite> :  list of data files to read</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">None</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Errors:</th><td class="field-body"><p class="first last">None</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="mosaic-tsvtrajio-module">
+<h2>10.1.3.4. mosaic.tsvTrajIO module<a class="headerlink" href="#mosaic-tsvtrajio-module" title="Permalink to this headline">¶</a></h2>
+<p class="graphviz">
+<img src="../_images/inheritance-ca6ce8b71729643b133095b8bb1ba0a1e5604de3.png" alt="Inheritance diagram of mosaic.tsvTrajIO" usemap="#inheritance0055deff42" class="inheritance"/>
+<map id="inheritance0055deff42" name="inheritance0055deff42">
+<area shape="rect" id="node1" href="mosaic.meta.html#mosaic.metaTrajIO.metaTrajIO" title=".. warning:: |metaclass|" alt="" coords="6,5,165,30"/>
+<area shape="rect" id="node2" href="#mosaic.tsvTrajIO.tsvTrajIO" title="Perform additional initialization checks. Check if kwarg &#39;timeCol&#39; is set to a number." alt="" coords="213,5,347,30"/>
+</map>
+</p>
+<span class="target" id="module-mosaic.tsvTrajIO"></span><p>An implementation of metaTrajIO that reads tab separated valued (TSV) files</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Created:</th><td class="field-body">7/31/2012</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Author:</th><td class="field-body">Arvind Balijepalli &lt;<a class="reference external" href="mailto:arvind&#46;balijepalli&#37;&#52;&#48;nist&#46;gov">arvind<span>&#46;</span>balijepalli<span>&#64;</span>nist<span>&#46;</span>gov</a>&gt;</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">License:</th><td class="field-body">See LICENSE.TXT</td>
+</tr>
+<tr class="field-even field"><th class="field-name">ChangeLog:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+<div class="line-block">
+<div class="line">7/31/12         AB      Initial version</div>
+<div class="line">6/30/13         AB      Added the &#8216;seprator&#8217; kwarg to the class initializer to allow any delimited</div>
+<div class="line-block">
+<div class="line">files to be read. e.g. &#8216;        &#8216; (default), &#8216;,&#8217;, etc.</div>
+</div>
+</div>
+<dl class="class">
+<dt id="mosaic.tsvTrajIO.tsvTrajIO">
+<em class="property">class </em><tt class="descclassname">mosaic.tsvTrajIO.</tt><tt class="descname">tsvTrajIO</tt><big>(</big><em>**kwargs</em><big>)</big><a class="reference internal" href="../_modules/mosaic/tsvTrajIO.html#tsvTrajIO"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mosaic.tsvTrajIO.tsvTrajIO" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="mosaic.meta.html#mosaic.metaTrajIO.metaTrajIO" title="mosaic.metaTrajIO.metaTrajIO"><tt class="xref py py-class docutils literal"><span class="pre">mosaic.metaTrajIO.metaTrajIO</span></tt></a></p>
+<p>Perform additional initialization checks. Check if kwarg &#8216;timeCol&#8217; is set to a number.</p>
+<p>In addition to metaTrajIO.__init__ args,
+:Optional Parameters:</p>
+<blockquote>
+<div><ul class="simple">
+<li><cite>headers</cite> :           If True, the first row is ignored (default: True)</li>
+<li><cite>separator</cite> : set the data separator (defualt: &#8216;      &#8216;)</li>
+</ul>
+<dl class="docutils">
+<dt>Either:</dt>
+<dd><ul class="first last">
+<li><dl class="first docutils">
+<dt><cite>Fs</cite> <span class="classifier-delimiter">:</span> <span class="classifier">Sampling frequency in Hz. If set, all other options are ignored</span></dt>
+<dd><p class="first last">and the first column in the file is assumed to be the current in pA.</p>
+</dd>
+</dl>
+</li>
+</ul>
+</dd>
+<dt>Or:</dt>
+<dd><ul class="first last">
+<li><dl class="first docutils">
+<dt><cite>nCols</cite> <span class="classifier-delimiter">:</span> <span class="classifier">number of columns in TSV file (default:2, first column is time </span></dt>
+<dd><p class="first last">in ms and second is current in pA)</p>
+</dd>
+</dl>
+</li>
+<li><p class="first"><cite>timeCol</cite> :           explicitly set the time column (default: 0, first col)</p>
+</li>
+<li><p class="first"><cite>currCol</cite> :           explicitly set the position of the current column (default: 1)</p>
+</li>
+</ul>
+</dd>
+</dl>
+<p>If neither &#8216;Fs&#8217; nor {&#8216;nCols&#8217;, &#8216;timeCol&#8217;,&#8217;currCol&#8217;} are set then the latter 
+is assumed with the listed default values.</p>
+</div></blockquote>
+<dl class="method">
+<dt id="mosaic.tsvTrajIO.tsvTrajIO.readdata">
+<tt class="descname">readdata</tt><big>(</big><em>fname</em><big>)</big><a class="reference internal" href="../_modules/mosaic/tsvTrajIO.html#tsvTrajIO.readdata"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mosaic.tsvTrajIO.tsvTrajIO.readdata" title="Permalink to this definition">¶</a></dt>
+<dd><p>Read a single TSV file and append its data to the data pipeline.
+Set/update a class attribute Fs with the sampling frequency in Hz.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><cite>fname</cite> :  list of data files to read</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">None</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Errors:</th><td class="field-body"><ul class="first last simple">
+<li><cite>SamplingRateChangedError</cite> : if the sampling rate for any data file differs from previous</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/icon.png" alt="Logo"/>
+            </a></p>
+<h3><a href="../index.html">Table Of Contents</a></h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../doc/Introduction.html">1. Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../doc/GettingStarted.html">2. Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../doc/GraphicalInterface.html">3. <em>MOSAIC</em> GUI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../doc/ScriptingandAdvancedFeatures.html">4. Scripting and Advanced Features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../doc/settingsFile.html">5. Settings File</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../doc/DatabaseStructure.html">6. Database Structure and Query Syntax</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../doc/Extend.html">7. Extend <em>MOSAIC</em></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../doc/Addons.html">8. Addons</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../doc/examples.html">9. Examples</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../doc/apidocs.html">10. API Documentation</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="../doc/apidocs.html#projname-modules">10.1. <em>MOSAIC</em> Modules</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../doc/ChangeLog.html">11. Change Log</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../doc/References.html">12. Bibliography</a></li>
+</ul>
+
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script><h3 class="searchheading" align="left">Questions/Suggestions</h3>
+<div class="sphinxsidebarsection" align="left">
+<p />
+<p class="logo">
+<a href="http://www.nist.gov/cgi-bin/wwwph/cso.nist.gov?Query=Arvind+Balijepalli" style=""><u>Contact Us</u></a><br />
+<!-- 
+http://www.nist.gov/cgi-bin/wwwph/cso.nist.gov?Query=Arvind+Balijepalli
+mailto:arvind.balijepalli@nist.gov
+ -->
+<!-- <em><small><br/> National Institute of Standards and Technology<br/>
+ 100 Bureau Drive<br/>
+ Gaithersburg, MD 20899<br/></small></em>
+ -->
+ <br/>
+You can report problems with <em>MOSAIC</em> using the<a class="" href="https://github.com/usnistgov/mosaic/issues" style=""><u>issue tracker.</u></a>
+</p>
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="mosaic.filter.html" title="10.1.4. Time-Series Filters"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="mosaic.meta.html" title="10.1.2. Meta-Classes"
+             >previous</a> |</li>
+        <li><a href="../index.html">MOSAIC 1.0 documentation</a> &raquo;</li>
+          <li><a href="../doc/apidocs.html" >10. API Documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+<!-- 
+    <div class="footer">
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.3.
+    </div> -->
+<div class="footer">
+National Institute of Standards and Technology,&nbsp;
+<a href="../doc/Disclaimer.html"><em>Terms of Use</em></a>
+</div>
+
+  </body>
+</html>
