@@ -82,7 +82,7 @@
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>Note that the column names can be used in constructing queries passed to SQLite. For example, This is described in more detail in the <a class="reference internal" href="WorkingWithSQLite.html#working-with-sqlite-sec"><em>Work with SQLite</em></a> section and the <a class="reference internal" href="ScriptingandAdvancedFeatures.html#scripting-page"><em>Scripting and Advanced Features</em></a> section. The first example SQL query below returns the <em>BlockDepth</em> column (ratio of <em>BlockedCurrent</em> to <em>OpenChCurrent</em>). One can imagine assembling more complex queries for example restricting the results to events whose residence time is greater than 0.2 ms as seen from the second example query below.</p>
+<p>Note that the column names can be used in constructing queries passed to SQLite. For example, This is described in more detail in the <a class="reference internal" href="#working-with-sqlite-sec"><em>Work with SQLite</em></a> section and the <a class="reference internal" href="ScriptingandAdvancedFeatures.html#scripting-page"><em>Scripting and Advanced Features</em></a> section. The first example SQL query below returns the <em>BlockDepth</em> column (ratio of <em>BlockedCurrent</em> to <em>OpenChCurrent</em>). One can imagine assembling more complex queries for example restricting the results to events whose residence time is greater than 0.2 ms as seen from the second example query below.</p>
 <div class="highlight-sql"><div class="highlight"><pre><span class="k">select</span> <span class="n">BlockDepth</span> <span class="k">from</span> <span class="n">metadata</span> <span class="k">where</span> <span class="n">ProcessingStatus</span><span class="o">=</span><span class="s1">&#39;normal&#39;</span>
 
 <span class="k">select</span> <span class="n">BlockDepth</span> <span class="k">from</span> <span class="n">metadata</span> <span class="k">where</span> <span class="n">ProcessingStatus</span><span class="o">=</span><span class="s1">&#39;normal&#39;</span> <span class="k">and</span> <span class="n">ResTime</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">.</span><span class="mi">2</span>
@@ -218,7 +218,7 @@ You can report problems with <em>MOSAIC</em> using the<a class="" href="https://
     <div class="footer">
       Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.3.
     </div> -->
-<div class="footer">
+<div class="footer" style="vertical-align: center">
 National Institute of Standards and Technology,&nbsp;
 <a href="Disclaimer.html"><em>Terms of Use</em></a>
 </div>

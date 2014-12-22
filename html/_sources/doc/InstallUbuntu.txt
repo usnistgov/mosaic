@@ -16,6 +16,8 @@ Several prerequisites must be installed prior to building |projname| dependencie
   $  sudo apt-get install python python-dev python-pip python-qt4 
      freetype* gfortran liblapack-dev libblas-dev
 
+.. _setPYTHONPATHUbuntu:
+
 Next add the following to ~/.bashrc
 
 .. code-block:: console

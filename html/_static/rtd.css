@@ -838,7 +838,7 @@ div.related ul li {
     padding: 0.65em 0;
     float: left;
     display: block;
-    color: #111111; /* For the >> separators */
+    color: #ffffff; /* For the >> separators */
     font-size: 0.8em;
 }
 

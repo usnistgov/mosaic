@@ -61,7 +61,7 @@
 <span id="gettingstarted"></span><h1>2. Getting Started<a class="headerlink" href="#getting-started" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="binary-installation">
 <h2>2.1. Binary Installation<a class="headerlink" href="#binary-installation" title="Permalink to this headline">¶</a></h2>
-<p><em>MOSAIC</em> is available as a pre-compiled binary for Windows and Mac OS X (<a class="reference external" href="http://www.nist.gov">download binaries</a>).</p>
+<p><em>MOSAIC</em> is available as a pre-compiled binary for Windows and Mac OS X (<a class="reference external" href="http://usnistgov.github.io/mosaic/platforms.html">download binaries</a>).</p>
 </div>
 <div class="section" id="installation-from-source">
 <h2>2.2. Installation from Source<a class="headerlink" href="#installation-from-source" title="Permalink to this headline">¶</a></h2>
@@ -94,7 +94,7 @@ requires Apple command line tools, but will directly prompt you to install it on
 </pre></div>
 </div>
 <p>At this point, it is a good idea to update the PYTHONPATH environment variable in ~/.bash_profile:</p>
-<div class="highlight-console"><div class="highlight"><pre><span class="gp">$</span>  <span class="nb">export </span><span class="nv">PYTHONPATH</span><span class="o">=</span><span class="nv">$PYTHONPATH</span>:/usr/local/lib/python2.7/site-packages
+<div class="highlight-console" id="setpythonpathosx"><div class="highlight"><pre><span class="gp">$</span>  <span class="nb">export </span><span class="nv">PYTHONPATH</span><span class="o">=</span><span class="nv">$PYTHONPATH</span>:/usr/local/lib/python2.7/site-packages
 </pre></div>
 </div>
 <p><strong>3. (Optional) Install and Setup Virtual Environment</strong></p>
@@ -121,9 +121,9 @@ requires Apple command line tools, but will directly prompt you to install it on
 <p class="last">We explicitly specify the <a class="reference external" href="http://www.python.org/">Python</a> installation to use. This is not mandatory, but is useful if you have multiple <a class="reference external" href="http://www.python.org/">Python</a> installations on your computer.</p>
 </div>
 <p><strong>4. Installing MOSAIC</strong></p>
-<p>First we need to obtain the <em>MOSAIC</em> source code. For analyzing publication data, we recommend downloading the latest stable version of the source code (<a class="reference external" href="http://www.nist.gov">download source</a>). Alternatively, the latest development version can be downloaded from the <a class="reference external" href="https://github.com/usnistgov/mosaic">MOSAIC page on Github</a>. Here we will show you how to set up <em>MOSAIC</em> from the latest stable release:</p>
+<p>First we need to obtain the <em>MOSAIC</em> source code. For analyzing publication data, we recommend downloading the latest stable version of the source code (<a class="reference external" href="http://usnistgov.github.io/mosaic/platforms.html">download source</a>). Alternatively, the latest development version can be downloaded from the <a class="reference external" href="https://github.com/usnistgov/mosaic">MOSAIC page on Github</a>. Here we will show you how to set up <em>MOSAIC</em> from the latest stable release:</p>
 <ol class="arabic simple">
-<li>Download the latest release (<a class="reference external" href="http://www.nist.gov">download source</a>)</li>
+<li>Download the latest release (<a class="reference external" href="http://usnistgov.github.io/mosaic/platforms.html">download source</a>)</li>
 <li>Create a directory for the project source. In this case we will create a directory called MOSAIC, located in <tt class="docutils literal"><span class="pre">~/projects/</span></tt>, where &#8216;~&#8217; is your home directory.</li>
 </ol>
 <div class="highlight-console"><div class="highlight"><pre><span class="gp">$</span> mkdir ~/projects/MOSAIC
@@ -172,7 +172,7 @@ requires Apple command line tools, but will directly prompt you to install it on
 <span class="go">   freetype* gfortran liblapack-dev libblas-dev</span>
 </pre></div>
 </div>
-<p>Next add the following to ~/.bashrc</p>
+<p id="setpythonpathubuntu">Next add the following to ~/.bashrc</p>
 <div class="highlight-console"><div class="highlight"><pre><span class="go">export PYTHONPATH=/usr/lib/python2.7/dist-packages</span>
 </pre></div>
 </div>
@@ -200,9 +200,9 @@ requires Apple command line tools, but will directly prompt you to install it on
 <p class="last">We explicitly specify the <a class="reference external" href="http://www.python.org/">Python</a> installation to use. This is not mandatory, but is useful if you have multiple <a class="reference external" href="http://www.python.org/">Python</a> installations on your computer.</p>
 </div>
 <p><strong>3. Installing MOSAIC</strong></p>
-<p>First we need to obtain the <em>MOSAIC</em> source code. For analyzing publication data, we recommend downloading the latest stable version of the source code (<a class="reference external" href="http://www.nist.gov">download source</a>). Alternatively, the latest development version can be downloaded from the <a class="reference external" href="https://github.com/usnistgov/mosaic">MOSAIC page on Github</a>. Here we will show you how to set up <em>MOSAIC</em> from the latest stable release:</p>
+<p>First we need to obtain the <em>MOSAIC</em> source code. For analyzing publication data, we recommend downloading the latest stable version of the source code (<a class="reference external" href="http://usnistgov.github.io/mosaic/platforms.html">download source</a>). Alternatively, the latest development version can be downloaded from the <a class="reference external" href="https://github.com/usnistgov/mosaic">MOSAIC page on Github</a>. Here we will show you how to set up <em>MOSAIC</em> from the latest stable release:</p>
 <ol class="arabic simple">
-<li>Download the latest release (<a class="reference external" href="http://www.nist.gov">download source</a>)</li>
+<li>Download the latest release (<a class="reference external" href="http://usnistgov.github.io/mosaic/platforms.html">download source</a>)</li>
 <li>Create a directory for the project source. In this case we will create a directory called MOSAIC, located in <tt class="docutils literal"><span class="pre">~/projects/</span></tt>, where &#8216;~&#8217; is your home directory.</li>
 </ol>
 <div class="highlight-console"><div class="highlight"><pre><span class="gp">$</span> mkdir ~/projects/MOSAIC
@@ -325,7 +325,7 @@ You can report problems with <em>MOSAIC</em> using the<a class="" href="https://
     <div class="footer">
       Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.3.
     </div> -->
-<div class="footer">
+<div class="footer" style="vertical-align: center">
 National Institute of Standards and Technology,&nbsp;
 <a href="Disclaimer.html"><em>Terms of Use</em></a>
 </div>

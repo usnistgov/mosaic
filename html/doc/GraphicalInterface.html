@@ -59,162 +59,158 @@
             
   <div class="section" id="projname-gui">
 <span id="gui-page"></span><h1>3. <em>MOSAIC</em> GUI<a class="headerlink" href="#projname-gui" title="Permalink to this headline">¶</a></h1>
-<p><em>MOSAIC</em>&#8216;s GUI interface is designed to allow you to easily setup and run an analysis and to analyze the results of prior trials via a graphical interface, it contains the most commonly used features of <em>MOSAIC</em>.  The GUI contains a number of different modular panels for setting up an analysis, running it, and analyzing the results. Here we&#8217;ll give you a brief overview of the different panels and their basic use. You can learn more about these features and their use in the examples we&#8217;ve included here.</p>
+<p><em>MOSAIC</em>&#8216;s GUI interface is designed to allow you to easily setup and run an analysis and to analyze the results of prior trials via a graphical interface; it contains the most commonly used features of <em>MOSAIC</em>.  The GUI contains modular panels for setting up an analysis, running it, and analyzing the results. Here we give you a brief overview of the graphical interface and its basic use. You can learn more in the <a class="reference internal" href="examples.html#examples-page"><em>Examples</em></a> section.</p>
 <p><strong>Opening the GUI</strong></p>
-<p>If you installed <em>MOSAIC</em> from the precomiled binary, you can open the GUI by double clicking the <em>MOSAIC</em> icon. If you compiled the source code yourself, you can run the GUI from the terminal window &#8211; navigate to the installation directory and type:</p>
+<p>If you installed <em>MOSAIC</em> from a precomiled binary, you can open the GUI by double clicking the <em>MOSAIC</em> icon. Alternatively, if you compiled <em>MOSAIC</em> from source code, you can run the GUI from the terminal window &#8211; navigate to the installation directory and type:</p>
 <div class="highlight-console"><div class="highlight"><pre><span class="go">python mosaicgui/mosaicGUI.py</span>
 </pre></div>
+</div>
+<div class="admonition hint">
+<p class="first admonition-title">Hint</p>
+<p class="last">Having trobule getting the GUI to start? Frequently, this arises because your PYTHONPATH environment variable is set up incorrectly. To fix this error, first type <tt class="docutils literal"><span class="pre">echo</span> <span class="pre">$PYTHONPATH</span></tt> in the terminal. If you don&#8217;t see the path to the <em>MOSAIC</em> installation in <cite>PYTHONPATH</cite>, consult the operating-system specific instructions (<a class="reference internal" href="InstallOSX.html#setpythonpathosx"><em>OSX</em></a> or <a class="reference internal" href="InstallUbuntu.html#setpythonpathubuntu"><em>Ubuntu</em></a>) to help resolve this issue.</p>
 </div>
 <div class="section" id="interface-overview">
 <h2>3.1. Interface Overview<a class="headerlink" href="#interface-overview" title="Permalink to this headline">¶</a></h2>
 <div class="figure align-center">
 <a class="reference internal image-reference" href="../_images/mainpanels-panelLabel.png"><img alt="../_images/mainpanels-panelLabel.png" src="../_images/mainpanels-panelLabel.png" style="width: 85%;" /></a>
+<p class="caption">Primary panels in <em>MOSAIC</em>: (A)Analysis Setup (B) Trajectory Viewer (C) Live Blockade Depth Histogram (D) Live Analysis Statistics (E) Event Viewer.</p>
 </div>
-<p>The main interface consists of five different modules which we&#8217;ll go over in detail later in this document. Briefly, these are:</p>
+<p>The main interface consists of five panels which we go over in detail later in this document. Briefly, these are:</p>
 <ol class="upperalpha simple">
-<li><em>Analysis Setup</em>: This module is used to set up the analysis.</li>
-<li><em>Trajectory Viewer</em>: This module shows a time snippet of the ionic current trace, an all points histogram, is used to help set the baseline and threshold parameters found in the <em>Analysis Setup</em> (A)</li>
-<li><em>Live Blockade Depth Histogram</em>: Once the data processing has started, this module shows a live blockade depth histogram; a query can be defined to restrict the histogram to data which fulfills a user-set criterion.</li>
-<li><em>Live analysis statistics</em>: Displays live statistics about the data processed</li>
-<li><em>Event Viewer</em>: Displays the partitioned events and their fit. This panel is active only if &#8220;Write Events to Disk&#8221; is enabled in (A).</li>
+<li><em>Analysis Setup</em>: This panel is used to set up the analysis parameters.</li>
+<li><em>Trajectory Viewer</em>: This panel shows a snippet of the ionic current time-series and an all points histogram, used to set the baseline and threshold parameters found in <a class="reference internal" href="#analysis-setup"><em>Panel A: Analysis Setup</em></a>.</li>
+<li><em>Blockade Depth Histogram</em>: Once the data processing has started, this panel shows a live blockade depth histogram; a query can be defined to restrict the histogram to data which fulfills a user-defined criteria.</li>
+<li><em>Analysis Statistics</em>: Displays live statistics about the data processed.</li>
+<li><em>Event Viewer</em>: Displays the partitioned events and their fit. This panel is active only if &#8220;Write Events to Disk&#8221; is enabled in the <a class="reference internal" href="#analysis-setup"><em>Analysis Setup.</em></a></li>
 </ol>
 </div>
-<div class="section" id="modules-a-b-analysis-setup-and-trajectory-viewer">
-<h2>3.2. Modules A &amp; B: Analysis Setup and Trajectory Viewer<a class="headerlink" href="#modules-a-b-analysis-setup-and-trajectory-viewer" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="panels-a-b-analysis-setup-and-trajectory-viewer">
+<h2>3.2. Panels A &amp; B: Analysis Setup and Trajectory Viewer<a class="headerlink" href="#panels-a-b-analysis-setup-and-trajectory-viewer" title="Permalink to this headline">¶</a></h2>
 <div class="figure align-center">
-<a class="reference internal image-reference" href="../_images/panelab.png"><img alt="../_images/panelab.png" src="../_images/panelab.png" style="width: 80%;" /></a>
+<a class="reference internal image-reference" href="../_images/panelab.png"><img alt="../_images/panelab.png" src="../_images/panelab.png" style="width: 70%;" /></a>
+<p class="caption"><em>Overview of Panels A &amp; B</em>: (A) Analysis setup panel (B) Trajectory viewer panel</p>
 </div>
-<div class="section" id="module-a-analysis-setup">
-<h3>3.2.1. Module A: Analysis Setup<a class="headerlink" href="#module-a-analysis-setup" title="Permalink to this headline">¶</a></h3>
-<div class="section" id="data-settings">
-<h4>3.2.1.1. 1. Data Settings<a class="headerlink" href="#data-settings" title="Permalink to this headline">¶</a></h4>
+<div class="section" id="panel-a-analysis-setup">
+<span id="analysis-setup"></span><h3>3.2.1. Panel A: Analysis Setup<a class="headerlink" href="#panel-a-analysis-setup" title="Permalink to this headline">¶</a></h3>
+<p><strong>1. Data Settings</strong></p>
 <ul class="simple">
-<li><strong>Path</strong>: Directory containing analysis files. Click the &#8221;...&#8221; icon to navigate to the directory.</li>
-<li><strong>File Type</strong>: Currently the GUI can be used to analyze either ABF or QDF Files, this field is automatically populated based on the files in the directory you&#8217;ve chosen.The <strong>Rfb</strong> and <strong>Cfb</strong> parameters are needed to correctly analyze QDF files (see ????? for more information)</li>
-<li><strong>Rfb &amp; Cfb</strong>: <em>MOSAIC</em> supports the QUB QDF file format used by the <a class="reference external" href="http://electronicbio.com">Electronic Biosciences</a> Nanopatch system. Two additional parameters, the feedback resistance (Rfb) in Ohms and capacitance (Cfb) in Farads are required to appropriately convert the stored measurement to ionic current.</li>
-<li><strong>Start</strong> and <strong>End</strong>: These parameters allow you to analyze a specific time range of your data. Choose the starting and ending times If you&#8217;d like to analyze a small time segement of your data. If this is left blank, all data will be analyzed.</li>
-<li><strong>DC Offset</strong>: If your measurement contains a DC offset, it can be manually corrected here. The absolute offset (not the correction) should be put here. This will be used to correct the measured current values in your data.</li>
+<li><strong>Path</strong>: Allows user to set the directory containing files to analyze. Click the &#8221;...&#8221; icon to navigate to the directory.</li>
+<li><strong>File Type</strong>: The GUI is natively compatible with either ABF or QDF Files, this field is automatically populated based on the files in the directory you&#8217;ve chosen.The <strong>Rfb</strong> and <strong>Cfb</strong> parameters are needed to correctly analyze QDF files (see <a class="reference internal" href="../api-doc/mosaic.traj.html#module-mosaic.qdfTrajIO" title="mosaic.qdfTrajIO"><tt class="xref py py-class docutils literal"><span class="pre">qdfTrajIO</span></tt></a> for more information)</li>
+<li><strong>Rfb &amp; Cfb</strong>: <em>MOSAIC</em> supports the QUB QDF file format used by the <a class="reference external" href="http://electronicbio.com">Electronic Biosciences</a> Nanopatch system. Two additional parameters, the feedback resistance (Rfb) in Ohms and capacitance (Cfb) in Farads are required to appropriately convert the measurements to ionic current.</li>
+<li><strong>Start</strong> and <strong>End</strong>: These parameters allow you to analyze a range of your data. Choose the starting and ending times if you&#8217;d like to analyze a small time segement of your data. If this is left blank, all data will be analyzed.</li>
+<li><strong>DC Offset</strong>: If your measurement contains a systematic bias, it can be manually corrected by entering the DC offset here.</li>
 </ul>
-</div>
-<div class="section" id="baseline-current-detection">
-<h4>3.2.1.2. 2. Baseline Current Detection<a class="headerlink" href="#baseline-current-detection" title="Permalink to this headline">¶</a></h4>
+<p><strong>2. Baseline Current Detection</strong></p>
 <ul class="simple">
-<li><span class="math">\(\mu\)</span>: Mean baseline current, in pA. This is shown schematically in the trajectory viewer (see Label #8). When <em>Auto</em> is selected, this will be greyed out and labeled &lt;auto&gt;.</li>
-<li><span class="math">\(\sigma\)</span>: Noise level (in pA). This is expected noise level of your baseline. Typically one would set this to the measured RMS noise of the open channel state at the sampling frequency. When <em>Auto</em> is selected, this will be greyed out and labeled &lt;auto&gt;.</li>
-<li><strong>Auto</strong>: Checking this box enables automatic dectection of the mean baseline current (<span class="math">\(\mu\)</span>) noise level (<span class="math">\(\sigma\)</span>). When auto is enabled, the values chosen by the software will be displayed in the trajectory viewer module (see Label #10)</li>
-<li><strong>Block Size</strong>:nControls the amount of data examined to determine the baseline. This also controls the amount of data shown in the trajectory viewer.</li>
+<li><span class="math">\(\mu\)</span>: Mean baseline current, in picoamperes (pA). This is shown schematically in the trajectory viewer (see Label #8). When <em>Auto</em> is selected, this will be greyed out and labeled <tt class="docutils literal"><span class="pre">&lt;auto&gt;</span></tt></li>
+<li><span class="math">\(\sigma\)</span>: Noise level (in pA). This is expected noise level of your baseline. Typically one would set this to the measured RMS noise of the open channel state at the cutoff frequency. When <em>Auto</em> is selected, this will be greyed out and labeled <tt class="docutils literal"><span class="pre">&lt;auto&gt;</span></tt>.</li>
+<li><strong>Auto</strong>: Checking this box enables automatic dectection of the mean baseline current (<span class="math">\(\mu\)</span>) and noise level (<span class="math">\(\sigma\)</span>). When auto is enabled, the values chosen by the software will be displayed in the trajectory viewer panel (see Label #10)</li>
+<li><strong>Block Size</strong>: Controls the amount of data examined to determine the baseline. This also controls the amount of data shown in the trajectory viewer.</li>
 </ul>
-</div>
-<div class="section" id="event-partition-control">
-<h4>3.2.1.3. 3. Event Partition Control<a class="headerlink" href="#event-partition-control" title="Permalink to this headline">¶</a></h4>
-<p>This panel is used to set the current threhold used for event detection <em>REF trajectory-viewer</em></p>
+<p><strong>3. Event Partition Control</strong></p>
+<p>This panel is used to set the current threhold used for event detection</p>
 <ul class="simple">
-<li><strong>Algorithm</strong>: Currently, the only event partitioning algoirthim enabled is <em>CurrentThreshold</em>.</li>
-<li><strong>Threshold</strong>: This is used to set the minimum current threshold used to partition events with <em>CurrentThreshold</em> algorithm.</li>
+<li><strong>Algorithm</strong>: Currently,the only event partitioning algorithm enabled is <em>CurrentThreshold</em>.</li>
+<li><strong>Threshold</strong>: This is used to set the minimum current threshold used to partition events with the <em>CurrentThreshold</em> algorithm.</li>
 </ul>
-</div>
-<div class="section" id="event-processing-setup">
-<h4>3.2.1.4. 4.  Event Processing Setup<a class="headerlink" href="#event-processing-setup" title="Permalink to this headline">¶</a></h4>
+<p><strong>4.  Event Processing Setup</strong></p>
+<p><strong>Event Processing Algorithm</strong>: The GUI supports two event processing algorithms, i) <em>StepResponseAnalysis</em> and ii) <em>MultiStateAnalysis</em>. <em>StepResponseAnalysis</em> is the default analysis, and should be used with data sets with unimodal events. For events with mutliple states or steps the <em>MultiStateAnalysis</em> algorithm, which is capable of automatically analyzing events with <em>N</em> states, should be used. Note that <em>StepResponseAnalysis</em> is a restricted case of <em>MultiStateAnalysis</em> and is more computationally efficient to run if you have unimodal (or single states) data.</p>
 <ul class="simple">
-<li><strong>Event Processing Algorithm</strong>: Currently, the only option shown in the GUI is stepResponseAnalysis. Other event response algorithims (including multistate fitting) are currently accessible only through the command line.</li>
-<li><strong>Write Events to Disk</strong>: When this box is checked, the data points for each partition events are written to the SQL database. When this is checked it is possible to view the individual fits of each  in the <em>Event Fits</em> module.</li>
+<li><strong>Write Events to Disk</strong>: When this box is checked, the data points for each partition events are written to the <a class="reference external" href="http://www.sqlite.org/">SQLite</a> database. When this is checked it is possible to view the individual fits of each  in the <em>Event Fits</em> panel.</li>
 </ul>
 <div class="admonition hint">
 <p class="first admonition-title">Hint</p>
-<p class="last">When this is checked, your database can become extremely large! This is effectively writing out most of your entire dataset to the DB. Regardless of whether this box is checked, the fit parameters are <em>always</em> written out to the DB (this doesn&#8217;t take up very much space).</p>
+<p class="last">When <em>Write Evens to Disk</em> is checked, your database can become extremely large! This is because <em>MOSAIC</em> is effectively writing most of your time-series to the database. Note that the fit parameters are <em>always</em> written to the database.</p>
 </div>
 <ul class="simple">
-<li><strong>Parallel Processing</strong> and <strong>Processors</strong>: Parallel processing can be enabled by checking this box. This box will be greyed out if the python module zmq is not installed on your system. The number of processors is chosen in the number box. Note that the GUI will occupy one processor, so choosing 3 processors will actually use 4 total processors, 3 for the processing and 1 for the gui.</li>
+<li><strong>Parallel Processing</strong> and <strong>Processors</strong>: Parallel processing can be enabled by checking this box. This box will be greyed out if the python module <a class="reference external" href="http://zeromq.github.io/pyzmq/">ZeroMQ</a> is not installed. The <cite>Processors</cite> box allows you to select the number of processors used in the analysis. It is important to note that the GUI will occupy one processor, so choosing 3 processors will actually use a total of 4 processors.</li>
 </ul>
-</div>
-<div class="section" id="plot-results-and-advanced-settings">
-<h4>3.2.1.5. 5. Plot Results and Advanced Settings<a class="headerlink" href="#plot-results-and-advanced-settings" title="Permalink to this headline">¶</a></h4>
+<p><strong>5. Plot Results and Advanced Settings</strong></p>
 <ul class="simple">
-<li><strong>Event Fits</strong>: Checking this box will show the events viewer (Module E). This can also be access through the file menu <tt class="docutils literal"><span class="pre">View&gt;Plots&gt;Event</span> <span class="pre">Fits</span></tt>. This will be greyed out if <em>Write Events to Disk</em> is not enabled.</li>
-<li><strong>Blockade Depth Histogram</strong>: Checking this box will show the blockade depth histogram (Module C) This can also be access through the file menu <tt class="docutils literal"><span class="pre">View&gt;Plots&gt;Blockade</span> <span class="pre">Depth</span> <span class="pre">Histogram)</span></tt></li>
-<li><strong>Advanced Settings</strong>: This opens a dialog window to manually edit settings not otherwise accessible in the GUI.</li>
+<li><strong>Event Fits</strong>: Checking this box will show the events viewer (Panel E). This can also be accessed from the file menu <tt class="docutils literal"><span class="pre">View&gt;Plots&gt;Event</span> <span class="pre">Fits</span></tt>. If <em>Write Events to Disk</em> is not enabled this checkbox will be greyed out.</li>
+<li><strong>Blockade Depth Histogram</strong>: Checking this box will show the blockade depth histogram (Panel C). This can also be accessed through the file menu <tt class="docutils literal"><span class="pre">View&gt;Plots&gt;Blockade</span> <span class="pre">Depth</span> <span class="pre">Histogram</span></tt>.</li>
+<li><strong>Advanced Settings</strong>: This opens a dialog window to manually edit settings not otherwise accessible in the GUI. See the <a class="reference internal" href="settingsFile.html#settings-page"><em>Settings File</em></a> section for further details.</li>
 </ul>
 </div>
-</div>
-<div class="section" id="module-b-trajectory-viewer">
-<h3>3.2.2. Module B: Trajectory Viewer<a class="headerlink" href="#module-b-trajectory-viewer" title="Permalink to this headline">¶</a></h3>
-<p>This module shows a segment of the data time series. The file loaded into memory is shown in the top of the window. If multiple files are loaded, the final file loaded will be displayed. The length of the trajectory shwon is set by by <em>BlockSize</em> in Module A (see #2).</p>
-<div class="section" id="time-series-trajectory">
-<h4>3.2.2.1. 6.  Time Series (Trajectory)<a class="headerlink" href="#time-series-trajectory" title="Permalink to this headline">¶</a></h4>
+<div class="section" id="panel-b-trajectory-viewer">
+<span id="trajectory-viewer"></span><h3>3.2.2. Panel B: Trajectory Viewer<a class="headerlink" href="#panel-b-trajectory-viewer" title="Permalink to this headline">¶</a></h3>
+<p>This panel shows a segment of the data time series. The file currently being displayed is shown at the top of the window. If data from multiple files are loaded, the last filename is displayed. The length of time displayed in the window is controlled by <em>BlockSize</em> in Panel A (see #2).</p>
+<p><strong>6.  Time Series (Trajectory)</strong></p>
 <ul class="simple">
-<li>This shows the time series of the data, of length <em>BlockSize</em>. Other features in the module (such as histogram, denoising etc) utilize the data shown in the window for their calculations. Other segments of the data are not employed.</li>
+<li>This plot shows the ionic current time series, of length <em>BlockSize</em>. Other features in the panel (such as histogram, denoising, etc.) only utilize the data in the window for their calculations.</li>
 </ul>
-</div>
-<div class="section" id="all-points-histogram">
-<h4>3.2.2.2. 7.  All Points Histogram<a class="headerlink" href="#all-points-histogram" title="Permalink to this headline">¶</a></h4>
+<p><strong>7.  All Points Histogram</strong></p>
 <ul class="simple">
 <li>This shows a histogram of the time series data shown in #6.</li>
 </ul>
-</div>
-<div class="section" id="dashed-line-indicates-mean-baseline-current">
-<h4>3.2.2.3. 8. Dashed line indicates mean baseline current<a class="headerlink" href="#dashed-line-indicates-mean-baseline-current" title="Permalink to this headline">¶</a></h4>
-</div>
-<div class="section" id="detection-threshold-level-indicated-by-solid-red-line">
-<h4>3.2.2.4. 9. Detection threshold level indicated by solid red line<a class="headerlink" href="#detection-threshold-level-indicated-by-solid-red-line" title="Permalink to this headline">¶</a></h4>
-</div>
-<div class="section" id="navigation-denoising-and-statistics">
-<h4>3.2.2.5. 10. Navigation, Denoising, and Statistics<a class="headerlink" href="#navigation-denoising-and-statistics" title="Permalink to this headline">¶</a></h4>
+<p><strong>8. Dashed line indicates mean baseline current</strong></p>
+<p><strong>9. Detection threshold level indicated by solid red line</strong></p>
+<p><strong>10. Navigation, Denoising, and Statistics</strong></p>
 <ul class="simple">
-<li><strong>Navigation Tools:</strong> Tools to navigate the plot window are shown above. These can be used to either the trajectory or all points histogram windows. These controls cannot be used to advance to subsequent data files. This can be acomplished by the arrow bar at the bottom right.</li>
-<li><strong>Denoising</strong> Wavelet denoising can be activated by clicking , the denoising level is enabled here, the level of denoising can be varied between 1 and 5. <em>See advanced tools for description of use.</em></li>
-<li><strong>Baseline Statistics</strong>: Value of mean baseline current, standard deviation of the open channel current, and the absolute threshold used for event detection (multiples of RMS noise listed in parenthesis) values correspond to the settings in the main window. If the baseline current detection is set to <strong>auto</strong> these values will update as each data segment is examined. The size of this segment is determined by the <strong>Block Size</strong> setting. In this screenshot, the time is set to 0.5 s</li>
+<li><strong>Navigation Tools:</strong> Tools to navigate the plot window are shown below the time-series plot. These can be applied to either the trajectory or all points histogram plots. The arrow bar on the bottom right of the trajectory viewer can be used to advance to the next data block.</li>
+<li><strong>Denoising</strong> Wavelet denoising can be activated by clicking , the denoising level is enabled here, the level of denoising can be varied between 1 and 5.</li>
+</ul>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">Wavelet-based denoising is currently an experimental feature and should be used with caution.</p>
+</div>
+<ul class="simple">
+<li><strong>Baseline Statistics</strong>: The mean baseline current, standard deviation, and the threshold used for event detection (specified as a multiple of the standard deviation in parenthesis) correspond to the settings in the main window. If the baseline current detection is set to <em>auto</em> these values will update as each data segment is examined. The size of this segment is determined by the <em>Block Size</em> setting. In the figure above, the <em>Block Size</em> is set to 0.5 s.</li>
 </ul>
 </div>
 </div>
-</div>
-<div class="section" id="modules-c-d-e-blockade-depth-histogram-statistics-and-event-viewer">
-<h2>3.3. Modules C,D, &amp; E: Blockade Depth Histogram, Statistics, and Event Viewer<a class="headerlink" href="#modules-c-d-e-blockade-depth-histogram-statistics-and-event-viewer" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="blockade-depth-histogram">
-<h3>3.3.1. Blockade Depth Histogram<a class="headerlink" href="#blockade-depth-histogram" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="panels-c-d-e-blockade-depth-histogram-statistics-and-event-viewer">
+<h2>3.3. Panels C,D, &amp; E: Blockade Depth Histogram, Statistics, and Event Viewer<a class="headerlink" href="#panels-c-d-e-blockade-depth-histogram-statistics-and-event-viewer" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="panel-c-blockade-depth-histogram">
+<h3>3.3.1. Panel C: Blockade Depth Histogram<a class="headerlink" href="#panel-c-blockade-depth-histogram" title="Permalink to this headline">¶</a></h3>
 <div class="figure align-center">
 <a class="reference internal image-reference" href="../_images/bd_hist.png"><img alt="../_images/bd_hist.png" src="../_images/bd_hist.png" style="width: 50%;" /></a>
+<p class="caption">Blockade depth histogram</p>
 </div>
-<p>In this window, the blockade depth distribution of data which is currently being analyzed is shown.</p>
+<p>This window shows the blockade depth histogram calculated from the meta-data output by <em>MOSAIC</em>.</p>
 <ul class="simple">
-<li><strong>Filter</strong> The data displayed in the histogram and be restricted to events which fulfill specific criteria. For instance, the default filter ResTime &gt; 0.025 instructs the software to only include events which last longer than 0.025 ms (25 us). Becuase all events are written out to a SQL database, this filter allows the different columns the table to be queried and events restricted. Further examples shown subsequently.</li>
-<li><strong>Bins</strong>  The number of bins in the histogram are defined here. By default, 500 bins are used, but the user can change this to any appropriate value seen fit.</li>
-<li><strong>Detect Peaks</strong> Checking the detect peaks enables a wavelet-based peak picking algorithm (<strong>ref</strong>). The wavelet level controls the sensitivity of the peak detection algorithim. Sliding it to the right will decrease the number of peaks picked up. Peaks found appear as red dots. The peak coordinates can be dispalyed by moving your mouse over the red dot, the coordinates will appear in the lower right hand corner of the window.</li>
+<li><strong>Filter</strong>: The data displayed in the histogram can be restricted to events that fulfill specific user-defined criteria. For instance, the default filter <tt class="docutils literal"><span class="pre">ResTime</span> <span class="pre">&gt;</span> <span class="pre">0.025</span></tt> only includes events longer than 0.025 ms (or 25 <span class="math">\(\mu s\)</span>). The GUI uses a <a class="reference external" href="http://en.wikipedia.org/wiki/SQL">SQL</a> <cite>select</cite> statement to restrict the events included in the histogram. The text in the <em>Filter</em> field represents the part of the query after the <cite>where</cite> clause, and allows the user to use standard <a class="reference external" href="http://en.wikipedia.org/wiki/SQL">SQL</a> syntax to narrow the results in the plot. See the <a class="reference internal" href="DatabaseStructure.html#working-with-sqlite-sec"><em>Work with SQLite</em></a> section for details on <a class="reference external" href="http://en.wikipedia.org/wiki/SQL">SQL</a> syntax.</li>
+<li><strong>Bins</strong>: The number of bins in the histogram are defined here. By default, 500 bins are used, but the user can change this necessary.</li>
+<li><strong>Detect Peaks</strong>: Checking <em>Detect Peaks</em> enables a wavelet-based peak detection algorithm. The wavelet level slider controls the sensitivity of the peak detection. Sliding it to the right will decrease the number of peaks picked up. The peaks detected are represented with red dots. Mousing over the detected peaks cause the coordinates of the peak to be displayed in the lower right hand corner of the window. The detected peaks can also be exported to a CSV file from the file menu <tt class="docutils literal"><span class="pre">File&gt;Save</span> <span class="pre">Histogram</span></tt>.</li>
 </ul>
 </div>
-<div class="section" id="statistics">
-<h3>3.3.2. Statistics<a class="headerlink" href="#statistics" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="panel-d-statistics">
+<h3>3.3.2. Panel D: Statistics<a class="headerlink" href="#panel-d-statistics" title="Permalink to this headline">¶</a></h3>
 <div class="figure align-center">
 <a class="reference internal image-reference" href="../_images/statistics.png"><img alt="../_images/statistics.png" src="../_images/statistics.png" style="width: 40%;" /></a>
+<p class="caption">Live statistics window</p>
 </div>
-<p>Statistics window will pop up when you initiate processing. This window
-displays the following information:</p>
+<p>The <em>Statistics Window</em> is displayed when a new analysis is started and displays:</p>
 <ul class="simple">
-<li><strong>Events Processed</strong>: Number of events which have been processed so far.</li>
-<li><strong>Processing Error</strong>: Percentage of events for which fit has failed.</li>
-<li><strong>Capture Rate</strong>: Estimate of mean capture rate, assuming a single exponentially distributed population.</li>
-<li><strong>Analysis Time</strong>: How many seconds of data have been processed.</li>
+<li><strong>Events Processed</strong>: The number of events processed.</li>
+<li><strong>Processing Error</strong>: The processing error rate (i.e. the percentage of events for which fit has failed).</li>
+<li><strong>Capture Rate</strong>: An estimate of the mean capture rate.</li>
+<li><strong>Analysis Time</strong>: The amount of data processed (in seconds).</li>
 </ul>
 </div>
-<div class="section" id="event-viewer">
-<h3>3.3.3. Event Viewer<a class="headerlink" href="#event-viewer" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="panel-e-event-viewer">
+<h3>3.3.3. Panel E: Event Viewer<a class="headerlink" href="#panel-e-event-viewer" title="Permalink to this headline">¶</a></h3>
 <div class="figure align-center">
 <a class="reference internal image-reference" href="../_images/event_viewerpng.png"><img alt="../_images/event_viewerpng.png" src="../_images/event_viewerpng.png" style="width: 50%;" /></a>
+<p class="caption">Event viewer window</p>
 </div>
-<p>If <em>Write to Disk</em> is enabled, this dialog allows you to view the first 9999 events partitioned and their corresponding fit. This is a useful dialog for ensuring that you are getting meaningful fits and for investigating which events are not fit.</p>
+<p>If <em>Write to Disk</em> is enabled, this panel allows you to view the first 10,000 events processed. This is useful to ensure the quality of the analysis and to debug potential problems with the settings.</p>
 </div>
 <div class="section" id="console-log">
 <h3>3.3.4. Console Log<a class="headerlink" href="#console-log" title="Permalink to this headline">¶</a></h3>
 <div class="figure align-center">
 <a class="reference internal image-reference" href="../_images/console.png"><img alt="../_images/console.png" src="../_images/console.png" style="width: 50%;" /></a>
+<p class="caption">Console log window</p>
 </div>
-<p>Once processing has been completed, this dialog shows you a diagnostic log with the settings you used for processing and information about the number of events fit, baseline drift, and open channel conducatance. This file is written in the database and can also be accessed later.</p>
+<p>When processing is complete, this panel displays a log of the analysis. This log contains useful information such as the analysis settings, the number of events fit, baseline drift, open channel conducatance, etc. This file is written to the database and can be accessed later.</p>
 </div>
 <div class="section" id="advanced-settings">
 <h3>3.3.5. Advanced Settings<a class="headerlink" href="#advanced-settings" title="Permalink to this headline">¶</a></h3>
 <div class="figure align-center">
 <a class="reference internal image-reference" href="../_images/advanced-settings.png"><img alt="../_images/advanced-settings.png" src="../_images/advanced-settings.png" style="width: 50%;" /></a>
+<p class="caption">Advanced settings window</p>
 </div>
-<p>This dialog allows you to manually edit settings not otherwise accessible in the GUI. Further information about the settings can be found in <strong>LINK</strong></p>
+<p>This dialog allows you to manually edit advanced settings for uncommon use cases not natively accessible from within the GUI. Further information can be found in the <a class="reference internal" href="settingsFile.html#settings-page"><em>Settings File</em></a>.</p>
 </div>
 </div>
 </div>
@@ -234,8 +230,8 @@ displays the following information:</p>
 <li class="toctree-l1"><a class="reference internal" href="GettingStarted.html">2. Getting Started</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="">3. <em>MOSAIC</em> GUI</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#interface-overview">3.1. Interface Overview</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#modules-a-b-analysis-setup-and-trajectory-viewer">3.2. Modules A &amp; B: Analysis Setup and Trajectory Viewer</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#modules-c-d-e-blockade-depth-histogram-statistics-and-event-viewer">3.3. Modules C,D, &amp; E: Blockade Depth Histogram, Statistics, and Event Viewer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#panels-a-b-analysis-setup-and-trajectory-viewer">3.2. Panels A &amp; B: Analysis Setup and Trajectory Viewer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#panels-c-d-e-blockade-depth-histogram-statistics-and-event-viewer">3.3. Panels C,D, &amp; E: Blockade Depth Histogram, Statistics, and Event Viewer</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="ScriptingandAdvancedFeatures.html">4. Scripting and Advanced Features</a></li>
@@ -304,7 +300,7 @@ You can report problems with <em>MOSAIC</em> using the<a class="" href="https://
     <div class="footer">
       Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.3.
     </div> -->
-<div class="footer">
+<div class="footer" style="vertical-align: center">
 National Institute of Standards and Technology,&nbsp;
 <a href="Disclaimer.html"><em>Terms of Use</em></a>
 </div>

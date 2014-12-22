@@ -41,6 +41,8 @@ Restart the terminal to update your shell.
 
 At this point, it is a good idea to update the PYTHONPATH environment variable in ~/.bash_profile:
 
+.. _setPYTHONPATHOSX:
+
 .. code-block:: console
   
    $  export PYTHONPATH=$PYTHONPATH:/usr/local/lib/python2.7/site-packages

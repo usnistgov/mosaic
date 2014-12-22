@@ -3,6 +3,7 @@
 .. _SQLite: http://www.sqlite.org/
 .. _SQL: http://en.wikipedia.org/wiki/SQL
 .. _matplotlib: http://matplotlib.org/
+.. _ZeroMQ: http://zeromq.github.io/pyzmq/
 .. _National Institute of Standards and Technology: http://www.nist.gov/
 .. _NIST: http://www.nist.gov/
 .. _Semiconductor and Device Metrology: http://www.nist.gov/pml/div683/about.cfm
@@ -15,6 +16,6 @@
 .. _Homebrew: http://brew.sh/
 .. _mksqlite: http://sourceforge.net/projects/mksqlite/
 
-.. _download binaries: http://www.nist.gov
-.. _download source: http://www.nist.gov
+.. _download binaries: http://usnistgov.github.io/mosaic/platforms.html
+.. _download source: http://usnistgov.github.io/mosaic/platforms.html
 .. _MOSAIC page on Github: https://github.com/usnistgov/mosaic
