@@ -50,7 +50,7 @@ At this point, it is a good idea to update the PYTHONPATH environment variable i
 
 **3. (Optional) Install and Setup Virtual Environment**
 
-.. include:: InstallVirtualenvOSX.rst   
+.. include:: InstallVirtualenv.rst
 
 **4. Installing MOSAIC**
 

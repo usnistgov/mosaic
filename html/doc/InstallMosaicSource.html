@@ -27,7 +27,7 @@
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
     <link rel="top" title="MOSAIC 1.0 documentation" href="../index.html" />
  
-<link href='//fonts.googleapis.com/css?family=Roboto:100,300,100italic,300italic' rel='stylesheet' type='text/css'>
+	<link href='//fonts.googleapis.com/css?family=Roboto:100,300,100italic,300italic' rel='stylesheet' type='text/css'>
 
   </head>
   <body>
@@ -84,6 +84,12 @@
 <li>To install the needed dependencies, navigate to ~/projects/MOSAIC/ and run the following:</li>
 </ol>
 <div class="highlight-console"><div class="highlight"><pre><span class="gp">(MOSAIC)$</span> python setup.py mosaic_deps
+</pre></div>
+</div>
+<ol class="arabic simple" start="8">
+<li>Finally, add the installation directory (~/projects/MOSAIC as set up previously) to your <cite>PYTHONPATH</cite> as shown below. This addition can be made permanent by adding the line below to your <cite>.bash_profile</cite> (OS X) or <cite>.bashrc</cite> (Ubuntu) script.</li>
+</ol>
+<div class="highlight-console"><div class="highlight"><pre><span class="gp">(MOSAIC)$</span> <span class="nb">export </span><span class="nv">PYTHONPATH</span><span class="o">=</span><span class="nv">$PYTHONPATH</span>:~/projects/MOSAIC
 </pre></div>
 </div>
 

@@ -29,7 +29,7 @@
     <link rel="next" title="5. Settings File" href="settingsFile.html" />
     <link rel="prev" title="3. MOSAIC GUI" href="GraphicalInterface.html" />
  
-<link href='//fonts.googleapis.com/css?family=Roboto:100,300,100italic,300italic' rel='stylesheet' type='text/css'>
+	<link href='//fonts.googleapis.com/css?family=Roboto:100,300,100italic,300italic' rel='stylesheet' type='text/css'>
 
   </head>
   <body>
@@ -59,7 +59,11 @@
             
   <div class="section" id="scripting-and-advanced-features">
 <span id="scripting-page"></span><h1>4. Scripting and Advanced Features<a class="headerlink" href="#scripting-and-advanced-features" title="Permalink to this headline">¶</a></h1>
-<p>The analysis can be run from the command line by setting up a <a class="reference external" href="http://www.python.org/">Python</a> script. Scripting allows one to build additional analysis tools on top of <em>MOSAIC</em>. The first step is to import the relevant modules, which can be accomplished with the import command. All the relevant modules required to run an analysis are contained within the top level <em>MOSAIC</em> module.</p>
+<p>The analysis can be run from the command line by setting up a <a class="reference external" href="http://www.python.org/">Python</a> script. Scripting allows one to build additional analysis tools on top of <em>MOSAIC</em>. The first step is to import <em>MOSAIC</em> as shown below.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">mosaic</span>
+</pre></div>
+</div>
+<p>Alternatively, one can import sub-modules of <em>MOSAIC</em> directly into a script to access other parts of the system as shown below.</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">mosaic.qdfTrajIO</span> <span class="kn">as</span> <span class="nn">qdf</span>
 <span class="kn">import</span> <span class="nn">mosaic.abfTrajIO</span> <span class="kn">as</span> <span class="nn">abf</span>
 
@@ -73,13 +77,17 @@
 <h2>4.1. Import Data and Run an Analysis<a class="headerlink" href="#import-data-and-run-an-analysis" title="Permalink to this headline">¶</a></h2>
 <p>Once the required modules are imported, a basic analysis can be run with the code snippet below. The top-level object that is used to configure and run a new analysis is <a class="reference internal" href="../api-doc/mosaic.html#mosaic.SingleChannelAnalysis.SingleChannelAnalysis" title="mosaic.SingleChannelAnalysis.SingleChannelAnalysis"><tt class="xref py py-class docutils literal"><span class="pre">SingleChannelAnalysis</span></tt></a>, which takes five arguments: i) the path to the data directory, ii) a handle to a <em>TrajIO</em> object that reads in data (e.g. <a class="reference internal" href="../api-doc/mosaic.traj.html#mosaic.abfTrajIO.abfTrajIO" title="mosaic.abfTrajIO.abfTrajIO"><tt class="xref py py-class docutils literal"><span class="pre">abfTrajIO</span></tt></a>), iii) a handle to a data filtering algorithm (e.g. <a class="reference internal" href="../api-doc/mosaic.filter.html#mosaic.besselLowpassFilter.besselLowpassFilter" title="mosaic.besselLowpassFilter.besselLowpassFilter"><tt class="xref py py-class docutils literal"><span class="pre">besselLowpassFilter</span></tt></a> or <cite>None</cite> for no filtering), iv) a handle to a partitioning algorithm (e.g. <a class="reference internal" href="eventSegment.html#mosaic.eventSegment.eventSegment" title="mosaic.eventSegment.eventSegment"><tt class="xref py py-class docutils literal"><span class="pre">eventSegment</span></tt></a>) that partitions the data and v) a handle to a processing algorithm (e.g. <a class="reference internal" href="stepResponse.html#mosaic.stepResponseAnalysis.stepResponseAnalysis" title="mosaic.stepResponseAnalysis.stepResponseAnalysis"><tt class="xref py py-class docutils literal"><span class="pre">stepResponseAnalysis</span></tt></a>) that processes individual blockade events.</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="c"># Process all ABF files in a directory</span>
-<span class="n">mosaic</span><span class="o">.</span><span class="n">SingleChannelAnalysis</span><span class="o">.</span><span class="n">SingleChannelAnalysis</span><span class="p">(</span>
+<span class="n">analysisObj</span><span class="o">=</span><span class="n">mosaic</span><span class="o">.</span><span class="n">SingleChannelAnalysis</span><span class="o">.</span><span class="n">SingleChannelAnalysis</span><span class="p">(</span>
             <span class="s">&#39;~/ReferenceData/abfSet1&#39;</span><span class="p">,</span>
             <span class="n">abf</span><span class="o">.</span><span class="n">abfTrajIO</span><span class="p">,</span>
             <span class="bp">None</span><span class="p">,</span>
             <span class="n">es</span><span class="o">.</span><span class="n">eventSegment</span><span class="p">,</span>
             <span class="n">sra</span><span class="o">.</span><span class="n">stepResponseAnalysis</span>
-        <span class="p">)</span><span class="o">.</span><span class="n">Run</span><span class="p">()</span>
+        <span class="p">)</span>
+</pre></div>
+</div>
+<p>The analysis is started by calling the <cite>Run()</cite> function.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">analysisObj</span><span class="o">.</span><span class="n">Run</span><span class="p">()</span>
 </pre></div>
 </div>
 <p>The code listing above analyzes all ABF files in the specified directory. Handles to trajectory I/O, data filtering, event partitioning and event processing are controlled with their corresponding sections in the <a class="reference internal" href="settingsFile.html#settings-page"><em>Settings File</em></a>. Default settings used to read ABF files are shown below.</p>
@@ -90,7 +98,16 @@
 <span class="p">}</span>
 </pre></div>
 </div>
-<p><em>MOSAIC</em> also supports the QUB QDF file format used by the <a class="reference external" href="http://electronicbio.com">Electronic Biosciences</a> Nanopatch system. This is accomplished by replacing <a class="reference internal" href="../api-doc/mosaic.traj.html#mosaic.abfTrajIO.abfTrajIO" title="mosaic.abfTrajIO.abfTrajIO"><tt class="xref py py-class docutils literal"><span class="pre">abfTrajIO</span></tt></a> in the previous example with <a class="reference internal" href="../api-doc/mosaic.traj.html#mosaic.qdfTrajIO.qdfTrajIO" title="mosaic.qdfTrajIO.qdfTrajIO"><tt class="xref py py-class docutils literal"><span class="pre">qdfTrajIO</span></tt></a>.  Settings for QDF files require two additional parameters, the feedback resistance (Rfb) in Ohms and capacitance (Cfb) in Farads as described in the <a class="reference internal" href="apidocs.html#api-docs-page"><em>API Documentation</em></a>.</p>
+<p><em>MOSAIC</em> also supports the QUB QDF file format used by the <a class="reference external" href="http://electronicbio.com">Electronic Biosciences</a> Nanopatch system. This is accomplished by replacing <a class="reference internal" href="../api-doc/mosaic.traj.html#mosaic.abfTrajIO.abfTrajIO" title="mosaic.abfTrajIO.abfTrajIO"><tt class="xref py py-class docutils literal"><span class="pre">abfTrajIO</span></tt></a> in the previous example with <a class="reference internal" href="../api-doc/mosaic.traj.html#mosaic.qdfTrajIO.qdfTrajIO" title="mosaic.qdfTrajIO.qdfTrajIO"><tt class="xref py py-class docutils literal"><span class="pre">qdfTrajIO</span></tt></a>.  Settings for QDF files require two additional parameters to be specified in the settings file, the feedback resistance (Rfb) in Ohms and capacitance (Cfb) in Farads as described in the <a class="reference internal" href="apidocs.html#api-docs-page"><em>API Documentation</em></a>. A sample section of the settings file to read QDF files, followed by Python code required to run an anlysis, is shown below.</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="s2">&quot;qdfTrajIO&quot;</span><span class="o">:</span> <span class="p">{</span>
+        <span class="s2">&quot;Rfb&quot;</span>               <span class="o">:</span> <span class="mf">9.1</span><span class="nx">e</span><span class="o">+</span><span class="mi">12</span><span class="p">,</span>
+        <span class="s2">&quot;Cfb&quot;</span>               <span class="o">:</span> <span class="mf">1.07</span><span class="nx">e</span><span class="o">-</span><span class="mi">12</span><span class="p">,</span>
+        <span class="s2">&quot;dcOffset&quot;</span>          <span class="o">:</span> <span class="mf">0.0</span><span class="p">,</span>
+        <span class="s2">&quot;filter&quot;</span>            <span class="o">:</span> <span class="s2">&quot;*.qdf&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;start&quot;</span>             <span class="o">:</span> <span class="mf">0.0</span>
+    <span class="p">}</span>
+</pre></div>
+</div>
 <div class="highlight-python"><div class="highlight"><pre><span class="c"># Process all QDF files in a directory</span>
 <span class="n">mosaic</span><span class="o">.</span><span class="n">SingleChannelAnalysis</span><span class="o">.</span><span class="n">SingleChannelAnalysis</span><span class="p">(</span>
             <span class="s">&#39;~/ReferenceData/qdfSet1&#39;</span><span class="p">,</span>
@@ -203,12 +220,12 @@
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
-<p>It is useful to visualize time-series data to highlight unique characteristics of a sample. For example the sample code above was used to load 1 second of monodisperse PEG28 data, sampled at 500 kHz. The data was read using a <a class="reference internal" href="../api-doc/mosaic.traj.html#mosaic.abfTrajIO.abfTrajIO" title="mosaic.abfTrajIO.abfTrajIO"><tt class="xref py py-class docutils literal"><span class="pre">abfTrajIO</span></tt></a> object similar to the examples above. The <a class="reference internal" href="../api-doc/mosaic.meta.html#mosaic.metaTrajIO.metaTrajIO.popdata" title="mosaic.metaTrajIO.metaTrajIO.popdata"><tt class="xref py py-meth docutils literal"><span class="pre">popdata()</span></tt></a> command was used to take 500k data points (or 1 second) and then plot a time-series using <a class="reference external" href="http://matplotlib.org/">matplotlib</a> (see figure below). Calling popdata a second time will return the next <em>n</em> points.</p>
+<p>It is useful to visualize time-series data to highlight unique characteristics of a sample. For example the sample code above was used to load 1 second of monodisperse PEG28 data, sampled at 500 kHz. The data was read using a <a class="reference internal" href="../api-doc/mosaic.traj.html#mosaic.abfTrajIO.abfTrajIO" title="mosaic.abfTrajIO.abfTrajIO"><tt class="xref py py-class docutils literal"><span class="pre">abfTrajIO</span></tt></a> object similar to the examples above. The <a class="reference internal" href="../api-doc/mosaic.meta.html#mosaic.metaTrajIO.metaTrajIO.popdata" title="mosaic.metaTrajIO.metaTrajIO.popdata"><tt class="xref py py-meth docutils literal"><span class="pre">popdata()</span></tt></a> command was used to take 500k data points (or 1 second) and then plot a time-series using <a class="reference external" href="http://matplotlib.org/">matplotlib</a> (see figure below). Calling <a class="reference internal" href="../api-doc/mosaic.meta.html#mosaic.metaTrajIO.metaTrajIO.popdata" title="mosaic.metaTrajIO.metaTrajIO.popdata"><tt class="xref py py-meth docutils literal"><span class="pre">popdata()</span></tt></a> again will return the next <em>n</em> points.</p>
 <div class="figure align-center">
 <a class="reference internal image-reference" href="../_images/advancedFig2.png"><img alt="../_images/advancedFig2.png" src="../_images/advancedFig2.png" style="width: 50%;" /></a>
 </div>
 <p><strong>Estimate the Channel Gating Duration</strong></p>
-<p>Scripting can be used to obtain statistics from the raw time-series. In the code snippet below, we estimate the amount of time a channel spends in a gated state by combining modules defined within <em>MOSAIC</em>. The analysis is performed in blocks for efficiency. We first define a Python function that takes multiple arguments including  <em>TrajIO</em> object, the threshold at which we want to define the gated state in pA (gatingcurrentpa), the block size in seconds (blocksz), the total time of the time-series being processed in seconds (totaltime) and the sampling rate of the data in Hz (fshz). The code then calculates the number of blocks in which the channel was in a gated state and returns the time spent in that state in seconds.</p>
+<p>Scripting can be used to obtain statistics from the raw time-series. In the code snippet below, we estimate the amount of time a channel spends in a gated state by combining modules defined within <em>MOSAIC</em>. The analysis is performed in blocks for efficiency. We first define a Python function that takes multiple arguments including  <em>TrajIO</em> object, the threshold at which we want to define the gated state in pA (gatingcurrentpa), the block size in seconds (blocksz), the total time of the time-series being processed in seconds (totaltime) and the sampling rate of the data in Hz (fshz). The function then calculates the number of blocks in which the channel was in a gated state and returns the time spent in that state in seconds.</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">mosaic.abfTrajIO</span> <span class="kn">as</span> <span class="nn">abf</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
 
@@ -229,7 +246,7 @@
 </pre></div>
 </div>
 <p><strong>Plot the Output of an Analysis</strong></p>
-<p>This final example shows how one can use <em>MOSAIC</em> to process an ionic current time-series and then build a custom script that further analyses and plots the results. This example uses single-molecule mass spectrometry (SMMS) data from <a class="reference external" href="http://www.pnas.org/content/104/20/8207">Robertson et al., PNAS 2007</a>.</p>
+<p>This final example shows how one can use <em>MOSAIC</em> to process an ionic current time-series and then build a custom script that further analyses and plots the results. This example uses single-molecule mass spectrometry (SMMS) data <a class="reference internal" href="References.html#robertson-2007jo" id="id1">[RRS+07]</a>, described in more detail in the <a class="reference internal" href="examples.html#smms-sec"><em>Single Molecule Mass Spectrometry</em></a> section .</p>
 <p>In the code below, we first process all the ABF files in a specified directory similar to the examples in previous sections. Upon completion of the analysis, the results are stored in a <a class="reference external" href="http://www.sqlite.org/">SQLite</a> database, which can be then queried using the structured query language (<a class="reference external" href="http://en.wikipedia.org/wiki/SQL">SQL</a>).</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">mosaic.qdfTrajIO</span> <span class="kn">as</span> <span class="nn">qdf</span>
 <span class="kn">import</span> <span class="nn">mosaic.abfTrajIO</span> <span class="kn">as</span> <span class="nn">abf</span>
@@ -289,7 +306,7 @@
 <span class="n">pl</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
-<p>Next, we generate a two pane plot using <a class="reference external" href="http://matplotlib.org/">matplotlib</a>. The top pane contains a histogram of the blockade depth, while the bottom pane plots a 2D histogram of residence time vs. blockade depth.</p>
+<p>Running the code above generates a two pane plot using <a class="reference external" href="http://matplotlib.org/">matplotlib</a>. The top pane contains a histogram of the blockade depth, while the bottom pane plots a 2D histogram of residence time vs. blockade depth.</p>
 <div class="figure align-center">
 <a class="reference internal image-reference" href="../_images/advancedFig3.png"><img alt="../_images/advancedFig3.png" src="../_images/advancedFig3.png" style="width: 50%;" /></a>
 </div>

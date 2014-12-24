@@ -28,7 +28,7 @@
     <link rel="top" title="MOSAIC 1.0 documentation" href="../../index.html" />
     <link rel="up" title="Module code" href="../index.html" />
  
-<link href='//fonts.googleapis.com/css?family=Roboto:100,300,100italic,300italic' rel='stylesheet' type='text/css'>
+	<link href='//fonts.googleapis.com/css?family=Roboto:100,300,100italic,300italic' rel='stylesheet' type='text/css'>
 
   </head>
   <body>
@@ -92,11 +92,11 @@
 <span class="sd">		&quot;&quot;&quot;</span>
 	<span class="k">def</span> <span class="nf">_init</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
 		<span class="c"># Check if headers are present</span>
-		<span class="bp">self</span><span class="o">.</span><span class="n">hasHeaders</span><span class="o">=</span><span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s">&#39;headers&#39;</span><span class="p">,</span> <span class="bp">True</span><span class="p">)</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">hasHeaders</span><span class="o">=</span><span class="nb">bool</span><span class="p">(</span><span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s">&#39;headers&#39;</span><span class="p">,</span> <span class="bp">True</span><span class="p">))</span>
 		<span class="k">try</span><span class="p">:</span>
 			<span class="c"># if the sampling frequency is set explicitly, currents </span>
 			<span class="c"># in pA will be in column 0.</span>
-			<span class="bp">self</span><span class="o">.</span><span class="n">Fs</span><span class="o">=</span><span class="n">kwargs</span><span class="p">[</span><span class="s">&quot;Fs&quot;</span><span class="p">]</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">Fs</span><span class="o">=</span><span class="nb">float</span><span class="p">(</span><span class="n">kwargs</span><span class="p">[</span><span class="s">&quot;Fs&quot;</span><span class="p">])</span>
 			<span class="bp">self</span><span class="o">.</span><span class="n">currCol</span><span class="o">=</span><span class="mi">0</span>
 
 			<span class="bp">self</span><span class="o">.</span><span class="n">userSetFs</span><span class="o">=</span><span class="bp">True</span>

@@ -27,7 +27,7 @@ Next add the following to ~/.bashrc
 
 **2. (Optional) Install and Setup Virtual Environment**
 
-.. include:: InstallVirtualenvUbuntu.rst   
+.. include:: InstallVirtualenv.rst   
 
 **3. Installing MOSAIC**
 

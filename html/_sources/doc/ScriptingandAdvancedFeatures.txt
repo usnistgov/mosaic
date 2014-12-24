@@ -4,8 +4,14 @@ Scripting and Advanced Features
 =================================
 
 
-The analysis can be run from the command line by setting up a Python_ script. Scripting allows one to build additional analysis tools on top of |projname|. The first step is to import the relevant modules, which can be accomplished with the import command. All the relevant modules required to run an analysis are contained within the top level |projname| module.
+The analysis can be run from the command line by setting up a Python_ script. Scripting allows one to build additional analysis tools on top of |projname|. The first step is to import |projname| as shown below.
 
+
+.. sourcecode:: python
+
+    import mosaic
+
+Alternatively, one can import sub-modules of |projname| directly into a script to access other parts of the system as shown below.
 
 .. sourcecode:: python
 
@@ -29,13 +35,20 @@ Once the required modules are imported, a basic analysis can be run with the cod
 .. sourcecode:: python
 
     # Process all ABF files in a directory
-    mosaic.SingleChannelAnalysis.SingleChannelAnalysis(
+    analysisObj=mosaic.SingleChannelAnalysis.SingleChannelAnalysis(
                 '~/ReferenceData/abfSet1',
                 abf.abfTrajIO,
                 None,
                 es.eventSegment,
                 sra.stepResponseAnalysis
-            ).Run()
+            )
+
+The analysis is started by calling the `Run()` function.
+
+.. sourcecode:: python
+
+    analysisObj.Run()
+
 
 The code listing above analyzes all ABF files in the specified directory. Handles to trajectory I/O, data filtering, event partitioning and event processing are controlled with their corresponding sections in the :ref:`settings-page`. Default settings used to read ABF files are shown below.
 
@@ -47,7 +60,18 @@ The code listing above analyzes all ABF files in the specified directory. Handle
         "dcOffset"          : 0.0
     }
 
-|projname| also supports the QUB QDF file format used by the `Electronic Biosciences`_ Nanopatch system. This is accomplished by replacing :py:class:`~mosaic.abfTrajIO.abfTrajIO` in the previous example with :py:class:`~mosaic.qdfTrajIO.qdfTrajIO`.  Settings for QDF files require two additional parameters, the feedback resistance (Rfb) in Ohms and capacitance (Cfb) in Farads as described in the :ref:`api-docs-page`.
+|projname| also supports the QUB QDF file format used by the `Electronic Biosciences`_ Nanopatch system. This is accomplished by replacing :py:class:`~mosaic.abfTrajIO.abfTrajIO` in the previous example with :py:class:`~mosaic.qdfTrajIO.qdfTrajIO`.  Settings for QDF files require two additional parameters to be specified in the settings file, the feedback resistance (Rfb) in Ohms and capacitance (Cfb) in Farads as described in the :ref:`api-docs-page`. A sample section of the settings file to read QDF files, followed by Python code required to run an anlysis, is shown below.
+
+.. sourcecode:: javascript
+
+    "qdfTrajIO": {
+            "Rfb"               : 9.1e+12, 
+            "Cfb"               : 1.07e-12, 
+            "dcOffset"          : 0.0, 
+            "filter"            : "*.qdf", 
+            "start"             : 0.0
+        }
+
 
 .. sourcecode:: python
 
@@ -177,7 +201,7 @@ Scripting with Python_ allows transforming the output of the |projname| further 
     plt.show()
 
 
-It is useful to visualize time-series data to highlight unique characteristics of a sample. For example the sample code above was used to load 1 second of monodisperse PEG28 data, sampled at 500 kHz. The data was read using a :py:class:`~mosaic.abfTrajIO.abfTrajIO` object similar to the examples above. The :py:meth:`~mosaic.metaTrajIO.metaTrajIO.popdata` command was used to take 500k data points (or 1 second) and then plot a time-series using matplotlib_ (see figure below). Calling popdata a second time will return the next *n* points.
+It is useful to visualize time-series data to highlight unique characteristics of a sample. For example the sample code above was used to load 1 second of monodisperse PEG28 data, sampled at 500 kHz. The data was read using a :py:class:`~mosaic.abfTrajIO.abfTrajIO` object similar to the examples above. The :py:meth:`~mosaic.metaTrajIO.metaTrajIO.popdata` command was used to take 500k data points (or 1 second) and then plot a time-series using matplotlib_ (see figure below). Calling :py:meth:`~mosaic.metaTrajIO.metaTrajIO.popdata` again will return the next *n* points.
 
 
 .. figure:: ../images/advancedFig2.png
@@ -186,7 +210,7 @@ It is useful to visualize time-series data to highlight unique characteristics o
 
 **Estimate the Channel Gating Duration**
 
-Scripting can be used to obtain statistics from the raw time-series. In the code snippet below, we estimate the amount of time a channel spends in a gated state by combining modules defined within |projname|. The analysis is performed in blocks for efficiency. We first define a Python function that takes multiple arguments including  *TrajIO* object, the threshold at which we want to define the gated state in pA (gatingcurrentpa), the block size in seconds (blocksz), the total time of the time-series being processed in seconds (totaltime) and the sampling rate of the data in Hz (fshz). The code then calculates the number of blocks in which the channel was in a gated state and returns the time spent in that state in seconds.
+Scripting can be used to obtain statistics from the raw time-series. In the code snippet below, we estimate the amount of time a channel spends in a gated state by combining modules defined within |projname|. The analysis is performed in blocks for efficiency. We first define a Python function that takes multiple arguments including  *TrajIO* object, the threshold at which we want to define the gated state in pA (gatingcurrentpa), the block size in seconds (blocksz), the total time of the time-series being processed in seconds (totaltime) and the sampling rate of the data in Hz (fshz). The function then calculates the number of blocks in which the channel was in a gated state and returns the time spent in that state in seconds.
 
 .. sourcecode:: python
 
@@ -211,7 +235,7 @@ Scripting can be used to obtain statistics from the raw time-series. In the code
 
 **Plot the Output of an Analysis**
 
-This final example shows how one can use |projname| to process an ionic current time-series and then build a custom script that further analyses and plots the results. This example uses single-molecule mass spectrometry (SMMS) data from `Robertson et al., PNAS 2007 <http://www.pnas.org/content/104/20/8207>`_.
+This final example shows how one can use |projname| to process an ionic current time-series and then build a custom script that further analyses and plots the results. This example uses single-molecule mass spectrometry (SMMS) data :cite:`Robertson:2007jo`, described in more detail in the :ref:`smms-sec` section .
 
 In the code below, we first process all the ABF files in a specified directory similar to the examples in previous sections. Upon completion of the analysis, the results are stored in a SQLite_ database, which can be then queried using the structured query language (SQL_). 
 
@@ -275,7 +299,7 @@ In the code below, we first process all the ABF files in a specified directory s
     pl.show()
 
 
-Next, we generate a two pane plot using matplotlib_. The top pane contains a histogram of the blockade depth, while the bottom pane plots a 2D histogram of residence time vs. blockade depth.
+Running the code above generates a two pane plot using matplotlib_. The top pane contains a histogram of the blockade depth, while the bottom pane plots a 2D histogram of residence time vs. blockade depth.
 
 .. figure:: ../images/advancedFig3.png
    :width: 50 %

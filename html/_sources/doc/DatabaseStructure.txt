@@ -16,7 +16,7 @@ SQLite_ databases store data in tables similar to spreadsheets, where each table
 Metadata Table
 ---------------------------------------------
 
-The *metadata* table contains the primary output of the analysis. |projname| processes individual blockade events from a time-series of ionic current. The parameters describing each events (or metadata) are stored in individual rows of the *metadata* table in the database file. The column names describe the metadata and are unique to the processing algorithm used. For example, the column names for the :ref:`stepresponse-page` algorithm are shown below. The column names for :ref:`multistate-page` differ from this list. 
+The *metadata* table contains the primary output of the analysis. |projname| processes individual blockade events from a time-series of ionic current. The parameters describing each event (or metadata) are stored in individual rows of the *metadata* table in the database file. The column names describe the metadata and are unique to the processing algorithm used. For example, the column names for the :ref:`stepresponse-page` algorithm are shown below. The column names for :ref:`multistate-page` differ from this list. 
 
 .. sourcecode:: javascript
 
@@ -34,7 +34,7 @@ The *metadata* table contains the primary output of the analysis. |projname| pro
         TimeSeries
     }
 
-Note that the column names can be used in constructing queries passed to SQLite. For example, This is described in more detail in the :ref:`working-with-sqlite-sec` section and the :ref:`scripting-page` section. The first example SQL query below returns the *BlockDepth* column (ratio of *BlockedCurrent* to *OpenChCurrent*). One can imagine assembling more complex queries for example restricting the results to events whose residence time is greater than 0.2 ms as seen from the second example query below.
+Note that the column names can be used in constructing queries passed to SQLite, and is described in more detail in the :ref:`working-with-sqlite-sec` section and the :ref:`scripting-page` section. The first example SQL query below returns the *BlockDepth* column (ratio of *BlockedCurrent* to *OpenChCurrent*). One can imagine assembling more complex queries for example restricting the results to events whose residence time is greater than 0.2 ms as seen from the second example query below.
 
 .. sourcecode:: sql
 

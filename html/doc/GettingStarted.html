@@ -29,7 +29,7 @@
     <link rel="next" title="3. MOSAIC GUI" href="GraphicalInterface.html" />
     <link rel="prev" title="1. Introduction" href="Introduction.html" />
  
-<link href='//fonts.googleapis.com/css?family=Roboto:100,300,100italic,300italic' rel='stylesheet' type='text/css'>
+	<link href='//fonts.googleapis.com/css?family=Roboto:100,300,100italic,300italic' rel='stylesheet' type='text/css'>
 
   </head>
   <body>
@@ -61,10 +61,14 @@
 <span id="gettingstarted"></span><h1>2. Getting Started<a class="headerlink" href="#getting-started" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="binary-installation">
 <h2>2.1. Binary Installation<a class="headerlink" href="#binary-installation" title="Permalink to this headline">¶</a></h2>
-<p><em>MOSAIC</em> is available as a pre-compiled binary for Windows and Mac OS X (<a class="reference external" href="http://usnistgov.github.io/mosaic/platforms.html">download binaries</a>).</p>
+<p><em>MOSAIC</em> is available as a pre-compiled binary for Windows and Mac OS X (<a class="reference external" href="http://usnistgov.github.io/mosaic/platforms.html">download binaries</a>). <a href="#id1"><span class="problematic" id="id2">|projename|</span></a> binaries do not need special installation. Under <strong>Mac OS X</strong> open the the downloaded disk image and drag the <em>MOSAIC</em> executable to the Applications folder. Under <strong>Windows</strong>, unzip downloaded zip file and move the <em>MOSAIC</em> executable to your hard disk.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last"><em>MOSAIC</em> binaries are 64-bit. If you need 32-bit support, please build <em>MOSAIC</em> from source as described in the <a class="reference internal" href="#sourceinstall"><em>Source Installation</em></a> section.</p>
 </div>
-<div class="section" id="installation-from-source">
-<h2>2.2. Installation from Source<a class="headerlink" href="#installation-from-source" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="source-installation">
+<span id="sourceinstall"></span><h2>2.2. Source Installation<a class="headerlink" href="#source-installation" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="install-projname-on-mac-os-x">
 <span id="installosx"></span><h3>2.2.1. Install <em>MOSAIC</em> on Mac OS X<a class="headerlink" href="#install-projname-on-mac-os-x" title="Permalink to this headline">¶</a></h3>
 <p>In the following guide, we provide step-by-step instructions on setting up and running <em>MOSAIC</em> on OS X. To simplify the isntallation, we use <a class="reference external" href="http://brew.sh/">Homebrew</a> to install some required dependencies. <a class="reference external" href="http://brew.sh/">Homebrew</a>
@@ -104,6 +108,10 @@ requires Apple command line tools, but will directly prompt you to install it on
 <div class="highlight-console"><div class="highlight"><pre><span class="gp">$</span>  pip install virtualenv virtualenvwrapper
 </pre></div>
 </div>
+<div class="admonition hint">
+<p class="first admonition-title">Hint</p>
+<p class="last">Under Ubuntu, you may need install virtualenv and virtualenvwrapper as root. Simply prefix the command above with sudo.</p>
+</div>
 <p>If you would like virtualenvwrapper to be available each time you open a new terminal window, add the line below to  ~/.bash_profile on OS X or ~/.bashrc on Linux.</p>
 <div class="highlight-console"><div class="highlight"><pre><span class="go">source /usr/local/bin/virtualenvwrapper.sh</span>
 </pre></div>
@@ -113,12 +121,12 @@ requires Apple command line tools, but will directly prompt you to install it on
 <p class="last">Depending on the process used to install <em>virtualenv</em>, the path to virtualenvwrapper.sh may vary. Find the approporiate path by running <tt class="docutils literal"><span class="pre">$</span> <span class="pre">find</span> <span class="pre">/usr</span> <span class="pre">-name</span> <span class="pre">virtualenvwrapper.sh</span></tt>. Adjust the line in your .bash_profile or .bashrc script accordingly.</p>
 </div>
 <p>Open a new shell to make the new virtual environment available. Now we are ready to create a virtual environment.  You can choose any name for your virtual environment, here we name it <em>MOSAIC</em>:</p>
-<div class="highlight-console"><div class="highlight"><pre><span class="gp">$</span>  mkvirtualenv -p /usr/local/bin/python MOSAIC
+<div class="highlight-console"><div class="highlight"><pre><span class="gp">$</span>  mkvirtualenv -p &lt;path to python&gt;/python MOSAIC
 </pre></div>
 </div>
 <div class="admonition hint">
 <p class="first admonition-title">Hint</p>
-<p class="last">We explicitly specify the <a class="reference external" href="http://www.python.org/">Python</a> installation to use. This is not mandatory, but is useful if you have multiple <a class="reference external" href="http://www.python.org/">Python</a> installations on your computer.</p>
+<p class="last">We explicitly specify the <a class="reference external" href="http://www.python.org/">Python</a> installation to use. This is not mandatory, but is useful if you have multiple <a class="reference external" href="http://www.python.org/">Python</a> installations on your computer. The <cite>&lt;path to python&gt;</cite> may vary according to the specific version of python you wish to use. In most cases, this will be either <cite>/usr/local/bin/</cite> or <cite>/usr/bin</cite></p>
 </div>
 <p><strong>4. Installing MOSAIC</strong></p>
 <p>First we need to obtain the <em>MOSAIC</em> source code. For analyzing publication data, we recommend downloading the latest stable version of the source code (<a class="reference external" href="http://usnistgov.github.io/mosaic/platforms.html">download source</a>). Alternatively, the latest development version can be downloaded from the <a class="reference external" href="https://github.com/usnistgov/mosaic">MOSAIC page on Github</a>. Here we will show you how to set up <em>MOSAIC</em> from the latest stable release:</p>
@@ -158,6 +166,12 @@ requires Apple command line tools, but will directly prompt you to install it on
 <div class="highlight-console"><div class="highlight"><pre><span class="gp">(MOSAIC)$</span> python setup.py mosaic_deps
 </pre></div>
 </div>
+<ol class="arabic simple" start="8">
+<li>Finally, add the installation directory (~/projects/MOSAIC as set up previously) to your <cite>PYTHONPATH</cite> as shown below. This addition can be made permanent by adding the line below to your <cite>.bash_profile</cite> (OS X) or <cite>.bashrc</cite> (Ubuntu) script.</li>
+</ol>
+<div class="highlight-console"><div class="highlight"><pre><span class="gp">(MOSAIC)$</span> <span class="nb">export </span><span class="nv">PYTHONPATH</span><span class="o">=</span><span class="nv">$PYTHONPATH</span>:~/projects/MOSAIC
+</pre></div>
+</div>
 </div>
 <div class="section" id="install-projname-on-ubuntu-14-04">
 <h3>2.2.2. Install <em>MOSAIC</em> on Ubuntu(14.04)<a class="headerlink" href="#install-projname-on-ubuntu-14-04" title="Permalink to this headline">¶</a></h3>
@@ -180,8 +194,12 @@ requires Apple command line tools, but will directly prompt you to install it on
 <p>It is generally a good practice to run <em>MOSAIC</em> from within a dedicated virtual environment. This minimizes conflicts with other installed programs. While we highly recommend this approach, it is not required to run <em>MOSAIC</em>. If you prefer to skip this, move on to the next step now.</p>
 <p>To setup a virtual environment, we need two different packages: <em>virtualenv</em>, which creates the virtual environments, and <em>virtualenvwrapper</em>, a wrapper for <em>virtualenv</em> that simplifies set up and use.</p>
 <p>To install these and set up the virtual enviroment wrapper, run the following in a shell:</p>
-<div class="highlight-console"><div class="highlight"><pre><span class="gp">$</span>  sudo pip install virtualenv virtualenvwrapper
+<div class="highlight-console"><div class="highlight"><pre><span class="gp">$</span>  pip install virtualenv virtualenvwrapper
 </pre></div>
+</div>
+<div class="admonition hint">
+<p class="first admonition-title">Hint</p>
+<p class="last">Under Ubuntu, you may need install virtualenv and virtualenvwrapper as root. Simply prefix the command above with sudo.</p>
 </div>
 <p>If you would like virtualenvwrapper to be available each time you open a new terminal window, add the line below to  ~/.bash_profile on OS X or ~/.bashrc on Linux.</p>
 <div class="highlight-console"><div class="highlight"><pre><span class="go">source /usr/local/bin/virtualenvwrapper.sh</span>
@@ -192,12 +210,12 @@ requires Apple command line tools, but will directly prompt you to install it on
 <p class="last">Depending on the process used to install <em>virtualenv</em>, the path to virtualenvwrapper.sh may vary. Find the approporiate path by running <tt class="docutils literal"><span class="pre">$</span> <span class="pre">find</span> <span class="pre">/usr</span> <span class="pre">-name</span> <span class="pre">virtualenvwrapper.sh</span></tt>. Adjust the line in your .bash_profile or .bashrc script accordingly.</p>
 </div>
 <p>Open a new shell to make the new virtual environment available. Now we are ready to create a virtual environment.  You can choose any name for your virtual environment, here we name it <em>MOSAIC</em>:</p>
-<div class="highlight-console"><div class="highlight"><pre><span class="gp">$</span>  mkvirtualenv -p /usr/bin/python MOSAIC
+<div class="highlight-console"><div class="highlight"><pre><span class="gp">$</span>  mkvirtualenv -p &lt;path to python&gt;/python MOSAIC
 </pre></div>
 </div>
 <div class="admonition hint">
 <p class="first admonition-title">Hint</p>
-<p class="last">We explicitly specify the <a class="reference external" href="http://www.python.org/">Python</a> installation to use. This is not mandatory, but is useful if you have multiple <a class="reference external" href="http://www.python.org/">Python</a> installations on your computer.</p>
+<p class="last">We explicitly specify the <a class="reference external" href="http://www.python.org/">Python</a> installation to use. This is not mandatory, but is useful if you have multiple <a class="reference external" href="http://www.python.org/">Python</a> installations on your computer. The <cite>&lt;path to python&gt;</cite> may vary according to the specific version of python you wish to use. In most cases, this will be either <cite>/usr/local/bin/</cite> or <cite>/usr/bin</cite></p>
 </div>
 <p><strong>3. Installing MOSAIC</strong></p>
 <p>First we need to obtain the <em>MOSAIC</em> source code. For analyzing publication data, we recommend downloading the latest stable version of the source code (<a class="reference external" href="http://usnistgov.github.io/mosaic/platforms.html">download source</a>). Alternatively, the latest development version can be downloaded from the <a class="reference external" href="https://github.com/usnistgov/mosaic">MOSAIC page on Github</a>. Here we will show you how to set up <em>MOSAIC</em> from the latest stable release:</p>
@@ -237,6 +255,12 @@ requires Apple command line tools, but will directly prompt you to install it on
 <div class="highlight-console"><div class="highlight"><pre><span class="gp">(MOSAIC)$</span> python setup.py mosaic_deps
 </pre></div>
 </div>
+<ol class="arabic simple" start="8">
+<li>Finally, add the installation directory (~/projects/MOSAIC as set up previously) to your <cite>PYTHONPATH</cite> as shown below. This addition can be made permanent by adding the line below to your <cite>.bash_profile</cite> (OS X) or <cite>.bashrc</cite> (Ubuntu) script.</li>
+</ol>
+<div class="highlight-console"><div class="highlight"><pre><span class="gp">(MOSAIC)$</span> <span class="nb">export </span><span class="nv">PYTHONPATH</span><span class="o">=</span><span class="nv">$PYTHONPATH</span>:~/projects/MOSAIC
+</pre></div>
+</div>
 </div>
 </div>
 </div>
@@ -255,7 +279,7 @@ requires Apple command line tools, but will directly prompt you to install it on
 <li class="toctree-l1"><a class="reference internal" href="Introduction.html">1. Introduction</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="">2. Getting Started</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#binary-installation">2.1. Binary Installation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#installation-from-source">2.2. Installation from Source</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#source-installation">2.2. Source Installation</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="GraphicalInterface.html">3. <em>MOSAIC</em> GUI</a></li>

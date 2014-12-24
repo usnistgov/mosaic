@@ -41,3 +41,9 @@ First we need to obtain the |projname| source code. For analyzing publication da
 .. code-block:: console
   
    (MOSAIC)$ python setup.py mosaic_deps
+
+8.  Finally, add the installation directory (~/projects/MOSAIC as set up previously) to your `PYTHONPATH` as shown below. This addition can be made permanent by adding the line below to your `.bash_profile` (OS X) or `.bashrc` (Ubuntu) script.
+
+.. code-block:: console
+
+	(MOSAIC)$ export PYTHONPATH=$PYTHONPATH:~/projects/MOSAIC

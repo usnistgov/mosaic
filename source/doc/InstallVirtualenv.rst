@@ -6,8 +6,11 @@ To install these and set up the virtual enviroment wrapper, run the following in
 
 .. code-block:: console
    
-    $  sudo pip install virtualenv virtualenvwrapper
+    $  pip install virtualenv virtualenvwrapper
 
+.. hint:: 
+	
+	Under Ubuntu, you may need install virtualenv and virtualenvwrapper as root. Simply prefix the command above with sudo.
 
 If you would like virtualenvwrapper to be available each time you open a new terminal window, add the line below to  ~/.bash_profile on OS X or ~/.bashrc on Linux.
 
@@ -24,9 +27,9 @@ Open a new shell to make the new virtual environment available. Now we are ready
 
 .. code-block:: console
 
-   $  mkvirtualenv -p /usr/bin/python MOSAIC
+   $  mkvirtualenv -p <path to python>/python MOSAIC
 
 
 .. hint::
 	
-	We explicitly specify the Python_ installation to use. This is not mandatory, but is useful if you have multiple Python_ installations on your computer.
+	We explicitly specify the Python_ installation to use. This is not mandatory, but is useful if you have multiple Python_ installations on your computer. The `<path to python>` may vary according to the specific version of python you wish to use. In most cases, this will be either `/usr/local/bin/` or `/usr/bin`

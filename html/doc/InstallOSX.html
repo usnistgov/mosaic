@@ -27,7 +27,7 @@
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
     <link rel="top" title="MOSAIC 1.0 documentation" href="../index.html" />
  
-<link href='//fonts.googleapis.com/css?family=Roboto:100,300,100italic,300italic' rel='stylesheet' type='text/css'>
+	<link href='//fonts.googleapis.com/css?family=Roboto:100,300,100italic,300italic' rel='stylesheet' type='text/css'>
 
   </head>
   <body>
@@ -88,6 +88,10 @@ requires Apple command line tools, but will directly prompt you to install it on
 <div class="highlight-console"><div class="highlight"><pre><span class="gp">$</span>  pip install virtualenv virtualenvwrapper
 </pre></div>
 </div>
+<div class="admonition hint">
+<p class="first admonition-title">Hint</p>
+<p class="last">Under Ubuntu, you may need install virtualenv and virtualenvwrapper as root. Simply prefix the command above with sudo.</p>
+</div>
 <p>If you would like virtualenvwrapper to be available each time you open a new terminal window, add the line below to  ~/.bash_profile on OS X or ~/.bashrc on Linux.</p>
 <div class="highlight-console"><div class="highlight"><pre><span class="go">source /usr/local/bin/virtualenvwrapper.sh</span>
 </pre></div>
@@ -97,12 +101,12 @@ requires Apple command line tools, but will directly prompt you to install it on
 <p class="last">Depending on the process used to install <em>virtualenv</em>, the path to virtualenvwrapper.sh may vary. Find the approporiate path by running <tt class="docutils literal"><span class="pre">$</span> <span class="pre">find</span> <span class="pre">/usr</span> <span class="pre">-name</span> <span class="pre">virtualenvwrapper.sh</span></tt>. Adjust the line in your .bash_profile or .bashrc script accordingly.</p>
 </div>
 <p>Open a new shell to make the new virtual environment available. Now we are ready to create a virtual environment.  You can choose any name for your virtual environment, here we name it <em>MOSAIC</em>:</p>
-<div class="highlight-console"><div class="highlight"><pre><span class="gp">$</span>  mkvirtualenv -p /usr/local/bin/python MOSAIC
+<div class="highlight-console"><div class="highlight"><pre><span class="gp">$</span>  mkvirtualenv -p &lt;path to python&gt;/python MOSAIC
 </pre></div>
 </div>
 <div class="admonition hint">
 <p class="first admonition-title">Hint</p>
-<p class="last">We explicitly specify the <a href="#id15"><span class="problematic" id="id16">Python_</span></a> installation to use. This is not mandatory, but is useful if you have multiple <a href="#id17"><span class="problematic" id="id18">Python_</span></a> installations on your computer.</p>
+<p class="last">We explicitly specify the <a href="#id15"><span class="problematic" id="id16">Python_</span></a> installation to use. This is not mandatory, but is useful if you have multiple <a href="#id17"><span class="problematic" id="id18">Python_</span></a> installations on your computer. The <cite>&lt;path to python&gt;</cite> may vary according to the specific version of python you wish to use. In most cases, this will be either <cite>/usr/local/bin/</cite> or <cite>/usr/bin</cite></p>
 </div>
 <p><strong>4. Installing MOSAIC</strong></p>
 <p>First we need to obtain the <em>MOSAIC</em> source code. For analyzing publication data, we recommend downloading the latest stable version of the source code (<a href="#id19"><span class="problematic" id="id20">`download source`_</span></a>). Alternatively, the latest development version can be downloaded from the <a href="#id21"><span class="problematic" id="id22">`MOSAIC page on Github`_</span></a>. Here we will show you how to set up <em>MOSAIC</em> from the latest stable release:</p>
@@ -140,6 +144,12 @@ requires Apple command line tools, but will directly prompt you to install it on
 <li>To install the needed dependencies, navigate to ~/projects/MOSAIC/ and run the following:</li>
 </ol>
 <div class="highlight-console"><div class="highlight"><pre><span class="gp">(MOSAIC)$</span> python setup.py mosaic_deps
+</pre></div>
+</div>
+<ol class="arabic simple" start="8">
+<li>Finally, add the installation directory (~/projects/MOSAIC as set up previously) to your <cite>PYTHONPATH</cite> as shown below. This addition can be made permanent by adding the line below to your <cite>.bash_profile</cite> (OS X) or <cite>.bashrc</cite> (Ubuntu) script.</li>
+</ol>
+<div class="highlight-console"><div class="highlight"><pre><span class="gp">(MOSAIC)$</span> <span class="nb">export </span><span class="nv">PYTHONPATH</span><span class="o">=</span><span class="nv">$PYTHONPATH</span>:~/projects/MOSAIC
 </pre></div>
 </div>
 </div>

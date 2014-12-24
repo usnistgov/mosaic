@@ -27,7 +27,7 @@
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
     <link rel="top" title="MOSAIC 1.0 documentation" href="../index.html" />
  
-<link href='//fonts.googleapis.com/css?family=Roboto:100,300,100italic,300italic' rel='stylesheet' type='text/css'>
+	<link href='//fonts.googleapis.com/css?family=Roboto:100,300,100italic,300italic' rel='stylesheet' type='text/css'>
 
   </head>
   <body>
@@ -52,8 +52,12 @@
   <p>It is generally a good practice to run <em>MOSAIC</em> from within a dedicated virtual environment. This minimizes conflicts with other installed programs. While we highly recommend this approach, it is not required to run <em>MOSAIC</em>. If you prefer to skip this, move on to the next step now.</p>
 <p>To setup a virtual environment, we need two different packages: <em>virtualenv</em>, which creates the virtual environments, and <em>virtualenvwrapper</em>, a wrapper for <em>virtualenv</em> that simplifies set up and use.</p>
 <p>To install these and set up the virtual enviroment wrapper, run the following in a shell:</p>
-<div class="highlight-console"><div class="highlight"><pre><span class="gp">$</span>  sudo pip install virtualenv virtualenvwrapper
+<div class="highlight-console"><div class="highlight"><pre><span class="gp">$</span>  pip install virtualenv virtualenvwrapper
 </pre></div>
+</div>
+<div class="admonition hint">
+<p class="first admonition-title">Hint</p>
+<p class="last">Under Ubuntu, you may need install virtualenv and virtualenvwrapper as root. Simply prefix the command above with sudo.</p>
 </div>
 <p>If you would like virtualenvwrapper to be available each time you open a new terminal window, add the line below to  ~/.bash_profile on OS X or ~/.bashrc on Linux.</p>
 <div class="highlight-console"><div class="highlight"><pre><span class="go">source /usr/local/bin/virtualenvwrapper.sh</span>
@@ -64,12 +68,12 @@
 <p class="last">Depending on the process used to install <em>virtualenv</em>, the path to virtualenvwrapper.sh may vary. Find the approporiate path by running <tt class="docutils literal"><span class="pre">$</span> <span class="pre">find</span> <span class="pre">/usr</span> <span class="pre">-name</span> <span class="pre">virtualenvwrapper.sh</span></tt>. Adjust the line in your .bash_profile or .bashrc script accordingly.</p>
 </div>
 <p>Open a new shell to make the new virtual environment available. Now we are ready to create a virtual environment.  You can choose any name for your virtual environment, here we name it <em>MOSAIC</em>:</p>
-<div class="highlight-console"><div class="highlight"><pre><span class="gp">$</span>  mkvirtualenv -p /usr/bin/python MOSAIC
+<div class="highlight-console"><div class="highlight"><pre><span class="gp">$</span>  mkvirtualenv -p &lt;path to python&gt;/python MOSAIC
 </pre></div>
 </div>
 <div class="admonition hint">
 <p class="first admonition-title">Hint</p>
-<p class="last">We explicitly specify the <a href="#id1"><span class="problematic" id="id2">Python_</span></a> installation to use. This is not mandatory, but is useful if you have multiple <a href="#id3"><span class="problematic" id="id4">Python_</span></a> installations on your computer.</p>
+<p class="last">We explicitly specify the <a href="#id1"><span class="problematic" id="id2">Python_</span></a> installation to use. This is not mandatory, but is useful if you have multiple <a href="#id3"><span class="problematic" id="id4">Python_</span></a> installations on your computer. The <cite>&lt;path to python&gt;</cite> may vary according to the specific version of python you wish to use. In most cases, this will be either <cite>/usr/local/bin/</cite> or <cite>/usr/bin</cite></p>
 </div>
 
 
