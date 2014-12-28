@@ -2,11 +2,9 @@ MOSAIC: A modular single-molecule analysis interface
 =================================
 
 
-MOSAIC is a single molecule analysis toolbox that automatically decodes multi-state nanopore data. By modeling the nanopore system with an equivalent circuit, MOSAIC leverages the transient response of a molecule entering the channel to quantify pore-molecule interactions. In contrast to existing techniques such as ionic current thresholding {REFS} or Viterbi decoding {REFS}, this technique allows the estimation of short-lived transient events that are otherwise not analyzed.
+MOSAIC is a single molecule analysis toolbox that automatically decodes multi-state nanopore data. By modeling the nanopore system with an equivalent circuit, MOSAIC leverages the transient response of a molecule entering the channel to quantify pore-molecule interactions. In contrast to existing techniques such as ionic current thresholding or Viterbi decoding, this technique allows the estimation of short-lived transient events that are otherwise not analyzed.
 
-Nanometer-scale pores have demonstrated potential use in biotechnology applications, including DNA sequencing {REFS}, single-molecule force spectroscopy {REFS}, and single-molecule mass spectrometry {REFS}. The data modeling and analysis methods implemented in MOSAIC allow for dramatic improvements in the quantification of molecular interactions with the channel in each of these applications.
-
-MOSAIC is written in Python and developed in the Semiconductor and Device Metrology (`SDMD <http://www.nist.gov/pml/div683/about.cfm>`_) division, in the Physical Metrology Laborotory (`PML <http://www.nist.gov/pml/>`_) at the National Institute of Standards and Technology (`NIST <http://www.nist.gov>`_).
+Nanometer-scale pores have demonstrated potential use in biotechnology applications, including DNA sequencing, single-molecule force spectroscopy, and single-molecule mass spectrometry. The data modeling and analysis methods implemented in MOSAIC allow for dramatic improvements in the quantification of molecular interactions with the channel in each of these applications.
 
 **If you use MOSAIC in your work, please cite:**
 
@@ -16,6 +14,13 @@ A. Balijepalli, J., Ettedgui, A. T. Cornio, J. W. F. Robertson K. P. Cheung, J. 
 
 What's new in v1.0b3
 =================================
+
+**v1.0b3.2**
+
+- [GUI] Misc bug fixes
+- [Addons] Added code to import MOSAIC output into Matlab (pull requests #18 and #20)
+- [Addons] Updated Mathematica addons to automatically decode multi-state data.
+- Resolves issues #16 and #22
 
 **v1.0b3.1**
 
