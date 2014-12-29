@@ -94,7 +94,7 @@ class mosaicDocs(Command):
 
 setup(
     cmdclass={'mosaic_tests': mosaicUnitTests, 'mosaic_docs': mosaicDocs, 'mosaic_bin': mosaicBinaries, 'mosaic_deps': mosaicDependencies, 'mosaic_addons': mosaicAddons},
-    name='mosaic',
+    name='mosaic-nist',
     version=mosaic.__version__,
     author='Arvind Balijepalli',
     author_email='arvind.balijepalli@nist.gov',
@@ -115,8 +115,10 @@ setup(
             ],
     scripts=[
             'bin/analysis.py', 
-            'addons/mathematica/nanoporeAnalysis.m', 
+            'addons/mathematica/MosaicAnalysis.m', 
+            'addons/mathematica/MosaicUtils.m', 
             'addons/mathematica/Util.m', 
+            'addons/MATLAB/openandquery.m', 
             'mosaicgui/ui/SettingsWindow.ui',
             'mosaicgui/ui/trajviewui.ui',
             'mosaicgui/ui/advancedSettingsDialog.ui',
@@ -131,7 +133,7 @@ setup(
             '.scripts/build-deps-sh', 
             '.scripts/pyinstaller-sh'
             ],
-    url='http://pypi.python.org/pypi/MOSAIC/',
+    url='http://pypi.python.org/pypi/mosaic-nist/',
     license='LICENSE.txt',
     description='A Modular Single-Molecule Analysis Interface.',
     long_description=open('README.rst').read(),
