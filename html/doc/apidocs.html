@@ -65,7 +65,7 @@
 <p><em>MOSAIC</em> is designed using object oriented tools, which makes it easy to extend. The API documentation provides class level descriptions of the different modules that can be used in customized code. Meta-Classes (in <em>blue</em> below) define interfaces to five key parts of MOSAIC: time-series IO (<a class="reference internal" href="../api-doc/mosaic.meta.html#mosaic.metaTrajIO.metaTrajIO" title="mosaic.metaTrajIO.metaTrajIO"><tt class="xref py py-class docutils literal"><span class="pre">metaTrajIO</span></tt></a>), time-series filtering (<a class="reference internal" href="../api-doc/mosaic.meta.html#mosaic.metaIOFilter.metaIOFilter" title="mosaic.metaIOFilter.metaIOFilter"><tt class="xref py py-class docutils literal"><span class="pre">metaIOFilter</span></tt></a>), analysis output (<a class="reference internal" href="../api-doc/mosaic.meta.html#mosaic.metaMDIO.metaMDIO" title="mosaic.metaMDIO.metaMDIO"><tt class="xref py py-class docutils literal"><span class="pre">metaMDIO</span></tt></a>), event partition and segmenting (<a class="reference internal" href="../api-doc/mosaic.meta.html#mosaic.metaEventPartition.metaEventPartition" title="mosaic.metaEventPartition.metaEventPartition"><tt class="xref py py-class docutils literal"><span class="pre">metaEventPartition</span></tt></a>), and event processing (<a class="reference internal" href="../api-doc/mosaic.meta.html#mosaic.metaEventProcessor.metaEventProcessor" title="mosaic.metaEventProcessor.metaEventProcessor"><tt class="xref py py-class docutils literal"><span class="pre">metaEventProcessor</span></tt></a>). Sub-classing any of these meta classes and implementing their interface functions allows one to extend <em>MOSAIC</em> while maintaining compatibility with other parts of the program. The diagram below shows the class inheritence in <em>MOSAIC</em>, with top-level classes in <em>gray</em>.</p>
 <blockquote>
 <div><p class="graphviz">
-<img src="../_images/graphviz-a7ff90617cbdc297c95ea68a78a8a9942d305962.png" alt="digraph &quot;Graphical Class Hierarchy&quot;
+<img src="../_images/graphviz-f4d1b54afefefc2f7e74aaab65bf7ee2bb9339ac.png" alt="digraph &quot;Graphical Class Hierarchy&quot;
 {
   graph [ dpi = 300 ];
   size=&quot;7,5.75&quot;;
@@ -74,43 +74,43 @@
   node [fontname=&quot;Helvetica&quot;,fontsize=&quot;20&quot;,shape=record];
   rankdir=&quot;LR&quot;;
   Node1 [label=&quot;object&quot;,height=0.2,width=0.4,color=&quot;grey75&quot;, fillcolor=&quot;white&quot;, style=&quot;filled&quot;];
-  Node1 -&gt; Node2 [dir=&quot;back&quot;,color=&quot;midnightblue&quot;,fontsize=&quot;20&quot;,style=&quot;solid&quot;,fontname=&quot;Helvetica&quot;];
+  Node1 -&gt; Node2 [dir=&quot;back&quot;, width=1.0, penwidth=2.5,color=&quot;midnightblue&quot;,fontsize=&quot;20&quot;,style=&quot;solid&quot;,fontname=&quot;Helvetica&quot;];
   Node2 [label=&quot;mosaic.ConvertToCSV.Convert\lToCSV&quot;,height=0.2,width=0.4,color=&quot;black&quot;, fillcolor=&quot;grey88&quot;, style=&quot;filled&quot;];
-  Node1 -&gt; Node3 [dir=&quot;back&quot;,color=&quot;midnightblue&quot;,fontsize=&quot;20&quot;,style=&quot;solid&quot;,fontname=&quot;Helvetica&quot;];
+  Node1 -&gt; Node3 [dir=&quot;back&quot;, width=1.0, penwidth=2.5,color=&quot;midnightblue&quot;,fontsize=&quot;20&quot;,style=&quot;solid&quot;,fontname=&quot;Helvetica&quot;];
   Node3 [label=&quot;mosaic.metaEventPartition.meta\lEventPartition&quot;,height=0.2,width=0.4,color=&quot;black&quot;, fillcolor=&quot;aliceblue&quot;, style=&quot;filled&quot;];
-  Node3 -&gt; Node4 [dir=&quot;back&quot;,color=&quot;midnightblue&quot;,fontsize=&quot;20&quot;,style=&quot;solid&quot;,fontname=&quot;Helvetica&quot;];
+  Node3 -&gt; Node4 [dir=&quot;back&quot;, width=1.0, penwidth=2.5,color=&quot;midnightblue&quot;,fontsize=&quot;20&quot;,style=&quot;solid&quot;,fontname=&quot;Helvetica&quot;];
   Node4 [label=&quot;mosaic.eventSegment.event\lSegment&quot;,height=0.2,width=0.4,color=&quot;black&quot;, fillcolor=&quot;white&quot;, style=&quot;filled&quot;];
-  Node1 -&gt; Node5 [dir=&quot;back&quot;,color=&quot;midnightblue&quot;,fontsize=&quot;20&quot;,style=&quot;solid&quot;,fontname=&quot;Helvetica&quot;];
+  Node1 -&gt; Node5 [dir=&quot;back&quot;, width=1.0, penwidth=2.5,color=&quot;midnightblue&quot;,fontsize=&quot;20&quot;,style=&quot;solid&quot;,fontname=&quot;Helvetica&quot;];
   Node5 [label=&quot;mosaic.metaEventProcessor.meta\lEventProcessor&quot;,height=0.2,width=0.4,color=&quot;black&quot;, fillcolor=&quot;aliceblue&quot;, style=&quot;filled&quot;];
-  Node5 -&gt; Node6 [dir=&quot;back&quot;,color=&quot;midnightblue&quot;,fontsize=&quot;20&quot;,style=&quot;solid&quot;,fontname=&quot;Helvetica&quot;];
+  Node5 -&gt; Node6 [dir=&quot;back&quot;, width=1.0, penwidth=2.5,color=&quot;midnightblue&quot;,fontsize=&quot;20&quot;,style=&quot;solid&quot;,fontname=&quot;Helvetica&quot;];
   Node6 [label=&quot;mosaic.multiStateAnalysis.multi\lStateAnalysis&quot;,height=0.2,width=0.4,color=&quot;black&quot;, fillcolor=&quot;white&quot;, style=&quot;filled&quot;];
-  Node5 -&gt; Node7 [dir=&quot;back&quot;,color=&quot;midnightblue&quot;,fontsize=&quot;20&quot;,style=&quot;solid&quot;,fontname=&quot;Helvetica&quot;];
+  Node5 -&gt; Node7 [dir=&quot;back&quot;, width=1.0, penwidth=2.5,color=&quot;midnightblue&quot;,fontsize=&quot;20&quot;,style=&quot;solid&quot;,fontname=&quot;Helvetica&quot;];
   Node7 [label=&quot;mosaic.singleStepEvent.single\lStepEvent&quot;,height=0.2,width=0.4,color=&quot;black&quot;, fillcolor=&quot;white&quot;, style=&quot;filled&quot;];
-  Node5 -&gt; Node8 [dir=&quot;back&quot;,color=&quot;midnightblue&quot;,fontsize=&quot;20&quot;,style=&quot;solid&quot;,fontname=&quot;Helvetica&quot;];
+  Node5 -&gt; Node8 [dir=&quot;back&quot;, width=1.0, penwidth=2.5,color=&quot;midnightblue&quot;,fontsize=&quot;20&quot;,style=&quot;solid&quot;,fontname=&quot;Helvetica&quot;];
   Node8 [label=&quot;mosaic.stepResponseAnalysis.step\lResponseAnalysis&quot;,height=0.2,width=0.4,color=&quot;black&quot;, fillcolor=&quot;white&quot;, style=&quot;filled&quot;];
-  Node1 -&gt; Node9 [dir=&quot;back&quot;,color=&quot;midnightblue&quot;,fontsize=&quot;20&quot;,style=&quot;solid&quot;,fontname=&quot;Helvetica&quot;];
+  Node1 -&gt; Node9 [dir=&quot;back&quot;, width=1.0, penwidth=2.5,color=&quot;midnightblue&quot;,fontsize=&quot;20&quot;,style=&quot;solid&quot;,fontname=&quot;Helvetica&quot;];
   Node9 [label=&quot;mosaic.metaIOFilter.meta\lIOFilter&quot;,height=0.2,width=0.4,color=&quot;black&quot;, fillcolor=&quot;aliceblue&quot;, style=&quot;filled&quot;];
-  Node9 -&gt; Node10 [dir=&quot;back&quot;,color=&quot;midnightblue&quot;,fontsize=&quot;20&quot;,style=&quot;solid&quot;,fontname=&quot;Helvetica&quot;];
+  Node9 -&gt; Node10 [dir=&quot;back&quot;, width=1.0, penwidth=2.5,color=&quot;midnightblue&quot;,fontsize=&quot;20&quot;,style=&quot;solid&quot;,fontname=&quot;Helvetica&quot;];
   Node10 [label=&quot;mosaic.besselLowpassFilter.bessel\lLowpassFilter&quot;,height=0.2,width=0.4,color=&quot;black&quot;, fillcolor=&quot;white&quot;, style=&quot;filled&quot;];
-  Node9 -&gt; Node11 [dir=&quot;back&quot;,color=&quot;midnightblue&quot;,fontsize=&quot;20&quot;,style=&quot;solid&quot;,fontname=&quot;Helvetica&quot;];
+  Node9 -&gt; Node11 [dir=&quot;back&quot;, width=1.0, penwidth=2.5,color=&quot;midnightblue&quot;,fontsize=&quot;20&quot;,style=&quot;solid&quot;,fontname=&quot;Helvetica&quot;];
   Node11 [label=&quot;mosaic.convolutionFilter.convolution\lFilter&quot;,height=0.2,width=0.4,color=&quot;black&quot;, fillcolor=&quot;white&quot;, style=&quot;filled&quot;];
-  Node9 -&gt; Node12 [dir=&quot;back&quot;,color=&quot;midnightblue&quot;,fontsize=&quot;20&quot;,style=&quot;solid&quot;,fontname=&quot;Helvetica&quot;];
+  Node9 -&gt; Node12 [dir=&quot;back&quot;, width=1.0, penwidth=2.5,color=&quot;midnightblue&quot;,fontsize=&quot;20&quot;,style=&quot;solid&quot;,fontname=&quot;Helvetica&quot;];
   Node12 [label=&quot;mosaic.waveletDenoiseFilter.wavelet\lDenoiseFilter&quot;,height=0.2,width=0.4,color=&quot;black&quot;, fillcolor=&quot;white&quot;, style=&quot;filled&quot;];
-  Node1 -&gt; Node13 [dir=&quot;back&quot;,color=&quot;midnightblue&quot;,fontsize=&quot;20&quot;,style=&quot;solid&quot;,fontname=&quot;Helvetica&quot;];
+  Node1 -&gt; Node13 [dir=&quot;back&quot;, width=1.0, penwidth=2.5,color=&quot;midnightblue&quot;,fontsize=&quot;20&quot;,style=&quot;solid&quot;,fontname=&quot;Helvetica&quot;];
   Node13 [label=&quot;mosaic.metaMDIO.metaMDIO&quot;,height=0.2,width=0.4,color=&quot;black&quot;, fillcolor=&quot;aliceblue&quot;, style=&quot;filled&quot;];
-  Node13 -&gt; Node14 [dir=&quot;back&quot;,color=&quot;midnightblue&quot;,fontsize=&quot;20&quot;,style=&quot;solid&quot;,fontname=&quot;Helvetica&quot;];
+  Node13 -&gt; Node14 [dir=&quot;back&quot;, width=1.0, penwidth=2.5,color=&quot;midnightblue&quot;,fontsize=&quot;20&quot;,style=&quot;solid&quot;,fontname=&quot;Helvetica&quot;];
   Node14 [label=&quot;mosaic.sqlite3MDIO.sqlite3MDIO&quot;,height=0.2,width=0.4,color=&quot;black&quot;, fillcolor=&quot;white&quot;, style=&quot;filled&quot;];
-  Node1 -&gt; Node15 [dir=&quot;back&quot;,color=&quot;midnightblue&quot;,fontsize=&quot;20&quot;,style=&quot;solid&quot;,fontname=&quot;Helvetica&quot;];
+  Node1 -&gt; Node15 [dir=&quot;back&quot;, width=1.0, penwidth=2.5,color=&quot;midnightblue&quot;,fontsize=&quot;20&quot;,style=&quot;solid&quot;,fontname=&quot;Helvetica&quot;];
   Node15 [label=&quot;mosaic.metaTrajIO.metaTrajIO&quot;,height=0.2,width=0.4,color=&quot;black&quot;, fillcolor=&quot;aliceblue&quot;, style=&quot;filled&quot;];
-  Node15 -&gt; Node16 [dir=&quot;back&quot;,color=&quot;midnightblue&quot;,fontsize=&quot;20&quot;,style=&quot;solid&quot;,fontname=&quot;Helvetica&quot;];
+  Node15 -&gt; Node16 [dir=&quot;back&quot;, width=1.0, penwidth=2.5,color=&quot;midnightblue&quot;,fontsize=&quot;20&quot;,style=&quot;solid&quot;,fontname=&quot;Helvetica&quot;];
   Node16 [label=&quot;mosaic.abfTrajIO.abfTrajIO&quot;,height=0.2,width=0.4,color=&quot;black&quot;, fillcolor=&quot;white&quot;, style=&quot;filled&quot;];
-  Node15 -&gt; Node17 [dir=&quot;back&quot;,color=&quot;midnightblue&quot;,fontsize=&quot;20&quot;,style=&quot;solid&quot;,fontname=&quot;Helvetica&quot;];
+  Node15 -&gt; Node17 [dir=&quot;back&quot;, width=1.0, penwidth=2.5,color=&quot;midnightblue&quot;,fontsize=&quot;20&quot;,style=&quot;solid&quot;,fontname=&quot;Helvetica&quot;];
   Node17 [label=&quot;mosaic.binTrajIO.binTrajIO&quot;,height=0.2,width=0.4,color=&quot;black&quot;, fillcolor=&quot;white&quot;, style=&quot;filled&quot;];
-  Node15 -&gt; Node18 [dir=&quot;back&quot;,color=&quot;midnightblue&quot;,fontsize=&quot;20&quot;,style=&quot;solid&quot;,fontname=&quot;Helvetica&quot;];
+  Node15 -&gt; Node18 [dir=&quot;back&quot;, width=1.0, penwidth=2.5,color=&quot;midnightblue&quot;,fontsize=&quot;20&quot;,style=&quot;solid&quot;,fontname=&quot;Helvetica&quot;];
   Node18 [label=&quot;mosaic.qdfTrajIO.qdfTrajIO&quot;,height=0.2,width=0.4,color=&quot;black&quot;, fillcolor=&quot;white&quot;, style=&quot;filled&quot;];
-  Node15 -&gt; Node19 [dir=&quot;back&quot;,color=&quot;midnightblue&quot;,fontsize=&quot;20&quot;,style=&quot;solid&quot;,fontname=&quot;Helvetica&quot;];
+  Node15 -&gt; Node19 [dir=&quot;back&quot;, width=1.0, penwidth=2.5,color=&quot;midnightblue&quot;,fontsize=&quot;20&quot;,style=&quot;solid&quot;,fontname=&quot;Helvetica&quot;];
   Node19 [label=&quot;mosaic.tsvTrajIO.tsvTrajIO&quot;,height=0.2,width=0.4,color=&quot;black&quot;, fillcolor=&quot;white&quot;, style=&quot;filled&quot;];
-  Node1 -&gt; Node20 [dir=&quot;back&quot;,color=&quot;midnightblue&quot;,fontsize=&quot;20&quot;,style=&quot;solid&quot;,fontname=&quot;Helvetica&quot;];
+  Node1 -&gt; Node20 [dir=&quot;back&quot;, width=1.0, penwidth=2.5,color=&quot;midnightblue&quot;,fontsize=&quot;20&quot;,style=&quot;solid&quot;,fontname=&quot;Helvetica&quot;];
   Node20 [label=&quot;mosaic.SingleChannelAnalysis.\lSingleChannelAnalysis&quot;,height=0.2,width=0.4,color=&quot;black&quot;, fillcolor=&quot;grey88&quot;, style=&quot;filled&quot;];
 }" />
 </p>
@@ -213,7 +213,7 @@
 <div class="sphinxsidebarsection" align="left">
 <p />
 <p class="logo">
-<a href="http://www.nist.gov/cgi-bin/wwwph/cso.nist.gov?Query=Arvind+Balijepalli" style=""><u>Contact Us</u></a><br />
+<a href="mailto:arvind.balijepalli@nist.gov" style=""><u>Contact Us</u></a><br />
 <!-- 
 http://www.nist.gov/cgi-bin/wwwph/cso.nist.gov?Query=Arvind+Balijepalli
 mailto:arvind.balijepalli@nist.gov

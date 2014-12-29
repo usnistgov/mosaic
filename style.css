@@ -40,16 +40,6 @@ p.downloadtext {
 /*	font-size: 1.5vw;*/
 	text-align: left;
 }
-p.downloadtitle {
-	color: #696969;
-	font-size: 28px;
-	font-size: 3vw;
-}
-p.downloadversion {
-	color: #696969;
-	font-size: 18px;
-	font-size: 1.75vw;
-}
 .legal{
 	color: #696969;
 	font-size: 12px;
@@ -62,7 +52,9 @@ p.downloadversion {
 .grayscale { 
 	-webkit-filter: grayscale(100%);
 	-moz-filter: grayscale(100%);
-	filter: grayscale(100%);
+	-ms-filter: grayscale(100%);
+	-o-filter: grayscale(100%);
+	filter: grayscale(100%);	
 	opacity: 0.75;
 }
 div.highlight {
@@ -87,7 +79,7 @@ h3 {
 	border-radius: 3px;
 	margin: 0;
 	font-size: 16pt;
-	font-size: 2vw;
+/*	font-size: 2vw;*/
 	width: 250px;
 /*	width: 25vw;*/
 	height: 50px;
@@ -143,13 +135,13 @@ a.plats:hover {
 }
 a.tablinks {
 	font-size: 10pt;
-	font-size: 1.25vw;
+/*	font-size: 1.25vw;*/
 	color: #696969;
 	padding-right: 20px;
 }
 a.tlinks {
 	font-size: 10pt;
-	font-size: 1.25vw;
+/*	font-size: 1.25vw;*/
 	color: #696969;
 	text-align: right;
 }
