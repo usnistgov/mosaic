@@ -26,6 +26,8 @@ def GenerateHeader():
 		<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 		<script src="utils.js"></script>		
 	</head>
+	
+	<body>
 	"""
 def GenerateTableFromVersion(baseurl, title, version, showBinaries=True):
 	tabsrc="""
@@ -74,7 +76,20 @@ if __name__ == '__main__':
 	htmlout+=GenerateTitle()
 	for v in vers:
 		htmlout+=GenerateTableFromVersion(url+v[1], v[0], v[1], v[2])
-	htmlout+="""</html>"""
+	htmlout+="""
+		<br /><br /><br /><br /><br /><br /><br /><br />
+			<div>
+				<hr />
+					<table class="legal" align="center">
+						<tr class="legal" style="vertical-align: center">
+							<td><a class="legal" href="http://pml.nist.gov">Physical Measurement Laboratory</a></td>
+							<td><img class="grayscale" src="landing-images/icon.png" height="20" width="20" alt="MOSAIC"><td>
+							<td><a class="legal" href="http://nist.gov">National Institute of Standards and Technology</a></td>
+						</tr>
+					</table>
+			</div>
+		</body>
+	</html>"""
 
 	with open('platforms.html', 'w') as f:
 		f.write(htmlout)

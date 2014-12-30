@@ -15,6 +15,7 @@
 import sys
 import os
 import mosaic
+import sphinx_bootstrap_theme
 
 # If extensions (or modules to document with autodoc) are in another directory,
 # add these directories to sys.path here. If the directory is relative to the
@@ -111,30 +112,50 @@ rst_prolog = """
 .. |abstractmethod| replace:: **Abstract method:** This method must be implemented by a sub-class.
 .. |metaclass| replace:: This metaclass must be sub-classed. All abstract methods within this metaclass must be implemented.
 .. |property| replace:: **Property** 
-
-
 """
 
 intersphinx_mapping = {
     'python': ('http://docs.python.org/', None),
     'numpy': ('http://docs.scipy.org/doc/numpy/', None),
     'scipy': ('http://docs.scipy.org/doc/scipy/reference/', None),
-    'matplotlib': ('http://matplotlib.sourceforge.net/', None)}
+    'matplotlib': ('http://matplotlib.sourceforge.net/', None)
+}
     
 # -- Options for HTML output ----------------------------------------------
 
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
-html_theme = 'rtd'
+
+# Activate the theme.
+html_theme = 'bootstrap'
+html_theme_path = sphinx_bootstrap_theme.get_html_theme_path()
 
 # Theme options are theme-specific and customize the look and feel of a theme
 # further.  For a list of options available for each theme, see the
 # documentation.
-html_theme_options = {}
+html_theme_options = {
+  'navbar_title': " ",
+  "navbar_fixed_top": "true",
+  "navbar_site_name": "Contents",
+  "bootstrap_version": "3",
+
+  'navbar_links': [
+        ("Develop", "//github.com/usnistgov/mosaic", True),
+        ("Issue Tracker", "//github.com/usnistgov/mosaic/issues", True),
+        ("Contact", "http://www.nist.gov/cgi-bin/wwwph/cso.nist.gov?Query=Arvind+Balijepalli", True),
+   ],
+
+   # Render the next and previous page links in navbar. (Default: true)
+   'navbar_sidebarrel': False,
+
+   # Render the current pages TOC in the navbar. (Default: true)
+   'navbar_pagenav': False,
+   
+ }
 
 # Add any paths that contain custom themes here, relative to this directory.
 # sys.path.append(os.path.abspath('_themes'))
-html_theme_path = ['_themes']
+# html_theme_path = ['_themes']
 
 # The name for this set of Sphinx documents.  If None, it defaults to
 # "<project> v<release> documentation".
@@ -145,7 +166,7 @@ html_theme_path = ['_themes']
 
 # The name of an image file (relative to this directory) to place at the top
 # of the sidebar.
-html_logo='images/icon.png'
+html_logo='images/icon_24.png'
 
 # The name of an image file (within the static path) to use as favicon of the
 # docs.  This file should be a Windows icon file (.ico) being 16x16 or 32x32
@@ -171,10 +192,7 @@ html_static_path = ['_static']
 #html_use_MOSAICypants = True
 
 # Custom sidebar templates, maps document names to template names.
-html_sidebars = {
-    'index': ['searchbox.html', 'contact.html', 'developers.html'],
-    '**': ['globaltoc.html', 'searchbox.html', 'contact.html'],
-    }
+html_sidebars = {}
 
 # Additional templates that should be rendered to pages, maps page names to
 # template names.

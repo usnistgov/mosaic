@@ -9,9 +9,11 @@
 #}
 {%- extends "!layout.html" %}
 
+{# Custom CSS overrides #}
+{% set bootswatch_css_custom = ['_static/style.css'] %}
+
 {%- block extrahead %}
 {{ super() }}
-	<link href='//fonts.googleapis.com/css?family=Roboto:100,300,100italic,300italic' rel='stylesheet' type='text/css'>
 	<script type="text/javascript"
 		src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
 	</script>
@@ -19,8 +21,19 @@
 
 {%- block footer %}
 <!-- {{ super() }} -->
-<div class="footer" style="vertical-align: center">
-National Institute of Standards and Technology,&nbsp;
-<a href="{{ pathto('doc/Disclaimer') }}"><em>Terms of Use</em></a>
+<div class="footer" style="vertical-align: center" align="center">
+	<small>
+		<table width="95%" style="vertical-align: center">
+			<col width=30%>
+			<col width=70%>
+			<tr>
+				<td align="left">
+					<a href="{{ pathto('doc/Developers') }}"><em>MOSAIC Developers</em></a>&nbsp;&nbsp;&nbsp;
+					<a href="{{ pathto('doc/Disclaimer') }}"><em>Terms of Use</em></a>
+				</td>
+				<td align="right">National Institute of Standards and Technology</td>
+			</tr>
+		</table>
+	</small>
 </div>
 {% endblock %}

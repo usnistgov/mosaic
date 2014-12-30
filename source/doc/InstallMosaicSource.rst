@@ -1,3 +1,20 @@
+**Install using Setuptools**
+
+|projname| can be installed using Python_ setuptools using *pip* as shown below.
+
+.. code-block:: console
+
+	pip install mosaic-nist
+
+
+When installed in this manner, in addition to the dependencies noted above, you must manually install additional dependencies required for |projname| to run. This can also be accomplished using *pip* as shown below. The version numbers included in the command are recommended but not required.
+
+.. code-block:: console
+
+	pip install numpy==1.8.1 cython==0.20.1 scipy==0.14.0 matplotlib==1.3.1 lmfit==0.7.4 uncertainties==2.4.6 PyWavelets==0.2.2
+
+
+**Install from a Downloaded Source Distribution**
 
 First we need to obtain the |projname| source code. For analyzing publication data, we recommend downloading the latest stable version of the source code (`download source`_). Alternatively, the latest development version can be downloaded from the `MOSAIC page on Github`_. Here we will show you how to set up |projname| from the latest stable release:
 

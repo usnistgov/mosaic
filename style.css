@@ -44,7 +44,7 @@ p.downloadtext {
 	color: #696969;
 	font-size: 12px;
 	font-size: 0.9vw;	
-	padding-top:30px;
+	padding-top:2px;
 	padding-left:20px;
 	padding-right:20px;
 /*	text-justify: inter-word;*/
@@ -112,13 +112,13 @@ tr.blurbimg {
 	padding:10px;
 	padding-top: 30px;
 }
-hr.blurbtable {
-	width: 50%;
+hr {
+	width: 100%;
 	height: 1.5px;
 	margin-left: auto;
 	margin-right: auto;
-	background-color:#696969;
-	opacity: 0.4;
+	background-color:#EDEDED;
+	opacity: 0.8;
 	border: 0 none;
 }
 a.plats {
@@ -172,6 +172,9 @@ a.downloadtext {
 }
 a.downloadtext:hover {
 	cursor: pointer;
+}
+.footer {
+	color: #696969;
 }
 img.mosaiclogo{
 /*	box-shadow: 10px 10px 5px #888888;*/
