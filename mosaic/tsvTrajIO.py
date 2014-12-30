@@ -38,11 +38,11 @@ class tsvTrajIO(metaTrajIO.metaTrajIO):
 		"""
 	def _init(self, **kwargs):
 		# Check if headers are present
-		self.hasHeaders=kwargs.pop('headers', True)
+		self.hasHeaders=bool(kwargs.pop('headers', True))
 		try:
 			# if the sampling frequency is set explicitly, currents 
 			# in pA will be in column 0.
-			self.Fs=kwargs["Fs"]
+			self.Fs=float(kwargs["Fs"])
 			self.currCol=0
 
 			self.userSetFs=True
