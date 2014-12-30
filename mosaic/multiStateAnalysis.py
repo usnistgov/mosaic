@@ -6,6 +6,7 @@
 	:License:	See LICENSE.TXT
 	:ChangeLog:
 	.. line-block::
+		12/30/14	JF	Removed min/max constraint on tau
 		11/7/14 	AB 	Error codes describing event rejection are now more specific.
 		11/6/14 	AB 	Fixed a bug in the event fitting logic that prevents the
 						analysis of long states.
@@ -205,8 +206,7 @@ class multiStateAnalysis(metaEventProcessor.metaEventProcessor):
 				params.add('mu'+str(i-1), value=initguess[i][1]*dt) 
 
 			params.add('b', value=initguess[0][0])
-			params.add('tau', value=dt*7.5, min=dt*5, max=dt*10)
-
+			params.add('tau', value=dt*7.5)
 
 			optfit=Minimizer(self.__objfunc, params, fcn_args=(ts,edat,))
 			optfit.prepare_fit()
