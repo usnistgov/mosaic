@@ -92,7 +92,7 @@ Table[{t,Evaluate[Abs[md[[1]]]+\!\(
 \*UnderoverscriptBox[\(\[Sum]\), \(i = 1\), \(Length[md[[2]]]\)]\((\(md[[2]]\)[[i]] HeavisideTheta[t - \(md[[3]]\)[[i]]])\)\)]},{t,ts[[1]][[1]],ts[[-1]][[1]],(1/FsKHz)/10}],
 Table[{t,Evaluate[Abs[md[[1]]]+\!\(
 \*UnderoverscriptBox[\(\[Sum]\), \(i = 1\), \(Length[md[[2]]]\)]\((\(md[[2]]\)[[i]] \((1 - Exp[
-\*FractionBox[\(-\((t - \(md[[3]]\)[[i]])\)\), \(md[[4]]\)]])\) HeavisideTheta[t - \(md[[3]]\)[[i]]])\)\)]},{t,ts[[1]][[1]],ts[[-1]][[1]],(1/FsKHz)/10}]
+\*FractionBox[\(-\((t - \(md[[3]]\)[[i]])\)\), \(\(md[[4]]\)[[i]]\)]])\) HeavisideTheta[t - \(md[[3]]\)[[i]]])\)\)]},{t,ts[[1]][[1]],ts[[-1]][[1]],(1/FsKHz)/10}]
 },PlotStyle->{{ColorData["DarkRainbow"][0.95],Dashed,Thickness[0.005]},{Black,Dashing[{}],Thickness[0.005]},{Black,Thickness[0.005]}},Joined->True]
 },ImageSize->600]
 ]/;status=="normal"

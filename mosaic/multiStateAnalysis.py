@@ -6,6 +6,8 @@
 	:License:	See LICENSE.TXT
 	:ChangeLog:
 	.. line-block::
+		12/31/14 	AB 	Changed multi-state function to include a separate tau for 
+						each state following Balijepalli et al, ACS Nano 2014.
 		12/30/14	JF	Removed min/max constraint on tau
 		11/7/14 	AB 	Error codes describing event rejection are now more specific.
 		11/6/14 	AB 	Fixed a bug in the event fitting logic that prevents the
@@ -72,7 +74,7 @@ class multiStateAnalysis(metaEventProcessor.metaEventProcessor):
 		
 		self.mdResTime = -1
 
-		self.mdRCConst=-1
+		self.mdRCConst=[-1]
 
 		self.mdAbsEventStart = -1
 
@@ -135,7 +137,7 @@ class multiStateAnalysis(metaEventProcessor.metaEventProcessor):
 					'REAL',
 					'REAL_LIST',
 					'REAL',
-					'REAL',
+					'REAL_LIST',
 					'REAL',
 					'REAL'
 				]
@@ -204,9 +206,10 @@ class multiStateAnalysis(metaEventProcessor.metaEventProcessor):
 			for i in range(1, len(initguess)):
 				params.add('a'+str(i-1), value=initguess[i][0]-initguess[i-1][0]) 
 				params.add('mu'+str(i-1), value=initguess[i][1]*dt) 
+				params.add('tau'+str(i-1), value=dt*7.5)
 
 			params.add('b', value=initguess[0][0])
-			params.add('tau', value=dt*7.5)
+			
 
 			optfit=Minimizer(self.__objfunc, params, fcn_args=(ts,edat,))
 			optfit.prepare_fit()
@@ -250,8 +253,8 @@ class multiStateAnalysis(metaEventProcessor.metaEventProcessor):
 	def __objfunc(self, params, t, data):
 		""" model decaying sine wave, subtract data"""
 		try:
-			tau = params['tau'].value
 			b = params['b'].value
+			tau = [params['tau'+str(i)].value for i in range(self.nStates)]
 			a=[params['a'+str(i)].value for i in range(self.nStates)]
 			mu=[params['mu'+str(i)].value for i in range(self.nStates)]
 
@@ -280,7 +283,7 @@ class multiStateAnalysis(metaEventProcessor.metaEventProcessor):
 
 			self.mdEventStart		= optfit.params['mu0'].value
 			self.mdEventEnd			= optfit.params['mu'+str(self.nStates-1)].value
-			self.mdRCConst			= optfit.params['tau'].value
+			self.mdRCConst			= [ optfit.params['tau'+str(i)].value for i in range(self.nStates) ]
 
 			self.mdResTime			= self.mdEventEnd - self.mdEventStart
 

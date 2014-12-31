@@ -6,6 +6,8 @@
 	:License:	See LICENSE.TXT	
 	:ChangeLog:
 	.. line-block::
+		12/31/14 	AB 	Changed multi-state function to include a separate tau for 
+						each state following Balijepalli et al, ACS Nano 2014.
 		11/19/14	AB	Initial version
 """
 import numpy as np
@@ -37,7 +39,7 @@ def multiStateFunc(t, tau, mu, a, b, n):
 	try:
 		func=b
 		for i in range(n):
-			t1=(1-np.exp((mu[i]-t)/tau))
+			t1=(1-np.exp((mu[i]-t)/tau[i]))
 
 			# For long events, t1 could contain NaN due to fixed precision arithmetic errors.
 			# In this case, we can set those values to zero.
