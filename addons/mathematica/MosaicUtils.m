@@ -29,9 +29,10 @@ QueryDB[filename_,query_]:=Module[{db=OpenSQLConnection[JDBC["SQLite",filename]]
 CloseSQLConnection[db];
 Return[res]
 ]
-QueryDB[filename_,query_]:=Module[{cols=ColNames[query], db=OpenSQLConnection[JDBC["SQLite",filename]],res,hash},
+QueryDB[filename_,query_]:=Module[{cols=ColNames[query], db=OpenSQLConnection[JDBC["SQLite",filename]],res,hash, qres, i},
 hash=Association[#[[1]]->#[[2]]&/@Transpose[{SQLExecute[db,"PRAGMA table_info(metadata_t)"][[All,2]],First[SQLExecute[db,"select * from metadata_t limit 1"]]}]];
-res=DecodeRecord[#,cols, hash]&/@SQLExecute[db,query];
+qres=SQLExecute[db,query];
+res=ParallelTable[DecodeRecord[qres[[i]],cols, hash],{i,Length[qres]}];
 CloseSQLConnection[db];
 Return[res]
 ]/;StringMatchQ[query,RegularExpression["\\bselect\\b.*\\bmetadata\\b.*"]]
@@ -54,7 +55,7 @@ DecodeColumn[dat_,dtype_]:=DecodeTimeSeries[dat]/;dtype=="REAL_LIST"
 DecodeColumn[dat_,dtype_]:=dat
 
 
-DecodeTimeSeries[ts_]:=ImportString[ImportString[ToString[ts],{"Base64","String"}],"Real64"]
+DecodeTimeSeries[ts_]:=ImportString[ToString[ts],{"Base64","Real64"}]
 
 
 ts[dat_,FsKHz_]:=Transpose[{Range[0,Length[dat]-1]/FsKHz,polarity[dat]*dat}]
