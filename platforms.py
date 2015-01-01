@@ -5,7 +5,7 @@ def GenerateTitle():
 		<table>
 			<tr>
 				<td><a href="index.html"><img class="mosaiclogo" src="landing-images/icon.png" height="75" width="75" alt="MOSAIC"></td>
-				<td><p class="downloadtitle">MOSAIC Downloads</p></td>
+				<td><p class="downloadtitle"><em>MOSAIC</em> Downloads</p></td>
 			</tr>
 		</table>
 	"""
@@ -30,7 +30,7 @@ def GenerateHeader():
 	"""
 def GenerateTableFromVersion(baseurl, title, version, showBinaries=True):
 	tabsrc="""
-		<p class="downloadversion" align="left"><b><em>{0}</em></b></p>
+		<p class="downloadversion" align="left"><em>{0}</em></p>
 		<table class="downloadtable">
 			<col width=40%>
 			<col width=60%>

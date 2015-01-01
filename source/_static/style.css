@@ -52,6 +52,11 @@ p.highlight {
 	filter: grayscale(100%);	
 	opacity: 0.75;
 }
+.downloadtitle, .downloadversion {
+	font-size: 20pt;
+	color: #696969;
+	padding-left: 30px;
+}
 p.blurbhead {
     color: #545353;
     font-size: 28pt;
@@ -68,8 +73,7 @@ p.blurbtext {
 p.downloadtext {
 	color: #696969;
 	padding:0px;
-	font-size: 16pt;
-/*	font-size: 1.5vw;*/
+	font-size: 12pt;
 	text-align: left;
 }
 a.footer{
@@ -129,6 +133,7 @@ td.logo {
 	padding: 50px;
 }
 td.downloadtext {
+	font-size: 12pt;
 	padding: 0;
 }
 tr.blurbimg {
@@ -186,15 +191,16 @@ a.downloadtext {
 	color: #696969;
 	padding-top:0px;
 	padding-bottom:0px;
-	padding-left:20px;
+	padding-left:50px;
 	padding-right:20px;
-	font-size: 16pt;
+	font-size: 12pt;
 /*	font-size: 1.5vw;*/
 	text-align: left;
 	text-decoration: underline;
 }
 a.downloadtext:hover {
 	cursor: pointer;
+	font-size: 12pt;
 }
 .footer {
 	color: #696969;
