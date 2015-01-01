@@ -77,16 +77,22 @@ if __name__ == '__main__':
 		htmlout+=GenerateTableFromVersion(url+v[1], v[0], v[1], v[2])
 	htmlout+="""
 		<br /><br /><br /><br /><br /><br /><br /><br />
-			<div>
-				<hr />
-					<table class="legal" align="center">
-						<tr class="legal" style="vertical-align: center">
-							<td><a class="legal" href="http://pml.nist.gov">Physical Measurement Laboratory</a></td>
-							<td><img class="grayscale" src="landing-images/icon.png" height="20" width="20" alt="MOSAIC"><td>
-							<td><a class="legal" href="http://nist.gov">National Institute of Standards and Technology</a></td>
-						</tr>
-					</table>
-			</div>
+		<hr />
+		<div align="center" style="vertical-align: bottom">
+			<small>
+				<table class="footer" width="95%">
+					<col width=30%>
+					<col width=70%>
+					<tr>
+						<td align="left" style="vertical-align: bottom">
+							<a class="footer" href="html/doc/Developers.html"><em>MOSAIC Developers</em></a>&nbsp;&nbsp;&nbsp;
+							<a class="footer" href="html/doc/Disclaimer.html"><em>Terms of Use</em></a>
+						</td>
+						<td align="right" style="vertical-align: bottom"><em>National Institute of Standards and Technology</em></td>
+					</tr>
+				</table>
+			</small>
+		</div>
 		</body>
 	</html>"""
 
