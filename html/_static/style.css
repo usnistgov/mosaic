@@ -20,7 +20,7 @@ a {
 	-webkit-box-shadow: inset 0 1px 0 rgba(255, 255, 255, .15), 0 1px 5px rgba(0, 0, 0, .075);
 					box-shadow: inset 0 1px 0 rgba(255, 255, 255, .15), 0 1px 5px rgba(0, 0, 0, .075);
 }
-p.highlight {
+p.highlight-mosaic {
     padding:10px;
     color: #696969;
     font-size: 16pt;
@@ -80,7 +80,7 @@ a.footer{
 	color: #2F378F;
 	text-decoration: none;
 }
-div.highlight {
+div.highlight-mosaic {
 	margin: 0 auto;
     display: block;
     float: center;
