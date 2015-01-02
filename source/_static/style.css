@@ -94,7 +94,7 @@ div.mosaicinfo {
     float: center;
     width: 100%;    
 }
-h3 {
+h3.download {
     color: white;
     background-color: #2F378F;
 	border-style: solid;
