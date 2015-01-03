@@ -1,7 +1,4 @@
 from setuptools import setup, Command
-# from distutils.core import setup, Command
-from Cython.Build import cythonize
-# import numpy
 import mosaic
 import os
 import sys
@@ -139,5 +136,3 @@ setup(
     long_description=open('README.rst').read(),
     # include_dirs=[numpy.get_include()],
 )
-
-#ext_modules = cythonize("mosaic/characterizeEvent.pyx"),
