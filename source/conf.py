@@ -140,9 +140,8 @@ html_theme_options = {
   "bootstrap_version": "3",
 
   'navbar_links': [
-        ("Develop", "//github.com/usnistgov/mosaic", True),
+        ("Develop MOSAIC", "//github.com/usnistgov/mosaic", True),
         ("Issue Tracker", "//github.com/usnistgov/mosaic/issues", True),
-        ("Contact", "http://www.nist.gov/cgi-bin/wwwph/cso.nist.gov?Query=Arvind+Balijepalli", True),
    ],
 
    # Render the next and previous page links in navbar. (Default: true)
