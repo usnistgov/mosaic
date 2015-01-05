@@ -599,7 +599,7 @@ class settingsview(QtGui.QMainWindow):
 		self.consoleLog.show()
 
 	def OnShowHelp(self):
-		webbrowser.open('http://usnistgov.github.io/mosaic', new=0, autoraise=True)
+		webbrowser.open('http://usnistgov.github.io/mosaic/html/index.html', new=0, autoraise=True)
 
 	# Dialog SLOTS
 	def OnShowTrajectoryViewer(self):
