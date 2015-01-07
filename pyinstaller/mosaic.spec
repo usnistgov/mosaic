@@ -1,6 +1,6 @@
 # -*- mode: python -*-
 import sys
-from utilities.resource_path import resource_path, format_path
+from mosaic.utilities.resource_path import resource_path, format_path
 
 a = Analysis(['../mosaicgui/mosaicGUI.py'],
 			 pathex=['..'], 		# resource_path('.settings')
