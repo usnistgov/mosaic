@@ -48,7 +48,7 @@ def GenerateTableFromVersion(baseurl, title, version, showBinaries=True):
 		""".format(baseurl, version)
 	tabsrc+="""
 			<tr>
-				<td class="downloadtext"><a class="downloadtext" href="{0}/mosaic-{1}.tar.gz">mosaic-{1}.tar.gz</a></td>
+				<td class="downloadtext"><a class="downloadtext" href="{0}/mosaic-nist-{1}.tar.gz">mosaic-nist-{1}.tar.gz</a></td>
 				<td class="downloadtext"><p class="downloadtext">MOSAIC Source</p></td>
 			</tr>
 		</table>
@@ -59,8 +59,8 @@ def GenerateTableFromVersion(baseurl, title, version, showBinaries=True):
 if __name__ == '__main__':
 	url="https://github.com/usnistgov/mosaic/releases/download/v"
 	vers=[
-		# ("Version "+str(mosaic.__version__), str(mosaic.__version__), True),
-		("Version 1.0 Beta 3, Update 2", "1.0b3.2",True),
+		("Version "+str(mosaic.__version__), str(mosaic.__version__), True),
+		("Version 1.0", "1.0b3.2",False),
 		("Version 1.0 Beta 3, Update 1", "1.0b3.1",False),
 		("Version 1.0 Beta 3", "1.0b3",False),
 		("Version 1.0 Beta 2", "1.0b2",False),

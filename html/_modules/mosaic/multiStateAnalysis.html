@@ -5,7 +5,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>mosaic.multiStateAnalysis &mdash; MOSAIC 1.0b3.2 documentation</title>
+    <title>mosaic.multiStateAnalysis &mdash; MOSAIC 1.0 documentation</title>
     
     <link rel="stylesheet" href="../../_static/basic.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
@@ -17,7 +17,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
-        VERSION:     '1.0b3.2',
+        VERSION:     '1.0',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -32,7 +32,7 @@
     <script type="text/javascript" src="../../_static/bootstrap-3.2.0/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="../../_static/bootstrap-sphinx.js"></script>
     <link rel="shortcut icon" href="../../_static/favicon.ico"/>
-    <link rel="top" title="MOSAIC 1.0b3.2 documentation" href="../../index.html" />
+    <link rel="top" title="MOSAIC 1.0 documentation" href="../../index.html" />
     <link rel="up" title="Module code" href="../index.html" />
 
 <meta charset='utf-8'>
@@ -58,7 +58,7 @@
         </button>
         <a class="navbar-brand" href="../../index.html"><img src="../../_static/icon_24.png">
            </a>
-        <span class="navbar-text navbar-version pull-left"><b>1.0b3.2</b></span>
+        <span class="navbar-text navbar-version pull-left"><b>1.0</b></span>
       </div>
 
         <div class="collapse navbar-collapse nav-collapse">
@@ -129,6 +129,10 @@
 <span class="sd">	:License:	See LICENSE.TXT</span>
 <span class="sd">	:ChangeLog:</span>
 <span class="sd">	.. line-block::</span>
+<span class="sd">		1/7/14		AB  Save the number of states in an event to the DB using the mdNStates column</span>
+<span class="sd">		12/31/14 	AB 	Changed multi-state function to include a separate tau for </span>
+<span class="sd">						each state following Balijepalli et al, ACS Nano 2014.</span>
+<span class="sd">		12/30/14	JF	Removed min/max constraint on tau</span>
 <span class="sd">		11/7/14 	AB 	Error codes describing event rejection are now more specific.</span>
 <span class="sd">		11/6/14 	AB 	Fixed a bug in the event fitting logic that prevents the</span>
 <span class="sd">						analysis of long states.</span>
@@ -185,6 +189,8 @@
 		<span class="bp">self</span><span class="o">.</span><span class="n">mdOpenChCurrent</span><span class="o">=-</span><span class="mi">1</span>
 		<span class="bp">self</span><span class="o">.</span><span class="n">mdCurrentStep</span><span class="o">=</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
 
+		<span class="bp">self</span><span class="o">.</span><span class="n">mdNStates</span><span class="o">=-</span><span class="mi">1</span>
+
 		<span class="bp">self</span><span class="o">.</span><span class="n">mdBlockDepth</span><span class="o">=</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
 
 		<span class="bp">self</span><span class="o">.</span><span class="n">mdEventDelay</span><span class="o">=</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
@@ -194,7 +200,7 @@
 		
 		<span class="bp">self</span><span class="o">.</span><span class="n">mdResTime</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
 
-		<span class="bp">self</span><span class="o">.</span><span class="n">mdRCConst</span><span class="o">=-</span><span class="mi">1</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">mdRCConst</span><span class="o">=</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
 
 		<span class="bp">self</span><span class="o">.</span><span class="n">mdAbsEventStart</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
 
@@ -232,7 +238,8 @@
 <span class="sd">		&quot;&quot;&quot;</span>
 		<span class="k">return</span> <span class="p">[</span>
 					<span class="bp">self</span><span class="o">.</span><span class="n">mdProcessingStatus</span><span class="p">,</span> 
-					<span class="bp">self</span><span class="o">.</span><span class="n">mdOpenChCurrent</span><span class="p">,</span> 
+					<span class="bp">self</span><span class="o">.</span><span class="n">mdOpenChCurrent</span><span class="p">,</span>
+					<span class="bp">self</span><span class="o">.</span><span class="n">mdNStates</span><span class="p">,</span> 
 					<span class="bp">self</span><span class="o">.</span><span class="n">mdCurrentStep</span><span class="p">,</span>
 					<span class="bp">self</span><span class="o">.</span><span class="n">mdBlockDepth</span><span class="p">,</span>
 					<span class="bp">self</span><span class="o">.</span><span class="n">mdEventStart</span><span class="p">,</span>
@@ -251,13 +258,14 @@
 		<span class="k">return</span> <span class="p">[</span>
 					<span class="s">&#39;TEXT&#39;</span><span class="p">,</span> 
 					<span class="s">&#39;REAL&#39;</span><span class="p">,</span> 
+					<span class="s">&#39;INTEGER&#39;</span><span class="p">,</span>
 					<span class="s">&#39;REAL_LIST&#39;</span><span class="p">,</span>
 					<span class="s">&#39;REAL_LIST&#39;</span><span class="p">,</span>
 					<span class="s">&#39;REAL&#39;</span><span class="p">,</span>
 					<span class="s">&#39;REAL&#39;</span><span class="p">,</span>
 					<span class="s">&#39;REAL_LIST&#39;</span><span class="p">,</span>
 					<span class="s">&#39;REAL&#39;</span><span class="p">,</span>
-					<span class="s">&#39;REAL&#39;</span><span class="p">,</span>
+					<span class="s">&#39;REAL_LIST&#39;</span><span class="p">,</span>
 					<span class="s">&#39;REAL&#39;</span><span class="p">,</span>
 					<span class="s">&#39;REAL&#39;</span>
 				<span class="p">]</span>
@@ -269,6 +277,7 @@
 		<span class="k">return</span> <span class="p">[</span>
 					<span class="s">&#39;ProcessingStatus&#39;</span><span class="p">,</span> 
 					<span class="s">&#39;OpenChCurrent&#39;</span><span class="p">,</span> 
+					<span class="s">&#39;NStates&#39;</span><span class="p">,</span>
 					<span class="s">&#39;CurrentStep&#39;</span><span class="p">,</span>
 					<span class="s">&#39;BlockDepth&#39;</span><span class="p">,</span>
 					<span class="s">&#39;EventStart&#39;</span><span class="p">,</span> 
@@ -326,10 +335,10 @@
 			<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">initguess</span><span class="p">)):</span>
 				<span class="n">params</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="s">&#39;a&#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">),</span> <span class="n">value</span><span class="o">=</span><span class="n">initguess</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">-</span><span class="n">initguess</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span> 
 				<span class="n">params</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="s">&#39;mu&#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">),</span> <span class="n">value</span><span class="o">=</span><span class="n">initguess</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span><span class="o">*</span><span class="n">dt</span><span class="p">)</span> 
+				<span class="n">params</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="s">&#39;tau&#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">),</span> <span class="n">value</span><span class="o">=</span><span class="n">dt</span><span class="o">*</span><span class="mf">7.5</span><span class="p">)</span>
 
 			<span class="n">params</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="s">&#39;b&#39;</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="n">initguess</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span>
-			<span class="n">params</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="s">&#39;tau&#39;</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="n">dt</span><span class="o">*</span><span class="mf">7.5</span><span class="p">,</span> <span class="nb">min</span><span class="o">=</span><span class="n">dt</span><span class="o">*</span><span class="mi">5</span><span class="p">,</span> <span class="nb">max</span><span class="o">=</span><span class="n">dt</span><span class="o">*</span><span class="mi">10</span><span class="p">)</span>
-
+			
 
 			<span class="n">optfit</span><span class="o">=</span><span class="n">Minimizer</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__objfunc</span><span class="p">,</span> <span class="n">params</span><span class="p">,</span> <span class="n">fcn_args</span><span class="o">=</span><span class="p">(</span><span class="n">ts</span><span class="p">,</span><span class="n">edat</span><span class="p">,))</span>
 			<span class="n">optfit</span><span class="o">.</span><span class="n">prepare_fit</span><span class="p">()</span>
@@ -373,8 +382,8 @@
 	<span class="k">def</span> <span class="nf">__objfunc</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">params</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
 		<span class="sd">&quot;&quot;&quot; model decaying sine wave, subtract data&quot;&quot;&quot;</span>
 		<span class="k">try</span><span class="p">:</span>
-			<span class="n">tau</span> <span class="o">=</span> <span class="n">params</span><span class="p">[</span><span class="s">&#39;tau&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value</span>
 			<span class="n">b</span> <span class="o">=</span> <span class="n">params</span><span class="p">[</span><span class="s">&#39;b&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value</span>
+			<span class="n">tau</span> <span class="o">=</span> <span class="p">[</span><span class="n">params</span><span class="p">[</span><span class="s">&#39;tau&#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">)]</span><span class="o">.</span><span class="n">value</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">nStates</span><span class="p">)]</span>
 			<span class="n">a</span><span class="o">=</span><span class="p">[</span><span class="n">params</span><span class="p">[</span><span class="s">&#39;a&#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">)]</span><span class="o">.</span><span class="n">value</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">nStates</span><span class="p">)]</span>
 			<span class="n">mu</span><span class="o">=</span><span class="p">[</span><span class="n">params</span><span class="p">[</span><span class="s">&#39;mu&#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">)]</span><span class="o">.</span><span class="n">value</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">nStates</span><span class="p">)]</span>
 
@@ -397,13 +406,15 @@
 			<span class="bp">self</span><span class="o">.</span><span class="n">mdOpenChCurrent</span> 	<span class="o">=</span> <span class="n">optfit</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s">&#39;b&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value</span> 
 			<span class="bp">self</span><span class="o">.</span><span class="n">mdCurrentStep</span>		<span class="o">=</span> <span class="p">[</span> <span class="n">optfit</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s">&#39;a&#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">)]</span><span class="o">.</span><span class="n">value</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">nStates</span><span class="p">)</span> <span class="p">]</span>
 			
+			<span class="bp">self</span><span class="o">.</span><span class="n">mdNStates</span>			<span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">nStates</span>
+
 			<span class="bp">self</span><span class="o">.</span><span class="n">mdBlockDepth</span> 		<span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">cumsum</span><span class="p">(</span> <span class="bp">self</span><span class="o">.</span><span class="n">mdCurrentStep</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="p">)</span><span class="o">/</span><span class="bp">self</span><span class="o">.</span><span class="n">mdOpenChCurrent</span> <span class="o">+</span> <span class="mi">1</span>
 
 			<span class="bp">self</span><span class="o">.</span><span class="n">mdEventDelay</span>		<span class="o">=</span> <span class="p">[</span> <span class="n">optfit</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s">&#39;mu&#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">)]</span><span class="o">.</span><span class="n">value</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">nStates</span><span class="p">)</span> <span class="p">]</span>
 
 			<span class="bp">self</span><span class="o">.</span><span class="n">mdEventStart</span>		<span class="o">=</span> <span class="n">optfit</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s">&#39;mu0&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value</span>
 			<span class="bp">self</span><span class="o">.</span><span class="n">mdEventEnd</span>			<span class="o">=</span> <span class="n">optfit</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s">&#39;mu&#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">nStates</span><span class="o">-</span><span class="mi">1</span><span class="p">)]</span><span class="o">.</span><span class="n">value</span>
-			<span class="bp">self</span><span class="o">.</span><span class="n">mdRCConst</span>			<span class="o">=</span> <span class="n">optfit</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s">&#39;tau&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">mdRCConst</span>			<span class="o">=</span> <span class="p">[</span> <span class="n">optfit</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s">&#39;tau&#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">)]</span><span class="o">.</span><span class="n">value</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">nStates</span><span class="p">)</span> <span class="p">]</span>
 
 			<span class="bp">self</span><span class="o">.</span><span class="n">mdResTime</span>			<span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mdEventEnd</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">mdEventStart</span>
 

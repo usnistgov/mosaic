@@ -18,7 +18,7 @@ def generateUtilsJS(baseurl, version):
 		return document.write("Download Source")
 	}};
 	function sourceURL() {{
-		return "{0}/v{1}/mosaic-{1}.tar.gz";
+		return "{0}/v{1}/mosaic-nist-{1}.tar.gz";
 	}}
 	function OSXURL() {{
 		return "{0}/v{1}/mosaic-{1}.dmg";
@@ -40,6 +40,6 @@ def generateUtilsJS(baseurl, version):
 if __name__ == '__main__':
 	with open('utils.js', 'w') as f:
 		# str(mosaic.__version__)
-		f.write(generateUtilsJS("https://github.com/usnistgov/mosaic/releases/download", "1.0b3.2"))
+		f.write(generateUtilsJS("https://github.com/usnistgov/mosaic/releases/download", "1.0"))
 
 	print "Wrote utils.js"

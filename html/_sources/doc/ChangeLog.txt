@@ -3,6 +3,15 @@
 Change Log
 =================================
 
+**v1.0**
+
+- Fixed a bug in multistate code that constrained the RC constant resulting in systematic fitting errors (pull request #25).
+- Updated multistate to include a separate RC constant for each state, to be consistent with functional form in Balijepalli et al., ACS Nano 2014.
+- Misc bug fixes in tsvTrajIO parsing.
+- The number of states is saved to the MDIO DB for multistate analysis (issue #26).
+- Created a new package on PyPI (mosaic-nist) to allow installation with setuptools.
+- [GUI] Updated help link to point to Sphinx documentation on Github.
+
 **v1.0b3.2**
 
 - [GUI] Misc bug fixes

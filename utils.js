@@ -15,13 +15,13 @@
 		return document.write("Download Source")
 	};
 	function sourceURL() {
-		return "https://github.com/usnistgov/mosaic/releases/download/v1.0b3.2/mosaic-1.0b3.2.tar.gz";
+		return "https://github.com/usnistgov/mosaic/releases/download/v1.0/mosaic-nist-1.0.tar.gz";
 	}
 	function OSXURL() {
-		return "https://github.com/usnistgov/mosaic/releases/download/v1.0b3.2/mosaic-1.0b3.2.dmg";
+		return "https://github.com/usnistgov/mosaic/releases/download/v1.0/mosaic-1.0.dmg";
 	}
 	function WindowsURL() {
-		return "https://github.com/usnistgov/mosaic/releases/download/v1.0b3.2/mosaic-x64-1.0b3.2.zip";
+		return "https://github.com/usnistgov/mosaic/releases/download/v1.0/mosaic-x64-1.0.zip";
 	}
 	function downloadURL() {
 		OSName=detectOS()

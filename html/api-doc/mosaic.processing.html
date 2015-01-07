@@ -5,7 +5,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>10.1.6. Event Processing &mdash; MOSAIC 1.0b3.2 documentation</title>
+    <title>10.1.6. Event Processing &mdash; MOSAIC 1.0 documentation</title>
     
     <link rel="stylesheet" href="../_static/basic.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -17,7 +17,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '1.0b3.2',
+        VERSION:     '1.0',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -32,7 +32,7 @@
     <script type="text/javascript" src="../_static/bootstrap-3.2.0/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="../_static/bootstrap-sphinx.js"></script>
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
-    <link rel="top" title="MOSAIC 1.0b3.2 documentation" href="../index.html" />
+    <link rel="top" title="MOSAIC 1.0 documentation" href="../index.html" />
     <link rel="up" title="10. API Documentation" href="../doc/apidocs.html" />
     <link rel="next" title="10.1.7. Data Output" href="mosaic.output.html" />
     <link rel="prev" title="10.1.5. Event Partition and Segment" href="mosaic.partition.html" />
@@ -60,7 +60,7 @@
         </button>
         <a class="navbar-brand" href="../index.html"><img src="../_static/icon_24.png">
            </a>
-        <span class="navbar-text navbar-version pull-left"><b>1.0b3.2</b></span>
+        <span class="navbar-text navbar-version pull-left"><b>1.0</b></span>
       </div>
 
         <div class="collapse navbar-collapse nav-collapse">
@@ -127,10 +127,10 @@
 <div class="section" id="mosaic-stepresponseanalysis-module">
 <h2>10.1.6.1. mosaic.stepResponseAnalysis module<a class="headerlink" href="#mosaic-stepresponseanalysis-module" title="Permalink to this headline">¶</a></h2>
 <p class="graphviz">
-<img src="../_images/inheritance-f70a63cedda7acbeac88380056946dd44ad7b05d.png" alt="Inheritance diagram of mosaic.stepResponseAnalysis" usemap="#inheritance99dd37b5b1" class="inheritance"/>
+<img src="../_images/inheritance-0c1bb49b173f89b561d2cda4ad5fe810ff1c8f10.png" alt="Inheritance diagram of mosaic.stepResponseAnalysis" usemap="#inheritance99dd37b5b1" class="inheritance"/>
 <map id="inheritance99dd37b5b1" name="inheritance99dd37b5b1">
 <area shape="rect" id="node1" href="mosaic.meta.html#mosaic.metaEventProcessor.metaEventProcessor" title=".. warning:: |metaclass|" alt="" coords="6,54,279,79"/>
-<area shape="rect" id="node3" href="../doc/stepResponse.html#mosaic.stepResponseAnalysis.stepResponseAnalysis" title="Analyze an event that is characteristic of PEG blockades. This method includes system " alt="" coords="328,54,624,79"/>
+<area shape="rect" id="node3" href="#mosaic.stepResponseAnalysis.stepResponseAnalysis" title="Analyze an event that is characteristic of PEG blockades. This method includes system " alt="" coords="328,54,624,79"/>
 <area shape="rect" id="node2" href="#mosaic.stepResponseAnalysis.datblock" title="Smart data block that holds a time&#45;series of data and keeps track" alt="" coords="37,5,248,30"/>
 </map>
 </p>
@@ -257,6 +257,12 @@ control the order of the data to keep formatting consistent.</p>
 </tbody>
 </table>
 <div class="line-block">
+<div class="line">1/7/14          AB  Save the number of states in an event to the DB using the mdNStates column</div>
+<div class="line">12/31/14        AB      Changed multi-state function to include a separate tau for</div>
+<div class="line-block">
+<div class="line">each state following Balijepalli et al, ACS Nano 2014.</div>
+</div>
+<div class="line">12/30/14        JF      Removed min/max constraint on tau</div>
 <div class="line">11/7/14         AB      Error codes describing event rejection are now more specific.</div>
 <div class="line">11/6/14         AB      Fixed a bug in the event fitting logic that prevents the</div>
 <div class="line-block">

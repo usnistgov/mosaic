@@ -5,7 +5,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>11. Change Log &mdash; MOSAIC 1.0b3.2 documentation</title>
+    <title>11. Change Log &mdash; MOSAIC 1.0 documentation</title>
     
     <link rel="stylesheet" href="../_static/basic.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -17,7 +17,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '1.0b3.2',
+        VERSION:     '1.0',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -32,7 +32,7 @@
     <script type="text/javascript" src="../_static/bootstrap-3.2.0/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="../_static/bootstrap-sphinx.js"></script>
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
-    <link rel="top" title="MOSAIC 1.0b3.2 documentation" href="../index.html" />
+    <link rel="top" title="MOSAIC 1.0 documentation" href="../index.html" />
     <link rel="next" title="12. Bibliography" href="References.html" />
     <link rel="prev" title="10.1.8. Miscellaneous" href="../api-doc/mosaic.misc.html" />
 
@@ -59,7 +59,7 @@
         </button>
         <a class="navbar-brand" href="../index.html"><img src="../_static/icon_24.png">
            </a>
-        <span class="navbar-text navbar-version pull-left"><b>1.0b3.2</b></span>
+        <span class="navbar-text navbar-version pull-left"><b>1.0</b></span>
       </div>
 
         <div class="collapse navbar-collapse nav-collapse">
@@ -123,6 +123,15 @@
       
   <div class="section" id="change-log">
 <span id="changelog-page"></span><h1>11. Change Log<a class="headerlink" href="#change-log" title="Permalink to this headline">¶</a></h1>
+<p><strong>v1.0</strong></p>
+<ul class="simple">
+<li>Fixed a bug in multistate code that constrained the RC constant resulting in systematic fitting errors (pull request #25).</li>
+<li>Updated multistate to include a separate RC constant for each state, to be consistent with functional form in Balijepalli et al., ACS Nano 2014.</li>
+<li>Misc bug fixes in tsvTrajIO parsing.</li>
+<li>The number of states is saved to the MDIO DB for multistate analysis (issue #26).</li>
+<li>Created a new package on PyPI (mosaic-nist) to allow installation with setuptools.</li>
+<li>[GUI] Updated help link to point to Sphinx documentation on Github.</li>
+</ul>
 <p><strong>v1.0b3.2</strong></p>
 <ul class="simple">
 <li>[GUI] Misc bug fixes</li>
