@@ -125,7 +125,7 @@ setup(
             'mosaicgui/ui/consoleDialog.ui',
             'mosaicgui/ui/aboutdialog.ui',
             'pyinstaller/mosaic.spec',
-            'icon.png',
+            'icons/icon_100px.png',
             '.scripts/install-addons-sh',
             '.scripts/build-deps-sh', 
             '.scripts/pyinstaller-sh'
