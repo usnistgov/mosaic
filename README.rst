@@ -12,8 +12,17 @@ A. Balijepalli, J., Ettedgui, A. T. Cornio, J. W. F. Robertson K. P. Cheung, J. 
 
 
 
-What's new in v1.0b3
+Change Log
 =================================
+
+**v1.0**
+
+- Fixed a bug in multistate code that constrained the RC constant resulting in systematic fitting errors (pull request #25).
+- Updated multistate to include a separate RC constant for each state, to be consistent with functional form in Balijepalli et al., ACS Nano 2014.
+- Misc bug fixes in tsvTrajIO parsing.
+- The number of states is saved to the MDIO DB for multistate analysis (issue #26).
+- Created a new package on PyPI (mosaic-nist) to allow installation with setuptools.
+- [GUI] Updated help link to point to Sphinx documentation on Github.
 
 **v1.0b3.2**
 
@@ -45,3 +54,24 @@ What's new in v1.0b3
 - Improved and expanded unit testing framework.
 - Moved installation and testing to setuptools.
 
+
+**v1.0b2**
+
+- [GUI] Fixed threshold update error from 1.0b1.
+- Considerably improved automatic open channel state detection.
+- The default settings string is now included within the source code.
+- Implemented new top-level class ConvertToCSV that allows conversion of data read by any TrajIO object to comma separated files.
+- Updated build system and unit testing framework.
+- [GUI] Misc UI updates.
+
+
+**v1.0b1**
+
+- [GUI] Added a menu option to save a settings file prior to starting the analysis.
+- [GUI] Current threshold is now defined by an ionic current. The trajectory viewer displays the deviation of the threshold from the mean current.
+- Analysis settings are saved within the analysissettings table of the sqlite database. When an analysis database is loaded into the GUI, settings are parsed from within the database.
+- When an analysis file is loaded, widgets in the main window remain enabled. This allows starting a new analysis run with the current settings.
+- [GUI] Implemented an analysis log viewer that displays the event processing log.
+- [GUI] Initial commit of wavelets based peak detection in blockdepthview.
+- [GUI] Added all points histogram to trajectory viewer. 
+- *Known Issues:* Selecting automatic baseline detection can sometimes cause the threshold in the trajectory viewer to change. Moving the slider will cause the settings and trajectory windows to synchronize.
