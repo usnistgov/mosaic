@@ -6,6 +6,7 @@
 	:License:	See LICENSE.TXT
 	:ChangeLog:
 	.. line-block::
+		1/7/14		AB  Save the number of states in an event to the DB using the mdNStates column
 		12/31/14 	AB 	Changed multi-state function to include a separate tau for 
 						each state following Balijepalli et al, ACS Nano 2014.
 		12/30/14	JF	Removed min/max constraint on tau
@@ -65,6 +66,8 @@ class multiStateAnalysis(metaEventProcessor.metaEventProcessor):
 		self.mdOpenChCurrent=-1
 		self.mdCurrentStep=[-1]
 
+		self.mdNStates=-1
+
 		self.mdBlockDepth=[-1]
 
 		self.mdEventDelay=[-1]
@@ -112,7 +115,8 @@ class multiStateAnalysis(metaEventProcessor.metaEventProcessor):
 		"""
 		return [
 					self.mdProcessingStatus, 
-					self.mdOpenChCurrent, 
+					self.mdOpenChCurrent,
+					self.mdNStates, 
 					self.mdCurrentStep,
 					self.mdBlockDepth,
 					self.mdEventStart,
@@ -131,6 +135,7 @@ class multiStateAnalysis(metaEventProcessor.metaEventProcessor):
 		return [
 					'TEXT', 
 					'REAL', 
+					'INTEGER',
 					'REAL_LIST',
 					'REAL_LIST',
 					'REAL',
@@ -149,6 +154,7 @@ class multiStateAnalysis(metaEventProcessor.metaEventProcessor):
 		return [
 					'ProcessingStatus', 
 					'OpenChCurrent', 
+					'NStates',
 					'CurrentStep',
 					'BlockDepth',
 					'EventStart', 
@@ -277,6 +283,8 @@ class multiStateAnalysis(metaEventProcessor.metaEventProcessor):
 			self.mdOpenChCurrent 	= optfit.params['b'].value 
 			self.mdCurrentStep		= [ optfit.params['a'+str(i)].value for i in range(self.nStates) ]
 			
+			self.mdNStates			= self.nStates
+
 			self.mdBlockDepth 		= np.cumsum( self.mdCurrentStep[:-1] )/self.mdOpenChCurrent + 1
 
 			self.mdEventDelay		= [ optfit.params['mu'+str(i)].value for i in range(self.nStates) ]
