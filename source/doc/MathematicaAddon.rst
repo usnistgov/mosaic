@@ -55,17 +55,26 @@ Queries the *metadata* table using the supplied SQL query.
 		A nested list of query results.
 
 
-**PlotEvents**\[*dbfile*, *FsKHz*, *options*\]
+**PlotEvents**\[*dbfile*, *FsKHz*\]
 
 Plot the event-time series if stored in the database (see the :ref:`settings-page` section for details on saving time-series to the analysis output).
 
 :Args:
 		- `dbfile` :	full path to the database file
 		- `FsKHz`  :	sampling frequency in kHz.
-		- `options`: 	(optional) *AnalysisAlgorithm->"MultiStateAnalysis" for *multiStateAnalysis,* not supplied for the *stepResponseAnalysis* algorithm.
-
+		
 :Returns:
 		A dynamic object that allows the user to browse event time-series and fits.
+
+**GetAnalysisAlgorithm**\[*db*\]
+
+Returns the analysis algorithm used to process the current data set.
+
+:Args:
+		- `db`	:		full path to a database file
+
+:Returns:
+		Algorithm used to analyze data.
 
 
 **MosaicUtils Examples**
@@ -180,7 +189,7 @@ Calculate the arrival times from a list of the absolute start time of each event
 	In[1]= <<MosaicUtils`
 	In[2]= <<MosaicAnalysis`
 
-In the following example, we estimate the capture rate of PEG28 from the reference data set included with the |projname| source. The first argument fo *CaptureRate* is a list of the absolute start time of each event in the database. This data can be obtained using the query shown below. The remaining arguments to *CaptureRate* define the parameters of the arrival times distribution, the lower and upper limit of the arrival times and the number of bins. The function returns the mean capture rate and standard error, as well as a plot that shows the underlying arrival times distribution.
+In the following example, we estimate the capture rate of PEG28 from the reference data set included with the |projname| source. The first argument fo *CaptureRate* is a list of the absolute start time of each event in the database. This data can be obtained using the query shown below. The remaining arguments to *CaptureRate* define the parameters of the arrival times distribution, the lower and upper limit of the arrival times and the number of bins. The function returns the mean capture rate and standard error, a plot that shows the underlying arrival times distribution, raw data used to generate the capture rate histogram, and a pure best-fit function.
 
 .. code-block:: mathematica
 
