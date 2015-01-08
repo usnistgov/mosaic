@@ -21,7 +21,7 @@ Background
 The interactions of single molecules with nanopores are observed by measuring changes to the ionic current that occurs when the pore changes from an unoccupied (i.e., an open channel) to an occupied state.  The electrical nature of the measurement allows us to model components of the physical system with equivalent electrical elements, (see figure below), and describe system behavior collectively with the circuit response :cite:`Balijepalli:2014ft`.  The resistance from the electrolyte solution between the two electrodes, together with the access resistance near the entrance of the channel due to electrical field constriction :cite:`Bezrukov:1993ij,Bezrukov:1996uc`, is modeled by resistors :math:`R_{cis}` and :math:`R_{trans}`, on each side of the nanopore.  The nanopore itself is modeled as a resistor, :math:`R_p`, in series with :math:`R_s`. Finally, the lipid bilayer is assumed to be a capacitive circuit element, :math:`C_m`, in parallel with the nanopore.
 
 .. figure:: ../images/NanoporeCircuit.png
-   :width: 25 %
+   :width: 40 %
    :align: center
 
 Electrical circuits described above are typically analyzed using external time-varying signal sources. In contrast, for the nanopore sensor system, the applied potential is fixed, and the net change in the current arises internally from the change in the nanopore resistance, :math:`R_p`, from single molecules that partition into the pore.  We first determine the overall circuit impedance for the case where the channel resistance is fixed, to verify the validity of the equivalent circuit model, and later relax that condition. 
@@ -44,6 +44,17 @@ where :math:`\alpha=(1/\Delta R_p +C_m)V_a` and :math:`\tau=(R_{cis}+R_{trans})(
 	i(t)=-\frac{\alpha}{\tau^2}exp(-t/\tau)+i_0, t>0,
 
 where :math:`i_0` is the open channel current offset.  The equation for i(t) suggests that the experimentally observed RC time constant (:math:`\tau`) is characteristic of the molecule interacting with the pore and related to the molecule’s physical properties (e.g., volume, charge, etc.)  :cite:`Reiner:2010kv,Balijepalli:2013gt`. The equation above then provides the basis for practical single molecule analysis as seen at the top of this page :cite:`Balijepalli:2014ft`.
+
+
+Implementation in |projname|
+---------------------------------------------
+
+The general technique outlined above is implemented in |projname| using two separate algorithms, i) StepResponseAnalysis is used for events that exhibit a single state, and ii) MultistateAnalysis for *N*-state events. 
+
+.. include:: ../doc/stepResponse.rst
+
+.. include:: ../doc/multiState.rst
+
 
 .. include:: ../aliases.rst
 
