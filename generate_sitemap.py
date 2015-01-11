@@ -32,7 +32,8 @@ from glob import glob
 import string
 import time
 
-WEBSITE = 'https://usnistgov.github.io/mosaic/html'
+ROOTWEB = 'https://usnistgov.github.io/mosaic'
+WEBSITE = ROOTWEB + '/html'
 
 # Document extentions we are interested in generating data for.
 EXTENSIONS = ['.pdf', '.html']
@@ -75,9 +76,9 @@ def process_directory(build_dir=SPHINX_BUILD, source_dir=SPHINX_SOURCE,
                         pass
                 if base_dir:
                     base_dir = base_dir.rstrip(os.sep) + os.sep
-                iso_time = time.strftime('%Y-%m-%d', time.localtime(modtime))                
+                iso_time = time.strftime('%Y-%m-%d', time.localtime(modtime))  
                 url = website + '/' + base_dir.replace(os.sep, '/') + fname
-
+               
                 # add the information to sitemap.xml
                 out.write('<url>\n')
                 out.write('  <loc>' + url +'</loc>\n')
@@ -86,6 +87,13 @@ def process_directory(build_dir=SPHINX_BUILD, source_dir=SPHINX_SOURCE,
                 out.write('  <priority>' + priority + '</priority>\n')
                 out.write('</url>\n')
 
+root_url="""<url>
+  <loc>{url}</loc>
+  <lastmod>{modtime}</lastmod>
+  <changefreq>weekly</changefreq>
+  <priority>1.0</priority>
+</url>
+"""
 
 def main():
     """Write header and footer of the sitemap.xml file and start
@@ -94,18 +102,27 @@ def main():
 
     exclude = sum([glob(x) for x in EXCLUDE], [])
     full_exclude = [join(os.getcwd(), f) for f in exclude]
+    root_pages=['index.offline.html', 'platforms.html']
 
-    out = open(os.getcwd() + os.sep + SPHINX_BUILD + os.sep +
-        SITEMAP_FILENAME, 'w')
+    out = open(os.getcwd() + os.sep + SITEMAP_FILENAME, 'w')
 
     out.write('<?xml version="1.0" encoding="UTF-8"?>\n')
     out.write('<urlset xmlns="http://www.google.com/schemas/sitemap/0.9">\n')
 
+    for page in root_pages:
+        out.write( root_url.format(url=ROOTWEB+'/'+page,modtime=time.strftime('%Y-%m-%d', time.localtime(os.path.getmtime(os.getcwd()+'/'+page)))) )
+
+    docweb=WEBSITE+'/html'
     process_directory(out=out, exclude=full_exclude)
 
     out.write('</urlset>\n')
     
     out.close()
-    
+
+    robots = open(os.getcwd() + os.sep + 'robots.txt', 'w')
+    robots.write('Sitemap: '+ WEBSITE +'/sitemap.xml')
+    robots.close()
+
 if __name__ == '__main__':
     main()
+
