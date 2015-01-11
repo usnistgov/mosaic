@@ -61,15 +61,29 @@ DecodeTimeSeries[ts_]:=ImportString[ToString[ts],{"Base64","Real64"}]
 ts[dat_,FsKHz_]:=Transpose[{Range[0,Length[dat]-1]/FsKHz,polarity[dat]*dat}]
 
 
-Options[PlotEvents]={AnalysisAlgorithm->"StepResponseAnalysis"};
-PlotEvents[dbname_,FsKHz_,OptionsPattern[]]:=Module[{q},
+GetAnalysisAlgorithm[db_]:=First[Flatten[QueryDB[db, "select processingAlgorithm from analysisinfo"]]]
+
+
+(* ::Text:: *)
+(*Options[PlotEvents] = {AnalysisAlgorithm -> "StepResponseAnalysis"};*)
+(*PlotEvents[dbname_, FsKHz_, OptionsPattern[]] := Module[{q},*)
+(*   q = QueryDB[dbname, "select ProcessingStatus, BlockedCurrent, OpenChCurrent, EventStart, EventEnd, RCConstant, TimeSeries from metadata"];*)
+(*   Manipulate[plotsra[q[[i]][[1]], ts[q[[i]][[-1]], FsKHz], q[[i]][[2 ;; -2]] , FsKHz], {i, 1, Length[q], 1, Appearance -> "Open"}]*)
+(*   ] /; OptionValue[AnalysisAlgorithm] == "StepResponseAnalysis"*)
+(*PlotEvents[dbname_, FsKHz_, OptionsPattern[]] := Module[{q},*)
+(*   q = QueryDB[dbname, "select ProcessingStatus, OpenChCurrent, CurrentStep, EventDelay, RCConstant, TimeSeries from metadata"];*)
+(*   Manipulate[plotmsa[q[[i]][[1]], ts[q[[i]][[-1]], FsKHz], {q[[i]][[2]], q[[i]][[3]], q[[i]][[4]], q[[i]][[5]]}, FsKHz], {i, 1, Length[q], 1, Appearance -> "Open"}]*)
+(*   ] /; OptionValue[AnalysisAlgorithm] == "MultiStateAnalysis"*)
+
+
+PlotEvents[dbname_,FsKHz_]:=Module[{q},
 q=QueryDB[dbname, "select ProcessingStatus, BlockedCurrent, OpenChCurrent, EventStart, EventEnd, RCConstant, TimeSeries from metadata"];
 Manipulate[plotsra[q[[i]][[1]], ts[q[[i]][[-1]],FsKHz],q[[i]][[2;;-2]] ,FsKHz],{i,1,Length[q],1,Appearance->"Open"}]
-]/;OptionValue[AnalysisAlgorithm]=="StepResponseAnalysis"
-PlotEvents[dbname_,FsKHz_,OptionsPattern[]]:=Module[{q},
+]/;GetAnalysisAlgorithm[dbname]=="stepResponseAnalysis"
+PlotEvents[dbname_,FsKHz_]:=Module[{q},
 q=QueryDB[dbname,"select ProcessingStatus, OpenChCurrent, CurrentStep, EventDelay, RCConstant, TimeSeries from metadata"];
 Manipulate[plotmsa[q[[i]][[1]], ts[q[[i]][[-1]],FsKHz], {q[[i]][[2]],q[[i]][[3]],q[[i]][[4]],q[[i]][[5]]},FsKHz],{i,1,Length[q],1,Appearance->"Open"}]
-]/;OptionValue[AnalysisAlgorithm]=="MultiStateAnalysis"
+]/;GetAnalysisAlgorithm[dbname]=="multiStateAnalysis"
 
 
 (* ::Input:: *)
