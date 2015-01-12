@@ -15,6 +15,39 @@ Upon successfully fitting the model to an event, :py:class:`~mosaic.multiStateAn
    :width: 50 %
    :align: center
 
-.. sourcecode:: python
 
-	[recIDX, ProcessingStatus, OpenChCurrent, NStates, CurrentStep, BlockDepth, EventStart, EventEnd, EventDelay, ResTime, RCConstant, AbsEventStart, ReducedChiSquared, TimeSeries]
+.. tabularcolumns:: |p{4cm}|p{4cm}|p{6cm}|
+
++-------------------+-----------------+---------------------------------+
+|  **Column Name**  | **Column Type** | **Description**                 |
++===================+=================+=================================+
+| recIDX            | INTEGER         | Record index.                   |
+|                   |                 |                                 |
+| ProcessingStatus  | TEXT            | Status of the analysis.         |
+|                   |                 |                                 |
+| OpenChCurrent     | REAL            | Open channel current in pA.     |
+|                   |                 |                                 |
+| NStates           | INTEGER         | Number of detected states.      |
+|                   |                 |                                 |
+| CurrentStep       | REAL_LIST       | Blocked current steps in pA.    |
+|                   |                 |                                 |
+| BlockDepth        | REAL_LIST       | BlockedCurrent/OpenChCurrent    |
+|                   |                 | for each state.                 |
+|                   |                 |                                 |
+| EventStart        | REAL            | Event start in ms.              |
+|                   |                 |                                 |
+| EventEnd          | REAL            | Event end in ms.                |
+|                   |                 |                                 |
+| EventDelay        | REAL_LIST       | Start time of each state in ms. |
+|                   |                 |                                 |
+|                   |                 |                                 |
+| ResTime           | REAL            | EventEnd-EventStart in ms.      |
+|                   |                 |                                 |
+| RCConstant        | REAL            | System RC constant in ms.       |
+|                   |                 |                                 |
+| AbsEventStart     | REAL            | Global event start time in ms.  |
+|                   |                 |                                 |
+| ReducedChiSquared | REAL            | Reduced Chi-squared of fit.     |
+|                   |                 |                                 |
+| TimeSeries        | REAL_LIST       | (OPTIONAL) Event time-series.   |
++-------------------+-----------------+---------------------------------+
