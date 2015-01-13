@@ -102,7 +102,7 @@ def main():
 
     exclude = sum([glob(x) for x in EXCLUDE], [])
     full_exclude = [join(os.getcwd(), f) for f in exclude]
-    root_pages=['index.offline.html', 'platforms.html']
+    root_pages=['index.html', 'platforms.html']
 
     out = open(os.getcwd() + os.sep + SITEMAP_FILENAME, 'w')
 
