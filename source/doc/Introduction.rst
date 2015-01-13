@@ -1,3 +1,5 @@
+.. _introduction-page:
+
 Introduction
 =================================
 
@@ -44,17 +46,7 @@ where :math:`\alpha=(1/\Delta R_p +C_m)V_a` and :math:`\tau=(R_{cis}+R_{trans})(
 .. math::
 	i(t)=-\frac{\alpha}{\tau^2}exp(-t/\tau)+i_0, t>0,
 
-where :math:`i_0` is the open channel current offset.  The equation for i(t) suggests that the experimentally observed RC time constant (:math:`\tau`) is characteristic of the molecule interacting with the pore and related to the molecule’s physical properties (e.g., volume, charge, etc.)  :cite:`Reiner:2010kv,Balijepalli:2013gt`. The equation above then provides the basis for practical single molecule analysis as seen at the top of this page :cite:`Balijepalli:2014ft`.
-
-
-Implementation in |projname|
----------------------------------------------
-
-The general technique outlined above is implemented in |projname| using two separate algorithms, i) StepResponseAnalysis is used for events that exhibit a single state, and ii) MultistateAnalysis for *N*-state events. 
-
-.. include:: ../doc/stepResponse.rst
-
-.. include:: ../doc/multiState.rst
+where :math:`i_0` is the open channel current offset.  The equation for i(t) suggests that the experimentally observed RC time constant (:math:`\tau`) is characteristic of the molecule interacting with the pore and related to the molecule’s physical properties (e.g., volume, charge, etc.)  :cite:`Reiner:2010kv,Balijepalli:2013gt`. The equation above then provides the basis for practical single molecule analysis as seen at the top of this page :cite:`Balijepalli:2014ft`. Practical implementations of these techniques are described in :ref:`algorithms-page`.
 
 
 .. include:: ../aliases.rst

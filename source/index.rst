@@ -34,6 +34,7 @@ Nanometer-scale pores have demonstrated potential use in biotechnology applicati
 
    doc/Introduction
    doc/GettingStarted
+   doc/Algorithms
    doc/GraphicalInterface
    doc/ScriptingandAdvancedFeatures
    doc/settingsFile
