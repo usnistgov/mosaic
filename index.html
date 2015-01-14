@@ -133,6 +133,7 @@
 	
 	<script>
 		$('#download').click( function() {
+			_gaq.push(['_trackEvent', 'Downloads', 'Downloaded'])
 			window.location.href =  downloadURL()
 		} );
 		$('#downloadsource').click( function() {
