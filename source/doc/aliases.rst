@@ -13,7 +13,7 @@
 .. _Mathematica: http://www.wolfram.com/mathematica/
 .. _MATLAB: http://www.mathworks.com/products/matlab/
 .. _IGOR: http://www.wavemetrics.com/products/igorpro/igorpro.htm
-.. _SQL.xop: http://www.wavemetrics.com/products/igorpro/dataaccess/sql.htm
+.. _SQL XOP:  http://www.wavemetrics.com/products/igorpro/dataaccess/sql.htm
 .. _ODBC Administrator: http://support.apple.com/kb/DL895
 .. _SQLite driver for IGOR: http://www.ch-werner.de/sqliteodbc/
 .. _Homebrew: http://brew.sh/

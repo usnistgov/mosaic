@@ -8,13 +8,13 @@ Data extraction in IGOR_ is a work in progress, but a number of users have found
 Activating SQL database access in IGOR
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Database functionality in IGOR is preloaded, but not activated for use in the standard installation of SQL.xop_.  To activate this feature follow the instructions detailed in "Igor Pro Folder/More Extensions/utilities/SQL Help.ihf".  The next few steps are reproduced from the IGOR_ instructions.   First, activate the  step in the activation process is open the folder, "Igor Pro Folder/More Extensions/utilities" and create an alias for SQL.xop_.  Then move the alias to "Igor Pro/Igor Extensions" or a similar folder that is in the search folder for IGOR_.  It may be necessary to delete the "alias" text from the file name for functionality.  Restart IGOR_ to activate.
+Database functionality in IGOR is preloaded, but not activated for use in the standard installation of `SQL XOP`_.  To activate this feature follow the instructions detailed in "Igor Pro Folder/More Extensions/utilities/SQL Help.ihf".  The next few steps are reproduced from the IGOR_ instructions.   First, activate the  step in the activation process is open the folder, "Igor Pro Folder/More Extensions/utilities" and create an alias for SQL.xop_.  Then move the alias to "Igor Pro/Igor Extensions" or a similar folder that is in the search folder for IGOR_.  It may be necessary to delete the "alias" text from the file name for functionality.  Restart IGOR_ to activate.
 
 IGOR_ relies on an external ODBC driver for database access.  Depending on the operating system, it may be necessary to install a stand alone ODBC driver administrator package. First check your machine for the `ODBC administrator.app` in the `~/Applications/Utilities` folder.  If not present `ODBC administrator`_ can be downloaded directly from the Apple support pages.  To test the functionality, it is useful to follow the *Installing MySQL ODBC Driver...* instructions on the IGOR_ help page.  The MySQL drivers are not necessary for functionally within |projname|.
 
 With the ODBC administrator program installed, the next step is to install the `SQLite driver for IGOR`_ necessary to interface with the database.  Once downloaded run the installation package in "sqlite3-odbc-0.93.dmg" and follow the setup instructions within the disk image.  The driver should be ready to use within IGOR_.
 
-Running and Query in IGOR
+Simple database Queery in IGOR
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 IGOR_ operates on databases with a single High Level operation command.  This one command handles the database connection, query, export of data and closing of the database in one simple function or macro.  To access this functionality, first open the procedure window and create the following function:
