@@ -1,0 +1,13 @@
+#!/bin/sh
+
+plat=`uname -s`
+
+if [ $plat=='Darwin' ]; then
+	SQLCMD='myodbc-installer -d -a -n "SQLite3 Driver" -t "DRIVER=/usr/lib/libsqlite3odbc-0.93.dylib;SETUP=/usr/lib/libsqlite3odbc-0.93.dylib"'
+	eval "$SQLCMD"
+elif [ $plat=='Linux' ]; then
+	echo "Platform not supported"
+fi
+
+echo "Installed IGOR addons"
+

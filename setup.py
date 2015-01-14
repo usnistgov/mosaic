@@ -44,12 +44,15 @@ class mosaicDependencies(Command):
 
 class mosaicAddons(Command):
     description = "install MOSAIC addons (Mathematica, Igor and Matlab scripts)."
-    user_options = [ ('mathematica', None, "install Mathematica scripts"),
-                     ('all', None, "install all scripts"),
+    user_options = [ 
+                    ('mathematica', None, "install Mathematica scripts"),
+                    ('igor', None, "install IGOR SQLite drivers"),
+                    ('all', None, "install all scripts"),
                     ]
 
     def initialize_options(self):
         self.mathematica = 0
+        self.igor = 0
         self.all = 0
 
     def finalize_options(self):
@@ -58,8 +61,11 @@ class mosaicAddons(Command):
     def run(self):
         if self.mathematica:
             os.system('sh .scripts/install-addons-sh ')
+        elif self.igor:
+            os.system( 'sh .scripts/install-igor-addons-sh' )
         else:
             os.system('sh .scripts/install-addons-sh ')
+            os.system( 'sh .scripts/install-igor-addons-sh' )
 
 class mosaicDocs(Command):
     description = "build MOSAIC documentation."
