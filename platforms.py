@@ -24,6 +24,8 @@ def GenerateHeader():
 		
 		<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 		<script src="utils.js"></script>		
+		<script type="text/javascript" id="_fed_an_js_tag" src="//www.nist.gov/js/federated-analytics.all.min.js?agency=NIST&subagency=github&pua=UA-42404149-54&yt=true&exts=ppsx,pps,f90,sch,rtf,wrl,txz,m1v,xlsm,msi,xsd,f,tif,eps,mpg,xml,pl,xlt,c">
+		</script>	
 	</head>
 	
 	<body>
