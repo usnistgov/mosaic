@@ -133,7 +133,10 @@
 	
 	<script>
 		$('#download').click( function() {
-			_gaq.push(['_trackEvent', 'Downloads', 'Downloaded'])
+			_gas.push(['_gasTrackDownloads', {
+    					category: 'File Downloads',
+					extensions: 'zip,dmg,gz'
+				}]);
 			window.location.href =  downloadURL()
 		} );
 		$('#downloadsource').click( function() {
