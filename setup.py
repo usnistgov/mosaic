@@ -136,6 +136,15 @@ setup(
             '.scripts/build-deps-sh', 
             '.scripts/pyinstaller-sh'
             ],
+    install_requires=[
+          'numpy==1.8.1',
+          'cython==0.20.1',
+          'scipy==0.15.0',
+          'matplotlib==1.3.1',
+          'lmfit==0.7.4',
+          'uncertainties==2.4.6',
+          'PyWavelets==0.2.2',
+      ],
     url='http://pypi.python.org/pypi/mosaic-nist/',
     license='LICENSE.txt',
     description='A Modular Single-Molecule Analysis Interface.',
