@@ -133,10 +133,6 @@
 	
 	<script>
 		$('#download').click( function() {
-			$('#download a.downloadurl').click(function() {
- 				ga('send', 'event', 'download', 'click', downloadurl());
-			});
-			
 			window.location.href =  downloadurl()
 		} );
 		$('#downloadsource').click( function() {
