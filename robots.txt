@@ -1,1 +1,1 @@
-Sitemap: https://usnistgov.github.io/mosaic/html/sitemap.xml
+Sitemap: https://usnistgov.github.io/mosaic/sitemap.xml
