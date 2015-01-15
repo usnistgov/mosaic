@@ -3,6 +3,15 @@
 plat=`uname -s`
 
 if [ $plat=='Darwin' ]; then
+	volprefix="/Volumes/"
+	volname=`diskutil info / | grep "Volume Name:" | awk -F "Volume Name:        " '{print $2}' | sed 's/^ *//'`
+	
+	curl -o ./sqlite3-odbc-0.93.dmg http://www.ch-werner.de/sqliteodbc/sqlite3-odbc-0.93.dmg
+	hdiutil mount sqlite3-odbc-0.93.dmg 
+	sudo installer -package /Volumes/sqlite3-odbc-0.93/sqlite3odbc0.93.pkg -target "$volprefix$volname"
+	hdiutil unmount /Volumes/sqlite3-odbc-0.93/
+	rm ./sqlite3-odbc-0.93.dmg
+
 	SQLCMD='myodbc-installer -d -a -n "SQLite3 Driver" -t "DRIVER=/usr/lib/libsqlite3odbc-0.93.dylib;SETUP=/usr/lib/libsqlite3odbc-0.93.dylib"'
 	eval "$SQLCMD"
 elif [ $plat=='Linux' ]; then
