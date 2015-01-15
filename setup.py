@@ -44,12 +44,15 @@ class mosaicDependencies(Command):
 
 class mosaicAddons(Command):
     description = "install MOSAIC addons (Mathematica, Igor and Matlab scripts)."
-    user_options = [ ('mathematica', None, "install Mathematica scripts"),
-                     ('all', None, "install all scripts"),
+    user_options = [ 
+                    ('mathematica', None, "install Mathematica scripts"),
+                    ('igor', None, "install IGOR SQLite drivers"),
+                    ('all', None, "install all scripts"),
                     ]
 
     def initialize_options(self):
         self.mathematica = 0
+        self.igor = 0
         self.all = 0
 
     def finalize_options(self):
@@ -58,8 +61,11 @@ class mosaicAddons(Command):
     def run(self):
         if self.mathematica:
             os.system('sh .scripts/install-addons-sh ')
+        elif self.igor:
+            os.system( 'sh .scripts/install-igor-addons-sh' )
         else:
             os.system('sh .scripts/install-addons-sh ')
+            os.system( 'sh .scripts/install-igor-addons-sh' )
 
 class mosaicDocs(Command):
     description = "build MOSAIC documentation."
@@ -130,6 +136,15 @@ setup(
             '.scripts/build-deps-sh', 
             '.scripts/pyinstaller-sh'
             ],
+    install_requires=[
+          'numpy==1.8.1',
+          'cython==0.20.1',
+          'scipy==0.15.0',
+          'matplotlib==1.3.1',
+          'lmfit==0.7.4',
+          'uncertainties==2.4.6',
+          'PyWavelets==0.2.2',
+      ],
     url='http://pypi.python.org/pypi/mosaic-nist/',
     license='LICENSE.txt',
     description='A Modular Single-Molecule Analysis Interface.',
