@@ -133,11 +133,9 @@
 	
 	<script>
 		$('#download').click( function() {
-			_gas.push(['_gasTrackDownloads', {
-    					category: 'File Downloads',
-					extensions: 'zip,dmg,gz'
-				}]);
-			window.location.href =  downloadURL()
+			url=downloadurl();
+			ga('send', 'event', 'download', 'click', url);
+			window.location.href =  url
 		} );
 		$('#downloadsource').click( function() {
 			window.location.href =  sourceURL()
