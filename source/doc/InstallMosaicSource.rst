@@ -11,7 +11,7 @@ When installed in this manner, in addition to the dependencies noted above, you 
 
 .. code-block:: console
 
-	pip install numpy==1.8.1 cython==0.20.1 scipy==0.14.0 matplotlib==1.3.1 lmfit==0.7.4 uncertainties==2.4.6 PyWavelets==0.2.2
+	pip install numpy==1.8.1 cython==0.20.1 scipy==0.15.0 matplotlib==1.3.1 lmfit==0.7.4 uncertainties==2.4.6 PyWavelets==0.2.2
 
 
 **Install from a Downloaded Source Distribution**
