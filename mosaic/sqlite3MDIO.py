@@ -283,6 +283,8 @@ class sqlite3MDIO(metaMDIO.metaMDIO):
 			# create a table to store a list of processed data filenames
 			c.execute("create table processedfiles ( \
 					filename TEXT, \
+					fileformat TEXT, \
+					modifiedtime TEXT, \
 					recIDX INTEGER PRIMARY KEY AUTOINCREMENT \
 				)")
 
