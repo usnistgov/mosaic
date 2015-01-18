@@ -11,6 +11,16 @@ Nanometer-scale pores have demonstrated potential use in biotechnology applicati
 A. Balijepalli, J., Ettedgui, A. T. Cornio, J. W. F. Robertson K. P. Cheung, J. J. Kasianowicz & C. Vaz, "`Quantifying Short-Lived Events in Multistate Ionic Current Measurements. <http://pubs.acs.org/doi/abs/10.1021/nn405761y>`_" *ACS Nano* 2014, **8**, 1547–1553.
 
 
+Installation
+=================================
+
+Please refer to the `Installation <https://usnistgov.github.io/mosaic/html/doc/GettingStarted.html>`_ section of the MOSAIC documentation for details on installation.
+
+
+Getting Help and Reporting Problems
+=================================
+
+You can `contact MOSAIC developers <http://www.nist.gov/cgi-bin/wwwph/cso.nist.gov?Query=Arvind+Balijepalli>`_  for help or report problems using our `issue tracker <https://github.com/usnistgov/mosaic/issues>`_.
 
 Change Log
 =================================
@@ -23,6 +33,7 @@ Change Log
 - The number of states is saved to the MDIO DB for multistate analysis (issue #26).
 - Created a new package on PyPI (mosaic-nist) to allow installation with setuptools.
 - [GUI] Updated help link to point to Sphinx documentation on Github.
+- *Known Issues:* See #8 and #10 
 
 **v1.0b3.2**
 
