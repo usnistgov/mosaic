@@ -3,6 +3,13 @@
 Change Log
 =================================
 
+**v1.1**
+
+- [Addons] IGOR_ support.
+- PyPi package automatically installs MOSAIC dependencies.
+- Miscellaneous bug fixes.
+- *Known Issues:* See #8 and #10.
+
 **v1.0**
 
 - Fixed a bug in multistate code that constrained the RC constant resulting in systematic fitting errors (pull request #25).
@@ -11,6 +18,7 @@ Change Log
 - The number of states is saved to the MDIO DB for multistate analysis (issue #26).
 - Created a new package on PyPI (mosaic-nist) to allow installation with setuptools.
 - [GUI] Updated help link to point to Sphinx documentation on Github.
+- *Known Issues:* See #8 and #10. 
 
 **v1.0b3.2**
 
@@ -25,7 +33,6 @@ Change Log
 - Analysis information such as alogirthms used, data type, etc. are now stored within a MDIO database.
 - [GUI] Autocomplete in mosaicgui only suggests database columns that are valid when used in a query.
 - Reorganized Mathematica_ addon code.
-
 
 **v1.0b3**
 
