@@ -6,6 +6,7 @@
 	:License:	See LICENSE.TXT	
 	:ChangeLog:
 	.. line-block::
+		1/17/15 	AB 	Store names of processed files in an array.
 		8/22/14 	AB 	Setup a new property ('LastDataFile') that tracks the current
 						data file being processed.
 		5/27/14		AB 	Added dcOffset kwarg to initialization to allow 
@@ -146,6 +147,10 @@ class metaTrajIO(object):
 		self.gloabDataIndex=0
 
 		self.initPipe=False
+
+		# A list that holds the names of processed files.
+		self.processedFilenames=[]
+
 
 		# Call sub-class init
 		self._init(**kwargs)
@@ -322,6 +327,9 @@ class metaTrajIO(object):
 			self.currDataPipe=np.hstack((self.currDataPipe, self.dataFilterObj.filteredData ))
 		else:
 			self.currDataPipe=np.hstack((self.currDataPipe, data ))
+
+		# store processed filenames
+		self.processedFilenames.extend(fname)
 		
 	@abstractmethod
 	def _formatsettings(self):
