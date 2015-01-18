@@ -17,6 +17,7 @@
 """
 from abc import ABCMeta, abstractmethod
 import glob
+import os
 import numpy as np
 
 import settings
@@ -339,7 +340,7 @@ class metaTrajIO(object):
 
 		# store processed filenames
 		for f in fname:
-			self.processedFilenames.extend([f, self.fileFormat, os.path.getmtime(f)])
+			self.processedFilenames.extend([[f, self.fileFormat, os.path.getmtime(f)]])
 		
 	@abstractmethod
 	def _formatsettings(self):

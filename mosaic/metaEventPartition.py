@@ -211,7 +211,7 @@ class metaEventPartition(object):
 		self._writeoutputlog()
 	
 		# Write the list of processed files to the database
-		[ self.mdioDBHnd.writeRecord([f], table='processedfiles') for f in self.trajDataObj.ProcessedFiles ]
+		[ self.mdioDBHnd.writeRecord(f, table='processedfiles') for f in self.trajDataObj.ProcessedFiles ]
 
 
 		self.logFileHnd.write(self.outputString)
