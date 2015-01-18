@@ -191,6 +191,15 @@ class metaTrajIO(object):
 		"""
 		return self.currentFilename
 
+	@property 
+	def ProcessedFiles(self):
+		"""
+			.. important:: |property|
+
+			Return a list of processed data filenames.
+		"""
+		return self.processedFilenames
+
 	def popdata(self, n):
 		"""
 			Pop data points from self.currDataPipe. This function uses recursion 
