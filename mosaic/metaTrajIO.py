@@ -338,7 +338,8 @@ class metaTrajIO(object):
 			self.currDataPipe=np.hstack((self.currDataPipe, data ))
 
 		# store processed filenames
-		self.processedFilenames.extend(fname)
+		for f in fname:
+			self.processedFilenames.extend([f, self.fileFormat, os.path.getmtime(f)])
 		
 	@abstractmethod
 	def _formatsettings(self):
