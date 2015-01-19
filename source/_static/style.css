@@ -1,4 +1,4 @@
-@import url("//fonts.googleapis.com/css?family=Roboto:300,300italic");
+@import url("http://fonts.googleapis.com/css?family=Roboto:300,300italic");
 body {
 	font-family: Roboto, sans-serif;
 	font-weight: 300; 
@@ -58,10 +58,11 @@ p.highlight-mosaic {
 	color: #696969;
 	padding-left: 30px;
 }
-p.blurbhead {
+h2.blurbhead {
     color: #545353;
-    font-size: 28pt;
-    font-size: 2.5vw;
+    font-size: 24pt;
+    font-weight: normal;
+    font-size: 2.25vw;
 }
 p.blurbtext {
     color: #696969;
@@ -95,7 +96,7 @@ div.mosaicinfo {
     float: center;
     width: 100%;    
 }
-h3.download {
+h1.download {
     color: white;
     background-color: #2F378F;
 	border-style: solid;
