@@ -103,14 +103,14 @@ h1.download {
 	border-color: #2F378F;
 	border-radius: 3px;
 	margin: 0;
-	font-size: 14pt;
+	font-size: 16pt;
 /*	font-size: 2vw;*/
 	width: 250px;
 /*	width: 25vw;*/
 	height: 50px;
 /*	height: 5vw;*/
-	padding-top:5px;
-	padding-bottom:10px;
+	padding-top:20px;
+	padding-bottom:0px;
 	box-shadow: 2px 2px 5px #888888;
 }
 table {
