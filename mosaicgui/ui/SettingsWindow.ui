@@ -957,6 +957,7 @@
     <addaction name="actionAdvanced_Settings_Mode"/>
     <addaction name="actionStatistics"/>
     <addaction name="actionAnalysis_Log"/>
+    <addaction name="actionProcessed_Files"/>
     <addaction name="menuPlots"/>
    </widget>
    <addaction name="menuFile"/>
@@ -1071,6 +1072,11 @@
    </property>
    <property name="shortcut">
     <string>Ctrl+Shift+H</string>
+   </property>
+  </action>
+  <action name="actionProcessed_Files">
+   <property name="text">
+    <string>Processed Files</string>
    </property>
   </action>
  </widget>

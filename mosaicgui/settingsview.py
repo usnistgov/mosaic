@@ -24,6 +24,7 @@ import mosaicgui.advancedsettings.advancedsettings
 import mosaicgui.blockdepthview.blockdepthview
 import mosaicgui.statisticsview.statisticsview
 import mosaicgui.consolelog.consolelog
+import mosaicgui.fileview.fileview
 import mosaicgui.fiteventsview.fiteventsview
 import mosaicgui.aboutdialog.aboutdialog
 import mosaicgui.datamodel
@@ -48,6 +49,7 @@ class settingsview(QtGui.QMainWindow):
 		self.trajViewerWindow = mosaicgui.trajview.trajview.TrajectoryWindow(parent=self)
 		self.advancedSettingsDialog = mosaicgui.advancedsettings.advancedsettings.AdvancedSettingsDialog(parent=self)
 		self.consoleLog = mosaicgui.consolelog.consolelog.AnalysisLogDialog(parent=self)
+		self.processedFiles = mosaicgui.fileview.fileview.FileViewWindow(parent=self)
 		self.blockDepthWindow = mosaicgui.blockdepthview.blockdepthview.BlockDepthWindow(parent=self)
 		self.statisticsView = mosaicgui.statisticsview.statisticsview.StatisticsWindow(parent=self)
 		self.fitEventsView = mosaicgui.fiteventsview.fiteventsview.FitEventWindow(parent=self)
@@ -119,6 +121,8 @@ class settingsview(QtGui.QMainWindow):
 		QtCore.QObject.connect(self.actionEvent_Fits, QtCore.SIGNAL('triggered()'), self.OnShowFitEventsViewer)
 		QtCore.QObject.connect(self.actionStatistics, QtCore.SIGNAL('triggered()'), self.OnShowStatisticsWindow)
 		QtCore.QObject.connect(self.actionAnalysis_Log, QtCore.SIGNAL('triggered()'), self.OnShowConsoleLog)
+		QtCore.QObject.connect(self.actionProcessed_Files, QtCore.SIGNAL('triggered()'), self.OnShowProcessedFiles)
+		
 		
 
 		# Help Menu signals
@@ -597,6 +601,10 @@ class settingsview(QtGui.QMainWindow):
 
 	def OnShowConsoleLog(self):
 		self.consoleLog.show()
+
+	def OnShowProcessedFiles(self):
+		self.processedFiles.show()
+
 
 	def OnShowHelp(self):
 		webbrowser.open('http://usnistgov.github.io/mosaic/html/index.html', new=0, autoraise=True)

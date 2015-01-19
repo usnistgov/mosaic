@@ -194,6 +194,17 @@ class sqlite3MDIO(metaMDIO.metaMDIO):
 		except sqlite3.OperationalError, err:
 			raise
 
+	def executeSQL(self, query):
+		try:
+			self.db.commit()
+			c = self.db.cursor()
+			
+			c.execute(str(query))
+
+			return c.fetchall()
+		except sqlite3.OperationalError, err:
+			raise
+
 	def _colnames(self, table=None):
 		if table:
 			tname=table
