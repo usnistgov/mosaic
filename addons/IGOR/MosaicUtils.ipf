@@ -42,13 +42,13 @@ End
 
 Function/S QueryBuilder()
 	
-	string SQ = "select BlockDepth, ResTime from metadata where ProcessingStatus='normal' and ResTime > 0.1 and BlockDepth between 0.05 and .8"
+	string SQ = "select BlockDepth, ResTime from metadata where ProcessingStatus='normal'"
 	prompt SQ, "Search Query"
 	
 	DoPrompt "Enter query action", SQ
 
 	if (V_Flag)
-		return "select BlockDepth, ResTime from metadata where ProcessingStatus='normal' and ResTime > 0.1 and BlockDepth between 0.05 and .8"	// User Canceled
+		return "select BlockDepth, ResTime from metadata where ProcessingStatus='normal' and ResTime > 0.1 and BlockDepth between 0.05 and .8 limit 100"	// User Canceled
 	endif
 	
 	Print "Query Statement  =  ",SQ
@@ -62,7 +62,7 @@ Function/S BuildConnectionString()
 	String DriverString = "DRIVER={SQLite3 Driver}"
 	String DatabaseString = DoOpenFileDialog()
 	
-	connectionString = DriverString+";"+"DATABASE=/"+DatabaseString+";"
+	connectionString = DriverString+";"+"DATABASE="+DatabaseString+";"
 	print connectionString
 	return connectionString
 
@@ -83,9 +83,8 @@ Function/S DoOpenFileDialog()
 	variable test = cmpstr (platform, "MACINTOSH")
 	if (test== 0)
 		outputPath = ReplaceString(":", outputPath,"/")
-		outputPath = ReplaceString("Macintosh HD", outputPath,"")
-	else
-		
+		outputPath = "/Volumes/"+outputPath
+		//outputPath = ReplaceString("Macintosh HD", outputPath,"Macintosh HD")
 	endif
 	
 	return outputPath // Will be empty if user canceled
