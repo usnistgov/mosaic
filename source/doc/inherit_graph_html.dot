@@ -1,7 +1,7 @@
 digraph "Graphical Class Hierarchy"
 {
   graph [ dpi = 300 ];
-  size="7,5.75";
+  size="2,1.75";
   ratio="fill";
   edge [fontname="Helvetica",fontsize="20",labelfontname="Helvetica",labelfontsize="20"];
   node [fontname="Helvetica",fontsize="20",shape=record];

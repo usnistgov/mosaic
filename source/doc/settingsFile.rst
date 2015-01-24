@@ -48,6 +48,127 @@ Finally, :class:`~mosaic.stepResponseAnalysis` is initialized by defining class 
 		raise commonExceptions.SettingsTypeError( err )
 
 
+.. _algorithm-settings-sec:
+
+Optimizing Settings
+---------------------------------------------
+
+|projname| classes are controlled through the JSON_ settings files as defined above. In most cases, running |projname| through the GUI (see :ref:`gui-page`) should generate satisfactory results. However, settings can be further optimized either by editing a file named ``.settings`` stored within the data directory, or by clicking on the ``Advanced Settings`` check-box in the :ref:`Analysis-Setup` section of the GUI.
+
+
+.. _eventseg-settings-sec:
+
+Initial Event Detection (:class:`~mosaic.eventSegment.eventSegment`)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+The first step when analyzing an ionic-current time series is to perform a quick partition to identify events. This is accomplished by overriding the :class:`~mosaic.eventPartition.eventPartition` class. Currently, the only implementation of event partitioning is the :class:`~mosaic.eventSegment.eventSegment` algorithm. This algorithm uses a thresholding technique to detect the start and end of an event. When an event is detected the ionic current time-series associated with that event is passed to a processing algorithm for fitting. Settings that can be passed to :class:`~mosaic.eventSegment.eventSegment` are given below followed by their descriptions.
+
+
+.. sourcecode:: javascript
+
+
+	"eventSegment" : {
+		"blockSizeSec" 			: "0.5",
+		"eventPad" 			: "50",
+		"minEventLength" 		: "5",
+		"eventThreshold" 		: "6.0",
+		"driftThreshold" 		: "999.0",
+		"maxDriftRate" 			: "999.0",
+		"meanOpenCurr"			: "-1",
+		"sdOpenCurr"			: "-1",
+		"slopeOpenCurr"			: "-1",
+		"writeEventTS"			: "1",
+		"parallelProc"			: "0",
+		"reserveNCPU"			: "2"
+	}
+
+
+.. tabularcolumns:: p{4cm}p{12cm}
+
++-------------------+----------------------------------------------------------------------------------------+
+|  **Setting**      | **Description**                                                                        |
++===================+========================================================================================+
+| blockSizeSec      | Time-series length (in sec) for block operations.                                      |
+|                   |                                                                                        |
+| eventPad          | Pad an event with the specified number of points.                                      |
+|                   |                                                                                        | 
+| minEventLength    | Discard events with fewer than the specfied points.                                    |
+|                   |                                                                                        | 
+| eventThreshold    | Event detection threshold.                                                             |
+|                   |                                                                                        | 
+| meanOpenCurr      | Set the mean open channel current (i0) in pA. -1 computes i0 automatically.            |
+|                   |                                                                                        | 
+| sdOpenCurr        | Set the open channel std. dev. in pA. -1 computes SD automatically.                    |
+|                   |                                                                                        | 
+| slopeOpenCurr     | Set the open channel drift in pA/ms. -1 automatically computes the slope.              |
+|                   |                                                                                        | 
+| driftThreshold    | Aborts the analysis when the open channel drift exceeds the specified value.           |
+|                   |                                                                                        | 
+| maxDriftRate      | Aborts the analysis when the open channel slope exceeds the specified value (pA/ms).   |
+|                   |                                                                                        | 
+| writeEventTS      | Write the event time-series to the output database.                                    |
+|                   |                                                                                        | 
+| parallelProc      | Enable parallel processing.                                                            |
+|                   |                                                                                        | 
+| reserveNCPU       | Use N-reserveNCPU for parallel processing.                                             |
+|                   |                                                                                        | 
++-------------------+----------------------------------------------------------------------------------------+
+
+
+.. _stepresp-settings-sec:
+
+Two-State Identification  (:class:`~mosaic.stepResponseAnalysis.stepResponseAnalysis`)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Once the time-series is partitioned, individual events are processed by a processing algorithm. For simple event patterns (e.g. homopolymers of DNA, PEG, etc.), one can use the :ref:`stepresponse-page` algorithm. Settings that can be passed to this algorithm are below, followed by their descriptions. For a vast majority of cases, the settings below can be used without modification.
+
+.. sourcecode:: javascript
+
+	"stepResponseAnalysis" : {
+		"FitTol"			: "1.e-7",
+		"FitIters"			: "50000"
+	}
+
+.. tabularcolumns:: p{4cm}p{12cm}
+
++-------------------+----------------------------------------------------------------------------------------+
+|  **Setting**      | **Description**                                                                        |
++===================+========================================================================================+
+| FitTol            | Controls the convergence criteria for the least squares fitting algorithm.             |
+|                   |                                                                                        |
+| FitIters          | Maximum iterations passed to the least squares fitting algorithm.                      |
+|                   |                                                                                        | 
++-------------------+----------------------------------------------------------------------------------------|  
+
+
+Multi-State Identification  (:class:`~mosaic.multiStateAnalysis.multiStateAnalysis`)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+For more complex signals with multiple states, the :ref:`multistate-page` algorithm yields better results. The settings passed to this algorithm (described below) are largely similar to :ref:`stepresp-settings-sec`. 
+
+.. sourcecode:: javascript
+	:emphasize-lines: 4
+
+	"multiStateAnalysis" : {
+		"FitTol"			: "1.e-7",
+		"FitIters"			: "50000",
+		"InitThreshold"			: "3.0"
+	}
+
+.. tabularcolumns:: p{4cm}p{12cm}
+
++-------------------+----------------------------------------------------------------------------------------+
+|  **Setting**      | **Description**                                                                        |
++===================+========================================================================================+
+| FitTol            | Controls the convergence criteria for the least squares fitting algorithm.             |
+|                   |                                                                                        |
+| FitIters          | Maximum iterations passed to the least squares fitting algorithm.                      |
+|                   |                                                                                        | 
+| InitThreshold     | Threshold used to identify the states in a multi-state event.                          |
+|                   |                                                                                        | 
++-------------------+----------------------------------------------------------------------------------------|  
+
+.. hint:: The parameter ``InitThreshold`` is used for preliminary state identification within multi-state events. As a rule of thumb, this value should be set to roughly half that of ``eventThreshold`` in the :ref:`eventseg-settings-sec` section. However, the final value may be adjusted further for optimal results.
 
 Default Settings
 ---------------------------------------------
@@ -79,13 +200,12 @@ Default Settings
 		},
 		"stepResponseAnalysis" : {
 			"FitTol"			: "1.e-7",
-			"FitIters"			: "50000",
-			"BlockRejectRatio"		: "0.9"
+			"FitIters"			: "50000"
 		},
 		"multiStateAnalysis" : {
 			"FitTol"			: "1.e-7",
 			"FitIters"			: "50000",
-			"InitThreshold"			: "5.0"
+			"InitThreshold"			: "3.0"
 		},
 		"besselLowpassFilter" : {
 			"filterOrder"			: "6",

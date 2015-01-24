@@ -9,7 +9,7 @@ The multistate algorithm implements the  general case for identifying states in 
     i(t)=i_0 + \sum_{j=1}^{N} a_j\left(1-e^{-\left(t-\mu_j\right)/\tau_j}\right) H\left(t-\mu_j\right)
 
 
-Upon successfully fitting the model to an event, :py:class:`~mosaic.multiStateAnalysis.multiStateAnalysis` generates meta-data the describes the individual states in the event. A representative example of one such event is shown in the figure below.
+Settings that control the fit are defined through the settings file and are described in more detail in the :ref:`algorithm-settings-sec` section. Upon successfully fitting the model to an event, :py:class:`~mosaic.multiStateAnalysis.multiStateAnalysis` generates meta-data the describes the individual states in the event. A representative example of one such event is shown in the figure below.
 
 .. figure:: ../images/Multistate.png
    :width: 50 %
@@ -17,8 +17,7 @@ Upon successfully fitting the model to an event, :py:class:`~mosaic.multiStateAn
 
 The :py:class:`~mosaic.multiStateAnalysis.multiStateAnalysis` algorithm outputs meta-data that characterizes every processed event. Similar to the :ref:`stepresponse-page` algorithm, this information is stored in a SQLite_ database and is available for further processing (see :ref:`database-page`). Notably, the data output by :py:class:`~mosaic.multiStateAnalysis.multiStateAnalysis` differs from :py:class:`~mosaic.stepResponseAnalysis.stepResponseAnalysis` in one important way. Because the number of states (*NStates*) detected in each event is not pre-determined, key meta-data (e.g. *BlockDepth*, *EventDelay*, etc.) are stored as arrays of real numbers with length equal to *NStates*. 
 
-
-.. tabularcolumns:: |p{4cm}|p{4cm}|p{8cm}|
+.. tabularcolumns:: p{4cm}p{4cm}p{8cm}
 
 +-------------------+-----------------+------------------------------------------------+
 |  **Column Name**  | **Column Type** | **Description**                                |
