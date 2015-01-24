@@ -91,13 +91,12 @@ __settings__="""
 		},
 		"stepResponseAnalysis" : {
 			"FitTol"				: "1.e-7",
-			"FitIters"				: "50000",
-			"BlockRejectRatio"		: "0.9"
+			"FitIters"				: "50000"
 		},
 		"multiStateAnalysis" : {
 	                "FitTol"		: "1.e-7",
 	                "FitIters"		: "50000",
-	                "InitThreshold"	: "5.0"
+	                "InitThreshold"	: "3.0"
 	        },
 		"besselLowpassFilter" : {
 			"filterOrder"			: "6",

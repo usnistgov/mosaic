@@ -8,7 +8,7 @@ Nanometer-scale pores have demonstrated potential use in biotechnology applicati
 
 **If you use MOSAIC in your work, please cite:**
 
-A. Balijepalli, J., Ettedgui, A. T. Cornio, J. W. F. Robertson K. P. Cheung, J. J. Kasianowicz & C. Vaz, "`Quantifying Short-Lived Events in Multistate Ionic Current Measurements. <http://pubs.acs.org/doi/abs/10.1021/nn405761y>`_" *ACS Nano* 2014, **8**, 1547–1553.
+\A. Balijepalli, J., Ettedgui, A. T. Cornio, J. W. F. Robertson K. P. Cheung, J. J. Kasianowicz & C. Vaz, "`Quantifying Short-Lived Events in Multistate Ionic Current Measurements. <http://pubs.acs.org/doi/abs/10.1021/nn405761y>`_" *ACS Nano* 2014, **8**, 1547–1553.
 
 
 Installation
@@ -24,6 +24,13 @@ You can `contact MOSAIC developers <http://www.nist.gov/cgi-bin/wwwph/cso.nist.g
 
 Change Log
 =================================
+
+**v1.1**
+
+- [Addons] IGOR_ support.
+- PyPi package automatically installs MOSAIC dependencies.
+- Miscellaneous bug fixes.
+- *Known Issues:* See #8 and #10.
 
 **v1.0**
 
