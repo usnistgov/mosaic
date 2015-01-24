@@ -5,7 +5,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>mosaic.SingleChannelAnalysis &mdash; MOSAIC 1.0 documentation</title>
+    <title>mosaic.SingleChannelAnalysis &mdash; MOSAIC 1.1 documentation</title>
     
     <link rel="stylesheet" href="../../_static/basic.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
@@ -17,7 +17,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
-        VERSION:     '1.0',
+        VERSION:     '1.1',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -32,7 +32,7 @@
     <script type="text/javascript" src="../../_static/bootstrap-3.2.0/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="../../_static/bootstrap-sphinx.js"></script>
     <link rel="shortcut icon" href="../../_static/favicon.ico"/>
-    <link rel="top" title="MOSAIC 1.0 documentation" href="../../index.html" />
+    <link rel="top" title="MOSAIC 1.1 documentation" href="../../index.html" />
     <link rel="up" title="Module code" href="../index.html" />
 
 <meta charset='utf-8'>
@@ -44,7 +44,7 @@
 		src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
 	</script>
 	<script type="text/javascript" id="_fed_an_js_tag" src="//www.nist.gov/js/federated-analytics.all.min.js?agency=NIST&subagency=github&pua=UA-42404149-54&yt=true&exts=ppsx,pps,f90,sch,rtf,wrl,txz,m1v,xlsm,msi,xsd,f,tif,eps,mpg,xml,pl,xlt,c">
-	</script>
+	</script>	
 
   </head>
   <body>
@@ -60,7 +60,7 @@
         </button>
         <a class="navbar-brand" href="../../index.html"><img src="../../_static/icon_24.png">
            </a>
-        <span class="navbar-text navbar-version pull-left"><b>1.0</b></span>
+        <span class="navbar-text navbar-version pull-left"><b>1.1</b></span>
       </div>
 
         <div class="collapse navbar-collapse nav-collapse">
@@ -81,16 +81,17 @@
       aria-labelledby="dLabelGlobalToc"><ul>
 <li class="toctree-l1"><a class="reference internal" href="../../doc/Introduction.html">1. Introduction</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../doc/GettingStarted.html">2. Getting Started</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../doc/GraphicalInterface.html">3. <em>MOSAIC</em> GUI</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../doc/ScriptingandAdvancedFeatures.html">4. Scripting and Advanced Features</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../doc/settingsFile.html">5. Settings File</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../doc/DatabaseStructure.html">6. Database Structure and Query Syntax</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../doc/Extend.html">7. Extend <em>MOSAIC</em></a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../doc/Addons.html">8. Addons</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../doc/examples.html">9. Examples</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../doc/apidocs.html">10. API Documentation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../doc/ChangeLog.html">11. Change Log</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../doc/References.html">12. Bibliography</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../doc/Algorithms.html">3. Algorithms in <em>MOSAIC</em></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../doc/GraphicalInterface.html">4. <em>MOSAIC</em> GUI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../doc/ScriptingandAdvancedFeatures.html">5. Scripting and Advanced Features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../doc/settingsFile.html">6. Settings File</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../doc/DatabaseStructure.html">7. Database Structure and Query Syntax</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../doc/Extend.html">8. Extend <em>MOSAIC</em></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../doc/Addons.html">9. Addons</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../doc/examples.html">10. Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../doc/apidocs.html">11. API Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../doc/ChangeLog.html">12. Change Log</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../doc/References.html">13. Bibliography</a></li>
 </ul>
 </ul>
 </li>
@@ -235,7 +236,6 @@
   </div>
 </footer> -->
 <div class="footer" style="vertical-align: center" align="center">
-	<small>
 		<table width="95%" style="vertical-align: center">
 			<col width=30%>
 			<col width=70%>
@@ -245,10 +245,9 @@
 					<a href="http://www.nist.gov/cgi-bin/wwwph/cso.nist.gov?Query=Arvind+Balijepalli"><em>Contact</em></a>&nbsp;&nbsp;&nbsp;
 					<a href="../../doc/Disclaimer.html"><em>Terms of Use</em></a>
 				</td>
-				<td align="right"><em>National Institute of Standards and Technology</em></td>
+				<td align="right"><em>National Institute of Standards and Technology (NIST)</em></td>
 			</tr>
 		</table>
-	</small>
 </div>
 
   </body>

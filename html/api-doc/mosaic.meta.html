@@ -5,7 +5,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>10.1.2. Meta-Classes &mdash; MOSAIC 1.0 documentation</title>
+    <title>11.1.2. Meta-Classes &mdash; MOSAIC 1.1 documentation</title>
     
     <link rel="stylesheet" href="../_static/basic.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -17,7 +17,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '1.0',
+        VERSION:     '1.1',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -32,10 +32,10 @@
     <script type="text/javascript" src="../_static/bootstrap-3.2.0/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="../_static/bootstrap-sphinx.js"></script>
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
-    <link rel="top" title="MOSAIC 1.0 documentation" href="../index.html" />
-    <link rel="up" title="10. API Documentation" href="../doc/apidocs.html" />
-    <link rel="next" title="10.1.3. Time-Series IO" href="mosaic.traj.html" />
-    <link rel="prev" title="10.1.1. Top-Level Interfaces" href="mosaic.html" />
+    <link rel="top" title="MOSAIC 1.1 documentation" href="../index.html" />
+    <link rel="up" title="11. API Documentation" href="../doc/apidocs.html" />
+    <link rel="next" title="11.1.3. Time-Series IO" href="mosaic.traj.html" />
+    <link rel="prev" title="11.1.1. Top-Level Interfaces" href="mosaic.html" />
 
 <meta charset='utf-8'>
 <meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
@@ -46,7 +46,7 @@
 		src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
 	</script>
 	<script type="text/javascript" id="_fed_an_js_tag" src="//www.nist.gov/js/federated-analytics.all.min.js?agency=NIST&subagency=github&pua=UA-42404149-54&yt=true&exts=ppsx,pps,f90,sch,rtf,wrl,txz,m1v,xlsm,msi,xsd,f,tif,eps,mpg,xml,pl,xlt,c">
-	</script>
+	</script>	
 
   </head>
   <body>
@@ -62,7 +62,7 @@
         </button>
         <a class="navbar-brand" href="../index.html"><img src="../_static/icon_24.png">
            </a>
-        <span class="navbar-text navbar-version pull-left"><b>1.0</b></span>
+        <span class="navbar-text navbar-version pull-left"><b>1.1</b></span>
       </div>
 
         <div class="collapse navbar-collapse nav-collapse">
@@ -83,16 +83,17 @@
       aria-labelledby="dLabelGlobalToc"><ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../doc/Introduction.html">1. Introduction</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../doc/GettingStarted.html">2. Getting Started</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../doc/GraphicalInterface.html">3. <em>MOSAIC</em> GUI</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../doc/ScriptingandAdvancedFeatures.html">4. Scripting and Advanced Features</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../doc/settingsFile.html">5. Settings File</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../doc/DatabaseStructure.html">6. Database Structure and Query Syntax</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../doc/Extend.html">7. Extend <em>MOSAIC</em></a></li>
-<li class="toctree-l1"><a class="reference internal" href="../doc/Addons.html">8. Addons</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../doc/examples.html">9. Examples</a></li>
-<li class="toctree-l1 current"><a class="reference internal" href="../doc/apidocs.html">10. API Documentation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../doc/ChangeLog.html">11. Change Log</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../doc/References.html">12. Bibliography</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../doc/Algorithms.html">3. Algorithms in <em>MOSAIC</em></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../doc/GraphicalInterface.html">4. <em>MOSAIC</em> GUI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../doc/ScriptingandAdvancedFeatures.html">5. Scripting and Advanced Features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../doc/settingsFile.html">6. Settings File</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../doc/DatabaseStructure.html">7. Database Structure and Query Syntax</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../doc/Extend.html">8. Extend <em>MOSAIC</em></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../doc/Addons.html">9. Addons</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../doc/examples.html">10. Examples</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../doc/apidocs.html">11. API Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../doc/ChangeLog.html">12. Change Log</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../doc/References.html">13. Bibliography</a></li>
 </ul>
 </ul>
 </li>
@@ -125,9 +126,9 @@
     <div class="col-md-12">
       
   <div class="section" id="meta-classes">
-<span id="api-metaclass-page"></span><h1>10.1.2. Meta-Classes<a class="headerlink" href="#meta-classes" title="Permalink to this headline">¶</a></h1>
+<span id="api-metaclass-page"></span><h1>11.1.2. Meta-Classes<a class="headerlink" href="#meta-classes" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="mosaic-metaeventpartition-module">
-<h2>10.1.2.1. mosaic.metaEventPartition module<a class="headerlink" href="#mosaic-metaeventpartition-module" title="Permalink to this headline">¶</a></h2>
+<h2>11.1.2.1. mosaic.metaEventPartition module<a class="headerlink" href="#mosaic-metaeventpartition-module" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="mosaic.metaEventPartition.metaEventPartition">
 <em class="property">class </em><tt class="descclassname">mosaic.metaEventPartition.</tt><tt class="descname">metaEventPartition</tt><big>(</big><em>trajDataObj</em>, <em>eventProcHnd</em>, <em>eventPartitionSettings</em>, <em>eventProcSettings</em>, <em>settingsString</em><big>)</big><a class="reference internal" href="../_modules/mosaic/metaEventPartition.html#metaEventPartition"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mosaic.metaEventPartition.metaEventPartition" title="Permalink to this definition">¶</a></dt>
@@ -254,7 +255,7 @@ current working directory)</p>
 
 </div>
 <div class="section" id="mosaic-metaeventprocessor-module">
-<h2>10.1.2.2. mosaic.metaEventProcessor module<a class="headerlink" href="#mosaic-metaeventprocessor-module" title="Permalink to this headline">¶</a></h2>
+<h2>11.1.2.2. mosaic.metaEventProcessor module<a class="headerlink" href="#mosaic-metaeventprocessor-module" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="mosaic.metaEventProcessor.metaEventProcessor">
 <em class="property">class </em><tt class="descclassname">mosaic.metaEventProcessor.</tt><tt class="descname">metaEventProcessor</tt><big>(</big><em>icurr</em>, <em>Fs</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="../_modules/mosaic/metaEventProcessor.html#metaEventProcessor"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mosaic.metaEventProcessor.metaEventProcessor" title="Permalink to this definition">¶</a></dt>
@@ -391,7 +392,7 @@ The status is assigned to mdProcessingStatus.</p>
 
 </div>
 <div class="section" id="mosaic-metaiofilter-module">
-<h2>10.1.2.3. mosaic.metaIOFilter module<a class="headerlink" href="#mosaic-metaiofilter-module" title="Permalink to this headline">¶</a></h2>
+<h2>11.1.2.3. mosaic.metaIOFilter module<a class="headerlink" href="#mosaic-metaiofilter-module" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="mosaic.metaIOFilter.metaIOFilter">
 <em class="property">class </em><tt class="descclassname">mosaic.metaIOFilter.</tt><tt class="descname">metaIOFilter</tt><big>(</big><em>**kwargs</em><big>)</big><a class="reference internal" href="../_modules/mosaic/metaIOFilter.html#metaIOFilter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mosaic.metaIOFilter.metaIOFilter" title="Permalink to this definition">¶</a></dt>
@@ -484,7 +485,7 @@ function:</p>
 
 </div>
 <div class="section" id="mosaic-metamdio-module">
-<h2>10.1.2.4. mosaic.metaMDIO module<a class="headerlink" href="#mosaic-metamdio-module" title="Permalink to this headline">¶</a></h2>
+<h2>11.1.2.4. mosaic.metaMDIO module<a class="headerlink" href="#mosaic-metamdio-module" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="mosaic.metaMDIO.metaMDIO">
 <em class="property">class </em><tt class="descclassname">mosaic.metaMDIO.</tt><tt class="descname">metaMDIO</tt><a class="reference internal" href="../_modules/mosaic/metaMDIO.html#metaMDIO"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mosaic.metaMDIO.metaMDIO" title="Permalink to this definition">¶</a></dt>
@@ -725,7 +726,7 @@ to writing data to a default table.</p>
 
 </div>
 <div class="section" id="mosaic-metatrajio-module">
-<h2>10.1.2.5. mosaic.metaTrajIO module<a class="headerlink" href="#mosaic-metatrajio-module" title="Permalink to this headline">¶</a></h2>
+<h2>11.1.2.5. mosaic.metaTrajIO module<a class="headerlink" href="#mosaic-metatrajio-module" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="mosaic.metaTrajIO.metaTrajIO">
 <em class="property">class </em><tt class="descclassname">mosaic.metaTrajIO.</tt><tt class="descname">metaTrajIO</tt><big>(</big><em>**kwargs</em><big>)</big><a class="reference internal" href="../_modules/mosaic/metaTrajIO.html#metaTrajIO"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mosaic.metaTrajIO.metaTrajIO" title="Permalink to this definition">¶</a></dt>
@@ -974,7 +975,6 @@ a class property Fs with the sampling frequency in Hz.</p>
   </div>
 </footer> -->
 <div class="footer" style="vertical-align: center" align="center">
-	<small>
 		<table width="95%" style="vertical-align: center">
 			<col width=30%>
 			<col width=70%>
@@ -984,10 +984,9 @@ a class property Fs with the sampling frequency in Hz.</p>
 					<a href="http://www.nist.gov/cgi-bin/wwwph/cso.nist.gov?Query=Arvind+Balijepalli"><em>Contact</em></a>&nbsp;&nbsp;&nbsp;
 					<a href="../doc/Disclaimer.html"><em>Terms of Use</em></a>
 				</td>
-				<td align="right"><em>National Institute of Standards and Technology</em></td>
+				<td align="right"><em>National Institute of Standards and Technology (NIST)</em></td>
 			</tr>
 		</table>
-	</small>
 </div>
 
   </body>

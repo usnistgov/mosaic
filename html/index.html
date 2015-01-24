@@ -5,7 +5,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>MOSAIC: A Modular Single-Molecule Analysis Interface &mdash; MOSAIC 1.0 documentation</title>
+    <title>MOSAIC: A Modular Single-Molecule Analysis Interface &mdash; MOSAIC 1.1 documentation</title>
     
     <link rel="stylesheet" href="_static/basic.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -17,7 +17,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '1.0',
+        VERSION:     '1.1',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -32,7 +32,7 @@
     <script type="text/javascript" src="_static/bootstrap-3.2.0/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="_static/bootstrap-sphinx.js"></script>
     <link rel="shortcut icon" href="_static/favicon.ico"/>
-    <link rel="top" title="MOSAIC 1.0 documentation" href="#" />
+    <link rel="top" title="MOSAIC 1.1 documentation" href="#" />
     <link rel="next" title="1. Introduction" href="doc/Introduction.html" />
 
 <meta charset='utf-8'>
@@ -44,7 +44,7 @@
 		src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
 	</script>
 	<script type="text/javascript" id="_fed_an_js_tag" src="//www.nist.gov/js/federated-analytics.all.min.js?agency=NIST&subagency=github&pua=UA-42404149-54&yt=true&exts=ppsx,pps,f90,sch,rtf,wrl,txz,m1v,xlsm,msi,xsd,f,tif,eps,mpg,xml,pl,xlt,c">
-	</script>
+	</script>	
 
   </head>
   <body>
@@ -60,7 +60,7 @@
         </button>
         <a class="navbar-brand" href="#"><img src="_static/icon_24.png">
            </a>
-        <span class="navbar-text navbar-version pull-left"><b>1.0</b></span>
+        <span class="navbar-text navbar-version pull-left"><b>1.1</b></span>
       </div>
 
         <div class="collapse navbar-collapse nav-collapse">
@@ -81,16 +81,17 @@
       aria-labelledby="dLabelGlobalToc"><ul>
 <li class="toctree-l1"><a class="reference internal" href="doc/Introduction.html">1. Introduction</a></li>
 <li class="toctree-l1"><a class="reference internal" href="doc/GettingStarted.html">2. Getting Started</a></li>
-<li class="toctree-l1"><a class="reference internal" href="doc/GraphicalInterface.html">3. <em>MOSAIC</em> GUI</a></li>
-<li class="toctree-l1"><a class="reference internal" href="doc/ScriptingandAdvancedFeatures.html">4. Scripting and Advanced Features</a></li>
-<li class="toctree-l1"><a class="reference internal" href="doc/settingsFile.html">5. Settings File</a></li>
-<li class="toctree-l1"><a class="reference internal" href="doc/DatabaseStructure.html">6. Database Structure and Query Syntax</a></li>
-<li class="toctree-l1"><a class="reference internal" href="doc/Extend.html">7. Extend <em>MOSAIC</em></a></li>
-<li class="toctree-l1"><a class="reference internal" href="doc/Addons.html">8. Addons</a></li>
-<li class="toctree-l1"><a class="reference internal" href="doc/examples.html">9. Examples</a></li>
-<li class="toctree-l1"><a class="reference internal" href="doc/apidocs.html">10. API Documentation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="doc/ChangeLog.html">11. Change Log</a></li>
-<li class="toctree-l1"><a class="reference internal" href="doc/References.html">12. Bibliography</a></li>
+<li class="toctree-l1"><a class="reference internal" href="doc/Algorithms.html">3. Algorithms in <em>MOSAIC</em></a></li>
+<li class="toctree-l1"><a class="reference internal" href="doc/GraphicalInterface.html">4. <em>MOSAIC</em> GUI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="doc/ScriptingandAdvancedFeatures.html">5. Scripting and Advanced Features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="doc/settingsFile.html">6. Settings File</a></li>
+<li class="toctree-l1"><a class="reference internal" href="doc/DatabaseStructure.html">7. Database Structure and Query Syntax</a></li>
+<li class="toctree-l1"><a class="reference internal" href="doc/Extend.html">8. Extend <em>MOSAIC</em></a></li>
+<li class="toctree-l1"><a class="reference internal" href="doc/Addons.html">9. Addons</a></li>
+<li class="toctree-l1"><a class="reference internal" href="doc/examples.html">10. Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="doc/apidocs.html">11. API Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="doc/ChangeLog.html">12. Change Log</a></li>
+<li class="toctree-l1"><a class="reference internal" href="doc/References.html">13. Bibliography</a></li>
 </ul>
 </ul>
 </li>
@@ -133,55 +134,64 @@
 </div>
 <div class="toctree-wrapper compound">
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="doc/Introduction.html">1. Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="doc/Introduction.html">1. Introduction</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="doc/Introduction.html#background">1.1. Background</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="doc/GettingStarted.html">2. Getting Started</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="doc/GettingStarted.html#binary-installation">2.1. Binary Installation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="doc/GettingStarted.html#source-installation">2.2. Source Installation</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="doc/GraphicalInterface.html">3. <em>MOSAIC</em> GUI</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="doc/GraphicalInterface.html#interface-overview">3.1. Interface Overview</a></li>
-<li class="toctree-l2"><a class="reference internal" href="doc/GraphicalInterface.html#panels-a-b-analysis-setup-and-trajectory-viewer">3.2. Panels A &amp; B: Analysis Setup and Trajectory Viewer</a></li>
-<li class="toctree-l2"><a class="reference internal" href="doc/GraphicalInterface.html#panels-c-d-e-blockade-depth-histogram-statistics-and-event-viewer">3.3. Panels C,D, &amp; E: Blockade Depth Histogram, Statistics, and Event Viewer</a></li>
+<li class="toctree-l1"><a class="reference internal" href="doc/Algorithms.html">3. Algorithms in <em>MOSAIC</em></a><ul>
+<li class="toctree-l2"><a class="reference internal" href="doc/Algorithms.html#step-response-analysis">3.1. Step Response Analysis</a></li>
+<li class="toctree-l2"><a class="reference internal" href="doc/Algorithms.html#multi-state-analysis">3.2. Multi-state Analysis</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="doc/ScriptingandAdvancedFeatures.html">4. Scripting and Advanced Features</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="doc/ScriptingandAdvancedFeatures.html#import-data-and-run-an-analysis">4.1. Import Data and Run an Analysis</a></li>
-<li class="toctree-l2"><a class="reference internal" href="doc/ScriptingandAdvancedFeatures.html#advanced-scripting">4.2. Advanced Scripting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="doc/GraphicalInterface.html">4. <em>MOSAIC</em> GUI</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="doc/GraphicalInterface.html#interface-overview">4.1. Interface Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="doc/GraphicalInterface.html#panels-a-b-analysis-setup-and-trajectory-viewer">4.2. Panels A &amp; B: Analysis Setup and Trajectory Viewer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="doc/GraphicalInterface.html#panels-c-d-e-blockade-depth-histogram-statistics-and-event-viewer">4.3. Panels C,D, &amp; E: Blockade Depth Histogram, Statistics, and Event Viewer</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="doc/settingsFile.html">5. Settings File</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="doc/settingsFile.html#settings-layout">5.1. Settings Layout</a></li>
-<li class="toctree-l2"><a class="reference internal" href="doc/settingsFile.html#default-settings">5.2. Default Settings</a></li>
+<li class="toctree-l1"><a class="reference internal" href="doc/ScriptingandAdvancedFeatures.html">5. Scripting and Advanced Features</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="doc/ScriptingandAdvancedFeatures.html#import-data-and-run-an-analysis">5.1. Import Data and Run an Analysis</a></li>
+<li class="toctree-l2"><a class="reference internal" href="doc/ScriptingandAdvancedFeatures.html#advanced-scripting">5.2. Advanced Scripting</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="doc/DatabaseStructure.html">6. Database Structure and Query Syntax</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="doc/DatabaseStructure.html#metadata-table">6.1. Metadata Table</a></li>
-<li class="toctree-l2"><a class="reference internal" href="doc/DatabaseStructure.html#analysis-settings-table">6.2. Analysis Settings Table</a></li>
-<li class="toctree-l2"><a class="reference internal" href="doc/DatabaseStructure.html#work-with-sqlite">6.3. Work with SQLite</a></li>
+<li class="toctree-l1"><a class="reference internal" href="doc/settingsFile.html">6. Settings File</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="doc/settingsFile.html#settings-layout">6.1. Settings Layout</a></li>
+<li class="toctree-l2"><a class="reference internal" href="doc/settingsFile.html#optimizing-settings">6.2. Optimizing Settings</a></li>
+<li class="toctree-l2"><a class="reference internal" href="doc/settingsFile.html#default-settings">6.3. Default Settings</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="doc/Extend.html">7. Extend <em>MOSAIC</em></a><ul>
-<li class="toctree-l2"><a class="reference internal" href="doc/Extend.html#read-arbitrary-binary-data-files">7.1. Read Arbitrary Binary Data Files</a></li>
-<li class="toctree-l2"><a class="reference internal" href="doc/Extend.html#define-top-level-functionality">7.2. Define Top-Level Functionality</a></li>
+<li class="toctree-l1"><a class="reference internal" href="doc/DatabaseStructure.html">7. Database Structure and Query Syntax</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="doc/DatabaseStructure.html#metadata-table">7.1. Metadata Table</a></li>
+<li class="toctree-l2"><a class="reference internal" href="doc/DatabaseStructure.html#analysis-settings-table">7.2. Analysis Settings Table</a></li>
+<li class="toctree-l2"><a class="reference internal" href="doc/DatabaseStructure.html#work-with-sqlite">7.3. Work with SQLite</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="doc/Addons.html">8. Addons</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="doc/Addons.html#mathematica">8.1. Mathematica</a></li>
-<li class="toctree-l2"><a class="reference internal" href="doc/Addons.html#matlab-addons-sec">8.2. Matlab</a></li>
-<li class="toctree-l2"><a class="reference internal" href="doc/Addons.html#igor-addons-sec">8.3. IGOR</a></li>
+<li class="toctree-l1"><a class="reference internal" href="doc/Extend.html">8. Extend <em>MOSAIC</em></a><ul>
+<li class="toctree-l2"><a class="reference internal" href="doc/Extend.html#read-arbitrary-binary-data-files">8.1. Read Arbitrary Binary Data Files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="doc/Extend.html#define-top-level-functionality">8.2. Define Top-Level Functionality</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="doc/examples.html">9. Examples</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="doc/examples.html#single-molecule-mass-spectrometry">9.1. Single Molecule Mass Spectrometry</a></li>
+<li class="toctree-l1"><a class="reference internal" href="doc/Addons.html">9. Addons</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="doc/Addons.html#mathematica">9.1. Mathematica</a></li>
+<li class="toctree-l2"><a class="reference internal" href="doc/Addons.html#matlab-addons-sec">9.2. Matlab</a></li>
+<li class="toctree-l2"><a class="reference internal" href="doc/Addons.html#igor-addons-sec">9.3. IGOR</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="doc/apidocs.html">10. API Documentation</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="doc/apidocs.html#projname-modules">10.1. <em>MOSAIC</em> Modules</a></li>
+<li class="toctree-l1"><a class="reference internal" href="doc/examples.html">10. Examples</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="doc/examples.html#single-molecule-mass-spectrometry">10.1. Single Molecule Mass Spectrometry</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="doc/ChangeLog.html">11. Change Log</a></li>
-<li class="toctree-l1"><a class="reference internal" href="doc/References.html">12. Bibliography</a></li>
+<li class="toctree-l1"><a class="reference internal" href="doc/apidocs.html">11. API Documentation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="doc/apidocs.html#projname-modules">11.1. <em>MOSAIC</em> Modules</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="doc/ChangeLog.html">12. Change Log</a></li>
+<li class="toctree-l1"><a class="reference internal" href="doc/References.html">13. Bibliography</a></li>
 </ul>
 </div>
 </div>
@@ -204,7 +214,6 @@
   </div>
 </footer> -->
 <div class="footer" style="vertical-align: center" align="center">
-	<small>
 		<table width="95%" style="vertical-align: center">
 			<col width=30%>
 			<col width=70%>
@@ -214,10 +223,9 @@
 					<a href="http://www.nist.gov/cgi-bin/wwwph/cso.nist.gov?Query=Arvind+Balijepalli"><em>Contact</em></a>&nbsp;&nbsp;&nbsp;
 					<a href="doc/Disclaimer.html"><em>Terms of Use</em></a>
 				</td>
-				<td align="right"><em>National Institute of Standards and Technology</em></td>
+				<td align="right"><em>National Institute of Standards and Technology (NIST)</em></td>
 			</tr>
 		</table>
-	</small>
 </div>
 
   </body>

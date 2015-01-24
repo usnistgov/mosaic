@@ -5,7 +5,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>10.1.3. Time-Series IO &mdash; MOSAIC 1.0 documentation</title>
+    <title>11.1.3. Time-Series IO &mdash; MOSAIC 1.1 documentation</title>
     
     <link rel="stylesheet" href="../_static/basic.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -17,7 +17,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '1.0',
+        VERSION:     '1.1',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -32,10 +32,10 @@
     <script type="text/javascript" src="../_static/bootstrap-3.2.0/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="../_static/bootstrap-sphinx.js"></script>
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
-    <link rel="top" title="MOSAIC 1.0 documentation" href="../index.html" />
-    <link rel="up" title="10. API Documentation" href="../doc/apidocs.html" />
-    <link rel="next" title="10.1.4. Time-Series Filters" href="mosaic.filter.html" />
-    <link rel="prev" title="10.1.2. Meta-Classes" href="mosaic.meta.html" />
+    <link rel="top" title="MOSAIC 1.1 documentation" href="../index.html" />
+    <link rel="up" title="11. API Documentation" href="../doc/apidocs.html" />
+    <link rel="next" title="11.1.4. Time-Series Filters" href="mosaic.filter.html" />
+    <link rel="prev" title="11.1.2. Meta-Classes" href="mosaic.meta.html" />
 
 <meta charset='utf-8'>
 <meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
@@ -46,7 +46,7 @@
 		src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
 	</script>
 	<script type="text/javascript" id="_fed_an_js_tag" src="//www.nist.gov/js/federated-analytics.all.min.js?agency=NIST&subagency=github&pua=UA-42404149-54&yt=true&exts=ppsx,pps,f90,sch,rtf,wrl,txz,m1v,xlsm,msi,xsd,f,tif,eps,mpg,xml,pl,xlt,c">
-	</script>
+	</script>	
 
   </head>
   <body>
@@ -62,7 +62,7 @@
         </button>
         <a class="navbar-brand" href="../index.html"><img src="../_static/icon_24.png">
            </a>
-        <span class="navbar-text navbar-version pull-left"><b>1.0</b></span>
+        <span class="navbar-text navbar-version pull-left"><b>1.1</b></span>
       </div>
 
         <div class="collapse navbar-collapse nav-collapse">
@@ -83,16 +83,17 @@
       aria-labelledby="dLabelGlobalToc"><ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../doc/Introduction.html">1. Introduction</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../doc/GettingStarted.html">2. Getting Started</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../doc/GraphicalInterface.html">3. <em>MOSAIC</em> GUI</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../doc/ScriptingandAdvancedFeatures.html">4. Scripting and Advanced Features</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../doc/settingsFile.html">5. Settings File</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../doc/DatabaseStructure.html">6. Database Structure and Query Syntax</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../doc/Extend.html">7. Extend <em>MOSAIC</em></a></li>
-<li class="toctree-l1"><a class="reference internal" href="../doc/Addons.html">8. Addons</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../doc/examples.html">9. Examples</a></li>
-<li class="toctree-l1 current"><a class="reference internal" href="../doc/apidocs.html">10. API Documentation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../doc/ChangeLog.html">11. Change Log</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../doc/References.html">12. Bibliography</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../doc/Algorithms.html">3. Algorithms in <em>MOSAIC</em></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../doc/GraphicalInterface.html">4. <em>MOSAIC</em> GUI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../doc/ScriptingandAdvancedFeatures.html">5. Scripting and Advanced Features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../doc/settingsFile.html">6. Settings File</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../doc/DatabaseStructure.html">7. Database Structure and Query Syntax</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../doc/Extend.html">8. Extend <em>MOSAIC</em></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../doc/Addons.html">9. Addons</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../doc/examples.html">10. Examples</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../doc/apidocs.html">11. API Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../doc/ChangeLog.html">12. Change Log</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../doc/References.html">13. Bibliography</a></li>
 </ul>
 </ul>
 </li>
@@ -125,9 +126,9 @@
     <div class="col-md-12">
       
   <div class="section" id="time-series-io">
-<h1>10.1.3. Time-Series IO<a class="headerlink" href="#time-series-io" title="Permalink to this headline">¶</a></h1>
+<h1>11.1.3. Time-Series IO<a class="headerlink" href="#time-series-io" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="mosaic-abftrajio-module">
-<h2>10.1.3.1. mosaic.abfTrajIO module<a class="headerlink" href="#mosaic-abftrajio-module" title="Permalink to this headline">¶</a></h2>
+<h2>11.1.3.1. mosaic.abfTrajIO module<a class="headerlink" href="#mosaic-abftrajio-module" title="Permalink to this headline">¶</a></h2>
 <p class="graphviz">
 <img src="../_images/inheritance-0c556903e9be4b31d10bd209aad22444519b0de3.png" alt="Inheritance diagram of mosaic.abfTrajIO" usemap="#inheritanced4bc199e84" class="inheritance"/>
 <map id="inheritanced4bc199e84" name="inheritanced4bc199e84">
@@ -201,7 +202,7 @@ Set a class attribute Fs with the sampling frequency in Hz.</p>
 
 </div>
 <div class="section" id="mosaic-qdftrajio-module">
-<h2>10.1.3.2. mosaic.qdfTrajIO module<a class="headerlink" href="#mosaic-qdftrajio-module" title="Permalink to this headline">¶</a></h2>
+<h2>11.1.3.2. mosaic.qdfTrajIO module<a class="headerlink" href="#mosaic-qdftrajio-module" title="Permalink to this headline">¶</a></h2>
 <p class="graphviz">
 <img src="../_images/inheritance-0e350901ffb9b4975bf644cd0faddd00badef00a.png" alt="Inheritance diagram of mosaic.qdfTrajIO" usemap="#inheritancee54b23a53e" class="inheritance"/>
 <map id="inheritancee54b23a53e" name="inheritancee54b23a53e">
@@ -294,7 +295,7 @@ Set a class attribute Fs with the sampling frequency in Hz.</p>
 
 </div>
 <div class="section" id="mosaic-bintrajio-module">
-<h2>10.1.3.3. mosaic.binTrajIO module<a class="headerlink" href="#mosaic-bintrajio-module" title="Permalink to this headline">¶</a></h2>
+<h2>11.1.3.3. mosaic.binTrajIO module<a class="headerlink" href="#mosaic-bintrajio-module" title="Permalink to this headline">¶</a></h2>
 <p class="graphviz">
 <img src="../_images/inheritance-e8b738f81fc89132cdba990b777c9b7cb58c555f.png" alt="Inheritance diagram of mosaic.binTrajIO" usemap="#inheritance1574f1c52e" class="inheritance"/>
 <map id="inheritance1574f1c52e" name="inheritance1574f1c52e">
@@ -393,7 +394,7 @@ Set a class attribute Fs with the sampling frequency in Hz.</p>
 
 </div>
 <div class="section" id="mosaic-tsvtrajio-module">
-<h2>10.1.3.4. mosaic.tsvTrajIO module<a class="headerlink" href="#mosaic-tsvtrajio-module" title="Permalink to this headline">¶</a></h2>
+<h2>11.1.3.4. mosaic.tsvTrajIO module<a class="headerlink" href="#mosaic-tsvtrajio-module" title="Permalink to this headline">¶</a></h2>
 <p class="graphviz">
 <img src="../_images/inheritance-ca6ce8b71729643b133095b8bb1ba0a1e5604de3.png" alt="Inheritance diagram of mosaic.tsvTrajIO" usemap="#inheritance0055deff42" class="inheritance"/>
 <map id="inheritance0055deff42" name="inheritance0055deff42">
@@ -513,7 +514,6 @@ Set/update a class attribute Fs with the sampling frequency in Hz.</p>
   </div>
 </footer> -->
 <div class="footer" style="vertical-align: center" align="center">
-	<small>
 		<table width="95%" style="vertical-align: center">
 			<col width=30%>
 			<col width=70%>
@@ -523,10 +523,9 @@ Set/update a class attribute Fs with the sampling frequency in Hz.</p>
 					<a href="http://www.nist.gov/cgi-bin/wwwph/cso.nist.gov?Query=Arvind+Balijepalli"><em>Contact</em></a>&nbsp;&nbsp;&nbsp;
 					<a href="../doc/Disclaimer.html"><em>Terms of Use</em></a>
 				</td>
-				<td align="right"><em>National Institute of Standards and Technology</em></td>
+				<td align="right"><em>National Institute of Standards and Technology (NIST)</em></td>
 			</tr>
 		</table>
-	</small>
 </div>
 
   </body>

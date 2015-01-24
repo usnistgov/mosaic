@@ -5,7 +5,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Mathematica &mdash; MOSAIC 1.0 documentation</title>
+    <title>Mathematica &mdash; MOSAIC 1.1 documentation</title>
     
     <link rel="stylesheet" href="../_static/basic.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -17,7 +17,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '1.0',
+        VERSION:     '1.1',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -32,7 +32,7 @@
     <script type="text/javascript" src="../_static/bootstrap-3.2.0/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="../_static/bootstrap-sphinx.js"></script>
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
-    <link rel="top" title="MOSAIC 1.0 documentation" href="../index.html" />
+    <link rel="top" title="MOSAIC 1.1 documentation" href="../index.html" />
 
 <meta charset='utf-8'>
 <meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
@@ -43,7 +43,7 @@
 		src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
 	</script>
 	<script type="text/javascript" id="_fed_an_js_tag" src="//www.nist.gov/js/federated-analytics.all.min.js?agency=NIST&subagency=github&pua=UA-42404149-54&yt=true&exts=ppsx,pps,f90,sch,rtf,wrl,txz,m1v,xlsm,msi,xsd,f,tif,eps,mpg,xml,pl,xlt,c">
-	</script>
+	</script>	
 
   </head>
   <body>
@@ -59,7 +59,7 @@
         </button>
         <a class="navbar-brand" href="../index.html"><img src="../_static/icon_24.png">
            </a>
-        <span class="navbar-text navbar-version pull-left"><b>1.0</b></span>
+        <span class="navbar-text navbar-version pull-left"><b>1.1</b></span>
       </div>
 
         <div class="collapse navbar-collapse nav-collapse">
@@ -80,16 +80,17 @@
       aria-labelledby="dLabelGlobalToc"><ul>
 <li class="toctree-l1"><a class="reference internal" href="Introduction.html">1. Introduction</a></li>
 <li class="toctree-l1"><a class="reference internal" href="GettingStarted.html">2. Getting Started</a></li>
-<li class="toctree-l1"><a class="reference internal" href="GraphicalInterface.html">3. <em>MOSAIC</em> GUI</a></li>
-<li class="toctree-l1"><a class="reference internal" href="ScriptingandAdvancedFeatures.html">4. Scripting and Advanced Features</a></li>
-<li class="toctree-l1"><a class="reference internal" href="settingsFile.html">5. Settings File</a></li>
-<li class="toctree-l1"><a class="reference internal" href="DatabaseStructure.html">6. Database Structure and Query Syntax</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Extend.html">7. Extend <em>MOSAIC</em></a></li>
-<li class="toctree-l1"><a class="reference internal" href="Addons.html">8. Addons</a></li>
-<li class="toctree-l1"><a class="reference internal" href="examples.html">9. Examples</a></li>
-<li class="toctree-l1"><a class="reference internal" href="apidocs.html">10. API Documentation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="ChangeLog.html">11. Change Log</a></li>
-<li class="toctree-l1"><a class="reference internal" href="References.html">12. Bibliography</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Algorithms.html">3. Algorithms in <em>MOSAIC</em></a></li>
+<li class="toctree-l1"><a class="reference internal" href="GraphicalInterface.html">4. <em>MOSAIC</em> GUI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ScriptingandAdvancedFeatures.html">5. Scripting and Advanced Features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="settingsFile.html">6. Settings File</a></li>
+<li class="toctree-l1"><a class="reference internal" href="DatabaseStructure.html">7. Database Structure and Query Syntax</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Extend.html">8. Extend <em>MOSAIC</em></a></li>
+<li class="toctree-l1"><a class="reference internal" href="Addons.html">9. Addons</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples.html">10. Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="apidocs.html">11. API Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ChangeLog.html">12. Change Log</a></li>
+<li class="toctree-l1"><a class="reference internal" href="References.html">13. Bibliography</a></li>
 </ul>
 </ul>
 </li>
@@ -182,7 +183,7 @@
 </tr>
 </tbody>
 </table>
-<p><strong>PlotEvents</strong>[<em>dbfile</em>, <em>FsKHz</em>, <em>options</em>]</p>
+<p><strong>PlotEvents</strong>[<em>dbfile</em>, <em>FsKHz</em>]</p>
 <p>Plot the event-time series if stored in the database (see the <a class="reference internal" href="settingsFile.html#settings-page"><em>Settings File</em></a> section for details on saving time-series to the analysis output).</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -191,11 +192,26 @@
 <tr class="field-odd field"><th class="field-name">Args:</th><td class="field-body"><ul class="first simple">
 <li><cite>dbfile</cite> :    full path to the database file</li>
 <li><cite>FsKHz</cite>  :    sampling frequency in kHz.</li>
-<li><cite>options</cite>:    (optional) <em>AnalysisAlgorithm-&gt;&#8221;MultiStateAnalysis&#8221; for *multiStateAnalysis,</em> not supplied for the <em>stepResponseAnalysis</em> algorithm.</li>
 </ul>
 </td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">A dynamic object that allows the user to browse event time-series and fits.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p><strong>GetAnalysisAlgorithm</strong>[<em>db</em>]</p>
+<p>Returns the analysis algorithm used to process the current data set.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Args:</th><td class="field-body"><ul class="first simple">
+<li><cite>db</cite>  :               full path to a database file</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Algorithm used to analyze data.</p>
 </td>
 </tr>
 </tbody>
@@ -308,7 +324,7 @@ Out[3]= {
 In[2]= &lt;&lt;MosaicAnalysis`
 </pre></div>
 </div>
-<p>In the following example, we estimate the capture rate of PEG28 from the reference data set included with the <em>MOSAIC</em> source. The first argument fo <em>CaptureRate</em> is a list of the absolute start time of each event in the database. This data can be obtained using the query shown below. The remaining arguments to <em>CaptureRate</em> define the parameters of the arrival times distribution, the lower and upper limit of the arrival times and the number of bins. The function returns the mean capture rate and standard error, as well as a plot that shows the underlying arrival times distribution.</p>
+<p>In the following example, we estimate the capture rate of PEG28 from the reference data set included with the <em>MOSAIC</em> source. The first argument fo <em>CaptureRate</em> is a list of the absolute start time of each event in the database. This data can be obtained using the query shown below. The remaining arguments to <em>CaptureRate</em> define the parameters of the arrival times distribution, the lower and upper limit of the arrival times and the number of bins. The function returns the mean capture rate and standard error, a plot that shows the underlying arrival times distribution, raw data used to generate the capture rate histogram, and a pure best-fit function.</p>
 <div class="highlight-mathematica"><div class="highlight"><pre>In[3]= CaptureRate[
         QueryDB[
         &quot;&lt;mosaicroot&gt;/data/eventMD-PEG29-Reference.sqlite&quot;,
@@ -359,7 +375,6 @@ ImageSize -&gt; 400}
   </div>
 </footer> -->
 <div class="footer" style="vertical-align: center" align="center">
-	<small>
 		<table width="95%" style="vertical-align: center">
 			<col width=30%>
 			<col width=70%>
@@ -369,10 +384,9 @@ ImageSize -&gt; 400}
 					<a href="http://www.nist.gov/cgi-bin/wwwph/cso.nist.gov?Query=Arvind+Balijepalli"><em>Contact</em></a>&nbsp;&nbsp;&nbsp;
 					<a href="Disclaimer.html"><em>Terms of Use</em></a>
 				</td>
-				<td align="right"><em>National Institute of Standards and Technology</em></td>
+				<td align="right"><em>National Institute of Standards and Technology (NIST)</em></td>
 			</tr>
 		</table>
-	</small>
 </div>
 
   </body>

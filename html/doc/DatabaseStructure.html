@@ -5,7 +5,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>6. Database Structure and Query Syntax &mdash; MOSAIC 1.0 documentation</title>
+    <title>7. Database Structure and Query Syntax &mdash; MOSAIC 1.1 documentation</title>
     
     <link rel="stylesheet" href="../_static/basic.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -17,7 +17,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '1.0',
+        VERSION:     '1.1',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -32,9 +32,9 @@
     <script type="text/javascript" src="../_static/bootstrap-3.2.0/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="../_static/bootstrap-sphinx.js"></script>
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
-    <link rel="top" title="MOSAIC 1.0 documentation" href="../index.html" />
-    <link rel="next" title="7. Extend MOSAIC" href="Extend.html" />
-    <link rel="prev" title="5. Settings File" href="settingsFile.html" />
+    <link rel="top" title="MOSAIC 1.1 documentation" href="../index.html" />
+    <link rel="next" title="8. Extend MOSAIC" href="Extend.html" />
+    <link rel="prev" title="6. Settings File" href="settingsFile.html" />
 
 <meta charset='utf-8'>
 <meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
@@ -45,7 +45,7 @@
 		src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
 	</script>
 	<script type="text/javascript" id="_fed_an_js_tag" src="//www.nist.gov/js/federated-analytics.all.min.js?agency=NIST&subagency=github&pua=UA-42404149-54&yt=true&exts=ppsx,pps,f90,sch,rtf,wrl,txz,m1v,xlsm,msi,xsd,f,tif,eps,mpg,xml,pl,xlt,c">
-	</script>
+	</script>	
 
   </head>
   <body>
@@ -61,7 +61,7 @@
         </button>
         <a class="navbar-brand" href="../index.html"><img src="../_static/icon_24.png">
            </a>
-        <span class="navbar-text navbar-version pull-left"><b>1.0</b></span>
+        <span class="navbar-text navbar-version pull-left"><b>1.1</b></span>
       </div>
 
         <div class="collapse navbar-collapse nav-collapse">
@@ -82,16 +82,17 @@
       aria-labelledby="dLabelGlobalToc"><ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="Introduction.html">1. Introduction</a></li>
 <li class="toctree-l1"><a class="reference internal" href="GettingStarted.html">2. Getting Started</a></li>
-<li class="toctree-l1"><a class="reference internal" href="GraphicalInterface.html">3. <em>MOSAIC</em> GUI</a></li>
-<li class="toctree-l1"><a class="reference internal" href="ScriptingandAdvancedFeatures.html">4. Scripting and Advanced Features</a></li>
-<li class="toctree-l1"><a class="reference internal" href="settingsFile.html">5. Settings File</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="">6. Database Structure and Query Syntax</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Extend.html">7. Extend <em>MOSAIC</em></a></li>
-<li class="toctree-l1"><a class="reference internal" href="Addons.html">8. Addons</a></li>
-<li class="toctree-l1"><a class="reference internal" href="examples.html">9. Examples</a></li>
-<li class="toctree-l1"><a class="reference internal" href="apidocs.html">10. API Documentation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="ChangeLog.html">11. Change Log</a></li>
-<li class="toctree-l1"><a class="reference internal" href="References.html">12. Bibliography</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Algorithms.html">3. Algorithms in <em>MOSAIC</em></a></li>
+<li class="toctree-l1"><a class="reference internal" href="GraphicalInterface.html">4. <em>MOSAIC</em> GUI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ScriptingandAdvancedFeatures.html">5. Scripting and Advanced Features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="settingsFile.html">6. Settings File</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="">7. Database Structure and Query Syntax</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Extend.html">8. Extend <em>MOSAIC</em></a></li>
+<li class="toctree-l1"><a class="reference internal" href="Addons.html">9. Addons</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples.html">10. Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="apidocs.html">11. API Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ChangeLog.html">12. Change Log</a></li>
+<li class="toctree-l1"><a class="reference internal" href="References.html">13. Bibliography</a></li>
 </ul>
 </ul>
 </li>
@@ -124,14 +125,14 @@
     <div class="col-md-12">
       
   <div class="section" id="database-structure-and-query-syntax">
-<span id="database-page"></span><h1>6. Database Structure and Query Syntax<a class="headerlink" href="#database-structure-and-query-syntax" title="Permalink to this headline">¶</a></h1>
+<span id="database-page"></span><h1>7. Database Structure and Query Syntax<a class="headerlink" href="#database-structure-and-query-syntax" title="Permalink to this headline">¶</a></h1>
 <p><em>MOSAIC</em> stores the output of an analysis in a <a class="reference external" href="http://www.sqlite.org/">SQLite</a> database. Database files are stored in the same directory as the data being processed. Each analysis creates a new database file named <em>eventMD-&lt;date&gt;-&lt;time&gt;.sqlite</em>, where <em>&lt;date&gt;</em> is the date the analysis was performed (e.g. 20140929 for Sep 29, 2014) and <em>&lt;time&gt;</em> is the analysis start time (e.g. 112937 for 11:29:37 AM).</p>
 <p><a class="reference external" href="http://www.sqlite.org/">SQLite</a> databases store data in tables similar to spreadsheets, where each table is analogous to a sheet in an Excel spreadsheet. Databased generated by <em>MOSAIC</em> can be inspected using a database viewer, for example the open source <a class="reference external" href="http://sqlitebrowser.org/">DB browser for SQLite</a>.  <em>MOSAIC</em> outputs databases with multiple tables as seen from the figure below. Databases output by <em>MOSAIC</em> contain four tables: i) <em>analysisinfo</em> contains general information about the anlysis such as the data path, analysis algorithm etc., ii) <em>analysissettings</em> contains a <a class="reference external" href="http://json.org/">JSON</a> formatted string with the analysis settings, iii) <em>metadata</em> holds the output of the analysis, and iv) <em>metadata_t</em> lists the data types for each column in <em>metadata</em>. Two tables most relevant to the analysis (<em>metadata</em> and <em>analysissettings</em>) are discussed in detail below.</p>
 <div class="figure align-center">
 <a class="reference internal image-reference" href="../_images/sqlstructFig1.png"><img alt="../_images/sqlstructFig1.png" src="../_images/sqlstructFig1.png" style="width: 75%;" /></a>
 </div>
 <div class="section" id="metadata-table">
-<span id="metadata-table-sec"></span><h2>6.1. Metadata Table<a class="headerlink" href="#metadata-table" title="Permalink to this headline">¶</a></h2>
+<span id="metadata-table-sec"></span><h2>7.1. Metadata Table<a class="headerlink" href="#metadata-table" title="Permalink to this headline">¶</a></h2>
 <p>The <em>metadata</em> table contains the primary output of the analysis. <em>MOSAIC</em> processes individual blockade events from a time-series of ionic current. The parameters describing each event (or metadata) are stored in individual rows of the <em>metadata</em> table in the database file. The column names describe the metadata and are unique to the processing algorithm used. For example, the column names for the <a class="reference internal" href="stepResponse.html#stepresponse-page"><em>Step Response Analysis</em></a> algorithm are shown below. The column names for <a class="reference internal" href="multiState.html#multistate-page"><em>Multi-state Analysis</em></a> differ from this list.</p>
 <div class="highlight-javascript"><div class="highlight"><pre><span class="p">{</span>
     <span class="nx">ProcessingStatus</span><span class="p">,</span>
@@ -148,7 +149,7 @@
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>Note that the column names can be used in constructing queries passed to SQLite, and is described in more detail in the <a class="reference internal" href="#working-with-sqlite-sec"><em>Work with SQLite</em></a> section and the <a class="reference internal" href="ScriptingandAdvancedFeatures.html#scripting-page"><em>Scripting and Advanced Features</em></a> section. The first example SQL query below returns the <em>BlockDepth</em> column (ratio of <em>BlockedCurrent</em> to <em>OpenChCurrent</em>). One can imagine assembling more complex queries for example restricting the results to events whose residence time is greater than 0.2 ms as seen from the second example query below.</p>
+<p>Note that the column names can be used in constructing queries passed to SQLite, and is described in more detail in the <a class="reference internal" href="WorkingWithSQLite.html#working-with-sqlite-sec"><em>Work with SQLite</em></a> section and the <a class="reference internal" href="ScriptingandAdvancedFeatures.html#scripting-page"><em>Scripting and Advanced Features</em></a> section. The first example SQL query below returns the <em>BlockDepth</em> column (ratio of <em>BlockedCurrent</em> to <em>OpenChCurrent</em>). One can imagine assembling more complex queries for example restricting the results to events whose residence time is greater than 0.2 ms as seen from the second example query below.</p>
 <div class="highlight-sql"><div class="highlight"><pre><span class="k">select</span> <span class="n">BlockDepth</span> <span class="k">from</span> <span class="n">metadata</span> <span class="k">where</span> <span class="n">ProcessingStatus</span><span class="o">=</span><span class="s1">&#39;normal&#39;</span>
 
 <span class="k">select</span> <span class="n">BlockDepth</span> <span class="k">from</span> <span class="n">metadata</span> <span class="k">where</span> <span class="n">ProcessingStatus</span><span class="o">=</span><span class="s1">&#39;normal&#39;</span> <span class="k">and</span> <span class="n">ResTime</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">.</span><span class="mi">2</span>
@@ -160,14 +161,14 @@
 </div>
 </div>
 <div class="section" id="analysis-settings-table">
-<span id="settings-table-sec"></span><h2>6.2. Analysis Settings Table<a class="headerlink" href="#analysis-settings-table" title="Permalink to this headline">¶</a></h2>
+<span id="settings-table-sec"></span><h2>7.2. Analysis Settings Table<a class="headerlink" href="#analysis-settings-table" title="Permalink to this headline">¶</a></h2>
 <p>The <em>analysissettings</em> table contains a single text entry that stores the settings file for the analysis. This allows any database opened with the <em>MOSAIC</em> GUI to retrieve settings that correspond to the analysis results in the file. As seen from the figure below, the settings file is in the <a class="reference external" href="http://json.org/">JSON</a> format as described in the <a class="reference internal" href="settingsFile.html#settings-page"><em>Settings File</em></a> documentation.</p>
 <div class="figure align-center">
 <a class="reference internal image-reference" href="../_images/sqlstructFig3.png"><img alt="../_images/sqlstructFig3.png" src="../_images/sqlstructFig3.png" style="width: 75%;" /></a>
 </div>
 </div>
 <div class="section" id="work-with-sqlite">
-<span id="working-with-sqlite-sec"></span><h2>6.3. Work with SQLite<a class="headerlink" href="#work-with-sqlite" title="Permalink to this headline">¶</a></h2>
+<span id="working-with-sqlite-sec"></span><h2>7.3. Work with SQLite<a class="headerlink" href="#work-with-sqlite" title="Permalink to this headline">¶</a></h2>
 <p><em>MOSAIC</em> stores the output of an analysis in a SQLite database as described in the <a class="reference internal" href="#database-page"><em>Database Structure and Query Syntax</em></a> section. Interacting with the data through the <a class="reference external" href="http://en.wikipedia.org/wiki/SQL">Structured Query Language (SQL)</a> is a flexible approach to further analyze or plot the output. Here we provide a few detailed examples of the common ways in which the output of <em>MOSAIC</em> can be queried for further processing. While this section is not a comprehensive SQL tutorial, it provides common use cases to allow you to get started.</p>
 <p>One way to retrieve data from a <a class="reference external" href="http://www.sqlite.org/">SQLite</a> database is to use the <em>select</em> command. In its simplest form, a <em>select</em> query can return the entire contents of a table using the syntax below. The statement below selects all columns <em>(select *)</em> from the table specified by <em>&lt;tablename&gt;</em>.</p>
 <div class="highlight-sql"><div class="highlight"><pre><span class="k">select</span> <span class="o">*</span> <span class="k">from</span> <span class="o">&lt;</span><span class="n">tablename</span><span class="o">&gt;</span>
@@ -216,7 +217,6 @@
   </div>
 </footer> -->
 <div class="footer" style="vertical-align: center" align="center">
-	<small>
 		<table width="95%" style="vertical-align: center">
 			<col width=30%>
 			<col width=70%>
@@ -226,10 +226,9 @@
 					<a href="http://www.nist.gov/cgi-bin/wwwph/cso.nist.gov?Query=Arvind+Balijepalli"><em>Contact</em></a>&nbsp;&nbsp;&nbsp;
 					<a href="Disclaimer.html"><em>Terms of Use</em></a>
 				</td>
-				<td align="right"><em>National Institute of Standards and Technology</em></td>
+				<td align="right"><em>National Institute of Standards and Technology (NIST)</em></td>
 			</tr>
 		</table>
-	</small>
 </div>
 
   </body>

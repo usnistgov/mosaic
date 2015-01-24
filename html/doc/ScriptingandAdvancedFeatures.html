@@ -5,7 +5,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>4. Scripting and Advanced Features &mdash; MOSAIC 1.0 documentation</title>
+    <title>5. Scripting and Advanced Features &mdash; MOSAIC 1.1 documentation</title>
     
     <link rel="stylesheet" href="../_static/basic.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -17,7 +17,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '1.0',
+        VERSION:     '1.1',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -32,9 +32,9 @@
     <script type="text/javascript" src="../_static/bootstrap-3.2.0/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="../_static/bootstrap-sphinx.js"></script>
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
-    <link rel="top" title="MOSAIC 1.0 documentation" href="../index.html" />
-    <link rel="next" title="5. Settings File" href="settingsFile.html" />
-    <link rel="prev" title="3. MOSAIC GUI" href="GraphicalInterface.html" />
+    <link rel="top" title="MOSAIC 1.1 documentation" href="../index.html" />
+    <link rel="next" title="6. Settings File" href="settingsFile.html" />
+    <link rel="prev" title="4. MOSAIC GUI" href="GraphicalInterface.html" />
 
 <meta charset='utf-8'>
 <meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
@@ -45,7 +45,7 @@
 		src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
 	</script>
 	<script type="text/javascript" id="_fed_an_js_tag" src="//www.nist.gov/js/federated-analytics.all.min.js?agency=NIST&subagency=github&pua=UA-42404149-54&yt=true&exts=ppsx,pps,f90,sch,rtf,wrl,txz,m1v,xlsm,msi,xsd,f,tif,eps,mpg,xml,pl,xlt,c">
-	</script>
+	</script>	
 
   </head>
   <body>
@@ -61,7 +61,7 @@
         </button>
         <a class="navbar-brand" href="../index.html"><img src="../_static/icon_24.png">
            </a>
-        <span class="navbar-text navbar-version pull-left"><b>1.0</b></span>
+        <span class="navbar-text navbar-version pull-left"><b>1.1</b></span>
       </div>
 
         <div class="collapse navbar-collapse nav-collapse">
@@ -82,16 +82,17 @@
       aria-labelledby="dLabelGlobalToc"><ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="Introduction.html">1. Introduction</a></li>
 <li class="toctree-l1"><a class="reference internal" href="GettingStarted.html">2. Getting Started</a></li>
-<li class="toctree-l1"><a class="reference internal" href="GraphicalInterface.html">3. <em>MOSAIC</em> GUI</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="">4. Scripting and Advanced Features</a></li>
-<li class="toctree-l1"><a class="reference internal" href="settingsFile.html">5. Settings File</a></li>
-<li class="toctree-l1"><a class="reference internal" href="DatabaseStructure.html">6. Database Structure and Query Syntax</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Extend.html">7. Extend <em>MOSAIC</em></a></li>
-<li class="toctree-l1"><a class="reference internal" href="Addons.html">8. Addons</a></li>
-<li class="toctree-l1"><a class="reference internal" href="examples.html">9. Examples</a></li>
-<li class="toctree-l1"><a class="reference internal" href="apidocs.html">10. API Documentation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="ChangeLog.html">11. Change Log</a></li>
-<li class="toctree-l1"><a class="reference internal" href="References.html">12. Bibliography</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Algorithms.html">3. Algorithms in <em>MOSAIC</em></a></li>
+<li class="toctree-l1"><a class="reference internal" href="GraphicalInterface.html">4. <em>MOSAIC</em> GUI</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="">5. Scripting and Advanced Features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="settingsFile.html">6. Settings File</a></li>
+<li class="toctree-l1"><a class="reference internal" href="DatabaseStructure.html">7. Database Structure and Query Syntax</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Extend.html">8. Extend <em>MOSAIC</em></a></li>
+<li class="toctree-l1"><a class="reference internal" href="Addons.html">9. Addons</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples.html">10. Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="apidocs.html">11. API Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ChangeLog.html">12. Change Log</a></li>
+<li class="toctree-l1"><a class="reference internal" href="References.html">13. Bibliography</a></li>
 </ul>
 </ul>
 </li>
@@ -124,7 +125,7 @@
     <div class="col-md-12">
       
   <div class="section" id="scripting-and-advanced-features">
-<span id="scripting-page"></span><h1>4. Scripting and Advanced Features<a class="headerlink" href="#scripting-and-advanced-features" title="Permalink to this headline">¶</a></h1>
+<span id="scripting-page"></span><h1>5. Scripting and Advanced Features<a class="headerlink" href="#scripting-and-advanced-features" title="Permalink to this headline">¶</a></h1>
 <p>The analysis can be run from the command line by setting up a <a class="reference external" href="http://www.python.org/">Python</a> script. Scripting allows one to build additional analysis tools on top of <em>MOSAIC</em>. The first step is to import <em>MOSAIC</em> as shown below.</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">mosaic</span>
 </pre></div>
@@ -140,8 +141,8 @@
 </pre></div>
 </div>
 <div class="section" id="import-data-and-run-an-analysis">
-<h2>4.1. Import Data and Run an Analysis<a class="headerlink" href="#import-data-and-run-an-analysis" title="Permalink to this headline">¶</a></h2>
-<p>Once the required modules are imported, a basic analysis can be run with the code snippet below. The top-level object that is used to configure and run a new analysis is <a class="reference internal" href="../api-doc/mosaic.html#mosaic.SingleChannelAnalysis.SingleChannelAnalysis" title="mosaic.SingleChannelAnalysis.SingleChannelAnalysis"><tt class="xref py py-class docutils literal"><span class="pre">SingleChannelAnalysis</span></tt></a>, which takes five arguments: i) the path to the data directory, ii) a handle to a <em>TrajIO</em> object that reads in data (e.g. <a class="reference internal" href="../api-doc/mosaic.traj.html#mosaic.abfTrajIO.abfTrajIO" title="mosaic.abfTrajIO.abfTrajIO"><tt class="xref py py-class docutils literal"><span class="pre">abfTrajIO</span></tt></a>), iii) a handle to a data filtering algorithm (e.g. <a class="reference internal" href="../api-doc/mosaic.filter.html#mosaic.besselLowpassFilter.besselLowpassFilter" title="mosaic.besselLowpassFilter.besselLowpassFilter"><tt class="xref py py-class docutils literal"><span class="pre">besselLowpassFilter</span></tt></a> or <cite>None</cite> for no filtering), iv) a handle to a partitioning algorithm (e.g. <a class="reference internal" href="eventSegment.html#mosaic.eventSegment.eventSegment" title="mosaic.eventSegment.eventSegment"><tt class="xref py py-class docutils literal"><span class="pre">eventSegment</span></tt></a>) that partitions the data and v) a handle to a processing algorithm (e.g. <a class="reference internal" href="stepResponse.html#mosaic.stepResponseAnalysis.stepResponseAnalysis" title="mosaic.stepResponseAnalysis.stepResponseAnalysis"><tt class="xref py py-class docutils literal"><span class="pre">stepResponseAnalysis</span></tt></a>) that processes individual blockade events.</p>
+<h2>5.1. Import Data and Run an Analysis<a class="headerlink" href="#import-data-and-run-an-analysis" title="Permalink to this headline">¶</a></h2>
+<p>Once the required modules are imported, a basic analysis can be run with the code snippet below. The top-level object that is used to configure and run a new analysis is <a class="reference internal" href="../api-doc/mosaic.html#mosaic.SingleChannelAnalysis.SingleChannelAnalysis" title="mosaic.SingleChannelAnalysis.SingleChannelAnalysis"><tt class="xref py py-class docutils literal"><span class="pre">SingleChannelAnalysis</span></tt></a>, which takes five arguments: i) the path to the data directory, ii) a handle to a <em>TrajIO</em> object that reads in data (e.g. <a class="reference internal" href="../api-doc/mosaic.traj.html#mosaic.abfTrajIO.abfTrajIO" title="mosaic.abfTrajIO.abfTrajIO"><tt class="xref py py-class docutils literal"><span class="pre">abfTrajIO</span></tt></a>), iii) a handle to a data filtering algorithm (e.g. <a class="reference internal" href="../api-doc/mosaic.filter.html#mosaic.besselLowpassFilter.besselLowpassFilter" title="mosaic.besselLowpassFilter.besselLowpassFilter"><tt class="xref py py-class docutils literal"><span class="pre">besselLowpassFilter</span></tt></a> or <cite>None</cite> for no filtering), iv) a handle to a partitioning algorithm (e.g. <a class="reference internal" href="eventSegment.html#mosaic.eventSegment.eventSegment" title="mosaic.eventSegment.eventSegment"><tt class="xref py py-class docutils literal"><span class="pre">eventSegment</span></tt></a>) that partitions the data and v) a handle to a processing algorithm (e.g. <a class="reference internal" href="../api-doc/mosaic.processing.html#mosaic.stepResponseAnalysis.stepResponseAnalysis" title="mosaic.stepResponseAnalysis.stepResponseAnalysis"><tt class="xref py py-class docutils literal"><span class="pre">stepResponseAnalysis</span></tt></a>) that processes individual blockade events.</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="c"># Process all ABF files in a directory</span>
 <span class="n">analysisObj</span><span class="o">=</span><span class="n">mosaic</span><span class="o">.</span><span class="n">SingleChannelAnalysis</span><span class="o">.</span><span class="n">SingleChannelAnalysis</span><span class="p">(</span>
             <span class="s">&#39;~/ReferenceData/abfSet1&#39;</span><span class="p">,</span>
@@ -249,7 +250,7 @@
 </pre></div>
 </div>
 <div class="section" id="filter-data">
-<span id="scripting-filter-sec"></span><h3>4.1.1. Filter Data<a class="headerlink" href="#filter-data" title="Permalink to this headline">¶</a></h3>
+<span id="scripting-filter-sec"></span><h3>5.1.1. Filter Data<a class="headerlink" href="#filter-data" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-python"><div class="highlight"><pre><span class="c"># Filter data with a Bessel filter before processing</span>
 <span class="n">mosaic</span><span class="o">.</span><span class="n">SingleChannelAnalysis</span><span class="o">.</span><span class="n">SingleChannelAnalysis</span><span class="p">(</span>
             <span class="s">&#39;~/ReferenceData/abfSet1&#39;</span><span class="p">,</span>
@@ -272,7 +273,7 @@
 </div>
 </div>
 <div class="section" id="advanced-scripting">
-<h2>4.2. Advanced Scripting<a class="headerlink" href="#advanced-scripting" title="Permalink to this headline">¶</a></h2>
+<h2>5.2. Advanced Scripting<a class="headerlink" href="#advanced-scripting" title="Permalink to this headline">¶</a></h2>
 <p>Scripting with <a class="reference external" href="http://www.python.org/">Python</a> allows transforming the output of the <em>MOSAIC</em> further to generate plots, perform additional analysis or extend functionality. Moreover, individual components of the <em>MOSAIC</em> module, which forms the back end code executed in the data processing pipeline, can be used for specific tasks. In this section, we highlight a few typical use cases.</p>
 <p><strong>Plot the Ionic Current Time-Series</strong></p>
 <div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">mosaic.abfTrajIO</span> <span class="kn">as</span> <span class="nn">abf</span>
@@ -397,7 +398,6 @@
   </div>
 </footer> -->
 <div class="footer" style="vertical-align: center" align="center">
-	<small>
 		<table width="95%" style="vertical-align: center">
 			<col width=30%>
 			<col width=70%>
@@ -407,10 +407,9 @@
 					<a href="http://www.nist.gov/cgi-bin/wwwph/cso.nist.gov?Query=Arvind+Balijepalli"><em>Contact</em></a>&nbsp;&nbsp;&nbsp;
 					<a href="Disclaimer.html"><em>Terms of Use</em></a>
 				</td>
-				<td align="right"><em>National Institute of Standards and Technology</em></td>
+				<td align="right"><em>National Institute of Standards and Technology (NIST)</em></td>
 			</tr>
 		</table>
-	</small>
 </div>
 
   </body>

@@ -5,7 +5,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>7. Extend MOSAIC &mdash; MOSAIC 1.0 documentation</title>
+    <title>8. Extend MOSAIC &mdash; MOSAIC 1.1 documentation</title>
     
     <link rel="stylesheet" href="../_static/basic.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -17,7 +17,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '1.0',
+        VERSION:     '1.1',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -32,9 +32,9 @@
     <script type="text/javascript" src="../_static/bootstrap-3.2.0/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="../_static/bootstrap-sphinx.js"></script>
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
-    <link rel="top" title="MOSAIC 1.0 documentation" href="../index.html" />
-    <link rel="next" title="8. Addons" href="Addons.html" />
-    <link rel="prev" title="6. Database Structure and Query Syntax" href="DatabaseStructure.html" />
+    <link rel="top" title="MOSAIC 1.1 documentation" href="../index.html" />
+    <link rel="next" title="9. Addons" href="Addons.html" />
+    <link rel="prev" title="7. Database Structure and Query Syntax" href="DatabaseStructure.html" />
 
 <meta charset='utf-8'>
 <meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
@@ -45,7 +45,7 @@
 		src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
 	</script>
 	<script type="text/javascript" id="_fed_an_js_tag" src="//www.nist.gov/js/federated-analytics.all.min.js?agency=NIST&subagency=github&pua=UA-42404149-54&yt=true&exts=ppsx,pps,f90,sch,rtf,wrl,txz,m1v,xlsm,msi,xsd,f,tif,eps,mpg,xml,pl,xlt,c">
-	</script>
+	</script>	
 
   </head>
   <body>
@@ -61,7 +61,7 @@
         </button>
         <a class="navbar-brand" href="../index.html"><img src="../_static/icon_24.png">
            </a>
-        <span class="navbar-text navbar-version pull-left"><b>1.0</b></span>
+        <span class="navbar-text navbar-version pull-left"><b>1.1</b></span>
       </div>
 
         <div class="collapse navbar-collapse nav-collapse">
@@ -82,16 +82,17 @@
       aria-labelledby="dLabelGlobalToc"><ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="Introduction.html">1. Introduction</a></li>
 <li class="toctree-l1"><a class="reference internal" href="GettingStarted.html">2. Getting Started</a></li>
-<li class="toctree-l1"><a class="reference internal" href="GraphicalInterface.html">3. <em>MOSAIC</em> GUI</a></li>
-<li class="toctree-l1"><a class="reference internal" href="ScriptingandAdvancedFeatures.html">4. Scripting and Advanced Features</a></li>
-<li class="toctree-l1"><a class="reference internal" href="settingsFile.html">5. Settings File</a></li>
-<li class="toctree-l1"><a class="reference internal" href="DatabaseStructure.html">6. Database Structure and Query Syntax</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="">7. Extend <em>MOSAIC</em></a></li>
-<li class="toctree-l1"><a class="reference internal" href="Addons.html">8. Addons</a></li>
-<li class="toctree-l1"><a class="reference internal" href="examples.html">9. Examples</a></li>
-<li class="toctree-l1"><a class="reference internal" href="apidocs.html">10. API Documentation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="ChangeLog.html">11. Change Log</a></li>
-<li class="toctree-l1"><a class="reference internal" href="References.html">12. Bibliography</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Algorithms.html">3. Algorithms in <em>MOSAIC</em></a></li>
+<li class="toctree-l1"><a class="reference internal" href="GraphicalInterface.html">4. <em>MOSAIC</em> GUI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ScriptingandAdvancedFeatures.html">5. Scripting and Advanced Features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="settingsFile.html">6. Settings File</a></li>
+<li class="toctree-l1"><a class="reference internal" href="DatabaseStructure.html">7. Database Structure and Query Syntax</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="">8. Extend <em>MOSAIC</em></a></li>
+<li class="toctree-l1"><a class="reference internal" href="Addons.html">9. Addons</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples.html">10. Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="apidocs.html">11. API Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ChangeLog.html">12. Change Log</a></li>
+<li class="toctree-l1"><a class="reference internal" href="References.html">13. Bibliography</a></li>
 </ul>
 </ul>
 </li>
@@ -124,10 +125,10 @@
     <div class="col-md-12">
       
   <div class="section" id="extend-projname">
-<span id="extend-page"></span><h1>7. Extend <em>MOSAIC</em><a class="headerlink" href="#extend-projname" title="Permalink to this headline">¶</a></h1>
+<span id="extend-page"></span><h1>8. Extend <em>MOSAIC</em><a class="headerlink" href="#extend-projname" title="Permalink to this headline">¶</a></h1>
 <p><em>MOSAIC</em> was designed from the start using object oriented tools, which makes it easy to extend. <a class="reference internal" href="../api-doc/mosaic.meta.html#api-metaclass-page"><em>Meta-Classes</em></a> define interfaces to five key parts of <em>MOSAIC</em>: time-series IO (<a class="reference internal" href="../api-doc/mosaic.meta.html#mosaic.metaTrajIO.metaTrajIO" title="mosaic.metaTrajIO.metaTrajIO"><tt class="xref py py-class docutils literal"><span class="pre">metaTrajIO</span></tt></a>), time-series filtering (<a class="reference internal" href="../api-doc/mosaic.meta.html#mosaic.metaIOFilter.metaIOFilter" title="mosaic.metaIOFilter.metaIOFilter"><tt class="xref py py-class docutils literal"><span class="pre">metaIOFilter</span></tt></a>), analysis output (<a class="reference internal" href="../api-doc/mosaic.meta.html#mosaic.metaMDIO.metaMDIO" title="mosaic.metaMDIO.metaMDIO"><tt class="xref py py-class docutils literal"><span class="pre">metaMDIO</span></tt></a>), event partition and segmenting (<a class="reference internal" href="../api-doc/mosaic.meta.html#mosaic.metaEventPartition.metaEventPartition" title="mosaic.metaEventPartition.metaEventPartition"><tt class="xref py py-class docutils literal"><span class="pre">metaEventPartition</span></tt></a>), and event processing (<a class="reference internal" href="../api-doc/mosaic.meta.html#mosaic.metaEventProcessor.metaEventProcessor" title="mosaic.metaEventProcessor.metaEventProcessor"><tt class="xref py py-class docutils literal"><span class="pre">metaEventProcessor</span></tt></a>). Sub-classing any of these meta classes and implementing their  interface functions allows one to extend <em>MOSAIC</em> while maintaining compatibility with other parts of the program. We highlight these capabilities via two examples. In the first example, we show how one can extend <a class="reference internal" href="../api-doc/mosaic.meta.html#mosaic.metaTrajIO.metaTrajIO" title="mosaic.metaTrajIO.metaTrajIO"><tt class="xref py py-class docutils literal"><span class="pre">metaTrajIO</span></tt></a> to read arbitrary binary files. In the second example, we implement a new top-level class that converts files to the comma separated value (CSV) format.</p>
 <div class="section" id="read-arbitrary-binary-data-files">
-<h2>7.1. Read Arbitrary Binary Data Files<a class="headerlink" href="#read-arbitrary-binary-data-files" title="Permalink to this headline">¶</a></h2>
+<h2>8.1. Read Arbitrary Binary Data Files<a class="headerlink" href="#read-arbitrary-binary-data-files" title="Permalink to this headline">¶</a></h2>
 <p>In this first example, we implement a class that can read an arbitrary binary data file and make its data available via the interface functions in <a class="reference internal" href="../api-doc/mosaic.meta.html#mosaic.metaTrajIO.metaTrajIO" title="mosaic.metaTrajIO.metaTrajIO"><tt class="xref py py-class docutils literal"><span class="pre">metaTrajIO</span></tt></a>. This allows the newly implemented binary data to be used across <em>MOSAIC</em>. A complete listing of the code used in this example (<a class="reference internal" href="../api-doc/mosaic.traj.html#mosaic.binTrajIO.binTrajIO" title="mosaic.binTrajIO.binTrajIO"><tt class="xref py py-class docutils literal"><span class="pre">binTrajIO</span></tt></a>) is available in the API documentation.</p>
 <p>The new binary IO class is implemented by sub-classing <a class="reference internal" href="../api-doc/mosaic.meta.html#mosaic.metaTrajIO.metaTrajIO" title="mosaic.metaTrajIO.metaTrajIO"><tt class="xref py py-class docutils literal"><span class="pre">metaTrajIO</span></tt></a> as shown in the listing below.</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="k">class</span> <span class="nc">binTrajIO</span><span class="p">(</span><span class="n">metaTrajIO</span><span class="o">.</span><span class="n">metaTrajIO</span><span class="p">):</span>
@@ -194,7 +195,7 @@
 </div>
 </div>
 <div class="section" id="define-top-level-functionality">
-<h2>7.2. Define Top-Level Functionality<a class="headerlink" href="#define-top-level-functionality" title="Permalink to this headline">¶</a></h2>
+<h2>8.2. Define Top-Level Functionality<a class="headerlink" href="#define-top-level-functionality" title="Permalink to this headline">¶</a></h2>
 <p>New functionality can be added to <em>MOSAIC</em> by combining other parts of the code. One way of accomplishing this is by defining new top-level functionality as shown in the following example. We define a new class that converts data from one of the supported data formats to comma separated text files (CSV). A complete listing of the <a class="reference internal" href="../api-doc/mosaic.html#mosaic.ConvertToCSV.ConvertToCSV" title="mosaic.ConvertToCSV.ConvertToCSV"><tt class="xref py py-class docutils literal"><span class="pre">ConvertToCSV</span></tt></a> class in this example is available in the API documentation.</p>
 <p>The <em>__init__</em> function of <a class="reference internal" href="../api-doc/mosaic.html#mosaic.ConvertToCSV.ConvertToCSV" title="mosaic.ConvertToCSV.ConvertToCSV"><tt class="xref py py-class docutils literal"><span class="pre">ConvertToCSV</span></tt></a> class accepts two arguments: a trajIO object and the location to save the converted files. If the output directory is not specified, the data is saved in the same folder as the input data. The data conversion is performed by the <a class="reference internal" href="../api-doc/mosaic.html#mosaic.ConvertToCSV.ConvertToCSV.Convert" title="mosaic.ConvertToCSV.ConvertToCSV.Convert"><tt class="xref py py-meth docutils literal"><span class="pre">Convert()</span></tt></a> function, which saves the data in blocks controlled by the <em>blockSize</em> parameter. <a class="reference internal" href="../api-doc/mosaic.html#mosaic.ConvertToCSV.ConvertToCSV.Convert" title="mosaic.ConvertToCSV.ConvertToCSV.Convert"><tt class="xref py py-meth docutils literal"><span class="pre">Convert()</span></tt></a> saves each block to a new CSV file, named with the filename of the input data followed by an integer number (see the API documentation for <a class="reference internal" href="../api-doc/mosaic.html#mosaic.ConvertToCSV.ConvertToCSV._filename" title="mosaic.ConvertToCSV.ConvertToCSV._filename"><tt class="xref py py-meth docutils literal"><span class="pre">_filename()</span></tt></a> for additional details).</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="k">class</span> <span class="nc">ConvertToCSV</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
@@ -263,7 +264,6 @@
   </div>
 </footer> -->
 <div class="footer" style="vertical-align: center" align="center">
-	<small>
 		<table width="95%" style="vertical-align: center">
 			<col width=30%>
 			<col width=70%>
@@ -273,10 +273,9 @@
 					<a href="http://www.nist.gov/cgi-bin/wwwph/cso.nist.gov?Query=Arvind+Balijepalli"><em>Contact</em></a>&nbsp;&nbsp;&nbsp;
 					<a href="Disclaimer.html"><em>Terms of Use</em></a>
 				</td>
-				<td align="right"><em>National Institute of Standards and Technology</em></td>
+				<td align="right"><em>National Institute of Standards and Technology (NIST)</em></td>
 			</tr>
 		</table>
-	</small>
 </div>
 
   </body>

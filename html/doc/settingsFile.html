@@ -5,7 +5,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>5. Settings File &mdash; MOSAIC 1.0 documentation</title>
+    <title>6. Settings File &mdash; MOSAIC 1.1 documentation</title>
     
     <link rel="stylesheet" href="../_static/basic.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -17,7 +17,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '1.0',
+        VERSION:     '1.1',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -32,9 +32,9 @@
     <script type="text/javascript" src="../_static/bootstrap-3.2.0/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="../_static/bootstrap-sphinx.js"></script>
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
-    <link rel="top" title="MOSAIC 1.0 documentation" href="../index.html" />
-    <link rel="next" title="6. Database Structure and Query Syntax" href="DatabaseStructure.html" />
-    <link rel="prev" title="4. Scripting and Advanced Features" href="ScriptingandAdvancedFeatures.html" />
+    <link rel="top" title="MOSAIC 1.1 documentation" href="../index.html" />
+    <link rel="next" title="7. Database Structure and Query Syntax" href="DatabaseStructure.html" />
+    <link rel="prev" title="5. Scripting and Advanced Features" href="ScriptingandAdvancedFeatures.html" />
 
 <meta charset='utf-8'>
 <meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
@@ -45,7 +45,7 @@
 		src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
 	</script>
 	<script type="text/javascript" id="_fed_an_js_tag" src="//www.nist.gov/js/federated-analytics.all.min.js?agency=NIST&subagency=github&pua=UA-42404149-54&yt=true&exts=ppsx,pps,f90,sch,rtf,wrl,txz,m1v,xlsm,msi,xsd,f,tif,eps,mpg,xml,pl,xlt,c">
-	</script>
+	</script>	
 
   </head>
   <body>
@@ -61,7 +61,7 @@
         </button>
         <a class="navbar-brand" href="../index.html"><img src="../_static/icon_24.png">
            </a>
-        <span class="navbar-text navbar-version pull-left"><b>1.0</b></span>
+        <span class="navbar-text navbar-version pull-left"><b>1.1</b></span>
       </div>
 
         <div class="collapse navbar-collapse nav-collapse">
@@ -82,16 +82,17 @@
       aria-labelledby="dLabelGlobalToc"><ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="Introduction.html">1. Introduction</a></li>
 <li class="toctree-l1"><a class="reference internal" href="GettingStarted.html">2. Getting Started</a></li>
-<li class="toctree-l1"><a class="reference internal" href="GraphicalInterface.html">3. <em>MOSAIC</em> GUI</a></li>
-<li class="toctree-l1"><a class="reference internal" href="ScriptingandAdvancedFeatures.html">4. Scripting and Advanced Features</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="">5. Settings File</a></li>
-<li class="toctree-l1"><a class="reference internal" href="DatabaseStructure.html">6. Database Structure and Query Syntax</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Extend.html">7. Extend <em>MOSAIC</em></a></li>
-<li class="toctree-l1"><a class="reference internal" href="Addons.html">8. Addons</a></li>
-<li class="toctree-l1"><a class="reference internal" href="examples.html">9. Examples</a></li>
-<li class="toctree-l1"><a class="reference internal" href="apidocs.html">10. API Documentation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="ChangeLog.html">11. Change Log</a></li>
-<li class="toctree-l1"><a class="reference internal" href="References.html">12. Bibliography</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Algorithms.html">3. Algorithms in <em>MOSAIC</em></a></li>
+<li class="toctree-l1"><a class="reference internal" href="GraphicalInterface.html">4. <em>MOSAIC</em> GUI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ScriptingandAdvancedFeatures.html">5. Scripting and Advanced Features</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="">6. Settings File</a></li>
+<li class="toctree-l1"><a class="reference internal" href="DatabaseStructure.html">7. Database Structure and Query Syntax</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Extend.html">8. Extend <em>MOSAIC</em></a></li>
+<li class="toctree-l1"><a class="reference internal" href="Addons.html">9. Addons</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples.html">10. Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="apidocs.html">11. API Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ChangeLog.html">12. Change Log</a></li>
+<li class="toctree-l1"><a class="reference internal" href="References.html">13. Bibliography</a></li>
 </ul>
 </ul>
 </li>
@@ -124,10 +125,10 @@
     <div class="col-md-12">
       
   <div class="section" id="settings-file">
-<span id="settings-page"></span><h1>5. Settings File<a class="headerlink" href="#settings-file" title="Permalink to this headline">¶</a></h1>
+<span id="settings-page"></span><h1>6. Settings File<a class="headerlink" href="#settings-file" title="Permalink to this headline">¶</a></h1>
 <p><em>MOSAIC</em> stores its settings in the <a class="reference external" href="http://json.org/">JSON</a> format. When using the graphical interface, a settings file is generated automatically upon starting an analysis, or by clicking <em>Save Settings</em> in the <em>File menu</em>  (see <a class="reference internal" href="GraphicalInterface.html#gui-page"><em>MOSAIC GUI</em></a>).</p>
 <div class="section" id="settings-layout">
-<h2>5.1. Settings Layout<a class="headerlink" href="#settings-layout" title="Permalink to this headline">¶</a></h2>
+<h2>6.1. Settings Layout<a class="headerlink" href="#settings-layout" title="Permalink to this headline">¶</a></h2>
 <p><a class="reference external" href="http://json.org/">JSON</a> is a human readable file format that consists of key-value pairs separated by sections. Each section in a JSON object consists of a section name and a list of string key-value pairs.</p>
 <div class="highlight-javascript"><div class="highlight"><pre><span class="p">{</span>
         <span class="s2">&quot;&lt;section name&gt;&quot;</span> <span class="o">:</span> <span class="p">{</span>
@@ -161,8 +162,97 @@
 </pre></div>
 </div>
 </div>
+<div class="section" id="optimizing-settings">
+<span id="algorithm-settings-sec"></span><h2>6.2. Optimizing Settings<a class="headerlink" href="#optimizing-settings" title="Permalink to this headline">¶</a></h2>
+<p><em>MOSAIC</em> classes are controlled through the <a class="reference external" href="http://json.org/">JSON</a> settings files as defined above. In most cases, running <em>MOSAIC</em> through the GUI (see <a class="reference internal" href="GraphicalInterface.html#gui-page"><em>MOSAIC GUI</em></a>) should generate satisfactory results. However, settings can be further optimized either by editing a file named <tt class="docutils literal"><span class="pre">.settings</span></tt> stored within the data directory, or by clicking on the <tt class="docutils literal"><span class="pre">Advanced</span> <span class="pre">Settings</span></tt> check-box in the <a class="reference internal" href="GraphicalInterface.html#analysis-setup"><em>Panel A: Analysis Setup</em></a> section of the GUI.</p>
+<div class="section" id="initial-event-detection-eventsegment">
+<span id="eventseg-settings-sec"></span><h3>6.2.1. Initial Event Detection (<a class="reference internal" href="eventSegment.html#mosaic.eventSegment.eventSegment" title="mosaic.eventSegment.eventSegment"><tt class="xref py py-class docutils literal"><span class="pre">eventSegment</span></tt></a>)<a class="headerlink" href="#initial-event-detection-eventsegment" title="Permalink to this headline">¶</a></h3>
+<p>The first step when analyzing an ionic-current time series is to perform a quick partition to identify events. This is accomplished by overriding the <tt class="xref py py-class docutils literal"><span class="pre">eventPartition</span></tt> class. Currently, the only implementation of event partitioning is the <a class="reference internal" href="eventSegment.html#mosaic.eventSegment.eventSegment" title="mosaic.eventSegment.eventSegment"><tt class="xref py py-class docutils literal"><span class="pre">eventSegment</span></tt></a> algorithm. This algorithm uses a thresholding technique to detect the start and end of an event. When an event is detected the ionic current time-series associated with that event is passed to a processing algorithm for fitting. Settings that can be passed to <a class="reference internal" href="eventSegment.html#mosaic.eventSegment.eventSegment" title="mosaic.eventSegment.eventSegment"><tt class="xref py py-class docutils literal"><span class="pre">eventSegment</span></tt></a> are given below followed by their descriptions.</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="s2">&quot;eventSegment&quot;</span> <span class="o">:</span> <span class="p">{</span>
+        <span class="s2">&quot;blockSizeSec&quot;</span>                  <span class="o">:</span> <span class="s2">&quot;0.5&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;eventPad&quot;</span>                      <span class="o">:</span> <span class="s2">&quot;50&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;minEventLength&quot;</span>                <span class="o">:</span> <span class="s2">&quot;5&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;eventThreshold&quot;</span>                <span class="o">:</span> <span class="s2">&quot;6.0&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;driftThreshold&quot;</span>                <span class="o">:</span> <span class="s2">&quot;999.0&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;maxDriftRate&quot;</span>                  <span class="o">:</span> <span class="s2">&quot;999.0&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;meanOpenCurr&quot;</span>                  <span class="o">:</span> <span class="s2">&quot;-1&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;sdOpenCurr&quot;</span>                    <span class="o">:</span> <span class="s2">&quot;-1&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;slopeOpenCurr&quot;</span>                 <span class="o">:</span> <span class="s2">&quot;-1&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;writeEventTS&quot;</span>                  <span class="o">:</span> <span class="s2">&quot;1&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;parallelProc&quot;</span>                  <span class="o">:</span> <span class="s2">&quot;0&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;reserveNCPU&quot;</span>                   <span class="o">:</span> <span class="s2">&quot;2&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<table border="1" class="docutils">
+<colgroup>
+<col width="18%" />
+<col width="82%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head"><strong>Setting</strong></th>
+<th class="head"><strong>Description</strong></th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><p class="first">blockSizeSec</p>
+<p>eventPad</p>
+<p>minEventLength</p>
+<p>eventThreshold</p>
+<p>meanOpenCurr</p>
+<p>sdOpenCurr</p>
+<p>slopeOpenCurr</p>
+<p>driftThreshold</p>
+<p>maxDriftRate</p>
+<p>writeEventTS</p>
+<p>parallelProc</p>
+<p class="last">reserveNCPU</p>
+</td>
+<td><p class="first">Time-series length (in sec) for block operations.</p>
+<p>Pad an event with the specified number of points.</p>
+<p>Discard events with fewer than the specfied points.</p>
+<p>Event detection threshold.</p>
+<p>Set the mean open channel current (i0) in pA. -1 computes i0 automatically.</p>
+<p>Set the open channel std. dev. in pA. -1 computes SD automatically.</p>
+<p>Set the open channel drift in pA/ms. -1 automatically computes the slope.</p>
+<p>Aborts the analysis when the open channel drift exceeds the specified value.</p>
+<p>Aborts the analysis when the open channel slope exceeds the specified value (pA/ms).</p>
+<p>Write the event time-series to the output database.</p>
+<p>Enable parallel processing.</p>
+<p class="last">Use N-reserveNCPU for parallel processing.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="two-state-identification-stepresponseanalysis">
+<span id="stepresp-settings-sec"></span><h3>6.2.2. Two-State Identification  (<a class="reference internal" href="../api-doc/mosaic.processing.html#mosaic.stepResponseAnalysis.stepResponseAnalysis" title="mosaic.stepResponseAnalysis.stepResponseAnalysis"><tt class="xref py py-class docutils literal"><span class="pre">stepResponseAnalysis</span></tt></a>)<a class="headerlink" href="#two-state-identification-stepresponseanalysis" title="Permalink to this headline">¶</a></h3>
+<p>Once the time-series is partitioned, individual events are processed by a processing algorithm. For simple event patterns (e.g. homopolymers of DNA, PEG, etc.), one can use the <a class="reference internal" href="stepResponse.html#stepresponse-page"><em>Step Response Analysis</em></a> algorithm. Settings that can be passed to this algorithm are below, followed by their descriptions. For a vast majority of cases, the settings below can be used without modification.</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="s2">&quot;stepResponseAnalysis&quot;</span> <span class="o">:</span> <span class="p">{</span>
+        <span class="s2">&quot;FitTol&quot;</span>                        <span class="o">:</span> <span class="s2">&quot;1.e-7&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;FitIters&quot;</span>                      <span class="o">:</span> <span class="s2">&quot;50000&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="multi-state-identification-multistateanalysis">
+<h3>6.2.3. Multi-State Identification  (<a class="reference internal" href="../api-doc/mosaic.processing.html#mosaic.multiStateAnalysis.multiStateAnalysis" title="mosaic.multiStateAnalysis.multiStateAnalysis"><tt class="xref py py-class docutils literal"><span class="pre">multiStateAnalysis</span></tt></a>)<a class="headerlink" href="#multi-state-identification-multistateanalysis" title="Permalink to this headline">¶</a></h3>
+<p>For more complex signals with multiple states, the <a class="reference internal" href="multiState.html#multistate-page"><em>Multi-state Analysis</em></a> algorithm yields better results. The settings passed to this algorithm (described below) are largely similar to <a class="reference internal" href="#stepresp-settings-sec"><em>Two-State Identification  (stepResponseAnalysis)</em></a>.</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="s2">&quot;multiStateAnalysis&quot;</span> <span class="o">:</span> <span class="p">{</span>
+        <span class="s2">&quot;FitTol&quot;</span>                        <span class="o">:</span> <span class="s2">&quot;1.e-7&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;FitIters&quot;</span>                      <span class="o">:</span> <span class="s2">&quot;50000&quot;</span><span class="p">,</span>
+<span class="hll">        <span class="s2">&quot;InitThreshold&quot;</span>                 <span class="o">:</span> <span class="s2">&quot;3.0&quot;</span>
+</span><span class="p">}</span>
+</pre></div>
+</div>
+<div class="admonition hint">
+<p class="first admonition-title">Hint</p>
+<p class="last">The parameter <tt class="docutils literal"><span class="pre">InitThreshold</span></tt> is used for preliminary state identification within multi-state events. As a rule of thumb, this value should be set to roughly half that of <tt class="docutils literal"><span class="pre">eventThreshold</span></tt> in the <a class="reference internal" href="#eventseg-settings-sec"><em>Initial Event Detection (eventSegment)</em></a> section. However, the final value may be adjusted further for optimal results.</p>
+</div>
+</div>
+</div>
 <div class="section" id="default-settings">
-<h2>5.2. Default Settings<a class="headerlink" href="#default-settings" title="Permalink to this headline">¶</a></h2>
+<h2>6.3. Default Settings<a class="headerlink" href="#default-settings" title="Permalink to this headline">¶</a></h2>
 <div class="highlight-javascript"><div class="highlight"><pre><span class="p">{</span>
         <span class="s2">&quot;eventSegment&quot;</span> <span class="o">:</span> <span class="p">{</span>
                 <span class="s2">&quot;blockSizeSec&quot;</span>                  <span class="o">:</span> <span class="s2">&quot;0.5&quot;</span><span class="p">,</span>
@@ -188,13 +278,12 @@
         <span class="p">},</span>
         <span class="s2">&quot;stepResponseAnalysis&quot;</span> <span class="o">:</span> <span class="p">{</span>
                 <span class="s2">&quot;FitTol&quot;</span>                        <span class="o">:</span> <span class="s2">&quot;1.e-7&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;FitIters&quot;</span>                      <span class="o">:</span> <span class="s2">&quot;50000&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;BlockRejectRatio&quot;</span>              <span class="o">:</span> <span class="s2">&quot;0.9&quot;</span>
+                <span class="s2">&quot;FitIters&quot;</span>                      <span class="o">:</span> <span class="s2">&quot;50000&quot;</span>
         <span class="p">},</span>
         <span class="s2">&quot;multiStateAnalysis&quot;</span> <span class="o">:</span> <span class="p">{</span>
                 <span class="s2">&quot;FitTol&quot;</span>                        <span class="o">:</span> <span class="s2">&quot;1.e-7&quot;</span><span class="p">,</span>
                 <span class="s2">&quot;FitIters&quot;</span>                      <span class="o">:</span> <span class="s2">&quot;50000&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;InitThreshold&quot;</span>                 <span class="o">:</span> <span class="s2">&quot;5.0&quot;</span>
+                <span class="s2">&quot;InitThreshold&quot;</span>                 <span class="o">:</span> <span class="s2">&quot;3.0&quot;</span>
         <span class="p">},</span>
         <span class="s2">&quot;besselLowpassFilter&quot;</span> <span class="o">:</span> <span class="p">{</span>
                 <span class="s2">&quot;filterOrder&quot;</span>                   <span class="o">:</span> <span class="s2">&quot;6&quot;</span><span class="p">,</span>
@@ -244,7 +333,6 @@
   </div>
 </footer> -->
 <div class="footer" style="vertical-align: center" align="center">
-	<small>
 		<table width="95%" style="vertical-align: center">
 			<col width=30%>
 			<col width=70%>
@@ -254,10 +342,9 @@
 					<a href="http://www.nist.gov/cgi-bin/wwwph/cso.nist.gov?Query=Arvind+Balijepalli"><em>Contact</em></a>&nbsp;&nbsp;&nbsp;
 					<a href="Disclaimer.html"><em>Terms of Use</em></a>
 				</td>
-				<td align="right"><em>National Institute of Standards and Technology</em></td>
+				<td align="right"><em>National Institute of Standards and Technology (NIST)</em></td>
 			</tr>
 		</table>
-	</small>
 </div>
 
   </body>

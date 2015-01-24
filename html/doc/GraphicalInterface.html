@@ -5,7 +5,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>3. MOSAIC GUI &mdash; MOSAIC 1.0 documentation</title>
+    <title>4. MOSAIC GUI &mdash; MOSAIC 1.1 documentation</title>
     
     <link rel="stylesheet" href="../_static/basic.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -17,7 +17,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '1.0',
+        VERSION:     '1.1',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -32,9 +32,9 @@
     <script type="text/javascript" src="../_static/bootstrap-3.2.0/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="../_static/bootstrap-sphinx.js"></script>
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
-    <link rel="top" title="MOSAIC 1.0 documentation" href="../index.html" />
-    <link rel="next" title="4. Scripting and Advanced Features" href="ScriptingandAdvancedFeatures.html" />
-    <link rel="prev" title="2. Getting Started" href="GettingStarted.html" />
+    <link rel="top" title="MOSAIC 1.1 documentation" href="../index.html" />
+    <link rel="next" title="5. Scripting and Advanced Features" href="ScriptingandAdvancedFeatures.html" />
+    <link rel="prev" title="3. Algorithms in MOSAIC" href="Algorithms.html" />
 
 <meta charset='utf-8'>
 <meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
@@ -45,7 +45,7 @@
 		src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
 	</script>
 	<script type="text/javascript" id="_fed_an_js_tag" src="//www.nist.gov/js/federated-analytics.all.min.js?agency=NIST&subagency=github&pua=UA-42404149-54&yt=true&exts=ppsx,pps,f90,sch,rtf,wrl,txz,m1v,xlsm,msi,xsd,f,tif,eps,mpg,xml,pl,xlt,c">
-	</script>
+	</script>	
 
   </head>
   <body>
@@ -61,7 +61,7 @@
         </button>
         <a class="navbar-brand" href="../index.html"><img src="../_static/icon_24.png">
            </a>
-        <span class="navbar-text navbar-version pull-left"><b>1.0</b></span>
+        <span class="navbar-text navbar-version pull-left"><b>1.1</b></span>
       </div>
 
         <div class="collapse navbar-collapse nav-collapse">
@@ -82,16 +82,17 @@
       aria-labelledby="dLabelGlobalToc"><ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="Introduction.html">1. Introduction</a></li>
 <li class="toctree-l1"><a class="reference internal" href="GettingStarted.html">2. Getting Started</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="">3. <em>MOSAIC</em> GUI</a></li>
-<li class="toctree-l1"><a class="reference internal" href="ScriptingandAdvancedFeatures.html">4. Scripting and Advanced Features</a></li>
-<li class="toctree-l1"><a class="reference internal" href="settingsFile.html">5. Settings File</a></li>
-<li class="toctree-l1"><a class="reference internal" href="DatabaseStructure.html">6. Database Structure and Query Syntax</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Extend.html">7. Extend <em>MOSAIC</em></a></li>
-<li class="toctree-l1"><a class="reference internal" href="Addons.html">8. Addons</a></li>
-<li class="toctree-l1"><a class="reference internal" href="examples.html">9. Examples</a></li>
-<li class="toctree-l1"><a class="reference internal" href="apidocs.html">10. API Documentation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="ChangeLog.html">11. Change Log</a></li>
-<li class="toctree-l1"><a class="reference internal" href="References.html">12. Bibliography</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Algorithms.html">3. Algorithms in <em>MOSAIC</em></a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="">4. <em>MOSAIC</em> GUI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ScriptingandAdvancedFeatures.html">5. Scripting and Advanced Features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="settingsFile.html">6. Settings File</a></li>
+<li class="toctree-l1"><a class="reference internal" href="DatabaseStructure.html">7. Database Structure and Query Syntax</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Extend.html">8. Extend <em>MOSAIC</em></a></li>
+<li class="toctree-l1"><a class="reference internal" href="Addons.html">9. Addons</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples.html">10. Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="apidocs.html">11. API Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ChangeLog.html">12. Change Log</a></li>
+<li class="toctree-l1"><a class="reference internal" href="References.html">13. Bibliography</a></li>
 </ul>
 </ul>
 </li>
@@ -124,7 +125,7 @@
     <div class="col-md-12">
       
   <div class="section" id="projname-gui">
-<span id="gui-page"></span><h1>3. <em>MOSAIC</em> GUI<a class="headerlink" href="#projname-gui" title="Permalink to this headline">¶</a></h1>
+<span id="gui-page"></span><h1>4. <em>MOSAIC</em> GUI<a class="headerlink" href="#projname-gui" title="Permalink to this headline">¶</a></h1>
 <p><em>MOSAIC</em>&#8216;s GUI interface is designed to allow you to easily setup and run an analysis and to analyze the results of prior trials via a graphical interface; it contains the most commonly used features of <em>MOSAIC</em>.  The GUI contains modular panels for setting up an analysis, running it, and analyzing the results. Here we give you a brief overview of the graphical interface and its basic use. You can learn more in the <a class="reference internal" href="examples.html#examples-page"><em>Examples</em></a> section.</p>
 <p><strong>Opening the GUI</strong></p>
 <p>If you installed <em>MOSAIC</em> from a precomiled binary, you can open the GUI by double clicking the <em>MOSAIC</em> icon. Alternatively, if you compiled <em>MOSAIC</em> from source code, you can run the GUI from the terminal window &#8211; navigate to the installation directory and type:</p>
@@ -136,7 +137,7 @@
 <p class="last">Having trobule getting the GUI to start? Frequently, this arises because your PYTHONPATH environment variable is set up incorrectly. To fix this error, first type <tt class="docutils literal"><span class="pre">echo</span> <span class="pre">$PYTHONPATH</span></tt> in the terminal. If you don&#8217;t see the path to the <em>MOSAIC</em> installation in <cite>PYTHONPATH</cite>, consult the operating-system specific instructions (<a class="reference internal" href="InstallOSX.html#setpythonpathosx"><em>OSX</em></a> or <a class="reference internal" href="InstallUbuntu.html#setpythonpathubuntu"><em>Ubuntu</em></a>) to help resolve this issue.</p>
 </div>
 <div class="section" id="interface-overview">
-<h2>3.1. Interface Overview<a class="headerlink" href="#interface-overview" title="Permalink to this headline">¶</a></h2>
+<h2>4.1. Interface Overview<a class="headerlink" href="#interface-overview" title="Permalink to this headline">¶</a></h2>
 <div class="figure align-center">
 <a class="reference internal image-reference" href="../_images/mainpanels-panelLabel.png"><img alt="../_images/mainpanels-panelLabel.png" src="../_images/mainpanels-panelLabel.png" style="width: 85%;" /></a>
 <p class="caption">Primary panels in <em>MOSAIC</em>: (A)Analysis Setup (B) Trajectory Viewer (C) Live Blockade Depth Histogram (D) Live Analysis Statistics (E) Event Viewer.</p>
@@ -151,13 +152,13 @@
 </ol>
 </div>
 <div class="section" id="panels-a-b-analysis-setup-and-trajectory-viewer">
-<h2>3.2. Panels A &amp; B: Analysis Setup and Trajectory Viewer<a class="headerlink" href="#panels-a-b-analysis-setup-and-trajectory-viewer" title="Permalink to this headline">¶</a></h2>
+<h2>4.2. Panels A &amp; B: Analysis Setup and Trajectory Viewer<a class="headerlink" href="#panels-a-b-analysis-setup-and-trajectory-viewer" title="Permalink to this headline">¶</a></h2>
 <div class="figure align-center">
 <a class="reference internal image-reference" href="../_images/panelab.png"><img alt="../_images/panelab.png" src="../_images/panelab.png" style="width: 70%;" /></a>
 <p class="caption"><em>Overview of Panels A &amp; B</em>: (A) Analysis setup panel (B) Trajectory viewer panel</p>
 </div>
 <div class="section" id="panel-a-analysis-setup">
-<span id="analysis-setup"></span><h3>3.2.1. Panel A: Analysis Setup<a class="headerlink" href="#panel-a-analysis-setup" title="Permalink to this headline">¶</a></h3>
+<span id="analysis-setup"></span><h3>4.2.1. Panel A: Analysis Setup<a class="headerlink" href="#panel-a-analysis-setup" title="Permalink to this headline">¶</a></h3>
 <p><strong>1. Data Settings</strong></p>
 <ul class="simple">
 <li><strong>Path</strong>: Allows user to set the directory containing files to analyze. Click the &#8221;...&#8221; icon to navigate to the directory.</li>
@@ -199,7 +200,7 @@
 </ul>
 </div>
 <div class="section" id="panel-b-trajectory-viewer">
-<span id="trajectory-viewer"></span><h3>3.2.2. Panel B: Trajectory Viewer<a class="headerlink" href="#panel-b-trajectory-viewer" title="Permalink to this headline">¶</a></h3>
+<span id="trajectory-viewer"></span><h3>4.2.2. Panel B: Trajectory Viewer<a class="headerlink" href="#panel-b-trajectory-viewer" title="Permalink to this headline">¶</a></h3>
 <p>This panel shows a segment of the data time series. The file currently being displayed is shown at the top of the window. If data from multiple files are loaded, the last filename is displayed. The length of time displayed in the window is controlled by <em>BlockSize</em> in Panel A (see #2).</p>
 <p><strong>6.  Time Series (Trajectory)</strong></p>
 <ul class="simple">
@@ -226,22 +227,22 @@
 </div>
 </div>
 <div class="section" id="panels-c-d-e-blockade-depth-histogram-statistics-and-event-viewer">
-<h2>3.3. Panels C,D, &amp; E: Blockade Depth Histogram, Statistics, and Event Viewer<a class="headerlink" href="#panels-c-d-e-blockade-depth-histogram-statistics-and-event-viewer" title="Permalink to this headline">¶</a></h2>
+<h2>4.3. Panels C,D, &amp; E: Blockade Depth Histogram, Statistics, and Event Viewer<a class="headerlink" href="#panels-c-d-e-blockade-depth-histogram-statistics-and-event-viewer" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="panel-c-blockade-depth-histogram">
-<h3>3.3.1. Panel C: Blockade Depth Histogram<a class="headerlink" href="#panel-c-blockade-depth-histogram" title="Permalink to this headline">¶</a></h3>
+<h3>4.3.1. Panel C: Blockade Depth Histogram<a class="headerlink" href="#panel-c-blockade-depth-histogram" title="Permalink to this headline">¶</a></h3>
 <div class="figure align-center">
 <a class="reference internal image-reference" href="../_images/bd_hist.png"><img alt="../_images/bd_hist.png" src="../_images/bd_hist.png" style="width: 50%;" /></a>
 <p class="caption">Blockade depth histogram</p>
 </div>
 <p>This window shows the blockade depth histogram calculated from the meta-data output by <em>MOSAIC</em>.</p>
 <ul class="simple">
-<li><strong>Filter</strong>: The data displayed in the histogram can be restricted to events that fulfill specific user-defined criteria. For instance, the default filter <tt class="docutils literal"><span class="pre">ResTime</span> <span class="pre">&gt;</span> <span class="pre">0.025</span></tt> only includes events longer than 0.025 ms (or 25 <span class="math">\(\mu s\)</span>). The GUI uses a <a class="reference external" href="http://en.wikipedia.org/wiki/SQL">SQL</a> <cite>select</cite> statement to restrict the events included in the histogram. The text in the <em>Filter</em> field represents the part of the query after the <cite>where</cite> clause, and allows the user to use standard <a class="reference external" href="http://en.wikipedia.org/wiki/SQL">SQL</a> syntax to narrow the results in the plot. See the <a class="reference internal" href="DatabaseStructure.html#working-with-sqlite-sec"><em>Work with SQLite</em></a> section for details on <a class="reference external" href="http://en.wikipedia.org/wiki/SQL">SQL</a> syntax.</li>
+<li><strong>Filter</strong>: The data displayed in the histogram can be restricted to events that fulfill specific user-defined criteria. For instance, the default filter <tt class="docutils literal"><span class="pre">ResTime</span> <span class="pre">&gt;</span> <span class="pre">0.025</span></tt> only includes events longer than 0.025 ms (or 25 <span class="math">\(\mu s\)</span>). The GUI uses a <a class="reference external" href="http://en.wikipedia.org/wiki/SQL">SQL</a> <cite>select</cite> statement to restrict the events included in the histogram. The text in the <em>Filter</em> field represents the part of the query after the <cite>where</cite> clause, and allows the user to use standard <a class="reference external" href="http://en.wikipedia.org/wiki/SQL">SQL</a> syntax to narrow the results in the plot. See the <a class="reference internal" href="WorkingWithSQLite.html#working-with-sqlite-sec"><em>Work with SQLite</em></a> section for details on <a class="reference external" href="http://en.wikipedia.org/wiki/SQL">SQL</a> syntax.</li>
 <li><strong>Bins</strong>: The number of bins in the histogram are defined here. By default, 500 bins are used, but the user can change this necessary.</li>
 <li><strong>Detect Peaks</strong>: Checking <em>Detect Peaks</em> enables a wavelet-based peak detection algorithm. The wavelet level slider controls the sensitivity of the peak detection. Sliding it to the right will decrease the number of peaks picked up. The peaks detected are represented with red dots. Mousing over the detected peaks cause the coordinates of the peak to be displayed in the lower right hand corner of the window. The detected peaks can also be exported to a CSV file from the file menu <tt class="docutils literal"><span class="pre">File&gt;Save</span> <span class="pre">Histogram</span></tt>.</li>
 </ul>
 </div>
 <div class="section" id="panel-d-statistics">
-<h3>3.3.2. Panel D: Statistics<a class="headerlink" href="#panel-d-statistics" title="Permalink to this headline">¶</a></h3>
+<h3>4.3.2. Panel D: Statistics<a class="headerlink" href="#panel-d-statistics" title="Permalink to this headline">¶</a></h3>
 <div class="figure align-center">
 <a class="reference internal image-reference" href="../_images/statistics.png"><img alt="../_images/statistics.png" src="../_images/statistics.png" style="width: 40%;" /></a>
 <p class="caption">Live statistics window</p>
@@ -255,7 +256,7 @@
 </ul>
 </div>
 <div class="section" id="panel-e-event-viewer">
-<h3>3.3.3. Panel E: Event Viewer<a class="headerlink" href="#panel-e-event-viewer" title="Permalink to this headline">¶</a></h3>
+<h3>4.3.3. Panel E: Event Viewer<a class="headerlink" href="#panel-e-event-viewer" title="Permalink to this headline">¶</a></h3>
 <div class="figure align-center">
 <a class="reference internal image-reference" href="../_images/event_viewerpng.png"><img alt="../_images/event_viewerpng.png" src="../_images/event_viewerpng.png" style="width: 50%;" /></a>
 <p class="caption">Event viewer window</p>
@@ -263,7 +264,7 @@
 <p>If <em>Write to Disk</em> is enabled, this panel allows you to view the first 10,000 events processed. This is useful to ensure the quality of the analysis and to debug potential problems with the settings.</p>
 </div>
 <div class="section" id="console-log">
-<h3>3.3.4. Console Log<a class="headerlink" href="#console-log" title="Permalink to this headline">¶</a></h3>
+<h3>4.3.4. Console Log<a class="headerlink" href="#console-log" title="Permalink to this headline">¶</a></h3>
 <div class="figure align-center">
 <a class="reference internal image-reference" href="../_images/console.png"><img alt="../_images/console.png" src="../_images/console.png" style="width: 50%;" /></a>
 <p class="caption">Console log window</p>
@@ -271,7 +272,7 @@
 <p>When processing is complete, this panel displays a log of the analysis. This log contains useful information such as the analysis settings, the number of events fit, baseline drift, open channel conducatance, etc. This file is written to the database and can be accessed later.</p>
 </div>
 <div class="section" id="advanced-settings">
-<h3>3.3.5. Advanced Settings<a class="headerlink" href="#advanced-settings" title="Permalink to this headline">¶</a></h3>
+<h3>4.3.5. Advanced Settings<a class="headerlink" href="#advanced-settings" title="Permalink to this headline">¶</a></h3>
 <div class="figure align-center">
 <a class="reference internal image-reference" href="../_images/advanced-settings.png"><img alt="../_images/advanced-settings.png" src="../_images/advanced-settings.png" style="width: 50%;" /></a>
 <p class="caption">Advanced settings window</p>
@@ -299,7 +300,6 @@
   </div>
 </footer> -->
 <div class="footer" style="vertical-align: center" align="center">
-	<small>
 		<table width="95%" style="vertical-align: center">
 			<col width=30%>
 			<col width=70%>
@@ -309,10 +309,9 @@
 					<a href="http://www.nist.gov/cgi-bin/wwwph/cso.nist.gov?Query=Arvind+Balijepalli"><em>Contact</em></a>&nbsp;&nbsp;&nbsp;
 					<a href="Disclaimer.html"><em>Terms of Use</em></a>
 				</td>
-				<td align="right"><em>National Institute of Standards and Technology</em></td>
+				<td align="right"><em>National Institute of Standards and Technology (NIST)</em></td>
 			</tr>
 		</table>
-	</small>
 </div>
 
   </body>
