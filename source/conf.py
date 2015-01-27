@@ -140,6 +140,7 @@ html_theme_options = {
   "bootstrap_version": "3",
 
   'navbar_links': [
+        ("Mailing List", "doc/mailingList"),
         ("Develop MOSAIC", "//github.com/usnistgov/mosaic", True),
         ("Issue Tracker", "//github.com/usnistgov/mosaic/issues", True),
    ],
