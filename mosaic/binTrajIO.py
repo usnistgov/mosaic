@@ -7,6 +7,7 @@ Binary file implementation of metaTrajIO. Read raw binary files with specified r
 	:ChangeLog:
 	.. line-block::
 
+		1/27/15 	AB 	Memory map files on read.
 		1/26/15 	AB 	Refactored code to read interleaved binary data. 
 		7/27/14		AB 	Update interface to specify python PythonStructCode instead of 
 						RecordSize. This will allow any binary file to be decoded
@@ -16,14 +17,14 @@ Binary file implementation of metaTrajIO. Read raw binary files with specified r
 """
 import struct
 
-import metaTrajIO
+import mosaic.metaTrajIO
 
 import numpy as np
 
 class InvalidDataColumnError(Exception):
 	pass
 
-class binTrajIO(metaTrajIO.metaTrajIO):
+class binTrajIO(mosaic.metaTrajIO.metaTrajIO):
 	"""
 		Read a file that contains interleaved binary data, ordered by column. Only a single 
 		column that holds ionic current data is read. The current in pA 
@@ -159,8 +160,8 @@ class binTrajIO(metaTrajIO.metaTrajIO):
 		return fmtstr
 
 	def readBinaryFile(self, fname):
-		return self.transformData(np.fromfile(fname, dtype=self.ColumnTypes)[self.IonicCurrentColumn])
-	
+		return self.transformData(np.memmap(fname, dtype=self.ColumnTypes, mode='r', offset=self.HeaderOffset)[self.IonicCurrentColumn])
+		
 	def transformData(self, data):
 		return np.array(data*self.AmplifierScale-self.AmplifierOffset, dtype=np.float64)
 
