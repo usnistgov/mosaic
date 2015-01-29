@@ -94,6 +94,11 @@
              </item>
              <item>
               <property name="text">
+               <string>BIN</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
                <string>QDF</string>
               </property>
              </item>

@@ -19,6 +19,7 @@ import mosaic.multiStateAnalysis
 
 import mosaic.qdfTrajIO
 import mosaic.abfTrajIO
+import mosaic.binTrajIO
 
 from mosaic.besselLowpassFilter import *
 import mosaic.waveletDenoiseFilter
@@ -126,9 +127,12 @@ class guiDataModel(dict):
 
 		if self["DataFilesType"]=="QDF":
 			keys.extend(["Rfb", "Cfb"])
-			dargs.update({"filter"	: "*.qdf"})
+			dargs.update({"filter"	: self["filter"]})
+		elif self["DataFilesType"]=="BIN":
+			keys.extend(["AmplifierScale", "AmplifierOffset", "SamplingFrequency", "HeaderOffset", "ColumnTypes", "IonicCurrentColumn"])
+			dargs.update({"filter"	: self["filter"]})
 		else:
-			dargs.update({"filter"	: "*.abf"})
+			dargs.update({"filter"	: self["filter"]})
 
 		if self["end"]!=-1.:
 			dargs["end"]=self["end"]
@@ -199,6 +203,8 @@ class guiDataModel(dict):
 				self["ProcessingAlgorithm"]=section
 			elif section in self.filterAlgoKeys.values():
 				self["FilterAlgorithm"]=section
+			elif section in self.dataTypeKeys.values():
+				self["filter"]=vals["filter"]
 
 			# print vals
 			self.update(vals)
@@ -244,7 +250,14 @@ class guiDataModel(dict):
 								"level"					: int,
 								"thresholdType"			: str,
 								"thresholdSubType"		: str,
-								"decimate"				: int
+								"decimate"				: int,
+								"AmplifierScale"		: str,
+								"AmplifierOffset"		: str,
+								"SamplingFrequency"		: int,
+								"HeaderOffset"			: int,
+								"ColumnTypes"			: str,
+								"IonicCurrentColumn"	: str,
+								"filter"				: str
 							}
 		self.eventSegmentKeys={
 								"blockSizeSec" 			: float,
@@ -296,7 +309,14 @@ class guiDataModel(dict):
 								"dcOffset" 				: float,
 								"start" 				: float,
 								"Rfb" 					: float,
-								"Cfb" 					: float
+								"Cfb" 					: float,
+								"AmplifierScale"		: str,
+								"AmplifierOffset"		: str,
+								"SamplingFrequency"		: int,
+								"HeaderOffset"			: int,
+								"ColumnTypes"			: str,
+								"IonicCurrentColumn"	: str,
+								"filter"				: str
 							}
 		self.eventPartitionAlgoKeys={
 								"CurrentThreshold" 		: "eventSegment"
@@ -312,11 +332,13 @@ class guiDataModel(dict):
 		}
 		self.dataTypeKeys={
 								"QDF" 					: "qdfTrajIO",
-								"ABF" 					: "abfTrajIO"
+								"ABF" 					: "abfTrajIO",
+								"BIN" 					: "binTrajIO"
 							}
 		self.analysisSetupKeys={
 								"QDF" 					: mosaic.qdfTrajIO.qdfTrajIO,
 								"ABF" 					: mosaic.abfTrajIO.abfTrajIO,
+								"BIN" 					: mosaic.binTrajIO.binTrajIO,
 								"SingleChannelAnalysis" : mosaic.SingleChannelAnalysis.SingleChannelAnalysis,
 								"CurrentThreshold" 		: mosaic.eventSegment.eventSegment,
 								"stepResponseAnalysis" 	: mosaic.stepResponseAnalysis.stepResponseAnalysis,

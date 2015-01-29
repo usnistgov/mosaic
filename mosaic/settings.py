@@ -120,6 +120,17 @@ __settings__="""
 			"dcOffset": 0.0, 
 			"filter": "*.qdf", 
 			"start": 0.0
+		},
+		"binTrajIO": {
+			"AmplifierScale": "1.0", 
+			"AmplifierOffset": "0.0", 
+			"SamplingFrequency": "50000",
+			"HeaderOffset": "0",
+			"ColumnTypes": "[('curr_pA', 'float64')]",
+			"IonicCurrentColumn" : "curr_pA",
+			"dcOffset": "0.0", 
+			"filter": "*.bin", 
+			"start": "0.0"
 		}
 	}
 """

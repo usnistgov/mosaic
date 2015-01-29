@@ -9,6 +9,7 @@ from PyQt4 import QtCore, QtGui, uic
 
 import mosaic.abfTrajIO as abf
 import mosaic.qdfTrajIO as qdf
+import mosaic.binTrajIO as bin
 from mosaic.metaTrajIO import FileNotFoundError, EmptyDataPipeError
 from mosaic.utilities.resource_path import resource_path
 from mosaic.utilities.ionic_current_stats import OpenCurrentDist
@@ -94,6 +95,16 @@ class TrajectoryWindow(QtGui.QDialog):
 					self.IOArgs["filter"]="*qdf"
 					self.IOArgs["Rfb"]=self.datadict["Rfb"]
 					self.IOArgs["Cfb"]=self.datadict["Cfb"]
+				elif self.datadict["DataFilesType"] ==  "BIN":
+					self.iohnd=bin.binTrajIO
+					self.IOArgs["filter"]="*bin"
+
+					self.IOArgs["AmplifierScale"]=self.datadict["AmplifierScale"]
+					self.IOArgs["AmplifierOffset"]=self.datadict["AmplifierOffset"]
+					self.IOArgs["SamplingFrequency"]=self.datadict["SamplingFrequency"]
+					self.IOArgs["ColumnTypes"]=self.datadict["ColumnTypes"]
+					self.IOArgs["IonicCurrentColumn"]=self.datadict["IonicCurrentColumn"]
+					self.IOArgs["HeaderOffset"]=self.datadict["HeaderOffset"]
 				else:
 					self.iohnd=abf.abfTrajIO	
 
@@ -206,7 +217,7 @@ class TrajectoryWindow(QtGui.QDialog):
 						color=cd,
 						orientation='horizontal'
 					)
-				else:
+				else:					
 					c='#%02x%02x%02x' % (72,91,144)
 					self.mpl_hist.canvas.ax.cla()
 					self.mpl_hist.canvas.ax.plot( xdat, ydat, color=c, markersize='1.')
@@ -238,7 +249,7 @@ class TrajectoryWindow(QtGui.QDialog):
 				plt.setp( self.mpl_hist.canvas.ax2.get_yticklabels(), visible=False)
 				
 
-				ilabel={1:'i', -1:'-i'}[int(datasign)]
+				ilabel={1:'i', -1:'-i', 0:'i'}[int(datasign)]
 				self.mpl_hist.canvas.ax.set_xlabel('t (s)', fontsize=12)
 				self.mpl_hist.canvas.ax.set_ylabel(ilabel+' (pA)', fontsize=12)
 			
