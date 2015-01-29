@@ -155,10 +155,16 @@ class settingsview(QtGui.QMainWindow):
 		path=model["DataFilesPath"] 
 		if len(glob.glob(format_path( str(path)+'/*qdf') )) > 0:
 			self.datTypeComboBox.setCurrentIndex( datidx["QDF"] )
+			model["filter"]="*.qdf"
 		elif len(glob.glob( format_path(str(path)+'/*abf') )) > 0:
 			self.datTypeComboBox.setCurrentIndex( datidx["ABF"] )
-		elif len(glob.glob( format_path(str(path)+'/*bin') )) > 0 or len(glob.glob( format_path(str(path)+'/*dat') )) > 0:
+			model["filter"]="*.abf"
+		elif len(glob.glob( format_path(str(path)+'/*bin') )) > 0:
 			self.datTypeComboBox.setCurrentIndex( datidx["BIN"] )
+			model["filter"]="*.bin"
+		elif len(glob.glob( format_path(str(path)+'/*dat') )) > 0:
+			self.datTypeComboBox.setCurrentIndex( datidx["BIN"] )
+			model["filter"]="*.dat"
 
 		# store the  data type in the trajviewer data struct
 		model["DataFilesType"] = str(self.datTypeComboBox.currentText())

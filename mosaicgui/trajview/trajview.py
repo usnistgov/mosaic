@@ -97,7 +97,6 @@ class TrajectoryWindow(QtGui.QDialog):
 					self.IOArgs["Cfb"]=self.datadict["Cfb"]
 				elif self.datadict["DataFilesType"] ==  "BIN":
 					self.iohnd=bin.binTrajIO
-					self.IOArgs["filter"]="*bin"
 
 					self.IOArgs["AmplifierScale"]=self.datadict["AmplifierScale"]
 					self.IOArgs["AmplifierOffset"]=self.datadict["AmplifierOffset"]
@@ -143,6 +142,7 @@ class TrajectoryWindow(QtGui.QDialog):
 			QtGui.QMessageBox.warning(self, "Path Error","Data path not set")
 			raise
 		except FileNotFoundError:
+			print self.IOArgs
 			QtGui.QMessageBox.warning(self, "Data Error", "No data files found in " + path)
 		except:
 			raise
