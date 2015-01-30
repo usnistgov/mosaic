@@ -2,7 +2,7 @@
 Binary file implementation of metaTrajIO. Read raw binary files with specified record sizes
 
 	:Created: 4/22/2013
- 	:Author: 	Arvind Balijepalli <arvind.balijepalli@nist.gov>
+	:Author: 	Arvind Balijepalli <arvind.balijepalli@nist.gov>
 	:License:	See LICENSE.TXT
 	:ChangeLog:
 	.. line-block::
@@ -68,9 +68,43 @@ class binTrajIO(mosaic.metaTrajIO.metaTrajIO):
 						"IonicCurrentColumn" : "curr_pA",
 						"dcOffset": "0.0", 
 						"filter": "*.bin", 
-						"start": "0.0"
-					} 
+						"start": "0.0",
+						"HeaderOffset": 0 
+					}
+		
+		:Settings Examples:
 
+			Read 16-bit signed integers (big endian) with a 512 byte header offset. Set the amplifier scale to 400 pA, sampling rate to 200 kHz.
+
+				.. code-block:: javascript
+
+					"binTrajIO": {
+						"AmplifierOffset": "0.0", 
+						"SamplingFrequency": 200000, 
+						"AmplifierScale": "400./2**16", 
+						"ColumnTypes": "[('curr_pA', '>i2')]", 
+						"dcOffset": 0.0, 
+						"filter": "*.dat", 
+						"start": 0.0, 
+						"HeaderOffset": 512, 
+						"IonicCurrentColumn": "curr_pA"
+					}
+
+			Read a two-column file: 64-bit floating point and 64-bit integers, and no header offset. Set the amplifier scale to 1 and sampling rate to 200 kHz.
+
+				.. code-block:: javascript
+
+					"binTrajIO": {
+						"AmplifierOffset": "0.0", 
+						"SamplingFrequency": 200000, 
+						"AmplifierScale": "1.0", 
+						"ColumnTypes" : "[('curr_pA', 'float64'), ('AD_V', 'int64')]",
+						"dcOffset": 0.0, 
+						"filter": "*.bin", 
+						"start": 0.0, 
+						"HeaderOffset": 0, 
+						"IonicCurrentColumn": "curr_pA"
+					}
 
 		:Parameters:
 				In addition to :class:`~mosaic.metaTrajIO.metaTrajIO` args,
