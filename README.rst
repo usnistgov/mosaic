@@ -25,6 +25,12 @@ You can `contact MOSAIC developers <http://www.nist.gov/cgi-bin/wwwph/cso.nist.g
 Change Log
 =================================
 
+**v1.2**
+
+Added support for arbitrary binary file formats (#33)
+[GUI] Included binary file support.
+Documentation updates and bug fixes.
+
 **v1.1**
 
 - [Addons] IGOR_ support.
