@@ -1,4 +1,4 @@
 <map id="inheritancee54b23a53e" name="inheritancee54b23a53e">
 <area shape="rect" id="node1" href="mosaic.meta.html#mosaic.metaTrajIO.metaTrajIO" title=".. warning:: |metaclass|" alt="" coords="6,5,165,30"/>
-<area shape="rect" id="node2" href="#mosaic.qdfTrajIO.qdfTrajIO" title="In addition to the base class init, check if the " alt="" coords="214,5,351,30"/>
+<area shape="rect" id="node2" href="#mosaic.qdfTrajIO.qdfTrajIO" title="Use the readqdf module from EBS to read individual QDF files." alt="" coords="214,5,351,30"/>
 </map>

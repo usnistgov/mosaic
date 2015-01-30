@@ -5,7 +5,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>mosaic.binTrajIO &mdash; MOSAIC 1.1 documentation</title>
+    <title>mosaic.binTrajIO &mdash; MOSAIC 1.2 documentation</title>
     
     <link rel="stylesheet" href="../../_static/basic.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
@@ -17,7 +17,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
-        VERSION:     '1.1',
+        VERSION:     '1.2',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -32,7 +32,7 @@
     <script type="text/javascript" src="../../_static/bootstrap-3.2.0/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="../../_static/bootstrap-sphinx.js"></script>
     <link rel="shortcut icon" href="../../_static/favicon.ico"/>
-    <link rel="top" title="MOSAIC 1.1 documentation" href="../../index.html" />
+    <link rel="top" title="MOSAIC 1.2 documentation" href="../../index.html" />
     <link rel="up" title="Module code" href="../index.html" />
 
 <meta charset='utf-8'>
@@ -60,7 +60,7 @@
         </button>
         <a class="navbar-brand" href="../../index.html"><img src="../../_static/icon_24.png">
            </a>
-        <span class="navbar-text navbar-version pull-left"><b>1.1</b></span>
+        <span class="navbar-text navbar-version pull-left"><b>1.2</b></span>
       </div>
 
         <div class="collapse navbar-collapse nav-collapse">
@@ -129,10 +129,13 @@
 <span class="sd">Binary file implementation of metaTrajIO. Read raw binary files with specified record sizes</span>
 
 <span class="sd">	:Created: 4/22/2013</span>
-<span class="sd"> 	:Author: 	Arvind Balijepalli &lt;arvind.balijepalli@nist.gov&gt;</span>
+<span class="sd">	:Author: 	Arvind Balijepalli &lt;arvind.balijepalli@nist.gov&gt;</span>
 <span class="sd">	:License:	See LICENSE.TXT</span>
 <span class="sd">	:ChangeLog:</span>
 <span class="sd">	.. line-block::</span>
+
+<span class="sd">		1/27/15 	AB 	Memory map files on read.</span>
+<span class="sd">		1/26/15 	AB 	Refactored code to read interleaved binary data. </span>
 <span class="sd">		7/27/14		AB 	Update interface to specify python PythonStructCode instead of </span>
 <span class="sd">						RecordSize. This will allow any binary file to be decoded</span>
 <span class="sd">						The AmplifierScale and AmplifierOffset are set to 1 and 0</span>
@@ -141,47 +144,142 @@
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="kn">import</span> <span class="nn">struct</span>
 
-<span class="kn">import</span> <span class="nn">metaTrajIO</span>
+<span class="kn">import</span> <span class="nn">mosaic.metaTrajIO</span>
 
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
 
-<span class="k">class</span> <span class="nc">InvalidPythonStructCodeError</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
+<span class="k">class</span> <span class="nc">InvalidDataColumnError</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
 	<span class="k">pass</span>
 
-<div class="viewcode-block" id="binTrajIO"><a class="viewcode-back" href="../../api-doc/mosaic.traj.html#mosaic.binTrajIO.binTrajIO">[docs]</a><span class="k">class</span> <span class="nc">binTrajIO</span><span class="p">(</span><span class="n">metaTrajIO</span><span class="o">.</span><span class="n">metaTrajIO</span><span class="p">):</span>
+<div class="viewcode-block" id="binTrajIO"><a class="viewcode-back" href="../../api-doc/mosaic.traj.html#mosaic.binTrajIO.binTrajIO">[docs]</a><span class="k">class</span> <span class="nc">binTrajIO</span><span class="p">(</span><span class="n">mosaic</span><span class="o">.</span><span class="n">metaTrajIO</span><span class="o">.</span><span class="n">metaTrajIO</span><span class="p">):</span>
 	<span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">		Read a binary file that contains single channel ionic current data and calculate the current in pA </span>
-<span class="sd">		after scaling by the amplifier scale factor and removing any offsets.</span>
+<span class="sd">		Read a file that contains interleaved binary data, ordered by column. Only a single </span>
+<span class="sd">		column that holds ionic current data is read. The current in pA </span>
+<span class="sd">		is returned after scaling by the amplifier scale factor (``AmplifierScale``) and </span>
+<span class="sd">		removing any offsets (``AmplifierOffset``) if provided.</span>
+
+<span class="sd">		:Usage and Assumptions:</span>
+
+<span class="sd">				Binary data is interleaved by column. For three columns (*a*, *b*, and *c*) and *N* rows, </span>
+<span class="sd">				binary data is assumed to be of the form:</span>
+
+<span class="sd">					[ a_1, b_1, c_1, a_2, b_2, c_2, ... ... ..., a_N, b_N, c_N ]</span>
+
+<span class="sd">				The column layout is specified with the ``ColumnTypes`` parameter, which accepts a list of tuples. </span>
+<span class="sd">				For the example above, if column **a** is the ionic current in a 64-bit floating point format, </span>
+<span class="sd">				column **b** is the ionic current representation in 16-bit integer format and column **c** is </span>
+<span class="sd">				an index in 16-bit integer format, the ``ColumnTypes`` paramter is a list with three </span>
+<span class="sd">				tuples, one for each column, as shown below:</span>
+
+<span class="sd">					[(&#39;curr_pA&#39;, &#39;float64&#39;), (&#39;AD_V&#39;, &#39;int16&#39;), (&#39;index&#39;, &#39;int16&#39;)]</span>
+
+<span class="sd">				The first element of each tuple is an arbitrary text label and the second element is </span>
+<span class="sd">				a valid `Numpy type &lt;http://docs.scipy.org/doc/numpy/user/basics.types.html&gt;`_.</span>
+
+<span class="sd">				Finally, the ``IonicCurrentColumn`` parameter holds the name (text label defined above) of the </span>
+<span class="sd">				column that holds the ionic current time-series. Note that if an integer column is selected, </span>
+<span class="sd">				the ``AmplifierScale`` and ``AmplifierOffset`` parameters can be used to convert the voltage from </span>
+<span class="sd">				the A/D to a current.</span>
+
+<span class="sd">				Assuming that we use a floating point representation of the ionic current, and</span>
+<span class="sd">				a sampling rate of 50 kHz, a settings section that will read the binary file format </span>
+<span class="sd">				defined above is:</span>
+
+<span class="sd">				.. code-block:: javascript</span>
+
+<span class="sd">					&quot;binTrajIO&quot;: {</span>
+<span class="sd">						&quot;AmplifierScale&quot; : &quot;1&quot;,</span>
+<span class="sd">						&quot;AmplifierOffset&quot; : &quot;0&quot;,</span>
+<span class="sd">						&quot;SamplingFrequency&quot; : &quot;50000&quot;,</span>
+<span class="sd">						&quot;ColumnTypes&quot; : &quot;[(&#39;curr_pA&#39;, &#39;float64&#39;), (&#39;AD_V&#39;, &#39;int16&#39;), (&#39;index&#39;, &#39;int16&#39;)]&quot;,</span>
+<span class="sd">						&quot;IonicCurrentColumn&quot; : &quot;curr_pA&quot;,</span>
+<span class="sd">						&quot;dcOffset&quot;: &quot;0.0&quot;, </span>
+<span class="sd">						&quot;filter&quot;: &quot;*.bin&quot;, </span>
+<span class="sd">						&quot;start&quot;: &quot;0.0&quot;,</span>
+<span class="sd">						&quot;HeaderOffset&quot;: 0 </span>
+<span class="sd">					}</span>
+<span class="sd">		</span>
+<span class="sd">		:Settings Examples:</span>
+
+<span class="sd">			Read 16-bit signed integers (big endian) with a 512 byte header offset. Set the amplifier scale to 400 pA, sampling rate to 200 kHz.</span>
+
+<span class="sd">				.. code-block:: javascript</span>
+
+<span class="sd">					&quot;binTrajIO&quot;: {</span>
+<span class="sd">						&quot;AmplifierOffset&quot;: &quot;0.0&quot;, </span>
+<span class="sd">						&quot;SamplingFrequency&quot;: 200000, </span>
+<span class="sd">						&quot;AmplifierScale&quot;: &quot;400./2**16&quot;, </span>
+<span class="sd">						&quot;ColumnTypes&quot;: &quot;[(&#39;curr_pA&#39;, &#39;&gt;i2&#39;)]&quot;, </span>
+<span class="sd">						&quot;dcOffset&quot;: 0.0, </span>
+<span class="sd">						&quot;filter&quot;: &quot;*.dat&quot;, </span>
+<span class="sd">						&quot;start&quot;: 0.0, </span>
+<span class="sd">						&quot;HeaderOffset&quot;: 512, </span>
+<span class="sd">						&quot;IonicCurrentColumn&quot;: &quot;curr_pA&quot;</span>
+<span class="sd">					}</span>
+
+<span class="sd">			Read a two-column file: 64-bit floating point and 64-bit integers, and no header offset. Set the amplifier scale to 1 and sampling rate to 200 kHz.</span>
+
+<span class="sd">				.. code-block:: javascript</span>
+
+<span class="sd">					&quot;binTrajIO&quot;: {</span>
+<span class="sd">						&quot;AmplifierOffset&quot;: &quot;0.0&quot;, </span>
+<span class="sd">						&quot;SamplingFrequency&quot;: 200000, </span>
+<span class="sd">						&quot;AmplifierScale&quot;: &quot;1.0&quot;, </span>
+<span class="sd">						&quot;ColumnTypes&quot; : &quot;[(&#39;curr_pA&#39;, &#39;float64&#39;), (&#39;AD_V&#39;, &#39;int64&#39;)]&quot;,</span>
+<span class="sd">						&quot;dcOffset&quot;: 0.0, </span>
+<span class="sd">						&quot;filter&quot;: &quot;*.bin&quot;, </span>
+<span class="sd">						&quot;start&quot;: 0.0, </span>
+<span class="sd">						&quot;HeaderOffset&quot;: 0, </span>
+<span class="sd">						&quot;IonicCurrentColumn&quot;: &quot;curr_pA&quot;</span>
+<span class="sd">					}</span>
 
 <span class="sd">		:Parameters:</span>
-<span class="sd">				In addition to metaTrajIO.__init__ args,</span>
-<span class="sd">					- `AmplifierScale` :		full scale of amplifier (in pA) that varies with the gain</span>
-<span class="sd">					- `AmplifierOffset` :		current offset in the recorded data</span>
-<span class="sd">					- `SamplingFrequency` :	sampling rate of data in the file in Hz</span>
-<span class="sd">					- `HeaderOffset` :		ignore first &#39;n&#39; bytes of the file for header (default: 0 bytes).</span>
-<span class="sd">					- `PythonStructCode` :	Single character code for a python struct (see `Python struct docs &lt;https://docs.python.org/2/library/struct.html&gt;`_).</span>
-<span class="sd">			Returns:</span>
+<span class="sd">				In addition to :class:`~mosaic.metaTrajIO.metaTrajIO` args,</span>
+<span class="sd">					- `AmplifierScale` :		Full scale of amplifier (pA/2^nbits) that varies with the gain (default: 1.0).</span>
+<span class="sd">					- `AmplifierOffset` :		Current offset in the recorded data in pA  (default: 0.0).</span>
+<span class="sd">					- `SamplingFrequency` :	Sampling rate of data in the file in Hz.</span>
+<span class="sd">					- `HeaderOffset` :		Ignore first *n* bytes of the file for header (default: 0 bytes).</span>
+<span class="sd">					- `ColumnTypes` :	A list of tuples with column names and types (see `Numpy types &lt;http://docs.scipy.org/doc/numpy/user/basics.types.html&gt;`_). Note only integer and floating point numbers are supported.</span>
+<span class="sd">					- `IonicCurrentColumn` : Column name that holds ionic current data.</span>
+<span class="sd">		:Returns:</span>
 <span class="sd">				None</span>
-<span class="sd">			Errors:</span>
-<span class="sd">				- `InsufficientArgumentsError` : if the mandatory arguments Rfb and Cfb are not set</span>
+<span class="sd">		:Errors:</span>
+<span class="sd">				None</span>
 <span class="sd">	&quot;&quot;&quot;</span>
 	<span class="k">def</span> <span class="nf">_init</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
 		<span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s">&#39;SamplingFrequency&#39;</span><span class="p">):</span>
 			<span class="k">raise</span> <span class="n">metaTrajIO</span><span class="o">.</span><span class="n">InsufficientArgumentsError</span><span class="p">(</span><span class="s">&quot;{0} requires the sampling rate in Hz to be defined.&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__name__</span><span class="p">))</span>
-		<span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s">&#39;PythonStructCode&#39;</span><span class="p">):</span>
-			<span class="k">raise</span> <span class="n">metaTrajIO</span><span class="o">.</span><span class="n">InsufficientArgumentsError</span><span class="p">(</span><span class="s">&quot;{0} requires the Python struct code to be defined.&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__name__</span><span class="p">))</span>
 
+		<span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s">&#39;ColumnTypes&#39;</span><span class="p">):</span>
+			<span class="k">raise</span> <span class="n">metaTrajIO</span><span class="o">.</span><span class="n">InsufficientArgumentsError</span><span class="p">(</span><span class="s">&quot;{0} requires the column types to be defined.&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__name__</span><span class="p">))</span>
+		<span class="k">else</span><span class="p">:</span>
+			<span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ColumnTypes</span><span class="p">)</span> <span class="ow">is</span> <span class="nb">str</span> <span class="ow">or</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ColumnTypes</span><span class="p">)</span> <span class="ow">is</span> <span class="nb">unicode</span><span class="p">:</span> 
+				<span class="bp">self</span><span class="o">.</span><span class="n">ColumnTypes</span><span class="o">=</span><span class="nb">eval</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ColumnTypes</span><span class="p">)</span>
+		
+		<span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s">&#39;IonicCurrentColumn&#39;</span><span class="p">):</span>
+			<span class="k">raise</span> <span class="n">metaTrajIO</span><span class="o">.</span><span class="n">InsufficientArgumentsError</span><span class="p">(</span><span class="s">&quot;{0} requires the ionic current column to be defined.&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__name__</span><span class="p">))</span>
+		
 		<span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s">&#39;HeaderOffset&#39;</span><span class="p">):</span>
 			<span class="bp">self</span><span class="o">.</span><span class="n">HeaderOffset</span><span class="o">=</span><span class="mi">0</span>
 
-		<span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s">&#39;AmplifierScale&#39;</span><span class="p">)</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">PythonStructCode</span> <span class="ow">in</span> <span class="p">[</span><span class="s">&#39;h&#39;</span><span class="p">,</span> <span class="s">&#39;H&#39;</span><span class="p">,</span> <span class="s">&#39;i&#39;</span><span class="p">,</span> <span class="s">&#39;I&#39;</span><span class="p">,</span> <span class="s">&#39;l&#39;</span><span class="p">,</span> <span class="s">&#39;L&#39;</span><span class="p">,</span> <span class="s">&#39;q&#39;</span><span class="p">,</span> <span class="s">&#39;Q&#39;</span><span class="p">]:</span>
-			<span class="k">raise</span> <span class="n">metaTrajIO</span><span class="o">.</span><span class="n">InsufficientArgumentsError</span><span class="p">(</span><span class="s">&quot;{0} requires the amplifier scale in pA to be defined.&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__name__</span><span class="p">))</span>
-		<span class="k">else</span><span class="p">:</span>
+		<span class="k">try</span><span class="p">:</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">IonicCurrentType</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ColumnTypes</span><span class="p">)[</span><span class="bp">self</span><span class="o">.</span><span class="n">IonicCurrentColumn</span><span class="p">]</span>
+		<span class="k">except</span> <span class="ne">KeyError</span><span class="p">,</span> <span class="n">err</span><span class="p">:</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">IonicCurrentColumn</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">ColumnTypes</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">IonicCurrentType</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">ColumnTypes</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span>
+
+			<span class="k">print</span> <span class="s">&quot;IonicCurrentColumn {0} not found. Defaulting to {1}.&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">err</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">IonicCurrentColumn</span><span class="p">)</span>
+
+
+		<span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s">&#39;AmplifierScale&#39;</span><span class="p">):</span>
 			<span class="bp">self</span><span class="o">.</span><span class="n">AmplifierScale</span><span class="o">=</span><span class="mf">1.0</span>
-		<span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s">&#39;AmplifierOffset&#39;</span><span class="p">)</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">PythonStructCode</span> <span class="ow">in</span> <span class="p">[</span><span class="s">&#39;h&#39;</span><span class="p">,</span> <span class="s">&#39;H&#39;</span><span class="p">,</span> <span class="s">&#39;i&#39;</span><span class="p">,</span> <span class="s">&#39;I&#39;</span><span class="p">,</span> <span class="s">&#39;l&#39;</span><span class="p">,</span> <span class="s">&#39;L&#39;</span><span class="p">,</span> <span class="s">&#39;q&#39;</span><span class="p">,</span> <span class="s">&#39;Q&#39;</span><span class="p">]:</span>
-			<span class="k">raise</span> <span class="n">metaTrajIO</span><span class="o">.</span><span class="n">InsufficientArgumentsError</span><span class="p">(</span><span class="s">&quot;{0} requires the amplifier offset in pA to be defined.&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__name__</span><span class="p">))</span>
 		<span class="k">else</span><span class="p">:</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">AmplifierScale</span><span class="o">=</span><span class="nb">float</span><span class="p">(</span><span class="nb">eval</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">AmplifierScale</span><span class="p">))</span>
+
+		<span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s">&#39;AmplifierOffset&#39;</span><span class="p">):</span> 
 			<span class="bp">self</span><span class="o">.</span><span class="n">AmplifierOffset</span><span class="o">=</span><span class="mf">0.0</span>
+		<span class="k">else</span><span class="p">:</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">AmplifierOffset</span><span class="o">=</span><span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">AmplifierOffset</span><span class="p">)</span>
 
 		<span class="c"># additional meta data</span>
 		<span class="bp">self</span><span class="o">.</span><span class="n">fileFormat</span><span class="o">=</span><span class="s">&#39;bin&#39;</span>
@@ -189,8 +287,6 @@
 		<span class="c"># set the sampling frequency in Hz.</span>
 		<span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s">&#39;Fs&#39;</span><span class="p">):</span>	
 			<span class="bp">self</span><span class="o">.</span><span class="n">Fs</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">SamplingFrequency</span>
-
-		<span class="bp">self</span><span class="o">.</span><span class="n">IntegerBits</span><span class="o">=</span><span class="p">{</span><span class="s">&#39;h&#39;</span><span class="p">:</span><span class="mi">2</span><span class="p">,</span> <span class="s">&#39;H&#39;</span><span class="p">:</span><span class="mi">2</span><span class="p">,</span> <span class="s">&#39;i&#39;</span><span class="p">:</span><span class="mi">4</span><span class="p">,</span> <span class="s">&#39;I&#39;</span><span class="p">:</span><span class="mi">4</span><span class="p">,</span> <span class="s">&#39;l&#39;</span><span class="p">:</span><span class="mi">4</span><span class="p">,</span> <span class="s">&#39;L&#39;</span><span class="p">:</span><span class="mi">4</span><span class="p">,</span> <span class="s">&#39;q&#39;</span><span class="p">:</span><span class="mi">8</span><span class="p">,</span> <span class="s">&#39;Q&#39;</span><span class="p">:</span><span class="mi">8</span><span class="p">,</span> <span class="s">&#39;f&#39;</span><span class="p">:</span><span class="mi">4</span><span class="p">,</span> <span class="s">&#39;d&#39;</span><span class="p">:</span><span class="mi">8</span><span class="p">}</span>
 
 <div class="viewcode-block" id="binTrajIO.readdata"><a class="viewcode-back" href="../../api-doc/mosaic.traj.html#mosaic.binTrajIO.binTrajIO.readdata">[docs]</a>	<span class="k">def</span> <span class="nf">readdata</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fname</span><span class="p">):</span>
 		<span class="sd">&quot;&quot;&quot;</span>
@@ -220,45 +316,28 @@
 		<span class="n">fmtstr</span><span class="o">+=</span><span class="s">&#39;</span><span class="se">\n\t\t</span><span class="s">Amplifier scale = {0} pA</span><span class="se">\n</span><span class="s">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">AmplifierScale</span><span class="p">)</span>
 		<span class="n">fmtstr</span><span class="o">+=</span><span class="s">&#39;</span><span class="se">\t\t</span><span class="s">Amplifier offset = {0} pA</span><span class="se">\n</span><span class="s">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">AmplifierOffset</span><span class="p">)</span>
 		<span class="n">fmtstr</span><span class="o">+=</span><span class="s">&#39;</span><span class="se">\t\t</span><span class="s">Header offset = {0} bytes</span><span class="se">\n</span><span class="s">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">HeaderOffset</span><span class="p">)</span>
-		<span class="n">fmtstr</span><span class="o">+=</span><span class="s">&#39;</span><span class="se">\t\t</span><span class="s">Data type code = </span><span class="se">\&#39;</span><span class="s">{0}</span><span class="se">\&#39;\n</span><span class="s">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">PythonStructCode</span><span class="p">)</span>
+		<span class="n">fmtstr</span><span class="o">+=</span><span class="s">&#39;</span><span class="se">\t\t</span><span class="s">Data type = </span><span class="se">\&#39;</span><span class="s">{0}</span><span class="se">\&#39;\n</span><span class="s">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">IonicCurrentType</span><span class="p">)</span>
 	
 		<span class="k">return</span> <span class="n">fmtstr</span>
 
 	<span class="k">def</span> <span class="nf">readBinaryFile</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fname</span><span class="p">):</span>
-		<span class="n">CHUNKSIZE</span><span class="o">=</span><span class="mi">4096</span>
+		<span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">transformData</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">memmap</span><span class="p">(</span><span class="n">fname</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">ColumnTypes</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s">&#39;r&#39;</span><span class="p">,</span> <span class="n">offset</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">HeaderOffset</span><span class="p">)[</span><span class="bp">self</span><span class="o">.</span><span class="n">IonicCurrentColumn</span><span class="p">])</span>
+		
+	<span class="k">def</span> <span class="nf">transformData</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+		<span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">data</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">AmplifierScale</span><span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">AmplifierOffset</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
+</div>
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
+	<span class="kn">from</span> <span class="nn">mosaic.utilities.resource_path</span> <span class="kn">import</span> <span class="n">resource_path</span>
 
-		<span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">PythonStructCode</span> <span class="ow">in</span> <span class="p">[</span><span class="s">&#39;f&#39;</span><span class="p">,</span> <span class="s">&#39;d&#39;</span><span class="p">]:</span>
-			<span class="n">scale</span><span class="o">=</span><span class="mi">1</span>
-			<span class="n">offset</span><span class="o">=</span><span class="mi">0</span>
-		<span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">PythonStructCode</span> <span class="ow">in</span> <span class="p">[</span><span class="s">&#39;h&#39;</span><span class="p">,</span> <span class="s">&#39;H&#39;</span><span class="p">,</span> <span class="s">&#39;i&#39;</span><span class="p">,</span> <span class="s">&#39;I&#39;</span><span class="p">,</span> <span class="s">&#39;l&#39;</span><span class="p">,</span> <span class="s">&#39;L&#39;</span><span class="p">,</span> <span class="s">&#39;q&#39;</span><span class="p">,</span> <span class="s">&#39;Q&#39;</span><span class="p">]:</span>
-			<span class="n">bits</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">IntegerBits</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">PythonStructCode</span><span class="p">]</span><span class="o">*</span><span class="mi">8</span>
-			<span class="n">scale</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">AmplifierScale</span><span class="o">/</span><span class="p">(</span><span class="mi">2</span><span class="o">**</span><span class="n">bits</span><span class="p">)</span>
-			<span class="n">offset</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">AmplifierOffset</span>
-		<span class="k">else</span><span class="p">:</span>
-			<span class="k">raise</span> <span class="n">InvalidPythonStructCodeError</span><span class="p">(</span><span class="s">&quot;Invalid Python struct code.&quot;</span><span class="p">)</span>
-
-		<span class="n">binfile</span><span class="o">=</span><span class="nb">open</span><span class="p">(</span><span class="n">fname</span><span class="p">,</span> <span class="s">&#39;rb&#39;</span><span class="p">)</span>
-
-		<span class="c"># Discard self.HeaderOffset bytes to remove the header</span>
-		<span class="n">binfile</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">HeaderOffset</span><span class="p">)</span>
-
-		<span class="n">parsedat</span><span class="o">=</span><span class="p">[]</span>
-		<span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
-			<span class="n">bd</span><span class="o">=</span><span class="n">binfile</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">CHUNKSIZE</span><span class="p">)</span>
-			<span class="k">if</span> <span class="n">bd</span><span class="o">==</span><span class="s">&quot;&quot;</span><span class="p">:</span>	<span class="c">#EOF</span>
-				<span class="k">break</span>
-
-			<span class="c"># read and parse the rest of the data</span>
-			<span class="n">parsedat</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span> <span class="bp">self</span><span class="o">.</span><span class="n">parseChunk</span><span class="p">(</span> <span class="n">bd</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">PythonStructCode</span><span class="p">,</span> <span class="n">scale</span><span class="p">,</span> <span class="n">offset</span> <span class="p">)</span> <span class="p">)</span>
-
-		<span class="n">binfile</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
-
-		<span class="k">return</span> <span class="n">parsedat</span>
-
-	<span class="k">def</span> <span class="nf">parseChunk</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dat</span><span class="p">,</span> <span class="n">structcode</span><span class="p">,</span> <span class="n">scale</span><span class="p">,</span> <span class="n">offset</span><span class="p">):</span>
-		<span class="n">pdat</span><span class="o">=</span><span class="n">struct</span><span class="o">.</span><span class="n">unpack</span><span class="p">(</span><span class="s">&#39;&lt;&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">dat</span><span class="p">)</span><span class="o">/</span><span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">IntegerBits</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">PythonStructCode</span><span class="p">])))</span> <span class="o">+</span> <span class="n">structcode</span><span class="p">,</span> <span class="n">dat</span><span class="p">)</span>
-
-		<span class="k">return</span> <span class="p">[</span> <span class="n">dat</span><span class="o">*</span><span class="n">scale</span><span class="o">-</span><span class="n">offset</span> <span class="k">for</span> <span class="n">dat</span> <span class="ow">in</span> <span class="n">pdat</span> <span class="p">]</span></div>
+	<span class="k">print</span> <span class="n">binTrajIO</span><span class="p">(</span>
+			<span class="n">fnames</span><span class="o">=</span><span class="p">[</span><span class="s">&#39;data/SingleChan-0001_1.bin&#39;</span><span class="p">],</span> 
+			<span class="n">dcOffset</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> 
+			<span class="n">start</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> 
+			<span class="n">ColumnTypes</span><span class="o">=</span><span class="p">[(</span><span class="s">&#39;curr&#39;</span><span class="p">,</span> <span class="s">&#39;float64&#39;</span><span class="p">)],</span> 
+			<span class="n">IonicCurrentColumn</span><span class="o">=</span><span class="s">&#39;curr&#39;</span><span class="p">,</span> 
+			<span class="n">HeaderOffset</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> 
+			<span class="n">SamplingFrequency</span><span class="o">=</span><span class="mi">500000</span>
+		<span class="p">)</span><span class="o">.</span><span class="n">popdata</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
 </pre></div>
 
     </div>

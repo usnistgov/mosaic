@@ -1,4 +1,4 @@
 <map id="inheritanced4bc199e84" name="inheritanced4bc199e84">
-<area shape="rect" id="node1" href="#mosaic.abfTrajIO.abfTrajIO" title=":Parameters:" alt="" coords="214,5,351,30"/>
+<area shape="rect" id="node1" href="#mosaic.abfTrajIO.abfTrajIO" title="Read ABF1 and ABF2 file formats. Currently, only " alt="" coords="214,5,351,30"/>
 <area shape="rect" id="node2" href="mosaic.meta.html#mosaic.metaTrajIO.metaTrajIO" title=".. warning:: |metaclass|" alt="" coords="6,5,165,30"/>
 </map>

@@ -5,7 +5,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>mosaic.tsvTrajIO &mdash; MOSAIC 1.1 documentation</title>
+    <title>mosaic.tsvTrajIO &mdash; MOSAIC 1.2 documentation</title>
     
     <link rel="stylesheet" href="../../_static/basic.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
@@ -17,7 +17,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
-        VERSION:     '1.1',
+        VERSION:     '1.2',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -32,7 +32,7 @@
     <script type="text/javascript" src="../../_static/bootstrap-3.2.0/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="../../_static/bootstrap-sphinx.js"></script>
     <link rel="shortcut icon" href="../../_static/favicon.ico"/>
-    <link rel="top" title="MOSAIC 1.1 documentation" href="../../index.html" />
+    <link rel="top" title="MOSAIC 1.2 documentation" href="../../index.html" />
     <link rel="up" title="Module code" href="../index.html" />
 
 <meta charset='utf-8'>
@@ -60,7 +60,7 @@
         </button>
         <a class="navbar-brand" href="../../index.html"><img src="../../_static/icon_24.png">
            </a>
-        <span class="navbar-text navbar-version pull-left"><b>1.1</b></span>
+        <span class="navbar-text navbar-version pull-left"><b>1.2</b></span>
       </div>
 
         <div class="collapse navbar-collapse nav-collapse">
@@ -135,7 +135,7 @@
 <span class="sd">	.. line-block::</span>
 <span class="sd">		7/31/12		AB	Initial version</span>
 <span class="sd">		6/30/13		AB 	Added the &#39;seprator&#39; kwarg to the class initializer to allow any delimited </span>
-<span class="sd">						files to be read. e.g. &#39;\t&#39; (default), &#39;,&#39;, etc.</span>
+<span class="sd">						files to be read. e.g. &#39;&quot;\\&quot;t&#39; (default), &#39;,&#39;, etc.</span>
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span> 
 
@@ -144,23 +144,21 @@
 
 <div class="viewcode-block" id="tsvTrajIO"><a class="viewcode-back" href="../../api-doc/mosaic.traj.html#mosaic.tsvTrajIO.tsvTrajIO">[docs]</a><span class="k">class</span> <span class="nc">tsvTrajIO</span><span class="p">(</span><span class="n">metaTrajIO</span><span class="o">.</span><span class="n">metaTrajIO</span><span class="p">):</span>
 	<span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">		Perform additional initialization checks. Check if kwarg &#39;timeCol&#39; is set to a number.</span>
+<span class="sd">		Read tab separated valued (TSV) files. </span>
 
-<span class="sd">		In addition to metaTrajIO.__init__ args,</span>
-<span class="sd">		:Optional Parameters:</span>
-<span class="sd">			- `headers` :		If True, the first row is ignored (default: True)</span>
-<span class="sd">			- `separator` :	set the data separator (defualt: &#39;\t&#39;)</span>
+<span class="sd">		:Parameters:</span>
+<span class="sd">			In addition to :class:`~mosaic.metaTrajIO.metaTrajIO` args,</span>
+<span class="sd">				- `headers` : 		If True, the first row is ignored (default: True)</span>
+<span class="sd">				- `separator` :	set the data separator (defualt: &#39;&quot;\\&quot;t&#39;)</span>
 <span class="sd">			</span>
-<span class="sd">			Either:</span>
-<span class="sd">				- `Fs` : 			Sampling frequency in Hz. If set, all other options are ignored</span>
-<span class="sd">							and the first column in the file is assumed to be the current in pA.</span>
-<span class="sd">			Or:</span>
-<span class="sd">				- `nCols` :		number of columns in TSV file (default:2, first column is time </span>
-<span class="sd">							in ms and second is current in pA) </span>
-<span class="sd">				- `timeCol` :		explicitly set the time column (default: 0, first col)</span>
-<span class="sd">				- `currCol` :		explicitly set the position of the current column (default: 1)</span>
+<span class="sd">				Either:</span>
+<span class="sd">					- `Fs` : 			Sampling frequency in Hz. If set, all other options are ignored and the first column in the file is assumed to be the current in pA.</span>
+<span class="sd">				Or:</span>
+<span class="sd">					- `nCols` :		number of columns in TSV file (default:2, first column is time in ms and second is current in pA) </span>
+<span class="sd">					- `timeCol` :		explicitly set the time column (default: 0, first col)</span>
+<span class="sd">					- `currCol` :		explicitly set the position of the current column (default: 1)</span>
 
-<span class="sd">			If neither &#39;Fs&#39; nor {&#39;nCols&#39;, &#39;timeCol&#39;,&#39;currCol&#39;} are set then the latter </span>
+<span class="sd">			If neither ``Fs`` nor {``nCols``, ``timeCol``, ``currCol``} are set then the latter </span>
 <span class="sd">			is assumed with the listed default values.</span>
 <span class="sd">		&quot;&quot;&quot;</span>
 	<span class="k">def</span> <span class="nf">_init</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
@@ -196,8 +194,10 @@
 
 <span class="sd">			:Parameters:</span>
 <span class="sd">				- `fname` :  list of data files to read</span>
+
 <span class="sd">			:Returns:</span>
 <span class="sd">				None</span>
+<span class="sd">				</span>
 <span class="sd">			:Errors:</span>
 <span class="sd">				- `SamplingRateChangedError` : if the sampling rate for any data file differs from previous</span>
 <span class="sd">		&quot;&quot;&quot;</span>

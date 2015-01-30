@@ -1,4 +1,4 @@
 <map id="inheritance0055deff42" name="inheritance0055deff42">
 <area shape="rect" id="node1" href="mosaic.meta.html#mosaic.metaTrajIO.metaTrajIO" title=".. warning:: |metaclass|" alt="" coords="6,5,165,30"/>
-<area shape="rect" id="node2" href="#mosaic.tsvTrajIO.tsvTrajIO" title="Perform additional initialization checks. Check if kwarg &#39;timeCol&#39; is set to a number." alt="" coords="213,5,347,30"/>
+<area shape="rect" id="node2" href="#mosaic.tsvTrajIO.tsvTrajIO" title="Read tab separated valued (TSV) files. " alt="" coords="213,5,347,30"/>
 </map>

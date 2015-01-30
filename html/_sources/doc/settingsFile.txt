@@ -48,13 +48,45 @@ Finally, :class:`~mosaic.stepResponseAnalysis` is initialized by defining class 
 		raise commonExceptions.SettingsTypeError( err )
 
 
+Trajectory Settings
+---------------------------------------------
+
+Common Settings (:class:`~mosaic.metaTrajIO.metaTrajIO`)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.. exec::
+   import mosaic.metaTrajIO
+   
+   print mosaic.metaTrajIO.metaTrajIO.__doc__
+
+
+QDF Files (:class:`~mosaic.qdfTrajIO.qdfTrajIO`)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.. exec::
+   import mosaic.qdfTrajIO
+   
+   print mosaic.qdfTrajIO.qdfTrajIO.__doc__
+
+
+ABF Files (:class:`~mosaic.abfTrajIO.abfTrajIO`)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.. exec::
+   import mosaic.abfTrajIO
+   
+   print mosaic.abfTrajIO.abfTrajIO.__doc__
+
+Binary Files (:class:`~mosaic.binTrajIO.binTrajIO`)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.. exec::
+   import mosaic.binTrajIO
+   
+   print mosaic.binTrajIO.binTrajIO.__doc__
+
 .. _algorithm-settings-sec:
 
 Optimizing Settings
 ---------------------------------------------
 
 |projname| classes are controlled through the JSON_ settings files as defined above. In most cases, running |projname| through the GUI (see :ref:`gui-page`) should generate satisfactory results. However, settings can be further optimized either by editing a file named ``.settings`` stored within the data directory, or by clicking on the ``Advanced Settings`` check-box in the :ref:`Analysis-Setup` section of the GUI.
-
 
 .. _eventseg-settings-sec:
 

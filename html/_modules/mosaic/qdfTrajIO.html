@@ -5,7 +5,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>mosaic.qdfTrajIO &mdash; MOSAIC 1.1 documentation</title>
+    <title>mosaic.qdfTrajIO &mdash; MOSAIC 1.2 documentation</title>
     
     <link rel="stylesheet" href="../../_static/basic.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
@@ -17,7 +17,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
-        VERSION:     '1.1',
+        VERSION:     '1.2',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -32,7 +32,7 @@
     <script type="text/javascript" src="../../_static/bootstrap-3.2.0/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="../../_static/bootstrap-sphinx.js"></script>
     <link rel="shortcut icon" href="../../_static/favicon.ico"/>
-    <link rel="top" title="MOSAIC 1.1 documentation" href="../../index.html" />
+    <link rel="top" title="MOSAIC 1.2 documentation" href="../../index.html" />
     <link rel="up" title="Module code" href="../index.html" />
 
 <meta charset='utf-8'>
@@ -60,7 +60,7 @@
         </button>
         <a class="navbar-brand" href="../../index.html"><img src="../../_static/icon_24.png">
            </a>
-        <span class="navbar-text navbar-version pull-left"><b>1.1</b></span>
+        <span class="navbar-text navbar-version pull-left"><b>1.2</b></span>
       </div>
 
         <div class="collapse navbar-collapse nav-collapse">
@@ -147,19 +147,36 @@
 
 <div class="viewcode-block" id="qdfTrajIO"><a class="viewcode-back" href="../../api-doc/mosaic.traj.html#mosaic.qdfTrajIO.qdfTrajIO">[docs]</a><span class="k">class</span> <span class="nc">qdfTrajIO</span><span class="p">(</span><span class="n">metaTrajIO</span><span class="o">.</span><span class="n">metaTrajIO</span><span class="p">):</span>
 	<span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">		In addition to the base class init, check if the </span>
-<span class="sd">		feedback resistance (Rfb) and feedback capacitance (Cfb)</span>
-<span class="sd">		are defined to convert qdf binary data into pA</span>
+<span class="sd">		Use the readqdf module from EBS to read individual QDF files.</span>
+
+<span class="sd">		In addition to :class:`~mosaic.metaTrajIO.metaTrajIO` args, check if the </span>
+<span class="sd">		feedback resistance (``Rfb``) and feedback capacitance (``Cfb``)</span>
+<span class="sd">		are defined to convert qdf binary data into pA.</span>
+
+<span class="sd">		A typical settings section to read QDF files is shown below. Note, that</span>
+<span class="sd">		the values for ``Rfb`` and ``Cfb`` are specific to the amplifier used.</span>
+
+<span class="sd">		.. code-block:: javascript</span>
+
+<span class="sd">			&quot;qdfTrajIO&quot;: {</span>
+<span class="sd">	                &quot;Rfb&quot;                           : 9.1e+12,</span>
+<span class="sd">	                &quot;Cfb&quot;                           : 1.07e-12,</span>
+<span class="sd">	                &quot;dcOffset&quot;                      : 0.0,</span>
+<span class="sd">	                &quot;filter&quot;                        : &quot;*.qdf&quot;,</span>
+<span class="sd">	                &quot;start&quot;                         : 0.0</span>
+<span class="sd">	        	}</span>
 
 <span class="sd">		:Parameters:</span>
 <span class="sd">			In addition to metaTrajIO.__init__ args,</span>
 <span class="sd">				- `Rfb` :		feedback resistance of amplifier</span>
 <span class="sd">				- `Cfb` :		feedback capacitance of amplifier</span>
 <span class="sd">				- `format` : 	&#39;V&#39; for voltage or &#39;pA&#39; for current. Default is &#39;V&#39;</span>
+<span class="sd">		</span>
 <span class="sd">		:Returns:</span>
 <span class="sd">			None</span>
+<span class="sd">		</span>
 <span class="sd">		:Errors:</span>
-<span class="sd">			- `InsufficientArgumentsError` : if the mandatory arguments Rfb and Cfb are not set</span>
+<span class="sd">			- `InsufficientArgumentsError` : if the mandatory arguments ``Rfb`` and ``Cfb`` are not set.</span>
 <span class="sd">	&quot;&quot;&quot;</span>	
 	
 	<span class="k">def</span> <span class="nf">_init</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
@@ -179,8 +196,10 @@
 
 <span class="sd">			:Parameters:</span>
 <span class="sd">				- `fname` :  list of data files to read</span>
+<span class="sd">			</span>
 <span class="sd">			:Returns:</span>
 <span class="sd">				None</span>
+<span class="sd">			</span>
 <span class="sd">			:Errors:</span>
 <span class="sd">				- `SamplingRateChangedError` : if the sampling rate for any data file differs from previous</span>
 <span class="sd">		&quot;&quot;&quot;</span>

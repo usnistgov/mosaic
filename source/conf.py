@@ -30,6 +30,7 @@ sys.path.insert(0, os.path.abspath('../mosaic'))
 # Add any Sphinx extension module names here, as strings. They can be
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
+sys.path.append(os.path.abspath('_extensions'))
 extensions = [
     'sphinx.ext.autodoc',
     'sphinx.ext.doctest',
@@ -38,7 +39,8 @@ extensions = [
     'sphinx.ext.inheritance_diagram',
     'sphinx.ext.graphviz',
     'sphinx.ext.viewcode',
-    'sphinxcontrib.bibtex'
+    'sphinxcontrib.bibtex',
+    'exec'
 ]
 
 # Add any paths that contain templates here, relative to this directory.
@@ -302,10 +304,8 @@ latex_elements = {
     
     \authoraddress{\Large Questions/Suggestions\\
     \\
-    \small Contact Arvind Balijepalli (\href{mailto:arvind.balijepalli@nist.gov}{arvind.balijepalli@nist.gov})\\
-    National Institute of Standards and Technology\\
-    100 Bureau Drive\\
-    Gaithersburg, MD 20899\\
+    \small Join our mailing list: \href{mailto:mosaic@nist.gov}{mosaic@nist.gov}\\
+    To subscribe, email \href{mailto:mosaic-request@nist.gov?subject=subscribe}{mosaic-request@nist.gov} with subject \textit{subscribe}.\\
     \\
     \\
     Report problems with MOSAIC using the issue tracker on GitHub\\

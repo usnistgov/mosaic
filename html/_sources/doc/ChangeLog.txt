@@ -3,6 +3,13 @@
 Change Log
 =================================
 
+**v1.2**
+
+Added support for arbitrary binary file formats (#33)
+[GUI] Included binary file support.
+Documentation updates and bug fixes.
+Known Issues: See #8 and #10.
+
 **v1.1**
 
 - [Addons] IGOR_ support.

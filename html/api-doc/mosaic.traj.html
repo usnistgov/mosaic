@@ -5,7 +5,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>11.1.3. Time-Series IO &mdash; MOSAIC 1.1 documentation</title>
+    <title>11.1.3. Time-Series IO &mdash; MOSAIC 1.2 documentation</title>
     
     <link rel="stylesheet" href="../_static/basic.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -17,7 +17,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '1.1',
+        VERSION:     '1.2',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -32,7 +32,7 @@
     <script type="text/javascript" src="../_static/bootstrap-3.2.0/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="../_static/bootstrap-sphinx.js"></script>
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
-    <link rel="top" title="MOSAIC 1.1 documentation" href="../index.html" />
+    <link rel="top" title="MOSAIC 1.2 documentation" href="../index.html" />
     <link rel="up" title="11. API Documentation" href="../doc/apidocs.html" />
     <link rel="next" title="11.1.4. Time-Series Filters" href="mosaic.filter.html" />
     <link rel="prev" title="11.1.2. Meta-Classes" href="mosaic.meta.html" />
@@ -62,7 +62,7 @@
         </button>
         <a class="navbar-brand" href="../index.html"><img src="../_static/icon_24.png">
            </a>
-        <span class="navbar-text navbar-version pull-left"><b>1.1</b></span>
+        <span class="navbar-text navbar-version pull-left"><b>1.2</b></span>
       </div>
 
         <div class="collapse navbar-collapse nav-collapse">
@@ -131,9 +131,9 @@
 <div class="section" id="mosaic-abftrajio-module">
 <h2>11.1.3.1. mosaic.abfTrajIO module<a class="headerlink" href="#mosaic-abftrajio-module" title="Permalink to this headline">¶</a></h2>
 <p class="graphviz">
-<img src="../_images/inheritance-0c556903e9be4b31d10bd209aad22444519b0de3.png" alt="Inheritance diagram of mosaic.abfTrajIO" usemap="#inheritanced4bc199e84" class="inheritance"/>
+<img src="../_images/inheritance-cf38ce59d9603496026edf785511813afda3d25b.png" alt="Inheritance diagram of mosaic.abfTrajIO" usemap="#inheritanced4bc199e84" class="inheritance"/>
 <map id="inheritanced4bc199e84" name="inheritanced4bc199e84">
-<area shape="rect" id="node1" href="#mosaic.abfTrajIO.abfTrajIO" title=":Parameters:" alt="" coords="214,5,351,30"/>
+<area shape="rect" id="node1" href="#mosaic.abfTrajIO.abfTrajIO" title="Read ABF1 and ABF2 file formats. Currently, only " alt="" coords="214,5,351,30"/>
 <area shape="rect" id="node2" href="mosaic.meta.html#mosaic.metaTrajIO.metaTrajIO" title=".. warning:: |metaclass|" alt="" coords="6,5,165,30"/>
 </map>
 </p>
@@ -160,12 +160,22 @@ gap-free mode and single channel recordings are supported.</p>
 <dt id="mosaic.abfTrajIO.abfTrajIO">
 <em class="property">class </em><tt class="descclassname">mosaic.abfTrajIO.</tt><tt class="descname">abfTrajIO</tt><big>(</big><em>**kwargs</em><big>)</big><a class="reference internal" href="../_modules/mosaic/abfTrajIO.html#abfTrajIO"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mosaic.abfTrajIO.abfTrajIO" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="mosaic.meta.html#mosaic.metaTrajIO.metaTrajIO" title="mosaic.metaTrajIO.metaTrajIO"><tt class="xref py py-class docutils literal"><span class="pre">mosaic.metaTrajIO.metaTrajIO</span></tt></a></p>
+<p>Read ABF1 and ABF2 file formats. Currently, only 
+gap-free mode and single channel recordings are supported.</p>
+<p>A typical settings section to read ABF files is shown below.</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="s2">&quot;abfTrajIO&quot;</span> <span class="o">:</span> <span class="p">{</span>
+<span class="s2">&quot;filter&quot;</span>                        <span class="o">:</span> <span class="s2">&quot;*.abf&quot;</span><span class="p">,</span>
+<span class="s2">&quot;start&quot;</span>                         <span class="o">:</span> <span class="mf">0.0</span><span class="p">,</span>
+<span class="s2">&quot;dcOffset&quot;</span>                      <span class="o">:</span> <span class="mf">0.0</span>
+<span class="p">}</span>
+</pre></div>
+</div>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first last docutils">
-<dt>In addition to metaTrajIO.__init__ args,</dt>
+<dt>In addition to <a class="reference internal" href="mosaic.meta.html#mosaic.metaTrajIO.metaTrajIO" title="mosaic.metaTrajIO.metaTrajIO"><tt class="xref py py-class docutils literal"><span class="pre">metaTrajIO</span></tt></a> args,</dt>
 <dd><p class="first last">None</p>
 </dd>
 </dl>
@@ -205,10 +215,10 @@ Set a class attribute Fs with the sampling frequency in Hz.</p>
 <div class="section" id="mosaic-qdftrajio-module">
 <h2>11.1.3.2. mosaic.qdfTrajIO module<a class="headerlink" href="#mosaic-qdftrajio-module" title="Permalink to this headline">¶</a></h2>
 <p class="graphviz">
-<img src="../_images/inheritance-0e350901ffb9b4975bf644cd0faddd00badef00a.png" alt="Inheritance diagram of mosaic.qdfTrajIO" usemap="#inheritancee54b23a53e" class="inheritance"/>
+<img src="../_images/inheritance-715deffa5df7e46e065c491237e8b32195ec803a.png" alt="Inheritance diagram of mosaic.qdfTrajIO" usemap="#inheritancee54b23a53e" class="inheritance"/>
 <map id="inheritancee54b23a53e" name="inheritancee54b23a53e">
 <area shape="rect" id="node1" href="mosaic.meta.html#mosaic.metaTrajIO.metaTrajIO" title=".. warning:: |metaclass|" alt="" coords="6,5,165,30"/>
-<area shape="rect" id="node2" href="#mosaic.qdfTrajIO.qdfTrajIO" title="In addition to the base class init, check if the " alt="" coords="214,5,351,30"/>
+<area shape="rect" id="node2" href="#mosaic.qdfTrajIO.qdfTrajIO" title="Use the readqdf module from EBS to read individual QDF files." alt="" coords="214,5,351,30"/>
 </map>
 </p>
 <span class="target" id="module-mosaic.qdfTrajIO"></span><p>QDF implementation of metaTrajIO. Uses the readqdf module from EBS to 
@@ -238,9 +248,21 @@ read individual qdf files.</p>
 <dt id="mosaic.qdfTrajIO.qdfTrajIO">
 <em class="property">class </em><tt class="descclassname">mosaic.qdfTrajIO.</tt><tt class="descname">qdfTrajIO</tt><big>(</big><em>**kwargs</em><big>)</big><a class="reference internal" href="../_modules/mosaic/qdfTrajIO.html#qdfTrajIO"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mosaic.qdfTrajIO.qdfTrajIO" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="mosaic.meta.html#mosaic.metaTrajIO.metaTrajIO" title="mosaic.metaTrajIO.metaTrajIO"><tt class="xref py py-class docutils literal"><span class="pre">mosaic.metaTrajIO.metaTrajIO</span></tt></a></p>
-<p>In addition to the base class init, check if the 
-feedback resistance (Rfb) and feedback capacitance (Cfb)
-are defined to convert qdf binary data into pA</p>
+<p>Use the readqdf module from EBS to read individual QDF files.</p>
+<p>In addition to <a class="reference internal" href="mosaic.meta.html#mosaic.metaTrajIO.metaTrajIO" title="mosaic.metaTrajIO.metaTrajIO"><tt class="xref py py-class docutils literal"><span class="pre">metaTrajIO</span></tt></a> args, check if the 
+feedback resistance (<tt class="docutils literal"><span class="pre">Rfb</span></tt>) and feedback capacitance (<tt class="docutils literal"><span class="pre">Cfb</span></tt>)
+are defined to convert qdf binary data into pA.</p>
+<p>A typical settings section to read QDF files is shown below. Note, that
+the values for <tt class="docutils literal"><span class="pre">Rfb</span></tt> and <tt class="docutils literal"><span class="pre">Cfb</span></tt> are specific to the amplifier used.</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="s2">&quot;qdfTrajIO&quot;</span><span class="o">:</span> <span class="p">{</span>
+<span class="s2">&quot;Rfb&quot;</span>                           <span class="o">:</span> <span class="mf">9.1</span><span class="nx">e</span><span class="o">+</span><span class="mi">12</span><span class="p">,</span>
+<span class="s2">&quot;Cfb&quot;</span>                           <span class="o">:</span> <span class="mf">1.07</span><span class="nx">e</span><span class="o">-</span><span class="mi">12</span><span class="p">,</span>
+<span class="s2">&quot;dcOffset&quot;</span>                      <span class="o">:</span> <span class="mf">0.0</span><span class="p">,</span>
+<span class="s2">&quot;filter&quot;</span>                        <span class="o">:</span> <span class="s2">&quot;*.qdf&quot;</span><span class="p">,</span>
+<span class="s2">&quot;start&quot;</span>                         <span class="o">:</span> <span class="mf">0.0</span>
+<span class="p">}</span>
+</pre></div>
+</div>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -260,7 +282,7 @@ are defined to convert qdf binary data into pA</p>
 </td>
 </tr>
 <tr class="field-odd field"><th class="field-name">Errors:</th><td class="field-body"><ul class="first last simple">
-<li><cite>InsufficientArgumentsError</cite> : if the mandatory arguments Rfb and Cfb are not set</li>
+<li><cite>InsufficientArgumentsError</cite> : if the mandatory arguments <tt class="docutils literal"><span class="pre">Rfb</span></tt> and <tt class="docutils literal"><span class="pre">Cfb</span></tt> are not set.</li>
 </ul>
 </td>
 </tr>
@@ -298,10 +320,10 @@ Set a class attribute Fs with the sampling frequency in Hz.</p>
 <div class="section" id="mosaic-bintrajio-module">
 <h2>11.1.3.3. mosaic.binTrajIO module<a class="headerlink" href="#mosaic-bintrajio-module" title="Permalink to this headline">¶</a></h2>
 <p class="graphviz">
-<img src="../_images/inheritance-e8b738f81fc89132cdba990b777c9b7cb58c555f.png" alt="Inheritance diagram of mosaic.binTrajIO" usemap="#inheritance1574f1c52e" class="inheritance"/>
+<img src="../_images/inheritance-231f4f8128b18e03bec10f15fb2bcd8b8a7a4abe.png" alt="Inheritance diagram of mosaic.binTrajIO" usemap="#inheritance1574f1c52e" class="inheritance"/>
 <map id="inheritance1574f1c52e" name="inheritance1574f1c52e">
-<area shape="rect" id="node2" href="#mosaic.binTrajIO.binTrajIO" title="Read a binary file that contains single channel ionic current data and calculate the current in pA " alt="" coords="312,5,448,30"/>
-<area shape="rect" id="node3" href="mosaic.meta.html#mosaic.metaTrajIO.metaTrajIO" title=".. warning:: |metaclass|" alt="" coords="55,5,214,30"/>
+<area shape="rect" id="node2" href="#mosaic.binTrajIO.binTrajIO" title="Read a file that contains interleaved binary data, ordered by column. Only a single " alt="" coords="277,5,413,30"/>
+<area shape="rect" id="node3" href="mosaic.meta.html#mosaic.metaTrajIO.metaTrajIO" title=".. warning:: |metaclass|" alt="" coords="38,5,197,30"/>
 </map>
 </p>
 <span class="target" id="module-mosaic.binTrajIO"></span><p>Binary file implementation of metaTrajIO. Read raw binary files with specified record sizes</p>
@@ -321,6 +343,8 @@ Set a class attribute Fs with the sampling frequency in Hz.</p>
 </tbody>
 </table>
 <div class="line-block">
+<div class="line">1/27/15         AB      Memory map files on read.</div>
+<div class="line">1/26/15         AB      Refactored code to read interleaved binary data.</div>
 <div class="line">7/27/14         AB      Update interface to specify python PythonStructCode instead of</div>
 <div class="line-block">
 <div class="line">RecordSize. This will allow any binary file to be decoded</div>
@@ -334,35 +358,105 @@ Set a class attribute Fs with the sampling frequency in Hz.</p>
 <dt id="mosaic.binTrajIO.binTrajIO">
 <em class="property">class </em><tt class="descclassname">mosaic.binTrajIO.</tt><tt class="descname">binTrajIO</tt><big>(</big><em>**kwargs</em><big>)</big><a class="reference internal" href="../_modules/mosaic/binTrajIO.html#binTrajIO"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mosaic.binTrajIO.binTrajIO" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="mosaic.meta.html#mosaic.metaTrajIO.metaTrajIO" title="mosaic.metaTrajIO.metaTrajIO"><tt class="xref py py-class docutils literal"><span class="pre">mosaic.metaTrajIO.metaTrajIO</span></tt></a></p>
-<p>Read a binary file that contains single channel ionic current data and calculate the current in pA 
-after scaling by the amplifier scale factor and removing any offsets.</p>
+<p>Read a file that contains interleaved binary data, ordered by column. Only a single 
+column that holds ionic current data is read. The current in pA 
+is returned after scaling by the amplifier scale factor (<tt class="docutils literal"><span class="pre">AmplifierScale</span></tt>) and 
+removing any offsets (<tt class="docutils literal"><span class="pre">AmplifierOffset</span></tt>) if provided.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><blockquote class="first">
-<div><dl class="docutils">
-<dt>In addition to metaTrajIO.__init__ args,</dt>
-<dd><ul class="first last simple">
-<li><cite>AmplifierScale</cite> :            full scale of amplifier (in pA) that varies with the gain</li>
-<li><cite>AmplifierOffset</cite> :           current offset in the recorded data</li>
-<li><cite>SamplingFrequency</cite> : sampling rate of data in the file in Hz</li>
-<li><cite>HeaderOffset</cite> :              ignore first &#8216;n&#8217; bytes of the file for header (default: 0 bytes).</li>
-<li><cite>PythonStructCode</cite> :  Single character code for a python struct (see <a class="reference external" href="https://docs.python.org/2/library/struct.html">Python struct docs</a>).</li>
-</ul>
-</dd>
-</dl>
+<tr class="field-odd field"><th class="field-name" colspan="2">Usage and Assumptions:</th></tr>
+<tr class="field-odd field"><td>&nbsp;</td><td class="field-body"><p class="first">Binary data is interleaved by column. For three columns (<em>a</em>, <em>b</em>, and <em>c</em>) and <em>N</em> rows, 
+binary data is assumed to be of the form:</p>
+<blockquote>
+<div><p>[ a_1, b_1, c_1, a_2, b_2, c_2, ... ... ..., a_N, b_N, c_N ]</p>
 </div></blockquote>
-<dl class="last docutils">
-<dt>Returns:</dt>
-<dd><p class="first last">None</p>
-</dd>
-<dt>Errors:</dt>
+<p>The column layout is specified with the <tt class="docutils literal"><span class="pre">ColumnTypes</span></tt> parameter, which accepts a list of tuples. 
+For the example above, if column <strong>a</strong> is the ionic current in a 64-bit floating point format, 
+column <strong>b</strong> is the ionic current representation in 16-bit integer format and column <strong>c</strong> is 
+an index in 16-bit integer format, the <tt class="docutils literal"><span class="pre">ColumnTypes</span></tt> paramter is a list with three 
+tuples, one for each column, as shown below:</p>
+<blockquote>
+<div><p>[(&#8216;curr_pA&#8217;, &#8216;float64&#8217;), (&#8216;AD_V&#8217;, &#8216;int16&#8217;), (&#8216;index&#8217;, &#8216;int16&#8217;)]</p>
+</div></blockquote>
+<p>The first element of each tuple is an arbitrary text label and the second element is 
+a valid <a class="reference external" href="http://docs.scipy.org/doc/numpy/user/basics.types.html">Numpy type</a>.</p>
+<p>Finally, the <tt class="docutils literal"><span class="pre">IonicCurrentColumn</span></tt> parameter holds the name (text label defined above) of the 
+column that holds the ionic current time-series. Note that if an integer column is selected, 
+the <tt class="docutils literal"><span class="pre">AmplifierScale</span></tt> and <tt class="docutils literal"><span class="pre">AmplifierOffset</span></tt> parameters can be used to convert the voltage from 
+the A/D to a current.</p>
+<p>Assuming that we use a floating point representation of the ionic current, and
+a sampling rate of 50 kHz, a settings section that will read the binary file format 
+defined above is:</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="s2">&quot;binTrajIO&quot;</span><span class="o">:</span> <span class="p">{</span>
+        <span class="s2">&quot;AmplifierScale&quot;</span> <span class="o">:</span> <span class="s2">&quot;1&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;AmplifierOffset&quot;</span> <span class="o">:</span> <span class="s2">&quot;0&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;SamplingFrequency&quot;</span> <span class="o">:</span> <span class="s2">&quot;50000&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;ColumnTypes&quot;</span> <span class="o">:</span> <span class="s2">&quot;[(&#39;curr_pA&#39;, &#39;float64&#39;), (&#39;AD_V&#39;, &#39;int16&#39;), (&#39;index&#39;, &#39;int16&#39;)]&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;IonicCurrentColumn&quot;</span> <span class="o">:</span> <span class="s2">&quot;curr_pA&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;dcOffset&quot;</span><span class="o">:</span> <span class="s2">&quot;0.0&quot;</span><span class="p">,</span> 
+        <span class="s2">&quot;filter&quot;</span><span class="o">:</span> <span class="s2">&quot;*.bin&quot;</span><span class="p">,</span> 
+        <span class="s2">&quot;start&quot;</span><span class="o">:</span> <span class="s2">&quot;0.0&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;HeaderOffset&quot;</span><span class="o">:</span> <span class="mi">0</span> 
+<span class="p">}</span>
+</pre></div>
+</div>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name" colspan="2">Settings Examples:</th></tr>
+<tr class="field-even field"><td>&nbsp;</td><td class="field-body"><p class="first">Read 16-bit signed integers (big endian) with a 512 byte header offset. Set the amplifier scale to 400 pA, sampling rate to 200 kHz.</p>
+<blockquote>
+<div><div class="highlight-javascript"><div class="highlight"><pre><span class="s2">&quot;binTrajIO&quot;</span><span class="o">:</span> <span class="p">{</span>
+        <span class="s2">&quot;AmplifierOffset&quot;</span><span class="o">:</span> <span class="s2">&quot;0.0&quot;</span><span class="p">,</span> 
+        <span class="s2">&quot;SamplingFrequency&quot;</span><span class="o">:</span> <span class="mi">200000</span><span class="p">,</span> 
+        <span class="s2">&quot;AmplifierScale&quot;</span><span class="o">:</span> <span class="s2">&quot;400./2**16&quot;</span><span class="p">,</span> 
+        <span class="s2">&quot;ColumnTypes&quot;</span><span class="o">:</span> <span class="s2">&quot;[(&#39;curr_pA&#39;, &#39;&gt;i2&#39;)]&quot;</span><span class="p">,</span> 
+        <span class="s2">&quot;dcOffset&quot;</span><span class="o">:</span> <span class="mf">0.0</span><span class="p">,</span> 
+        <span class="s2">&quot;filter&quot;</span><span class="o">:</span> <span class="s2">&quot;*.dat&quot;</span><span class="p">,</span> 
+        <span class="s2">&quot;start&quot;</span><span class="o">:</span> <span class="mf">0.0</span><span class="p">,</span> 
+        <span class="s2">&quot;HeaderOffset&quot;</span><span class="o">:</span> <span class="mi">512</span><span class="p">,</span> 
+        <span class="s2">&quot;IonicCurrentColumn&quot;</span><span class="o">:</span> <span class="s2">&quot;curr_pA&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p>Read a two-column file: 64-bit floating point and 64-bit integers, and no header offset. Set the amplifier scale to 1 and sampling rate to 200 kHz.</p>
+<blockquote>
+<div><div class="highlight-javascript"><div class="highlight"><pre><span class="s2">&quot;binTrajIO&quot;</span><span class="o">:</span> <span class="p">{</span>
+        <span class="s2">&quot;AmplifierOffset&quot;</span><span class="o">:</span> <span class="s2">&quot;0.0&quot;</span><span class="p">,</span> 
+        <span class="s2">&quot;SamplingFrequency&quot;</span><span class="o">:</span> <span class="mi">200000</span><span class="p">,</span> 
+        <span class="s2">&quot;AmplifierScale&quot;</span><span class="o">:</span> <span class="s2">&quot;1.0&quot;</span><span class="p">,</span> 
+        <span class="s2">&quot;ColumnTypes&quot;</span> <span class="o">:</span> <span class="s2">&quot;[(&#39;curr_pA&#39;, &#39;float64&#39;), (&#39;AD_V&#39;, &#39;int64&#39;)]&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;dcOffset&quot;</span><span class="o">:</span> <span class="mf">0.0</span><span class="p">,</span> 
+        <span class="s2">&quot;filter&quot;</span><span class="o">:</span> <span class="s2">&quot;*.bin&quot;</span><span class="p">,</span> 
+        <span class="s2">&quot;start&quot;</span><span class="o">:</span> <span class="mf">0.0</span><span class="p">,</span> 
+        <span class="s2">&quot;HeaderOffset&quot;</span><span class="o">:</span> <span class="mi">0</span><span class="p">,</span> 
+        <span class="s2">&quot;IonicCurrentColumn&quot;</span><span class="o">:</span> <span class="s2">&quot;curr_pA&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div></blockquote>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first docutils">
+<dt>In addition to <a class="reference internal" href="mosaic.meta.html#mosaic.metaTrajIO.metaTrajIO" title="mosaic.metaTrajIO.metaTrajIO"><tt class="xref py py-class docutils literal"><span class="pre">metaTrajIO</span></tt></a> args,</dt>
 <dd><ul class="first last simple">
-<li><cite>InsufficientArgumentsError</cite> : if the mandatory arguments Rfb and Cfb are not set</li>
+<li><cite>AmplifierScale</cite> :            Full scale of amplifier (pA/2^nbits) that varies with the gain (default: 1.0).</li>
+<li><cite>AmplifierOffset</cite> :           Current offset in the recorded data in pA  (default: 0.0).</li>
+<li><cite>SamplingFrequency</cite> : Sampling rate of data in the file in Hz.</li>
+<li><cite>HeaderOffset</cite> :              Ignore first <em>n</em> bytes of the file for header (default: 0 bytes).</li>
+<li><cite>ColumnTypes</cite> :       A list of tuples with column names and types (see <a class="reference external" href="http://docs.scipy.org/doc/numpy/user/basics.types.html">Numpy types</a>). Note only integer and floating point numbers are supported.</li>
+<li><cite>IonicCurrentColumn</cite> : Column name that holds ionic current data.</li>
 </ul>
 </dd>
 </dl>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">None</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Errors:</th><td class="field-body"><p class="first last">None</p>
 </td>
 </tr>
 </tbody>
@@ -397,10 +491,10 @@ Set a class attribute Fs with the sampling frequency in Hz.</p>
 <div class="section" id="mosaic-tsvtrajio-module">
 <h2>11.1.3.4. mosaic.tsvTrajIO module<a class="headerlink" href="#mosaic-tsvtrajio-module" title="Permalink to this headline">¶</a></h2>
 <p class="graphviz">
-<img src="../_images/inheritance-ca6ce8b71729643b133095b8bb1ba0a1e5604de3.png" alt="Inheritance diagram of mosaic.tsvTrajIO" usemap="#inheritance0055deff42" class="inheritance"/>
+<img src="../_images/inheritance-fe9b14e8f9a9a334d50eb931f3a486267c041b82.png" alt="Inheritance diagram of mosaic.tsvTrajIO" usemap="#inheritance0055deff42" class="inheritance"/>
 <map id="inheritance0055deff42" name="inheritance0055deff42">
 <area shape="rect" id="node1" href="mosaic.meta.html#mosaic.metaTrajIO.metaTrajIO" title=".. warning:: |metaclass|" alt="" coords="6,5,165,30"/>
-<area shape="rect" id="node2" href="#mosaic.tsvTrajIO.tsvTrajIO" title="Perform additional initialization checks. Check if kwarg &#39;timeCol&#39; is set to a number." alt="" coords="213,5,347,30"/>
+<area shape="rect" id="node2" href="#mosaic.tsvTrajIO.tsvTrajIO" title="Read tab separated valued (TSV) files. " alt="" coords="213,5,347,30"/>
 </map>
 </p>
 <span class="target" id="module-mosaic.tsvTrajIO"></span><p>An implementation of metaTrajIO that reads tab separated valued (TSV) files</p>
@@ -422,50 +516,46 @@ Set a class attribute Fs with the sampling frequency in Hz.</p>
 <div class="line">7/31/12         AB      Initial version</div>
 <div class="line">6/30/13         AB      Added the &#8216;seprator&#8217; kwarg to the class initializer to allow any delimited</div>
 <div class="line-block">
-<div class="line">files to be read. e.g. &#8216;        &#8216; (default), &#8216;,&#8217;, etc.</div>
+<div class="line">files to be read. e.g. &#8216;&#8221;&#8220;t&#8217; (default), &#8216;,&#8217;, etc.</div>
 </div>
 </div>
 <dl class="class">
 <dt id="mosaic.tsvTrajIO.tsvTrajIO">
 <em class="property">class </em><tt class="descclassname">mosaic.tsvTrajIO.</tt><tt class="descname">tsvTrajIO</tt><big>(</big><em>**kwargs</em><big>)</big><a class="reference internal" href="../_modules/mosaic/tsvTrajIO.html#tsvTrajIO"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mosaic.tsvTrajIO.tsvTrajIO" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="mosaic.meta.html#mosaic.metaTrajIO.metaTrajIO" title="mosaic.metaTrajIO.metaTrajIO"><tt class="xref py py-class docutils literal"><span class="pre">mosaic.metaTrajIO.metaTrajIO</span></tt></a></p>
-<p>Perform additional initialization checks. Check if kwarg &#8216;timeCol&#8217; is set to a number.</p>
-<p>In addition to metaTrajIO.__init__ args,
-:Optional Parameters:</p>
-<blockquote>
-<div><ul class="simple">
+<p>Read tab separated valued (TSV) files.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first docutils">
+<dt>In addition to <a class="reference internal" href="mosaic.meta.html#mosaic.metaTrajIO.metaTrajIO" title="mosaic.metaTrajIO.metaTrajIO"><tt class="xref py py-class docutils literal"><span class="pre">metaTrajIO</span></tt></a> args,</dt>
+<dd><ul class="first simple">
 <li><cite>headers</cite> :           If True, the first row is ignored (default: True)</li>
-<li><cite>separator</cite> : set the data separator (defualt: &#8216;      &#8216;)</li>
+<li><cite>separator</cite> : set the data separator (defualt: &#8216;&#8221;&#8220;t&#8217;)</li>
 </ul>
-<dl class="docutils">
+<dl class="last docutils">
 <dt>Either:</dt>
-<dd><ul class="first last">
-<li><dl class="first docutils">
-<dt><cite>Fs</cite> <span class="classifier-delimiter">:</span> <span class="classifier">Sampling frequency in Hz. If set, all other options are ignored</span></dt>
-<dd><p class="first last">and the first column in the file is assumed to be the current in pA.</p>
-</dd>
-</dl>
-</li>
+<dd><ul class="first last simple">
+<li><cite>Fs</cite> :                        Sampling frequency in Hz. If set, all other options are ignored and the first column in the file is assumed to be the current in pA.</li>
 </ul>
 </dd>
 <dt>Or:</dt>
-<dd><ul class="first last">
-<li><dl class="first docutils">
-<dt><cite>nCols</cite> <span class="classifier-delimiter">:</span> <span class="classifier">number of columns in TSV file (default:2, first column is time </span></dt>
-<dd><p class="first last">in ms and second is current in pA)</p>
-</dd>
-</dl>
-</li>
-<li><p class="first"><cite>timeCol</cite> :           explicitly set the time column (default: 0, first col)</p>
-</li>
-<li><p class="first"><cite>currCol</cite> :           explicitly set the position of the current column (default: 1)</p>
-</li>
+<dd><ul class="first last simple">
+<li><cite>nCols</cite> :             number of columns in TSV file (default:2, first column is time in ms and second is current in pA)</li>
+<li><cite>timeCol</cite> :           explicitly set the time column (default: 0, first col)</li>
+<li><cite>currCol</cite> :           explicitly set the position of the current column (default: 1)</li>
 </ul>
 </dd>
 </dl>
-<p>If neither &#8216;Fs&#8217; nor {&#8216;nCols&#8217;, &#8216;timeCol&#8217;,&#8217;currCol&#8217;} are set then the latter 
+</dd>
+</dl>
+<p class="last">If neither <tt class="docutils literal"><span class="pre">Fs</span></tt> nor {<tt class="docutils literal"><span class="pre">nCols</span></tt>, <tt class="docutils literal"><span class="pre">timeCol</span></tt>, <tt class="docutils literal"><span class="pre">currCol</span></tt>} are set then the latter 
 is assumed with the listed default values.</p>
-</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
 <dl class="method">
 <dt id="mosaic.tsvTrajIO.tsvTrajIO.readdata">
 <tt class="descname">readdata</tt><big>(</big><em>fname</em><big>)</big><a class="reference internal" href="../_modules/mosaic/tsvTrajIO.html#tsvTrajIO.readdata"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mosaic.tsvTrajIO.tsvTrajIO.readdata" title="Permalink to this definition">¶</a></dt>
