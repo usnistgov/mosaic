@@ -13,3 +13,10 @@ the National Institute of Standards and Technology, nor is it intended
 to imply that related products are necessarily the best available for the
 purpose.
 
+
+Other Licenses
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Except as otherwise noted, permission to use documents and related graphics will normally be granted, provided that (1) images are used only for promoting Mathematica and Mathematica-related products, (2) the copyright notice appears in all copies, and both the copyright notice and this permission notice appear, (3) no documents or related graphics available are modified in any way, and (4) no graphics available are used separately without the accompanying text (if required).
+
+Using a Wolfram Research, Inc. (WRI) logo or graphic does not grant you a license or any other right to WRI logos, trademarks, or graphics. WRI reserves the right to, at any time and without cause, modify or suspend these policies, request modification of any logo or graphic, or withdraw any permission granted under these policies to use any logo or graphic. WRI reserves the right to take action against any misuse or unfair, misleading, diluting, or infringing use of WRI logos and graphics.

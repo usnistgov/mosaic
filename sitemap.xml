@@ -2,145 +2,145 @@
 <urlset xmlns="http://www.google.com/schemas/sitemap/0.9">
 <url>
   <loc>https://usnistgov.github.io/mosaic/index.html</loc>
-  <lastmod>2015-01-27</lastmod>
+  <lastmod>2015-01-31</lastmod>
   <changefreq>weekly</changefreq>
   <priority>1.0</priority>
 </url>
 <url>
   <loc>https://usnistgov.github.io/mosaic/platforms.html</loc>
-  <lastmod>2015-01-30</lastmod>
+  <lastmod>2015-01-31</lastmod>
   <changefreq>weekly</changefreq>
   <priority>1.0</priority>
 </url>
 <url>
   <loc>https://usnistgov.github.io/mosaic/html/_modules/index.html</loc>
-  <lastmod>2015-01-30</lastmod>
+  <lastmod>2015-01-31</lastmod>
   <changefreq>weekly</changefreq>
   <priority>0.5</priority>
 </url>
 <url>
   <loc>https://usnistgov.github.io/mosaic/html/_modules/mosaic/abfTrajIO.html</loc>
-  <lastmod>2015-01-30</lastmod>
+  <lastmod>2015-01-31</lastmod>
   <changefreq>weekly</changefreq>
   <priority>0.5</priority>
 </url>
 <url>
   <loc>https://usnistgov.github.io/mosaic/html/_modules/mosaic/besselLowpassFilter.html</loc>
-  <lastmod>2015-01-30</lastmod>
+  <lastmod>2015-01-31</lastmod>
   <changefreq>weekly</changefreq>
   <priority>0.5</priority>
 </url>
 <url>
   <loc>https://usnistgov.github.io/mosaic/html/_modules/mosaic/binTrajIO.html</loc>
-  <lastmod>2015-01-30</lastmod>
+  <lastmod>2015-01-31</lastmod>
   <changefreq>weekly</changefreq>
   <priority>0.5</priority>
 </url>
 <url>
   <loc>https://usnistgov.github.io/mosaic/html/_modules/mosaic/ConvertToCSV.html</loc>
-  <lastmod>2015-01-30</lastmod>
+  <lastmod>2015-01-31</lastmod>
   <changefreq>weekly</changefreq>
   <priority>0.5</priority>
 </url>
 <url>
   <loc>https://usnistgov.github.io/mosaic/html/_modules/mosaic/convolutionFilter.html</loc>
-  <lastmod>2015-01-30</lastmod>
+  <lastmod>2015-01-31</lastmod>
   <changefreq>weekly</changefreq>
   <priority>0.5</priority>
 </url>
 <url>
   <loc>https://usnistgov.github.io/mosaic/html/_modules/mosaic/eventSegment.html</loc>
-  <lastmod>2015-01-30</lastmod>
+  <lastmod>2015-01-31</lastmod>
   <changefreq>weekly</changefreq>
   <priority>0.5</priority>
 </url>
 <url>
   <loc>https://usnistgov.github.io/mosaic/html/_modules/mosaic/metaEventPartition.html</loc>
-  <lastmod>2015-01-30</lastmod>
+  <lastmod>2015-01-31</lastmod>
   <changefreq>weekly</changefreq>
   <priority>0.5</priority>
 </url>
 <url>
   <loc>https://usnistgov.github.io/mosaic/html/_modules/mosaic/metaEventProcessor.html</loc>
-  <lastmod>2015-01-30</lastmod>
+  <lastmod>2015-01-31</lastmod>
   <changefreq>weekly</changefreq>
   <priority>0.5</priority>
 </url>
 <url>
   <loc>https://usnistgov.github.io/mosaic/html/_modules/mosaic/metaIOFilter.html</loc>
-  <lastmod>2015-01-30</lastmod>
+  <lastmod>2015-01-31</lastmod>
   <changefreq>weekly</changefreq>
   <priority>0.5</priority>
 </url>
 <url>
   <loc>https://usnistgov.github.io/mosaic/html/_modules/mosaic/metaMDIO.html</loc>
-  <lastmod>2015-01-30</lastmod>
+  <lastmod>2015-01-31</lastmod>
   <changefreq>weekly</changefreq>
   <priority>0.5</priority>
 </url>
 <url>
   <loc>https://usnistgov.github.io/mosaic/html/_modules/mosaic/metaTrajIO.html</loc>
-  <lastmod>2015-01-30</lastmod>
+  <lastmod>2015-01-31</lastmod>
   <changefreq>weekly</changefreq>
   <priority>0.5</priority>
 </url>
 <url>
   <loc>https://usnistgov.github.io/mosaic/html/_modules/mosaic/multiStateAnalysis.html</loc>
-  <lastmod>2015-01-30</lastmod>
+  <lastmod>2015-01-31</lastmod>
   <changefreq>weekly</changefreq>
   <priority>0.5</priority>
 </url>
 <url>
   <loc>https://usnistgov.github.io/mosaic/html/_modules/mosaic/qdfTrajIO.html</loc>
-  <lastmod>2015-01-30</lastmod>
+  <lastmod>2015-01-31</lastmod>
   <changefreq>weekly</changefreq>
   <priority>0.5</priority>
 </url>
 <url>
   <loc>https://usnistgov.github.io/mosaic/html/_modules/mosaic/settings.html</loc>
-  <lastmod>2015-01-30</lastmod>
+  <lastmod>2015-01-31</lastmod>
   <changefreq>weekly</changefreq>
   <priority>0.5</priority>
 </url>
 <url>
   <loc>https://usnistgov.github.io/mosaic/html/_modules/mosaic/SingleChannelAnalysis.html</loc>
-  <lastmod>2015-01-30</lastmod>
+  <lastmod>2015-01-31</lastmod>
   <changefreq>weekly</changefreq>
   <priority>0.5</priority>
 </url>
 <url>
   <loc>https://usnistgov.github.io/mosaic/html/_modules/mosaic/sqlite3MDIO.html</loc>
-  <lastmod>2015-01-30</lastmod>
+  <lastmod>2015-01-31</lastmod>
   <changefreq>weekly</changefreq>
   <priority>0.5</priority>
 </url>
 <url>
   <loc>https://usnistgov.github.io/mosaic/html/_modules/mosaic/stepResponseAnalysis.html</loc>
-  <lastmod>2015-01-30</lastmod>
+  <lastmod>2015-01-31</lastmod>
   <changefreq>weekly</changefreq>
   <priority>0.5</priority>
 </url>
 <url>
   <loc>https://usnistgov.github.io/mosaic/html/_modules/mosaic/tsvTrajIO.html</loc>
-  <lastmod>2015-01-30</lastmod>
+  <lastmod>2015-01-31</lastmod>
   <changefreq>weekly</changefreq>
   <priority>0.5</priority>
 </url>
 <url>
   <loc>https://usnistgov.github.io/mosaic/html/_modules/mosaic/utilities/ionic_current_stats.html</loc>
-  <lastmod>2015-01-30</lastmod>
+  <lastmod>2015-01-31</lastmod>
   <changefreq>weekly</changefreq>
   <priority>0.5</priority>
 </url>
 <url>
   <loc>https://usnistgov.github.io/mosaic/html/_modules/mosaic/utilities/util.html</loc>
-  <lastmod>2015-01-30</lastmod>
+  <lastmod>2015-01-31</lastmod>
   <changefreq>weekly</changefreq>
   <priority>0.5</priority>
 </url>
 <url>
   <loc>https://usnistgov.github.io/mosaic/html/_modules/mosaic/waveletDenoiseFilter.html</loc>
-  <lastmod>2015-01-30</lastmod>
+  <lastmod>2015-01-31</lastmod>
   <changefreq>weekly</changefreq>
   <priority>0.5</priority>
 </url>
@@ -152,253 +152,253 @@
 </url>
 <url>
   <loc>https://usnistgov.github.io/mosaic/html/api-doc/mosaic.filter.html</loc>
-  <lastmod>2015-01-30</lastmod>
+  <lastmod>2015-01-31</lastmod>
   <changefreq>weekly</changefreq>
   <priority>0.5</priority>
 </url>
 <url>
   <loc>https://usnistgov.github.io/mosaic/html/api-doc/mosaic.html</loc>
-  <lastmod>2015-01-30</lastmod>
+  <lastmod>2015-01-31</lastmod>
   <changefreq>weekly</changefreq>
   <priority>0.5</priority>
 </url>
 <url>
   <loc>https://usnistgov.github.io/mosaic/html/api-doc/mosaic.meta.html</loc>
-  <lastmod>2015-01-30</lastmod>
+  <lastmod>2015-01-31</lastmod>
   <changefreq>weekly</changefreq>
   <priority>0.5</priority>
 </url>
 <url>
   <loc>https://usnistgov.github.io/mosaic/html/api-doc/mosaic.misc.html</loc>
-  <lastmod>2015-01-30</lastmod>
+  <lastmod>2015-01-31</lastmod>
   <changefreq>weekly</changefreq>
   <priority>0.5</priority>
 </url>
 <url>
   <loc>https://usnistgov.github.io/mosaic/html/api-doc/mosaic.output.html</loc>
-  <lastmod>2015-01-30</lastmod>
+  <lastmod>2015-01-31</lastmod>
   <changefreq>weekly</changefreq>
   <priority>0.5</priority>
 </url>
 <url>
   <loc>https://usnistgov.github.io/mosaic/html/api-doc/mosaic.partition.html</loc>
-  <lastmod>2015-01-30</lastmod>
+  <lastmod>2015-01-31</lastmod>
   <changefreq>weekly</changefreq>
   <priority>0.5</priority>
 </url>
 <url>
   <loc>https://usnistgov.github.io/mosaic/html/api-doc/mosaic.processing.html</loc>
-  <lastmod>2015-01-30</lastmod>
+  <lastmod>2015-01-31</lastmod>
   <changefreq>weekly</changefreq>
   <priority>0.5</priority>
 </url>
 <url>
   <loc>https://usnistgov.github.io/mosaic/html/api-doc/mosaic.traj.html</loc>
-  <lastmod>2015-01-30</lastmod>
+  <lastmod>2015-01-31</lastmod>
   <changefreq>weekly</changefreq>
   <priority>0.5</priority>
 </url>
 <url>
   <loc>https://usnistgov.github.io/mosaic/html/doc/Addons.html</loc>
-  <lastmod>2015-01-30</lastmod>
+  <lastmod>2015-01-31</lastmod>
   <changefreq>weekly</changefreq>
   <priority>0.5</priority>
 </url>
 <url>
   <loc>https://usnistgov.github.io/mosaic/html/doc/Algorithms.html</loc>
-  <lastmod>2015-01-30</lastmod>
+  <lastmod>2015-01-31</lastmod>
   <changefreq>weekly</changefreq>
   <priority>0.5</priority>
 </url>
 <url>
   <loc>https://usnistgov.github.io/mosaic/html/doc/aliases.html</loc>
-  <lastmod>2015-01-30</lastmod>
+  <lastmod>2015-01-31</lastmod>
   <changefreq>weekly</changefreq>
   <priority>0.5</priority>
 </url>
 <url>
   <loc>https://usnistgov.github.io/mosaic/html/doc/apidocs.html</loc>
-  <lastmod>2015-01-30</lastmod>
+  <lastmod>2015-01-31</lastmod>
   <changefreq>weekly</changefreq>
   <priority>0.5</priority>
 </url>
 <url>
   <loc>https://usnistgov.github.io/mosaic/html/doc/ChangeLog.html</loc>
-  <lastmod>2015-01-30</lastmod>
+  <lastmod>2015-01-31</lastmod>
   <changefreq>weekly</changefreq>
   <priority>0.5</priority>
 </url>
 <url>
   <loc>https://usnistgov.github.io/mosaic/html/doc/DatabaseStructure.html</loc>
-  <lastmod>2015-01-30</lastmod>
+  <lastmod>2015-01-31</lastmod>
   <changefreq>weekly</changefreq>
   <priority>0.5</priority>
 </url>
 <url>
   <loc>https://usnistgov.github.io/mosaic/html/doc/Developers.html</loc>
-  <lastmod>2015-01-30</lastmod>
+  <lastmod>2015-01-31</lastmod>
   <changefreq>weekly</changefreq>
   <priority>0.5</priority>
 </url>
 <url>
   <loc>https://usnistgov.github.io/mosaic/html/doc/Disclaimer.html</loc>
-  <lastmod>2015-01-30</lastmod>
+  <lastmod>2015-01-31</lastmod>
   <changefreq>weekly</changefreq>
   <priority>0.5</priority>
 </url>
 <url>
   <loc>https://usnistgov.github.io/mosaic/html/doc/eventSegment.html</loc>
-  <lastmod>2015-01-30</lastmod>
+  <lastmod>2015-01-31</lastmod>
   <changefreq>weekly</changefreq>
   <priority>0.5</priority>
 </url>
 <url>
   <loc>https://usnistgov.github.io/mosaic/html/doc/examples.html</loc>
-  <lastmod>2015-01-30</lastmod>
+  <lastmod>2015-01-31</lastmod>
   <changefreq>weekly</changefreq>
   <priority>0.5</priority>
 </url>
 <url>
   <loc>https://usnistgov.github.io/mosaic/html/doc/Extend.html</loc>
-  <lastmod>2015-01-30</lastmod>
+  <lastmod>2015-01-31</lastmod>
   <changefreq>weekly</changefreq>
   <priority>0.5</priority>
 </url>
 <url>
   <loc>https://usnistgov.github.io/mosaic/html/doc/GettingStarted.html</loc>
-  <lastmod>2015-01-30</lastmod>
+  <lastmod>2015-01-31</lastmod>
   <changefreq>weekly</changefreq>
   <priority>0.5</priority>
 </url>
 <url>
   <loc>https://usnistgov.github.io/mosaic/html/doc/GraphicalInterface.html</loc>
-  <lastmod>2015-01-30</lastmod>
+  <lastmod>2015-01-31</lastmod>
   <changefreq>weekly</changefreq>
   <priority>0.5</priority>
 </url>
 <url>
   <loc>https://usnistgov.github.io/mosaic/html/doc/Home.html</loc>
-  <lastmod>2015-01-30</lastmod>
+  <lastmod>2015-01-31</lastmod>
   <changefreq>weekly</changefreq>
   <priority>0.5</priority>
 </url>
 <url>
   <loc>https://usnistgov.github.io/mosaic/html/doc/IgorAddon.html</loc>
-  <lastmod>2015-01-30</lastmod>
+  <lastmod>2015-01-31</lastmod>
   <changefreq>weekly</changefreq>
   <priority>0.5</priority>
 </url>
 <url>
   <loc>https://usnistgov.github.io/mosaic/html/doc/InstallMosaicSource.html</loc>
-  <lastmod>2015-01-30</lastmod>
+  <lastmod>2015-01-31</lastmod>
   <changefreq>weekly</changefreq>
   <priority>0.5</priority>
 </url>
 <url>
   <loc>https://usnistgov.github.io/mosaic/html/doc/InstallOSX.html</loc>
-  <lastmod>2015-01-30</lastmod>
+  <lastmod>2015-01-31</lastmod>
   <changefreq>weekly</changefreq>
   <priority>0.5</priority>
 </url>
 <url>
   <loc>https://usnistgov.github.io/mosaic/html/doc/InstallUbuntu.html</loc>
-  <lastmod>2015-01-30</lastmod>
+  <lastmod>2015-01-31</lastmod>
   <changefreq>weekly</changefreq>
   <priority>0.5</priority>
 </url>
 <url>
   <loc>https://usnistgov.github.io/mosaic/html/doc/InstallVirtualenv.html</loc>
-  <lastmod>2015-01-30</lastmod>
+  <lastmod>2015-01-31</lastmod>
   <changefreq>weekly</changefreq>
   <priority>0.5</priority>
 </url>
 <url>
   <loc>https://usnistgov.github.io/mosaic/html/doc/Introduction.html</loc>
-  <lastmod>2015-01-30</lastmod>
+  <lastmod>2015-01-31</lastmod>
   <changefreq>weekly</changefreq>
   <priority>0.5</priority>
 </url>
 <url>
   <loc>https://usnistgov.github.io/mosaic/html/doc/mailingList.html</loc>
-  <lastmod>2015-01-30</lastmod>
+  <lastmod>2015-01-31</lastmod>
   <changefreq>weekly</changefreq>
   <priority>0.5</priority>
 </url>
 <url>
   <loc>https://usnistgov.github.io/mosaic/html/doc/MathematicaAddon.html</loc>
-  <lastmod>2015-01-30</lastmod>
+  <lastmod>2015-01-31</lastmod>
   <changefreq>weekly</changefreq>
   <priority>0.5</priority>
 </url>
 <url>
   <loc>https://usnistgov.github.io/mosaic/html/doc/MatlabAddon.html</loc>
-  <lastmod>2015-01-30</lastmod>
+  <lastmod>2015-01-31</lastmod>
   <changefreq>weekly</changefreq>
   <priority>0.5</priority>
 </url>
 <url>
   <loc>https://usnistgov.github.io/mosaic/html/doc/multiState.html</loc>
-  <lastmod>2015-01-30</lastmod>
+  <lastmod>2015-01-31</lastmod>
   <changefreq>weekly</changefreq>
   <priority>0.5</priority>
 </url>
 <url>
   <loc>https://usnistgov.github.io/mosaic/html/doc/References.html</loc>
-  <lastmod>2015-01-30</lastmod>
+  <lastmod>2015-01-31</lastmod>
   <changefreq>weekly</changefreq>
   <priority>0.5</priority>
 </url>
 <url>
   <loc>https://usnistgov.github.io/mosaic/html/doc/ScriptingandAdvancedFeatures.html</loc>
-  <lastmod>2015-01-30</lastmod>
+  <lastmod>2015-01-31</lastmod>
   <changefreq>weekly</changefreq>
   <priority>0.5</priority>
 </url>
 <url>
   <loc>https://usnistgov.github.io/mosaic/html/doc/settingsFile.html</loc>
-  <lastmod>2015-01-30</lastmod>
+  <lastmod>2015-01-31</lastmod>
   <changefreq>weekly</changefreq>
   <priority>0.5</priority>
 </url>
 <url>
   <loc>https://usnistgov.github.io/mosaic/html/doc/SMMSExample.html</loc>
-  <lastmod>2015-01-30</lastmod>
+  <lastmod>2015-01-31</lastmod>
   <changefreq>weekly</changefreq>
   <priority>0.5</priority>
 </url>
 <url>
   <loc>https://usnistgov.github.io/mosaic/html/doc/stepResponse.html</loc>
-  <lastmod>2015-01-30</lastmod>
+  <lastmod>2015-01-31</lastmod>
   <changefreq>weekly</changefreq>
   <priority>0.5</priority>
 </url>
 <url>
   <loc>https://usnistgov.github.io/mosaic/html/doc/WorkingWithSQLite.html</loc>
-  <lastmod>2015-01-30</lastmod>
+  <lastmod>2015-01-31</lastmod>
   <changefreq>weekly</changefreq>
   <priority>0.5</priority>
 </url>
 <url>
   <loc>https://usnistgov.github.io/mosaic/html/genindex.html</loc>
-  <lastmod>2015-01-30</lastmod>
+  <lastmod>2015-01-31</lastmod>
   <changefreq>weekly</changefreq>
   <priority>0.5</priority>
 </url>
 <url>
   <loc>https://usnistgov.github.io/mosaic/html/index.html</loc>
-  <lastmod>2015-01-30</lastmod>
+  <lastmod>2015-01-31</lastmod>
   <changefreq>weekly</changefreq>
   <priority>0.5</priority>
 </url>
 <url>
   <loc>https://usnistgov.github.io/mosaic/html/py-modindex.html</loc>
-  <lastmod>2015-01-30</lastmod>
+  <lastmod>2015-01-31</lastmod>
   <changefreq>weekly</changefreq>
   <priority>0.5</priority>
 </url>
 <url>
   <loc>https://usnistgov.github.io/mosaic/html/search.html</loc>
-  <lastmod>2015-01-30</lastmod>
+  <lastmod>2015-01-31</lastmod>
   <changefreq>weekly</changefreq>
   <priority>0.5</priority>
 </url>
