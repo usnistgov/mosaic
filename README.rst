@@ -20,16 +20,17 @@ Please refer to the `Installation <https://usnistgov.github.io/mosaic/html/doc/G
 Getting Help and Reporting Problems
 =================================
 
-You can `contact MOSAIC developers <http://www.nist.gov/cgi-bin/wwwph/cso.nist.gov?Query=Arvind+Balijepalli>`_  for help or report problems using our `issue tracker <https://github.com/usnistgov/mosaic/issues>`_.
+For questions and help, please `join our mailing list <https://usnistgov.github.io/mosaic/html/doc/mailingList.html>`_ (`mosaic@nist.gov <mailto:mosaic@nist.gov>`_). Report problems using our `issue tracker <https://github.com/usnistgov/mosaic/issues>`_ on Github.
 
 Change Log
 =================================
 
 **v1.2**
 
-Added support for arbitrary binary file formats (#33)
-[GUI] Included binary file support.
-Documentation updates and bug fixes.
+- Added support for arbitrary binary file formats (#33)
+- [GUI] Included binary file support.
+- Documentation updates and bug fixes.
+- *Known Issues:* See #8 and #10.
 
 **v1.1**
 
