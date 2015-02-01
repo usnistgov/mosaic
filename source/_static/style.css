@@ -105,11 +105,11 @@ h1.download {
 	margin: 0;
 	font-size: 16pt;
 /*	font-size: 2vw;*/
-	width: 250px;
+	width: 225px;
 /*	width: 25vw;*/
 	height: 50px;
 /*	height: 5vw;*/
-	padding-top:20px;
+	padding-top:5px;
 	padding-bottom:0px;
 	box-shadow: 2px 2px 5px #888888;
 }
