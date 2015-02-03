@@ -80,11 +80,14 @@ class mosaicDocs(Command):
         self.pdf = 0
         self.all = 0
         self.rebuild = 0
+        self.upload = 0
 
     def finalize_options(self):
         pass
 
     def run(self):
+        # always build docs in the master branch.
+        os.system("git checkout master")
         if self.html:
             os.system("make -C _docs html")
         elif self.pdf:
@@ -106,14 +109,6 @@ setup(
             'mosaic.utest', 
             'mosaic.qdf',
             'mosaic.abf',
-            'mosaicgui',
-            'mosaicgui.trajview',
-            'mosaicgui.advancedsettings',
-            'mosaicgui.consolelog',
-            'mosaicgui.blockdepthview',
-            'mosaicgui.statisticsview',
-            'mosaicgui.fiteventsview',
-            'mosaicgui.aboutdialog',
             'mosaic.utilities'
             ],
     scripts=[
@@ -122,15 +117,6 @@ setup(
             'addons/mathematica/MosaicUtils.m', 
             'addons/mathematica/Util.m', 
             'addons/MATLAB/openandquery.m', 
-            'mosaicgui/ui/SettingsWindow.ui',
-            'mosaicgui/ui/trajviewui.ui',
-            'mosaicgui/ui/advancedSettingsDialog.ui',
-            'mosaicgui/ui/blockdepthview.ui',
-            'mosaicgui/ui/statisticsview.ui',
-            'mosaicgui/ui/fiteventsview.ui',
-            'mosaicgui/ui/consoleDialog.ui',
-            'mosaicgui/ui/aboutdialog.ui',
-            'pyinstaller/mosaic.spec',
             'icons/icon_100px.png',
             '.scripts/install-addons-sh',
             '.scripts/build-deps-sh', 
@@ -140,12 +126,11 @@ setup(
           'numpy==1.8.1',
           'cython==0.20.1',
           'scipy==0.15.0',
-          'matplotlib==1.3.1',
           'lmfit==0.7.4',
           'uncertainties==2.4.6',
           'PyWavelets==0.2.2',
       ],
-    url='http://pypi.python.org/pypi/mosaic-nist/',
+    url='https://usnistgov.github.io/mosaic/',
     license='LICENSE.txt',
     description='A Modular Single-Molecule Analysis Interface.',
     long_description=open('README.rst').read(),
