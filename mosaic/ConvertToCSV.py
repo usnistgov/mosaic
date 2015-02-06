@@ -21,7 +21,7 @@ class ConvertToCSV(object):
 			- `trajDataObj` : a trajIO data object
 			- `outdir` : the output directory. Default is *None*, which causes the output to be saved in the same directory as the input data.
 	"""
-	def __init__(self, trajDataObj, outdir=None):
+	def __init__(self, trajDataObj, outdir=None, extension="csv"):
 		self.trajDataObj=trajDataObj
 		self.datPath=trajDataObj.datPath
 
@@ -30,6 +30,8 @@ class ConvertToCSV(object):
 			self.outDir=self.datPath
 		else:
 			self.outDir=outdir
+		
+		self.extension=extension
 		
 		self.filePrefix=None
 		self._creategenerator()
@@ -71,6 +73,6 @@ class ConvertToCSV(object):
 		"""
 		self._creategenerator()
 
-		return self.outDir+'/'+next(self.fileGenerator)+'.csv'
+		return self.outDir+'/'+next(self.fileGenerator)+'.'+self.extension
 
 		
