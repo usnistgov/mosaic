@@ -92,7 +92,7 @@ class TrajectoryWindow(QtGui.QDialog):
 				if self.datadict["DataFilesType"] == 'QDF':
 					self.iohnd=qdf.qdfTrajIO
 
-					self.IOArgs["filter"]="*qdf"
+					self.IOArgs["filter"]=self.datadict["filter"]
 					self.IOArgs["Rfb"]=self.datadict["Rfb"]
 					self.IOArgs["Cfb"]=self.datadict["Cfb"]
 				elif self.datadict["DataFilesType"] ==  "BIN":
@@ -104,10 +104,10 @@ class TrajectoryWindow(QtGui.QDialog):
 					self.IOArgs["ColumnTypes"]=self.datadict["ColumnTypes"]
 					self.IOArgs["IonicCurrentColumn"]=self.datadict["IonicCurrentColumn"]
 					self.IOArgs["HeaderOffset"]=self.datadict["HeaderOffset"]
+					self.IOArgs["filter"]=self.datadict["filter"]
 				else:
 					self.iohnd=abf.abfTrajIO	
-
-					self.IOArgs["filter"]="*abf"
+					self.IOArgs["filter"]=self.datadict["filter"]
 
 				self.IOArgs["start"]=int(self.datadict["start"])
 				self.IOArgs["dcOffset"]=float(self.datadict["dcOffset"])
