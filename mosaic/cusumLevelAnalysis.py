@@ -88,8 +88,8 @@ class cusumLevelAnalysis(metaEventProcessor.metaEventProcessor):
 		# Settings for single step event processing
 		# settings for gaussian fits
 		try:
-			self.StepSize=float(self.settingsDict.pop("StepSize", 300))
-			self.Threshold=int(self.settingsDict.pop("Threshold", 10))
+			self.StepSize=float(self.settingsDict.pop("StepSize", 3.0))
+			self.Threshold=int(self.settingsDict.pop("Threshold", 3.0))
 		except ValueError as err:
 			raise commonExceptions.SettingsTypeError( err )
 
@@ -122,9 +122,7 @@ class cusumLevelAnalysis(metaEventProcessor.metaEventProcessor):
 					self.mdEventEnd,
 					self.mdEventDelay,
 					self.mdResTime,
-					self.mdRCConst,
-					self.mdAbsEventStart,
-					self.mdRedChiSq
+					self.mdAbsEventStart
 				]
 		
 	def mdHeadingDataType(self):
@@ -138,8 +136,6 @@ class cusumLevelAnalysis(metaEventProcessor.metaEventProcessor):
 					'REAL_LIST',
 					'REAL_LIST',
 					'REAL',
-					'REAL',
-					'REAL_LIST',
 					'REAL',
 					'REAL_LIST',
 					'REAL',
@@ -160,9 +156,7 @@ class cusumLevelAnalysis(metaEventProcessor.metaEventProcessor):
 					'EventEnd', 
 					'EventDelay', 
 					'ResTime', 
-					'RCConstant', 
-					'AbsEventStart',
-					'ReducedChiSquared' 
+					'AbsEventStart'
 				]
 
 	def mdAveragePropertiesList(self):
@@ -191,7 +185,6 @@ class cusumLevelAnalysis(metaEventProcessor.metaEventProcessor):
 	###########################################################################
 	def __FitEvent(self):
 		try:
-                        print "We are using CUSUM\n"
 			dt = 1000./self.Fs 	# time-step in ms.
 			edat=self.dataPolarity*np.asarray( self.eventData,  dtype='float64' ) #make data into an array and make it abs val
 			
@@ -210,15 +203,14 @@ class cusumLevelAnalysis(metaEventProcessor.metaEventProcessor):
 			edges = np.array([0], dtype='int64') #initialize an array with the position of the first subevent - the start of the event
 			anchor = 0 #the last detected change
 			length = len(edat)
-                        print "Initialized\n"
-                        print "pA threshold is "+str(self.baseSD)+" * "+str(self.Threshold)+" = "+str(self.baseSD*self.Threshold)+"\n"
 			k = 0
 			self.nStates = 0
-			np.savetxt("array.txt",edat)
                         while k < length-1: 
                                 k += 1
                                 mean = np.average(edat[anchor:k+1]) #get local mean value since last current change
                                 variance = np.var(edat[anchor:k+1]) #get local variance since last current change
+                                if (variance == 0):                 # with low-precision data sets it is possible that two adjacent values are equal, in which case there is zero variance for the two-vector of sample if this occurs next to a detected jump. This is very, very rare, but it does happen.
+                                        variance = self.baseSD*self.baseSD # in that case, we default to the local baseline variance, which is a good an estimate as any.
                                 logp = self.StepSize*self.baseSD/variance * (edat[k] - mean - self.StepSize*self.baseSD/2.) #instantaneous log-likelihood for current sample assuming local baseline has jumped in the positive direction
                                 logn = -self.StepSize*self.baseSD/variance * (edat[k] - mean + self.StepSize*self.baseSD/2.) #instantaneous log-likelihood for current sample assuming local baseline has jumped in the negative direction
                                 cpos[k] = cpos[k-1] + logp #accumulate positive log-likelihoods
@@ -227,12 +219,10 @@ class cusumLevelAnalysis(metaEventProcessor.metaEventProcessor):
                                 gneg[k] = max(gneg[k-1] + logn, 0) #accumulate or reset negative decision function
                                 if (gpos[k] > self.Threshold or gneg[k] > self.Threshold):
                                         if (gpos[k] > self.Threshold): #significant positive jump detected
-                                                print "+Jump detected\n"
                                                 jump = anchor + np.argmin(cpos[anchor:k+1]) #find the location of the start of the jump
                                                 edges = np.append(edges, jump)
                                                 self.nStates += 1
                                         if (gneg[k] > self.Threshold): #significant negative jump detected
-                                                print "-jump detected\n"
                                                 jump = anchor + np.argmin(cneg[anchor:k+1])
                                                 edges = np.append(edges, jump)
                                                 self.nStates += 1
@@ -242,60 +232,15 @@ class cusumLevelAnalysis(metaEventProcessor.metaEventProcessor):
                                         gpos[0:len(cpos)] = 0
                                         cneg[0:len(cpos)] = 0
                         edges = np.append(edges, len(edat)) #mark the end of the event as an edge
-                        print "We found "+str(len(edges))+" edges at\n"+str(edges)+"\n"
-                        sys.exit()
-			
-			
-                        
+                        self.nStates += 1
+			cusum = dict()
+			if (self.nStates < 3):
+                                self.RejectEvent('eInvalidStates')
+                        else:
+                                cusum['CurrentLevels'] = [np.average(edat[edges[i]:edges[i+1]]) for i in range(self.nStates)]
+                                cusum['EventDelay'] = edges * dt
+                                self.__recordevent(cusum)
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-			ts = np.array([ t*dt for t in range(0,len(edat)) ], dtype='float64') #make a time array presumably in ms
-			
-			# estimate initial guess for events
-			initguess=self._characterizeevent(edat, np.abs(util.avg(edat[:10])), self.baseSD, self.InitThreshold, 6.) #roughly partition the event and determine how many levels there are
-			self.nStates=len(initguess)-1
-
-			# setup fit params
-			params=Parameters()
-
-			for i in range(1, len(initguess)):
-				params.add('a'+str(i-1), value=initguess[i][0]-initguess[i-1][0]) 
-				params.add('mu'+str(i-1), value=initguess[i][1]*dt) 
-				params.add('tau'+str(i-1), value=dt*7.5)
-
-			params.add('b', value=initguess[0][0])
-			
-
-			optfit=Minimizer(self.__objfunc, params, fcn_args=(ts,edat,))
-			optfit.prepare_fit()
-
-	
-			optfit.leastsq(xtol=self.FitTol,ftol=self.FitTol,maxfev=self.FitIters)
-
-			if optfit.success:
-				self.__recordevent(optfit)
-			else:
-				#print optfit.message, optfit.lmdif_message
-				self.rejectEvent('eFitConvergence')
 		except KeyboardInterrupt:
 			self.rejectEvent('eFitUserStop')
 			raise
@@ -305,91 +250,26 @@ class cusumLevelAnalysis(metaEventProcessor.metaEventProcessor):
 	 		self.rejectEvent('eFitFailure')
 	 		raise
 
-	def __threadList(self, l1, l2):
-		"""thread two lists	"""
-		try:
-			return map( lambda x,y : (x,y), l1, l2 )
-		except KeyboardInterrupt:
-			raise
 
-	def __eventEndIndex(self, dat, mu, sigma):
-		try:
-			return ([ d for d in dat if d[0] < (mu-2*sigma) ][-1][1]+1)
-		except IndexError:
-			return -1
-
-	def __eventStartIndex(self, dat, mu, sigma):
-		try:
-			return ([ d for d in dat if d[0] < (mu-2.75*sigma) ][0][1]+1)
-		except IndexError:
-			return -1
-
-	def __objfunc(self, params, t, data):
-		""" model decaying sine wave, subtract data"""
-		try:
-			b = params['b'].value
-			tau = [params['tau'+str(i)].value for i in range(self.nStates)]
-			a=[params['a'+str(i)].value for i in range(self.nStates)]
-			mu=[params['mu'+str(i)].value for i in range(self.nStates)]
-
-			model = fit_funcs.multiStateFunc(t, tau, mu, a, b, self.nStates)
-			return model - data
-		except KeyboardInterrupt:
-			raise
-
-	def __recordevent(self, optfit):
+	def __recordevent(self, cusum):
 		dt = 1000./self.Fs 	# time-step in ms.
 
-		if self.nStates<2:
+		if self.nStates<3:
 			self.rejectEvent('eInvalidStates')
-		elif optfit.params['mu0'].value < 0.0 or optfit.params['mu'+str(self.nStates-1)].value < 0.0:
-			self.rejectEvent('eInvalidResTime')
-		# The start of the event is set past the length of the data
-		elif optfit.params['mu'+str(self.nStates-1)].value > (1000./self.Fs)*(len(self.eventData)-1):
-			self.rejectEvent('eInvalidStartTime')
 		else:
-			self.mdOpenChCurrent 	= optfit.params['b'].value 
-			self.mdCurrentStep		= [ optfit.params['a'+str(i)].value for i in range(self.nStates) ]
+			self.mdOpenChCurrent 	        = 0.5*(cusum['CurrentLevels'][0] + cusum['CurrentLevels'][self.nStates-1]) #this assumes that the event returns to baseline after
+			self.mdCurrentStep		= cusum['CurrentLevels'] #these are absolute current levels, not changes with respect to baseline
 			
-			self.mdNStates			= self.nStates
+			self.mdNStates			= self.nStates #this counts both paddings as separate states. Note also that states can be triggered inside the padding
 
-			self.mdBlockDepth 		= np.cumsum( self.mdCurrentStep[:-1] )/self.mdOpenChCurrent + 1
+			self.mdBlockDepth 		= 1. - self.mdCurrentStep/self.mdOpenChCurrent #percentage blockage of each state
 
-			self.mdEventDelay		= [ optfit.params['mu'+str(i)].value for i in range(self.nStates) ]
+			self.mdEventDelay		= cusum['EventDelay'] # 0 and the last sample in the padding are included in this list
 
-			self.mdEventStart		= optfit.params['mu0'].value
-			self.mdEventEnd			= optfit.params['mu'+str(self.nStates-1)].value
-			self.mdRCConst			= [ optfit.params['tau'+str(i)].value for i in range(self.nStates) ]
+			self.mdEventStart		= cusum['EventDelay'][1] #the first nonzero event
+			self.mdEventEnd			= cusum['EventDelay'][self.nStates-1] #the second last event, this assumes no events triggered in the padding
 
-			self.mdResTime			= self.mdEventEnd - self.mdEventStart
+			self.mdResTime			= self.mdEventEnd - self.mdEventStart 
 
 			self.mdAbsEventStart	= self.mdEventStart + self.absDataStartIndex * dt
-			
-			self.mdRedChiSq			= sum(np.array(optfit.residual)**2/self.baseSD**2)/optfit.nfree
-				
-			if math.isnan(self.mdRedChiSq):
-				self.rejectEvent('eInvalidRedChiSq')
 
-
-	def _levelchange(self, dat, sMean, sSD, nSD, blksz):
-		for i in range(int(blksz/2.0), len(dat)-int(blksz/2.0)):
-			if abs(util.avg(dat[i-int(blksz/2.0):i+int(blksz/2.0)])-sMean) > nSD * sSD:
-				return  [i+1, util.avg(dat[i:i+blksz])]
-
-		raise InvalidEvent()
-
-	def _characterizeevent(self, dat, mean, sd, nSD, blksz):
-		tdat=dat #movingaverage(dat, 2*blksz)
-		tt=[0, mean]
-		mu=[0]
-		a=[mean]
-		t1=0
-		while (1):
-			tt=self._levelchange( tdat[t1:], tt[1], sd, nSD, blksz )
-			t1+=tt[0]
-			mu.append(t1)
-			a.append(tt[1])
-			if abs(tt[1]) > (mean-nSD*sd):
-				break
-
-		return zip(a,mu)
