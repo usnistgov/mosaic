@@ -1,8 +1,8 @@
 """
 	Analyze a multi-step event with the CUSUM algorithm
 
-	:Created:	4/18/2013
- 	:Author: 	Kyle Briggs (kbrig035@uottawa.ca) borrowing heavily from Arvind Balijepalli <arvind.balijepalli@nist.gov>
+	:Created:	2/10/2015
+ 	:Author: 	Kyle Briggs <kbrig035@uottawa.ca>
 	:License:	See LICENSE.TXT
 	:ChangeLog:
 	.. line-block::
