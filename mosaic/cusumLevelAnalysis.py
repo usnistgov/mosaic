@@ -6,17 +6,7 @@
 	:License:	See LICENSE.TXT
 	:ChangeLog:
 	.. line-block::
-		1/7/14		AB  Save the number of states in an event to the DB using the mdNStates column
-		12/31/14 	AB 	Changed multi-state function to include a separate tau for 
-						each state following Balijepalli et al, ACS Nano 2014.
-		12/30/14	JF	Removed min/max constraint on tau
-		11/7/14 	AB 	Error codes describing event rejection are now more specific.
-		11/6/14 	AB 	Fixed a bug in the event fitting logic that prevents the
-						analysis of long states.
-		8/21/14		AB 	Added AbsEventStart and BlockDepth (constructed from mdCurrentStep
-						and mdOpenChCurrent) metadata.
-		5/17/14		AB  Modified md interface functions for metaMDIO support
-		9/26/13		AB	Initial version
+                2/10/15         KB  Initial version
 """
 import commonExceptions
 import metaEventProcessor
@@ -47,16 +37,17 @@ class datblock:
 
 class cusumLevelAnalysis(metaEventProcessor.metaEventProcessor):
 	"""
-		Analyze a multi-step event that contains two or more states using the CUSUM algorithm. This method includes system 
-		information in the analysis, specifically the filtering effects (throught the RC constant)
-		of either amplifiers or the membrane/nanopore complex. The analysis generates several 
-		parameters that are stored as metadata including:
-			1. Blockade depth: the ratio of the open channel current to the blocked current
-			2. Residence time: the time the molecule spends inside the pore
-			3. Tau: the 1/RC of the response to a step input (e.g. the entry or exit of the
-				molecule into or out of the nanopore).
+		Analyze a single- or multi-step event that contains one or more states using the CUSUM algorithm.
+		This method ignores system effects in favor of speed.
+		The analysis generates several parameters that are stored as metadata including:
+                        1. Open channel current (averaged over the padding)'
+                        2. Absolute currentl levels for every significant level change detected
+                        3. Start time for every change in current level
+			4. Blockade depth: the ratio of the blockaed current to the open channel current
+			5. Residence time: the time the molecule spends inside the pore
+			
 
-		When an event cannot be analyzed, the blockade depth, residence time and rise time are set to -1.
+		When an event cannot be analyzed, all relevent data are set to -1.
 	"""
 	def _init(self, **kwargs):
 		"""
@@ -77,16 +68,11 @@ class cusumLevelAnalysis(metaEventProcessor.metaEventProcessor):
 		
 		self.mdResTime = -1
 
-		self.mdRCConst=[-1]
-
 		self.mdAbsEventStart = -1
-
-		self.mdRedChiSq=-1
 
 		self.nStates=-1
 
-		# Settings for single step event processing
-		# settings for gaussian fits
+		# Settings for detection of changed in current level
 		try:
 			self.StepSize=float(self.settingsDict.pop("StepSize", 3.0))
 			self.Threshold=int(self.settingsDict.pop("Threshold", 3.0))
@@ -102,7 +88,7 @@ class cusumLevelAnalysis(metaEventProcessor.metaEventProcessor):
 			This function implements the core logic to analyze one single step-event.
 		"""
 		try:
-			# Fit the system transfer function to the event data
+			# Run CUSUM to detect changed in level
 			self.__FitEvent()
 		except:
 			raise
@@ -237,8 +223,8 @@ class cusumLevelAnalysis(metaEventProcessor.metaEventProcessor):
 			if (self.nStates < 3):
                                 self.RejectEvent('eInvalidStates')
                         else:
-                                cusum['CurrentLevels'] = [np.average(edat[edges[i]:edges[i+1]]) for i in range(self.nStates)]
-                                cusum['EventDelay'] = edges * dt
+                                cusum['CurrentLevels'] = [np.average(edat[edges[i]:edges[i+1]]) for i in range(self.nStates)] #detect current levels during detected sub-events
+                                cusum['EventDelay'] = edges * dt #locations of sub-events in the data
                                 self.__recordevent(cusum)
 
 		except KeyboardInterrupt:
