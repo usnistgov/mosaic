@@ -16,9 +16,7 @@ import sys
 import math
 
 import numpy as np
-import scipy.optimize
 
-from lmfit import minimize, Parameters, Parameter, report_errors, Minimizer
 
 class InvalidEvent(Exception):
 	pass
@@ -37,17 +35,27 @@ class datblock:
 
 class cusumLevelAnalysis(metaEventProcessor.metaEventProcessor):
 	"""
-		Analyze a single- or multi-step event that contains one or more states using the CUSUM algorithm.
-		This method ignores system effects in favor of speed.
-		The analysis generates several parameters that are stored as metadata including:
-                        1. Open channel current (averaged over the padding)'
-                        2. Absolute currentl levels for every significant level change detected
-                        3. Start time for every change in current level
-			4. Blockade depth: the ratio of the blockaed current to the open channel current
-			5. Residence time: the time the molecule spends inside the pore
-			
+		Implements the CUSUM algorithm (used by OpenNanopore for example) in MOSAIC. This approach sacrifices including system information in the analysis in favor of much faster fitting of single- and multi-level events.
 
-		When an event cannot be analyzed, all relevent data are set to -1.
+                Some known issues with CUSUM:
+
+                1. If the duration of a sub-event is shorter than a few RC rise times, the averaging will underestimate the extent of the current change. I have not yet found a satisfactory solution for this issue, but for longer events CUSUM should achieve very similar output to the fitting employed elsewhere in MOSAIC.
+                2. CUSUM assumes an instantaneous transition between current states. As a result, if the RC rise time of the system is large, CUSUM can trigger and detect intermediate states during the change time. This can usually be mitigated by playing with the algorithm sensitivity settings.
+                3. If the event is very long, CUSUM will eventually trigger even if there is no real change, leading to artificially high nStates values for an event. This is a consequence of using a statistical t-test which can have false positives, and can in some cases be mitigated by reducing the sensitivity.
+
+                To use it requires two settings:
+
+                .. code-block:: javascript
+                {
+                        "cusumLevelAnalysis": {
+                        "StepSize": 3.0, 
+                        "Threshold": 3.0
+                        }
+                }
+
+                StepSize is the number of baseline standard deviations are considered significant (3 is usually a good starting point). Threshold is the sensitivity of the algorithm, (lower is more sensitive, a good starting point is to set it equal to StepSize). CUSUM will detect jumps that are smaller than StepSize, but they will have to be sustained longer. Threshold can be thought of, very roughly, as roughly proportional to the length of time a subevent must be sustained for it to be detected.
+
+                You can read about the algorithm here: http://pubs.rsc.org/en/Content/ArticleLanding/2012/NR/c2nr30951c#!divAbstract
 	"""
 	def _init(self, **kwargs):
 		"""
