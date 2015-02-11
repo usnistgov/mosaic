@@ -120,7 +120,11 @@ setup(
             'icons/icon_100px.png',
             '.scripts/install-addons-sh',
             '.scripts/build-deps-sh', 
-            '.scripts/pyinstaller-sh'
+            '.scripts/pyinstaller-sh',
+            'data/eventMD-PEG28-Reference.sqlite',
+            'data/.settings',
+            'data/SingleChan-0001.qdf',
+            'data/SingleChan-0001_state.txt'
             ],
     install_requires=[
           'numpy==1.8.1',
@@ -128,6 +132,7 @@ setup(
           'scipy==0.15.0',
           'lmfit==0.7.4',
           'uncertainties==2.4.6',
+          'matplotlib==1.3.1',
           'PyWavelets==0.2.2',
       ],
     url='https://usnistgov.github.io/mosaic/',

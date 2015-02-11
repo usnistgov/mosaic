@@ -48,7 +48,7 @@ class datblock:
 class multiStateAnalysis(metaEventProcessor.metaEventProcessor):
 	"""
 		Analyze a multi-step event that contains two or more states. This method includes system 
-		information in the analysis, specifically the filtering effects (throught the RC constant)
+		information in the analysis, specifically the filtering effects (through the RC constant)
 		of either amplifiers or the membrane/nanopore complex. The analysis generates several 
 		parameters that are stored as metadata including:
 			1. Blockade depth: the ratio of the open channel current to the blocked current

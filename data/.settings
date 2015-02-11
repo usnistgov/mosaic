@@ -1,25 +1,19 @@
 {
-    "waveletDenoiseFilter": {
-        "decimate": 1, 
-        "level": 5, 
-        "thresholdType": "soft", 
-        "thresholdSubType": "sqtwolog", 
-        "wavelet": "sym5"
-    }, 
     "stepResponseAnalysis": {
         "FitTol": 1e-07, 
         "BlockRejectRatio": 0.9, 
         "FitIters": 50000
     }, 
-    "binTrajIO": {
-        "AmplifierOffset": 0.0, 
-        "SamplingFrequency": 500000, 
-        "AmplifierScale": 1.0, 
-        "dcOffset": 0.0, 
-        "filter": "*.bin", 
+    "cusumLevelAnalysis": {
+        "StepSize": 3.0, 
+        "Threshold": 3.0
+    }, 
+    "qdfTrajIO": {
+        "filter": "*.qdf", 
         "start": 0.0, 
-        "HeaderOffset": 0, 
-        "PythonStructCode": "d"
+        "Cfb": 1.07e-12, 
+        "dcOffset": 0.0, 
+        "Rfb": 9100000000.0
     }, 
     "eventSegment": {
         "meanOpenCurr": -1.0, 
@@ -27,7 +21,7 @@
         "eventPad": 50, 
         "driftThreshold": 999.0, 
         "maxDriftRate": 999.0, 
-        "eventThreshold": 3.9373285649681846, 
+        "eventThreshold": 3.9373285645823413, 
         "writeEventTS": 1, 
         "minEventLength": 5, 
         "sdOpenCurr": -1.0, 

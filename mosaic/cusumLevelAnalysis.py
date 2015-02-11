@@ -46,12 +46,11 @@ class cusumLevelAnalysis(metaEventProcessor.metaEventProcessor):
                 To use it requires two settings:
 
                 .. code-block:: javascript
-                {
-                        "cusumLevelAnalysis": {
-                        "StepSize": 3.0, 
-                        "Threshold": 3.0
+
+	                "cusumLevelAnalysis": {
+						"StepSize": 3.0, 
+						"Threshold": 3.0
                         }
-                }
 
                 StepSize is the number of baseline standard deviations are considered significant (3 is usually a good starting point). Threshold is the sensitivity of the algorithm, (lower is more sensitive, a good starting point is to set it equal to StepSize). CUSUM will detect jumps that are smaller than StepSize, but they will have to be sustained longer. Threshold can be thought of, very roughly, as roughly proportional to the length of time a subevent must be sustained for it to be detected.
 
