@@ -1,12 +1,14 @@
 |projname| Developers
 ------------------------------------
 
-Arvind Balijepalli
+Arvind Balijepalli, NIST
 
-Jacob Forstater
+Jacob Forstater, NIST
 
-Joseph Robertson
+Joseph Robertson, NIST
 
-Canute Vaz
+Canute Vaz, NIST
+
+Kyle Briggs, Univeristy of Ottawa
 
 

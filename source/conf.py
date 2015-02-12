@@ -304,8 +304,8 @@ latex_elements = {
     
     \authoraddress{\Large Questions/Suggestions\\
     \\
-    \small Join our mailing list: \href{mailto:mosaic@nist.gov}{mosaic@nist.gov}\\
-    To subscribe, email \href{mailto:mosaic-request@nist.gov?subject=subscribe}{mosaic-request@nist.gov} with subject \textit{subscribe}.\\
+    \small Subscribe to our mailing list: email \href{mailto:mosaic-request@nist.gov?subject=subscribe}{mosaic-request@nist.gov} with subject \textit{subscribe}\\
+    Once subscribed, send messages by emailing \href{mailto:mosaic@nist.gov}{mosaic@nist.gov}.\\
     \\
     \\
     Report problems with MOSAIC using the issue tracker on GitHub\\
