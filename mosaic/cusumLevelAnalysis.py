@@ -6,6 +6,8 @@
 	:License:	See LICENSE.TXT
 	:ChangeLog:
 	.. line-block::
+				2/12/15 		AB 	Updated metadata representation to be consistent 
+									with stepResponseAnalysis and multiStateAnalysis
                 2/10/15         KB  Initial version
 """
 import commonExceptions
@@ -46,12 +48,11 @@ class cusumLevelAnalysis(metaEventProcessor.metaEventProcessor):
                 To use it requires two settings:
 
                 .. code-block:: javascript
-                {
-                        "cusumLevelAnalysis": {
-                        "StepSize": 3.0, 
-                        "Threshold": 3.0
+
+	                "cusumLevelAnalysis": {
+						"StepSize": 3.0, 
+						"Threshold": 3.0
                         }
-                }
 
                 StepSize is the number of baseline standard deviations are considered significant (3 is usually a good starting point). Threshold is the sensitivity of the algorithm, (lower is more sensitive, a good starting point is to set it equal to StepSize). CUSUM will detect jumps that are smaller than StepSize, but they will have to be sustained longer. Threshold can be thought of, very roughly, as roughly proportional to the length of time a subevent must be sustained for it to be detected.
 
@@ -190,10 +191,10 @@ class cusumLevelAnalysis(metaEventProcessor.metaEventProcessor):
 			
 			logp = 0 #instantaneous log-likelihood for positive jumps
 			logn = 0 #instantaneous log-likelihood for negative jumps
-			cpos = np.array([0. for i in range(0,len(edat))], dtype='float64') #cumulative log-likelihood function for positive jumps
-			cneg = np.array([0. for i in range(0,len(edat))], dtype='float64') #cumulative log-likelihood function for negative jumps
-			gpos = np.array([0. for i in range(0,len(edat))], dtype='float64') #decision function for positive jumps
-			gneg = np.array([0. for i in range(0,len(edat))], dtype='float64') #decision function for negative jumps
+			cpos = np.zeros(len(edat), dtype='float64') #cumulative log-likelihood function for positive jumps
+			cneg = np.zeros(len(edat), dtype='float64') #cumulative log-likelihood function for negative jumps
+			gpos = np.zeros(len(edat), dtype='float64') #decision function for positive jumps
+			gneg = np.zeros(len(edat), dtype='float64') #decision function for negative jumps
 			edges = np.array([0], dtype='int64') #initialize an array with the position of the first subevent - the start of the event
 			anchor = 0 #the last detected change
 			length = len(edat)
@@ -229,7 +230,7 @@ class cusumLevelAnalysis(metaEventProcessor.metaEventProcessor):
                         self.nStates += 1
 			cusum = dict()
 			if (self.nStates < 3):
-                                self.RejectEvent('eInvalidStates')
+                                self.rejectEvent('eInvalidStates')
                         else:
                                 cusum['CurrentLevels'] = [np.average(edat[edges[i]:edges[i+1]]) for i in range(self.nStates)] #detect current levels during detected sub-events
                                 cusum['EventDelay'] = edges * dt #locations of sub-events in the data
@@ -252,16 +253,16 @@ class cusumLevelAnalysis(metaEventProcessor.metaEventProcessor):
 			self.rejectEvent('eInvalidStates')
 		else:
 			self.mdOpenChCurrent 	        = 0.5*(cusum['CurrentLevels'][0] + cusum['CurrentLevels'][self.nStates-1]) #this assumes that the event returns to baseline after
-			self.mdCurrentStep		= cusum['CurrentLevels'] #these are absolute current levels, not changes with respect to baseline
+			self.mdCurrentStep		= np.diff(np.hstack(([self.mdOpenChCurrent], cusum['CurrentLevels'])))[1:] #these current levels are relative to the open state
 			
-			self.mdNStates			= self.nStates #this counts both paddings as separate states. Note also that states can be triggered inside the padding
+			self.mdNStates			= self.nStates - 1 #this does not count padding as separate states. Note also that states can be triggered inside the padding
 
 			self.mdBlockDepth 		= 1. - self.mdCurrentStep/self.mdOpenChCurrent #percentage blockage of each state
 
-			self.mdEventDelay		= cusum['EventDelay'] # 0 and the last sample in the padding are included in this list
+			self.mdEventDelay		= cusum['EventDelay'][1:-1] # first and last states (or baseline) are removed
 
-			self.mdEventStart		= cusum['EventDelay'][1] #the first nonzero event
-			self.mdEventEnd			= cusum['EventDelay'][self.nStates-1] #the second last event, this assumes no events triggered in the padding
+			self.mdEventStart		= self.mdEventDelay[0] #the first nonzero event
+			self.mdEventEnd			= self.mdEventDelay[-1] #the last non zero event, this assumes no events triggered in the padding
 
 			self.mdResTime			= self.mdEventEnd - self.mdEventStart 
 
