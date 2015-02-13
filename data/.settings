@@ -5,8 +5,8 @@
         "FitIters": 50000
     }, 
     "cusumLevelAnalysis": {
-        "StepSize": 3.0, 
-        "Threshold": 3.0
+        "StepSize": 5.0, 
+        "Threshold": 5.0
     }, 
     "qdfTrajIO": {
         "filter": "*.qdf", 
