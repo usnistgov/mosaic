@@ -6,6 +6,7 @@
 	:License:	See LICENSE.TXT
 	:ChangeLog:
 	.. line-block::
+		2/14/15 	AB 	Added default settings for cusumLevelAnalysis.
 		8/20/14		AB 	Changed precedence of settings file search to datpath/.settings,
 						datpath/settings, coderoot/.settings and coderoot/settings
 		8/6/14		AB 	Add a function to parse a settings string.
@@ -97,7 +98,11 @@ __settings__="""
 	                "FitTol"		: "1.e-7",
 	                "FitIters"		: "50000",
 	                "InitThreshold"	: "3.0"
-	        },
+	     },
+	     "cusumLevelAnalysis": {
+        			"StepSize"		: 3.0, 
+        			"Threshold"		: 3.0
+    	}, 
 		"besselLowpassFilter" : {
 			"filterOrder"			: "6",
 			"filterCutoff"			: "10000",
