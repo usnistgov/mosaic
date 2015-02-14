@@ -72,8 +72,19 @@ class FitEventWindow(QtGui.QDialog):
 		self.queryString=self.queryStringDict[self.analysisAlgorithm]
 
 		# Setup the fit function based on the algorithm
-		self.fitFuncHnd=self.queryAlgoHndDict[self.analysisAlgorithm]
-		self.fitFuncArgs=self.queryAlgoArgsDict[self.analysisAlgorithm]
+		try:
+			self.fitFuncHnd=self.fitFuncHndDict[self.analysisAlgorithm]
+			self.fitFuncArgs=self.fitFuncArgsDict[self.analysisAlgorithm]
+		except KeyError:
+			self.fitFuncHnd=None
+			self.fitFuncArgs="[]"
+
+		try:
+			self.stepFuncHnd=self.stepFuncHndDict[self.analysisAlgorithm]
+			self.stepFuncArgs=self.stepFuncArgsDict[self.analysisAlgorithm]
+		except KeyError:
+			self.stepFuncHnd=None
+			self.stepFuncArgs="[]"
 
 		self.FskHz=float(FskHz)
 		# print self.FskHz
@@ -111,18 +122,24 @@ class FitEventWindow(QtGui.QDialog):
 
 			np.seterr(invalid='ignore', over='ignore', under='ignore')
 			# fit function data
-			# ProcessingStatus, TimeSeries, RCConstant, EventStart, EventEnd, CurrentStep, OpenChCurrent
-			# print len(q[1]), float((len(q[1]))/fs), float(1/(100*fs))
-			xfit=np.arange(0,float((len(q[1]))/fs), float(1/(100*fs)))
-			yfit=self.fitFuncHnd( *eval(self.fitFuncArgs) )
-
 			if str(q[0])=="normal":
 				c='#%02x%02x%02x' % (72,91,144)
 				cf='#%02x%02x%02x' % (50,50,47)
+				cs='#%02x%02x%02x' % (170,41,45)
 				self.mpl_hist.canvas.ax.cla()
 				self.mpl_hist.canvas.ax.hold(True)
 				self.mpl_hist.canvas.ax.plot( xdat, ydat, linestyle='None', marker='o', color=c, markersize=8, markeredgecolor='none', alpha=0.6)
-				self.mpl_hist.canvas.ax.plot( xfit, yfit, linestyle='-', linewidth='2.0', color=cf)
+				
+				if self.fitFuncHnd:
+					xfit=np.arange(0,float((len(q[1]))/fs), float(1/(100*fs)))
+					yfit=self.fitFuncHnd( *eval(self.fitFuncArgs) )
+					self.mpl_hist.canvas.ax.plot( xfit, yfit, linestyle='-', linewidth='2.0', color=cf)
+
+				if self.stepFuncHnd:
+					xstep=np.arange(0,float((len(q[1]))/fs), float(1/(100*fs)))
+					ystep=self.stepFuncHnd( *eval(self.stepFuncArgs) )
+					self.mpl_hist.canvas.ax.plot( xstep, ystep, linestyle='--', linewidth='2.0', color=cs)
+
 			else:
 				self.mpl_hist.canvas.ax.cla()
 				self.mpl_hist.canvas.ax.plot( xdat, ydat, linestyle='None', marker='o', color='r', markersize=8, markeredgecolor='none', alpha=0.6)
@@ -235,16 +252,26 @@ class FitEventWindow(QtGui.QDialog):
 			"cusumLevelAnalysis" 	: "select ProcessingStatus, TimeSeries, EventDelay, CurrentStep, OpenChCurrent from metadata limit " + str(self.viewerLimit)
 		}
 
-		self.queryAlgoHndDict={
+		self.fitFuncHndDict={
 			"stepResponseAnalysis" 	: fit_funcs.stepResponseFunc,
-			"multiStateAnalysis" 	: fit_funcs.multiStateFunc,
+			"multiStateAnalysis" 	: fit_funcs.multiStateFunc
+		}
+
+		self.fitFuncArgsDict={
+			"stepResponseAnalysis" 	: "[xfit, q[2], q[3], q[4], abs(q[6]-q[5]), q[6]]",
+			"multiStateAnalysis" 	: "[xfit, q[2], q[3], q[4], q[5], len(q[3])]"
+		}
+
+		self.stepFuncHndDict={
+			"stepResponseAnalysis" 	: fit_funcs.multiStateStepFunc,
+			"multiStateAnalysis" 	: fit_funcs.multiStateStepFunc,
 			"cusumLevelAnalysis"	: fit_funcs.multiStateStepFunc
 		}
 
-		self.queryAlgoArgsDict={
-			"stepResponseAnalysis" 	: "[xfit, q[2], q[3], q[4], abs(q[6]-q[5]), q[6]]",
-			"multiStateAnalysis" 	: "[xfit, q[2], q[3], q[4], q[5], len(q[3])]",
-			"cusumLevelAnalysis" 	: "[xfit, q[2], q[3], q[4], len(q[2])]"
+		self.stepFuncArgsDict={
+			"stepResponseAnalysis" 	: "[xstep, [q[3], q[4]], [-abs(q[6]-q[5]), abs(q[6]-q[5])], q[6], 2]",
+			"multiStateAnalysis" 	: "[xstep, q[3], q[4], q[5], len(q[3])]",
+			"cusumLevelAnalysis" 	: "[xstep, q[2], q[3], q[4], len(q[2])]"
 		}
 
 
