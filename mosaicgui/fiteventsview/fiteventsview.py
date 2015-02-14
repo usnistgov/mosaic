@@ -223,15 +223,6 @@ class FitEventWindow(QtGui.QDialog):
 		except:
 			raise
 
-	def _heaviside(self, x):
-		out=np.array(x)
-
-		out[out==0]=0.5
-		out[out<0]=0
-		out[out>0]=1
-
-		return out
-
 	def _setupdict(self):
 		self.keyDict={
 			QtCore.Qt.Key_Right : 	self.OnNextButton,
@@ -240,17 +231,20 @@ class FitEventWindow(QtGui.QDialog):
 
 		self.queryStringDict={
 			"stepResponseAnalysis" 	: "select ProcessingStatus, TimeSeries, RCConstant, EventStart, EventEnd, BlockedCurrent, OpenChCurrent from metadata limit " + str(self.viewerLimit),
-			"multiStateAnalysis" 	: "select ProcessingStatus, TimeSeries, RCConstant, EventDelay, CurrentStep, OpenChCurrent from metadata limit " + str(self.viewerLimit)
+			"multiStateAnalysis" 	: "select ProcessingStatus, TimeSeries, RCConstant, EventDelay, CurrentStep, OpenChCurrent from metadata limit " + str(self.viewerLimit),
+			"cusumLevelAnalysis" 	: "select ProcessingStatus, TimeSeries, EventDelay, CurrentStep, OpenChCurrent from metadata limit " + str(self.viewerLimit)
 		}
 
 		self.queryAlgoHndDict={
 			"stepResponseAnalysis" 	: fit_funcs.stepResponseFunc,
-			"multiStateAnalysis" 	: fit_funcs.multiStateFunc
+			"multiStateAnalysis" 	: fit_funcs.multiStateFunc,
+			"cusumLevelAnalysis"	: fit_funcs.multiStateStepFunc
 		}
 
 		self.queryAlgoArgsDict={
 			"stepResponseAnalysis" 	: "[xfit, q[2], q[3], q[4], abs(q[6]-q[5]), q[6]]",
-			"multiStateAnalysis" 	: "[xfit, q[2], q[3], q[4], q[5], len(q[3])]"
+			"multiStateAnalysis" 	: "[xfit, q[2], q[3], q[4], q[5], len(q[3])]",
+			"cusumLevelAnalysis" 	: "[xfit, q[2], q[3], q[4], len(q[2])]"
 		}
 
 

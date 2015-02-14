@@ -16,9 +16,6 @@ import webbrowser
 from PyQt4 import QtCore, QtGui, uic
 from mosaic.utilities.resource_path import resource_path, format_path
 import mosaicgui.EBSStateFileDict
-# import mosaic.settings
-# import AnalysisSettings
-# from mosaicgui.SettingsWindow import Ui_SettingsWindow
 import mosaicgui.trajview.trajview
 import mosaicgui.advancedsettings.advancedsettings
 import mosaicgui.blockdepthview.blockdepthview

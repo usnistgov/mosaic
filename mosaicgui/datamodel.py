@@ -16,6 +16,7 @@ import mosaic.eventSegment
 
 import mosaic.stepResponseAnalysis
 import mosaic.multiStateAnalysis
+import mosaic.cusumLevelAnalysis
 
 import mosaic.qdfTrajIO
 import mosaic.abfTrajIO
@@ -91,6 +92,9 @@ class guiDataModel(dict):
 		elif procAlgo=="multiStateAnalysis":
 			settingsdict[procAlgo]={}
 			procKeys=self.multiStateAnalysisKeys
+		elif procAlgo=="cusumLevelAnalysis":
+			settingsdict[procAlgo]={}
+			procKeys=self.cusumLevelAnalysisKeys
 
 		# Add a section for data files
 		settingsdict[self.dataTypeKeys[self["DataFilesType"]]]=self.GenerateDataFilesView()
@@ -284,8 +288,10 @@ class guiDataModel(dict):
 								"BlockRejectRatio" 		: float,
 								"InitThreshold"			: float
 							}
-
-
+		self.cusumLevelAnalysisKeys={
+								"StepSize"				: float,
+								"Threshold"				: float
+		}
 		self.besselLowpassFilterKeys={
 								"filterOrder" 			: int,
 								"filterCutoff" 			: float,
@@ -324,7 +330,8 @@ class guiDataModel(dict):
 
 		self.eventProcessingAlgoKeys={
 								"stepResponseAnalysis" 	: "stepResponseAnalysis",
-								"multiStateAnalysis"	: "multiStateAnalysis"
+								"multiStateAnalysis"	: "multiStateAnalysis",
+								"cusumLevelAnalysis"	: "cusumLevelAnalysis"
 							}
 
 		self.filterAlgoKeys={
@@ -343,6 +350,7 @@ class guiDataModel(dict):
 								"CurrentThreshold" 		: mosaic.eventSegment.eventSegment,
 								"stepResponseAnalysis" 	: mosaic.stepResponseAnalysis.stepResponseAnalysis,
 								"multiStateAnalysis"	: mosaic.multiStateAnalysis.multiStateAnalysis,
+								"cusumLevelAnalysis"	: mosaic.cusumLevelAnalysis.cusumLevelAnalysis,
 								"waveletDenoiseFilter"	: mosaic.waveletDenoiseFilter.waveletDenoiseFilter
 							}
 
