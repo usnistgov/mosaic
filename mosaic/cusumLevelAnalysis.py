@@ -268,3 +268,6 @@ class cusumLevelAnalysis(metaEventProcessor.metaEventProcessor):
 
 			self.mdAbsEventStart	= self.mdEventStart + self.absDataStartIndex * dt
 
+
+			if math.isnan(self.mdOpenChCurrent):
+				self.rejectEvent('eInvalidOpenChCurr')
