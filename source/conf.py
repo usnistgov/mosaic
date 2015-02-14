@@ -114,6 +114,7 @@ rst_prolog = """
 .. |abstractmethod| replace:: **Abstract method:** This method must be implemented by a sub-class.
 .. |metaclass| replace:: This metaclass must be sub-classed. All abstract methods within this metaclass must be implemented.
 .. |property| replace:: **Property** 
+.. |nist| replace:: *NIST*
 """
 
 intersphinx_mapping = {
@@ -296,6 +297,9 @@ latex_elements = {
       \changepage{}{}{}{}{}{}{}{}{}
       \input DISCLAIMER
       \clearpage
+      \changepage{}{}{}{}{}{}{}{}{}
+      \input DEVELOPERS
+      \clearpage
       \setcounter{footnote}{0}%
       \let\thanks\relax\let\maketitle\relax
       %\gdef\@thanks{}\gdef\@author{}\gdef\@title{}
@@ -327,10 +331,10 @@ latex_elements = {
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
   ('index', 'MOSAIC.tex', u'MOSAIC Manual',
-   ur'Arvind Balijepalli \\ Jacob Forstater \\ Joseph Robertson \\ Canute Vaz', 'manual'),
+   ur'`', 'manual'),
 ]
 
-latex_additional_files = ['images/icon.png', 'images/nistlogo.pdf', 'LICENSE', 'DISCLAIMER']
+latex_additional_files = ['images/icon.png', 'images/nistlogo.pdf', 'LICENSE', 'DISCLAIMER', 'DEVELOPERS']
 
 # The name of an image file (relative to this directory) to place at the top of
 # the title page.
