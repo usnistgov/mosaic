@@ -18,7 +18,7 @@ digraph "Graphical Class Hierarchy"
   Node5 -> Node6 [dir="back", width=1.0, penwidth=2.5,color="midnightblue",fontsize="20",style="solid",fontname="Helvetica"];
   Node6 [label="mosaic.multiStateAnalysis.multi\lStateAnalysis",height=0.2,width=0.4,color="black", fillcolor="white", style="filled"];
   Node5 -> Node7 [dir="back", width=1.0, penwidth=2.5,color="midnightblue",fontsize="20",style="solid",fontname="Helvetica"];
-  Node7 [label="mosaic.singleStepEvent.single\lStepEvent",height=0.2,width=0.4,color="black", fillcolor="white", style="filled"];
+  Node7 [label="mosaic.cusumLevelAnalysis.cusum\lLevelAnalysis",height=0.2,width=0.4,color="black", fillcolor="white", style="filled"];
   Node5 -> Node8 [dir="back", width=1.0, penwidth=2.5,color="midnightblue",fontsize="20",style="solid",fontname="Helvetica"];
   Node8 [label="mosaic.stepResponseAnalysis.step\lResponseAnalysis",height=0.2,width=0.4,color="black", fillcolor="white", style="filled"];
   Node1 -> Node9 [dir="back", width=1.0, penwidth=2.5,color="midnightblue",fontsize="20",style="solid",fontname="Helvetica"];
