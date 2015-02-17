@@ -257,7 +257,7 @@ class cusumLevelAnalysis(metaEventProcessor.metaEventProcessor):
 			
 			self.mdNStates			= self.nStates - 1 #this does not count padding as separate states. Note also that states can be triggered inside the padding
 
-			self.mdBlockDepth 		= 1. - self.mdCurrentStep/self.mdOpenChCurrent #percentage blockage of each state
+			self.mdBlockDepth 		= cusum['CurrentLevels'][1:-1]/self.mdOpenChCurrent #percentage blockage of each state
 
 			self.mdEventDelay		= cusum['EventDelay'][1:-1] # first and last states (or baseline) are removed
 
