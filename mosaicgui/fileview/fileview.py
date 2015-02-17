@@ -78,7 +78,7 @@ class FileViewWindow(QtGui.QDialog):
 		if not errorstr:
 			try:
 				if len(res) > 0:
-					self.queryData=[ [r[0], r[1], time.ctime(float(r[2])) ] for r in res]
+					self.queryData=[ [os.path.basename(r[0]), r[1], time.ctime(float(r[2])) ] for r in res]
 
 					# self.tableModel = FileViewModel(self, self.queryData, ['File Name', 'File Type', 'Last Modified'])
 					self.tableModel.update(self.queryData)
