@@ -16,9 +16,6 @@ import webbrowser
 from PyQt4 import QtCore, QtGui, uic
 from mosaic.utilities.resource_path import resource_path, format_path
 import mosaicgui.EBSStateFileDict
-# import mosaic.settings
-# import AnalysisSettings
-# from mosaicgui.SettingsWindow import Ui_SettingsWindow
 import mosaicgui.trajview.trajview
 import mosaicgui.advancedsettings.advancedsettings
 import mosaicgui.blockdepthview.blockdepthview
@@ -153,13 +150,22 @@ class settingsview(QtGui.QMainWindow):
 
 		datidx= { 
 					"QDF" : self.datTypeComboBox.findText("QDF"), 
-					"ABF" : self.datTypeComboBox.findText("ABF")
+					"ABF" : self.datTypeComboBox.findText("ABF"),
+					"BIN" : self.datTypeComboBox.findText("BIN")
 				}
 		path=model["DataFilesPath"] 
 		if len(glob.glob(format_path( str(path)+'/*qdf') )) > 0:
 			self.datTypeComboBox.setCurrentIndex( datidx["QDF"] )
+			model["filter"]="*.qdf"
 		elif len(glob.glob( format_path(str(path)+'/*abf') )) > 0:
 			self.datTypeComboBox.setCurrentIndex( datidx["ABF"] )
+			model["filter"]="*.abf"
+		elif len(glob.glob( format_path(str(path)+'/*bin') )) > 0:
+			self.datTypeComboBox.setCurrentIndex( datidx["BIN"] )
+			model["filter"]="*.bin"
+		elif len(glob.glob( format_path(str(path)+'/*dat') )) > 0:
+			self.datTypeComboBox.setCurrentIndex( datidx["BIN"] )
+			model["filter"]="*.dat"
 
 		# store the  data type in the trajviewer data struct
 		model["DataFilesType"] = str(self.datTypeComboBox.currentText())

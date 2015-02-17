@@ -50,3 +50,13 @@ def multiStateFunc(t, tau, mu, a, b, n):
 		return func
 	except:
 		raise
+
+def multiStateStepFunc(t, mu, a, b, n):
+	try:
+		func=b
+		for i in range(n):			
+			func += a[i]*heaviside(t-mu[i])
+
+		return func
+	except:
+		raise

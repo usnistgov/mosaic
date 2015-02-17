@@ -20,19 +20,36 @@ import qdf.readqdf as qdf
 
 class qdfTrajIO(metaTrajIO.metaTrajIO):
 	"""
-		In addition to the base class init, check if the 
-		feedback resistance (Rfb) and feedback capacitance (Cfb)
-		are defined to convert qdf binary data into pA
+		Use the readqdf module from EBS to read individual QDF files.
+
+		In addition to :class:`~mosaic.metaTrajIO.metaTrajIO` args, check if the 
+		feedback resistance (``Rfb``) and feedback capacitance (``Cfb``)
+		are defined to convert qdf binary data into pA.
+
+		A typical settings section to read QDF files is shown below. Note, that
+		the values for ``Rfb`` and ``Cfb`` are specific to the amplifier used.
+
+		.. code-block:: javascript
+
+			"qdfTrajIO": {
+	                "Rfb"                           : 9.1e+12,
+	                "Cfb"                           : 1.07e-12,
+	                "dcOffset"                      : 0.0,
+	                "filter"                        : "*.qdf",
+	                "start"                         : 0.0
+	        	}
 
 		:Parameters:
 			In addition to metaTrajIO.__init__ args,
 				- `Rfb` :		feedback resistance of amplifier
 				- `Cfb` :		feedback capacitance of amplifier
 				- `format` : 	'V' for voltage or 'pA' for current. Default is 'V'
+		
 		:Returns:
 			None
+		
 		:Errors:
-			- `InsufficientArgumentsError` : if the mandatory arguments Rfb and Cfb are not set
+			- `InsufficientArgumentsError` : if the mandatory arguments ``Rfb`` and ``Cfb`` are not set.
 	"""	
 	
 	def _init(self, **kwargs):
@@ -52,8 +69,10 @@ class qdfTrajIO(metaTrajIO.metaTrajIO):
 
 			:Parameters:
 				- `fname` :  list of data files to read
+			
 			:Returns:
 				None
+			
 			:Errors:
 				- `SamplingRateChangedError` : if the sampling rate for any data file differs from previous
 		"""

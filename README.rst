@@ -8,7 +8,7 @@ Nanometer-scale pores have demonstrated potential use in biotechnology applicati
 
 **If you use MOSAIC in your work, please cite:**
 
-A. Balijepalli, J., Ettedgui, A. T. Cornio, J. W. F. Robertson K. P. Cheung, J. J. Kasianowicz & C. Vaz, "`Quantifying Short-Lived Events in Multistate Ionic Current Measurements. <http://pubs.acs.org/doi/abs/10.1021/nn405761y>`_" *ACS Nano* 2014, **8**, 1547–1553.
+\A. Balijepalli, J., Ettedgui, A. T. Cornio, J. W. F. Robertson K. P. Cheung, J. J. Kasianowicz & C. Vaz, "`Quantifying Short-Lived Events in Multistate Ionic Current Measurements. <http://pubs.acs.org/doi/abs/10.1021/nn405761y>`_" *ACS Nano* 2014, **8**, 1547–1553.
 
 
 Installation
@@ -20,10 +20,24 @@ Please refer to the `Installation <https://usnistgov.github.io/mosaic/html/doc/G
 Getting Help and Reporting Problems
 =================================
 
-You can `contact MOSAIC developers <http://www.nist.gov/cgi-bin/wwwph/cso.nist.gov?Query=Arvind+Balijepalli>`_  for help or report problems using our `issue tracker <https://github.com/usnistgov/mosaic/issues>`_.
+For questions and help, please `join our mailing list <https://usnistgov.github.io/mosaic/html/doc/mailingList.html>`_ (`mosaic@nist.gov <mailto:mosaic@nist.gov>`_). Report problems using our `issue tracker <https://github.com/usnistgov/mosaic/issues>`_ on Github.
 
 Change Log
 =================================
+
+**v1.2**
+
+- Added support for arbitrary binary file formats (#33)
+- [GUI] Included binary file support.
+- Documentation updates and bug fixes.
+- *Known Issues:* See #8 and #10.
+
+**v1.1**
+
+- [Addons] IGOR_ support.
+- PyPi package automatically installs MOSAIC dependencies.
+- Miscellaneous bug fixes.
+- *Known Issues:* See #8 and #10.
 
 **v1.0**
 

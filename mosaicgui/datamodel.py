@@ -16,9 +16,11 @@ import mosaic.eventSegment
 
 import mosaic.stepResponseAnalysis
 import mosaic.multiStateAnalysis
+import mosaic.cusumLevelAnalysis
 
 import mosaic.qdfTrajIO
 import mosaic.abfTrajIO
+import mosaic.binTrajIO
 
 from mosaic.besselLowpassFilter import *
 import mosaic.waveletDenoiseFilter
@@ -90,6 +92,9 @@ class guiDataModel(dict):
 		elif procAlgo=="multiStateAnalysis":
 			settingsdict[procAlgo]={}
 			procKeys=self.multiStateAnalysisKeys
+		elif procAlgo=="cusumLevelAnalysis":
+			settingsdict[procAlgo]={}
+			procKeys=self.cusumLevelAnalysisKeys
 
 		# Add a section for data files
 		settingsdict[self.dataTypeKeys[self["DataFilesType"]]]=self.GenerateDataFilesView()
@@ -126,9 +131,12 @@ class guiDataModel(dict):
 
 		if self["DataFilesType"]=="QDF":
 			keys.extend(["Rfb", "Cfb"])
-			dargs.update({"filter"	: "*.qdf"})
+			dargs.update({"filter"	: self["filter"]})
+		elif self["DataFilesType"]=="BIN":
+			keys.extend(["AmplifierScale", "AmplifierOffset", "SamplingFrequency", "HeaderOffset", "ColumnTypes", "IonicCurrentColumn"])
+			dargs.update({"filter"	: self["filter"]})
 		else:
-			dargs.update({"filter"	: "*.abf"})
+			dargs.update({"filter"	: self["filter"]})
 
 		if self["end"]!=-1.:
 			dargs["end"]=self["end"]
@@ -199,6 +207,8 @@ class guiDataModel(dict):
 				self["ProcessingAlgorithm"]=section
 			elif section in self.filterAlgoKeys.values():
 				self["FilterAlgorithm"]=section
+			elif section in self.dataTypeKeys.values():
+				self["filter"]=vals["filter"]
 
 			# print vals
 			self.update(vals)
@@ -244,7 +254,14 @@ class guiDataModel(dict):
 								"level"					: int,
 								"thresholdType"			: str,
 								"thresholdSubType"		: str,
-								"decimate"				: int
+								"decimate"				: int,
+								"AmplifierScale"		: str,
+								"AmplifierOffset"		: str,
+								"SamplingFrequency"		: int,
+								"HeaderOffset"			: int,
+								"ColumnTypes"			: str,
+								"IonicCurrentColumn"	: str,
+								"filter"				: str
 							}
 		self.eventSegmentKeys={
 								"blockSizeSec" 			: float,
@@ -271,8 +288,10 @@ class guiDataModel(dict):
 								"BlockRejectRatio" 		: float,
 								"InitThreshold"			: float
 							}
-
-
+		self.cusumLevelAnalysisKeys={
+								"StepSize"				: float,
+								"Threshold"				: float
+		}
 		self.besselLowpassFilterKeys={
 								"filterOrder" 			: int,
 								"filterCutoff" 			: float,
@@ -296,7 +315,14 @@ class guiDataModel(dict):
 								"dcOffset" 				: float,
 								"start" 				: float,
 								"Rfb" 					: float,
-								"Cfb" 					: float
+								"Cfb" 					: float,
+								"AmplifierScale"		: str,
+								"AmplifierOffset"		: str,
+								"SamplingFrequency"		: int,
+								"HeaderOffset"			: int,
+								"ColumnTypes"			: str,
+								"IonicCurrentColumn"	: str,
+								"filter"				: str
 							}
 		self.eventPartitionAlgoKeys={
 								"CurrentThreshold" 		: "eventSegment"
@@ -304,7 +330,8 @@ class guiDataModel(dict):
 
 		self.eventProcessingAlgoKeys={
 								"stepResponseAnalysis" 	: "stepResponseAnalysis",
-								"multiStateAnalysis"	: "multiStateAnalysis"
+								"multiStateAnalysis"	: "multiStateAnalysis",
+								"cusumLevelAnalysis"	: "cusumLevelAnalysis"
 							}
 
 		self.filterAlgoKeys={
@@ -312,15 +339,18 @@ class guiDataModel(dict):
 		}
 		self.dataTypeKeys={
 								"QDF" 					: "qdfTrajIO",
-								"ABF" 					: "abfTrajIO"
+								"ABF" 					: "abfTrajIO",
+								"BIN" 					: "binTrajIO"
 							}
 		self.analysisSetupKeys={
 								"QDF" 					: mosaic.qdfTrajIO.qdfTrajIO,
 								"ABF" 					: mosaic.abfTrajIO.abfTrajIO,
+								"BIN" 					: mosaic.binTrajIO.binTrajIO,
 								"SingleChannelAnalysis" : mosaic.SingleChannelAnalysis.SingleChannelAnalysis,
 								"CurrentThreshold" 		: mosaic.eventSegment.eventSegment,
 								"stepResponseAnalysis" 	: mosaic.stepResponseAnalysis.stepResponseAnalysis,
 								"multiStateAnalysis"	: mosaic.multiStateAnalysis.multiStateAnalysis,
+								"cusumLevelAnalysis"	: mosaic.cusumLevelAnalysis.cusumLevelAnalysis,
 								"waveletDenoiseFilter"	: mosaic.waveletDenoiseFilter.waveletDenoiseFilter
 							}
 

@@ -64,18 +64,6 @@ ts[dat_,FsKHz_]:=Transpose[{Range[0,Length[dat]-1]/FsKHz,polarity[dat]*dat}]
 GetAnalysisAlgorithm[db_]:=First[Flatten[QueryDB[db, "select processingAlgorithm from analysisinfo"]]]
 
 
-(* ::Text:: *)
-(*Options[PlotEvents] = {AnalysisAlgorithm -> "StepResponseAnalysis"};*)
-(*PlotEvents[dbname_, FsKHz_, OptionsPattern[]] := Module[{q},*)
-(*   q = QueryDB[dbname, "select ProcessingStatus, BlockedCurrent, OpenChCurrent, EventStart, EventEnd, RCConstant, TimeSeries from metadata"];*)
-(*   Manipulate[plotsra[q[[i]][[1]], ts[q[[i]][[-1]], FsKHz], q[[i]][[2 ;; -2]] , FsKHz], {i, 1, Length[q], 1, Appearance -> "Open"}]*)
-(*   ] /; OptionValue[AnalysisAlgorithm] == "StepResponseAnalysis"*)
-(*PlotEvents[dbname_, FsKHz_, OptionsPattern[]] := Module[{q},*)
-(*   q = QueryDB[dbname, "select ProcessingStatus, OpenChCurrent, CurrentStep, EventDelay, RCConstant, TimeSeries from metadata"];*)
-(*   Manipulate[plotmsa[q[[i]][[1]], ts[q[[i]][[-1]], FsKHz], {q[[i]][[2]], q[[i]][[3]], q[[i]][[4]], q[[i]][[5]]}, FsKHz], {i, 1, Length[q], 1, Appearance -> "Open"}]*)
-(*   ] /; OptionValue[AnalysisAlgorithm] == "MultiStateAnalysis"*)
-
-
 PlotEvents[dbname_,FsKHz_]:=Module[{q},
 q=QueryDB[dbname, "select ProcessingStatus, BlockedCurrent, OpenChCurrent, EventStart, EventEnd, RCConstant, TimeSeries from metadata"];
 Manipulate[plotsra[q[[i]][[1]], ts[q[[i]][[-1]],FsKHz],q[[i]][[2;;-2]] ,FsKHz],{i,1,Length[q],1,Appearance->"Open"}]
@@ -84,6 +72,10 @@ PlotEvents[dbname_,FsKHz_]:=Module[{q},
 q=QueryDB[dbname,"select ProcessingStatus, OpenChCurrent, CurrentStep, EventDelay, RCConstant, TimeSeries from metadata"];
 Manipulate[plotmsa[q[[i]][[1]], ts[q[[i]][[-1]],FsKHz], {q[[i]][[2]],q[[i]][[3]],q[[i]][[4]],q[[i]][[5]]},FsKHz],{i,1,Length[q],1,Appearance->"Open"}]
 ]/;GetAnalysisAlgorithm[dbname]=="multiStateAnalysis"
+PlotEvents[dbname_,FsKHz_]:=Module[{q},
+q=QueryDB[dbname,"select ProcessingStatus, OpenChCurrent, CurrentStep, EventDelay, TimeSeries from metadata"];
+Manipulate[plotcla[q[[i]][[1]], ts[q[[i]][[-1]],FsKHz], {q[[i]][[2]],q[[i]][[3]],q[[i]][[4]]},FsKHz],{i,1,Length[q],1,Appearance->"Open"}]
+]/;GetAnalysisAlgorithm[dbname]=="cusumLevelAnalysis"
 
 
 (* ::Input:: *)
@@ -112,6 +104,26 @@ Table[{t,Evaluate[Abs[md[[1]]]+\!\(
 },ImageSize->600]
 ]/;status=="normal"
  plotmsa[status_,ts_,md_,FsKHz_]:=Module[{t,a,\[Mu]1,\[Mu]2,\[Tau],b},
+Show[{
+ListPlot[ts,PlotRange->All,PlotStyle->Red,PlotMarkers->{Automatic,10},Frame->True,FrameLabel->{Style["\!\(\*
+StyleBox[\"t\",\nFontSlant->\"Italic\"]\) (ms)",20,FontFamily->"Helvectica"],Style["\!\(\*
+StyleBox[\"i\",\nFontSlant->\"Italic\"]\) (pA)",20,FontFamily->"Helvectica"]},FrameTicksStyle->Directive[20,FontFamily->"Helvectica"]]
+},ImageSize->600]
+]
+
+
+plotcla[status_,ts_,md_,FsKHz_]:=Module[{t,a,\[Mu]1,\[Mu]2,\[Tau],b},
+Show[{
+ListPlot[ts,PlotRange->{-25,All},PlotStyle->Directive[RGBColor@@({41, 74,130}/255),Opacity[0.4]],PlotMarkers->{Automatic,14},Frame->True,FrameLabel->{Style["\!\(\*
+StyleBox[\"t\",\nFontSlant->\"Italic\"]\) (ms)",20,FontFamily->"Helvectica"],Style["\!\(\*
+StyleBox[\"i\",\nFontSlant->\"Italic\"]\) (pA)",20,FontFamily->"Helvectica"]},FrameTicksStyle->Directive[20,FontFamily->"Helvectica"]],
+ListLinePlot[{
+Table[{t,Evaluate[Abs[md[[1]]]+\!\(
+\*UnderoverscriptBox[\(\[Sum]\), \(i = 1\), \(Length[md[[2]]]\)]\((\(md[[2]]\)[[i]] HeavisideTheta[t - \(md[[3]]\)[[i]]])\)\)]},{t,ts[[1]][[1]],ts[[-1]][[1]],(1/FsKHz)/500}]
+},PlotStyle->{{ColorData["DarkRainbow"][0.95],Dashed,Thickness[0.005]}},Joined->True]
+},ImageSize->600]
+]/;status=="normal"
+ plotcla[status_,ts_,md_,FsKHz_]:=Module[{t,a,\[Mu]1,\[Mu]2,\[Tau],b},
 Show[{
 ListPlot[ts,PlotRange->All,PlotStyle->Red,PlotMarkers->{Automatic,10},Frame->True,FrameLabel->{Style["\!\(\*
 StyleBox[\"t\",\nFontSlant->\"Italic\"]\) (ms)",20,FontFamily->"Helvectica"],Style["\!\(\*

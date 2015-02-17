@@ -13,6 +13,7 @@ import mosaic.eventSegment as es
 import mosaic.singleStepEvent as sse
 import mosaic.stepResponseAnalysis as sra 
 import mosaic.multiStateAnalysis as msa
+import mosaic.cusumLevelAnalysis as cla
 
 from mosaic.qdfTrajIO import *
 from mosaic.abfTrajIO import *
@@ -23,9 +24,17 @@ from mosaic.besselLowpassFilter import *
 from mosaic.waveletDenoiseFilter import *
 
 mosaic.SingleChannelAnalysis.SingleChannelAnalysis(
-			mosaic.__path__[0]+'/../data/',
+			'data/',
 			qdfTrajIO, 
 			None,
 			es.eventSegment,
 			sra.stepResponseAnalysis
+		).Run()
+
+mosaic.SingleChannelAnalysis.SingleChannelAnalysis(
+			'data/',
+			qdfTrajIO, 
+			None,
+			es.eventSegment,
+			cla.cusumLevelAnalysis
 		).Run()

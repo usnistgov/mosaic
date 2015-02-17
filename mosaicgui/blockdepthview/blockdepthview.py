@@ -93,6 +93,8 @@ class BlockDepthWindow(QtGui.QDialog):
 		"""
 			Open a specific database file.
 		"""
+		self.dbFile=dbfile
+
 		# Create an index to speed up queries
 		self._createDBIndex(dbfile)
 
@@ -293,7 +295,7 @@ class BlockDepthWindow(QtGui.QDialog):
 				self.queryData= np.hstack( np.hstack( np.array( results ) ) )
 
 				# self.errorPrefixLabel.setText("")
-				self.setWindowTitle("Blockade Depth Histogram")
+				self.setWindowTitle("Blockade Depth Histogram ("+str(os.path.basename(self.dbFile))+")")
 				self.queryErrorString=""
 				self.statusbarLine.hide()
 				self.errorLabel.setText(self.queryErrorString)

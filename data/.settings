@@ -4,6 +4,10 @@
         "BlockRejectRatio": 0.9, 
         "FitIters": 50000
     }, 
+    "cusumLevelAnalysis": {
+        "StepSize": 5.0, 
+        "Threshold": 5.0
+    }, 
     "qdfTrajIO": {
         "filter": "*.qdf", 
         "start": 0.0, 
@@ -17,7 +21,7 @@
         "eventPad": 50, 
         "driftThreshold": 999.0, 
         "maxDriftRate": 999.0, 
-        "eventThreshold": 3.9373285666187976, 
+        "eventThreshold": 3.9373285645823413, 
         "writeEventTS": 1, 
         "minEventLength": 5, 
         "sdOpenCurr": -1.0, 

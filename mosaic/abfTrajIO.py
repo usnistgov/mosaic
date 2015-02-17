@@ -18,8 +18,22 @@ import numpy as np
 
 class abfTrajIO(metaTrajIO.metaTrajIO):
 	"""
+		Read ABF1 and ABF2 file formats. Currently, only 
+		gap-free mode and single channel recordings are supported.
+
+		A typical settings section to read ABF files is shown below.
+
+		.. code-block:: javascript
+
+			"abfTrajIO" : {
+	                "filter"                        : "*.abf",
+	                "start"                         : 0.0,
+	                "dcOffset"                      : 0.0
+	        	}
+        
+
 		:Parameters:
-			In addition to metaTrajIO.__init__ args,
+			In addition to :class:`~mosaic.metaTrajIO.metaTrajIO` args,
 				None
 		"""
 	def _init(self, **kwargs):
@@ -32,8 +46,10 @@ class abfTrajIO(metaTrajIO.metaTrajIO):
 
 			:Parameters:
 				- `fname` :  list of data files to read
+			
 			:Returns:
 				None
+			
 			:Errors:
 				- `SamplingRateChangedError` : if the sampling rate for any data file differs from previous
 		"""
