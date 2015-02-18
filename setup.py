@@ -112,7 +112,14 @@ class mosaicDocs(Command):
         
 
 setup(
-    cmdclass={'mosaic_tests': mosaicUnitTests, 'mosaic_docs': mosaicDocs, 'mosaic_bin': mosaicBinaries, 'mosaic_deps': mosaicDependencies, 'mosaic_docs_deps': mosaicDocumentationDependencies, 'mosaic_addons': mosaicAddons},
+    cmdclass={
+        'mosaic_tests'      : mosaicUnitTests, 
+        'mosaic_docs'       : mosaicDocs, 
+        'mosaic_bin'        : mosaicBinaries, 
+        'mosaic_deps'       : mosaicDependencies, 
+        'mosaic_docs_deps'  : mosaicDocumentationDependencies, 
+        'mosaic_addons'     : mosaicAddons
+        },
     name='mosaic-nist',
     version=mosaic.__version__,
     author='Arvind Balijepalli',
