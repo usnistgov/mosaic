@@ -42,6 +42,19 @@ class mosaicDependencies(Command):
     def run(self):
         os.system('sh .scripts/build-deps-sh')
 
+class mosaicDocumentationDependencies(Command):
+    description = "install dependencies for Sphinx documentation."
+    user_options = []
+
+    def initialize_options(self):
+        pass
+
+    def finalize_options(self):
+        pass
+
+    def run(self):
+        os.system('sh .scripts/build-docs-deps-sh')
+
 class mosaicAddons(Command):
     description = "install MOSAIC addons (Mathematica, Igor and Matlab scripts)."
     user_options = [ 
@@ -99,7 +112,7 @@ class mosaicDocs(Command):
         
 
 setup(
-    cmdclass={'mosaic_tests': mosaicUnitTests, 'mosaic_docs': mosaicDocs, 'mosaic_bin': mosaicBinaries, 'mosaic_deps': mosaicDependencies, 'mosaic_addons': mosaicAddons},
+    cmdclass={'mosaic_tests': mosaicUnitTests, 'mosaic_docs': mosaicDocs, 'mosaic_bin': mosaicBinaries, 'mosaic_deps': mosaicDependencies, 'mosaic_docs_deps': mosaicDocumentationDependencies, 'mosaic_addons': mosaicAddons},
     name='mosaic-nist',
     version=mosaic.__version__,
     author='Arvind Balijepalli',
