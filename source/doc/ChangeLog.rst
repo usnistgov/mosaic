@@ -5,7 +5,11 @@ Change Log
 
 **v1.3**
 
-- Added CUSUM algorithm (by @shadowk29, pull request #34)
+- Added CUSUM algorithm (see pull request #34)
+- [GUI] Added CUSUM support to MOSAIC GUI.
+- [GUI] Fit window in MOSAIC GUI displays idealized pulses overlays.
+- [Addons] Added CUSUM support to Mathematica addon (PlotEvents in MosaicUtils.m)
+- Removed mosaicgui from PyPi. 'pip install mosaic-nist' only installs command line modules. 
 - Top level ConvertToCSV supports arbitrary file extensions.
 
 **v1.2**
