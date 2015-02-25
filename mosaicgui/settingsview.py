@@ -668,16 +668,28 @@ class settingsview(QtGui.QMainWindow):
 
 	def OnAdvancedModeSave(self):
 		updatesettings=self.analysisDataModel.UpdateDataModelFromSettingsString
+		settingString=str(self.advancedSettingsDialog.advancedSettingsTextEdit.toPlainText())
 
-		updatesettings(str(self.advancedSettingsDialog.advancedSettingsTextEdit.toPlainText()))
-		self._updateControls()
+		try:
+			updatesettings(settingString)
+		except ValueError, err:
+			mb=QtGui.QMessageBox(self.advancedSettingsDialog)
+			mb.setIcon(QtGui.QMessageBox.Critical)
+			mb.setWindowTitle("Syntax Error")
+			mb.setText("Syntax Error: "+str(err) )
+			mb.exec_()
 		
-		# update trajviewer
-		self._trajviewerdata()
-		self.trajViewerWindow.refreshPlot()
+			self.advancedSettingsDialog.show()
+			return
+		finally:
+			self._updateControls()
+			
+			# update trajviewer
+			self._trajviewerdata()
+			self.trajViewerWindow.refreshPlot()
 
-		self.advancedModeCheckBox.setChecked(False)
-		self._setEnableSettingsWidgets(True)
+			self.advancedModeCheckBox.setChecked(False)
+			self._setEnableSettingsWidgets(True)
 
 
 def main():
