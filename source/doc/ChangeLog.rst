@@ -11,6 +11,8 @@ Change Log
 - [Addons] Added CUSUM support to Mathematica addon (PlotEvents in MosaicUtils.m)
 - Removed mosaicgui from PyPi. 'pip install mosaic-nist' only installs command line modules. 
 - Top level ConvertToCSV supports arbitrary file extensions.
+- Fixes issues #36 and #37.
+- Known Issues: See #8 and #10.
 
 **v1.2**
 

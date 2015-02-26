@@ -14,7 +14,7 @@ Some known issues with CUSUM:
 
 Settings that control the algorithm are defined through the settings file, as described the :ref:`algorithm-settings-sec` section. Upon successfully analyzing an event, :py:class:`~mosaic.cusumLevelAnalysis.cusumLevelAnalysis` generates meta-data the describes the individual states in the event. A representative example of one such event is shown in the figure below.
 
-.. figure:: ../images/Multistate.png
+.. figure:: ../images/CUSUM.png
    :width: 50 %
    :align: center
 

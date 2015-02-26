@@ -40,6 +40,7 @@ extensions = [
     'sphinx.ext.graphviz',
     'sphinx.ext.viewcode',
     'sphinxcontrib.bibtex',
+    'sphinxcontrib.gist',
     'exec'
 ]
 

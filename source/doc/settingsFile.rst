@@ -210,7 +210,7 @@ Default Settings
 	{
 		"eventSegment" : {
 			"blockSizeSec" 			: "0.5",
-			"eventPad" 			: "50",
+			"eventPad" 				: "50",
 			"minEventLength" 		: "5",
 			"eventThreshold" 		: "6.0",
 			"driftThreshold" 		: "999.0",
@@ -223,45 +223,59 @@ Default Settings
 			"reserveNCPU"			: "2"
 		},
 		"singleStepEvent" : {
-			"binSize" 			: "1.0",
-			"histPad" 			: "10",
+			"binSize" 				: "1.0",
+			"histPad" 				: "10",
 			"maxFitIters"			: "5000",
-			"a12Ratio" 			: "1.e4",
+			"a12Ratio" 				: "1.e4",
 			"minEvntTime" 			: "10.e-6",
 			"minDataPad" 			: "75"
 		},
 		"stepResponseAnalysis" : {
-			"FitTol"			: "1.e-7",
-			"FitIters"			: "50000"
+			"FitTol"				: "1.e-7",
+			"FitIters"				: "50000"
 		},
 		"multiStateAnalysis" : {
-			"FitTol"			: "1.e-7",
-			"FitIters"			: "50000",
-			"InitThreshold"			: "3.0"
-		},
+	                "FitTol"		: "1.e-7",
+	                "FitIters"		: "50000",
+	                "InitThreshold"	: "3.0"
+	     },
+	     "cusumLevelAnalysis": {
+        			"StepSize"		: 3.0, 
+        			"Threshold"		: 3.0
+    	}, 
 		"besselLowpassFilter" : {
 			"filterOrder"			: "6",
 			"filterCutoff"			: "10000",
-			"decimate"			: "1"	
+			"decimate"				: "1"	
 		},
 		"waveletDenoiseFilter" : {
-			"wavelet"			: "sym5",
-			"level"				: "5",
+			"wavelet"				: "sym5",
+			"level"					: "5",
 			"thresholdType"			: "soft",
 			"thresholdSubType"		: "sqtwolog"
 		},
-		,
 		"abfTrajIO" : {
-			"filter"			: "*.abf", 
-			"start"				: 0.0, 
-			"dcOffset"			: 0.0
+			"filter"				: "*.abf", 
+			"start"					: 0.0, 
+			"dcOffset"				: 0.0
 		},
 		"qdfTrajIO": {
-			"Rfb"				: 9.1e+12, 
-			"Cfb"				: 1.07e-12, 
-			"dcOffset"			: 0.0, 
-			"filter"			: "*.qdf", 
-			"start"				: 0.0
+			"Rfb": 9.1e+12, 
+			"Cfb": 1.07e-12, 
+			"dcOffset": 0.0, 
+			"filter": "*.qdf", 
+			"start": 0.0
+		},
+		"binTrajIO": {
+			"AmplifierScale": "1.0", 
+			"AmplifierOffset": "0.0", 
+			"SamplingFrequency": "50000",
+			"HeaderOffset": "0",
+			"ColumnTypes": "[('curr_pA', 'float64')]",
+			"IonicCurrentColumn" : "curr_pA",
+			"dcOffset": "0.0", 
+			"filter": "*.bin", 
+			"start": "0.0"
 		}
 	}
 
