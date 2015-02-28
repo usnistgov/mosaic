@@ -17,13 +17,41 @@ Installation
 Please refer to the `Installation <https://usnistgov.github.io/mosaic/html/doc/GettingStarted.html>`_ section of the MOSAIC documentation for details on installation.
 
 
-Getting Help and Reporting Problems
+Getting Help
 =================================
 
-For questions and help, please `join our mailing list <https://usnistgov.github.io/mosaic/html/doc/mailingList.html>`_ (`mosaic@nist.gov <mailto:mosaic@nist.gov>`_). Report problems using our `issue tracker <https://github.com/usnistgov/mosaic/issues>`_ on Github.
+For questions and help, please join our `mailing list <https://usnistgov.github.io/mosaic/html/doc/mailingList.html>`_. 
+
+To subscribe:
+
+	Email `mosaic-request@nist.gov <mailto:mosaic-request@nist.gov?subject=subscribe>`_ with subject 'subscribe'
+
+To unsubscribe:
+
+	Email `mosaic-request@nist.gov <mailto:mosaic-request@nist.gov?subject=unsubscribe>`_ with subject 'unsubscribe'
+
+Once subscribed, you can send messages by emailing `mosaic@nist.gov <mailto:mosaic@nist.gov>`_.
+
+
+Reporting Problems
+=================================
+
+Report problems using our `issue tracker <https://github.com/usnistgov/mosaic/issues>`_ on Github.
+
 
 Change Log
 =================================
+
+**v1.3**
+
+- Added CUSUM algorithm (see pull request #34)
+- [GUI] Added CUSUM support to MOSAIC GUI.
+- [GUI] Fit window in MOSAIC GUI displays idealized pulses overlays.
+- [Addons] Added CUSUM support to Mathematica addon (PlotEvents in MosaicUtils.m)
+- Removed mosaicgui from PyPi. 'pip install mosaic-nist' only installs command line modules. 
+- Top level ConvertToCSV supports arbitrary file extensions.
+- Fixes issues #36 and #37.
+- Known Issues: See #8 and #10.
 
 **v1.2**
 

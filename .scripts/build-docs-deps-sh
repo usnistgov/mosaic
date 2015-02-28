@@ -12,3 +12,4 @@ set -x
 pip install -U sphinx
 pip install -U sphinx_bootstrap_theme
 pip install -U sphinxcontrib-bibtex
+pip install -U sphinxcontrib.gist
