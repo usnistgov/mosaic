@@ -6,7 +6,8 @@
 	:License:	See LICENSE.TXT
 	:ChangeLog:
 	.. line-block::
-		1/7/14		AB  Save the number of states in an event to the DB using the mdNStates column
+		3/5/15 		AB 	Updated initial state determination to include a minumum state length parameter (MinStateLength).
+		1/7/15		AB  Save the number of states in an event to the DB using the mdNStates column
 		12/31/14 	AB 	Changed multi-state function to include a separate tau for 
 						each state following Balijepalli et al, ACS Nano 2014.
 		12/30/14	JF	Removed min/max constraint on tau
@@ -22,6 +23,7 @@ import commonExceptions
 import metaEventProcessor
 import mosaic.utilities.util as util
 import mosaic.utilities.fit_funcs as fit_funcs
+import mosaic.cusumLevelAnalysis as cla
 import sys
 import math
 
@@ -91,6 +93,7 @@ class multiStateAnalysis(metaEventProcessor.metaEventProcessor):
 			self.FitTol=float(self.settingsDict.pop("FitTol", 1.e-7))
 			self.FitIters=int(self.settingsDict.pop("FitIters", 5000))
 			self.InitThreshold=float(self.settingsDict.pop("InitThreshold", 5.0))
+			self.MinStateLength=float(self.settingsDict.pop("MinStateLength", 4))
 		except ValueError as err:
 			raise commonExceptions.SettingsTypeError( err )
 
@@ -212,7 +215,7 @@ class multiStateAnalysis(metaEventProcessor.metaEventProcessor):
 			for i in range(1, len(initguess)):
 				params.add('a'+str(i-1), value=initguess[i][0]-initguess[i-1][0]) 
 				params.add('mu'+str(i-1), value=initguess[i][1]*dt) 
-				params.add('tau'+str(i-1), value=dt*7.5)
+				params.add('tau'+str(i-1), value=dt*5.)
 
 			params.add('b', value=initguess[0][0])
 			
@@ -304,14 +307,25 @@ class multiStateAnalysis(metaEventProcessor.metaEventProcessor):
 
 
 	def _levelchange(self, dat, sMean, sSD, nSD, blksz):
+		start_i=None
+		start_slope=None
 		for i in range(int(blksz/2.0), len(dat)-int(blksz/2.0)):
-			if abs(util.avg(dat[i-int(blksz/2.0):i+int(blksz/2.0)])-sMean) > nSD * sSD:
-				return  [i+1, util.avg(dat[i:i+blksz])]
+			p1, p2= i-int(blksz/2.0), i+int(blksz/2.0)
+			if abs(util.avg(dat[p1:p2])-sMean) > nSD * sSD:
+				if not start_i:	
+					start_i=i
+					start_slope=dat[p2]-dat[p1]
+				elif np.sign(start_slope) != np.sign(dat[p2]-dat[p1]):
+					if start_slope < 0:
+						avgCurr=np.min(dat[start_i:p2])
+					else:
+						avgCurr=np.max(dat[start_i:p2])
+					return [start_i, avgCurr]
 
 		raise InvalidEvent()
 
 	def _characterizeevent(self, dat, mean, sd, nSD, blksz):
-		tdat=dat #movingaverage(dat, 2*blksz)
+		tdat=dat
 		tt=[0, mean]
 		mu=[0]
 		a=[mean]
@@ -323,5 +337,14 @@ class multiStateAnalysis(metaEventProcessor.metaEventProcessor):
 			a.append(tt[1])
 			if abs(tt[1]) > (mean-nSD*sd):
 				break
+
+		delIdx=[]
+		for i in range(2, len(mu)-1):
+			if mu[i]-mu[i-1] < self.MinStateLength:
+				delIdx.extend([i])
+
+		for idx in sorted(delIdx, reverse=True):
+			del a[idx]
+			del mu[idx]
 
 		return zip(a,mu)

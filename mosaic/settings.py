@@ -97,7 +97,8 @@ __settings__="""
 		"multiStateAnalysis" : {
 	                "FitTol"		: "1.e-7",
 	                "FitIters"		: "50000",
-	                "InitThreshold"	: "3.0"
+	                "InitThreshold"	: "3.0",
+	                "MinStateLength": "4"
 	     },
 	     "cusumLevelAnalysis": {
         			"StepSize"		: 3.0, 
