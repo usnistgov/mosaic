@@ -8,6 +8,7 @@
 	.. line-block::
 		3/6/15 		JF	Added MinStateLength to output log
 		3/5/15 		AB 	Updated initial state determination to include a minumum state length parameter (MinStateLength).
+						Initial state estimates now utilize gradient information for improved state identification.
 		1/7/15		AB  Save the number of states in an event to the DB using the mdNStates column
 		12/31/14 	AB 	Changed multi-state function to include a separate tau for 
 						each state following Balijepalli et al, ACS Nano 2014.
