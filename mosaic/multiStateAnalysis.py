@@ -6,6 +6,7 @@
 	:License:	See LICENSE.TXT
 	:ChangeLog:
 	.. line-block::
+		3/6/15 		AB 	Added a new test for negative event delays
 		3/6/15 		JF	Added MinStateLength to output log
 		3/5/15 		AB 	Updated initial state determination to include a minumum state length parameter (MinStateLength).
 						Initial state estimates now utilize gradient information for improved state identification.
@@ -308,6 +309,8 @@ class multiStateAnalysis(metaEventProcessor.metaEventProcessor):
 			if math.isnan(self.mdRedChiSq):
 				self.rejectEvent('eInvalidRedChiSq')
 
+			if not (np.diff(self.mdEventDelay)>0).all():
+				self.rejectEvent('eNegativeEventDelay')
 
 	def _levelchange(self, dat, sMean, sSD, nSD, blksz):
 		start_i=None
