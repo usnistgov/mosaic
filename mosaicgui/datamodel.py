@@ -3,6 +3,9 @@
 
 	:Author: 	Arvind Balijepalli <arvind.balijepalli@nist.gov>
 	:License:	See LICENSE.TXT
+	:ChangeLog:
+		.. line-block::
+					3/6/14 			JF 	Added MinStateLength to multiStateAnalysis setup model
 """	
 import json
 import os
@@ -261,7 +264,8 @@ class guiDataModel(dict):
 								"HeaderOffset"			: int,
 								"ColumnTypes"			: str,
 								"IonicCurrentColumn"	: str,
-								"filter"				: str
+								"filter"				: str,
+								"MinStateLength"		: int
 							}
 		self.eventSegmentKeys={
 								"blockSizeSec" 			: float,
@@ -286,7 +290,8 @@ class guiDataModel(dict):
 								"FitTol" 				: float,
 								"FitIters" 				: int,
 								"BlockRejectRatio" 		: float,
-								"InitThreshold"			: float
+								"InitThreshold"			: float,
+								"MinStateLength"		: int
 							}
 		self.cusumLevelAnalysisKeys={
 								"StepSize"				: float,

@@ -6,6 +6,7 @@
 	:License:	See LICENSE.TXT
 	:ChangeLog:
 	.. line-block::
+		3/6/15 		JF	Added MinStateLength to output log
 		3/5/15 		AB 	Updated initial state determination to include a minumum state length parameter (MinStateLength).
 		1/7/15		AB  Save the number of states in an event to the DB using the mdNStates column
 		12/31/14 	AB 	Changed multi-state function to include a separate tau for 
@@ -187,7 +188,8 @@ class multiStateAnalysis(metaEventProcessor.metaEventProcessor):
 		
 		fmtstr+='\t\tMax. iterations  = {0}\n'.format(self.FitIters)
 		fmtstr+='\t\tFit tolerance (rel. err in leastsq)  = {0}\n'.format(self.FitTol)
-		fmtstr+='\t\tInitial partition threshold  = {0}\n\n'.format(self.InitThreshold)
+		fmtstr+='\t\tInitial partition threshold  = {0}\n'.format(self.InitThreshold)
+		fmtstr+='\t\tMin. State Length = {0}\n\n'.format(self.MinStateLength)
 
 		return fmtstr
 
