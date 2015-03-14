@@ -84,7 +84,7 @@ class cusumLevelAnalysis(metaEventProcessor.metaEventProcessor):
 		# Settings for detection of changed in current level
 		try:
 			self.StepSize=float(self.settingsDict.pop("StepSize", 3.0))
-			self.Threshold=int(self.settingsDict.pop("Threshold", 3.0))
+			self.Threshold=float(self.settingsDict.pop("Threshold", 3.0))
 		except ValueError as err:
 			raise commonExceptions.SettingsTypeError( err )
 
