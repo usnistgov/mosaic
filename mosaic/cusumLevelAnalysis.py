@@ -252,9 +252,9 @@ class cusumLevelAnalysis(metaEventProcessor.metaEventProcessor):
                                                 self.nStates += 1
                                         anchor = k
                                         cpos[0:len(cpos)] = 0 #reset all decision arrays
-                                        cneg[0:len(cpos)] = 0
-                                        gpos[0:len(cpos)] = 0
-                                        cneg[0:len(cpos)] = 0
+                                        cneg[0:len(cneg)] = 0
+                                        gpos[0:len(gpos)] = 0
+                                        gneg[0:len(gneg)] = 0
                         edges = np.append(edges, len(edat)) #mark the end of the event as an edge
                         self.nStates += 1
 			cusum = dict()
