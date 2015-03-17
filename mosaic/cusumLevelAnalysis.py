@@ -88,6 +88,7 @@ class cusumLevelAnalysis(metaEventProcessor.metaEventProcessor):
 			self.StepSize=float(self.settingsDict.pop("StepSize", 3.0))
 			self.MinThreshold=float(self.settingsDict.pop("MinThreshold", 2.0))
 			self.MaxThreshold=float(self.settingsDict.pop("MaxThreshold", 10.0))
+			self.MinLengthMS=float(self.settingsDict.pop("MinLengthMS", 0.01))
 		except ValueError as err:
 			raise commonExceptions.SettingsTypeError( err )
 
@@ -212,7 +213,8 @@ class cusumLevelAnalysis(metaEventProcessor.metaEventProcessor):
 			edat=self.dataPolarity*np.asarray( self.eventData,  dtype='float64' ) #make data into an array and make it abs val
 
 			Threshold = self.__GetThreshold(len(edat),self.StepSize,-self.StepSize/2.0)
-
+                        MinPoints = self.MinLengthMS / dt
+                        
 			# control numpy error reporting
 			np.seterr(invalid='ignore', over='ignore', under='ignore')
 
@@ -244,12 +246,14 @@ class cusumLevelAnalysis(metaEventProcessor.metaEventProcessor):
                                 if (gpos[k] > Threshold or gneg[k] > Threshold):
                                         if (gpos[k] > Threshold): #significant positive jump detected
                                                 jump = anchor + np.argmin(cpos[anchor:k+1]) #find the location of the start of the jump
-                                                edges = np.append(edges, jump)
-                                                self.nStates += 1
+                                                if jump - edges[self.nStates] > MinPoints:
+                                                        edges = np.append(edges, jump)
+                                                        self.nStates += 1
                                         if (gneg[k] > Threshold): #significant negative jump detected
                                                 jump = anchor + np.argmin(cneg[anchor:k+1])
-                                                edges = np.append(edges, jump)
-                                                self.nStates += 1
+                                                if jump - edges[self.nStates] > MinPoints:
+                                                        edges = np.append(edges, jump)
+                                                        self.nStates += 1
                                         anchor = k
                                         cpos[0:len(cpos)] = 0 #reset all decision arrays
                                         cneg[0:len(cneg)] = 0
@@ -261,7 +265,7 @@ class cusumLevelAnalysis(metaEventProcessor.metaEventProcessor):
 			if (self.nStates < 3):
                                 self.rejectEvent('eInvalidStates')
                         else:
-                                cusum['CurrentLevels'] = [np.average(edat[edges[i]:edges[i+1]]) for i in range(self.nStates)] #detect current levels during detected sub-events
+                                cusum['CurrentLevels'] = [np.average(edat[edges[i]+MinPoints:edges[i+1]]) for i in range(self.nStates)] #detect current levels during detected sub-events
                                 cusum['EventDelay'] = edges * dt #locations of sub-events in the data
                                 cusum['Threshold'] = Threshold #record the threshold used
                                 self.__recordevent(cusum)
