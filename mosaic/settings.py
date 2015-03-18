@@ -103,8 +103,10 @@ __settings__="""
             "MinStateLength"		: "4"
 	     },
 	     "cusumLevelAnalysis": {
-			"StepSize"				: 3.0, 
-			"Threshold"				: 3.0
+			"StepSize": 3.0, 
+			"MinThreshold": 3.0,
+			"MaxThreshold": 10.0,
+			"MinLength" : 10
     	}, 
 		"besselLowpassFilter" : {
 			"filterOrder"			: "6",
