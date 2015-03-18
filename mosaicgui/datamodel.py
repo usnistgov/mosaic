@@ -294,8 +294,10 @@ class guiDataModel(dict):
 								"MinStateLength"		: int
 							}
 		self.cusumLevelAnalysisKeys={
-								"StepSize"				: float,
-								"Threshold"				: float
+								"StepSize"				: float, 
+								"MinThreshold"			: float,
+								"MaxThreshold"			: float,
+								"MinLength" 			: int
 		}
 		self.besselLowpassFilterKeys={
 								"filterOrder" 			: int,
