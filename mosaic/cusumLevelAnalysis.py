@@ -4,7 +4,7 @@
 	:Created:	2/10/2015
  	:Author: 	Kyle Briggs <kbrig035@uottawa.ca>
 	:License:	See LICENSE.TXT
-	:ChangeLog:
+	:ChangeLog:             3/18/15                 KB      Implemented rise time skipping
 	.. line-block::         3/17/15                 KB      Implemented adaptive threshold
 				2/12/15 		AB 	Updated metadata representation to be consistent with stepResponseAnalysis and multiStateAnalysis
                                 2/10/15                 KB      Initial version
@@ -41,22 +41,26 @@ class cusumLevelAnalysis(metaEventProcessor.metaEventProcessor):
                 Some known issues with CUSUM:
 
                 1. If the duration of a sub-event is shorter than a few RC rise times, the averaging will underestimate the extent of the current change. I have not yet found a satisfactory solution for this issue, but for longer events CUSUM should achieve very similar output to the fitting employed elsewhere in MOSAIC.
-                2. CUSUM assumes an instantaneous transition between current states. As a result, if the RC rise time of the system is large, CUSUM can trigger and detect intermediate states during the change time. This can usually be mitigated by playing with the algorithm sensitivity settings.
-                3. If the event is very long, CUSUM will eventually trigger even if there is no real change, leading to artificially high nStates values for an event. This is a consequence of using a statistical t-test which can have false positives, and can in some cases be mitigated by reducing the sensitivity.
+                2. CUSUM assumes an instantaneous transition between current states. As a result, if the RC rise time of the system is large, CUSUM can trigger and detect intermediate states during the change time. This can be avoided by choosing a number of samples to skip equal to about 4RC.
+                3. If the event is very long, CUSUM will eventually trigger even if there is no real change, leading to artificially high nStates values for an event. This is a consequence of using a statistical t-test which can have false positives. The algorithm has an adaptive threshold that tries to minimize the chances of this happening while maintaining good sensitivity.
 
-                To use it requires three settings:
+                To use it requires four settings:
 
                 .. code-block:: javascript
 
 	                "cusumLevelAnalysis": {
 						"StepSize": 3.0, 
 						"MinThreshold": 3.0,
-						"MaxThreshold": 10.0
+						"MaxThreshold": 10.0,
+						"MinLength" : 10
                         }
 
-                StepSize is the number of baseline standard deviations are considered significant (3 is usually a good starting point). MinThreshold and MaxThreshold set the sensitivity of the algorithm, (lower is more sensitive, a good starting point is to set MinThreshold equal to StepSize and MaxThreshold about 3x higher). CUSUM will detect jumps that are smaller than StepSize, but they will have to be sustained longer. Threshold can be thought of, very roughly, as roughly proportional to the length of time a subevent must be sustained for it to be detected.
+                StepSize is the number of baseline standard deviations are considered significant (3 is usually a good starting point).
+                MinThreshold and MaxThreshold set the sensitivity of the algorithm, (lower is more sensitive, a good starting point is to set MinThreshold equal to StepSize and MaxThreshold about 3x higher).
+                MinLength is the number of samples to skip after detecting a jump, in order to avoid triggering during the rise time and giving an artificially high number of states. This number of points is also skipped when averaging levels. About 4RC is usually a good bet.
+                CUSUM will detect jumps that are smaller than StepSize, but they will have to be sustained longer. Threshold can be thought of, very roughly, as roughly proportional to the length of time a subevent must be sustained for it to be detected.
                 The algorithm will adjust the actual threshold used on a per-event basis in order to minimize false positive detection of current jumps
-                You can read about the algorithm here: http://pubs.rsc.org/en/Content/ArticleLanding/2012/NR/c2nr30951c#!divAbstract
+                This algorithm is based on code used in OpenNanopore, which you can read about here: http://pubs.rsc.org/en/Content/ArticleLanding/2012/NR/c2nr30951c#!divAbstract
 	"""
 	def _init(self, **kwargs):
 		"""
@@ -79,7 +83,6 @@ class cusumLevelAnalysis(metaEventProcessor.metaEventProcessor):
 
 		self.mdAbsEventStart = -1
 
-		self.mdThreshold = 2.0
 
 		self.nStates=-1
 
@@ -88,10 +91,11 @@ class cusumLevelAnalysis(metaEventProcessor.metaEventProcessor):
 			self.StepSize=float(self.settingsDict.pop("StepSize", 3.0))
 			self.MinThreshold=float(self.settingsDict.pop("MinThreshold", 2.0))
 			self.MaxThreshold=float(self.settingsDict.pop("MaxThreshold", 10.0))
-			self.MinLengthMS=float(self.settingsDict.pop("MinLengthMS", 0.01))
+			self.MinLength=float(self.settingsDict.pop("MinLength", 10))
 		except ValueError as err:
 			raise commonExceptions.SettingsTypeError( err )
 
+                self.mdThreshold = self.MinThreshold
 
 	###########################################################################
 	# Interface functions implemented starting here
@@ -213,7 +217,6 @@ class cusumLevelAnalysis(metaEventProcessor.metaEventProcessor):
 			edat=self.dataPolarity*np.asarray( self.eventData,  dtype='float64' ) #make data into an array and make it abs val
 
 			Threshold = self.__GetThreshold(len(edat),self.StepSize,-self.StepSize/2.0)
-                        MinPoints = self.MinLengthMS / dt
                         
 			# control numpy error reporting
 			np.seterr(invalid='ignore', over='ignore', under='ignore')
@@ -246,12 +249,12 @@ class cusumLevelAnalysis(metaEventProcessor.metaEventProcessor):
                                 if (gpos[k] > Threshold or gneg[k] > Threshold):
                                         if (gpos[k] > Threshold): #significant positive jump detected
                                                 jump = anchor + np.argmin(cpos[anchor:k+1]) #find the location of the start of the jump
-                                                if jump - edges[self.nStates] > MinPoints:
+                                                if jump - edges[self.nStates] > self.MinLength:
                                                         edges = np.append(edges, jump)
                                                         self.nStates += 1
                                         if (gneg[k] > Threshold): #significant negative jump detected
                                                 jump = anchor + np.argmin(cneg[anchor:k+1])
-                                                if jump - edges[self.nStates] > MinPoints:
+                                                if jump - edges[self.nStates] > self.MinLength:
                                                         edges = np.append(edges, jump)
                                                         self.nStates += 1
                                         anchor = k
@@ -265,7 +268,7 @@ class cusumLevelAnalysis(metaEventProcessor.metaEventProcessor):
 			if (self.nStates < 3):
                                 self.rejectEvent('eInvalidStates')
                         else:
-                                cusum['CurrentLevels'] = [np.average(edat[edges[i]+MinPoints:edges[i+1]]) for i in range(self.nStates)] #detect current levels during detected sub-events
+                                cusum['CurrentLevels'] = [np.average(edat[edges[i]+self.MinLength:edges[i+1]]) for i in range(self.nStates)] #detect current levels during detected sub-events
                                 cusum['EventDelay'] = edges * dt #locations of sub-events in the data
                                 cusum['Threshold'] = Threshold #record the threshold used
                                 self.__recordevent(cusum)
