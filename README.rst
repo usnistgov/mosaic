@@ -44,10 +44,11 @@ Change Log
 
 **v1.3**
 
-- Added CUSUM algorithm (see pull request #34)
+- Added CUSUM algorithm (see pull request #34, #43)
 - [GUI] Added CUSUM support to MOSAIC GUI.
 - [GUI] Fit window in MOSAIC GUI displays idealized pulses overlays.
 - [Addons] Added CUSUM support to Mathematica addon (PlotEvents in MosaicUtils.m)
+- Added a new metadata column (mdStateResTime) that saves the residence time of each state to the database. This affects multiStateAnalysis and cusumLevelAnalysis.
 - Removed mosaicgui from PyPi. 'pip install mosaic-nist' only installs command line modules. 
 - Top level ConvertToCSV supports arbitrary file extensions.
 - Fixes issues #36 and #37.

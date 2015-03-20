@@ -4,10 +4,13 @@
 	:Created:	2/10/2015
  	:Author: 	Kyle Briggs <kbrig035@uottawa.ca>
 	:License:	See LICENSE.TXT
-	:ChangeLog:             3/18/15                 KB      Implemented rise time skipping
-	.. line-block::         3/17/15                 KB      Implemented adaptive threshold
-				2/12/15 		AB 	Updated metadata representation to be consistent with stepResponseAnalysis and multiStateAnalysis
-                                2/10/15                 KB      Initial version
+	:ChangeLog:             
+	.. line-block::         
+				3/20/15 	AB 	Added a new metadata column (mdStateResTime) that saves the residence time of each state to the database.
+				3/18/15		KB	Implemented rise time skipping
+				3/17/15		KB	Implemented adaptive threshold
+				2/12/15		AB	Updated metadata representation to be consistent with stepResponseAnalysis and multiStateAnalysis
+				2/10/15		KB	Initial version
 """
 import commonExceptions
 import metaEventProcessor
@@ -75,6 +78,7 @@ class cusumLevelAnalysis(metaEventProcessor.metaEventProcessor):
 		self.mdBlockDepth=[-1]
 
 		self.mdEventDelay=[-1]
+		self.mdStateResTime=[-1]
 
 		self.mdEventStart=-1
 		self.mdEventEnd=-1
@@ -124,9 +128,10 @@ class cusumLevelAnalysis(metaEventProcessor.metaEventProcessor):
 					self.mdEventStart,
 					self.mdEventEnd,
 					self.mdEventDelay,
+					self.mdStateResTime,
 					self.mdResTime,
 					self.mdAbsEventStart,
-                                        self.mdThreshold
+					self.mdThreshold
 				]
 		
 	def mdHeadingDataType(self):
@@ -142,9 +147,10 @@ class cusumLevelAnalysis(metaEventProcessor.metaEventProcessor):
 					'REAL',
 					'REAL',
 					'REAL_LIST',
+					'REAL_LIST',
 					'REAL',
 					'REAL',
-                                        'REAL'
+					'REAL'
 				]
 
 	def mdHeadings(self):
@@ -160,9 +166,10 @@ class cusumLevelAnalysis(metaEventProcessor.metaEventProcessor):
 					'EventStart', 
 					'EventEnd', 
 					'EventDelay', 
+					'StateResTime',
 					'ResTime', 
 					'AbsEventStart',
-                                        'Threshold'
+					'Threshold'
 				]
 
 	def mdAveragePropertiesList(self):
@@ -297,6 +304,8 @@ class cusumLevelAnalysis(metaEventProcessor.metaEventProcessor):
 			self.mdBlockDepth 		= cusum['CurrentLevels'][1:-1]/self.mdOpenChCurrent #percentage blockage of each state
 
 			self.mdEventDelay		= cusum['EventDelay'][1:-1] # first and last states (or baseline) are removed
+
+			self.mdStateResTime 	= np.diff(self.mdEventDelay)
 
 			self.mdEventStart		= self.mdEventDelay[0] #the first nonzero event
 			self.mdEventEnd			= self.mdEventDelay[-1] #the last non zero event, this assumes no events triggered in the padding

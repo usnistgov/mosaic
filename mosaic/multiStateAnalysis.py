@@ -6,6 +6,7 @@
 	:License:	See LICENSE.TXT
 	:ChangeLog:
 	.. line-block::
+		3/20/15 	AB 	Added a new metadata column (mdStateResTime) that saves the residence time of each state to the database.
 		3/6/15 		AB 	Added a new test for negative event delays
 		3/6/15 		JF	Added MinStateLength to output log
 		3/5/15 		AB 	Updated initial state determination to include a minumum state length parameter (MinStateLength).
@@ -76,6 +77,7 @@ class multiStateAnalysis(metaEventProcessor.metaEventProcessor):
 		self.mdBlockDepth=[-1]
 
 		self.mdEventDelay=[-1]
+		self.mdStateResTime=[-1]
 
 		self.mdEventStart=-1
 		self.mdEventEnd=-1
@@ -128,6 +130,7 @@ class multiStateAnalysis(metaEventProcessor.metaEventProcessor):
 					self.mdEventStart,
 					self.mdEventEnd,
 					self.mdEventDelay,
+					self.mdStateResTime,
 					self.mdResTime,
 					self.mdRCConst,
 					self.mdAbsEventStart,
@@ -146,6 +149,7 @@ class multiStateAnalysis(metaEventProcessor.metaEventProcessor):
 					'REAL_LIST',
 					'REAL',
 					'REAL',
+					'REAL_LIST',
 					'REAL_LIST',
 					'REAL',
 					'REAL_LIST',
@@ -166,6 +170,7 @@ class multiStateAnalysis(metaEventProcessor.metaEventProcessor):
 					'EventStart', 
 					'EventEnd', 
 					'EventDelay', 
+					'StateResTime', 
 					'ResTime', 
 					'RCConstant', 
 					'AbsEventStart',
@@ -296,6 +301,8 @@ class multiStateAnalysis(metaEventProcessor.metaEventProcessor):
 
 			self.mdEventDelay		= [ optfit.params['mu'+str(i)].value for i in range(self.nStates) ]
 
+			self.mdStateResTime 	= np.diff(self.mdEventDelay)
+
 			self.mdEventStart		= optfit.params['mu0'].value
 			self.mdEventEnd			= optfit.params['mu'+str(self.nStates-1)].value
 			self.mdRCConst			= [ optfit.params['tau'+str(i)].value for i in range(self.nStates) ]
@@ -309,7 +316,7 @@ class multiStateAnalysis(metaEventProcessor.metaEventProcessor):
 			if math.isnan(self.mdRedChiSq):
 				self.rejectEvent('eInvalidRedChiSq')
 
-			if not (np.diff(self.mdEventDelay)>0).all():
+			if not (self.mdStateResTime>0).all():
 				self.rejectEvent('eNegativeEventDelay')
 
 	def _levelchange(self, dat, sMean, sSD, nSD, blksz):
