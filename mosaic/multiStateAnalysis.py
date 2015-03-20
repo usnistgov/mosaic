@@ -6,6 +6,7 @@
 	:License:	See LICENSE.TXT
 	:ChangeLog:
 	.. line-block::
+		3/20/15 	AB 	Added a maximum event length setting (MaxEventLength) that automatically rejects events longer than the specified value.
 		3/20/15 	AB 	Added a new metadata column (mdStateResTime) that saves the residence time of each state to the database.
 		3/6/15 		AB 	Added a new test for negative event delays
 		3/6/15 		JF	Added MinStateLength to output log
@@ -39,7 +40,6 @@ from lmfit import minimize, Parameters, Parameter, report_errors, Minimizer
 class InvalidEvent(Exception):
 	pass
 
-
 class datblock:
 	"""
 		Smart data block that holds a time-series of data and keeps track
@@ -62,7 +62,15 @@ class multiStateAnalysis(metaEventProcessor.metaEventProcessor):
 			3. Tau: the 1/RC of the response to a step input (e.g. the entry or exit of the
 				molecule into or out of the nanopore).
 
-		When an event cannot be analyzed, the blockade depth, residence time and rise time are set to -1.
+		When an event cannot be analyzed, all meta=data are set to -1.
+
+		:Keyword Args:
+			In addition to :class:`~mosaic.metaEventProcessor.metaEventProcessor` args,
+				- `InitThreshold` : 	internal threshold for initial state determination (default: 5.0)
+				- `MinStateLength` : 	minimum number of data points required to assign a state within an event (default: 4)
+				- `MaxEventLength` :	maximum length (in data points) of events that will be processed (default: 10000)
+				- `FitTol` :			fit tolerance for convergence (default: 1.e-7)
+				- `FitIters` :			maximum fit iterations (default: 5000)
 	"""
 	def _init(self, **kwargs):
 		"""
@@ -99,6 +107,7 @@ class multiStateAnalysis(metaEventProcessor.metaEventProcessor):
 			self.FitIters=int(self.settingsDict.pop("FitIters", 5000))
 			self.InitThreshold=float(self.settingsDict.pop("InitThreshold", 5.0))
 			self.MinStateLength=float(self.settingsDict.pop("MinStateLength", 4))
+			self.MaxEventLength=int(self.settingsDict.pop("MaxEventLength", 10000))
 		except ValueError as err:
 			raise commonExceptions.SettingsTypeError( err )
 
@@ -111,8 +120,11 @@ class multiStateAnalysis(metaEventProcessor.metaEventProcessor):
 			This function implements the core logic to analyze one single step-event.
 		"""
 		try:
-			# Fit the system transfer function to the event data
-			self.__FitEvent()
+			if (self.eEndEstimate-self.eStartEstimate) > self.MaxEventLength:
+				self.rejectEvent("eMaxLength")
+			else:
+				# Fit the system transfer function to the event data
+				self.__FitEvent()
 		except:
 			raise
 
