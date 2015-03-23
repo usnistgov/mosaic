@@ -296,40 +296,43 @@ class multiStateAnalysis(metaEventProcessor.metaEventProcessor):
 	def __recordevent(self, optfit):
 		dt = 1000./self.Fs 	# time-step in ms.
 
-		if self.nStates<2:
-			self.rejectEvent('eInvalidStates')
-		elif optfit.params['mu0'].value < 0.0 or optfit.params['mu'+str(self.nStates-1)].value < 0.0:
-			self.rejectEvent('eInvalidResTime')
-		# The start of the event is set past the length of the data
-		elif optfit.params['mu'+str(self.nStates-1)].value > (1000./self.Fs)*(len(self.eventData)-1):
-			self.rejectEvent('eInvalidStartTime')
-		else:
-			self.mdOpenChCurrent 	= optfit.params['b'].value 
-			self.mdCurrentStep		= [ optfit.params['a'+str(i)].value for i in range(self.nStates) ]
-			
-			self.mdNStates			= self.nStates
-
-			self.mdBlockDepth 		= np.cumsum( self.mdCurrentStep[:-1] )/self.mdOpenChCurrent + 1
-
-			self.mdEventDelay		= [ optfit.params['mu'+str(i)].value for i in range(self.nStates) ]
-
-			self.mdStateResTime 	= np.diff(self.mdEventDelay)
-
-			self.mdEventStart		= optfit.params['mu0'].value
-			self.mdEventEnd			= optfit.params['mu'+str(self.nStates-1)].value
-			self.mdRCConst			= [ optfit.params['tau'+str(i)].value for i in range(self.nStates) ]
-
-			self.mdResTime			= self.mdEventEnd - self.mdEventStart
-
-			self.mdAbsEventStart	= self.mdEventStart + self.absDataStartIndex * dt
-			
-			self.mdRedChiSq			= sum(np.array(optfit.residual)**2/self.baseSD**2)/optfit.nfree
+		try:
+			if self.nStates<2:
+				self.rejectEvent('eInvalidStates')
+			elif optfit.params['mu0'].value < 0.0 or optfit.params['mu'+str(self.nStates-1)].value < 0.0:
+				self.rejectEvent('eInvalidResTime')
+			# The start of the event is set past the length of the data
+			elif optfit.params['mu'+str(self.nStates-1)].value > (1000./self.Fs)*(len(self.eventData)-1):
+				self.rejectEvent('eInvalidStartTime')
+			else:
+				self.mdOpenChCurrent 	= optfit.params['b'].value 
+				self.mdCurrentStep		= [ optfit.params['a'+str(i)].value for i in range(self.nStates) ]
 				
-			if math.isnan(self.mdRedChiSq):
-				self.rejectEvent('eInvalidRedChiSq')
+				self.mdNStates			= self.nStates
 
-			if not (self.mdStateResTime>0).all():
-				self.rejectEvent('eNegativeEventDelay')
+				self.mdBlockDepth 		= np.cumsum( self.mdCurrentStep[:-1] )/self.mdOpenChCurrent + 1
+
+				self.mdEventDelay		= [ optfit.params['mu'+str(i)].value for i in range(self.nStates) ]
+
+				self.mdStateResTime 	= np.diff(self.mdEventDelay)
+
+				self.mdEventStart		= optfit.params['mu0'].value
+				self.mdEventEnd			= optfit.params['mu'+str(self.nStates-1)].value
+				self.mdRCConst			= [ optfit.params['tau'+str(i)].value for i in range(self.nStates) ]
+
+				self.mdResTime			= self.mdEventEnd - self.mdEventStart
+
+				self.mdAbsEventStart	= self.mdEventStart + self.absDataStartIndex * dt
+				
+				self.mdRedChiSq			= sum(np.array(optfit.residual)**2/self.baseSD**2)/optfit.nfree
+					
+				if math.isnan(self.mdRedChiSq):
+					self.rejectEvent('eInvalidRedChiSq')
+
+				if not (self.mdStateResTime>0).all():
+					self.rejectEvent('eNegativeEventDelay')
+		except:
+			self.rejectEvent('eInvalidEvent')
 
 	def _levelchange(self, dat, sMean, sSD, nSD, blksz):
 		start_i=None

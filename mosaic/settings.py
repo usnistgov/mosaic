@@ -6,6 +6,7 @@
 	:License:	See LICENSE.TXT
 	:ChangeLog:
 	.. line-block::
+		3/20/15 	AB 	Added MaxEventLength to multiStateAnalysis settings
 		3/6/15		JF	Corrected formatting on cusumLevelAnalysis and multiStateAnalysis dictionary file
 		3/6/15		AB 	Added MinStateLength parameter for multiStateAnalysis to dictionary
 		2/14/15 	AB 	Added default settings for cusumLevelAnalysis.
@@ -100,7 +101,8 @@ __settings__="""
             "FitTol"				: "1.e-7",
             "FitIters"				: "50000",
             "InitThreshold"			: "3.0",
-            "MinStateLength"		: "4"
+            "MinStateLength"		: "4",
+            "MaxEventLength" 		: "10000"
 	     },
 	     "cusumLevelAnalysis": {
 			"StepSize": 3.0, 

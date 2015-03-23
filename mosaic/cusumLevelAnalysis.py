@@ -87,6 +87,7 @@ class cusumLevelAnalysis(metaEventProcessor.metaEventProcessor):
 
 		self.mdAbsEventStart = -1
 
+		self.mdThreshold=-1
 
 		self.nStates=-1
 
@@ -189,7 +190,9 @@ class cusumLevelAnalysis(metaEventProcessor.metaEventProcessor):
 		fmtstr+='Algorithm = {0}\n\n'.format(self.__class__.__name__)
 		
 		fmtstr+='\t\tJump Size  = {0}\n'.format(self.StepSize)
-		fmtstr+='\t\tCUSUM Threshold (rel. err in leastsq)  = {0}\n'.format(self.Threshold)
+		fmtstr+='\t\tMin. State Length  = {0}\n'.format(self.MinLength)
+		fmtstr+='\t\tCUSUM Min. Threshold  = {0}\n'.format(self.MinThreshold)
+		fmtstr+='\t\tCUSUM Max. Threshold  = {0}\n'.format(self.MaxThreshold)
 
 		return fmtstr
 
