@@ -21,6 +21,16 @@ MosaicUtils
 
 *MosaicUtils* provides low level functions to interact with a database output by |projname|. 
 
+.. warning:: If you use a virtual environment with Python, please call the SetVirtualEnv function after you install this addon.
+
+
+**SetVirtualEnv**\[*virtualenv*\]
+
+:Args:
+		- `virtualenv` :	name of the virtual environment configured for use with MOSAIC
+:Returns:
+		None
+
 **PrintMDKeys**\[*dbfile*\]
 
 Returns a list of column headings from the *metadata* table.
