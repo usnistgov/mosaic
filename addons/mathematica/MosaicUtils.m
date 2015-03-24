@@ -25,56 +25,86 @@ Return[mdtypes]
 ]
 
 
-QueryDB[filename_,query_]:=Module[{db=OpenSQLConnection[JDBC["SQLite",filename]],q,res},res=SQLExecute[db,query];
-CloseSQLConnection[db];
-Return[res]
-]
-QueryDB[filename_,query_]:=Module[{cols=ColNames[query], db=OpenSQLConnection[JDBC["SQLite",filename]],res,hash, qres, i},
-hash=Association[#[[1]]->#[[2]]&/@Transpose[{SQLExecute[db,"PRAGMA table_info(metadata_t)"][[All,2]],First[SQLExecute[db,"select * from metadata_t limit 1"]]}]];
-qres=SQLExecute[db,query];
-res=ParallelTable[DecodeRecord[qres[[i]],cols, hash],{i,Length[qres]}];
-CloseSQLConnection[db];
-Return[res]
-]/;StringMatchQ[query,RegularExpression["\\bselect\\b.*\\bmetadata\\b.*"]]
+(* ::Text:: *)
+(*QueryDB[filename_, query_] := Module[{db = OpenSQLConnection[JDBC["SQLite", filename]], q, res}, res = SQLExecute[db, query];*)
+(*  CloseSQLConnection[db];*)
+(*  Return[res]*)
+(*  ]*)
+(*QueryDB[filename_, query_] := Module[{cols = ColNames[query], db = OpenSQLConnection[JDBC["SQLite", filename]], res, hash, qres, i},*)
+(*   hash = Association[#[[1]] -> #[[2]] & /@ Transpose[{SQLExecute[db, "PRAGMA table_info(metadata_t)"][[All, 2]], First[SQLExecute[db, "select * from metadata_t limit 1"]]}]];*)
+(*   qres = SQLExecute[db, query];*)
+(*   res = ParallelTable[DecodeRecord[qres[[i]], cols, hash], {i, Length[qres]}];*)
+(*   CloseSQLConnection[db];*)
+(*   Return[res]*)
+(*   ] /; StringMatchQ[query, RegularExpression["\\bselect\\b.*\\bmetadata\\b.*"]]*)
 
 
-ColNames[qstr_]:=Flatten[StringSplit[StringSplit[First[StringSplit[qstr,{"select","from"}]],","]]]
+(* ::Text:: *)
+(*ColNames[qstr_] := Flatten[StringSplit[StringSplit[First[StringSplit[qstr, {"select", "from"}]], ","]]]*)
 
 
-DecodeRecord[rec_,cols_, colhash_]:=Module[{c=ExpandCols[cols,colhash],ct},
-ct=colhash/@c;
-Return[(DecodeColumn@@#)&/@Transpose[{rec,ct}]]
-]
+(* ::Text:: *)
+(*DecodeRecord[rec_, cols_, colhash_] := Module[{c = ExpandCols[cols, colhash], ct},*)
+(*  ct = colhash /@ c;*)
+(*  Return[(DecodeColumn @@ #) & /@ Transpose[{rec, ct}]]*)
+(*  ]*)
 
 
-ExpandCols[cols_,colhash_]:=Keys[colhash]/;cols=={"*"}
-ExpandCols[cols_,colhash_]:=cols
+(* ::Text:: *)
+(*ExpandCols[cols_, colhash_] := Keys[colhash] /; cols == {"*"}*)
+(*ExpandCols[cols_, colhash_] := cols*)
 
 
-DecodeColumn[dat_,dtype_]:=DecodeTimeSeries[dat]/;dtype=="REAL_LIST"
-DecodeColumn[dat_,dtype_]:=dat
+(* ::Text:: *)
+(*DecodeColumn[dat_, dtype_] := DecodeTimeSeries[dat] /; dtype == "REAL_LIST"*)
+(*DecodeColumn[dat_, dtype_] := dat*)
 
 
-DecodeTimeSeries[ts_]:=ImportString[ToString[ts],{"Base64","Real64"}]
+SetVirtualEnv[virtualenv_]:=Export[FileNameJoin[{$UserBaseDirectory,"Applications",".virtualenv" },OperatingSystem->$OperatingSystem],ToString[virtualenv],"Text"];
+
+
+readVirtualEnv[]:=Import[FileNameJoin[{$UserBaseDirectory,"Applications",".virtualenv" },OperatingSystem->$OperatingSystem],"Text"]/;FileExistsQ[FileNameJoin[{$UserBaseDirectory,"Applications",".virtualenv" },OperatingSystem->$OperatingSystem]];
+readVirtualEnv[]:="";
+
+
+bashrc="~/.bashrc"/;$OperatingSystem!="MacOSX";
+bashrc="~/.bash_profile";
+
+
+shellPrefix[virtualenv_]:=""/;virtualenv==""
+shellPrefix[virtualenv_]:="source "<>bashrc<>"; workon "<>virtualenv<>"; "
+
+
+rawquery[q_]:=" --raw "/;Length[StringPosition[q,{"select","metadata"}]]<2
+rawquery[q_]:=" "
+
+
+QueryDB[filename_,query_]:=ToExpression[StringReplace[Import["!"<>shellPrefix[readVirtualEnv[]]<>" python "<>FileNameJoin[{$UserBaseDirectory,"Applications","pyquery.py " },OperatingSystem->$OperatingSystem]<>rawquery[query] <> filename<>" \"" <>query<>"\"","String"],{"["->"{","]"->"}"}]]
+
+
+DecodeTimeSeries[ts_]:=ts(*ImportString[ToString[ts],{"Base64","Real64"}]*)
 
 
 ts[dat_,FsKHz_]:=Transpose[{Range[0,Length[dat]-1]/FsKHz,polarity[dat]*dat}]
 
 
-GetAnalysisAlgorithm[db_]:=First[Flatten[QueryDB[db, "select processingAlgorithm from analysisinfo"]]]
+pyUnicode=First[StringSplit[ToString[#],"'"]]&;
+
+
+GetAnalysisAlgorithm[db_]:=pyUnicode[First[Flatten[QueryDB[db, "select processingAlgorithm from analysisinfo"]]]]
 
 
 PlotEvents[dbname_,FsKHz_]:=Module[{q},
 q=QueryDB[dbname, "select ProcessingStatus, BlockedCurrent, OpenChCurrent, EventStart, EventEnd, RCConstant, TimeSeries from metadata"];
-Manipulate[plotsra[q[[i]][[1]], ts[q[[i]][[-1]],FsKHz],q[[i]][[2;;-2]] ,FsKHz],{i,1,Length[q],1,Appearance->"Open"}]
+Manipulate[plotsra[pyUnicode[q[[i]][[1]]], ts[q[[i]][[-1]],FsKHz],q[[i]][[2;;-2]] ,FsKHz],{i,1,Length[q],1,Appearance->"Open"}]
 ]/;GetAnalysisAlgorithm[dbname]=="stepResponseAnalysis"
 PlotEvents[dbname_,FsKHz_]:=Module[{q},
 q=QueryDB[dbname,"select ProcessingStatus, OpenChCurrent, CurrentStep, EventDelay, RCConstant, TimeSeries from metadata"];
-Manipulate[plotmsa[q[[i]][[1]], ts[q[[i]][[-1]],FsKHz], {q[[i]][[2]],q[[i]][[3]],q[[i]][[4]],q[[i]][[5]]},FsKHz],{i,1,Length[q],1,Appearance->"Open"}]
+Manipulate[plotmsa[pyUnicode[q[[i]][[1]]], ts[q[[i]][[-1]],FsKHz], {q[[i]][[2]],q[[i]][[3]],q[[i]][[4]],q[[i]][[5]]},FsKHz],{i,1,Length[q],1,Appearance->"Open"}]
 ]/;GetAnalysisAlgorithm[dbname]=="multiStateAnalysis"
 PlotEvents[dbname_,FsKHz_]:=Module[{q},
 q=QueryDB[dbname,"select ProcessingStatus, OpenChCurrent, CurrentStep, EventDelay, TimeSeries from metadata"];
-Manipulate[plotcla[q[[i]][[1]], ts[q[[i]][[-1]],FsKHz], {q[[i]][[2]],q[[i]][[3]],q[[i]][[4]]},FsKHz],{i,1,Length[q],1,Appearance->"Open"}]
+Manipulate[plotcla[pyUnicode[q[[i]][[1]]], ts[q[[i]][[-1]],FsKHz], {q[[i]][[2]],q[[i]][[3]],q[[i]][[4]]},FsKHz],{i,1,Length[q],1,Appearance->"Open"}]
 ]/;GetAnalysisAlgorithm[dbname]=="cusumLevelAnalysis"
 
 
