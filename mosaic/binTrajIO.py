@@ -207,12 +207,10 @@ if __name__ == '__main__':
 	import os
 
 	b=binTrajIO(
-			# fnames=["/Users/arvind/Desktop/50bp_500kHz/400mV/NanoRun-K199PC - pH 10.03 1M NaCl G 90.2mScm - pH 8.05 3.6M LiCl G 160.8mScm - -400mV 50nM dsDNA-T2141.bin"],
 			fnames=['data/SingleChan-0001_1.bin'], 
 			dcOffset=0, 
 			start=0, 
 			ColumnTypes=[('curr', 'float64')], 
-			# ColumnTypes=[('curr', '>f8'),('volts', '>f8')], 
 			IonicCurrentColumn='curr', 
 			HeaderOffset=0, 
 			SamplingFrequency=500000
