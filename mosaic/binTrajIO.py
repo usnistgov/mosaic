@@ -218,7 +218,7 @@ if __name__ == '__main__':
 
 	for i in range(100):
 		d=b.popdata(100000)
-		print len(d), d[0], d[-1], np.mean(d), os.path.basename(b.LastFileProcessed)
+		print len(d), d[0], d[-1], np.mean(d), os.path.basename(b.LastFileProcessed), b.ElapsedTimeSeconds
 
 
 

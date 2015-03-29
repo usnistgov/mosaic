@@ -180,7 +180,7 @@ class metaTrajIO(object):
 
 			Return the elapsed time in the time-series in seconds.
 		"""
-		return self.globalDataIndex*self.Fs
+		return self.globalDataIndex/float(self.Fs)
 
 	@property 
 	def LastFileProcessed(self):
@@ -223,10 +223,7 @@ class metaTrajIO(object):
 			t=self.currDataPipe[self.currDataIdx:self.currDataIdx+n]-self.dcOffset
 			if len(t) < n:
 				if len(self.currDataPipe)-self.currDataIdx > 0:
-					t=self.currDataPipe[self.currDataIdx:self.currDataIdx+n]
 					self.currDataIdx=len(self.currDataPipe)
-
-					return t
 				else:
 					raise IndexError
 
@@ -274,10 +271,7 @@ class metaTrajIO(object):
 			t=self.currDataPipe[self.currDataIdx:self.currDataIdx+n]-self.dcOffset
 			if len(t) < n:
 				if len(self.currDataPipe)-self.currDataIdx > 0:
-					t=self.currDataPipe[self.currDataIdx:self.currDataIdx+n]
 					self.currDataIdx=len(self.currDataPipe)
-
-					return t
 				else:
 					raise IndexError
 
