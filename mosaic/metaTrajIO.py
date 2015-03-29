@@ -329,7 +329,7 @@ class metaTrajIO(object):
 		
 	def scaleData(self, data):
 		"""
-			.. important:: |abstractmethod|
+			.. important:: |interfacemethod|
 
 			scale the raw data loaded with readdata.
 		"""
