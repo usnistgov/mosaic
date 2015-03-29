@@ -6,7 +6,7 @@ Binary file implementation of metaTrajIO. Read raw binary files with specified r
 	:License:	See LICENSE.TXT
 	:ChangeLog:
 	.. line-block::
-
+		3/28/15 	AB 	Updated file read code to match new metaTrajIO API.
 		1/27/15 	AB 	Memory map files on read.
 		1/26/15 	AB 	Refactored code to read interleaved binary data. 
 		7/27/14		AB 	Update interface to specify python PythonStructCode instead of 
@@ -167,18 +167,13 @@ class binTrajIO(mosaic.metaTrajIO.metaTrajIO):
 			Set a class attribute Fs with the sampling frequency in Hz.
 
 			:Parameters:
-				- `fname` :  list of data files to read
+				- `fname` :  fileame to read
 			:Returns:
 				None
 			:Errors:
 				None
 		"""
-		tempdata=np.array([])
-		# Read binary data and add it to the data pipe
-		for f in fname:
-			tempdata=np.hstack(( tempdata, self.readBinaryFile(f) ))
-
-		return tempdata
+		return self.readBinaryFile(fname)
 		
 	def _formatsettings(self):
 		"""
@@ -194,23 +189,30 @@ class binTrajIO(mosaic.metaTrajIO.metaTrajIO):
 		return fmtstr
 
 	def readBinaryFile(self, fname):
-		return self.transformData(np.memmap(fname, dtype=self.ColumnTypes, mode='r', offset=self.HeaderOffset)[self.IonicCurrentColumn])
+		return np.memmap(fname, dtype=self.ColumnTypes, mode='r', offset=self.HeaderOffset)[self.IonicCurrentColumn]
 		
-	def transformData(self, data):
+	def scaleData(self, data):
 		return np.array(data*self.AmplifierScale-self.AmplifierOffset, dtype=np.float64)
 
 if __name__ == '__main__':
 	from mosaic.utilities.resource_path import resource_path
+	import os
 
-	print binTrajIO(
+	b=binTrajIO(
+			# fnames=["/Users/arvind/Desktop/50bp_500kHz/400mV/NanoRun-K199PC - pH 10.03 1M NaCl G 90.2mScm - pH 8.05 3.6M LiCl G 160.8mScm - -400mV 50nM dsDNA-T2141.bin"],
 			fnames=['data/SingleChan-0001_1.bin'], 
 			dcOffset=0, 
 			start=0, 
 			ColumnTypes=[('curr', 'float64')], 
+			# ColumnTypes=[('curr', '>f8'),('volts', '>f8')], 
 			IonicCurrentColumn='curr', 
 			HeaderOffset=0, 
 			SamplingFrequency=500000
-		).popdata(10)
+		)
+
+	for i in range(100):
+		d=b.popdata(100000)
+		print len(d), d[0], d[-1], np.mean(d), os.path.basename(b.LastFileProcessed)
 
 
 

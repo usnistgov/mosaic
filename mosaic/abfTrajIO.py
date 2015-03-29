@@ -7,6 +7,7 @@
 	:License:	See LICENSE.TXT
 	:ChangeLog:
 	.. line-block::
+		3/28/15 	AB 	Updated file read code to match new metaTrajIO API.
 		5/23/13		AB	Initial version
 
 """
@@ -45,7 +46,7 @@ class abfTrajIO(metaTrajIO.metaTrajIO):
 			Set a class attribute Fs with the sampling frequency in Hz.
 
 			:Parameters:
-				- `fname` :  list of data files to read
+				- `fname` :  fileame to read
 			
 			:Returns:
 				None
@@ -53,25 +54,18 @@ class abfTrajIO(metaTrajIO.metaTrajIO):
 			:Errors:
 				- `SamplingRateChangedError` : if the sampling rate for any data file differs from previous
 		"""
-		tempdata=np.array([])
-		
-		# Read a single file or a list of files.		
-		for f in fname:
-			[freq, self.fileFormat, self.bandwidth, self.gain, dat] = abf.abfload_gp(f)
+		[freq, self.fileFormat, self.bandwidth, self.gain, dat] = abf.abfload_gp(fname)
 	
-			# set the sampling frequency in Hz. The times are in ms.
-			# If the Fs attribute doesn't exist set it
-			if not hasattr(self, 'Fs'):	
-				self.Fs=freq
-			# else check if it s the same as before
-			else:
-				if self.Fs!=freq:
-					raise metaTrajIO.SamplingRateChangedError("The sampling rate in the data file '{0}' has changed.".format(f))
+		# set the sampling frequency in Hz. The times are in ms.
+		# If the Fs attribute doesn't exist set it
+		if not hasattr(self, 'Fs'):	
+			self.Fs=freq
+		# else check if it s the same as before
+		else:
+			if self.Fs!=freq:
+				raise metaTrajIO.SamplingRateChangedError("The sampling rate in the data file '{0}' has changed.".format(f))
 
-			# Add new data to the existing array
-			tempdata=np.hstack((tempdata, dat))
-
-		return tempdata
+		return dat
 
 	def _formatsettings(self):
 		"""

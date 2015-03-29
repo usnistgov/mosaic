@@ -6,9 +6,11 @@
 	:License:	See LICENSE.TXT
 	:ChangeLog:
 	.. line-block::
-		7/31/12		AB	Initial version
+		3/28/15 	AB 	Updated file read code to match new metaTrajIO API.
 		6/30/13		AB 	Added the 'seprator' kwarg to the class initializer to allow any delimited 
 						files to be read. e.g. '"\\"t' (default), ',', etc.
+		7/31/12		AB	Initial version
+
 """
 import numpy as np 
 
@@ -66,7 +68,7 @@ class tsvTrajIO(metaTrajIO.metaTrajIO):
 			Set/update a class attribute Fs with the sampling frequency in Hz.
 
 			:Parameters:
-				- `fname` :  list of data files to read
+				- `fname` :  fileame to read
 
 			:Returns:
 				None
@@ -74,12 +76,7 @@ class tsvTrajIO(metaTrajIO.metaTrajIO):
 			:Errors:
 				- `SamplingRateChangedError` : if the sampling rate for any data file differs from previous
 		"""
-		data=np.array([])
-		# Add new data to the existing array
-		for f in fname:
-			data=np.hstack((data, self.__readtsv(f)))
-
-		return data
+		return self.__readtsv(f)
 
 	def _formatsettings(self):
 		return ""

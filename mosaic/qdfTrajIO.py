@@ -7,6 +7,7 @@
 	:License:	See LICENSE.TXT
 	:ChangeLog:
 	.. line-block::
+		3/28/15 	AB 	Updated file read code to match new metaTrajIO API.
 		7/18/12		AB	Initial version
 		2/11/14		AB 	Support qdf files that save the current in pA. This needs 
 						format='pA' argument.
@@ -80,9 +81,9 @@ class qdfTrajIO(metaTrajIO.metaTrajIO):
 		# and time_scale to 0, we get back times in ms and current in pA.
 		# Check if the files have current of voltage.
 		if self.format=='V':
-			q=qdf.qdf_V2I(fname, float(self.Cfb), float(self.Rfb), scale_data=0, time_scale=0)
+			q=qdf.qdf_V2I([fname], float(self.Cfb), float(self.Rfb), scale_data=0, time_scale=0)
 		else:
-			q=qdf.qdf_I(fname, float(self.Cfb), float(self.Rfb), scale_data=0, time_scale=0)
+			q=qdf.qdf_I([fname], float(self.Cfb), float(self.Rfb), scale_data=0, time_scale=0)
 
 		# set the sampling frequency in Hz. The times are in ms.
 		# If the Fs attribute doesn't exist set it
@@ -109,3 +110,20 @@ class qdfTrajIO(metaTrajIO.metaTrajIO):
 		fmtstr+='\t\tFeedback capacitance = {0} pF\n'.format(self.Cfb*1e12)
 	
 		return fmtstr
+
+if __name__ == '__main__':
+	from mosaic.utilities.resource_path import resource_path
+	import os
+
+	b=qdfTrajIO(
+			fnames=['data/SingleChan-0001.qdf'], 
+			Rfb=9.1e9,
+			Cfb=1.07e-12
+		)
+
+	for i in range(100):
+		d=b.popdata(100000)
+		print i, len(d), d[0], d[-1], np.mean(d), os.path.basename(b.LastFileProcessed)
+
+
+

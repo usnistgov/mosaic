@@ -6,6 +6,7 @@
 	:License:	See LICENSE.TXT	
 	:ChangeLog:
 	.. line-block::
+		3/28/15 	AB 	Optimized file read interface for improved large file support.
 		8/22/14 	AB 	Setup a new property ('LastDataFile') that tracks the current
 						data file being processed.
 		5/27/14		AB 	Added dcOffset kwarg to initialization to allow 
@@ -78,6 +79,9 @@ class metaTrajIO(object):
 	def __init__(self, **kwargs):
 		"""
 		"""
+		self.CHUNKSIZE=10000
+		self.dataGenerator=None
+
 		# start by setting all passed keyword arguments as class attributes
 		for (k,v) in kwargs.iteritems():
 			setattr(self, k, v)
@@ -143,7 +147,7 @@ class metaTrajIO(object):
 		self.currDataIdx=0
 
 		# A global index that tracks the number of data points retrieved.
-		self.gloabDataIndex=0
+		self.globalDataIndex=0
 
 		self.initPipe=False
 
@@ -175,7 +179,7 @@ class metaTrajIO(object):
 
 			Return the elapsed time in the time-series in seconds.
 		"""
-		return self.gloabDataIndex*self.Fs
+		return self.globalDataIndex*self.Fs
 
 	@property 
 	def LastFileProcessed(self):
@@ -205,18 +209,24 @@ class metaTrajIO(object):
 
 		# If the global index exceeds the specied end point, raise an EmptyDataPipError
 		if hasattr(self, "end"):
-			if self.gloabDataIndex > self.endIndex:
+			if self.globalDataIndex > self.endIndex:
 				raise EmptyDataPipeError("End of data.")
 
 		try:
 			# Get the elements to return: index to (index+n)
 			t=self.currDataPipe[self.currDataIdx:self.currDataIdx+n]-self.dcOffset
 			if len(t) < n:
-				raise IndexError
+				if len(self.currDataPipe)-self.currDataIdx > 0:
+					t=self.currDataPipe[self.currDataIdx:self.currDataIdx+n]
+					self.currDataIdx=len(self.currDataPipe)
+
+					return t
+				else:
+					raise IndexError
 
 			# If the required data points were obtained, update the queue and global indices
 			self.currDataIdx+=n
-			self.gloabDataIndex+=n
+			self.globalDataIndex+=n
 			
 			# delete them from the pipe if the index exceeds 1 million
 			if self.currDataIdx>1000000:
@@ -227,20 +237,9 @@ class metaTrajIO(object):
 			# return the popped data
 			return t
 		except IndexError, err:
-			fnames=self.popfnames(1)
-			if len(fnames) > 0:
-				self.currentFilename=fnames[0]		#update the last successfully read fname
-				self._appenddata(fnames)
-				return self.popdata(n)
-			else:
-				if len(self.currDataPipe)-self.currDataIdx > 0:
-					t=self.currDataPipe[self.currDataIdx:self.currDataIdx+n]
-					self.currDataIdx=len(self.currDataPipe)
-
-					return t
-				else:
-					raise EmptyDataPipeError("End of data.")
-	
+			self._appenddata()
+			return self.popdata(n)
+				
 	def previewdata(self, n):
 		"""
 			Preview data points in self.currDataPipe. This function is identical in 
@@ -263,22 +262,19 @@ class metaTrajIO(object):
 			# Get the elements to return
 			t=self.currDataPipe[self.currDataIdx:self.currDataIdx+n]-self.dcOffset
 			if len(t) < n:
-				raise IndexError
-			return t
-		except IndexError, err:
-			fnames=self.popfnames(1)
-			if len(fnames) > 0:
-				self.currentFilename=fnames[0]		#update the last successfully read fname
-				self._appenddata(fnames)
-				return self.previewdata(n)
-			else:
 				if len(self.currDataPipe)-self.currDataIdx > 0:
 					t=self.currDataPipe[self.currDataIdx:self.currDataIdx+n]
 					self.currDataIdx=len(self.currDataPipe)
 
 					return t
 				else:
-					raise EmptyDataPipeError("End of data.")
+					raise IndexError
+
+			return t
+		except IndexError, err:
+			self._appenddata()
+			return self.previewdata(n)
+
 
 	def formatsettings(self):
 		"""
@@ -305,24 +301,40 @@ class metaTrajIO(object):
 	# Private API: Interface functions, implemented by sub-classes.
 	# Should not be called from external classes
 	#################################################################
-	def _appenddata(self, fname):
+	def _appenddata(self):
 		"""
 			Read the specified data file(s) and append its data to the data pipeline. Set 
 			a class property FsHz with the sampling frequency in Hz.
 
 			:Parameters:
-				- `fname` :	list of filenames
+				None
 
 			
 			.. seealso:: See implementations of metaTrajIO for specfic documentation.
 		"""
-		data=self.readdata(fname)
-		if self.dataFilter:
-			self.dataFilterObj.filterData(data, self.Fs)
-			self.currDataPipe=np.hstack((self.currDataPipe, self.dataFilterObj.filteredData ))
-		else:
-			self.currDataPipe=np.hstack((self.currDataPipe, data ))
+		try:			
+			data=self.scaleData(self.dataGenerator.next())
+
+			if self.dataFilter:
+				self.dataFilterObj.filterData(data, self.Fs)
+				self.currDataPipe=np.hstack((self.currDataPipe, self.dataFilterObj.filteredData ))
+			else:
+				self.currDataPipe=np.hstack((self.currDataPipe, data ))
+
+		except (StopIteration, AttributeError):
+			# Read a new data file to get more data
+			self.tempData=self.readdata( self.popfnames() )
+			self.dataGenerator=self._createGenerator()
+			self._appenddata()
 		
+	def scaleData(self, data):
+		"""
+			.. important:: |abstractmethod|
+
+			scale the raw data loaded with readdata.
+		"""
+		return data
+
 	@abstractmethod
 	def _formatsettings(self):
 		"""
@@ -346,15 +358,15 @@ class metaTrajIO(object):
 		"""
 			.. important:: |abstractmethod|
 
-			Read the specified data file(s) and  return the data as an array. Set 
-			a class property Fs with the sampling frequency in Hz.
+			Read the specified data file and return data as an array object (python, numpy, memmap, etc.). 
+			Set a class property Fs with the sampling frequency in Hz.
 
 			:Parameters:
 				- `fname` :	list of filenames
 		"""
 		pass
 
-	def popfnames(self, n):
+	def popfnames(self):
 		"""
 			Pop n filenames from the start of self.dataFiles. If filenames run out, 
 			simply return the available names. 
@@ -364,12 +376,10 @@ class metaTrajIO(object):
 			:Returns:
 				List of filenames if successful, empty list if not files remain
 		"""
-		poplist=[]
 		try:
-			[ poplist.append(self.dataFiles.pop(0)) for i in range(n) ]
+			return self.dataFiles.pop(0)
 		except IndexError:
-			pass
-		return poplist
+			raise EmptyDataPipeError("End of data.")
 
 	#################################################################
 	# Internal Functions
@@ -377,12 +387,8 @@ class metaTrajIO(object):
 	def _initPipe(self):
 		# Last, on startup load a single data file to force
 		# the sampling frequency FsHz to be set on startup
-		fnames=self.popfnames(1)
-		if len(fnames) > 0:
-			self._appenddata(fnames)
-		else:
-			raise EmptyDataPipeError("End of data.")
-
+		self._appenddata()
+		
 		self.initPipe=True
 
 		# Set the end point
@@ -403,3 +409,10 @@ class metaTrajIO(object):
 			return
 
 		return self.datafilter(**filtsettings)
+
+	def _createGenerator(self):
+		i=0
+		while i<len(self.tempData):
+			yield self.tempData[i:i+self.CHUNKSIZE]
+			i+=self.CHUNKSIZE
+
