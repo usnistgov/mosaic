@@ -331,7 +331,7 @@ class metaTrajIO(object):
 		"""
 			.. important:: |interfacemethod|
 
-			scale the raw data loaded with readdata.
+			Scale the raw data loaded with :func:`~mosaic.metaTrajIO.metaTrajIO.readdata`.
 		"""
 		return data
 
@@ -340,7 +340,7 @@ class metaTrajIO(object):
 		"""
 			.. important:: |abstractmethod|
 
-			Return a formatted string of settings for display
+			Return a formatted string of settings for display 
 		"""
 		pass
 		
@@ -358,11 +358,15 @@ class metaTrajIO(object):
 		"""
 			.. important:: |abstractmethod|
 
-			Read the specified data file and return data as an array object (python, numpy, memmap, etc.). 
-			Set a class property Fs with the sampling frequency in Hz.
+			Return raw data from a single data file. Set a class 
+			attribute Fs with the sampling frequency in Hz.
 
 			:Parameters:
-				- `fname` :	list of filenames
+				- `fname` :  fileame to read
+			:Returns:
+				An array object that holds raw (unscaled) data from `fname`
+			:Errors:
+				None
 		"""
 		pass
 

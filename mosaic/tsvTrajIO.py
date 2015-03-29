@@ -64,14 +64,14 @@ class tsvTrajIO(metaTrajIO.metaTrajIO):
 
 	def readdata(self, fname):
 		"""
-			Read a single TSV file and append its data to the data pipeline.
+			Read a single TSV file and return raw (unscaled) data contained within it.
 			Set/update a class attribute Fs with the sampling frequency in Hz.
 
 			:Parameters:
 				- `fname` :  fileame to read
 
 			:Returns:
-				None
+				an array object that holds raw (unscaled) data from `fname`
 				
 			:Errors:
 				- `SamplingRateChangedError` : if the sampling rate for any data file differs from previous

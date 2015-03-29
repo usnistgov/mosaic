@@ -163,13 +163,13 @@ class binTrajIO(mosaic.metaTrajIO.metaTrajIO):
 
 	def readdata(self, fname):
 		"""
-			Read one or more files and append their data to the data pipeline.
-			Set a class attribute Fs with the sampling frequency in Hz.
+			Return raw data from a single data file. Set a class 
+			attribute Fs with the sampling frequency in Hz.
 
 			:Parameters:
 				- `fname` :  fileame to read
 			:Returns:
-				None
+				an array object that holds raw (unscaled) data from `fname`
 			:Errors:
 				None
 		"""
