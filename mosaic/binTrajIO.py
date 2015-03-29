@@ -167,10 +167,15 @@ class binTrajIO(mosaic.metaTrajIO.metaTrajIO):
 			attribute Fs with the sampling frequency in Hz.
 
 			:Parameters:
+
 				- `fname` :  fileame to read
+			
 			:Returns:
-				an array object that holds raw (unscaled) data from `fname`
+			
+				- An array object that holds raw (unscaled) data from `fname`
+			
 			:Errors:
+
 				None
 		"""
 		return self.readBinaryFile(fname)
@@ -192,6 +197,9 @@ class binTrajIO(mosaic.metaTrajIO.metaTrajIO):
 		return np.memmap(fname, dtype=self.ColumnTypes, mode='r', offset=self.HeaderOffset)[self.IonicCurrentColumn]
 		
 	def scaleData(self, data):
+		"""
+			See :func:`mosaic.metaTrajIO.metaTrajIO.scaleData`.
+		"""
 		return np.array(data*self.AmplifierScale-self.AmplifierOffset, dtype=np.float64)
 
 if __name__ == '__main__':

@@ -69,12 +69,15 @@ class qdfTrajIO(metaTrajIO.metaTrajIO):
 			Set a class attribute Fs with the sampling frequency in Hz.
 
 			:Parameters:
+
 				- `fname` :  list of data files to read
 			
 			:Returns:
+
 				None
 			
 			:Errors:
+
 				- `SamplingRateChangedError` : if the sampling rate for any data file differs from previous
 		"""
 		# Read a single file or a list of files. By setting scale_data 

@@ -68,12 +68,15 @@ class tsvTrajIO(metaTrajIO.metaTrajIO):
 			Set/update a class attribute Fs with the sampling frequency in Hz.
 
 			:Parameters:
+
 				- `fname` :  fileame to read
 
 			:Returns:
-				an array object that holds raw (unscaled) data from `fname`
+
+				- An array object that holds raw (unscaled) data from `fname`
 				
 			:Errors:
+			
 				- `SamplingRateChangedError` : if the sampling rate for any data file differs from previous
 		"""
 		return self.__readtsv(f)

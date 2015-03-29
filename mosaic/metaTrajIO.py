@@ -49,30 +49,31 @@ class metaTrajIO(object):
 			for what those may be. For example, the qdfTrajIO implementation of metaTrajIO also requires
 			the feedback resistance (Rfb) and feedback capacitance (Cfb) to be passed at initialization.
 
-			:Keyword Args:
+			:Parameters:
+
 				- `dirname` :		all files from a directory ('<full path to data directory>')
 				- `nfiles` :		if requesting N files (in addition to dirname) from a specified directory
-				
-				- `fnames` : 		explicit list of filenames ([file1, file2,...]). This argument 
-							cannot be used in conjuction with dirname/nfiles. The filter 
-							argument is ignored when used in combination with fnames. 
-
+				- `fnames` : 		explicit list of filenames ([file1, file2,...]). This argument cannot be used in conjuction with dirname/nfiles. The filter argument is ignored when used in combination with fnames. 
 				- `filter` :		'<wildcard filter>' (optional, filter is '*' if not specified)
 				- `start` : 		Data start point in seconds.
-				- `end` : 		Data end point in seconds.
-				- `datafilter` :	Handle to the algorithm to use to filter the data. If no algorithm is specified, datafilter
-							is None and no filtering is performed.
-				- `dcOffset` :	Subtract a DC offset from the ionic current data.
+				- `end` : 			Data end point in seconds.
+				- `datafilter` :	Handle to the algorithm to use to filter the data. If no algorithm is specified, datafilter	is None and no filtering is performed.
+				- `dcOffset` :		Subtract a DC offset from the ionic current data.
+		
+
 			:Properties:
-				- `FsHz` :				sampling frequency in Hz. If the data was decimated, this 
-									property will hold the sampling frequency after decimation.
-				- `LastFileProcessed` :	return the data file that was last processed.
-				- `ElapsedTimeSeconds` : return the analysis time in sec.
+
+				- `FsHz` :					sampling frequency in Hz. If the data was decimated, this property will hold the sampling frequency after decimation.
+				- `LastFileProcessed` :		return the data file that was last processed.
+				- `ElapsedTimeSeconds` : 	return the analysis time in sec.
+			
+
 			:Errors:
-				- `IncompatibleArgumentsError` : when conflicting arguments are used.
-				- `EmptyDataPipeError` : when out of data.
-				- `FileNotFoundError` : when data files do not exist in the specified path.
-				- `InsufficientArgumentsError` : when incompatible arguments are passed
+
+				- `IncompatibleArgumentsError` : 	when conflicting arguments are used.
+				- `EmptyDataPipeError` : 			when out of data.
+				- `FileNotFoundError` : 			when data files do not exist in the specified path.
+				- `InsufficientArgumentsError` : 	when incompatible arguments are passed
 	"""
 	__metaclass__=ABCMeta
 
@@ -198,10 +199,15 @@ class metaTrajIO(object):
 			EmptyDataPipeError is thrown.
 
 			:Parameters:
+
 				- `n` : number of requested data points
+			
 			:Returns:
-				numpy array with requested data
+			
+				- Numpy array with requested data
+
 			:Errors:
+				
 				- `EmptyDataPipeError` : if the queue has fewer data points than requested.
 		"""
 		if not self.initPipe:
@@ -249,10 +255,15 @@ class metaTrajIO(object):
 			data files are read, an	EmptyDataPipeError is thrown.
 
 			:Parameters:
+
 				`n` : number of requested data points
+
 			:Returns:
-				numpy array with requested data
+
+				- Numpy array with requested data
+
 			:Errors:
+
 				- `EmptyDataPipeError` : if the queue has fewer data points than requested.
 		"""
 		if not self.initPipe:
@@ -307,8 +318,8 @@ class metaTrajIO(object):
 			a class property FsHz with the sampling frequency in Hz.
 
 			:Parameters:
-				None
 
+				- None
 			
 			.. seealso:: See implementations of metaTrajIO for specfic documentation.
 		"""
@@ -329,9 +340,30 @@ class metaTrajIO(object):
 		
 	def scaleData(self, data):
 		"""
-			.. important:: |interfacemethod|
+			.. note:: |interfacemethod|
 
-			Scale the raw data loaded with :func:`~mosaic.metaTrajIO.metaTrajIO.readdata`.
+			Scale the raw data loaded with :func:`~mosaic.metaTrajIO.metaTrajIO.readdata`. Note this function will not necessarily receive the entire data array loaded with :func:`~mosaic.metaTrajIO.metaTrajIO.readdata`. Transformations must be able to process partial data chunks.
+
+			:Parameters:
+			
+				- `data` : partial chunk of raw data loaded using :func:`~mosaic.metaTrajIO.metaTrajIO.readdata`.
+
+			:Returns:
+
+				- Array containing scaled data.
+
+			:Default Behavior:
+
+				- If not implemented by a sub-class, the default behavior is to return ``data`` to the calling function without modifications.
+
+			:Example:
+
+				Assuming the amplifier scale and offset values are stored in the class variables ``AmplifierScale`` and ``AmplifierOffset``, the raw data read using :func:`~mosaic.metaTrajIO.metaTrajIO.readdata` can be transformed by :func:`~mosaic.metaTrajIO.metaTrajIO.scaleData`. We can also use this function to change the array data type.
+
+					.. code-block:: python
+
+						def scaleData(self, data):
+							return np.array( data*self.AmplifierScale-self.AmplifierOffset, dtype='f8' )
 		"""
 		return data
 
@@ -362,23 +394,36 @@ class metaTrajIO(object):
 			attribute Fs with the sampling frequency in Hz.
 
 			:Parameters:
+
 				- `fname` :  fileame to read
+			
 			:Returns:
+			
 				An array object that holds raw (unscaled) data from `fname`
+			
 			:Errors:
+			
 				None
 		"""
 		pass
 
 	def popfnames(self):
 		"""
-			Pop n filenames from the start of self.dataFiles. If filenames run out, 
-			simply return the available names. 
+			Pop a single filename from the start of ``self.dataFiles``. If ``self.dataFiles`` is empty,
+			raise an ``EmptyDataPipeError`` error. 
 
 			:Parameters:
-				- `n` : 	number of requested filenames
+			
+				- None
+			
 			:Returns:
-				List of filenames if successful, empty list if not files remain
+			
+				A single filename if successful.
+
+			:Errors:
+
+				- `EmptyDataPipeError` : when the filename list is empty.
+
 		"""
 		try:
 			return self.dataFiles.pop(0)

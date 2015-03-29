@@ -46,12 +46,15 @@ class abfTrajIO(metaTrajIO.metaTrajIO):
 			Set a class attribute Fs with the sampling frequency in Hz.
 
 			:Parameters:
+			
 				- `fname` :  fileame to read
 			
 			:Returns:
-				None
+
+				- An array object that holds raw (unscaled) data from `fname`
 			
 			:Errors:
+
 				- `SamplingRateChangedError` : if the sampling rate for any data file differs from previous
 		"""
 		[freq, self.fileFormat, self.bandwidth, self.gain, dat] = abf.abfload_gp(fname)
