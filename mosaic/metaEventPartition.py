@@ -116,6 +116,7 @@ class metaEventPartition(object):
 							type(self).__name__,
 							type(self.tEventProcObj).__name__,
 							fstring,
+							self.trajDataObj.DataLengthSec
 						])
 
 		if self.parallelProc:
