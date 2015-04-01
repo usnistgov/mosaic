@@ -72,6 +72,7 @@ Plot the event-time series if stored in the database (see the :ref:`settings-pag
 :Args:
 		- `dbfile` :	full path to the database file
 		- `FsKHz`  :	sampling frequency in kHz.
+		- `nEvents` :	(optional) limit the plot to the first ``n`` entries in the database
 		
 :Returns:
 		A dynamic object that allows the user to browse event time-series and fits.

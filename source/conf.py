@@ -113,6 +113,7 @@ rst_prolog = """
 .. |projlongname| replace:: A Modular Single-Molecule Analysis Interface
 .. |pymodulename| replace:: mosaic
 .. |abstractmethod| replace:: **Abstract method:** This method must be implemented by a sub-class.
+.. |interfacemethod| replace:: **Abstract method:** This optional interface method can be overridden by a sub-class to modify functionality.
 .. |metaclass| replace:: This metaclass must be sub-classed. All abstract methods within this metaclass must be implemented.
 .. |property| replace:: **Property** 
 .. |nist| replace:: *NIST*
