@@ -88,22 +88,26 @@ DecodeTimeSeries[ts_]:=ts(*ImportString[ToString[ts],{"Base64","Real64"}]*)
 ts[dat_,FsKHz_]:=Transpose[{Range[0,Length[dat]-1]/FsKHz,polarity[dat]*dat}]
 
 
+nEventLimit[nEvents_]:=""/;nEvents==All
+nEventLimit[nEvents_]:=" limit "<>ToString[nEvents]
+
+
 pyUnicode=First[StringSplit[ToString[#],"'"]]&;
 
 
 GetAnalysisAlgorithm[db_]:=pyUnicode[First[Flatten[QueryDB[db, "select processingAlgorithm from analysisinfo"]]]]
 
 
-PlotEvents[dbname_,FsKHz_]:=Module[{q},
-q=QueryDB[dbname, "select ProcessingStatus, BlockedCurrent, OpenChCurrent, EventStart, EventEnd, RCConstant, TimeSeries from metadata"];
+PlotEvents[dbname_,FsKHz_, nEvents_:All]:=Module[{q},
+q=QueryDB[dbname, "select ProcessingStatus, BlockedCurrent, OpenChCurrent, EventStart, EventEnd, RCConstant, TimeSeries from metadata"<>nEventLimit[nEvents]];
 Manipulate[plotsra[pyUnicode[q[[i]][[1]]], ts[q[[i]][[-1]],FsKHz],q[[i]][[2;;-2]] ,FsKHz],{i,1,Length[q],1,Appearance->"Open"}]
 ]/;GetAnalysisAlgorithm[dbname]=="stepResponseAnalysis"
-PlotEvents[dbname_,FsKHz_]:=Module[{q},
-q=QueryDB[dbname,"select ProcessingStatus, OpenChCurrent, CurrentStep, EventDelay, RCConstant, TimeSeries from metadata"];
+PlotEvents[dbname_,FsKHz_, nEvents_:All]:=Module[{q},
+q=QueryDB[dbname,"select ProcessingStatus, OpenChCurrent, CurrentStep, EventDelay, RCConstant, TimeSeries from metadata"<>nEventLimit[nEvents]];
 Manipulate[plotmsa[pyUnicode[q[[i]][[1]]], ts[q[[i]][[-1]],FsKHz], {q[[i]][[2]],q[[i]][[3]],q[[i]][[4]],q[[i]][[5]]},FsKHz],{i,1,Length[q],1,Appearance->"Open"}]
 ]/;GetAnalysisAlgorithm[dbname]=="multiStateAnalysis"
-PlotEvents[dbname_,FsKHz_]:=Module[{q},
-q=QueryDB[dbname,"select ProcessingStatus, OpenChCurrent, CurrentStep, EventDelay, TimeSeries from metadata"];
+PlotEvents[dbname_,FsKHz_, nEvents_:All]:=Module[{q},
+q=QueryDB[dbname,"select ProcessingStatus, OpenChCurrent, CurrentStep, EventDelay, TimeSeries from metadata"<>nEventLimit[nEvents]];
 Manipulate[plotcla[pyUnicode[q[[i]][[1]]], ts[q[[i]][[-1]],FsKHz], {q[[i]][[2]],q[[i]][[3]],q[[i]][[4]]},FsKHz],{i,1,Length[q],1,Appearance->"Open"}]
 ]/;GetAnalysisAlgorithm[dbname]=="cusumLevelAnalysis"
 
