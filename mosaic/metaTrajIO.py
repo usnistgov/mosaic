@@ -221,11 +221,8 @@ class metaTrajIO(object):
 		try:
 			# Get the elements to return: index to (index+n)
 			t=self.currDataPipe[self.currDataIdx:self.currDataIdx+n]-self.dcOffset
-			if len(t) < n:
-				if len(self.currDataPipe)-self.currDataIdx > 0:
-					self.currDataIdx=len(self.currDataPipe)
-				else:
-					raise IndexError
+			
+			if len(t) < n: raise IndexError
 
 			# If the required data points were obtained, update the queue and global indices
 			self.currDataIdx+=n
@@ -269,12 +266,8 @@ class metaTrajIO(object):
 		try:
 			# Get the elements to return
 			t=self.currDataPipe[self.currDataIdx:self.currDataIdx+n]-self.dcOffset
-			if len(t) < n:
-				if len(self.currDataPipe)-self.currDataIdx > 0:
-					self.currDataIdx=len(self.currDataPipe)
-				else:
-					raise IndexError
-
+			if len(t) < n: raise IndexError
+				
 			return t
 		except IndexError, err:
 			self._appenddata()

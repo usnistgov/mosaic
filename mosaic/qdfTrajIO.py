@@ -100,7 +100,7 @@ class qdfTrajIO(metaTrajIO.metaTrajIO):
 		# Slice the data to remove the time-stamps to conserve memory		
 		# and add new data to the existing array
 		#print "last raw current val in file ", fname, " = ", q[-1]
-		return q[ : , 1]
+		return np.array(q[ : , 1], dtype=np.float64)
 
 	def _formatsettings(self):
 		"""
@@ -119,14 +119,15 @@ if __name__ == '__main__':
 	import os
 
 	b=qdfTrajIO(
-			fnames=['data/SingleChan-0001.qdf'], 
-			Rfb=9.1e9,
+			dirname='data', 
+			filter='*qdf',
+			Rfb=9.16e9,
 			Cfb=1.07e-12
 		)
 
 	for i in range(100):
 		d=b.popdata(100000)
-		print i, len(d), d[0], d[-1], np.mean(d), os.path.basename(b.LastFileProcessed)
+		print i, len(d)/100000., d[0], d[-1], np.mean(d), os.path.basename(b.LastFileProcessed)
 
 
 
