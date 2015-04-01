@@ -6,6 +6,7 @@
 	:License:	See LICENSE.TXT	
 	:ChangeLog:
 	.. line-block::
+		4/1/15 		AB 	Added a new property (DataLengthSec) to estimate the length of a data set.
 		3/28/15 	AB 	Optimized file read interface for improved large file support.
 		8/22/14 	AB 	Setup a new property ('LastDataFile') that tracks the current
 						data file being processed.
@@ -150,6 +151,8 @@ class metaTrajIO(object):
 		# A global index that tracks the number of data points retrieved.
 		self.globalDataIndex=0
 
+		self.datLenSec=0
+
 		self.initPipe=False
 
 		# Call sub-class init
@@ -190,6 +193,20 @@ class metaTrajIO(object):
 			Return the last data file that was processed
 		"""
 		return self.currentFilename
+
+	@property 
+	def DataLengthSec(self):
+		"""
+			.. important:: |property|
+
+			Return the approximate length of data that will be processed. If the data are in multiple files,
+			this property assumes that each file contains an equal amount of data.
+		"""
+		if not self.initPipe:
+			self._initPipe()
+
+		return self.datLenSec
+
 
 	def popdata(self, n):
 		"""
@@ -321,7 +338,7 @@ class metaTrajIO(object):
 
 		except (StopIteration, AttributeError):
 			# Read a new data file to get more data
-			self.tempData=self.readdata( self.popfnames() )
+			self.rawData=self.readdata( self.popfnames() )
 			self.dataGenerator=self._createGenerator()
 			self._appenddata()
 		
@@ -427,15 +444,18 @@ class metaTrajIO(object):
 		
 		self.initPipe=True
 
-		# Set the end point
-		if hasattr(self, 'end'):
-			self.endIndex=int((self.end-1)*self.Fs)
-
 		# Drop the first 'n' points specified by the start keyword
 		if hasattr(self, 'start'):
 			self.startIndex=int(self.start*self.Fs)
 			if self.startIndex > 0:
 				self.popdata(self.startIndex-1)
+
+		# Set the end point
+		if hasattr(self, 'end'):
+			self.endIndex=int((self.end-1)*self.Fs)
+			self.datLenSec=self.end-self.start
+		else:
+			self.datLenSec=len(self.rawData)/float(self.Fs)*(len(self.dataFiles)+1)-float(self.start)
 
 	def _setupDataFilter(self):
 		filtsettings=settings.settings( self.datPath ).getSettings(self.datafilter.__name__)
@@ -448,7 +468,7 @@ class metaTrajIO(object):
 
 	def _createGenerator(self):
 		i=0
-		while i<len(self.tempData):
-			yield self.tempData[i:i+self.CHUNKSIZE]
+		while i<len(self.rawData):
+			yield self.rawData[i:i+self.CHUNKSIZE]
 			i+=self.CHUNKSIZE
 
