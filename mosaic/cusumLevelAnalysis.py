@@ -300,7 +300,7 @@ class cusumLevelAnalysis(metaEventProcessor.metaEventProcessor):
 			self.rejectEvent('eInvalidStates')
 		else:
 			self.mdOpenChCurrent 	        = 0.5*(cusum['CurrentLevels'][0] + cusum['CurrentLevels'][self.nStates-1]) #this assumes that the event returns to baseline after
-			self.mdCurrentStep		= np.diff(np.hstack(([self.mdOpenChCurrent], cusum['CurrentLevels'])))[1:] #these current levels are relative to the open state
+			self.mdCurrentStep		= np.diff(np.hstack(([self.mdOpenChCurrent], cusum['CurrentLevels'][1:]))) #these current levels are relative to the open state
 			
 			self.mdNStates			= self.nStates - 1 #this does not count padding as separate states. Note also that states can be triggered inside the padding
 
