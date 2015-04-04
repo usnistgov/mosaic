@@ -6,7 +6,13 @@
 	:License:	See LICENSE.TXT
 	:ChangeLog:
 	.. line-block::
-		1/7/14		AB  Save the number of states in an event to the DB using the mdNStates column
+		3/20/15 	AB 	Added a maximum event length setting (MaxEventLength) that automatically rejects events longer than the specified value.
+		3/20/15 	AB 	Added a new metadata column (mdStateResTime) that saves the residence time of each state to the database.
+		3/6/15 		AB 	Added a new test for negative event delays
+		3/6/15 		JF	Added MinStateLength to output log
+		3/5/15 		AB 	Updated initial state determination to include a minumum state length parameter (MinStateLength).
+						Initial state estimates now utilize gradient information for improved state identification.
+		1/7/15		AB  Save the number of states in an event to the DB using the mdNStates column
 		12/31/14 	AB 	Changed multi-state function to include a separate tau for 
 						each state following Balijepalli et al, ACS Nano 2014.
 		12/30/14	JF	Removed min/max constraint on tau
@@ -22,6 +28,7 @@ import commonExceptions
 import metaEventProcessor
 import mosaic.utilities.util as util
 import mosaic.utilities.fit_funcs as fit_funcs
+import mosaic.cusumLevelAnalysis as cla
 import sys
 import math
 
@@ -32,7 +39,6 @@ from lmfit import minimize, Parameters, Parameter, report_errors, Minimizer
 
 class InvalidEvent(Exception):
 	pass
-
 
 class datblock:
 	"""
@@ -56,7 +62,15 @@ class multiStateAnalysis(metaEventProcessor.metaEventProcessor):
 			3. Tau: the 1/RC of the response to a step input (e.g. the entry or exit of the
 				molecule into or out of the nanopore).
 
-		When an event cannot be analyzed, the blockade depth, residence time and rise time are set to -1.
+		When an event cannot be analyzed, all meta=data are set to -1.
+
+		:Keyword Args:
+			In addition to :class:`~mosaic.metaEventProcessor.metaEventProcessor` args,
+				- `InitThreshold` : 	internal threshold for initial state determination (default: 5.0)
+				- `MinStateLength` : 	minimum number of data points required to assign a state within an event (default: 4)
+				- `MaxEventLength` :	maximum length (in data points) of events that will be processed (default: 10000)
+				- `FitTol` :			fit tolerance for convergence (default: 1.e-7)
+				- `FitIters` :			maximum fit iterations (default: 5000)
 	"""
 	def _init(self, **kwargs):
 		"""
@@ -71,6 +85,7 @@ class multiStateAnalysis(metaEventProcessor.metaEventProcessor):
 		self.mdBlockDepth=[-1]
 
 		self.mdEventDelay=[-1]
+		self.mdStateResTime=[-1]
 
 		self.mdEventStart=-1
 		self.mdEventEnd=-1
@@ -91,6 +106,8 @@ class multiStateAnalysis(metaEventProcessor.metaEventProcessor):
 			self.FitTol=float(self.settingsDict.pop("FitTol", 1.e-7))
 			self.FitIters=int(self.settingsDict.pop("FitIters", 5000))
 			self.InitThreshold=float(self.settingsDict.pop("InitThreshold", 5.0))
+			self.MinStateLength=float(self.settingsDict.pop("MinStateLength", 4))
+			self.MaxEventLength=int(self.settingsDict.pop("MaxEventLength", 10000))
 		except ValueError as err:
 			raise commonExceptions.SettingsTypeError( err )
 
@@ -103,8 +120,11 @@ class multiStateAnalysis(metaEventProcessor.metaEventProcessor):
 			This function implements the core logic to analyze one single step-event.
 		"""
 		try:
-			# Fit the system transfer function to the event data
-			self.__FitEvent()
+			if (self.eEndEstimate-self.eStartEstimate) > self.MaxEventLength:
+				self.rejectEvent("eMaxLength")
+			else:
+				# Fit the system transfer function to the event data
+				self.__FitEvent()
 		except:
 			raise
 
@@ -122,6 +142,7 @@ class multiStateAnalysis(metaEventProcessor.metaEventProcessor):
 					self.mdEventStart,
 					self.mdEventEnd,
 					self.mdEventDelay,
+					self.mdStateResTime,
 					self.mdResTime,
 					self.mdRCConst,
 					self.mdAbsEventStart,
@@ -140,6 +161,7 @@ class multiStateAnalysis(metaEventProcessor.metaEventProcessor):
 					'REAL_LIST',
 					'REAL',
 					'REAL',
+					'REAL_LIST',
 					'REAL_LIST',
 					'REAL',
 					'REAL_LIST',
@@ -160,6 +182,7 @@ class multiStateAnalysis(metaEventProcessor.metaEventProcessor):
 					'EventStart', 
 					'EventEnd', 
 					'EventDelay', 
+					'StateResTime', 
 					'ResTime', 
 					'RCConstant', 
 					'AbsEventStart',
@@ -184,7 +207,8 @@ class multiStateAnalysis(metaEventProcessor.metaEventProcessor):
 		
 		fmtstr+='\t\tMax. iterations  = {0}\n'.format(self.FitIters)
 		fmtstr+='\t\tFit tolerance (rel. err in leastsq)  = {0}\n'.format(self.FitTol)
-		fmtstr+='\t\tInitial partition threshold  = {0}\n\n'.format(self.InitThreshold)
+		fmtstr+='\t\tInitial partition threshold  = {0}\n'.format(self.InitThreshold)
+		fmtstr+='\t\tMin. State Length = {0}\n\n'.format(self.MinStateLength)
 
 		return fmtstr
 
@@ -212,7 +236,7 @@ class multiStateAnalysis(metaEventProcessor.metaEventProcessor):
 			for i in range(1, len(initguess)):
 				params.add('a'+str(i-1), value=initguess[i][0]-initguess[i-1][0]) 
 				params.add('mu'+str(i-1), value=initguess[i][1]*dt) 
-				params.add('tau'+str(i-1), value=dt*7.5)
+				params.add('tau'+str(i-1), value=dt*5.)
 
 			params.add('b', value=initguess[0][0])
 			
@@ -272,46 +296,64 @@ class multiStateAnalysis(metaEventProcessor.metaEventProcessor):
 	def __recordevent(self, optfit):
 		dt = 1000./self.Fs 	# time-step in ms.
 
-		if self.nStates<2:
-			self.rejectEvent('eInvalidStates')
-		elif optfit.params['mu0'].value < 0.0 or optfit.params['mu'+str(self.nStates-1)].value < 0.0:
-			self.rejectEvent('eInvalidResTime')
-		# The start of the event is set past the length of the data
-		elif optfit.params['mu'+str(self.nStates-1)].value > (1000./self.Fs)*(len(self.eventData)-1):
-			self.rejectEvent('eInvalidStartTime')
-		else:
-			self.mdOpenChCurrent 	= optfit.params['b'].value 
-			self.mdCurrentStep		= [ optfit.params['a'+str(i)].value for i in range(self.nStates) ]
-			
-			self.mdNStates			= self.nStates
-
-			self.mdBlockDepth 		= np.cumsum( self.mdCurrentStep[:-1] )/self.mdOpenChCurrent + 1
-
-			self.mdEventDelay		= [ optfit.params['mu'+str(i)].value for i in range(self.nStates) ]
-
-			self.mdEventStart		= optfit.params['mu0'].value
-			self.mdEventEnd			= optfit.params['mu'+str(self.nStates-1)].value
-			self.mdRCConst			= [ optfit.params['tau'+str(i)].value for i in range(self.nStates) ]
-
-			self.mdResTime			= self.mdEventEnd - self.mdEventStart
-
-			self.mdAbsEventStart	= self.mdEventStart + self.absDataStartIndex * dt
-			
-			self.mdRedChiSq			= sum(np.array(optfit.residual)**2/self.baseSD**2)/optfit.nfree
+		try:
+			if self.nStates<2:
+				self.rejectEvent('eInvalidStates')
+			elif optfit.params['mu0'].value < 0.0 or optfit.params['mu'+str(self.nStates-1)].value < 0.0:
+				self.rejectEvent('eInvalidResTime')
+			# The start of the event is set past the length of the data
+			elif optfit.params['mu'+str(self.nStates-1)].value > (1000./self.Fs)*(len(self.eventData)-1):
+				self.rejectEvent('eInvalidStartTime')
+			else:
+				self.mdOpenChCurrent 	= optfit.params['b'].value 
+				self.mdCurrentStep		= [ optfit.params['a'+str(i)].value for i in range(self.nStates) ]
 				
-			if math.isnan(self.mdRedChiSq):
-				self.rejectEvent('eInvalidRedChiSq')
+				self.mdNStates			= self.nStates
 
+				self.mdBlockDepth 		= np.cumsum( self.mdCurrentStep[:-1] )/self.mdOpenChCurrent + 1
+
+				self.mdEventDelay		= [ optfit.params['mu'+str(i)].value for i in range(self.nStates) ]
+
+				self.mdStateResTime 	= np.diff(self.mdEventDelay)
+
+				self.mdEventStart		= optfit.params['mu0'].value
+				self.mdEventEnd			= optfit.params['mu'+str(self.nStates-1)].value
+				self.mdRCConst			= [ optfit.params['tau'+str(i)].value for i in range(self.nStates) ]
+
+				self.mdResTime			= self.mdEventEnd - self.mdEventStart
+
+				self.mdAbsEventStart	= self.mdEventStart + self.absDataStartIndex * dt
+				
+				self.mdRedChiSq			= sum(np.array(optfit.residual)**2/self.baseSD**2)/optfit.nfree
+					
+				if math.isnan(self.mdRedChiSq):
+					self.rejectEvent('eInvalidRedChiSq')
+
+				if not (self.mdStateResTime>0).all():
+					self.rejectEvent('eNegativeEventDelay')
+		except:
+			self.rejectEvent('eInvalidEvent')
 
 	def _levelchange(self, dat, sMean, sSD, nSD, blksz):
+		start_i=None
+		start_slope=None
 		for i in range(int(blksz/2.0), len(dat)-int(blksz/2.0)):
-			if abs(util.avg(dat[i-int(blksz/2.0):i+int(blksz/2.0)])-sMean) > nSD * sSD:
-				return  [i+1, util.avg(dat[i:i+blksz])]
+			p1, p2= i-int(blksz/2.0), i+int(blksz/2.0)
+			if abs(util.avg(dat[p1:p2])-sMean) > nSD * sSD:
+				if not start_i:	
+					start_i=i
+					start_slope=dat[p2]-dat[p1]
+				elif np.sign(start_slope) != np.sign(dat[p2]-dat[p1]):
+					if start_slope < 0:
+						avgCurr=np.min(dat[start_i:p2])
+					else:
+						avgCurr=np.max(dat[start_i:p2])
+					return [start_i, avgCurr]
 
 		raise InvalidEvent()
 
 	def _characterizeevent(self, dat, mean, sd, nSD, blksz):
-		tdat=dat #movingaverage(dat, 2*blksz)
+		tdat=dat
 		tt=[0, mean]
 		mu=[0]
 		a=[mean]
@@ -323,5 +365,14 @@ class multiStateAnalysis(metaEventProcessor.metaEventProcessor):
 			a.append(tt[1])
 			if abs(tt[1]) > (mean-nSD*sd):
 				break
+
+		delIdx=[]
+		for i in range(2, len(mu)-1):
+			if mu[i]-mu[i-1] < self.MinStateLength:
+				delIdx.extend([i])
+
+		for idx in sorted(delIdx, reverse=True):
+			del a[idx]
+			del mu[idx]
 
 		return zip(a,mu)

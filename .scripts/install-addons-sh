@@ -11,6 +11,7 @@ fi
 cp addons/mathematica/MosaicUtils.m ${mathbase}
 cp addons/mathematica/MosaicAnalysis.m ${mathbase}
 cp addons/mathematica/Util.m ${mathbase}
+cp addons/mathematica/pyquery.py ${mathbase}
 
 echo "Installed Mathematica addons in" $mathbase	
 

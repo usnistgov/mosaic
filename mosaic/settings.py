@@ -6,6 +6,9 @@
 	:License:	See LICENSE.TXT
 	:ChangeLog:
 	.. line-block::
+		3/20/15 	AB 	Added MaxEventLength to multiStateAnalysis settings
+		3/6/15		JF	Corrected formatting on cusumLevelAnalysis and multiStateAnalysis dictionary file
+		3/6/15		AB 	Added MinStateLength parameter for multiStateAnalysis to dictionary
 		2/14/15 	AB 	Added default settings for cusumLevelAnalysis.
 		8/20/14		AB 	Changed precedence of settings file search to datpath/.settings,
 						datpath/settings, coderoot/.settings and coderoot/settings
@@ -95,13 +98,17 @@ __settings__="""
 			"FitIters"				: "50000"
 		},
 		"multiStateAnalysis" : {
-	                "FitTol"		: "1.e-7",
-	                "FitIters"		: "50000",
-	                "InitThreshold"	: "3.0"
+            "FitTol"				: "1.e-7",
+            "FitIters"				: "50000",
+            "InitThreshold"			: "3.0",
+            "MinStateLength"		: "4",
+            "MaxEventLength" 		: "10000"
 	     },
 	     "cusumLevelAnalysis": {
-        			"StepSize"		: 3.0, 
-        			"Threshold"		: 3.0
+			"StepSize": 3.0, 
+			"MinThreshold": 3.0,
+			"MaxThreshold": 10.0,
+			"MinLength" : 10
     	}, 
 		"besselLowpassFilter" : {
 			"filterOrder"			: "6",

@@ -3,6 +3,10 @@
 
 	:Author: 	Arvind Balijepalli <arvind.balijepalli@nist.gov>
 	:License:	See LICENSE.TXT
+	:ChangeLog:
+		.. line-block::
+			3/20/15			AB 	Added MaxEventLength to multiStateAnalysis settings
+			3/6/15 			JF 	Added MinStateLength to multiStateAnalysis setup model
 """	
 import json
 import os
@@ -261,7 +265,9 @@ class guiDataModel(dict):
 								"HeaderOffset"			: int,
 								"ColumnTypes"			: str,
 								"IonicCurrentColumn"	: str,
-								"filter"				: str
+								"filter"				: str,
+								"MinStateLength"		: int,
+								"MaxEventLength" 		: int
 							}
 		self.eventSegmentKeys={
 								"blockSizeSec" 			: float,
@@ -286,11 +292,15 @@ class guiDataModel(dict):
 								"FitTol" 				: float,
 								"FitIters" 				: int,
 								"BlockRejectRatio" 		: float,
-								"InitThreshold"			: float
+								"InitThreshold"			: float,
+								"MinStateLength"		: int,
+								"MaxEventLength" 		: int
 							}
 		self.cusumLevelAnalysisKeys={
-								"StepSize"				: float,
-								"Threshold"				: float
+								"StepSize"				: float, 
+								"MinThreshold"			: float,
+								"MaxThreshold"			: float,
+								"MinLength" 			: int
 		}
 		self.besselLowpassFilterKeys={
 								"filterOrder" 			: int,

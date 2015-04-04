@@ -6,6 +6,8 @@
 	:License:	See LICENSE.TXT
 	:ChangeLog:
 	.. line-block::
+		4/1/15 		AB 	Added an estimate of data length to the DB
+		3/23/15 	AB 	Added a raw query function that does not automatically decode column data.
 		11/9/14 	AB  Implemented the analysis log I/O interface for sqlite3 databases.
 		9/28/14		AB 	Initial version
 """
@@ -130,7 +132,7 @@ class sqlite3MDIO(metaMDIO.metaMDIO):
 		with self.db:
 			# allow only one entry in this table
 			self.db.execute('DELETE FROM analysislog')
-			self.db.execute( 'INSERT INTO analysisinfo VALUES(?, ?, ?, ?, ?, ?)',  (infolist+[None]))
+			self.db.execute( 'INSERT INTO analysisinfo VALUES(?, ?, ?, ?, ?, ?, ?)',  (infolist+[None]))
 
 
 	def writeAnalysisLog(self, analysislog):
@@ -179,6 +181,17 @@ class sqlite3MDIO(metaMDIO.metaMDIO):
 		except sqlite3.OperationalError, err:
 			raise
 
+
+	def rawQuery(self, query):
+		try:
+			self.db.commit()
+			c = self.db.cursor()
+
+			c.execute(str(query))
+		
+			return c.fetchall()
+		except sqlite3.OperationalError, err:
+			raise
 
 	def queryDB(self, query):
 		try:
@@ -275,6 +288,7 @@ class sqlite3MDIO(metaMDIO.metaMDIO):
 					partitionAlgorithm TEXT, \
 					processingAlgorithm TEXT, \
 					filteringAlgorithm TEXT, \
+					dataLengthSec REAL, \
 					recIDX INTEGER PRIMARY KEY AUTOINCREMENT \
 				)")
 
