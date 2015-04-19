@@ -57,6 +57,8 @@ class BlockDepthWindow(QtGui.QDialog):
 
 		self.queryCompleter=None
 
+		self.updateDataOnIdle=True
+
 		self.nBins=500
 		self.binsSpinBox.setValue(self.nBins)
 
@@ -83,17 +85,20 @@ class BlockDepthWindow(QtGui.QDialog):
 
 		# QtCore.QObject.connect(self.processeEventsTimer, QtCore.SIGNAL('timeout()'), self.OnProcessEvents)		
 
-	def openDB(self, dbpath):
+	def openDB(self, dbpath, updateOnIdle=True):
 		"""
 			Open the latest sqlite file in a directory
 		"""
-		self.openDBFile( last_file_in_directory(dbpath, "*sqlite") )
+		self.openDBFile( last_file_in_directory(dbpath, "*sqlite"), updateOnIdle )
 
-	def openDBFile(self, dbfile):
+	def openDBFile(self, dbfile, updateOnIdle=True):
 		"""
 			Open a specific database file.
 		"""
 		self.dbFile=dbfile
+
+		# self update on idle flag
+		self.updateDataOnIdle=updateOnIdle
 
 		# Create an index to speed up queries
 		self._createDBIndex(dbfile)
@@ -340,6 +345,9 @@ class BlockDepthWindow(QtGui.QDialog):
 		self.update_graph()
 
 	def OnAppIdle(self):
+		if not self.updateDataOnIdle:
+			return
+
 		t1=round(time.time())
 		if not self.queryRunning and t1-self.lastQueryTime >= self.queryInterval:
 			# self.lastQueryTime=t1

@@ -216,14 +216,14 @@ class qtAnalysisGUI(mosaicgui.settingsview.settingsview):
 					del self.fitEventsView
 					self.fitEventsView = mosaicgui.fiteventsview.fiteventsview.FitEventWindow(parent=self)
 			
-				self.blockDepthWindow.openDBFile( analysisfile )
+				self.blockDepthWindow.openDBFile( analysisfile, updateOnIdle=False )
 				self.blockDepthWindow.show()
 				self.plotBlockDepthHistCheckBox.setChecked(True)
 				
-				self.statisticsView.openDBFile( analysisfile )
+				self.statisticsView.openDBFile( analysisfile, updateOnIdle=False )
 				self.statisticsView.show()
 
-				self.fitEventsView.openDBFile( analysisfile, self.trajViewerWindow.FskHz )
+				self.fitEventsView.openDBFile( analysisfile, self.trajViewerWindow.FskHz, updateOnIdle=False )
 				self.fitEventsView.show()
 				self.plotEventFitsCheckBox.setChecked(True)
 

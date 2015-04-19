@@ -1,5 +1,20 @@
 import csv
 import string
+import json
+import numpy as np
+
+param_t={
+	"n" 				: int,
+	"OpenChCurrent"		: float,
+	"RCConstant"		: list,
+	"eventDelay"		: list,
+	"deltaStep"			: list,
+	"FsKHz"				: int,
+	"BkHz"				: int,
+	"padding"			: int,
+	"noisefArtHz"		: int
+}
+
 
 def readcsv(fname):
 	r1=csv.reader(open(fname,'rU'), delimiter=',')
@@ -30,3 +45,16 @@ def readparams(fname):
 			return float(s)
 
 	return dict([ ( p[0], _formatstr(p[1]) ) for p in d1])
+
+
+def readDataRAW(datfile):
+		return np.fromfile(datfile, dtype=np.float64)
+
+def readParametersJSON(paramfile):
+	prm=json.loads("".join((open(paramfile, 'r').readlines())))
+	
+	for k in prm.keys():
+		v=eval(prm[k])
+		prm[k]=param_t[k](v)
+
+	return prm

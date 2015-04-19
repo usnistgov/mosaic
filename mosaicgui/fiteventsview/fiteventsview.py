@@ -40,6 +40,8 @@ class FitEventWindow(QtGui.QDialog):
 		self.idleTimer=QtCore.QTimer()
 		self.idleTimer.start(3000)
 
+		self.updateDataOnIdle=True
+
 		# setup hash tables used in this class
 		self._setupdict()
 
@@ -50,15 +52,18 @@ class FitEventWindow(QtGui.QDialog):
 		QtCore.QObject.connect(self.eventIndexHorizontalSlider, QtCore.SIGNAL('valueChanged ( int )'), self.OnEventIndexSliderChange)
 
 
-	def openDB(self, dbpath, FskHz):
+	def openDB(self, dbpath, FskHz, updateOnIdle=True):
 		"""
 			Open the latest sqlite file in a directory
 		"""
-		self.openDBFile( last_file_in_directory(dbpath, "*sqlite"), FskHz)
+		self.openDBFile( last_file_in_directory(dbpath, "*sqlite"), FskHz, updateOnIdle)
 
-	def openDBFile(self, dbfile, FskHz):
+	def openDBFile(self, dbfile, FskHz, updateOnIdle=True):
 		self.queryDatabase=sqlite.sqlite3MDIO()
 		self.queryDatabase.openDB(dbfile)
+
+		# self update on idle flag
+		self.updateDataOnIdle=updateOnIdle
 
 		# Store the analysis algorithm
 		try:
@@ -205,7 +210,9 @@ class FitEventWindow(QtGui.QDialog):
 		self.update_graph()
 
 	def OnAppIdle(self):
-		# if len(self.queryData) == 0:
+		if not self.updateDataOnIdle:
+			return
+
 		if not self.EndOfData:
 			self._updatequery()
 			self.update_graph()

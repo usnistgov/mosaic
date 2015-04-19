@@ -6,6 +6,7 @@
 	:License:	See LICENSE.TXT
 	:ChangeLog:
 	.. line-block::
+		4/12/15 	AB 	Refactored code to improve reusability.
 		3/20/15 	AB 	Added a maximum event length setting (MaxEventLength) that automatically rejects events longer than the specified value.
 		3/20/15 	AB 	Added a new metadata column (mdStateResTime) that saves the residence time of each state to the database.
 		3/6/15 		AB 	Added a new test for negative event delays
@@ -123,8 +124,16 @@ class multiStateAnalysis(metaEventProcessor.metaEventProcessor):
 			if (self.eEndEstimate-self.eStartEstimate) > self.MaxEventLength:
 				self.rejectEvent("eMaxLength")
 			else:
+				# Correct the time-series data for polarity
+				edat=self.dataPolarity*np.asarray( self.eventData,  dtype='float64' )
+
+				# estimate initial guess for events
+				initguess=self._characterizeevent(edat, np.abs(util.avg(edat[:10])), self.baseSD, self.InitThreshold, 6.)
+			
 				# Fit the system transfer function to the event data
-				self.__FitEvent()
+				self.fitevent(edat, initguess)
+		except InvalidEvent:
+			self.rejectEvent('eInvalidEvent')
 		except:
 			raise
 
@@ -215,19 +224,15 @@ class multiStateAnalysis(metaEventProcessor.metaEventProcessor):
 	###########################################################################
 	# Local functions
 	###########################################################################
-	def __FitEvent(self):
+	def fitevent(self, edat, initguess):
 		try:
 			dt = 1000./self.Fs 	# time-step in ms.
-			# edat=np.asarray( np.abs(self.eventData),  dtype='float64' )
-			edat=self.dataPolarity*np.asarray( self.eventData,  dtype='float64' )
 
 			# control numpy error reporting
 			np.seterr(invalid='ignore', over='ignore', under='ignore')
 
 			ts = np.array([ t*dt for t in range(0,len(edat)) ], dtype='float64')
 
-			# estimate initial guess for events
-			initguess=self._characterizeevent(edat, np.abs(util.avg(edat[:10])), self.baseSD, self.InitThreshold, 6.)
 			self.nStates=len(initguess)-1
 
 			# setup fit params

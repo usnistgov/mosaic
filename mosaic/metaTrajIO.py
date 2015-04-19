@@ -140,6 +140,10 @@ class metaTrajIO(object):
 		else:
 			self.dcOffset=float(self.dcOffset)
 
+		# set start to 0 if it doesn't exist
+		if not hasattr(self, 'start'):
+			self.start=0.
+
 		# Track current filename
 		self.currentFilename=self.dataFiles[0]
 

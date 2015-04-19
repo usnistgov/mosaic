@@ -39,6 +39,8 @@ class StatisticsWindow(QtGui.QDialog):
 		self.totalEvents=0
 		self.elapsedTime=0.0
 
+		self.updateDataOnIdle=True
+
 		self.qWorker=None
 		self.qThread=QtCore.QThread()
 
@@ -47,13 +49,13 @@ class StatisticsWindow(QtGui.QDialog):
 		self.errorrateLabel.setTextInteractionFlags(QtCore.Qt.TextSelectableByMouse)
 		self.caprateLabel.setTextInteractionFlags(QtCore.Qt.TextSelectableByMouse)
 
-	def openDB(self, dbpath):
+	def openDB(self, dbpath, updateOnIdle=True):
 		"""
 			Open the latest sqlite file in a directory
 		"""
-		self.openDBFile( last_file_in_directory(dbpath, "*sqlite") )
+		self.openDBFile( last_file_in_directory(dbpath, "*sqlite"), updateOnIdle )
 
-	def openDBFile(self, dbfile):
+	def openDBFile(self, dbfile, updateOnIdle=True):
 		"""
 			Open a specific database file.
 		"""
@@ -73,6 +75,9 @@ class StatisticsWindow(QtGui.QDialog):
 
 		# reset elapsed time
 		self.elapsedTime=0.0
+
+		# self update on idle flag
+		self.updateDataOnIdle=updateOnIdle
 
 		# Query the DB
 		self._updatequery()
@@ -183,6 +188,9 @@ class StatisticsWindow(QtGui.QDialog):
 		return a * np.exp(-t/tau)
 
 	def OnAppIdle(self):
+		if not self.updateDataOnIdle:
+			return
+
 		if not self.queryRunning:
 			self._updatequery()
 
