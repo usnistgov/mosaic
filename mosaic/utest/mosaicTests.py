@@ -10,6 +10,7 @@ import mosaic.settings as settings
 import mosaic.stepResponseAnalysis as sra
 import mosaic.singleStepEvent as sse
 import mosaic.multiStateAnalysis as msa
+import mosaic.cusumLevelAnalysis as cla
 
 import mosaic.eventSegment as es
 
@@ -24,20 +25,13 @@ class ProcessingAlgorithmsCommon(unittest.TestCase):
 		self.datapath = 'testdata'
 
 	def runTestCase(self, datfile, prmfile, algoHnd):
-		self.dat=testutil.readcsv(datfile)
-		self.prm=testutil.readparams(prmfile)
-
-		sett = (settings.settings('.', defaultwarn=False).settingsDict)[algoHnd.__name__]
-
-		dt=int(1e6/self.dat[0])
-
 		self.testobj=algoHnd(
-							self.dat[1], 
-							self.dat[0],
-							eventstart=int(self.prm['tau1']/dt),			# event start point
-							eventend=int(self.prm['tau2']/dt),    		# event end point
+							self.dat, 
+							self.Fs,
+							eventstart=int(self.prm['tau1']/self.dt),			# event start point
+							eventend=int(self.prm['tau2']/self.dt),    		# event end point
 							baselinestats=[ 1.0, 0.01, 0.0 ],
-							algosettingsdict=sett,
+							algosettingsdict=self.sett,
 							savets=0,
 							absdatidx=0.0,
 							datafileHnd=None
@@ -46,7 +40,17 @@ class ProcessingAlgorithmsCommon(unittest.TestCase):
 
 
 class SRATest(ProcessingAlgorithmsCommon):
+	def _setupTestCase(self, datfile, prmfile, algoHnd):
+		[self.Fs, self.dat]=testutil.readcsv(datfile)
+		self.prm=testutil.readparams(prmfile)
+
+		self.sett = (settings.settings('.', defaultwarn=False).settingsDict)[algoHnd.__name__]
+
+		self.dt=int(1e6/self.dat[0])
+
 	def runTestCase(self, datfile, prmfile, algoHnd):
+		self._setupTestCase(datfile, prmfile,algoHnd)
+
 		super(SRATest, self).runTestCase(datfile, prmfile, algoHnd)
 
 		self.assertEqual( self.testobj.mdProcessingStatus, 'normal' )
@@ -54,20 +58,54 @@ class SRATest(ProcessingAlgorithmsCommon):
 		self.assertEqual( round(self.testobj.mdResTime,1), (self.prm['tau2']-self.prm['tau1'])/1000. )
 
 class SSETest(ProcessingAlgorithmsCommon):
+	def _setupTestCase(self, datfile, prmfile, algoHnd):
+		[self.Fs, self.dat]=testutil.readcsv(datfile)
+		self.prm=testutil.readparams(prmfile)
+
+		self.sett = (settings.settings('.', defaultwarn=False).settingsDict)[algoHnd.__name__]
+
+		self.dt=int(1e6/self.dat[0])
+		
 	def runTestCase(self, datfile, prmfile, algoHnd):
+		self._setupTestCase(datfile, prmfile,algoHnd)
+
 		super(SSETest, self).runTestCase(datfile, prmfile, algoHnd)
 
 		self.assertEqual( self.testobj.mdProcessingStatus, 'eShortEvent' )
 		# self.assertEqual( round(self.testobj.mdBlockDepth,1), 1.0-abs(self.prm['a']) )
 		# self.assertEqual( round(self.testobj.mdResTime,1), (self.prm['tau2']-self.prm['tau1'])/1000. )
 
-class MSATest(ProcessingAlgorithmsCommon):
-	def runTestCase(self, datfile, prmfile, algoHnd):
-		super(MSATest, self).runTestCase(datfile, prmfile, algoHnd)
+class BaseMultiStateTest(ProcessingAlgorithmsCommon):
+	def _setupTestCase(self, datfile, prmfile, algoHnd):
+		self.dat=testutil.readDataRAW(datfile)
+		self.prm=testutil.readParametersJSON(prmfile)
+		self.Fs=int(self.prm['FsKHz']*1000)
 
-		self.assertEqual( self.testobj.mdProcessingStatus, 'normal' )
+		self.dt=1./self.prm['FsKHz']
+
+		self.noiseRMS=self.prm['noisefArtHz']*np.sqrt(self.prm['BkHz']*1000.)/1000.
+				
+		self.sett = (settings.settings('.', defaultwarn=False).settingsDict)[algoHnd.__name__]
+	
+	def runTestCase(self, datfile, prmfile, algoHnd):
+		self._setupTestCase(datfile, prmfile,algoHnd)
+			
+		testobj=algoHnd(
+					self.dat, 
+					self.Fs,
+					eventstart=int(self.prm['eventDelay'][0]/self.dt),			# event start point
+					eventend=int(self.prm['eventDelay'][-1]/self.dt),    		# event end point
+					baselinestats=[ self.prm['OpenChCurrent'], self.noiseRMS, 0.0 ],
+					algosettingsdict=self.sett,
+					savets=0,
+					absdatidx=0.0,
+					datafileHnd=None
+				)
+		testobj.processEvent()
+
+		self.assertEqual( testobj.mdProcessingStatus, 'normal' )
 		# self.assertEqual( round(self.testobj.mdBlockDepth,1), 1.0-abs(self.prm['a']) )
-		self.assertEqual( round(self.testobj.mdResTime,1), round((self.prm['tau2']-self.prm['tau1'])/1000.,1) )
+		# self.assertEqual( round(self.testobj.mdResTime,1), round((self.prm['tau2']-self.prm['tau1'])/1000.,1) )
 
 
 class PEGEventPartitionTest(unittest.TestCase):
@@ -142,16 +180,67 @@ class EventPartitionTestSuite(PEGEventPartitionTest):
 	def test_e5segP(self):
 		self.runTestCase('testdata/testEventPartition5.csv', 'testdata/testEventPartition5.prm', es.eventSegment, True)
 
-class MSATestSuite(MSATest):
+class MSATestSuite(BaseMultiStateTest):
 	def test_e1msa(self):
-		self.runTestCase('testdata/msaTest1.csv', 'testdata/msaTest1.prm', msa.multiStateAnalysis)
+		self.runTestCase('testdata/eventLong_0_raw.bin', 'testdata/eventLong_0_params.json', msa.multiStateAnalysis)
 
 	def test_e2msa(self):
-		self.runTestCase('testdata/msaTest2.csv', 'testdata/msaTest2.prm', msa.multiStateAnalysis)
+		self.runTestCase('testdata/eventLong_2_raw.bin', 'testdata/eventLong_2_params.json', msa.multiStateAnalysis)
 
 	def test_e3msa(self):
-		self.runTestCase('testdata/msaTest3.csv', 'testdata/msaTest3.prm', msa.multiStateAnalysis)
+		self.runTestCase('testdata/eventLong_3_raw.bin', 'testdata/eventLong_3_params.json', msa.multiStateAnalysis)
 
+	def test_e4msa(self):
+		self.runTestCase('testdata/eventLong_4_raw.bin', 'testdata/eventLong_4_params.json', msa.multiStateAnalysis)
+
+	def test_e5msa(self):
+		self.runTestCase('testdata/eventLong_5_raw.bin', 'testdata/eventLong_5_params.json', msa.multiStateAnalysis)
+
+	def test_e6msa(self):
+		self.runTestCase('testdata/eventLong_6_raw.bin', 'testdata/eventLong_6_params.json', msa.multiStateAnalysis)
+
+	def test_e7msa(self):
+		self.runTestCase('testdata/eventLong_7_raw.bin', 'testdata/eventLong_7_params.json', msa.multiStateAnalysis)
+
+	def test_e8msa(self):
+		self.runTestCase('testdata/eventLong_8_raw.bin', 'testdata/eventLong_8_params.json', msa.multiStateAnalysis)
+
+	def test_e9msa(self):
+		self.runTestCase('testdata/eventLong_10_raw.bin', 'testdata/eventLong_10_params.json', msa.multiStateAnalysis)
+
+	def test_e10msa(self):
+		self.runTestCase('testdata/eventLong_11_raw.bin', 'testdata/eventLong_11_params.json', msa.multiStateAnalysis)
+
+class CLATestSuite(BaseMultiStateTest):
+	def test_e1cla(self):
+		self.runTestCase('testdata/eventLong_0_raw.bin', 'testdata/eventLong_0_params.json', cla.cusumLevelAnalysis)
+
+	def test_e2cla(self):
+		self.runTestCase('testdata/eventLong_2_raw.bin', 'testdata/eventLong_2_params.json', cla.cusumLevelAnalysis)
+
+	def test_e3cla(self):
+		self.runTestCase('testdata/eventLong_3_raw.bin', 'testdata/eventLong_3_params.json', cla.cusumLevelAnalysis)
+
+	def test_e4cla(self):
+		self.runTestCase('testdata/eventLong_4_raw.bin', 'testdata/eventLong_4_params.json', cla.cusumLevelAnalysis)
+
+	def test_e5cla(self):
+		self.runTestCase('testdata/eventLong_5_raw.bin', 'testdata/eventLong_5_params.json', cla.cusumLevelAnalysis)
+
+	def test_e6cla(self):
+		self.runTestCase('testdata/eventLong_6_raw.bin', 'testdata/eventLong_6_params.json', cla.cusumLevelAnalysis)
+
+	def test_e7cla(self):
+		self.runTestCase('testdata/eventLong_7_raw.bin', 'testdata/eventLong_7_params.json', cla.cusumLevelAnalysis)
+
+	def test_e8cla(self):
+		self.runTestCase('testdata/eventLong_8_raw.bin', 'testdata/eventLong_8_params.json', cla.cusumLevelAnalysis)
+
+	def test_e9cla(self):
+		self.runTestCase('testdata/eventLong_10_raw.bin', 'testdata/eventLong_10_params.json', cla.cusumLevelAnalysis)
+
+	def test_e10cla(self):
+		self.runTestCase('testdata/eventLong_11_raw.bin', 'testdata/eventLong_11_params.json', cla.cusumLevelAnalysis)
 
 class SRATestSuite(SRATest):
 	def test_e1sra(self):

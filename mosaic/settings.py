@@ -100,8 +100,8 @@ __settings__="""
 		"multiStateAnalysis" : {
             "FitTol"				: "1.e-7",
             "FitIters"				: "50000",
-            "InitThreshold"			: "3.0",
-            "MinStateLength"		: "4",
+            "InitThreshold"			: "2.5",
+            "MinStateLength"		: "10",
             "MaxEventLength" 		: "10000"
 	     },
 	     "cusumLevelAnalysis": {
