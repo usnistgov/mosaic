@@ -9,12 +9,12 @@ fi
 
 set -x
 
-pip install -U numpy==1.8.1
+pip install -U numpy==1.9.2
 pip install -U cython==0.20.1
+pip install -U lmfit==0.8.3
 pip install -U scipy==0.14.0
 # pip install -U pyzmq==14.3.1
 pip install -U matplotlib==1.3.1
-pip install -U lmfit==0.7.4
 pip install -U uncertainties==2.4.6
 pip install -U PyWavelets==0.2.2
 pip install -U nose==1.3.4
