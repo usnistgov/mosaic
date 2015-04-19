@@ -79,7 +79,7 @@ class tsvTrajIO(metaTrajIO.metaTrajIO):
 			
 				- `SamplingRateChangedError` : if the sampling rate for any data file differs from previous
 		"""
-		return self.__readtsv(f)
+		return self.__readtsv(fname)
 
 	def _formatsettings(self):
 		return ""
