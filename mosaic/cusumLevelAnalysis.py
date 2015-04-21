@@ -43,11 +43,11 @@ class cusumLevelAnalysis(metaEventProcessor.metaEventProcessor):
 
                 Some known issues with CUSUM:
 
-                1. If the duration of a sub-event is shorter than a few RC rise times, the averaging will underestimate the extent of the current change. I have not yet found a satisfactory solution for this issue, but for longer events CUSUM should achieve very similar output to the fitting employed elsewhere in MOSAIC.
-                2. CUSUM assumes an instantaneous transition between current states. As a result, if the RC rise time of the system is large, CUSUM can trigger and detect intermediate states during the change time. This can be avoided by choosing a number of samples to skip equal to about 4RC.
-                3. If the event is very long, CUSUM will eventually trigger even if there is no real change, leading to artificially high nStates values for an event. This is a consequence of using a statistical t-test which can have false positives. The algorithm has an adaptive threshold that tries to minimize the chances of this happening while maintaining good sensitivity.
+                1. If the duration of a sub-event is shorter than than the MinLength parameter, CUSUM will be unable to detect it. CUSUM will not detect events within MinLength of a previous event.
+                2. CUSUM assumes an instantaneous transition between current states. As a result, if the RC rise time of the system is large, CUSUM can trigger and detect intermediate states during the change time. This can be avoided by choosing a number of samples to skip equal to about 2-5RC.
+                3. As a consequence of using a statistical t-test, CUSUM can have false positives. The algorithm has an adaptive threshold that tries to minimize the chances of this happening while maintaining good sensitivity (expected number of false positives within an event is less than 1).
 
-                To use it requires four settings:
+                To use it requires five settings:
 
                 .. code-block:: javascript
 
@@ -55,7 +55,8 @@ class cusumLevelAnalysis(metaEventProcessor.metaEventProcessor):
 						"StepSize": 3.0, 
 						"MinThreshold": 3.0,
 						"MaxThreshold": 10.0,
-						"MinLength" : 10
+						"MinLength" : 10,
+						"UseLocalVariance" : 1
                         }
 
                 StepSize is the number of baseline standard deviations are considered significant (3 is usually a good starting point).
@@ -63,6 +64,7 @@ class cusumLevelAnalysis(metaEventProcessor.metaEventProcessor):
                 MinLength is the number of samples to skip after detecting a jump, in order to avoid triggering during the rise time and giving an artificially high number of states. This number of points is also skipped when averaging levels. About 4RC is usually a good bet.
                 CUSUM will detect jumps that are smaller than StepSize, but they will have to be sustained longer. Threshold can be thought of, very roughly, as roughly proportional to the length of time a subevent must be sustained for it to be detected.
                 The algorithm will adjust the actual threshold used on a per-event basis in order to minimize false positive detection of current jumps
+                UseLocalVariance is a speed setting. Setting it to 1 will do the proper CUSUM algorithm. Setting it to 0 will allow you do perform a very fast but low accuracy analysis of your data for a preliminary look.
                 This algorithm is based on code used in OpenNanopore, which you can read about here: http://pubs.rsc.org/en/Content/ArticleLanding/2012/NR/c2nr30951c#!divAbstract
 	"""
 	def _init(self, **kwargs):
@@ -97,6 +99,7 @@ class cusumLevelAnalysis(metaEventProcessor.metaEventProcessor):
 			self.MinThreshold=float(self.settingsDict.pop("MinThreshold", 2.0))
 			self.MaxThreshold=float(self.settingsDict.pop("MaxThreshold", 10.0))
 			self.MinLength=float(self.settingsDict.pop("MinLength", 10))
+			self.UseLocalVariance=bool(self.settingsDict.pop("UseLocalVariance", True))
 		except ValueError as err:
 			raise commonExceptions.SettingsTypeError( err )
 
@@ -242,14 +245,19 @@ class cusumLevelAnalysis(metaEventProcessor.metaEventProcessor):
 			edges = np.array([0], dtype='int64') #initialize an array with the position of the first subevent - the start of the event
 			anchor = 0 #the last detected change
 			length = len(edat)
+			mean = edat[0]
+			variance = self.baseSD * self.baseSD
 			k = 0
 			self.nStates = 0
                         while k < length-1: 
                                 k += 1
-                                mean = np.average(edat[anchor:k+1]) #get local mean value since last current change
-                                variance = np.var(edat[anchor:k+1]) #get local variance since last current change
-                                if (variance == 0):                 # with low-precision data sets it is possible that two adjacent values are equal, in which case there is zero variance for the two-vector of sample if this occurs next to a detected jump. This is very, very rare, but it does happen.
-                                        variance = self.baseSD*self.baseSD # in that case, we default to the local baseline variance, which is a good an estimate as any.
+                                if self.UseLocalVariance:
+                                        mean = np.average(edat[anchor:k+1]) #get local mean value since last current change
+                                        variance = np.var(edat[anchor:k+1]) #get local variance since last current change
+                                        if (variance == 0):                 # with low-precision data sets it is possible that two adjacent values are equal, in which case there is zero variance for the two-vector of sample if this occurs next to a detected jump. This is very, very rare, but it does happen.
+                                                variance = self.baseSD*self.baseSD # in that case, we default to the local baseline variance, which is a good an estimate as any.
+                                else:
+                                        mean = ((k-anchor) * mean + edat[k])/float(k+1-anchor)
                                 logp = self.StepSize*self.baseSD/variance * (edat[k] - mean - self.StepSize*self.baseSD/2.) #instantaneous log-likelihood for current sample assuming local baseline has jumped in the positive direction
                                 logn = -self.StepSize*self.baseSD/variance * (edat[k] - mean + self.StepSize*self.baseSD/2.) #instantaneous log-likelihood for current sample assuming local baseline has jumped in the negative direction
                                 cpos[k] = cpos[k-1] + logp #accumulate positive log-likelihoods
