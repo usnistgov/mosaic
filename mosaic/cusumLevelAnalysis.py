@@ -254,7 +254,7 @@ class cusumLevelAnalysis(metaEventProcessor.metaEventProcessor):
                                 varOldM = varM #algorithm to calculate running variance, details here: http://www.johndcook.com/blog/standard_deviation/
                                 varM = varM + (edat[k] - varM)/float(k+1-anchor)
                                 varS = varS + (edat[k] - varOldM) * (edat[k] - varM)
-                                varS / float(k+1-anchor)
+                                variance = varS / float(k+1-anchor)
                                 mean = ((k-anchor) * mean + edat[k])/float(k+1-anchor)
                                 if (variance == 0):                 # with low-precision data sets it is possible that two adjacent values are equal, in which case there is zero variance for the two-vector of sample if this occurs next to a detected jump. This is very, very rare, but it does happen.
                                         variance = self.baseSD*self.baseSD # in that case, we default to the local baseline variance, which is a good an estimate as any.
