@@ -20,6 +20,8 @@ read -d '' info2 <<-"EOF"
 	</string>
 	<key>CFBundleExecutable</key>
 	<string>MacOS/MOSAIC</string>
+	<key>CFBundleIndentifier</key>
+	<string>gov.nist.mosaic</string>
 	<key>CFBundleName</key>
 	<string>MOSAIC</string>
 	<key>NSHighResolutionCapable</key>

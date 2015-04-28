@@ -5,6 +5,7 @@ import math
 import os
 import csv
 import sqlite3
+import time
 
 import numpy as np
 from scipy.optimize import curve_fit
@@ -76,6 +77,10 @@ class StatisticsWindow(QtGui.QDialog):
 		# reset elapsed time
 		self.elapsedTime=0.0
 
+		# reset wall time and analysis start time
+		self.wallTime=0.0
+		self.startTime=time.time()
+
 		# self update on idle flag
 		self.updateDataOnIdle=updateOnIdle
 
@@ -121,11 +126,16 @@ class StatisticsWindow(QtGui.QDialog):
 				self.totalEvents=len( res2 )
 
 				c=self._caprate()
-
+				
 				self.neventsLabel.setText( str(self.totalEvents) )
 				self.errorrateLabel.setText( str(round(100.*(1 - len(self.queryData)/float(self.totalEvents)), 2)) + ' %' )
 				self.caprateLabel.setText( str(c[0]) + " &#177; " + str(c[1]) + " s<sup>-1</sup>" )
 				self.elapsedtimeLabel.setText( self._formatelapsedtime() )
+
+				if self.updateDataOnIdle:
+					wtime=time.time()-self.startTime
+					self.walltimeLabel.setText( self._formattime( wtime ) )
+					self.timepereventLabel.setText( str(round(1000.*wtime/self.totalEvents,2))+' ms' )
 
 				self.queryRunning=False
 			except ZeroDivisionError:
@@ -165,25 +175,26 @@ class StatisticsWindow(QtGui.QDialog):
 			return [0,0]
 
 	def _formatelapsedtime(self):
-		oneMin=60
-		oneSec=1
-
 		etime=self.queryData[-1]/1000.
 		if etime > self.elapsedTime:
 			self.elapsedTime=etime
 
-		if self.elapsedTime < oneMin:
-			elaptime=str(round(self.elapsedTime, 2)) + " s"
-		# elif self.elapsedTime > 60 and self.elapsedTime < 600:
-		else:
-			m=int(self.elapsedTime/oneMin)
-			s=int(self.elapsedTime%oneMin)
-			elaptime=str(m) + " min " + str(s) + " s"
-		# else:
-		# 	elaptime=str(round(self.elapsedTime/60., 1)) + " min"
-
-		return elaptime
+		return self._formattime(self.elapsedTime)
 		
+	def _formattime(self, tm):
+		oneMin=60
+		oneSec=1
+
+		if tm < oneMin:
+			fmttm=str(round(tm, 2)) + " s"
+		else:
+			m=int(tm/oneMin)
+			s=int(tm%oneMin)
+			fmttm=str(m) + " min " + str(s) + " s"
+		
+		return fmttm
+
+
 	def _fitfunc(self, t, a, tau):
 		return a * np.exp(-t/tau)
 
