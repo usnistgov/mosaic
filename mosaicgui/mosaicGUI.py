@@ -169,6 +169,10 @@ class qtAnalysisGUI(mosaicgui.settingsview.settingsview):
 			self.startAnalysisPushButton.setEnabled(True)
 			self.actionStart_Analysis.setEnabled(True)
 
+			# Turn off updates on idle
+			for win in [self.blockDepthWindow, self.statisticsView, self.fitEventsView, self.blockDepthWindow ]:
+				win.updateDataOnIdle=False
+
 			self.analysisRunning=False
 
 			# Force an update of the console log

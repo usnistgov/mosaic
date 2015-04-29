@@ -6,6 +6,7 @@ import os
 import csv
 import sqlite3
 import time
+import re
 
 import numpy as np
 from scipy.optimize import curve_fit
@@ -65,6 +66,8 @@ class StatisticsWindow(QtGui.QDialog):
 		
 		self.qWorker=sqlworker.sqlQueryWorker(dbfile)
 	
+		self.dbFile=dbfile
+
 		# Connect signals and slots
 		self.qWorker.resultsReady2.connect(self.OnDataReady)
 
@@ -134,8 +137,11 @@ class StatisticsWindow(QtGui.QDialog):
 
 				if self.updateDataOnIdle:
 					wtime=time.time()-self.startTime
-					self.walltimeLabel.setText( self._formattime( wtime ) )
-					self.timepereventLabel.setText( str(round(1000.*wtime/self.totalEvents,2))+' ms' )
+				else:
+					wtime=self._parseanalysislog()
+				
+				self.walltimeLabel.setText( self._formattime( wtime ) )
+				self.timepereventLabel.setText( str(round(1000.*wtime/self.totalEvents,2))+' ms' )
 
 				self.queryRunning=False
 			except ZeroDivisionError:
@@ -194,6 +200,22 @@ class StatisticsWindow(QtGui.QDialog):
 		
 		return fmttm
 
+	def _parseanalysislog(self):
+		db=sqlite.sqlite3MDIO()
+		db.openDB(self.dbFile)
+		logstr=db.readAnalysisLog()
+		db.closeDB()
+
+		if logstr:
+			for line in logstr.split('\n'):
+				if re.search("Total = ", line): 
+					wtime=float(line.split()[2])
+				# if re.search("Time per event = ", line):
+				# 	timeperevent=str(line.split()[4])
+
+			return wtime
+		else:
+			return ""
 
 	def _fitfunc(self, t, a, tau):
 		return a * np.exp(-t/tau)
@@ -206,12 +228,12 @@ class StatisticsWindow(QtGui.QDialog):
 			self._updatequery()
 
 if __name__ == '__main__':
-	# dbfile=resource_path('eventMD-PEG29-Reference.sqlite')
-	dbfile=resource_path('eventMD-tempMSA.sqlite')
+	dbfile=resource_path('eventMD-PEG28-stepResponseAnalysis.sqlite')
+	# dbfile=resource_path('eventMD-tempMSA.sqlite')
 
 	app = QtGui.QApplication(sys.argv)
 	dmw = StatisticsWindow()
-	dmw.openDBFile(dbfile)
+	dmw.openDBFile(dbfile, updateOnIdle=False)
 	dmw.show()
 	dmw.raise_()
 	sys.exit(app.exec_())
