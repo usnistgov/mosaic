@@ -76,7 +76,7 @@
        <item>
         <widget class="QLabel" name="Label_7">
          <property name="toolTip">
-          <string>Position in time-series</string>
+          <string>Percent completed</string>
          </property>
          <property name="text">
           <string>Analysis Progress:</string>
@@ -86,7 +86,7 @@
        <item>
         <widget class="QLabel" name="Label_9">
          <property name="toolTip">
-          <string>Position in time-series</string>
+          <string>Elapsed time</string>
          </property>
          <property name="text">
           <string>Elapsed Time:</string>
@@ -96,7 +96,7 @@
        <item>
         <widget class="QLabel" name="Label_11">
          <property name="toolTip">
-          <string>Position in time-series</string>
+          <string>Analysis time remaining</string>
          </property>
          <property name="text">
           <string>Remaining Time:</string>
@@ -106,7 +106,7 @@
        <item>
         <widget class="QLabel" name="Label_10">
          <property name="toolTip">
-          <string>Position in time-series</string>
+          <string>Processing time per event</string>
          </property>
          <property name="text">
           <string>Time Per Event:</string>
