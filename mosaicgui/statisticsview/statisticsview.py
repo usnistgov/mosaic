@@ -101,7 +101,10 @@ class StatisticsWindow(QtGui.QDialog):
 		QtCore.QObject.connect(self.idleTimer, QtCore.SIGNAL('timeout()'), self.OnAppIdle)
 
 	def closeDB(self):
-		self.dbHnd.closeDB()
+		try:
+			self.dbHnd.closeDB()
+		except AttributeError:
+			pass
 
 	def _positionWindow(self):
 		"""
@@ -200,7 +203,7 @@ class StatisticsWindow(QtGui.QDialog):
 			pctcomplete=100.*self.analysisTime/float(self.trajLength)
 			
 			if pctcomplete<5.:
-				return str( round(pctcomplete, 1) )+"%", "<calculating>"
+				return str( round(pctcomplete, 1) )+"%", "calculating..."
 			else:
 				return str( int(round(pctcomplete)) )+"%", self._formattime(self.wallTime/pctcomplete*(100.-pctcomplete))
 		except:

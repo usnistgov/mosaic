@@ -459,7 +459,7 @@ class metaTrajIO(object):
 			self.endIndex=int((self.end-1)*self.Fs)
 			self.datLenSec=self.end-self.start
 		else:
-			self.datLenSec=len(self.rawData)/float(self.Fs)*(len(self.dataFiles)+1)-float(self.start)
+			self.datLenSec=(len(self.rawData)/float(self.Fs)*(len(self.dataFiles)+1))
 
 	def _setupDataFilter(self):
 		filtsettings=settings.settings( self.datPath ).getSettings(self.datafilter.__name__)
