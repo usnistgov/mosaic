@@ -111,7 +111,7 @@ class FitEventWindow(QtGui.QDialog):
 			Position settings window at the top left corner
 		"""
 		screen = QtGui.QDesktopWidget().screenGeometry()
-		self.setGeometry(1050, 275, 375, 350)
+		self.setGeometry(1050, 295, 375, 350)
 		# self.move( (-screen.width()/2)+200, -screen.height()/2 )
 
 

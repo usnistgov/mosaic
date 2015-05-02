@@ -5,6 +5,8 @@ import math
 import os
 import csv
 import sqlite3
+import time
+import re
 
 import numpy as np
 from scipy.optimize import curve_fit
@@ -37,7 +39,7 @@ class StatisticsWindow(QtGui.QDialog):
 		self.queryString="select AbsEventStart from metadata where ProcessingStatus='normal' order by AbsEventStart ASC"
 		self.queryData=[]
 		self.totalEvents=0
-		self.elapsedTime=0.0
+		self.analysisTime=0.0
 
 		self.updateDataOnIdle=True
 
@@ -64,6 +66,15 @@ class StatisticsWindow(QtGui.QDialog):
 		
 		self.qWorker=sqlworker.sqlQueryWorker(dbfile)
 	
+		self.dbFile=dbfile
+
+		# Open a handle to the database
+		self.dbHnd=sqlite.sqlite3MDIO()
+		self.dbHnd.openDB(self.dbFile)
+
+		# set the length of the trajectory in sec.
+		self.trajLength=self.dbHnd.readAnalysisInfo()[-1]
+
 		# Connect signals and slots
 		self.qWorker.resultsReady2.connect(self.OnDataReady)
 
@@ -74,7 +85,11 @@ class StatisticsWindow(QtGui.QDialog):
 		self.qThread.start()
 
 		# reset elapsed time
-		self.elapsedTime=0.0
+		self.analysisTime=0.0
+
+		# reset wall time and analysis start time
+		self.wallTime=0.0
+		self.startTime=time.time()
 
 		# self update on idle flag
 		self.updateDataOnIdle=updateOnIdle
@@ -86,16 +101,19 @@ class StatisticsWindow(QtGui.QDialog):
 		QtCore.QObject.connect(self.idleTimer, QtCore.SIGNAL('timeout()'), self.OnAppIdle)
 
 	def closeDB(self):
-		pass
+		try:
+			self.dbHnd.closeDB()
+		except AttributeError:
+			pass
 
 	def _positionWindow(self):
 		"""
 			Position settings window at the top left corner
 		"""
 		if sys.platform=='win32':
-			self.setGeometry(1050, 30, 375, 200)
+			self.setGeometry(1050, 30, 375, 220)
 		else:
-			self.setGeometry(1050, 0, 375, 200)
+			self.setGeometry(1050, 0, 375, 220)
 		# self.move( (-screen.width()/2)+200, -screen.height()/2 )
 
 	def _createDBIndex(self, dbfile):
@@ -121,11 +139,23 @@ class StatisticsWindow(QtGui.QDialog):
 				self.totalEvents=len( res2 )
 
 				c=self._caprate()
-
+				
 				self.neventsLabel.setText( str(self.totalEvents) )
 				self.errorrateLabel.setText( str(round(100.*(1 - len(self.queryData)/float(self.totalEvents)), 2)) + ' %' )
 				self.caprateLabel.setText( str(c[0]) + " &#177; " + str(c[1]) + " s<sup>-1</sup>" )
-				self.elapsedtimeLabel.setText( self._formatelapsedtime() )
+
+				pctcomplete,remaintime=self._progressstats()
+
+				self.progressLabel.setText( pctcomplete )
+				self.remaintimeLabel.setText( remaintime )
+
+				if self.updateDataOnIdle:
+					self.wallTime=time.time()-self.startTime
+				else:
+					self.wallTime=self._parseanalysislog()
+				
+				self.walltimeLabel.setText( self._formattime( self.wallTime ) )
+				self.timepereventLabel.setText( str(round(1000.*self.wallTime/self.totalEvents,2))+' ms' )
 
 				self.queryRunning=False
 			except ZeroDivisionError:
@@ -164,26 +194,48 @@ class StatisticsWindow(QtGui.QDialog):
 		except:
 			return [0,0]
 
-	def _formatelapsedtime(self):
+	def _progressstats(self):
+		etime=self.queryData[-1]/1000.
+		if etime > self.analysisTime:
+			self.analysisTime=etime
+
+		try:
+			pctcomplete=100.*self.analysisTime/float(self.trajLength)
+			
+			if pctcomplete<5.:
+				return str( round(pctcomplete, 1) )+"%", "calculating..."
+			else:
+				return str( int(round(pctcomplete)) )+"%", self._formattime(self.wallTime/pctcomplete*(100.-pctcomplete))
+		except:
+			return "n/a", "n/a"
+		
+	def _formattime(self, tm):
 		oneMin=60
 		oneSec=1
 
-		etime=self.queryData[-1]/1000.
-		if etime > self.elapsedTime:
-			self.elapsedTime=etime
-
-		if self.elapsedTime < oneMin:
-			elaptime=str(round(self.elapsedTime, 2)) + " s"
-		# elif self.elapsedTime > 60 and self.elapsedTime < 600:
+		if tm < oneMin:
+			fmttm=str(round(tm, 2)) + " s"
 		else:
-			m=int(self.elapsedTime/oneMin)
-			s=int(self.elapsedTime%oneMin)
-			elaptime=str(m) + " min " + str(s) + " s"
-		# else:
-		# 	elaptime=str(round(self.elapsedTime/60., 1)) + " min"
-
-		return elaptime
+			m=int(tm/oneMin)
+			s=int(tm%oneMin)
+			fmttm=str(m) + " min " + str(s) + " s"
 		
+		return fmttm
+
+	def _parseanalysislog(self):
+		logstr=self.dbHnd.readAnalysisLog()
+
+		if logstr:
+			for line in logstr.split('\n'):
+				if re.search("Total = ", line): 
+					wtime=float(line.split()[2])
+				# if re.search("Time per event = ", line):
+				# 	timeperevent=str(line.split()[4])
+
+			return wtime
+		else:
+			return ""
+
 	def _fitfunc(self, t, a, tau):
 		return a * np.exp(-t/tau)
 
@@ -195,12 +247,13 @@ class StatisticsWindow(QtGui.QDialog):
 			self._updatequery()
 
 if __name__ == '__main__':
-	# dbfile=resource_path('eventMD-PEG29-Reference.sqlite')
-	dbfile=resource_path('eventMD-tempMSA.sqlite')
+	# dbfile=resource_path('eventMD-PEG28-stepResponseAnalysis.sqlite')
+	dbfile="/Users/arvind/Desktop/50bp_500kHz/800mV/eventMD-20150404-221533_MSA.sqlite"
+	# dbfile=resource_path('eventMD-tempMSA.sqlite')
 
 	app = QtGui.QApplication(sys.argv)
 	dmw = StatisticsWindow()
-	dmw.openDBFile(dbfile)
+	dmw.openDBFile(dbfile, updateOnIdle=False)
 	dmw.show()
 	dmw.raise_()
 	sys.exit(app.exec_())
