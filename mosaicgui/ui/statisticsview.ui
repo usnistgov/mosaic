@@ -79,7 +79,7 @@
           <string>Position in time-series</string>
          </property>
          <property name="text">
-          <string>Analysis Time:</string>
+          <string>Analysis Progress:</string>
          </property>
         </widget>
        </item>
@@ -89,7 +89,17 @@
           <string>Position in time-series</string>
          </property>
          <property name="text">
-          <string>Wall Time:</string>
+          <string>Elapsed Time:</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="Label_11">
+         <property name="toolTip">
+          <string>Position in time-series</string>
+         </property>
+         <property name="text">
+          <string>Remaining Time:</string>
          </property>
         </widget>
        </item>
@@ -99,7 +109,7 @@
           <string>Position in time-series</string>
          </property>
          <property name="text">
-          <string>Processing Time Per Event:</string>
+          <string>Time Per Event:</string>
          </property>
         </widget>
        </item>
@@ -145,7 +155,7 @@
         </spacer>
        </item>
        <item>
-        <widget class="QLabel" name="elapsedtimeLabel">
+        <widget class="QLabel" name="progressLabel">
          <property name="text">
           <string>n/a</string>
          </property>
@@ -153,6 +163,13 @@
        </item>
        <item>
         <widget class="QLabel" name="walltimeLabel">
+         <property name="text">
+          <string>n/a</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="remaintimeLabel">
          <property name="text">
           <string>n/a</string>
          </property>
