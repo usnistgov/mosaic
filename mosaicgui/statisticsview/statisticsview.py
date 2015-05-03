@@ -3,6 +3,7 @@ from __future__ import with_statement
 import sys
 import math
 import os
+import platform
 import csv
 import sqlite3
 import time
@@ -147,16 +148,20 @@ class StatisticsWindow(QtGui.QDialog):
 				pctcomplete,remaintime=self._progressstats()
 
 				try:
-					self.analysisprogressBar.setValue(int(pctcomplete))					
+					self.analysisprogressBar.setValue(int(pctcomplete))		
+
+					if platform.system()=='Darwin':
+						if pctcomplete=='n/a':
+							pctstr=str(pctcomplete)
+						else:
+							pctstr=str(pctcomplete)+"%"
+					else:
+						pctstr=""
+
+					self.progressLabel.setText( pctstr )
 				except ValueError:
 					self.analysisprogressBar.setValue(0)					
 
-				if pctcomplete=='n/a':
-					pctstr=str(pctcomplete)
-				else:
-					pctstr=str(pctcomplete)+"%"
-
-				self.progressLabel.setText( pctstr )
 				self.remaintimeLabel.setText( remaintime )
 
 				if self.updateDataOnIdle:
