@@ -259,8 +259,7 @@ class StatisticsWindow(QtGui.QDialog):
 			self._updatequery()
 
 if __name__ == '__main__':
-	# dbfile=resource_path('eventMD-PEG28-stepResponseAnalysis.sqlite')
-	dbfile="/Users/arvind/Desktop/50bp_500kHz/800mV/eventMD-20150404-221533_MSA.sqlite"
+	dbfile=resource_path('eventMD-PEG28-stepResponseAnalysis.sqlite')
 	# dbfile=resource_path('eventMD-tempMSA.sqlite')
 
 	app = QtGui.QApplication(sys.argv)
