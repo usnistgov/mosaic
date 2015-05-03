@@ -146,8 +146,17 @@ class StatisticsWindow(QtGui.QDialog):
 
 				pctcomplete,remaintime=self._progressstats()
 
-				self.progressLabel.setText( str(pctcomplete)+"%" )
-				self.analysisprogressBar.setValue(int(pctcomplete))
+				try:
+					self.analysisprogressBar.setValue(int(pctcomplete))					
+				except ValueError:
+					self.analysisprogressBar.setValue(0)					
+
+				if pctcomplete=='n/a':
+					pctstr=str(pctcomplete)
+				else:
+					pctstr=str(pctcomplete)+"%"
+
+				self.progressLabel.setText( pctstr )
 				self.remaintimeLabel.setText( remaintime )
 
 				if self.updateDataOnIdle:
