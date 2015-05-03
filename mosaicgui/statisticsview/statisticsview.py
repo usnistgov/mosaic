@@ -146,7 +146,8 @@ class StatisticsWindow(QtGui.QDialog):
 
 				pctcomplete,remaintime=self._progressstats()
 
-				self.progressLabel.setText( pctcomplete )
+				self.progressLabel.setText( str(pctcomplete)+"%" )
+				self.analysisprogressBar.setValue(int(pctcomplete))
 				self.remaintimeLabel.setText( remaintime )
 
 				if self.updateDataOnIdle:
@@ -203,9 +204,11 @@ class StatisticsWindow(QtGui.QDialog):
 			pctcomplete=100.*self.analysisTime/float(self.trajLength)
 			
 			if pctcomplete<5.:
-				return str( round(pctcomplete, 1) )+"%", "calculating..."
+				return round(pctcomplete, 1), "calculating ..."
+			elif pctcomplete>90:
+				return int(round(pctcomplete/10.0)*10.0), self._formattime(int(self.wallTime/pctcomplete*(100.-pctcomplete)))
 			else:
-				return str( int(round(pctcomplete)) )+"%", self._formattime(self.wallTime/pctcomplete*(100.-pctcomplete))
+				return int(round(pctcomplete)), self._formattime(self.wallTime/pctcomplete*(100.-pctcomplete))
 		except:
 			return "n/a", "n/a"
 		
