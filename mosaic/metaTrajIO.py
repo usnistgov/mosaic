@@ -448,18 +448,18 @@ class metaTrajIO(object):
 		
 		self.initPipe=True
 
-		# Drop the first 'n' points specified by the start keyword
-		if hasattr(self, 'start'):
-			self.startIndex=int(self.start*self.Fs)
-			if self.startIndex > 0:
-				self.popdata(self.startIndex-1)
-
 		# Set the end point
 		if hasattr(self, 'end'):
 			self.endIndex=int((self.end-1)*self.Fs)
 			self.datLenSec=self.end-self.start
 		else:
 			self.datLenSec=(len(self.rawData)/float(self.Fs)*(len(self.dataFiles)+1))
+			
+		# Drop the first 'n' points specified by the start keyword
+		if hasattr(self, 'start'):
+			self.startIndex=int(self.start*self.Fs)
+			if self.startIndex > 0:
+				self.popdata(self.startIndex-1)
 
 	def _setupDataFilter(self):
 		filtsettings=settings.settings( self.datPath ).getSettings(self.datafilter.__name__)
