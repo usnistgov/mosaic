@@ -190,7 +190,10 @@ class metaTrajIO(object):
 
 			Return the elapsed time in the time-series in seconds.
 		"""
-		return self.globalDataIndex/float(self.Fs)
+		if not self.initPipe:
+			self._initPipe()
+
+		return (self.globalDataIndex - self.startIndex)/float(self.FsHz) 
 
 	@property 
 	def LastFileProcessed(self):
@@ -478,7 +481,11 @@ class metaTrajIO(object):
 		if hasattr(self, 'start'):
 			self.startIndex=int(self.start*self.Fs)
 			if self.startIndex > 0:
-				self.popdata(self.startIndex-1)
+				nBlks=int((self.startIndex-1)/self.CHUNKSIZE)
+				for i in range(nBlks):
+					self.popdata(self.CHUNKSIZE)
+
+				self.popdata( int((self.startIndex-1)%self.CHUNKSIZE) )
 
 	def _setupDataFilter(self):
 		filtsettings=settings.settings( self.datPath ).getSettings(self.datafilter.__name__)
