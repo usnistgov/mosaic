@@ -127,8 +127,8 @@ class sqlite3MDIO(metaMDIO.metaMDIO):
 	def writeAnalysisInfo(self, infolist):
 		with self.db:
 			# allow only one entry in this table
-			self.db.execute('DELETE FROM analysislog')
-			self.db.execute( 'INSERT INTO analysisinfo VALUES(?, ?, ?, ?, ?, ?, ?)',  (infolist+[None]))
+			self.db.execute('DELETE FROM analysisinfo')
+			self.db.execute( 'INSERT INTO analysisinfo VALUES(?, ?, ?, ?, ?, ?, ?, ?)',  (infolist+[None]))
 
 
 	def writeAnalysisLog(self, analysislog):
@@ -273,6 +273,7 @@ class sqlite3MDIO(metaMDIO.metaMDIO):
 					partitionAlgorithm TEXT, \
 					processingAlgorithm TEXT, \
 					filteringAlgorithm TEXT, \
+					analysisTimeSec REAL, \
 					dataLengthSec REAL, \
 					recIDX INTEGER PRIMARY KEY AUTOINCREMENT \
 				)")
