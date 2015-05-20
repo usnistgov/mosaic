@@ -25,17 +25,39 @@ Return[mdtypes]
 ]
 
 
+(* ::Subsubsection:: *)
+(*Utility Functions*)
+
+
+SetQueryBackend[backend_:"Mathematica"]:=Export[FileNameJoin[{$UserBaseDirectory,"Applications",".mosaic_backend" },OperatingSystem->$OperatingSystem],ToString[backend],"Text"]
+
+
+ReadQueryBackend[]:=Import[FileNameJoin[{$UserBaseDirectory,"Applications",".mosaic_backend" },OperatingSystem->$OperatingSystem],"Text"]/;FileExistsQ[FileNameJoin[{$UserBaseDirectory,"Applications",".mosaic_backend" },OperatingSystem->$OperatingSystem]];
+ReadQueryBackend[]:="Mathematica";
+
+
+SetVirtualEnv[virtualenv_]:=Export[FileNameJoin[{$UserBaseDirectory,"Applications",".virtualenv" },OperatingSystem->$OperatingSystem],ToString[virtualenv],"Text"];
+
+
+readVirtualEnv[]:=Import[FileNameJoin[{$UserBaseDirectory,"Applications",".virtualenv" },OperatingSystem->$OperatingSystem],"Text"]/;FileExistsQ[FileNameJoin[{$UserBaseDirectory,"Applications",".virtualenv" },OperatingSystem->$OperatingSystem]];
+readVirtualEnv[]:="";
+
+
+(* ::Subsubsection:: *)
+(*QueryDB: Mathematica Backend*)
+
+
 QueryDB[filename_, query_] := Module[{db = OpenSQLConnection[JDBC["SQLite", filename]], q, res}, res = SQLExecute[db, query];
   CloseSQLConnection[db];
   Return[res]
-  ]/;readBackend[]=="Mathematica"
+  ]/;ReadQueryBackend[]=="Mathematica"
 QueryDB[filename_, query_] := Module[{cols = ColNames[query], db = OpenSQLConnection[JDBC["SQLite", filename]], res, hash, qres, i},
    hash = Association[#[[1]] -> #[[2]] & /@ Transpose[{SQLExecute[db, "PRAGMA table_info(metadata_t)"][[All, 2]], First[SQLExecute[db, "select * from metadata_t limit 1"]]}]];
    qres = SQLExecute[db, query];
    res = ParallelTable[DecodeRecord[qres[[i]], cols, hash], {i, Length[qres]}];
    CloseSQLConnection[db];
    Return[res]
-   ] /; StringMatchQ[query, RegularExpression["\\bselect\\b.*\\bmetadata\\b.*"]]&&readBackend[]=="Mathematica"
+   ] /; StringMatchQ[query, RegularExpression["\\bselect\\b.*\\bmetadata\\b.*"]]&&ReadQueryBackend[]=="Mathematica"
 
 
 ColNames[qstr_] := Flatten[StringSplit[StringSplit[First[StringSplit[qstr, {"select", "from"}]], ","]]]
@@ -55,18 +77,8 @@ DecodeColumn[dat_, dtype_] := DecodeTimeSeries[dat] /; dtype == "REAL_LIST"
 DecodeColumn[dat_, dtype_] := dat
 
 
-SetBackend[backend_:"Mathematica"]:=Export[FileNameJoin[{$UserBaseDirectory,"Applications",".mosaic_backend" },OperatingSystem->$OperatingSystem],ToString[backend],"Text"]
-
-
-readBackend[]:=Import[FileNameJoin[{$UserBaseDirectory,"Applications",".mosaic_backend" },OperatingSystem->$OperatingSystem],"Text"]/;FileExistsQ[FileNameJoin[{$UserBaseDirectory,"Applications",".mosaic_backend" },OperatingSystem->$OperatingSystem]];
-readBackend[]:="Mathematica";
-
-
-SetVirtualEnv[virtualenv_]:=Export[FileNameJoin[{$UserBaseDirectory,"Applications",".virtualenv" },OperatingSystem->$OperatingSystem],ToString[virtualenv],"Text"];
-
-
-readVirtualEnv[]:=Import[FileNameJoin[{$UserBaseDirectory,"Applications",".virtualenv" },OperatingSystem->$OperatingSystem],"Text"]/;FileExistsQ[FileNameJoin[{$UserBaseDirectory,"Applications",".virtualenv" },OperatingSystem->$OperatingSystem]];
-readVirtualEnv[]:="";
+(* ::Subsubsection:: *)
+(*QueryDB: Python Backend*)
 
 
 bashrc="~/.bashrc"/;$OperatingSystem!="MacOSX";
@@ -81,7 +93,7 @@ rawquery[q_]:=" --raw "/;Length[StringPosition[q,{"select","metadata"}]]<2
 rawquery[q_]:=" "
 
 
-QueryDB[filename_,query_]:=ToExpression[StringReplace[Import["!"<>shellPrefix[readVirtualEnv[]]<>" python "<>FileNameJoin[{$UserBaseDirectory,"Applications","pyquery.py " },OperatingSystem->$OperatingSystem]<>rawquery[query] <> filename<>" \"" <>query<>"\"","String"],{"["->"{","]"->"}"}]]/;readBackend[]=="Python"
+QueryDB[filename_,query_]:=ToExpression[StringReplace[Import["!"<>shellPrefix[readVirtualEnv[]]<>" python "<>FileNameJoin[{$UserBaseDirectory,"Applications","pyquery.py " },OperatingSystem->$OperatingSystem]<>rawquery[query] <> filename<>" \"" <>query<>"\"","String"],{"["->"{","]"->"}"}]]/;ReadQueryBackend[]=="Python"
 
 
 DecodeTimeSeries[ts_]:=ts(*ImportString[ToString[ts],{"Base64","Real64"}]*)
@@ -98,6 +110,10 @@ pyUnicode=First[StringSplit[ToString[#],"'"]]&;
 
 
 GetAnalysisAlgorithm[db_]:=pyUnicode[First[Flatten[QueryDB[db, "select processingAlgorithm from analysisinfo"]]]]
+
+
+(* ::Subsubsection:: *)
+(*Event Plotting*)
 
 
 PlotEvents[dbname_,FsKHz_, nEvents_:All]:=Module[{q},
