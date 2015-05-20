@@ -25,39 +25,41 @@ Return[mdtypes]
 ]
 
 
-(* ::Text:: *)
-(*QueryDB[filename_, query_] := Module[{db = OpenSQLConnection[JDBC["SQLite", filename]], q, res}, res = SQLExecute[db, query];*)
-(*  CloseSQLConnection[db];*)
-(*  Return[res]*)
-(*  ]*)
-(*QueryDB[filename_, query_] := Module[{cols = ColNames[query], db = OpenSQLConnection[JDBC["SQLite", filename]], res, hash, qres, i},*)
-(*   hash = Association[#[[1]] -> #[[2]] & /@ Transpose[{SQLExecute[db, "PRAGMA table_info(metadata_t)"][[All, 2]], First[SQLExecute[db, "select * from metadata_t limit 1"]]}]];*)
-(*   qres = SQLExecute[db, query];*)
-(*   res = ParallelTable[DecodeRecord[qres[[i]], cols, hash], {i, Length[qres]}];*)
-(*   CloseSQLConnection[db];*)
-(*   Return[res]*)
-(*   ] /; StringMatchQ[query, RegularExpression["\\bselect\\b.*\\bmetadata\\b.*"]]*)
+QueryDB[filename_, query_] := Module[{db = OpenSQLConnection[JDBC["SQLite", filename]], q, res}, res = SQLExecute[db, query];
+  CloseSQLConnection[db];
+  Return[res]
+  ]/;readBackend[]=="Mathematica"
+QueryDB[filename_, query_] := Module[{cols = ColNames[query], db = OpenSQLConnection[JDBC["SQLite", filename]], res, hash, qres, i},
+   hash = Association[#[[1]] -> #[[2]] & /@ Transpose[{SQLExecute[db, "PRAGMA table_info(metadata_t)"][[All, 2]], First[SQLExecute[db, "select * from metadata_t limit 1"]]}]];
+   qres = SQLExecute[db, query];
+   res = ParallelTable[DecodeRecord[qres[[i]], cols, hash], {i, Length[qres]}];
+   CloseSQLConnection[db];
+   Return[res]
+   ] /; StringMatchQ[query, RegularExpression["\\bselect\\b.*\\bmetadata\\b.*"]]&&readBackend[]=="Mathematica"
 
 
-(* ::Text:: *)
-(*ColNames[qstr_] := Flatten[StringSplit[StringSplit[First[StringSplit[qstr, {"select", "from"}]], ","]]]*)
+ColNames[qstr_] := Flatten[StringSplit[StringSplit[First[StringSplit[qstr, {"select", "from"}]], ","]]]
 
 
-(* ::Text:: *)
-(*DecodeRecord[rec_, cols_, colhash_] := Module[{c = ExpandCols[cols, colhash], ct},*)
-(*  ct = colhash /@ c;*)
-(*  Return[(DecodeColumn @@ #) & /@ Transpose[{rec, ct}]]*)
-(*  ]*)
+DecodeRecord[rec_, cols_, colhash_] := Module[{c = ExpandCols[cols, colhash], ct},
+  ct = colhash /@ c;
+  Return[(DecodeColumn @@ #) & /@ Transpose[{rec, ct}]]
+  ]
 
 
-(* ::Text:: *)
-(*ExpandCols[cols_, colhash_] := Keys[colhash] /; cols == {"*"}*)
-(*ExpandCols[cols_, colhash_] := cols*)
+ExpandCols[cols_, colhash_] := Keys[colhash] /; cols == {"*"}
+ExpandCols[cols_, colhash_] := cols
 
 
-(* ::Text:: *)
-(*DecodeColumn[dat_, dtype_] := DecodeTimeSeries[dat] /; dtype == "REAL_LIST"*)
-(*DecodeColumn[dat_, dtype_] := dat*)
+DecodeColumn[dat_, dtype_] := DecodeTimeSeries[dat] /; dtype == "REAL_LIST"
+DecodeColumn[dat_, dtype_] := dat
+
+
+SetBackend[backend_:"Mathematica"]:=Export[FileNameJoin[{$UserBaseDirectory,"Applications",".mosaic_backend" },OperatingSystem->$OperatingSystem],ToString[backend],"Text"]
+
+
+readBackend[]:=Import[FileNameJoin[{$UserBaseDirectory,"Applications",".mosaic_backend" },OperatingSystem->$OperatingSystem],"Text"]/;FileExistsQ[FileNameJoin[{$UserBaseDirectory,"Applications",".mosaic_backend" },OperatingSystem->$OperatingSystem]];
+readBackend[]:="Mathematica";
 
 
 SetVirtualEnv[virtualenv_]:=Export[FileNameJoin[{$UserBaseDirectory,"Applications",".virtualenv" },OperatingSystem->$OperatingSystem],ToString[virtualenv],"Text"];
@@ -79,7 +81,7 @@ rawquery[q_]:=" --raw "/;Length[StringPosition[q,{"select","metadata"}]]<2
 rawquery[q_]:=" "
 
 
-QueryDB[filename_,query_]:=ToExpression[StringReplace[Import["!"<>shellPrefix[readVirtualEnv[]]<>" python "<>FileNameJoin[{$UserBaseDirectory,"Applications","pyquery.py " },OperatingSystem->$OperatingSystem]<>rawquery[query] <> filename<>" \"" <>query<>"\"","String"],{"["->"{","]"->"}"}]]
+QueryDB[filename_,query_]:=ToExpression[StringReplace[Import["!"<>shellPrefix[readVirtualEnv[]]<>" python "<>FileNameJoin[{$UserBaseDirectory,"Applications","pyquery.py " },OperatingSystem->$OperatingSystem]<>rawquery[query] <> filename<>" \"" <>query<>"\"","String"],{"["->"{","]"->"}"}]]/;readBackend[]=="Python"
 
 
 DecodeTimeSeries[ts_]:=ts(*ImportString[ToString[ts],{"Base64","Real64"}]*)
