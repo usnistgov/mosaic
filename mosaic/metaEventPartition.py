@@ -107,17 +107,11 @@ class metaEventPartition(object):
 							)
 		self.mdioDBHnd.writeSettings(settingsString)
 		if self.trajDataObj.dataFilter:
-			fstring=type(self.trajDataObj.dataFilterObj).__name__
+			self.fstring=type(self.trajDataObj.dataFilterObj).__name__
 		else:
-			fstring='None'
-		self.mdioDBHnd.writeAnalysisInfo([
-							self.trajDataObj.datPath,
-							self.trajDataObj.fileFormat,
-							type(self).__name__,
-							type(self.tEventProcObj).__name__,
-							fstring,
-							self.trajDataObj.DataLengthSec
-						])
+			self.fstring='None'
+
+		self._writeanalysisinfo()
 
 		if self.parallelProc:
 			self._setupparallel()
@@ -179,6 +173,9 @@ class metaEventPartition(object):
 				# store the new data into a local store
 				self.currData.extend(list(d))
 				
+				# update analysis info
+				self._writeanalysisinfo()
+
 				#print self.meanOpenCurr, self.minDrift, self.maxDrift, self.minDriftR, self.maxDriftR
 
 				# Process the data segment for events
@@ -286,6 +283,17 @@ class metaEventPartition(object):
 	#################################################################
 	# Internal functions
 	#################################################################
+	def _writeanalysisinfo(self):
+		self.mdioDBHnd.writeAnalysisInfo([
+							self.trajDataObj.datPath,
+							self.trajDataObj.fileFormat,
+							type(self).__name__,
+							type(self.tEventProcObj).__name__,
+							self.fstring,
+							self.trajDataObj.ElapsedTimeSeconds,
+							self.trajDataObj.DataLengthSec
+						])
+
 	def _setupparallel(self):
 		# check if parallel is available
 		try:

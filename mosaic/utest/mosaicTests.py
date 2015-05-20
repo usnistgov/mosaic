@@ -142,7 +142,7 @@ class PEGEventPartitionTest(unittest.TestCase):
 						)
 		testobj.PartitionEvents()
 
-		self.assertEqual( testobj.eventcount, prm['nevents']-1 )
+		self.assertEqual( testobj.eventcount, prm['nevents'] )
 
 		testobj.Stop()
 

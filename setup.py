@@ -14,7 +14,10 @@ class mosaicUnitTests(Command):
         self.cwd = os.getcwd()
 
     def run(self):
-        os.system('nosetests -v -w mosaic/utest/ mosaicTests.py')
+        if not self.verbose:
+            os.system('nosetests -w mosaic/utest/ mosaicTests.py')
+        else:
+            os.system('nosetests -v -w mosaic/utest/ mosaicTests.py')
 
 class mosaicBinaries(Command):
     description = "build MOSAIC binaries."
@@ -141,7 +144,8 @@ setup(
             '.scripts/install-addons-sh',
             '.scripts/build-deps-sh', 
             '.scripts/pyinstaller-sh',
-            'data/eventMD-PEG28-Reference.sqlite',
+            'data/eventMD-PEG28-stepResponseAnalysis.sqlite',
+            'data/eventMD-PEG28-cusumLevelAnalysis.sqlite',
             'data/.settings',
             'data/SingleChan-0001.qdf',
             'data/SingleChan-0001_state.txt'

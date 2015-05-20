@@ -155,6 +155,9 @@ class metaTrajIO(object):
 		# exceeds 1 million data points.
 		self.currDataIdx=0
 
+		# a var that determines if the end of the data stream is imminent.
+		self.nearEndOfData=0
+
 		# A global index that tracks the number of data points retrieved.
 		self.globalDataIndex=0
 
@@ -194,7 +197,10 @@ class metaTrajIO(object):
 
 			Return the elapsed time in the time-series in seconds.
 		"""
-		return self.globalDataIndex/float(self.Fs)
+		if not self.initPipe:
+			self._initPipe()
+
+		return (self.globalDataIndex - self.startIndex)/float(self.FsHz) 
 
 	@property 
 	def LastFileProcessed(self):
@@ -249,6 +255,9 @@ class metaTrajIO(object):
 		if not self.initPipe:
 			self._initPipe()
 
+		if self.nearEndOfData>1:
+			raise EmptyDataPipeError("End of data.")
+
 		# If the global index exceeds the specied end point, raise an EmptyDataPipError
 		if hasattr(self, "end"):
 			if self.globalDataIndex > self.endIndex:
@@ -273,8 +282,16 @@ class metaTrajIO(object):
 			# return the popped data
 			return t
 		except IndexError, err:
-			self._appenddata()
-			return self.popdata(n)
+			if self.nearEndOfData>0:
+				self.currDataIdx+=n
+				self.globalDataIndex+=n
+				
+				self.nearEndOfData+=1
+
+				return t
+			else:
+				self._appenddata()
+				return self.popdata(n)
 				
 	def previewdata(self, n):
 		"""
@@ -358,11 +375,11 @@ class metaTrajIO(object):
 		except (StopIteration, AttributeError):
 			# Read a new data file to get more data
 			fname=self.popfnames()
-			self.processedFilenames.extend([[fname, self.fileFormat, os.path.getmtime(fname)]])
-
-			self.rawData=self.readdata( fname )
-			self.dataGenerator=self._createGenerator()
-			self._appenddata()
+			if fname:
+				self.processedFilenames.extend([[fname, self.fileFormat, os.path.getmtime(fname)]])
+				self.rawData=self.readdata( fname )
+				self.dataGenerator=self._createGenerator()
+				self._appenddata()
 		
 	def scaleData(self, data):
 		"""
@@ -454,7 +471,10 @@ class metaTrajIO(object):
 		try:
 			return self.dataFiles.pop(0)
 		except IndexError:
-			raise EmptyDataPipeError("End of data.")
+			if self.nearEndOfData:
+				raise EmptyDataPipeError("End of data.")
+			else:
+				self.nearEndOfData+=1
 
 	#################################################################
 	# Internal Functions
@@ -466,18 +486,22 @@ class metaTrajIO(object):
 		
 		self.initPipe=True
 
-		# Drop the first 'n' points specified by the start keyword
-		if hasattr(self, 'start'):
-			self.startIndex=int(self.start*self.Fs)
-			if self.startIndex > 0:
-				self.popdata(self.startIndex-1)
-
 		# Set the end point
 		if hasattr(self, 'end'):
 			self.endIndex=int((self.end-1)*self.Fs)
 			self.datLenSec=self.end-self.start
 		else:
 			self.datLenSec=(len(self.rawData)/float(self.Fs)*(len(self.dataFiles)+1))
+			
+		# Drop the first 'n' points specified by the start keyword
+		if hasattr(self, 'start'):
+			self.startIndex=int(self.start*self.Fs)
+			if self.startIndex > 0:
+				nBlks=int((self.startIndex-1)/self.CHUNKSIZE)
+				for i in range(nBlks):
+					self.popdata(self.CHUNKSIZE)
+
+				self.popdata( int((self.startIndex-1)%self.CHUNKSIZE) )
 
 	def _setupDataFilter(self):
 		filtsettings=settings.settings( self.datPath ).getSettings(self.datafilter.__name__)

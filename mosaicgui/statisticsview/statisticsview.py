@@ -3,6 +3,7 @@ from __future__ import with_statement
 import sys
 import math
 import os
+import platform
 import csv
 import sqlite3
 import time
@@ -146,8 +147,21 @@ class StatisticsWindow(QtGui.QDialog):
 
 				pctcomplete,remaintime=self._progressstats()
 
-				self.progressLabel.setText( str(pctcomplete)+"%" )
-				self.analysisprogressBar.setValue(int(pctcomplete))
+				try:
+					self.analysisprogressBar.setValue(int(pctcomplete))		
+
+					if platform.system()=='Darwin':
+						if pctcomplete=='n/a':
+							pctstr=str(pctcomplete)
+						else:
+							pctstr=str(pctcomplete)+"%"
+					else:
+						pctstr=""
+
+					self.progressLabel.setText( pctstr )
+				except ValueError:
+					self.analysisprogressBar.setValue(0)					
+
 				self.remaintimeLabel.setText( remaintime )
 
 				if self.updateDataOnIdle:
@@ -196,9 +210,12 @@ class StatisticsWindow(QtGui.QDialog):
 			return [0,0]
 
 	def _progressstats(self):
-		etime=self.queryData[-1]/1000.
-		if etime > self.analysisTime:
-			self.analysisTime=etime
+		try:
+			self.analysisTime=list(self.dbHnd.rawQuery("select analysisTimeSec from analysisinfo")[0])[0]
+		except:
+			etime=self.queryData[-1]/1000.
+			if etime > self.analysisTime:
+				self.analysisTime=etime
 
 		try:
 			pctcomplete=100.*self.analysisTime/float(self.trajLength)
@@ -250,8 +267,7 @@ class StatisticsWindow(QtGui.QDialog):
 			self._updatequery()
 
 if __name__ == '__main__':
-	# dbfile=resource_path('eventMD-PEG28-stepResponseAnalysis.sqlite')
-	dbfile="/Users/arvind/Desktop/50bp_500kHz/800mV/eventMD-20150404-221533_MSA.sqlite"
+	dbfile=resource_path('eventMD-PEG28-stepResponseAnalysis.sqlite')
 	# dbfile=resource_path('eventMD-tempMSA.sqlite')
 
 	app = QtGui.QApplication(sys.argv)
