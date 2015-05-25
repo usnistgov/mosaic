@@ -69,6 +69,9 @@ DecodeRecord[rec_, cols_, colhash_] := Module[{c = ExpandCols[cols, colhash], ct
   ]
 
 
+DecodeTimeSeries[ts_]:=ImportString[ToString[ts],{"Base64","Real64"}]/;ReadQueryBackend[]=="Mathematica"
+
+
 ExpandCols[cols_, colhash_] := Keys[colhash] /; cols == {"*"}
 ExpandCols[cols_, colhash_] := cols
 
@@ -96,7 +99,7 @@ rawquery[q_]:=" "
 QueryDB[filename_,query_]:=ToExpression[StringReplace[Import["!"<>shellPrefix[readVirtualEnv[]]<>" python "<>FileNameJoin[{$UserBaseDirectory,"Applications","pyquery.py " },OperatingSystem->$OperatingSystem]<>rawquery[query] <> filename<>" \"" <>query<>"\"","String"],{"["->"{","]"->"}"}]]/;ReadQueryBackend[]=="Python"
 
 
-DecodeTimeSeries[ts_]:=ts(*ImportString[ToString[ts],{"Base64","Real64"}]*)
+DecodeTimeSeries[ts_]:=ts/;ReadQueryBackend[]=="Python"
 
 
 ts[dat_,FsKHz_]:=Transpose[{Range[0,Length[dat]-1]/FsKHz,polarity[dat]*dat}]
