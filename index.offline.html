@@ -16,13 +16,13 @@
     <link rel="stylesheet" href="assets/app.css"/>
   </head>
 
-  <body ng-app="starterApp" layout="row" ng-controller="UserController as ul">
+  <body ng-app="mosaicApp" layout="row" ng-controller="UserController as ul">
     <div flex layout="column" tabIndex="-1" role="main" class="md-whiteframe-z3" ng-controller="AppCtrl">
 
-      <md-toolbar layout="row" hide-sm class="md-whiteframe-z3">
+      <md-toolbar ng-controller="AppCtrl" layout="row" hide-sm class="md-whiteframe-z3">
         <span flex></span>
-        <md-button ng-href="https://usnistgov.github.io/mosaic/html/"><h4>Documentation</h4></md-button>
-        <md-button ng-href="https://usnistgov.github.io/mosaic/html/doc/mailingList.html"><h4>Mailing List</h4></md-button>
+        <md-button ng-href="{{docURL}}"><h4>Documentation</h4></md-button>
+        <md-button ng-href="{{mailingListURL}}"><h4>Mailing List</h4></md-button>
         <md-button ng-href="https://github.com/usnistgov/mosaic"><h4>Develop</h4></md-button>
         <md-button ng-href="https://github.com/usnistgov/mosaic/issues"><h4>Issue Tracker</h4></md-button>
         <md-button class="download" ng-href="download.html" aria-label="Download"><h4>Download</h4></md-button>
@@ -48,8 +48,8 @@
           </h1>
         </md-toolbar>
         <md-content ng-controller="LeftCtrl" class="sidenav">
-          <a href="https://usnistgov.github.io/mosaic/html/"><h2>Documentation</h2></a>
-          <a href="https://usnistgov.github.io/mosaic/html/doc/mailingList.html"><h2>Mailing List</h2></a>
+          <a href="{{docURL}}"><h2>Documentation</h2></a>
+          <a href="{{mailingListURL}}"><h2>Mailing List</h2></a>
           <a href="https://github.com/usnistgov/mosaic"><h2>Develop</h2></a>
           <a href="https://github.com/usnistgov/mosaic/issues"><h2>Issue Tracker</h2></a>
         </md-content>
@@ -65,9 +65,9 @@
               <p>MOSAIC is a modular single-molecule nanopore analysis toolbox to decode multi-state nanopore data. MOSAIC leverages the underlying physics of the system to considerably increase the information retrieved from experimental data.</p>
 
               <md-list class="md-1-line">
-                <md-list-item><div class="md-list-item-text"> > <a href="https://usnistgov.github.io/mosaic/html/doc/Algorithms.html">Powerful Algorithms</a></div></md-list-item>
-                <md-list-item><div class="md-list-item-text"> > <a href="https://usnistgov.github.io/mosaic/html/doc/Extend.html">Easily Extensible</a></div></md-list-item>
-                <md-list-item><div class="md-list-item-text"> > <a href="https://usnistgov.github.io/mosaic/html/doc/Addons.html">Integrates Into Your Workflow</a></div></md-list-item>
+                <md-list-item><div class="md-list-item-text"> > <a href="{{algoURL}}">Powerful Algorithms</a></div></md-list-item>
+                <md-list-item><div class="md-list-item-text"> > <a href="{{extendURL}}">Easily Extensible</a></div></md-list-item>
+                <md-list-item><div class="md-list-item-text"> > <a href="{{addonURL}}">Integrates Into Your Workflow</a></div></md-list-item>
               </md-list>
               <p><small>If you use MOSAIC, please cite:
               <a style="color:#696969; text-decoration: underline;" href="http://pubs.acs.org/doi/abs/10.1021/nn405761y">ACS Nano <em>2014</em>, <b>8</b>, 1547–1553.</a></small></p>
@@ -102,53 +102,54 @@
                   </div>
                 </div>
 
-                <md-grid-tile-footer>
-                  <md-button flex aria-label="Learn More" ng-href="https://usnistgov.github.io/mosaic/html/doc/GraphicalInterface.html"><h4>Learn More</h4></md-button>
-                </md-grid-tile-footer>
-              </md-grid-tile>
-
-              <md-grid-tile class="script m-grid-tile md-whiteframe-z1" md-rowspan="2" md-colspan="2" md-colspan-sm="1">
-                <md-grid-tile-header>
-                  <h2>Powerful Scripting</h2>
-                </md-grid-tile-header>
-                
-                <div layout="column">
-                  <div flex>
-                    <center>
-                      <img src="assets/img/Script-01.png" alt="Script" width="100%">
-                    </center>
-                  </div>
-                  <div flex>
-                    <p>MOSAIC can be scripted to run multiple analyses in batch mode. Leveraging the power of Python, MOSAIC can also be integrated into custom scripts and work flows.</p>
-                  </div>
-                </div>             
-                
-                <md-grid-tile-footer>
-                  <md-button flex aria-label="Learn More" ng-href="https://usnistgov.github.io/mosaic/html/doc/ScriptingandAdvancedFeatures.html"><h4>Learn More</h4></md-button>
-                </md-grid-tile-footer>
-              </md-grid-tile>
-
-              <md-grid-tile class="getmore m-grid-tile md-whiteframe-z1" md-rowspan="2" md-colspan="2" md-colspan-sm="1">
-                <md-grid-tile-header>
-                  <h2>Extract More From Your Data</h2>
-                </md-grid-tile-header>
-                
-                <div layout="column">
-                  <div flex>
-                    <img src="assets/img/GetMore-02.png" alt="Script" width="100%">
-                  </div>
-                  <div flex>
-                    <p>
-                        MOSAIC’s novel algorithms allow you to see events that other software frequently misses. MOSAIC leverages a physical model of the system response to recover events from fast transients.
-                    </p>
-                  </div>
-                </div>            
-                <md-grid-tile-footer>
-                  <md-button flex aria-label="Learn More"><h4>Learn More</h4></md-button>
+                <md-grid-tile-footer layout-align="end end">
+                  <md-button flex aria-label="Learn More" ng-href="{{guiURL}}"><h4>Learn More</h4></md-button>
                 </md-grid-tile-footer>
               </md-grid-tile>
 
           </md-grid-list>
+
+          <br/><br/>
+          <div layout="row" layout-sm="column">
+            <md-card flex>
+                  <img ng-src="assets/img/Script-01.png" width="100%" class="md-card-image" alt="Scripting">
+                  <md-card-content>
+                    <h2 class="md-title">Powerful Scripting</h2>
+                    <p>
+                      MOSAIC can be scripted to run multiple analyses in batch mode. Leveraging the power of Python, MOSAIC can also be integrated into custom scripts and work flows.<br/><br/>
+                    </p>
+                  </md-card-content>
+                  <div class="md-actions" layout="row" layout-align="end center">
+                    <md-button aria-label="Learn More" ng-href="{{scriptURL}}"><h4>Learn More</h4></md-button>
+                  </div>
+            </md-card>
+
+            <md-card flex>
+                  <img ng-src="assets/img/GetMore-01.png" width="100%" class="md-card-image" alt="Get More">
+                  <md-card-content>
+                    <h2 class="md-title">Better Results</h2>
+                    <p>
+                      MOSAIC’s novel algorithms allow you to see events that other software frequently misses. MOSAIC leverages a physical model of the system response to recover events from fast transients.
+                    </p>
+                  </md-card-content>
+                  <div class="md-actions" layout="row" layout-align="end end">
+                    <md-button aria-label="Learn More" ng-href="{{algoURL}}"><h4>Learn More</h4></md-button>
+                  </div>
+            </md-card>
+
+            <md-card flex>
+                  <img ng-src="assets/img/GetMore-01.png" width="100%" class="md-card-image" alt="Get More">
+                  <md-card-content>
+                    <h2 class="md-title">Better Results</h2>
+                    <p>
+                      MOSAIC’s novel algorithms allow you to see events that other software frequently misses. MOSAIC leverages a physical model of the system response to recover events from fast transients.
+                    </p>
+                  </md-card-content>
+                  <div class="md-actions" layout="row" layout-align="end end">
+                    <md-button aria-label="Learn More" ng-href="{{algoURL}}"><h4>Learn More</h4></md-button>
+                  </div>
+            </md-card>
+          </div>
 
         <br/><br/>
         <md-divider></md-divider>
@@ -185,45 +186,7 @@
     <script src="./src/users/UserController.js"></script>
     <script src="./src/users/UserService.js"></script>
 
-    </script>
-
-    <script type="text/javascript">
-          angular
-              .module('starterApp', ['ngMaterial', 'users'])
-              .config(function($mdThemingProvider, $mdIconProvider){
-                      // $mdThemingProvider.theme('default')
-                      //     .primaryPalette('brown')
-                      //     .accentPalette('red');
-
-              })
-              .controller('AppCtrl', function ($scope, $timeout, $mdSidenav, $mdUtil, $log) {
-                $scope.toggleLeft = buildToggler('left');
-                $scope.toggleRight = buildToggler('right');
-                /**
-                 * Build handler to open/close a SideNav; when animation finishes
-                 * report completion in console
-                 */
-                function buildToggler(navID) {
-                  var debounceFn =  $mdUtil.debounce(function(){
-                        $mdSidenav(navID)
-                          .toggle()
-                          .then(function () {
-                            $log.debug("toggle " + navID + " is done");
-                          });
-                      },300);
-                  return debounceFn;
-                }
-              })
-              .controller('LeftCtrl', function ($scope, $timeout, $mdSidenav, $log) {
-                $scope.close = function () {
-                  $mdSidenav('left').close()
-                    .then(function () {
-                      $log.debug("close LEFT is done");
-                    });
-                };
-              });
-
-    </script>
+    <script src="mosaic.js"></script>
 
   </body>
 </html>
