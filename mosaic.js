@@ -15,6 +15,8 @@ angular
       $scope.extendURL = $scope.baseURL+"/html/doc/Extend.html"
       $scope.addonURL = $scope.baseURL+"/html/doc/Addons.html"
       $scope.guiURL = $scope.baseURL+"/html/doc/GraphicalInterface.html"
+      $scope.developersURL = $scope.baseURL+"/html/doc/Developers.html"
+      $scope.termsURL = $scope.baseURL+"/html/doc/Disclaimer.html"
       
       $scope.toggleLeft = buildToggler('left');
       $scope.toggleRight = buildToggler('right');
