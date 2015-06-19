@@ -21,3 +21,14 @@ mosaic.multiStateAnalysis module
 .. automodule:: mosaic.multiStateAnalysis
     :members:
     :show-inheritance:
+
+mosaic.cusumLevelAnalysis module
+-----------------------------------------
+
+.. inheritance-diagram:: mosaic.cusumLevelAnalysis
+   :parts: 2
+
+   
+.. automodule:: mosaic.cusumLevelAnalysis
+    :members:
+    :show-inheritance:

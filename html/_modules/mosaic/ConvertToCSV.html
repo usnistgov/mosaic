@@ -5,7 +5,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>mosaic.ConvertToCSV &mdash; MOSAIC 1.2 documentation</title>
+    <title>mosaic.ConvertToCSV &mdash; MOSAIC 1.3 documentation</title>
     
     <link rel="stylesheet" href="../../_static/basic.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
@@ -17,7 +17,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
-        VERSION:     '1.2',
+        VERSION:     '1.3',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -26,13 +26,13 @@
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
-    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <script type="text/javascript" src="../../_static/js/jquery-1.11.0.min.js"></script>
     <script type="text/javascript" src="../../_static/js/jquery-fix.js"></script>
     <script type="text/javascript" src="../../_static/bootstrap-3.2.0/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="../../_static/bootstrap-sphinx.js"></script>
     <link rel="shortcut icon" href="../../_static/favicon.ico"/>
-    <link rel="top" title="MOSAIC 1.2 documentation" href="../../index.html" />
+    <link rel="top" title="MOSAIC 1.3 documentation" href="../../index.html" />
     <link rel="up" title="Module code" href="../index.html" />
 
 <meta charset='utf-8'>
@@ -41,13 +41,13 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 
 	<script type="text/javascript"
-		src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+		src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
 	</script>
 	<script type="text/javascript" id="_fed_an_js_tag" src="//www.nist.gov/js/federated-analytics.all.min.js?agency=NIST&subagency=github&pua=UA-42404149-54&yt=true&exts=ppsx,pps,f90,sch,rtf,wrl,txz,m1v,xlsm,msi,xsd,f,tif,eps,mpg,xml,pl,xlt,c">
 	</script>	
 
   </head>
-  <body>
+  <body role="document">
 
   <div id="navbar" class="navbar navbar-default navbar-fixed-top">
     <div class="container">
@@ -60,7 +60,7 @@
         </button>
         <a class="navbar-brand" href="../../index.html"><img src="../../_static/icon_24.png">
            </a>
-        <span class="navbar-text navbar-version pull-left"><b>1.2</b></span>
+        <span class="navbar-text navbar-version pull-left"><b>1.3</b></span>
       </div>
 
         <div class="collapse navbar-collapse nav-collapse">
@@ -82,7 +82,7 @@
       aria-labelledby="dLabelGlobalToc"><ul>
 <li class="toctree-l1"><a class="reference internal" href="../../doc/Introduction.html">1. Introduction</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../doc/GettingStarted.html">2. Getting Started</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../doc/Algorithms.html">3. Algorithms in <em>MOSAIC</em></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../doc/Algorithms.html">3. Data Processing Algorithms in <em>MOSAIC</em></a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../doc/GraphicalInterface.html">4. <em>MOSAIC</em> GUI</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../doc/ScriptingandAdvancedFeatures.html">5. Scripting and Advanced Features</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../doc/settingsFile.html">6. Settings File</a></li>
@@ -148,7 +148,7 @@
 <span class="sd">			- `trajDataObj` : a trajIO data object</span>
 <span class="sd">			- `outdir` : the output directory. Default is *None*, which causes the output to be saved in the same directory as the input data.</span>
 <span class="sd">	&quot;&quot;&quot;</span>
-	<span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">trajDataObj</span><span class="p">,</span> <span class="n">outdir</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+	<span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">trajDataObj</span><span class="p">,</span> <span class="n">outdir</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">extension</span><span class="o">=</span><span class="s">&quot;csv&quot;</span><span class="p">):</span>
 		<span class="bp">self</span><span class="o">.</span><span class="n">trajDataObj</span><span class="o">=</span><span class="n">trajDataObj</span>
 		<span class="bp">self</span><span class="o">.</span><span class="n">datPath</span><span class="o">=</span><span class="n">trajDataObj</span><span class="o">.</span><span class="n">datPath</span>
 
@@ -157,6 +157,8 @@
 			<span class="bp">self</span><span class="o">.</span><span class="n">outDir</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">datPath</span>
 		<span class="k">else</span><span class="p">:</span>
 			<span class="bp">self</span><span class="o">.</span><span class="n">outDir</span><span class="o">=</span><span class="n">outdir</span>
+		
+		<span class="bp">self</span><span class="o">.</span><span class="n">extension</span><span class="o">=</span><span class="n">extension</span>
 		
 		<span class="bp">self</span><span class="o">.</span><span class="n">filePrefix</span><span class="o">=</span><span class="bp">None</span>
 		<span class="bp">self</span><span class="o">.</span><span class="n">_creategenerator</span><span class="p">()</span>
@@ -198,7 +200,7 @@
 <span class="sd">		&quot;&quot;&quot;</span>
 		<span class="bp">self</span><span class="o">.</span><span class="n">_creategenerator</span><span class="p">()</span>
 
-		<span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">outDir</span><span class="o">+</span><span class="s">&#39;/&#39;</span><span class="o">+</span><span class="nb">next</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">fileGenerator</span><span class="p">)</span><span class="o">+</span><span class="s">&#39;.csv&#39;</span>
+		<span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">outDir</span><span class="o">+</span><span class="s">&#39;/&#39;</span><span class="o">+</span><span class="nb">next</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">fileGenerator</span><span class="p">)</span><span class="o">+</span><span class="s">&#39;.&#39;</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">extension</span>
 
 		</div></div>
 </pre></div>
@@ -215,7 +217,7 @@
       
     </p>
     <p>
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.2.3.<br/>
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.3.1.<br/>
     </p>
   </div>
 </footer> -->

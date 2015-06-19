@@ -5,7 +5,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>1. Introduction &mdash; MOSAIC 1.2 documentation</title>
+    <title>1. Introduction &mdash; MOSAIC 1.3 documentation</title>
     
     <link rel="stylesheet" href="../_static/basic.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -17,7 +17,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '1.2',
+        VERSION:     '1.3',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -26,13 +26,13 @@
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <script type="text/javascript" src="../_static/js/jquery-1.11.0.min.js"></script>
     <script type="text/javascript" src="../_static/js/jquery-fix.js"></script>
     <script type="text/javascript" src="../_static/bootstrap-3.2.0/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="../_static/bootstrap-sphinx.js"></script>
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
-    <link rel="top" title="MOSAIC 1.2 documentation" href="../index.html" />
+    <link rel="top" title="MOSAIC 1.3 documentation" href="../index.html" />
     <link rel="next" title="2. Getting Started" href="GettingStarted.html" />
     <link rel="prev" title="MOSAIC: A Modular Single-Molecule Analysis Interface" href="../index.html" />
 
@@ -42,13 +42,13 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 
 	<script type="text/javascript"
-		src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+		src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
 	</script>
 	<script type="text/javascript" id="_fed_an_js_tag" src="//www.nist.gov/js/federated-analytics.all.min.js?agency=NIST&subagency=github&pua=UA-42404149-54&yt=true&exts=ppsx,pps,f90,sch,rtf,wrl,txz,m1v,xlsm,msi,xsd,f,tif,eps,mpg,xml,pl,xlt,c">
 	</script>	
 
   </head>
-  <body>
+  <body role="document">
 
   <div id="navbar" class="navbar navbar-default navbar-fixed-top">
     <div class="container">
@@ -61,7 +61,7 @@
         </button>
         <a class="navbar-brand" href="../index.html"><img src="../_static/icon_24.png">
            </a>
-        <span class="navbar-text navbar-version pull-left"><b>1.2</b></span>
+        <span class="navbar-text navbar-version pull-left"><b>1.3</b></span>
       </div>
 
         <div class="collapse navbar-collapse nav-collapse">
@@ -83,7 +83,7 @@
       aria-labelledby="dLabelGlobalToc"><ul class="current">
 <li class="toctree-l1 current"><a class="current reference internal" href="">1. Introduction</a></li>
 <li class="toctree-l1"><a class="reference internal" href="GettingStarted.html">2. Getting Started</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Algorithms.html">3. Algorithms in <em>MOSAIC</em></a></li>
+<li class="toctree-l1"><a class="reference internal" href="Algorithms.html">3. Data Processing Algorithms in <em>MOSAIC</em></a></li>
 <li class="toctree-l1"><a class="reference internal" href="GraphicalInterface.html">4. <em>MOSAIC</em> GUI</a></li>
 <li class="toctree-l1"><a class="reference internal" href="ScriptingandAdvancedFeatures.html">5. Scripting and Advanced Features</a></li>
 <li class="toctree-l1"><a class="reference internal" href="settingsFile.html">6. Settings File</a></li>
@@ -131,7 +131,7 @@
 <div class="math">
 \[i(t)=i_0 + \sum_{j=1}^{N} a_j\left(1-e^{-\left(t-\mu_j\right)/\tau_j}\right) H\left(t-\mu_j\right)\]</div>
 <p>The above functional form, which represents the response to a step change from one state to another is ubiqutous in many disciplines. By fitting individual state changes to the equation above, <em>MOSAIC</em> is able to automatically identify the states corresponding to each change. Moreover this approach allows us to accurately characterize transient events before they asymptotically approach a steady state. In nanopore applications, this has resulted in a 20-fold improvement in the number of states identified per unit time <a class="reference internal" href="References.html#balijepalli-2014ft" id="id3">[BEC+14]</a>.</p>
-<p><em>MOSAIC</em> offers tremendous flexibility in how it can be used. Nanopore data can be analyzed and visualized using the <a class="reference internal" href="GraphicalInterface.html#gui-page"><em>MOSAIC GUI</em></a> (GUI), which is available as a stand-alone application (<a class="reference external" href="http://usnistgov.github.io/mosaic/platforms.html">download binaries</a>). This is a convenient way for most users to analyze nanopore data. Advanced users can write their own Python scripts to include <em>MOSAIC</em> in their analysis workflow (see <a class="reference internal" href="ScriptingandAdvancedFeatures.html#scripting-page"><em>Scripting and Advanced Features</em></a>). Finally, because <em>MOSAIC</em> was designed from the start using object oriented design, developers can easily extend it by combining existing classes to define new functionality or writing their own classes (see <a class="reference internal" href="Extend.html#extend-page"><em>Extend MOSAIC</em></a>).</p>
+<p><em>MOSAIC</em> offers tremendous flexibility in how it can be used. Nanopore data can be analyzed and visualized using the <a class="reference internal" href="GraphicalInterface.html#gui-page"><span>MOSAIC GUI</span></a> (GUI), which is available as a stand-alone application (<a class="reference external" href="http://usnistgov.github.io/mosaic/platforms.html">download binaries</a>). This is a convenient way for most users to analyze nanopore data. Advanced users can write their own Python scripts to include <em>MOSAIC</em> in their analysis workflow (see <a class="reference internal" href="ScriptingandAdvancedFeatures.html#scripting-page"><span>Scripting and Advanced Features</span></a>). Finally, because <em>MOSAIC</em> was designed from the start using object oriented design, developers can easily extend it by combining existing classes to define new functionality or writing their own classes (see <a class="reference internal" href="Extend.html#extend-page"><span>Extend MOSAIC</span></a>).</p>
 <div class="section" id="background">
 <h2>1.1. Background<a class="headerlink" href="#background" title="Permalink to this headline">¶</a></h2>
 <p>The interactions of single molecules with nanopores are observed by measuring changes to the ionic current that occurs when the pore changes from an unoccupied (i.e., an open channel) to an occupied state.  The electrical nature of the measurement allows us to model components of the physical system with equivalent electrical elements, (see figure below), and describe system behavior collectively with the circuit response <a class="reference internal" href="References.html#balijepalli-2014ft" id="id4">[BEC+14]</a>.  The resistance from the electrolyte solution between the two electrodes, together with the access resistance near the entrance of the channel due to electrical field constriction <a class="reference internal" href="References.html#bezrukov-1993ij" id="id5">[BV93]</a><a class="reference internal" href="References.html#bezrukov-1996uc" id="id6">[BVBK96]</a>, is modeled by resistors <span class="math">\(R_{cis}\)</span> and <span class="math">\(R_{trans}\)</span>, on each side of the nanopore.  The nanopore itself is modeled as a resistor, <span class="math">\(R_p\)</span>, in series with <span class="math">\(R_s\)</span>. Finally, the lipid bilayer is assumed to be a capacitive circuit element, <span class="math">\(C_m\)</span>, in parallel with the nanopore.</p>
@@ -148,7 +148,7 @@
 <p>where <span class="math">\(\alpha=(1/\Delta R_p +C_m)V_a\)</span> and <span class="math">\(\tau=(R_{cis}+R_{trans})(1/\Delta R_p+C_m)\)</span>. The inverse Laplace transform of I(s), yields an exponentially decaying time-domain current response,</p>
 <div class="math">
 \[\begin{split}i(t)=-\frac{\alpha}{\tau^2}exp(-t/\tau)+i_0, t&gt;0,\end{split}\]</div>
-<p>where <span class="math">\(i_0\)</span> is the open channel current offset.  The equation for i(t) suggests that the experimentally observed RC time constant (<span class="math">\(\tau\)</span>) is characteristic of the molecule interacting with the pore and related to the molecule’s physical properties (e.g., volume, charge, etc.)  <a class="reference internal" href="References.html#reiner-2010kv" id="id7">[RKNR10]</a><a class="reference internal" href="References.html#balijepalli-2013gt" id="id8">[BRR+13]</a>. The equation above then provides the basis for practical single molecule analysis as seen at the top of this page <a class="reference internal" href="References.html#balijepalli-2014ft" id="id9">[BEC+14]</a>. Practical implementations of these techniques are described in <a class="reference internal" href="Algorithms.html#algorithms-page"><em>Algorithms in MOSAIC</em></a>.</p>
+<p>where <span class="math">\(i_0\)</span> is the open channel current offset.  The equation for i(t) suggests that the experimentally observed RC time constant (<span class="math">\(\tau\)</span>) is characteristic of the molecule interacting with the pore and related to the molecule’s physical properties (e.g., volume, charge, etc.)  <a class="reference internal" href="References.html#reiner-2010kv" id="id7">[RKNR10]</a><a class="reference internal" href="References.html#balijepalli-2013gt" id="id8">[BRR+13]</a>. The equation above then provides the basis for practical single molecule analysis as seen at the top of this page <a class="reference internal" href="References.html#balijepalli-2014ft" id="id9">[BEC+14]</a>. Practical implementations of these techniques are described in <a class="reference internal" href="Algorithms.html#algorithms-page"><span>Data Processing Algorithms in MOSAIC</span></a>.</p>
 </div>
 </div>
 
@@ -165,7 +165,7 @@
       
     </p>
     <p>
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.2.3.<br/>
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.3.1.<br/>
     </p>
   </div>
 </footer> -->

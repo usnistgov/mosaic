@@ -13,5 +13,4 @@ To unsubscribe:
 
 	Email `mosaic-request@nist.gov <mailto:mosaic-request@nist.gov?subject=unsubscribe>`_ with subject 'unsubscribe'
 
-
 Once subscribed, you can send messages by emailing `mosaic@nist.gov <mailto:mosaic@nist.gov>`_.

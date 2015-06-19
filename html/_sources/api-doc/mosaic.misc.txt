@@ -23,6 +23,13 @@ mosaic.utilities.util module
     :members:
     :show-inheritance:
 
+mosaic.utilities.fit_funcs module
+---------------------------
+
+.. automodule:: mosaic.utilities.fit_funcs
+    :members:
+    :show-inheritance:
+
 .. mosaic.zmqIO module
 .. ----------------------------
 

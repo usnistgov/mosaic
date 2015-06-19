@@ -21,6 +21,16 @@ MosaicUtils
 
 *MosaicUtils* provides low level functions to interact with a database output by |projname|. 
 
+.. warning:: If you use a virtual environment with Python, please call the SetVirtualEnv function after you install this addon.
+
+
+**SetVirtualEnv**\[*virtualenv*\]
+
+:Args:
+		- `virtualenv` :	name of the virtual environment configured for use with MOSAIC
+:Returns:
+		None
+
 **PrintMDKeys**\[*dbfile*\]
 
 Returns a list of column headings from the *metadata* table.
@@ -62,6 +72,7 @@ Plot the event-time series if stored in the database (see the :ref:`settings-pag
 :Args:
 		- `dbfile` :	full path to the database file
 		- `FsKHz`  :	sampling frequency in kHz.
+		- `nEvents` :	(optional) limit the plot to the first ``n`` entries in the database
 		
 :Returns:
 		A dynamic object that allows the user to browse event time-series and fits.

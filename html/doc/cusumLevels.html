@@ -5,7 +5,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>13. Bibliography &mdash; MOSAIC 1.3 documentation</title>
+    <title>CUSUM Level Analysis &mdash; MOSAIC 1.3 documentation</title>
     
     <link rel="stylesheet" href="../_static/basic.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -33,7 +33,6 @@
     <script type="text/javascript" src="../_static/bootstrap-sphinx.js"></script>
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
     <link rel="top" title="MOSAIC 1.3 documentation" href="../index.html" />
-    <link rel="prev" title="12. Change Log" href="ChangeLog.html" />
 
 <meta charset='utf-8'>
 <meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
@@ -79,7 +78,7 @@
      href="../index.html">Contents <b class="caret"></b></a>
   <ul class="dropdown-menu globaltoc"
       role="menu"
-      aria-labelledby="dLabelGlobalToc"><ul class="current">
+      aria-labelledby="dLabelGlobalToc"><ul>
 <li class="toctree-l1"><a class="reference internal" href="Introduction.html">1. Introduction</a></li>
 <li class="toctree-l1"><a class="reference internal" href="GettingStarted.html">2. Getting Started</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Algorithms.html">3. Data Processing Algorithms in <em>MOSAIC</em></a></li>
@@ -92,7 +91,7 @@
 <li class="toctree-l1"><a class="reference internal" href="examples.html">10. Examples</a></li>
 <li class="toctree-l1"><a class="reference internal" href="apidocs.html">11. API Documentation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="ChangeLog.html">12. Change Log</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="">13. Bibliography</a></li>
+<li class="toctree-l1"><a class="reference internal" href="References.html">13. Bibliography</a></li>
 </ul>
 </ul>
 </li>
@@ -124,52 +123,78 @@
   <div class="row">
     <div class="col-md-12">
       
-  <div class="section" id="bibliography">
-<h1>13. Bibliography<a class="headerlink" href="#bibliography" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="cusum-level-analysis">
+<span id="cusumlevel-page"></span><h1>CUSUM Level Analysis<a class="headerlink" href="#cusum-level-analysis" title="Permalink to this headline">¶</a></h1>
+<p>The CUSUM algorithm (used by OpenNanopore for example) <a class="reference internal" href="References.html#raillon-2012is" id="id1">[RGG+12]</a> is available in <em>MOSAIC</em>. In contrast with other algorithms available in <em>MOSAIC</em>, this approach does not leverage system information in the analysis. This however results in a faster estimation of single- and multi-level events, compared with <a class="reference internal" href="stepResponse.html#stepresponse-page"><span>Step Response Analysis</span></a> and <a class="reference internal" href="multiState.html#multistate-page"><span>Multi-state Analysis</span></a>. You can read about the CUSUM algorithm <a class="reference external" href="http://pubs.rsc.org/en/Content/ArticleLanding/2012/NR/c2nr30951c#!divAbstract">here</a>.</p>
+<p>Some known issues with CUSUM:</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li>If the duration of a sub-event is shorter than a five RC constants, the averaging will underestimate the extent of the current change. For longer events, CUSUM should achieve very similar output to the fitting employed elsewhere in <em>MOSAIC</em>.</li>
+<li>CUSUM assumes an instantaneous transition between current states. As a result, if the RC rise time of the system is large, CUSUM can trigger and detect intermediate states. This can usually be mitigated by optimizing the algorithm sensitivity settings.</li>
+<li>If an event is very long, CUSUM will detect a state transistion even if there is no real change, leading to an artificially high number of states. This is a consequence of false positives from using a statistical t-test. In some cases this can be mitigated by reducing the sensitivity.</li>
+</ol>
+</div></blockquote>
+<p>Settings that control the algorithm are defined through the settings file, as described the <a class="reference internal" href="settingsFile.html#algorithm-settings-sec"><span>Optimizing Settings</span></a> section. Upon successfully analyzing an event, <a class="reference internal" href="../api-doc/mosaic.processing.html#mosaic.cusumLevelAnalysis.cusumLevelAnalysis" title="mosaic.cusumLevelAnalysis.cusumLevelAnalysis"><code class="xref py py-class docutils literal"><span class="pre">cusumLevelAnalysis</span></code></a> generates meta-data the describes the individual states in the event. A representative example of one such event is shown in the figure below.</p>
+<div class="figure align-center">
+<a class="reference internal image-reference" href="../_images/CUSUM.png"><img alt="../_images/CUSUM.png" src="../_images/CUSUM.png" style="width: 50%;" /></a>
 </div>
-<p id="bibtex-bibliography-doc/References-0"><table class="docutils citation" frame="void" id="balijepalli-2014ft" rules="none">
-<colgroup><col class="label" /><col /></colgroup>
+<p>The <a class="reference internal" href="../api-doc/mosaic.processing.html#mosaic.cusumLevelAnalysis.cusumLevelAnalysis" title="mosaic.cusumLevelAnalysis.cusumLevelAnalysis"><code class="xref py py-class docutils literal"><span class="pre">cusumLevelAnalysis</span></code></a> algorithm outputs meta-data that characterizes every processed event. Similar to the <a class="reference internal" href="multiState.html#multistate-page"><span>Multi-state Analysis</span></a> algorithm, this information is stored in a <a href="#id2"><span class="problematic" id="id3">SQLite_</span></a> database and is available for further processing (see <a class="reference internal" href="DatabaseStructure.html#database-page"><span>Database Structure and Query Syntax</span></a>).</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="23%" />
+<col width="20%" />
+<col width="57%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head"><strong>Column Name</strong></th>
+<th class="head"><strong>Column Type</strong></th>
+<th class="head"><strong>Description</strong></th>
+</tr>
+</thead>
 <tbody valign="top">
-<tr><td class="label">[BEC+14]</td><td>Arvind Balijepalli, Jessica Ettedgui, Andrew&nbsp;T Cornio, Joseph W&nbsp;F Robertson, Kin&nbsp;P Cheung, John&nbsp;J Kasianowicz, and Canute Vaz. Quantifying short-lived events in multistate ionic current measurements.. <em>ACS Nano</em>, 8(2):1547–1553, February 2014.</td></tr>
+<tr class="row-even"><td><p class="first">recIDX</p>
+<p>ProcessingStatus</p>
+<p>OpenChCurrent</p>
+<p>NStates</p>
+<p>CurrentStep</p>
+<p>BlockDepth</p>
+<p>EventStart</p>
+<p>EventEnd</p>
+<p>EventDelay</p>
+<p>ResTime</p>
+<p>AbsEventStart</p>
+<p class="last">TimeSeries</p>
+</td>
+<td><p class="first">INTEGER</p>
+<p>TEXT</p>
+<p>REAL</p>
+<p>INTEGER</p>
+<p>REAL_LIST</p>
+<p>REAL_LIST</p>
+<p>REAL</p>
+<p>REAL</p>
+<p>REAL_LIST</p>
+<p>REAL</p>
+<p>REAL</p>
+<p class="last">REAL_LIST</p>
+</td>
+<td><p class="first">Record index.</p>
+<p>Status of the analysis.</p>
+<p>Open channel current in pA.</p>
+<p>Number of detected states.</p>
+<p>Blocked current steps in pA.</p>
+<p>BlockedCurrent/OpenChCurrent for each state.</p>
+<p>Event start in ms.</p>
+<p>Event end in ms.</p>
+<p>Start time of each state in ms.</p>
+<p>EventEnd-EventStart in ms.</p>
+<p>Global event start time in ms.</p>
+<p class="last">(OPTIONAL) Event time-series.</p>
+</td>
+</tr>
 </tbody>
 </table>
-<table class="docutils citation" frame="void" id="balijepalli-2013gt" rules="none">
-<colgroup><col class="label" /><col /></colgroup>
-<tbody valign="top">
-<tr><td class="label">[BRR+13]</td><td>Arvind Balijepalli, Joseph W&nbsp;F Robertson, Joseph&nbsp;E Reiner, John&nbsp;J Kasianowicz, and Richard&nbsp;W Pastor. Theory of polymer-nanopore interactions refined using molecular dynamics simulations.. <em>J Am Chem Soc</em>, 135(18):7064–7072, May 2013.</td></tr>
-</tbody>
-</table>
-<table class="docutils citation" frame="void" id="bezrukov-1993ij" rules="none">
-<colgroup><col class="label" /><col /></colgroup>
-<tbody valign="top">
-<tr><td class="label">[BV93]</td><td>S&nbsp;M Bezrukov and I&nbsp;Vodyanoy. Probing alamethicin channels with water-soluble polymers. Effect on conductance of channel states.. <em>Biophys J</em>, 64(1):16–25, January 1993.</td></tr>
-</tbody>
-</table>
-<table class="docutils citation" frame="void" id="bezrukov-1996uc" rules="none">
-<colgroup><col class="label" /><col /></colgroup>
-<tbody valign="top">
-<tr><td class="label">[BVBK96]</td><td>SM&nbsp;Bezrukov, I&nbsp;Vodyanoy, RA&nbsp;Brutyan, and JJ&nbsp;Kasianowicz. Dynamics and free energy of polymers partitioning into a nanoscale pore. <em>Macromolecules</em>, 29(26):8517–8522, 1996.</td></tr>
-</tbody>
-</table>
-<table class="docutils citation" frame="void" id="raillon-2012is" rules="none">
-<colgroup><col class="label" /><col /></colgroup>
-<tbody valign="top">
-<tr><td class="label">[RGG+12]</td><td>C&nbsp;Raillon, P&nbsp;Granjon, M&nbsp;Graf, L&nbsp;J Steinbock, and A&nbsp;Radenovic. Fast and automatic processing of multi-level events in nanopore translocation experiments.. <em>Nanoscale</em>, 4(16):4916–4924, August 2012.</td></tr>
-</tbody>
-</table>
-<table class="docutils citation" frame="void" id="reiner-2012bg" rules="none">
-<colgroup><col class="label" /><col /></colgroup>
-<tbody valign="top">
-<tr><td class="label">[RBR+12]</td><td>Joseph&nbsp;E Reiner, Arvind Balijepalli, Joseph W&nbsp;F Robertson, Jason Campbell, John Suehle, and John&nbsp;J Kasianowicz. Disease Detection and Management via Single Nanopore-Based Sensors.. <em>Chem. Rev.</em>, 112:6432–6451, November 2012.</td></tr>
-</tbody>
-</table>
-<table class="docutils citation" frame="void" id="reiner-2010kv" rules="none">
-<colgroup><col class="label" /><col /></colgroup>
-<tbody valign="top">
-<tr><td class="label">[RKNR10]</td><td>Joseph&nbsp;E Reiner, John&nbsp;J Kasianowicz, Brian&nbsp;J Nablo, and Joseph W&nbsp;F Robertson. Theory for polymer analysis using nanopore-based single-molecule mass spectrometry.. <em>P Natl Acad Sci USA</em>, 107(27):12080–12085, July 2010.</td></tr>
-</tbody>
-</table>
-</p>
+</div>
 
 
     </div>

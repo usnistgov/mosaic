@@ -5,7 +5,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>11.1.8. Miscellaneous &mdash; MOSAIC 1.2 documentation</title>
+    <title>11.1.8. Miscellaneous &mdash; MOSAIC 1.3 documentation</title>
     
     <link rel="stylesheet" href="../_static/basic.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -17,7 +17,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '1.2',
+        VERSION:     '1.3',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -26,13 +26,13 @@
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <script type="text/javascript" src="../_static/js/jquery-1.11.0.min.js"></script>
     <script type="text/javascript" src="../_static/js/jquery-fix.js"></script>
     <script type="text/javascript" src="../_static/bootstrap-3.2.0/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="../_static/bootstrap-sphinx.js"></script>
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
-    <link rel="top" title="MOSAIC 1.2 documentation" href="../index.html" />
+    <link rel="top" title="MOSAIC 1.3 documentation" href="../index.html" />
     <link rel="up" title="11. API Documentation" href="../doc/apidocs.html" />
     <link rel="next" title="12. Change Log" href="../doc/ChangeLog.html" />
     <link rel="prev" title="11.1.7. Data Output" href="mosaic.output.html" />
@@ -43,13 +43,13 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 
 	<script type="text/javascript"
-		src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+		src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
 	</script>
 	<script type="text/javascript" id="_fed_an_js_tag" src="//www.nist.gov/js/federated-analytics.all.min.js?agency=NIST&subagency=github&pua=UA-42404149-54&yt=true&exts=ppsx,pps,f90,sch,rtf,wrl,txz,m1v,xlsm,msi,xsd,f,tif,eps,mpg,xml,pl,xlt,c">
 	</script>	
 
   </head>
-  <body>
+  <body role="document">
 
   <div id="navbar" class="navbar navbar-default navbar-fixed-top">
     <div class="container">
@@ -62,7 +62,7 @@
         </button>
         <a class="navbar-brand" href="../index.html"><img src="../_static/icon_24.png">
            </a>
-        <span class="navbar-text navbar-version pull-left"><b>1.2</b></span>
+        <span class="navbar-text navbar-version pull-left"><b>1.3</b></span>
       </div>
 
         <div class="collapse navbar-collapse nav-collapse">
@@ -84,7 +84,7 @@
       aria-labelledby="dLabelGlobalToc"><ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../doc/Introduction.html">1. Introduction</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../doc/GettingStarted.html">2. Getting Started</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../doc/Algorithms.html">3. Algorithms in <em>MOSAIC</em></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../doc/Algorithms.html">3. Data Processing Algorithms in <em>MOSAIC</em></a></li>
 <li class="toctree-l1"><a class="reference internal" href="../doc/GraphicalInterface.html">4. <em>MOSAIC</em> GUI</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../doc/ScriptingandAdvancedFeatures.html">5. Scripting and Advanced Features</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../doc/settingsFile.html">6. Settings File</a></li>
@@ -146,6 +146,10 @@
 </tbody>
 </table>
 <div class="line-block">
+<div class="line">3/20/15         AB      Added MaxEventLength to multiStateAnalysis settings</div>
+<div class="line">3/6/15          JF      Corrected formatting on cusumLevelAnalysis and multiStateAnalysis dictionary file</div>
+<div class="line">3/6/15          AB      Added MinStateLength parameter for multiStateAnalysis to dictionary</div>
+<div class="line">2/14/15         AB      Added default settings for cusumLevelAnalysis.</div>
 <div class="line">8/20/14         AB      Changed precedence of settings file search to datpath/.settings,</div>
 <div class="line-block">
 <div class="line">datpath/settings, coderoot/.settings and coderoot/settings</div>
@@ -159,7 +163,7 @@
 </div>
 <dl class="class">
 <dt id="mosaic.settings.settings">
-<em class="property">class </em><tt class="descclassname">mosaic.settings.</tt><tt class="descname">settings</tt><big>(</big><em>datpath</em>, <em>defaultwarn=True</em><big>)</big><a class="reference internal" href="../_modules/mosaic/settings.html#settings"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mosaic.settings.settings" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">mosaic.settings.</code><code class="descname">settings</code><span class="sig-paren">(</span><em>datpath</em>, <em>defaultwarn=True</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/settings.html#settings"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mosaic.settings.settings" title="Permalink to this definition">¶</a></dt>
 <dd><p>Initialize a settings object.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -175,7 +179,7 @@
 </table>
 <dl class="method">
 <dt id="mosaic.settings.settings.getSettings">
-<tt class="descname">getSettings</tt><big>(</big><em>section</em><big>)</big><a class="reference internal" href="../_modules/mosaic/settings.html#settings.getSettings"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mosaic.settings.settings.getSettings" title="Permalink to this definition">¶</a></dt>
+<code class="descname">getSettings</code><span class="sig-paren">(</span><em>section</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/settings.html#settings.getSettings"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mosaic.settings.settings.getSettings" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return settings for a specified section as a Python dict.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -214,7 +218,7 @@
 </div>
 <dl class="function">
 <dt id="mosaic.utilities.ionic_current_stats.OpenCurrentDist">
-<tt class="descclassname">mosaic.utilities.ionic_current_stats.</tt><tt class="descname">OpenCurrentDist</tt><big>(</big><em>dat</em>, <em>limit</em><big>)</big><a class="reference internal" href="../_modules/mosaic/utilities/ionic_current_stats.html#OpenCurrentDist"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mosaic.utilities.ionic_current_stats.OpenCurrentDist" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">mosaic.utilities.ionic_current_stats.</code><code class="descname">OpenCurrentDist</code><span class="sig-paren">(</span><em>dat</em>, <em>limit</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/utilities/ionic_current_stats.html#OpenCurrentDist"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mosaic.utilities.ionic_current_stats.OpenCurrentDist" title="Permalink to this definition">¶</a></dt>
 <dd><p>Calculate the mean and standard deviation of a time-series.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -236,25 +240,25 @@
 <span class="target" id="module-mosaic.utilities.util"></span><p>A collection of utility functions</p>
 <dl class="function">
 <dt id="mosaic.utilities.util.avg">
-<tt class="descclassname">mosaic.utilities.util.</tt><tt class="descname">avg</tt><big>(</big><em>dat</em><big>)</big><a class="reference internal" href="../_modules/mosaic/utilities/util.html#avg"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mosaic.utilities.util.avg" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">mosaic.utilities.util.</code><code class="descname">avg</code><span class="sig-paren">(</span><em>dat</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/utilities/util.html#avg"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mosaic.utilities.util.avg" title="Permalink to this definition">¶</a></dt>
 <dd><p>Calculate the average of a list of reals</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="mosaic.utilities.util.commonest">
-<tt class="descclassname">mosaic.utilities.util.</tt><tt class="descname">commonest</tt><big>(</big><em>dat</em><big>)</big><a class="reference internal" href="../_modules/mosaic/utilities/util.html#commonest"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mosaic.utilities.util.commonest" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">mosaic.utilities.util.</code><code class="descname">commonest</code><span class="sig-paren">(</span><em>dat</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/utilities/util.html#commonest"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mosaic.utilities.util.commonest" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return the most common element in a list.</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="mosaic.utilities.util.decimate">
-<tt class="descclassname">mosaic.utilities.util.</tt><tt class="descname">decimate</tt><big>(</big><em>dat</em>, <em>size</em><big>)</big><a class="reference internal" href="../_modules/mosaic/utilities/util.html#decimate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mosaic.utilities.util.decimate" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">mosaic.utilities.util.</code><code class="descname">decimate</code><span class="sig-paren">(</span><em>dat</em>, <em>size</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/utilities/util.html#decimate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mosaic.utilities.util.decimate" title="Permalink to this definition">¶</a></dt>
 <dd><p>Decimate dat for a specified window size.</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="mosaic.utilities.util.filter">
-<tt class="descclassname">mosaic.utilities.util.</tt><tt class="descname">filter</tt><big>(</big><em>dat</em>, <em>windowSz</em><big>)</big><a class="reference internal" href="../_modules/mosaic/utilities/util.html#filter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mosaic.utilities.util.filter" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">mosaic.utilities.util.</code><code class="descname">filter</code><span class="sig-paren">(</span><em>dat</em>, <em>windowSz</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/utilities/util.html#filter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mosaic.utilities.util.filter" title="Permalink to this definition">¶</a></dt>
 <dd><p>Filter the data using a convolution. Returns an
 array of size len(dat)-windowSz+1 if dat is longer than 
 windowSz. If len(dat) &lt; windowSz, raise WindowSizeError</p>
@@ -262,30 +266,55 @@ windowSz. If len(dat) &lt; windowSz, raise WindowSizeError</p>
 
 <dl class="function">
 <dt id="mosaic.utilities.util.flat2">
-<tt class="descclassname">mosaic.utilities.util.</tt><tt class="descname">flat2</tt><big>(</big><em>dat</em><big>)</big><a class="reference internal" href="../_modules/mosaic/utilities/util.html#flat2"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mosaic.utilities.util.flat2" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">mosaic.utilities.util.</code><code class="descname">flat2</code><span class="sig-paren">(</span><em>dat</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/utilities/util.html#flat2"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mosaic.utilities.util.flat2" title="Permalink to this definition">¶</a></dt>
 <dd><p>Flatten a 2D array to a list</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="mosaic.utilities.util.partition">
-<tt class="descclassname">mosaic.utilities.util.</tt><tt class="descname">partition</tt><big>(</big><em>dat</em>, <em>size</em><big>)</big><a class="reference internal" href="../_modules/mosaic/utilities/util.html#partition"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mosaic.utilities.util.partition" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">mosaic.utilities.util.</code><code class="descname">partition</code><span class="sig-paren">(</span><em>dat</em>, <em>size</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/utilities/util.html#partition"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mosaic.utilities.util.partition" title="Permalink to this definition">¶</a></dt>
 <dd><p>Partition a list into sub-lists, each of length size. If the number of elements
 in dat does not partition evenly, the last sub-list will have fewer elements.</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="mosaic.utilities.util.sd">
-<tt class="descclassname">mosaic.utilities.util.</tt><tt class="descname">sd</tt><big>(</big><em>dat</em><big>)</big><a class="reference internal" href="../_modules/mosaic/utilities/util.html#sd"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mosaic.utilities.util.sd" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">mosaic.utilities.util.</code><code class="descname">sd</code><span class="sig-paren">(</span><em>dat</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/utilities/util.html#sd"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mosaic.utilities.util.sd" title="Permalink to this definition">¶</a></dt>
 <dd><p>Wrapper for numpy std</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="mosaic.utilities.util.selectS">
-<tt class="descclassname">mosaic.utilities.util.</tt><tt class="descname">selectS</tt><big>(</big><em>dat</em>, <em>nSigma</em>, <em>mu</em>, <em>sd</em><big>)</big><a class="reference internal" href="../_modules/mosaic/utilities/util.html#selectS"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mosaic.utilities.util.selectS" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">mosaic.utilities.util.</code><code class="descname">selectS</code><span class="sig-paren">(</span><em>dat</em>, <em>nSigma</em>, <em>mu</em>, <em>sd</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/utilities/util.html#selectS"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mosaic.utilities.util.selectS" title="Permalink to this definition">¶</a></dt>
 <dd><p>Select and return data from a list that lie within
 nSigma * SD of the mean.</p>
 </dd></dl>
 
+</div>
+<div class="section" id="mosaic-utilities-fit-funcs-module">
+<h2>11.1.8.4. mosaic.utilities.fit_funcs module<a class="headerlink" href="#mosaic-utilities-fit-funcs-module" title="Permalink to this headline">¶</a></h2>
+<span class="target" id="module-mosaic.utilities.fit_funcs"></span><p>Fit functions used in processing algorithms.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Created:</th><td class="field-body">10/30/2014</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Author:</th><td class="field-body">Arvind Balijepalli &lt;<a class="reference external" href="mailto:arvind&#46;balijepalli&#37;&#52;&#48;nist&#46;gov">arvind<span>&#46;</span>balijepalli<span>&#64;</span>nist<span>&#46;</span>gov</a>&gt;</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">License:</th><td class="field-body">See LICENSE.TXT</td>
+</tr>
+<tr class="field-even field"><th class="field-name">ChangeLog:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+<div class="line-block">
+<div class="line">12/31/14        AB      Changed multi-state function to include a separate tau for</div>
+<div class="line-block">
+<div class="line">each state following Balijepalli et al, ACS Nano 2014.</div>
+</div>
+<div class="line">11/19/14        AB      Initial version</div>
+</div>
 </div>
 </div>
 
@@ -302,7 +331,7 @@ nSigma * SD of the mean.</p>
       
     </p>
     <p>
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.2.3.<br/>
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.3.1.<br/>
     </p>
   </div>
 </footer> -->

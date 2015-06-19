@@ -5,7 +5,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>&lt;no title&gt; &mdash; MOSAIC 1.2 documentation</title>
+    <title>&lt;no title&gt; &mdash; MOSAIC 1.3 documentation</title>
     
     <link rel="stylesheet" href="../_static/basic.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -17,7 +17,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '1.2',
+        VERSION:     '1.3',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -26,13 +26,13 @@
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <script type="text/javascript" src="../_static/js/jquery-1.11.0.min.js"></script>
     <script type="text/javascript" src="../_static/js/jquery-fix.js"></script>
     <script type="text/javascript" src="../_static/bootstrap-3.2.0/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="../_static/bootstrap-sphinx.js"></script>
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
-    <link rel="top" title="MOSAIC 1.2 documentation" href="../index.html" />
+    <link rel="top" title="MOSAIC 1.3 documentation" href="../index.html" />
 
 <meta charset='utf-8'>
 <meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
@@ -40,13 +40,13 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 
 	<script type="text/javascript"
-		src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+		src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
 	</script>
 	<script type="text/javascript" id="_fed_an_js_tag" src="//www.nist.gov/js/federated-analytics.all.min.js?agency=NIST&subagency=github&pua=UA-42404149-54&yt=true&exts=ppsx,pps,f90,sch,rtf,wrl,txz,m1v,xlsm,msi,xsd,f,tif,eps,mpg,xml,pl,xlt,c">
 	</script>	
 
   </head>
-  <body>
+  <body role="document">
 
   <div id="navbar" class="navbar navbar-default navbar-fixed-top">
     <div class="container">
@@ -59,7 +59,7 @@
         </button>
         <a class="navbar-brand" href="../index.html"><img src="../_static/icon_24.png">
            </a>
-        <span class="navbar-text navbar-version pull-left"><b>1.2</b></span>
+        <span class="navbar-text navbar-version pull-left"><b>1.3</b></span>
       </div>
 
         <div class="collapse navbar-collapse nav-collapse">
@@ -81,7 +81,7 @@
       aria-labelledby="dLabelGlobalToc"><ul>
 <li class="toctree-l1"><a class="reference internal" href="Introduction.html">1. Introduction</a></li>
 <li class="toctree-l1"><a class="reference internal" href="GettingStarted.html">2. Getting Started</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Algorithms.html">3. Algorithms in <em>MOSAIC</em></a></li>
+<li class="toctree-l1"><a class="reference internal" href="Algorithms.html">3. Data Processing Algorithms in <em>MOSAIC</em></a></li>
 <li class="toctree-l1"><a class="reference internal" href="GraphicalInterface.html">4. <em>MOSAIC</em> GUI</a></li>
 <li class="toctree-l1"><a class="reference internal" href="ScriptingandAdvancedFeatures.html">5. Scripting and Advanced Features</a></li>
 <li class="toctree-l1"><a class="reference internal" href="settingsFile.html">6. Settings File</a></li>
@@ -124,19 +124,19 @@
     <div class="col-md-12">
       
   <p><strong>Install using Setuptools</strong></p>
-<p><em>MOSAIC</em> can be installed using <a href="#id1"><span class="problematic" id="id2">Python_</span></a> setuptools using <em>pip</em> as shown below.</p>
+<p>The command-line version of <em>MOSAIC</em> can be installed using <em>pip</em> as shown below. Any additional dependencies required by <em>MOSAIC</em> will be installed automatically.</p>
 <div class="highlight-console"><div class="highlight"><pre><span class="go">pip install mosaic-nist</span>
 </pre></div>
 </div>
-<p>When installed in this manner, in addition to the dependencies noted above, you must manually install additional dependencies required for <em>MOSAIC</em> to run. This can also be accomplished using <em>pip</em> as shown below. The version numbers included in the command are recommended but not required.</p>
-<div class="highlight-console"><div class="highlight"><pre><span class="go">pip install numpy==1.8.1 cython==0.20.1 scipy==0.15.0 matplotlib==1.3.1 lmfit==0.7.4 uncertainties==2.4.6 PyWavelets==0.2.2</span>
-</pre></div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Installing the graphical interface requires one to install <em>MOSAIC</em> from the source distribution as outlined below.</p>
 </div>
 <p><strong>Install from a Downloaded Source Distribution</strong></p>
-<p>First we need to obtain the <em>MOSAIC</em> source code. For analyzing publication data, we recommend downloading the latest stable version of the source code (<a href="#id3"><span class="problematic" id="id4">`download source`_</span></a>). Alternatively, the latest development version can be downloaded from the <a href="#id5"><span class="problematic" id="id6">`MOSAIC page on Github`_</span></a>. Here we will show you how to set up <em>MOSAIC</em> from the latest stable release:</p>
+<p>First we need to obtain the <em>MOSAIC</em> source code. For analyzing publication data, we recommend downloading the latest stable version of the source code (<a href="#id1"><span class="problematic" id="id2">`download source`_</span></a>). Alternatively, the latest development version can be downloaded from the <a href="#id3"><span class="problematic" id="id4">`MOSAIC page on Github`_</span></a>. Here we will show you how to set up <em>MOSAIC</em> from the latest stable release:</p>
 <ol class="arabic simple">
-<li>Download the latest release (<a href="#id7"><span class="problematic" id="id8">`download source`_</span></a>)</li>
-<li>Create a directory for the project source. In this case we will create a directory called MOSAIC, located in <tt class="docutils literal"><span class="pre">~/projects/</span></tt>, where &#8216;~&#8217; is your home directory.</li>
+<li>Download the latest release (<a href="#id5"><span class="problematic" id="id6">`download source`_</span></a>)</li>
+<li>Create a directory for the project source. In this case we will create a directory called MOSAIC, located in <code class="docutils literal"><span class="pre">~/projects/</span></code>, where &#8216;~&#8217; is your home directory.</li>
 </ol>
 <div class="highlight-console"><div class="highlight"><pre><span class="gp">$</span> mkdir ~/projects/MOSAIC
 </pre></div>
@@ -159,7 +159,7 @@
 <p class="last">You will notice that (<em>MOSAIC</em>) now appears in front of the $ prompt in your shell. This inidicates that the virtual environment is active. We have employed this notation to indicate commands that should be run from inside the virtual environment.</p>
 </div>
 <ol class="arabic simple" start="6">
-<li><em>MOSAIC</em> and its dependencies are built using setuptools via a custom command as described below. However, we  must first install cython manually. Run the following command:</li>
+<li><em>MOSAIC</em> and its dependencies are built using setuptools via a custom command as described below. However, we  must first install Cython manually. Run the following command:</li>
 </ol>
 <div class="highlight-console"><div class="highlight"><pre><span class="gp">(MOSAIC)$</span> pip install cython
 </pre></div>
@@ -190,7 +190,7 @@
       
     </p>
     <p>
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.2.3.<br/>
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.3.1.<br/>
     </p>
   </div>
 </footer> -->

@@ -146,7 +146,7 @@ html_theme_options = {
 
   'navbar_links': [
         ("Mailing List", "doc/mailingList"),
-        ("Develop MOSAIC", "//github.com/usnistgov/mosaic", True),
+        ("Develop", "//github.com/usnistgov/mosaic", True),
         ("Issue Tracker", "//github.com/usnistgov/mosaic/issues", True),
    ],
 
@@ -156,6 +156,7 @@ html_theme_options = {
    # Render the current pages TOC in the navbar. (Default: true)
    'navbar_pagenav': False,
    
+   'bootswatch_theme': "paper",
  }
 
 # Add any paths that contain custom themes here, relative to this directory.
@@ -250,7 +251,6 @@ latex_elements = {
     \usepackage{changepage}
     \usepackage{graphicx}
     \usepackage{hyperref}
-
 
     \makeatletter
     \renewcommand{\maketitle}{%

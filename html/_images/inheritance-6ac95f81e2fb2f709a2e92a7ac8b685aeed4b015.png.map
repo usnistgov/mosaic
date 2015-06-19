@@ -1,0 +1,5 @@
+<map id="inheritanced734f22811" name="inheritanced734f22811">
+<area shape="rect" id="node2" href="#mosaic.cusumLevelAnalysis.cusumLevelAnalysis" title="Implements the CUSUM algorithm (used by OpenNanopore for example) in MOSAIC. This approach sacrifices including system information in the analysis in favor of much faster fitting of single&#45; and multi&#45;level events." alt="" coords="328,54,595,79"/>
+<area shape="rect" id="node3" href="mosaic.meta.html#mosaic.metaEventProcessor.metaEventProcessor" title=".. warning:: |metaclass|" alt="" coords="6,54,279,79"/>
+<area shape="rect" id="node4" href="#mosaic.cusumLevelAnalysis.datblock" title="Smart data block that holds a time&#45;series of data and keeps track" alt="" coords="45,5,241,30"/>
+</map>

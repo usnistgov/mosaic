@@ -5,7 +5,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>IGOR &mdash; MOSAIC 1.2 documentation</title>
+    <title>IGOR &mdash; MOSAIC 1.3 documentation</title>
     
     <link rel="stylesheet" href="../_static/basic.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -17,7 +17,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '1.2',
+        VERSION:     '1.3',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -26,13 +26,13 @@
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <script type="text/javascript" src="../_static/js/jquery-1.11.0.min.js"></script>
     <script type="text/javascript" src="../_static/js/jquery-fix.js"></script>
     <script type="text/javascript" src="../_static/bootstrap-3.2.0/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="../_static/bootstrap-sphinx.js"></script>
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
-    <link rel="top" title="MOSAIC 1.2 documentation" href="../index.html" />
+    <link rel="top" title="MOSAIC 1.3 documentation" href="../index.html" />
 
 <meta charset='utf-8'>
 <meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
@@ -40,13 +40,13 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 
 	<script type="text/javascript"
-		src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+		src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
 	</script>
 	<script type="text/javascript" id="_fed_an_js_tag" src="//www.nist.gov/js/federated-analytics.all.min.js?agency=NIST&subagency=github&pua=UA-42404149-54&yt=true&exts=ppsx,pps,f90,sch,rtf,wrl,txz,m1v,xlsm,msi,xsd,f,tif,eps,mpg,xml,pl,xlt,c">
 	</script>	
 
   </head>
-  <body>
+  <body role="document">
 
   <div id="navbar" class="navbar navbar-default navbar-fixed-top">
     <div class="container">
@@ -59,7 +59,7 @@
         </button>
         <a class="navbar-brand" href="../index.html"><img src="../_static/icon_24.png">
            </a>
-        <span class="navbar-text navbar-version pull-left"><b>1.2</b></span>
+        <span class="navbar-text navbar-version pull-left"><b>1.3</b></span>
       </div>
 
         <div class="collapse navbar-collapse nav-collapse">
@@ -81,7 +81,7 @@
       aria-labelledby="dLabelGlobalToc"><ul>
 <li class="toctree-l1"><a class="reference internal" href="Introduction.html">1. Introduction</a></li>
 <li class="toctree-l1"><a class="reference internal" href="GettingStarted.html">2. Getting Started</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Algorithms.html">3. Algorithms in <em>MOSAIC</em></a></li>
+<li class="toctree-l1"><a class="reference internal" href="Algorithms.html">3. Data Processing Algorithms in <em>MOSAIC</em></a></li>
 <li class="toctree-l1"><a class="reference internal" href="GraphicalInterface.html">4. <em>MOSAIC</em> GUI</a></li>
 <li class="toctree-l1"><a class="reference internal" href="ScriptingandAdvancedFeatures.html">5. Scripting and Advanced Features</a></li>
 <li class="toctree-l1"><a class="reference internal" href="settingsFile.html">6. Settings File</a></li>
@@ -133,21 +133,21 @@
 <p>With the ODBC administrator program installed, the next step is to install the <a class="reference external" href="http://www.ch-werner.de/sqliteodbc/">SQLite driver for IGOR</a> necessary to interface with the database.  Once downloaded run the installation package in &#8220;sqlite3-odbc-0.93.dmg&#8221; and follow the setup instructions within the disk image.  The driver should be ready to use within <a class="reference external" href="http://www.wavemetrics.com/products/igorpro/igorpro.htm">IGOR</a>.</p>
 <div class="admonition hint">
 <p class="first admonition-title">Hint</p>
-<p class="last">The <a class="reference external" href="http://www.wavemetrics.com/products/igorpro/igorpro.htm">IGOR</a> addon installation (described above) can be activated automatically on <em>Mac OS X</em> by issuing the command <tt class="docutils literal"><span class="pre">python</span> <span class="pre">setup.py</span> <span class="pre">mosaic_addons</span> <span class="pre">--igor</span></tt> from the <em>MOSAIC</em> root directory. Note that administrator privileges are required.</p>
+<p class="last">The <a class="reference external" href="http://www.wavemetrics.com/products/igorpro/igorpro.htm">IGOR</a> addon installation (described above) can be activated automatically on <em>Mac OS X</em> by issuing the command <code class="docutils literal"><span class="pre">python</span> <span class="pre">setup.py</span> <span class="pre">mosaic_addons</span> <span class="pre">--igor</span></code> from the <em>MOSAIC</em> root directory. Note that administrator privileges are required.</p>
 </div>
 </div>
 <div class="section" id="simple-database-query-in-igor">
 <h2>Simple Database Query in IGOR<a class="headerlink" href="#simple-database-query-in-igor" title="Permalink to this headline">¶</a></h2>
 <p><a class="reference external" href="http://www.wavemetrics.com/products/igorpro/igorpro.htm">IGOR</a> operates on databases with a single High Level operation command.  This one command handles the database connection, query, export of data and closing of the database in one simple function or macro.  To access this functionality, first open the procedure window and create the following function:</p>
-<div class="highlight-igor"><div class="highlight"><pre>#include &lt;SQLUtils&gt;
+<div class="highlight-igor"><div class="highlight"><pre><span class="nd">#include</span> &lt;SQLUtils&gt;
 
-Function QuerySQLData()
+<span class="kr">Function</span> QuerySQLData()
 
-        String connectionStr= &quot;DRIVER={SQLite3 Driver};DATABASE=&#39;database path&#39;;&quot;
-        String statement = &quot;select Blockdepth, ResTime from metadata where ProcessingStatus =&#39;normal&#39;&quot;
+        <span class="kt">String</span> connectionStr= <span class="s">&quot;DRIVER={SQLite3 Driver};DATABASE=&#39;database path&#39;;&quot;</span>
+        <span class="kt">String</span> statement = <span class="s">&quot;select Blockdepth, ResTime from metadata where ProcessingStatus =&#39;normal&#39;&quot;</span>
 
         SQLHighLevelOp/CSTR={connectionStr, SQL_Driver_COMPLETE}/O/E=1 statement
-End
+<span class="kr">End</span>
 </pre></div>
 </div>
 <p>Running this function will extract all normal events and create two waves containing the Blockade depth and Residence time of the events in sequence for further processing in <a class="reference external" href="http://www.wavemetrics.com/products/igorpro/igorpro.htm">IGOR</a>.  Two <a class="reference external" href="http://www.wavemetrics.com/products/igorpro/igorpro.htm">IGOR</a> functions are included in the <cite>/addon/IGOR/</cite> folder that import the data into <a class="reference external" href="http://www.wavemetrics.com/products/igorpro/igorpro.htm">IGOR</a> waves for further processing. To open these functions to run, simply double click the file and the procedures will be opened in a new <a class="reference external" href="http://www.wavemetrics.com/products/igorpro/igorpro.htm">IGOR</a> project.  Once open, the procedure file can be compiled within <a class="reference external" href="http://www.wavemetrics.com/products/igorpro/igorpro.htm">IGOR</a> to enable the code.  A new menu &#8220;Mosaic&#8221; should then appear in the title bar within <a class="reference external" href="http://www.wavemetrics.com/products/igorpro/igorpro.htm">IGOR</a>.  A function &#8220;Fetch SQL data&#8221; will bring up a dialog box to manually enter a search string.  After entering the string and clicking continue, you will be prompted to locate the database file you wish to access.  The data will be imported into waves with the name automatically imported from the database.  <em>Warning:</em> this will overwrite any existing data that is called by identical wave names.</p>
@@ -167,7 +167,7 @@ End
       
     </p>
     <p>
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.2.3.<br/>
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.3.1.<br/>
     </p>
   </div>
 </footer> -->
