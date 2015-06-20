@@ -148,6 +148,7 @@ html_theme_options = {
         ("Mailing List", "doc/mailingList"),
         ("Develop", "//github.com/usnistgov/mosaic", True),
         ("Issue Tracker", "//github.com/usnistgov/mosaic/issues", True),
+        ("Download PDF Documentation", "../latex/MOSAIC.pdf", True),
    ],
 
    # Render the next and previous page links in navbar. (Default: true)
