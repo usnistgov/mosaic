@@ -132,7 +132,25 @@ md-button.menuBtn > md-icon {
   max-width: 500px;
 }
 
+.icon-frame {
+  height: 250px;
+  width: 250px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  position: relative;
+  border-radius: 5px;
+}
 
+.icon-frame img {
+  width: 200px;
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-right: -50%;
+  transform: translate(-50%, -50%);
+}
 /* Utils */
 
 .content-wrapper {
