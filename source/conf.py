@@ -145,10 +145,10 @@ html_theme_options = {
   "bootstrap_version": "3",
 
   'navbar_links': [
+        ("Download PDF", "../latex/MOSAIC.pdf", True),
         ("Mailing List", "doc/mailingList"),
         ("Develop", "//github.com/usnistgov/mosaic", True),
         ("Issue Tracker", "//github.com/usnistgov/mosaic/issues", True),
-        ("Download PDF Documentation", "../latex/MOSAIC.pdf", True),
    ],
 
    # Render the next and previous page links in navbar. (Default: true)
@@ -173,7 +173,7 @@ html_theme_options = {
 
 # The name of an image file (relative to this directory) to place at the top
 # of the sidebar.
-html_logo='images/icon_24.png'
+html_logo='images/icon_36.png'
 
 # The name of an image file (within the static path) to use as favicon of the
 # docs.  This file should be a Windows icon file (.ico) being 16x16 or 32x32
