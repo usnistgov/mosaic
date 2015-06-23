@@ -3,7 +3,7 @@
 	<html lang="en">
 	
 	<head>
-		<title>MOSAIC Downloads</title>
+    <title>MOSAIC Downloads</title>
 		<link rel="icon" href="assets/img/favicon.ico" type="image/ico"/>
 
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
@@ -31,7 +31,7 @@
 		<div flex layout="column" tabIndex="-1" role="main" class="md-whiteframe-z3">
 
       <md-toolbar ng-controller="AppCtrl" layout="row" hide-sm class="md-whiteframe-z4">
-        <a href="index.html" style="padding-top: 5px; padding-left: 5px;"><img src="assets/img/icon100px.png" width="50%"></img></a>
+        <a href="index.html" style="padding-top: 15px; padding-left: 25px;"><md-icon md-font-set="material-icons md-24">arrow_back</md-icon></img></a>
         <span flex></span>
         <md-button ng-href="{{docURL}}"><h4>Documentation</h4></md-button>
         <md-button ng-href="{{mailingListURL}}"><h4>Mailing List</h4></md-button>
@@ -64,8 +64,9 @@
       </md-sidenav>
 
       <md-content flex id="content">
-          <div layout="row" class="download-page">
-            <div flex><h2>MOSAIC Downloads</h2></div>
+          <div layout="row" class="download-page" layout-align="center center">
+            <div flex="10" flex-sm="20"><img src="assets/img/icon100px.png" width="50%"></img></div>
+            <div flex><h2>Downloads</h2></div>
           </div>
 	
 		<md-list>
