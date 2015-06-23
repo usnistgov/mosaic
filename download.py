@@ -49,9 +49,14 @@ def GenerateHeader():
 		<title>MOSAIC Downloads</title>
 		<link rel="icon" href="assets/img/favicon.ico" type="image/ico"/>
 
-		<meta charset="utf-8">
-		<meta http-equiv="X-UA-Compatible" content="IE=edge">
-		<meta name="description" content="">
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta http-equiv="Content-Language" content="en"/>
+    <meta http-equiv="Content-Style-Type" content="text/css"/>
+    <meta name="description" content="MOSAIC is a modular single-molecule analysis toolbox to decode multi-state nanopore data."/>
+    <meta name="author" content="Arvind Balijepalli"/>
+    <meta name="google-site-verification" content="BXETzCWmp_8xdMvDlUidbzJ4zbvyjVnNwiabBPnCvDk"/>
+    <meta name="msvalidate.01" content="6486B1AC4BD85BB7125DD2B47CA4E4C5"/>
+
 		<meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no" />
 
 		<link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Roboto:200,300,400,400italic'>

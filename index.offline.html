@@ -4,9 +4,14 @@
     <title>MOSAIC</title>
     <link rel="icon" href="assets/img/favicon.ico" type="image/ico"/>
 
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="description" content="">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta http-equiv="Content-Language" content="en"/>
+    <meta http-equiv="Content-Style-Type" content="text/css"/>
+    <meta name="description" content="MOSAIC is a modular single-molecule analysis toolbox to decode multi-state nanopore data."/>
+    <meta name="author" content="Arvind Balijepalli"/>
+    <meta name="google-site-verification" content="BXETzCWmp_8xdMvDlUidbzJ4zbvyjVnNwiabBPnCvDk"/>
+    <meta name="msvalidate.01" content="6486B1AC4BD85BB7125DD2B47CA4E4C5"/>
+
     <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no" />
 
     <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Roboto:200,300,400,400italic'>
@@ -61,7 +66,7 @@
       <md-content flex id="content">
           <div flex ng-controller="AppCtrl" layout="row" layout-align="center center" class="tagline md-whiteframe-z2">
             <div flex hide-sm>
-              <div class="icon-frame md-whiteframe-z3">
+              <div class="icon-frame">
                 <img src="assets/img/icon.png">
               </div>
             </div>
@@ -94,7 +99,7 @@
                 <div layout="row" layout-sm="column">
                   <div flex>
                     <center>
-                      <img src="assets/img/GUI-01.png" alt="GUI" width="90%" style="vertical-align: middle;">
+                      <img src="assets/img/GUI-01.png" alt="GUI" style="vertical-align: middle; width:250%">
                     </center>
                   </div>
                   <div flex>
@@ -118,39 +123,45 @@
           <div layout="row" layout-sm="column">
             <md-card flex>
                   <img ng-src="assets/img/Script-01.png" width="100%" class="md-card-image" alt="Scripting">
+
                   <md-card-content>
                     <h2 class="md-title">Powerful Scripting</h2>
                     <p>
-                      MOSAIC can be scripted to run multiple analyses in batch mode. Leveraging the power of Python, MOSAIC can also be integrated into custom scripts and work flows.<br/><br/>
+                      MOSAIC can be scripted to run multiple analyses in batch mode. Leveraging the power of Python, MOSAIC can also be integrated into custom scripts and work flows.
                     </p>
                   </md-card-content>
-                  <div class="md-actions" layout="row" layout-align="end center">
-                    <md-button aria-label="Learn More" ng-href="{{scriptURL}}"><h4>Learn More</h4></md-button>
+                  
+                  <div flex class="md-actions" layout="row" layout-align="end center">
+                      <md-button aria-label="Learn More" ng-href="{{scriptURL}}"><h4>Learn More</h4></md-button>
                   </div>
             </md-card>
 
             <md-card flex>
                   <img ng-src="assets/img/GetMore-01.png" width="100%" class="md-card-image" alt="Get More">
+                  
                   <md-card-content>
                     <h2 class="md-title">Better Results</h2>
                     <p>
                       MOSAIC’s novel algorithms allow you to see events that other software frequently misses. MOSAIC leverages a physical model of the system response to recover events from fast transients.
                     </p>
                   </md-card-content>
-                  <div class="md-actions" layout="row" layout-align="end end">
+                  
+                  <div flex class="md-actions" layout="row" layout-align="end end">
                     <md-button aria-label="Learn More" ng-href="{{algoURL}}"><h4>Learn More</h4></md-button>
                   </div>
             </md-card>
 
             <md-card flex>
                   <img ng-src="assets/img/GetMore-01.png" width="100%" class="md-card-image" alt="Get More">
+                  
                   <md-card-content>
                     <h2 class="md-title">Better Results</h2>
                     <p>
                       MOSAIC’s novel algorithms allow you to see events that other software frequently misses. MOSAIC leverages a physical model of the system response to recover events from fast transients.
                     </p>
                   </md-card-content>
-                  <div class="md-actions" layout="row" layout-align="end end">
+                  
+                  <div flex class="md-actions" layout="row" layout-align="end end">
                     <md-button aria-label="Learn More" ng-href="{{algoURL}}"><h4>Learn More</h4></md-button>
                   </div>
             </md-card>

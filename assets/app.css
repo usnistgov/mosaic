@@ -139,7 +139,8 @@ md-button.menuBtn > md-icon {
   margin-left: auto;
   margin-right: auto;
   position: relative;
-  border-radius: 5px;
+  border-radius: 10px;
+  background: rgba(41, 50, 145, 0.1)
 }
 
 .icon-frame img {
@@ -212,7 +213,7 @@ span.name {
 
 p {
   text-indent: 20px;
-  color: black;
+  color: #696969;
   font-family: 'Roboto', sans-serif;
   font-size: 16px;
   font-weight: 200;
@@ -257,6 +258,7 @@ p {
   color: black;
   font-family: 'Roboto', sans-serif;
   font-weight: 200;
+  color: #505050;
 }
 
 .m-grid-tile h2 {
