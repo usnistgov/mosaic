@@ -367,7 +367,7 @@ class metaTrajIO(object):
 		
 	def scaleData(self, data):
 		"""
-			.. note:: |interfacemethod|
+			.. important:: |interfacemethod|
 
 			Scale the raw data loaded with :func:`~mosaic.metaTrajIO.metaTrajIO.readdata`. Note this function will not necessarily receive the entire data array loaded with :func:`~mosaic.metaTrajIO.metaTrajIO.readdata`. Transformations must be able to process partial data chunks.
 
