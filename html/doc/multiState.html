@@ -132,6 +132,45 @@
 <div class="figure align-center">
 <a class="reference internal image-reference" href="../_images/Multistate.png"><img alt="../_images/Multistate.png" src="../_images/Multistate.png" style="width: 50%;" /></a>
 </div>
+<div class="section" id="algorithm-settings">
+<h2>Algorithm Settings<a class="headerlink" href="#algorithm-settings" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><p>Analyze a multi-step event that contains two or more states. This method includes system
+information in the analysis, specifically the filtering effects (through the RC constant)
+of either amplifiers or the membrane/nanopore complex. The analysis generates several
+parameters that are stored as metadata including:</p>
+<ol class="arabic simple">
+<li>Blockade depth: the ratio of the open channel current to the blocked current</li>
+<li>Residence time: the time the molecule spends inside the pore</li>
+<li>Tau: the RC constant  of the response to a step input (e.g. the entry or exit of the molecule into or out of the nanopore).</li>
+</ol>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Keyword Args:</th><td class="field-body"><dl class="first docutils">
+<dt>In addition to <a class="reference internal" href="../api-doc/mosaic.meta.html#mosaic.metaEventProcessor.metaEventProcessor" title="mosaic.metaEventProcessor.metaEventProcessor"><code class="xref py py-class docutils literal"><span class="pre">metaEventProcessor</span></code></a> args,</dt>
+<dd><ul class="first last simple">
+<li><cite>InitThreshold</cite> :     internal threshold for initial state determination (default: 5.0)</li>
+<li><cite>MinStateLength</cite> :    minimum number of data points required to assign a state within an event (default: 4)</li>
+<li><cite>MaxEventLength</cite> :    maximum length (in data points) of events that will be processed (default: 10000)</li>
+<li><cite>FitTol</cite> :                    fit tolerance for convergence (default: 1.e-7)</li>
+<li><cite>FitIters</cite> :                  maximum fit iterations (default: 5000)</li>
+<li><cite>UnlinkRCConst</cite> :                     When True, unlinks the RC constants in the fit function to vary independently of each other. (Default: <cite>True</cite>)</li>
+</ul>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Errors:</th><td class="field-body"><p class="first last">When an event cannot be analyzed, all metadata are set to -1.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+</div>
+<div class="section" id="metadata-output">
+<h2>Metadata Output<a class="headerlink" href="#metadata-output" title="Permalink to this headline">¶</a></h2>
 <p>The <a class="reference internal" href="../api-doc/mosaic.processing.html#mosaic.multiStateAnalysis.multiStateAnalysis" title="mosaic.multiStateAnalysis.multiStateAnalysis"><code class="xref py py-class docutils literal"><span class="pre">multiStateAnalysis</span></code></a> algorithm outputs meta-data that characterizes every processed event. Similar to the <a class="reference internal" href="stepResponse.html#stepresponse-page"><span>Step Response Analysis</span></a> algorithm, this information is stored in a <a href="#id2"><span class="problematic" id="id3">SQLite_</span></a> database and is available for further processing (see <a class="reference internal" href="DatabaseStructure.html#database-page"><span>Database Structure and Query Syntax</span></a>). Notably, the data output by <a class="reference internal" href="../api-doc/mosaic.processing.html#mosaic.multiStateAnalysis.multiStateAnalysis" title="mosaic.multiStateAnalysis.multiStateAnalysis"><code class="xref py py-class docutils literal"><span class="pre">multiStateAnalysis</span></code></a> differs from <a class="reference internal" href="../api-doc/mosaic.processing.html#mosaic.stepResponseAnalysis.stepResponseAnalysis" title="mosaic.stepResponseAnalysis.stepResponseAnalysis"><code class="xref py py-class docutils literal"><span class="pre">stepResponseAnalysis</span></code></a> in one important way. Because the number of states (<em>NStates</em>) detected in each event is not pre-determined, key meta-data (e.g. <em>BlockDepth</em>, <em>EventDelay</em>, etc.) are stored as arrays of real numbers with length equal to <em>NStates</em>.</p>
 <table border="1" class="docutils">
 <colgroup>
@@ -194,6 +233,7 @@
 </tr>
 </tbody>
 </table>
+</div>
 </div>
 
 

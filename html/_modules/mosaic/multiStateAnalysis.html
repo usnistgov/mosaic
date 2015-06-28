@@ -185,12 +185,10 @@
 <span class="sd">		information in the analysis, specifically the filtering effects (through the RC constant)</span>
 <span class="sd">		of either amplifiers or the membrane/nanopore complex. The analysis generates several </span>
 <span class="sd">		parameters that are stored as metadata including:</span>
-<span class="sd">			1. Blockade depth: the ratio of the open channel current to the blocked current</span>
-<span class="sd">			2. Residence time: the time the molecule spends inside the pore</span>
-<span class="sd">			3. Tau: the 1/RC of the response to a step input (e.g. the entry or exit of the</span>
-<span class="sd">				molecule into or out of the nanopore).</span>
-
-<span class="sd">		When an event cannot be analyzed, all meta=data are set to -1.</span>
+<span class="sd">			</span>
+<span class="sd">		1. Blockade depth: the ratio of the open channel current to the blocked current</span>
+<span class="sd">		2. Residence time: the time the molecule spends inside the pore</span>
+<span class="sd">		3. Tau: the RC constant  of the response to a step input (e.g. the entry or exit of the molecule into or out of the nanopore).</span>
 
 <span class="sd">		:Keyword Args:</span>
 <span class="sd">			In addition to :class:`~mosaic.metaEventProcessor.metaEventProcessor` args,</span>
@@ -199,6 +197,13 @@
 <span class="sd">				- `MaxEventLength` :	maximum length (in data points) of events that will be processed (default: 10000)</span>
 <span class="sd">				- `FitTol` :			fit tolerance for convergence (default: 1.e-7)</span>
 <span class="sd">				- `FitIters` :			maximum fit iterations (default: 5000)</span>
+<span class="sd">				- `UnlinkRCConst` :			When True, unlinks the RC constants in the fit function to vary independently of each other. (Default: `True`)</span>
+
+<span class="sd">		:Errors:</span>
+
+<span class="sd">			When an event cannot be analyzed, all metadata are set to -1.</span>
+
+
 <span class="sd">	&quot;&quot;&quot;</span>
 	<span class="k">def</span> <span class="nf">_init</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
 		<span class="sd">&quot;&quot;&quot;</span>
@@ -236,6 +241,7 @@
 			<span class="bp">self</span><span class="o">.</span><span class="n">InitThreshold</span><span class="o">=</span><span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">settingsDict</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s">&quot;InitThreshold&quot;</span><span class="p">,</span> <span class="mf">5.0</span><span class="p">))</span>
 			<span class="bp">self</span><span class="o">.</span><span class="n">MinStateLength</span><span class="o">=</span><span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">settingsDict</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s">&quot;MinStateLength&quot;</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
 			<span class="bp">self</span><span class="o">.</span><span class="n">MaxEventLength</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">settingsDict</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s">&quot;MaxEventLength&quot;</span><span class="p">,</span> <span class="mi">10000</span><span class="p">))</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">UnlinkRCConst</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">settingsDict</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s">&quot;UnlinkRCConst&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
 		<span class="k">except</span> <span class="ne">ValueError</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
 			<span class="k">raise</span> <span class="n">commonExceptions</span><span class="o">.</span><span class="n">SettingsTypeError</span><span class="p">(</span> <span class="n">err</span> <span class="p">)</span>
 
@@ -368,7 +374,13 @@
 			<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">initguess</span><span class="p">)):</span>
 				<span class="n">params</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="s">&#39;a&#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">),</span> <span class="n">value</span><span class="o">=</span><span class="n">initguess</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">-</span><span class="n">initguess</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span> 
 				<span class="n">params</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="s">&#39;mu&#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">),</span> <span class="n">value</span><span class="o">=</span><span class="n">initguess</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span><span class="o">*</span><span class="n">dt</span><span class="p">)</span> 
-				<span class="n">params</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="s">&#39;tau&#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">),</span> <span class="n">value</span><span class="o">=</span><span class="n">dt</span><span class="o">*</span><span class="mf">5.</span><span class="p">)</span>
+				<span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">UnlinkRCConst</span><span class="p">:</span>
+					<span class="n">params</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="s">&#39;tau&#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">),</span> <span class="n">value</span><span class="o">=</span><span class="n">dt</span><span class="o">*</span><span class="mf">5.</span><span class="p">)</span>
+				<span class="k">else</span><span class="p">:</span>
+					<span class="k">if</span> <span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="o">==</span><span class="mi">0</span><span class="p">:</span>
+						<span class="n">params</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="s">&#39;tau&#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">),</span> <span class="n">value</span><span class="o">=</span><span class="n">dt</span><span class="o">*</span><span class="mf">5.</span><span class="p">)</span>
+					<span class="k">else</span><span class="p">:</span>
+						<span class="n">params</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="s">&#39;tau&#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">),</span> <span class="n">value</span><span class="o">=</span><span class="n">dt</span><span class="o">*</span><span class="mf">5.</span><span class="p">,</span> <span class="n">expr</span><span class="o">=</span><span class="s">&#39;tau0&#39;</span><span class="p">)</span>
 
 			<span class="n">params</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="s">&#39;b&#39;</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="n">initguess</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span>
 			

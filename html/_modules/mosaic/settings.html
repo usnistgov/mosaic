@@ -133,6 +133,7 @@
 <span class="sd">	:License:	See LICENSE.TXT</span>
 <span class="sd">	:ChangeLog:</span>
 <span class="sd">	.. line-block::</span>
+<span class="sd">		6/24/15 	AB 	Added an option to unlink the RC constants in stepResponseAnalysis.</span>
 <span class="sd">		3/20/15 	AB 	Added MaxEventLength to multiStateAnalysis settings</span>
 <span class="sd">		3/6/15		JF	Corrected formatting on cusumLevelAnalysis and multiStateAnalysis dictionary file</span>
 <span class="sd">		3/6/15		AB 	Added MinStateLength parameter for multiStateAnalysis to dictionary</span>
@@ -222,14 +223,16 @@
 <span class="s">		},</span>
 <span class="s">		&quot;stepResponseAnalysis&quot; : {</span>
 <span class="s">			&quot;FitTol&quot;				: &quot;1.e-7&quot;,</span>
-<span class="s">			&quot;FitIters&quot;				: &quot;50000&quot;</span>
+<span class="s">			&quot;FitIters&quot;				: &quot;50000&quot;,</span>
+<span class="s">			&quot;UnlinkRCConst&quot; 		: &quot;1&quot;</span>
 <span class="s">		},</span>
 <span class="s">		&quot;multiStateAnalysis&quot; : {</span>
 <span class="s">            &quot;FitTol&quot;				: &quot;1.e-7&quot;,</span>
 <span class="s">            &quot;FitIters&quot;				: &quot;50000&quot;,</span>
 <span class="s">            &quot;InitThreshold&quot;			: &quot;2.5&quot;,</span>
 <span class="s">            &quot;MinStateLength&quot;		: &quot;10&quot;,</span>
-<span class="s">            &quot;MaxEventLength&quot; 		: &quot;10000&quot;</span>
+<span class="s">            &quot;MaxEventLength&quot; 		: &quot;10000&quot;,</span>
+<span class="s">            &quot;UnlinkRCConst&quot; 		: &quot;1&quot;</span>
 <span class="s">	     },</span>
 <span class="s">	     &quot;cusumLevelAnalysis&quot;: {</span>
 <span class="s">			&quot;StepSize&quot;: 3.0, </span>

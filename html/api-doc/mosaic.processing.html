@@ -154,6 +154,7 @@
 </tbody>
 </table>
 <div class="line-block">
+<div class="line">6/24/15         AB      Added an option to unlink the RC constants in stepResponseAnalysis.</div>
 <div class="line">11/7/14         AB      Error codes describing event rejection are now more specific.</div>
 <div class="line">11/5/14         AB      Fixed a bug in the event fitting logic that prevented</div>
 <div class="line-block">
@@ -186,20 +187,32 @@ information in the analysis, specifically the filtering effects (throught the RC
 of either amplifiers or the membrane/nanopore complex. The analysis generates several 
 parameters that are stored as metadata including:</p>
 <blockquote>
-<div><ol class="arabic">
-<li><p class="first">Blockade depth: the ratio of the open channel current to the blocked current</p>
-</li>
-<li><p class="first">Residence time: the time the molecule spends inside the pore</p>
-</li>
-<li><dl class="first docutils">
-<dt>Rise time: the 1/RC of the response to a step input (e.g. the entry or exit of the</dt>
-<dd><p class="first last">molecule into or out of the nanopore).</p>
-</dd>
-</dl>
-</li>
+<div><ol class="arabic simple">
+<li>Blockade depth: the ratio of the open channel current to the blocked current</li>
+<li>Residence time: the time the molecule spends inside the pore</li>
+<li>Tau: the RC constant of the response to a step input (e.g. the entry or exit of the molecule into or out of the nanopore).</li>
 </ol>
 </div></blockquote>
-<p>When an event cannot be analyzed, the blockade depth, residence time and rise time are set to -1.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Keyword Args:</th><td class="field-body"><dl class="first docutils">
+<dt>In addition to <a class="reference internal" href="mosaic.meta.html#mosaic.metaEventProcessor.metaEventProcessor" title="mosaic.metaEventProcessor.metaEventProcessor"><code class="xref py py-class docutils literal"><span class="pre">metaEventProcessor</span></code></a> args,</dt>
+<dd><ul class="first last simple">
+<li><cite>FitTol</cite> :            Tolerance value for the least squares algorithm that controls the convergence of the fit (Default: <cite>1e-7</cite>).</li>
+<li><cite>FitIters</cite> :          Maximum number of iterations before terminating the fit (Default: <cite>50000</cite>).</li>
+<li><cite>UnlinkRCConst</cite> :             When True, unlinks the RC constants in the fit function to vary independently of each other. (Default: <cite>False</cite>)</li>
+</ul>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Errors:</th><td class="field-body"><p class="first last">When an event cannot be analyzed, the blockade depth, residence time and rise time are set to -1.</p>
+</td>
+</tr>
+</tbody>
+</table>
 <dl class="method">
 <dt id="mosaic.stepResponseAnalysis.stepResponseAnalysis.formatsettings">
 <code class="descname">formatsettings</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/stepResponseAnalysis.html#stepResponseAnalysis.formatsettings"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mosaic.stepResponseAnalysis.stepResponseAnalysis.formatsettings" title="Permalink to this definition">¶</a></dt>
@@ -303,26 +316,16 @@ of its mean and SD.</p>
 information in the analysis, specifically the filtering effects (through the RC constant)
 of either amplifiers or the membrane/nanopore complex. The analysis generates several 
 parameters that are stored as metadata including:</p>
-<blockquote>
-<div><ol class="arabic">
-<li><p class="first">Blockade depth: the ratio of the open channel current to the blocked current</p>
-</li>
-<li><p class="first">Residence time: the time the molecule spends inside the pore</p>
-</li>
-<li><dl class="first docutils">
-<dt>Tau: the 1/RC of the response to a step input (e.g. the entry or exit of the</dt>
-<dd><p class="first last">molecule into or out of the nanopore).</p>
-</dd>
-</dl>
-</li>
+<ol class="arabic simple">
+<li>Blockade depth: the ratio of the open channel current to the blocked current</li>
+<li>Residence time: the time the molecule spends inside the pore</li>
+<li>Tau: the RC constant  of the response to a step input (e.g. the entry or exit of the molecule into or out of the nanopore).</li>
 </ol>
-</div></blockquote>
-<p>When an event cannot be analyzed, all meta=data are set to -1.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Keyword Args:</th><td class="field-body"><dl class="first last docutils">
+<tr class="field-odd field"><th class="field-name">Keyword Args:</th><td class="field-body"><dl class="first docutils">
 <dt>In addition to <a class="reference internal" href="mosaic.meta.html#mosaic.metaEventProcessor.metaEventProcessor" title="mosaic.metaEventProcessor.metaEventProcessor"><code class="xref py py-class docutils literal"><span class="pre">metaEventProcessor</span></code></a> args,</dt>
 <dd><ul class="first last simple">
 <li><cite>InitThreshold</cite> :     internal threshold for initial state determination (default: 5.0)</li>
@@ -330,9 +333,13 @@ parameters that are stored as metadata including:</p>
 <li><cite>MaxEventLength</cite> :    maximum length (in data points) of events that will be processed (default: 10000)</li>
 <li><cite>FitTol</cite> :                    fit tolerance for convergence (default: 1.e-7)</li>
 <li><cite>FitIters</cite> :                  maximum fit iterations (default: 5000)</li>
+<li><cite>UnlinkRCConst</cite> :                     When True, unlinks the RC constants in the fit function to vary independently of each other. (Default: <cite>True</cite>)</li>
 </ul>
 </dd>
 </dl>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Errors:</th><td class="field-body"><p class="first last">When an event cannot be analyzed, all metadata are set to -1.</p>
 </td>
 </tr>
 </tbody>
@@ -409,6 +416,7 @@ control the order of the data to keep formatting consistent.</p>
 <em class="property">class </em><code class="descclassname">mosaic.cusumLevelAnalysis.</code><code class="descname">cusumLevelAnalysis</code><span class="sig-paren">(</span><em>icurr</em>, <em>Fs</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/cusumLevelAnalysis.html#cusumLevelAnalysis"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mosaic.cusumLevelAnalysis.cusumLevelAnalysis" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="mosaic.meta.html#mosaic.metaEventProcessor.metaEventProcessor" title="mosaic.metaEventProcessor.metaEventProcessor"><code class="xref py py-class docutils literal"><span class="pre">mosaic.metaEventProcessor.metaEventProcessor</span></code></a></p>
 <p>Implements the CUSUM algorithm (used by OpenNanopore for example) in MOSAIC. This approach sacrifices including system information in the analysis in favor of much faster fitting of single- and multi-level events.</p>
+<p>CUSUM will detect jumps that are smaller than <cite>StepSize</cite>, but they will have to be sustained longer. Threshold can be thought of, very roughly, as proportional to the length of time a subevent must be sustained for it to be detected. The algorithm will adjust the actual threshold used on a per-event basis in order to minimize false positive detection of current jumps This algorithm is based on code used in OpenNanopore, which you can read about here: <a class="reference external" href="http://pubs.rsc.org/en/Content/ArticleLanding/2012/NR/c2nr30951c#!divAbstract">http://pubs.rsc.org/en/Content/ArticleLanding/2012/NR/c2nr30951c#!divAbstract</a></p>
 <p>Some known issues with CUSUM:</p>
 <ol class="arabic simple">
 <li>If the duration of a sub-event is shorter than than the MinLength parameter, CUSUM will be unable to detect it. CUSUM will not detect events within MinLength of a previous event.</li>
@@ -416,20 +424,37 @@ control the order of the data to keep formatting consistent.</p>
 <li>As a consequence of using a statistical t-test, CUSUM can have false positives. The algorithm has an adaptive threshold that tries to minimize the chances of this happening while maintaining good sensitivity (expected number of false positives within an event is less than 1).</li>
 </ol>
 <p>To use it requires four settings:</p>
-<div class="highlight-javascript"><div class="highlight"><pre><span class="s2">&quot;cusumLevelAnalysis&quot;</span><span class="o">:</span> <span class="p">{</span>
-                        <span class="s2">&quot;StepSize&quot;</span><span class="o">:</span> <span class="mf">3.0</span><span class="p">,</span> 
-                        <span class="s2">&quot;MinThreshold&quot;</span><span class="o">:</span> <span class="mf">3.0</span><span class="p">,</span>
-                        <span class="s2">&quot;MaxThreshold&quot;</span><span class="o">:</span> <span class="mf">10.0</span><span class="p">,</span>
-                        <span class="s2">&quot;MinLength&quot;</span> <span class="o">:</span> <span class="mi">10</span><span class="p">,</span>
+<blockquote>
+<div><div class="highlight-javascript"><div class="highlight"><pre><span class="s2">&quot;cusumLevelAnalysis&quot;</span><span class="o">:</span> <span class="p">{</span>
+        <span class="s2">&quot;StepSize&quot;</span><span class="o">:</span> <span class="mf">3.0</span><span class="p">,</span> 
+        <span class="s2">&quot;MinThreshold&quot;</span><span class="o">:</span> <span class="mf">3.0</span><span class="p">,</span>
+        <span class="s2">&quot;MaxThreshold&quot;</span><span class="o">:</span> <span class="mf">10.0</span><span class="p">,</span>
+        <span class="s2">&quot;MinLength&quot;</span> <span class="o">:</span> <span class="mi">10</span><span class="p">,</span>
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>StepSize is the number of baseline standard deviations are considered significant (3 is usually a good starting point).
-MinThreshold and MaxThreshold set the sensitivity of the algorithm, (lower is more sensitive, a good starting point is to set MinThreshold equal to StepSize and MaxThreshold about 3x higher).
-MinLength is the number of samples to skip after detecting a jump, in order to avoid triggering during the rise time and giving an artificially high number of states. This number of points is also skipped when averaging levels. About 4RC is usually a good bet.
-CUSUM will detect jumps that are smaller than StepSize, but they will have to be sustained longer. Threshold can be thought of, very roughly, as roughly proportional to the length of time a subevent must be sustained for it to be detected.
-The algorithm will adjust the actual threshold used on a per-event basis in order to minimize false positive detection of current jumps
-This algorithm is based on code used in OpenNanopore, which you can read about here: <a class="reference external" href="http://pubs.rsc.org/en/Content/ArticleLanding/2012/NR/c2nr30951c#!divAbstract">http://pubs.rsc.org/en/Content/ArticleLanding/2012/NR/c2nr30951c#!divAbstract</a></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Keyword Args:</th><td class="field-body"><dl class="first docutils">
+<dt>In addition to <a class="reference internal" href="mosaic.meta.html#mosaic.metaEventProcessor.metaEventProcessor" title="mosaic.metaEventProcessor.metaEventProcessor"><code class="xref py py-class docutils literal"><span class="pre">metaEventProcessor</span></code></a> args,</dt>
+<dd><ul class="first last simple">
+<li><cite>StepSize</cite> :                  The number of baseline standard deviations are considered significant (3 is usually a good starting point).</li>
+<li><cite>MinThreshold</cite> :              One of two sensitivity parameters (lower is more sensitive). A good starting point is to set <cite>MinThreshold</cite> equal to <cite>StepSize</cite>.</li>
+<li><cite>MaxThreshold</cite> :              One of two sensitivity parameters (lower is more sensitive). Set <cite>MaxThreshold</cite> about 3x higher than <cite>MinThreshold</cite>.</li>
+<li><cite>MinLength</cite> :                 The number of samples to skip after detecting a jump, in order to avoid triggering during the rise time and returning an artificially high number of states. This number of points is also skipped when averaging levels. About 4 times the RC constant of the system is a good starting value.</li>
+</ul>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Errors:</th><td class="field-body"><p class="first last">When an event cannot be analyzed, all metadata are set to -1.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
 <dl class="method">
 <dt id="mosaic.cusumLevelAnalysis.cusumLevelAnalysis.formatsettings">
 <code class="descname">formatsettings</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/cusumLevelAnalysis.html#cusumLevelAnalysis.formatsettings"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mosaic.cusumLevelAnalysis.cusumLevelAnalysis.formatsettings" title="Permalink to this definition">¶</a></dt>
