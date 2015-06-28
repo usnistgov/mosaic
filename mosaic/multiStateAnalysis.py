@@ -58,12 +58,10 @@ class multiStateAnalysis(metaEventProcessor.metaEventProcessor):
 		information in the analysis, specifically the filtering effects (through the RC constant)
 		of either amplifiers or the membrane/nanopore complex. The analysis generates several 
 		parameters that are stored as metadata including:
-			1. Blockade depth: the ratio of the open channel current to the blocked current
-			2. Residence time: the time the molecule spends inside the pore
-			3. Tau: the 1/RC of the response to a step input (e.g. the entry or exit of the
-				molecule into or out of the nanopore).
-
-		When an event cannot be analyzed, all meta=data are set to -1.
+			
+		1. Blockade depth: the ratio of the open channel current to the blocked current
+		2. Residence time: the time the molecule spends inside the pore
+		3. Tau: the RC constant  of the response to a step input (e.g. the entry or exit of the molecule into or out of the nanopore).
 
 		:Keyword Args:
 			In addition to :class:`~mosaic.metaEventProcessor.metaEventProcessor` args,
@@ -72,6 +70,13 @@ class multiStateAnalysis(metaEventProcessor.metaEventProcessor):
 				- `MaxEventLength` :	maximum length (in data points) of events that will be processed (default: 10000)
 				- `FitTol` :			fit tolerance for convergence (default: 1.e-7)
 				- `FitIters` :			maximum fit iterations (default: 5000)
+				- `UnlinkRCConst` :			When True, unlinks the RC constants in the fit function to vary independently of each other. (Default: `True`)
+
+		:Errors:
+
+			When an event cannot be analyzed, all metadata are set to -1.
+
+
 	"""
 	def _init(self, **kwargs):
 		"""
@@ -109,6 +114,7 @@ class multiStateAnalysis(metaEventProcessor.metaEventProcessor):
 			self.InitThreshold=float(self.settingsDict.pop("InitThreshold", 5.0))
 			self.MinStateLength=float(self.settingsDict.pop("MinStateLength", 4))
 			self.MaxEventLength=int(self.settingsDict.pop("MaxEventLength", 10000))
+			self.UnlinkRCConst=int(self.settingsDict.pop("UnlinkRCConst", 1))
 		except ValueError as err:
 			raise commonExceptions.SettingsTypeError( err )
 
@@ -241,7 +247,13 @@ class multiStateAnalysis(metaEventProcessor.metaEventProcessor):
 			for i in range(1, len(initguess)):
 				params.add('a'+str(i-1), value=initguess[i][0]-initguess[i-1][0]) 
 				params.add('mu'+str(i-1), value=initguess[i][1]*dt) 
-				params.add('tau'+str(i-1), value=dt*5.)
+				if self.UnlinkRCConst:
+					params.add('tau'+str(i-1), value=dt*5.)
+				else:
+					if i-1==0:
+						params.add('tau'+str(i-1), value=dt*5.)
+					else:
+						params.add('tau'+str(i-1), value=dt*5., expr='tau0')
 
 			params.add('b', value=initguess[0][0])
 			

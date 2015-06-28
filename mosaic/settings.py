@@ -6,6 +6,7 @@
 	:License:	See LICENSE.TXT
 	:ChangeLog:
 	.. line-block::
+		6/24/15 	AB 	Added an option to unlink the RC constants in stepResponseAnalysis.
 		3/20/15 	AB 	Added MaxEventLength to multiStateAnalysis settings
 		3/6/15		JF	Corrected formatting on cusumLevelAnalysis and multiStateAnalysis dictionary file
 		3/6/15		AB 	Added MinStateLength parameter for multiStateAnalysis to dictionary
@@ -95,14 +96,16 @@ __settings__="""
 		},
 		"stepResponseAnalysis" : {
 			"FitTol"				: "1.e-7",
-			"FitIters"				: "50000"
+			"FitIters"				: "50000",
+			"UnlinkRCConst" 		: "1"
 		},
 		"multiStateAnalysis" : {
             "FitTol"				: "1.e-7",
             "FitIters"				: "50000",
             "InitThreshold"			: "2.5",
             "MinStateLength"		: "10",
-            "MaxEventLength" 		: "10000"
+            "MaxEventLength" 		: "10000",
+            "UnlinkRCConst" 		: "1"
 	     },
 	     "cusumLevelAnalysis": {
 			"StepSize": 3.0, 

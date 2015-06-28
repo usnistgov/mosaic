@@ -254,7 +254,7 @@ class FitEventWindow(QtGui.QDialog):
 		}
 
 		self.queryStringDict={
-			"stepResponseAnalysis" 	: "select ProcessingStatus, TimeSeries, RCConstant, EventStart, EventEnd, BlockedCurrent, OpenChCurrent from metadata limit " + str(self.viewerLimit),
+			"stepResponseAnalysis" 	: "select ProcessingStatus, TimeSeries, RCConstant1, RCConstant2, EventStart, EventEnd, BlockedCurrent, OpenChCurrent from metadata limit " + str(self.viewerLimit),
 			"multiStateAnalysis" 	: "select ProcessingStatus, TimeSeries, RCConstant, EventDelay, CurrentStep, OpenChCurrent from metadata limit " + str(self.viewerLimit),
 			"cusumLevelAnalysis" 	: "select ProcessingStatus, TimeSeries, EventDelay, CurrentStep, OpenChCurrent from metadata limit " + str(self.viewerLimit)
 		}
@@ -265,7 +265,7 @@ class FitEventWindow(QtGui.QDialog):
 		}
 
 		self.fitFuncArgsDict={
-			"stepResponseAnalysis" 	: "[xfit, q[2], q[3], q[4], abs(q[6]-q[5]), q[6]]",
+			"stepResponseAnalysis" 	: "[xfit, q[2], q[3], q[4], q[5], abs(q[7]-q[6]), q[7]]",
 			"multiStateAnalysis" 	: "[xfit, q[2], q[3], q[4], q[5], len(q[3])]"
 		}
 
@@ -276,7 +276,7 @@ class FitEventWindow(QtGui.QDialog):
 		}
 
 		self.stepFuncArgsDict={
-			"stepResponseAnalysis" 	: "[xstep, [q[3], q[4]], [-abs(q[6]-q[5]), abs(q[6]-q[5])], q[6], 2]",
+			"stepResponseAnalysis" 	: "[xstep, [q[4], q[5]], [-abs(q[7]-q[6]), abs(q[7]-q[6])], q[7], 2]",
 			"multiStateAnalysis" 	: "[xstep, q[3], q[4], q[5], len(q[3])]",
 			"cusumLevelAnalysis" 	: "[xstep, q[2], q[3], q[4], len(q[2])]"
 		}

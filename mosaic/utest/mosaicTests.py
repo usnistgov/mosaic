@@ -288,33 +288,6 @@ class SRATestSuite(SRATest):
 	def test_e15sra(self):
 		self.runTestCase('testdata/test15.csv', 'testdata/test15.prm', sra.stepResponseAnalysis)
 
-	def test_e16sra(self):
-		self.runTestCase('testdata/test16.csv', 'testdata/test16.prm', sra.stepResponseAnalysis)
-
-	def test_e17sra(self):
-		self.runTestCase('testdata/test17.csv', 'testdata/test17.prm', sra.stepResponseAnalysis)
-
-	def test_e18sra(self):
-		self.runTestCase('testdata/test18.csv', 'testdata/test18.prm', sra.stepResponseAnalysis)
-
-	def test_e19sra(self):
-		self.runTestCase('testdata/test19.csv', 'testdata/test19.prm', sra.stepResponseAnalysis)
-
-	def test_e20sra(self):
-		self.runTestCase('testdata/test20.csv', 'testdata/test20.prm', sra.stepResponseAnalysis)
-
-	def test_e21sra(self):
-		self.runTestCase('testdata/test21.csv', 'testdata/test21.prm', sra.stepResponseAnalysis)
-
-	def test_e22sra(self):
-		self.runTestCase('testdata/test22.csv', 'testdata/test22.prm', sra.stepResponseAnalysis)
-
-	def test_e23sra(self):
-		self.runTestCase('testdata/test23.csv', 'testdata/test23.prm', sra.stepResponseAnalysis)
-
-	def test_e24sra(self):
-		self.runTestCase('testdata/test24.csv', 'testdata/test24.prm', sra.stepResponseAnalysis)
-
 class SSETestSuite(SSETest):
 	def test_e1sse(self):
 		self.runTestCase('testdata/test1.csv', 'testdata/test1.prm', sse.singleStepEvent)
@@ -360,6 +333,3 @@ class SSETestSuite(SSETest):
 
 	def test_e15sse(self):
 		self.runTestCase('testdata/test15.csv', 'testdata/test15.prm', sse.singleStepEvent)
-
-	def test_e16sse(self):
-		self.runTestCase('testdata/test16.csv', 'testdata/test16.prm', sse.singleStepEvent)
