@@ -15,6 +15,17 @@ Settings that control the fit are defined through the settings file and are desc
    :width: 50 %
    :align: center
 
+
+Algorithm Settings
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.. exec::
+	import mosaic.multiStateAnalysis
+
+	print mosaic.multiStateAnalysis.multiStateAnalysis.__doc__
+
+
+Metadata Output
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 The :py:class:`~mosaic.multiStateAnalysis.multiStateAnalysis` algorithm outputs meta-data that characterizes every processed event. Similar to the :ref:`stepresponse-page` algorithm, this information is stored in a SQLite_ database and is available for further processing (see :ref:`database-page`). Notably, the data output by :py:class:`~mosaic.multiStateAnalysis.multiStateAnalysis` differs from :py:class:`~mosaic.stepResponseAnalysis.stepResponseAnalysis` in one important way. Because the number of states (*NStates*) detected in each event is not pre-determined, key meta-data (e.g. *BlockDepth*, *EventDelay*, etc.) are stored as arrays of real numbers with length equal to *NStates*. 
 
 .. tabularcolumns:: p{4cm}p{4cm}p{8cm}
