@@ -20,7 +20,7 @@ Settings that control the algorithm are defined through the settings file, as de
 
 
 .. Algorithm Settings
-.. ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.. ##########################################
 .. .. exec::
 .. 	import mosaic.cusumLevelAnalysis
 
@@ -28,7 +28,7 @@ Settings that control the algorithm are defined through the settings file, as de
 
 
 Metadata Output
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+##########################################
 The :py:class:`~mosaic.cusumLevelAnalysis.cusumLevelAnalysis` algorithm outputs meta-data that characterizes every processed event. Similar to the :ref:`multistate-page` algorithm, this information is stored in a SQLite_ database and is available for further processing (see :ref:`database-page`). 
 
 .. tabularcolumns:: p{4cm}p{4cm}p{8cm}
