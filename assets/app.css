@@ -20,7 +20,8 @@ md-toolbar h4 {
   margin: auto;
   color: #696969;
   margin: 0px;
-  padding-top: 6px;
+  padding-top: 4px;
+  padding-bottom: 4px;
   font-family: 'Roboto', sans-serif;
   font-size:16px;
   font-weight: 200;
@@ -59,7 +60,8 @@ md-toolbar {
 .download h4 {
   color: white;
   margin: 0px;
-  padding-top: 6px;
+  padding-top: 4px;
+  padding-bottom: 4px;
   font-family: 'Roboto', sans-serif;
   font-weight: 200;
   text-transform: inherit;
