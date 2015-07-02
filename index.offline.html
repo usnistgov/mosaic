@@ -72,7 +72,7 @@
             </div>
             <div flex>
               <h1>Extract More From Your Data </h1>
-              <p>MOSAIC is a modular single-molecule nanopore analysis toolbox to decode multi-state nanopore data. MOSAIC leverages the underlying physics of the system to considerably increase the information retrieved from experimental data.</p>
+              <p>MOSAIC is a modular single-molecule nanopore analysis toolbox to decode multi-state nanopore data. Read the <a href="{{docURL}}" style="text-decoration: underline; color: black; font-family: 'Roboto', sans-serif; font-weight: 300;">documentation</a> for additional information.</p>
 
               <md-list class="md-1-line">
                 <md-list-item><div class="md-list-item-text"> > <a href="{{algoURL}}">Powerful Algorithms</a></div></md-list-item>
@@ -88,7 +88,7 @@
 
           <md-grid-list
           md-cols-sm="1" md-cols-md="2" md-cols-gt-md="4"
-          md-row-height-gt-md="1:1" md-row-height="2:2"
+          md-row-height="1:0.9" md-row-height-md="1:1" md-row-height-sm="1:1.35"
           md-gutter="12px" md-gutter-gt-sm="8px">
             
               <md-grid-tile class="gui m-grid-tile md-whiteframe-z1" md-rowspan="2" md-colspan="4" md-colspan-md="2"  md-colspan-sm="1">
@@ -96,10 +96,10 @@
                   <h2>Intuitive Graphical Interface</h2>
                 </md-grid-tile-header>
 
-                <div layout="row" layout-sm="column">
+                <div layout="row" layout-sm="column" layout-align="center center">
                   <div flex>
                     <center>
-                      <img src="assets/img/GUI-01.png" alt="GUI" style="vertical-align: middle; width:250%">
+                      <img src="assets/img/GUI-01.png" alt="GUI" style="vertical-align: middle; width:100%">
                     </center>
                   </div>
                   <div flex>
@@ -131,7 +131,7 @@
                     </p>
                   </md-card-content>
                   
-                  <div flex class="md-actions" layout="row" layout-align="end center">
+                  <div flex class="md-actions" layout="row" layout-align="end end">
                       <md-button aria-label="Learn More" ng-href="{{scriptURL}}"><h4>Learn More</h4></md-button>
                   </div>
             </md-card>
@@ -152,17 +152,20 @@
             </md-card>
 
             <md-card flex>
-                  <img ng-src="assets/img/GetMore-01.png" width="100%" class="md-card-image" alt="Get More">
+                  <img ng-src="assets/img/UseCase-01.png" width="100%" class="md-card-image" alt="Get More">
                   
                   <md-card-content>
-                    <h2 class="md-title">Better Results</h2>
+                    <h2 class="md-title">Use Cases</h2>
                     <p>
-                      MOSAIC’s novel algorithms allow you to see events that other software frequently misses. MOSAIC leverages a physical model of the system response to recover events from fast transients.
+                      MOSAIC’s flexible approach to data analysis allows the seamless analysis of solid-state and biological nanopore data. 
+                    </p>
+                    <p>
+                      Have an interesting problem that MOSAIC helped solve? <a href="http://www.nist.gov/cgi-bin/wwwph/cso.nist.gov?Query=Arvind+Balijepalli" style="color: #696969; font-family: 'Roboto', sans-serif; font-size: 16px; font-weight: 200;">Contact us</a> to have it highlighted.
                     </p>
                   </md-card-content>
                   
                   <div flex class="md-actions" layout="row" layout-align="end end">
-                    <md-button aria-label="Learn More" ng-href="{{algoURL}}"><h4>Learn More</h4></md-button>
+                    <md-button aria-label="Learn More" ng-href="{{exampleURL}}"><h4>Learn More</h4></md-button>
                   </div>
             </md-card>
           </div>

@@ -24,6 +24,10 @@ a {
 	margin:0;
 	padding-top: 0px;
 }
+.form-control:focus input {
+  /*border-color: #283593;*/
+  border-color: green;
+}
 h1 {
 	font-size: 28pt;
 }

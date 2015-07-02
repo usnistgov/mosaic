@@ -12,6 +12,7 @@ angular
       $scope.mailingListURL = $scope.baseURL+"/html/doc/mailingList.html"
       $scope.scriptURL = $scope.baseURL+"/html/doc/ScriptingandAdvancedFeatures.html"
       $scope.algoURL = $scope.baseURL+"/html/doc/Algorithms.html"
+      $scope.exampleURL = $scope.baseURL+"/html/doc/examples.html"
       $scope.extendURL = $scope.baseURL+"/html/doc/Extend.html"
       $scope.addonURL = $scope.baseURL+"/html/doc/Addons.html"
       $scope.guiURL = $scope.baseURL+"/html/doc/GraphicalInterface.html"
