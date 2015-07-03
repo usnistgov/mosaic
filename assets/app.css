@@ -142,7 +142,7 @@ md-button.menuBtn > md-icon {
   margin-right: auto;
   position: relative;
   border-radius: 10px;
-  background: rgba(41, 50, 145, 0.1)
+  background: rgba(41, 50, 145, 0.075)
 }
 
 .icon-frame img {
@@ -199,7 +199,9 @@ span.name {
   background: #272821; 
 }
 .gui {
-  background-color: #AEBEC8;
+  /*background-color: #AEBEC8;*/
+  /*background: rgba(91, 56, 143,0.8);*/
+  background: rgba(92, 101, 156, 0.8);
 }
 .getmore {
   background-color: #F2F2F2;
@@ -257,10 +259,10 @@ p {
 }
 
 .gui p {
-  color: black;
   font-family: 'Roboto', sans-serif;
   font-weight: 200;
-  color: #505050;
+  color: #dedede;
+  /*color: white;*/
 }
 
 .m-grid-tile h2 {
@@ -369,3 +371,18 @@ h1 {
   padding-top: 10px;
   padding-left: 20px;
 }
+
+/*.submit {
+  border: none;
+  background-color: #283593;
+  border-radius: 5%;
+  color: white;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-left: 15px;
+  padding-right: 15px;
+  margin: 0;
+  font-family: 'Roboto', sans-serif;
+  font-size: 20px;
+  font-weight: 200;
+}*/
