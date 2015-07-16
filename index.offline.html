@@ -64,7 +64,7 @@
       </md-sidenav>
 
       <md-content flex id="content">
-          <div flex ng-controller="AppCtrl" layout="column" layout-gt-sm="row" layout-align="center center" class="tagline md-whiteframe-z2">
+          <div flex ng-controller="AppCtrl" layout="column" layout-gt-md="row" layout-align="center center" class="tagline md-whiteframe-z2">
             <div flex>
               <div class="icon-frame">
                 <img src="assets/img/icon.png">
@@ -72,15 +72,15 @@
             </div>
             <div flex>
               <h1>Extract More From Your Data </h1>
-              <p>MOSAIC is a modular single-molecule nanopore analysis toolbox to decode multi-state nanopore data. Read the <a href="{{docURL}}" style="text-decoration: underline; color: black; font-family: 'Roboto', sans-serif; font-weight: 300;">documentation</a> for additional information.</p>
+              <p>MOSAIC is a modular single-molecule analysis toolbox to decode multi-state nanopore data. Read the <a href="{{docURL}}" style="text-decoration: underline; color: black; font-family: 'Roboto', sans-serif; font-weight: 300;">documentation</a> for additional information.</p>
 
               <md-list class="md-1-line">
                 <md-list-item><div class="md-list-item-text"> > <a href="{{algoURL}}">Powerful Algorithms</a></div></md-list-item>
                 <md-list-item><div class="md-list-item-text"> > <a href="{{extendURL}}">Easily Extensible</a></div></md-list-item>
                 <md-list-item><div class="md-list-item-text"> > <a href="{{addonURL}}">Integrates Into Your Workflow</a></div></md-list-item>
               </md-list>
-              <p><small>If you use MOSAIC, please cite:
-              <a style="color:#696969; text-decoration: underline;" href="http://pubs.acs.org/doi/abs/10.1021/nn405761y">ACS Nano <em>2014</em>, <b>8</b>, 1547–1553.</a></small></p>
+              <p><small>If you use MOSAIC, please cite: <a style="color:#696969; text-decoration: underline;" href="http://pubs.acs.org/doi/abs/10.1021/nn405761y">ACS Nano <em>2014</em>, <b>8</b>, 1547–1553</a>.</small></p>
+                 
             </div>
           </div>
 
@@ -91,12 +91,12 @@
           md-row-height="1:0.9" md-row-height-md="1:1" md-row-height-sm="1:1.35"
           md-gutter="12px" md-gutter-gt-sm="8px">
             
-              <md-grid-tile class="gui m-grid-tile md-whiteframe-z1" md-rowspan="2" md-colspan="4" md-colspan-md="2"  md-colspan-sm="1">
+              <md-grid-tile class="gui m-grid-tile md-whiteframe-z1" md-rowspan="3" md-rowspan-md="4" md-colspan="4" md-colspan-md="3"  md-colspan-sm="1">
                 <md-grid-tile-header>
                   <h2>Intuitive Graphical Interface</h2>
                 </md-grid-tile-header>
 
-                <div layout="row" layout-sm="column" layout-align="center center">
+                <div layout-gt-sm="row" layout="column" layout-align="center center">
                   <div flex>
                     <center>
                       <img src="assets/img/GUI-01.png" alt="GUI" style="vertical-align: middle; width:100%">
@@ -120,7 +120,7 @@
           </md-grid-list>
 
           <br/><br/>
-          <div layout="row" layout-sm="column">
+          <div layout-gt-sm="row" layout="column">
             <md-card flex>
                   <img ng-src="assets/img/Script-01.png" width="100%" class="md-card-image" alt="Scripting">
 

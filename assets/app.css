@@ -142,7 +142,7 @@ md-button.menuBtn > md-icon {
   margin-right: auto;
   position: relative;
   border-radius: 10px;
-  background: rgba(41, 50, 145, 0.075)
+  /*background: rgba(41, 50, 145, 0.075)*/
 }
 
 .icon-frame img {
