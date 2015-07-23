@@ -270,7 +270,7 @@ class stepResponseAnalysis(metaEventProcessor.metaEventProcessor):
 						self.rejectEvent('eInvalidChiSq')
 					if self.mdBlockDepth < 0 or self.mdBlockDepth > 1:
 						self.rejectEvent('eInvalidBlockDepth')
-					if self.mdRCConst1 < 0 or self.mdRCConst2 < 1:
+					if self.mdRCConst1 < 0 or self.mdRCConst2 < 0:
 						self.rejectEVent('eInvalidRCConstant')
 
 					#print i0, i0sig, [optfit.params['a'].value, optfit.params['b'].value, optfit.params['mu1'].value, optfit.params['mu2'].value, optfit.params['tau'].value]
