@@ -6,6 +6,7 @@
 	:License:	See LICENSE.TXT
 	:ChangeLog:
 	.. line-block::
+		7/23/15     JF  Added additional check to reject events with unphysical RC Constants
 		6/24/15 	AB 	Added an option to unlink the RC constants in stepResponseAnalysis.
 		11/7/14		AB 	Error codes describing event rejection are now more specific.
 		11/5/14		AB 	Fixed a bug in the event fitting logic that prevented 
@@ -269,6 +270,8 @@ class stepResponseAnalysis(metaEventProcessor.metaEventProcessor):
 						self.rejectEvent('eInvalidChiSq')
 					if self.mdBlockDepth < 0 or self.mdBlockDepth > 1:
 						self.rejectEvent('eInvalidBlockDepth')
+					if self.mdRCConst1 < 0 or self.mdRCConst2 < 1:
+						self.rejectEVent('eInvalidRCConstant')
 
 					#print i0, i0sig, [optfit.params['a'].value, optfit.params['b'].value, optfit.params['mu1'].value, optfit.params['mu2'].value, optfit.params['tau'].value]
 			else:
