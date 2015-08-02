@@ -6,7 +6,7 @@
 	:License:	See LICENSE.TXT
 	:ChangeLog:
 	.. line-block::
-		7/23/15     JF  Added additional check to reject events with unphysical RC Constants
+		7/23/15         JF  Added additional check to reject events with unphysical RC Constants
 		6/24/15 	AB 	Added an option to unlink the RC constants in stepResponseAnalysis.
 		11/7/14		AB 	Error codes describing event rejection are now more specific.
 		11/5/14		AB 	Fixed a bug in the event fitting logic that prevented 
@@ -305,7 +305,7 @@ class stepResponseAnalysis(metaEventProcessor.metaEventProcessor):
 			return -1
 
 	def __objfunc(self, params, t, data):
-		""" model decaying sine wave, subtract data	"""
+		""" single step response model parameters """
 		try:
 			tau1 = params['tau1'].value
 			tau2 = params['tau2'].value
