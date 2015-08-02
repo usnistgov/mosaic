@@ -6,6 +6,7 @@
 	:License:	See LICENSE.TXT
 	:ChangeLog:
 	.. line-block::
+		8/02/15		JF	Added a new test to reject RC Constants <=0
 		4/12/15 	AB 	Refactored code to improve reusability.
 		3/20/15 	AB 	Added a maximum event length setting (MaxEventLength) that automatically rejects events longer than the specified value.
 		3/20/15 	AB 	Added a new metadata column (mdStateResTime) that saves the residence time of each state to the database.
@@ -321,6 +322,9 @@ class multiStateAnalysis(metaEventProcessor.metaEventProcessor):
 			# The start of the event is set past the length of the data
 			elif optfit.params['mu'+str(self.nStates-1)].value > (1000./self.Fs)*(len(self.eventData)-1):
 				self.rejectEvent('eInvalidStartTime')
+			# If RC Constant <= 0, reject event.
+			elif optfit.params['tau0'].value <= 0 or optfit.params['tau'+str(self.nstates-1)].value <= 0:
+				self.rejectEVent('eInvalidRCConstant')
 			else:
 				self.mdOpenChCurrent 	= optfit.params['b'].value 
 				self.mdCurrentStep		= [ optfit.params['a'+str(i)].value for i in range(self.nStates) ]
