@@ -322,9 +322,6 @@ class multiStateAnalysis(metaEventProcessor.metaEventProcessor):
 			# The start of the event is set past the length of the data
 			elif optfit.params['mu'+str(self.nStates-1)].value > (1000./self.Fs)*(len(self.eventData)-1):
 				self.rejectEvent('eInvalidStartTime')
-			# If RC Constant <= 0, reject event.
-			elif optfit.params['tau0'].value <= 0 or optfit.params['tau'+str(self.nstates-1)].value <= 0:
-				self.rejectEVent('eInvalidRCConstant')
 			else:
 				self.mdOpenChCurrent 	= optfit.params['b'].value 
 				self.mdCurrentStep		= [ optfit.params['a'+str(i)].value for i in range(self.nStates) ]
@@ -349,7 +346,8 @@ class multiStateAnalysis(metaEventProcessor.metaEventProcessor):
 					
 				if math.isnan(self.mdRedChiSq):
 					self.rejectEvent('eInvalidRedChiSq')
-
+				if not (self.mdRCConst>0).all():
+					self.rejectEvent('eInvalidRCConstant')
 				if not (self.mdStateResTime>0).all():
 					self.rejectEvent('eNegativeEventDelay')
 		except:
