@@ -5,8 +5,9 @@
 	:License:	See LICENSE.TXT
 	:ChangeLog:
 		.. line-block::
-			3/20/15			AB 	Added MaxEventLength to multiStateAnalysis settings
-			3/6/15 			JF 	Added MinStateLength to multiStateAnalysis setup model
+			6/24/15 	AB 	Added an option to unlink the RC constants in stepResponseAnalysis.
+			3/20/15		AB 	Added MaxEventLength to multiStateAnalysis settings
+			3/6/15 		JF 	Added MinStateLength to multiStateAnalysis setup model
 """	
 import json
 import os
@@ -286,7 +287,8 @@ class guiDataModel(dict):
 		self.stepResponseAnalysisKeys={
 								"FitTol" 				: float,
 								"FitIters" 				: int,
-								"BlockRejectRatio" 		: float
+								"BlockRejectRatio" 		: float,
+								"UnlinkRCConst" 			: bool
 							}
 		self.multiStateAnalysisKeys={
 								"FitTol" 				: float,
@@ -294,7 +296,8 @@ class guiDataModel(dict):
 								"BlockRejectRatio" 		: float,
 								"InitThreshold"			: float,
 								"MinStateLength"		: int,
-								"MaxEventLength" 		: int
+								"MaxEventLength" 		: int,
+								"UnlinkRCConst"			: bool
 							}
 		self.cusumLevelAnalysisKeys={
 								"StepSize"				: float, 

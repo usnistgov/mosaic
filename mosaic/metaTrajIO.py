@@ -367,7 +367,7 @@ class metaTrajIO(object):
 		
 	def scaleData(self, data):
 		"""
-			.. note:: |interfacemethod|
+			.. important:: |interfacemethod|
 
 			Scale the raw data loaded with :func:`~mosaic.metaTrajIO.metaTrajIO.readdata`. Note this function will not necessarily receive the entire data array loaded with :func:`~mosaic.metaTrajIO.metaTrajIO.readdata`. Transformations must be able to process partial data chunks.
 
@@ -387,10 +387,10 @@ class metaTrajIO(object):
 
 				Assuming the amplifier scale and offset values are stored in the class variables ``AmplifierScale`` and ``AmplifierOffset``, the raw data read using :func:`~mosaic.metaTrajIO.metaTrajIO.readdata` can be transformed by :func:`~mosaic.metaTrajIO.metaTrajIO.scaleData`. We can also use this function to change the array data type.
 
-					.. code-block:: python
+			.. code-block:: python
 
-						def scaleData(self, data):
-							return np.array( data*self.AmplifierScale-self.AmplifierOffset, dtype='f8' )
+				def scaleData(self, data):
+					return np.array(data*self.AmplifierScale-self.AmplifierOffset, dtype='f8')
 		"""
 		return data
 

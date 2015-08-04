@@ -41,6 +41,9 @@ class cusumLevelAnalysis(metaEventProcessor.metaEventProcessor):
 	"""
 		Implements the CUSUM algorithm (used by OpenNanopore for example) in MOSAIC. This approach sacrifices including system information in the analysis in favor of much faster fitting of single- and multi-level events.
 
+		CUSUM will detect jumps that are smaller than `StepSize`, but they will have to be sustained longer. Threshold can be thought of, very roughly, as proportional to the length of time a subevent must be sustained for it to be detected. The algorithm will adjust the actual threshold used on a per-event basis in order to minimize false positive detection of current jumps This algorithm is based on code used in OpenNanopore, which you can read about here: http://pubs.rsc.org/en/Content/ArticleLanding/2012/NR/c2nr30951c#!divAbstract
+
+
                 Some known issues with CUSUM:
 
                 1. If the duration of a sub-event is shorter than than the MinLength parameter, CUSUM will be unable to detect it. CUSUM will not detect events within MinLength of a previous event.
@@ -49,21 +52,26 @@ class cusumLevelAnalysis(metaEventProcessor.metaEventProcessor):
 
                 To use it requires four settings:
 
-                .. code-block:: javascript
 
-	                "cusumLevelAnalysis": {
+				.. code-block:: javascript
+
+					"cusumLevelAnalysis": {
 						"StepSize": 3.0, 
 						"MinThreshold": 3.0,
 						"MaxThreshold": 10.0,
 						"MinLength" : 10,
-                        }
+					}
 
-                StepSize is the number of baseline standard deviations are considered significant (3 is usually a good starting point).
-                MinThreshold and MaxThreshold set the sensitivity of the algorithm, (lower is more sensitive, a good starting point is to set MinThreshold equal to StepSize and MaxThreshold about 3x higher).
-                MinLength is the number of samples to skip after detecting a jump, in order to avoid triggering during the rise time and giving an artificially high number of states. This number of points is also skipped when averaging levels. About 4RC is usually a good bet.
-                CUSUM will detect jumps that are smaller than StepSize, but they will have to be sustained longer. Threshold can be thought of, very roughly, as roughly proportional to the length of time a subevent must be sustained for it to be detected.
-                The algorithm will adjust the actual threshold used on a per-event basis in order to minimize false positive detection of current jumps
-                This algorithm is based on code used in OpenNanopore, which you can read about here: http://pubs.rsc.org/en/Content/ArticleLanding/2012/NR/c2nr30951c#!divAbstract
+				:Keyword Args:
+					In addition to :class:`~mosaic.metaEventProcessor.metaEventProcessor` args,
+						- `StepSize` :			The number of baseline standard deviations are considered significant (3 is usually a good starting point).
+						- `MinThreshold` :		One of two sensitivity parameters (lower is more sensitive). A good starting point is to set `MinThreshold` equal to `StepSize`.
+						- `MaxThreshold` : 		One of two sensitivity parameters (lower is more sensitive). Set `MaxThreshold` about 3x higher than `MinThreshold`.
+						- `MinLength` : 		The number of samples to skip after detecting a jump, in order to avoid triggering during the rise time and returning an artificially high number of states. This number of points is also skipped when averaging levels. About 4 times the RC constant of the system is a good starting value.
+
+				:Errors:
+
+					When an event cannot be analyzed, all metadata are set to -1.
 	"""
 	def _init(self, **kwargs):
 		"""

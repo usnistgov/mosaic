@@ -80,6 +80,17 @@ class sqlite3MDIO(metaMDIO.metaMDIO):
 
 		self._setuptables()
 
+	def _dbfile(self):
+		"""
+			.. important:: |abstractmethod|
+
+			Return the full path and filename to the database.
+		"""
+		try:
+			return self.dbFilename
+		except:
+			return ""
+
 	def _opendb(self, dbname, **kwargs):
 		if not hasattr(self, 'tableName'):
 			self.tableName='metadata'

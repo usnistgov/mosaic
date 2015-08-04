@@ -14,7 +14,10 @@ class mosaicUnitTests(Command):
         self.cwd = os.getcwd()
 
     def run(self):
-        os.system('nosetests -v -w mosaic/utest/ mosaicTests.py')
+        if not self.verbose:
+            os.system('nosetests -w mosaic/utest/ mosaicTests.py')
+        else:
+            os.system('nosetests -v -w mosaic/utest/ mosaicTests.py')
 
 class mosaicBinaries(Command):
     description = "build MOSAIC binaries."
