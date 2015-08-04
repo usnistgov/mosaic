@@ -6,6 +6,7 @@
 	:License:	See LICENSE.TXT
 	:ChangeLog:
 	.. line-block::
+		8/02/15		JF	Added a new test to reject RC Constants <=0
 		4/12/15 	AB 	Refactored code to improve reusability.
 		3/20/15 	AB 	Added a maximum event length setting (MaxEventLength) that automatically rejects events longer than the specified value.
 		3/20/15 	AB 	Added a new metadata column (mdStateResTime) that saves the residence time of each state to the database.
@@ -345,7 +346,8 @@ class multiStateAnalysis(metaEventProcessor.metaEventProcessor):
 					
 				if math.isnan(self.mdRedChiSq):
 					self.rejectEvent('eInvalidRedChiSq')
-
+				if not (self.mdRCConst>0).all():
+					self.rejectEvent('eInvalidRCConstant')
 				if not (self.mdStateResTime>0).all():
 					self.rejectEvent('eNegativeEventDelay')
 		except:
