@@ -299,7 +299,7 @@ class multiStateAnalysis(metaEventProcessor.metaEventProcessor):
 			return -1
 
 	def __objfunc(self, params, t, data):
-		""" model decaying sine wave, subtract data"""
+		""" model parameters for multistate blockade """
 		try:
 			b = params['b'].value
 			tau = [params['tau'+str(i)].value for i in range(self.nStates)]
