@@ -346,7 +346,7 @@ class multiStateAnalysis(metaEventProcessor.metaEventProcessor):
 					
 				if math.isnan(self.mdRedChiSq):
 					self.rejectEvent('eInvalidRedChiSq')
-				if not (self.mdRCConst>0).all():
+				if not all (x > 0 for x in self.mdRCConst):
 					self.rejectEvent('eInvalidRCConstant')
 				if not (self.mdStateResTime>0).all():
 					self.rejectEvent('eNegativeEventDelay')
