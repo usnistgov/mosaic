@@ -223,8 +223,9 @@ class sqlite3MDIO(metaMDIO.metaMDIO):
 		"""
 			Export database records that match the specified query to a CSV flat file.
 		"""
+		csvfile=format_path( self.dbFile.split('.')[0]+'.csv' )
 		df=pandas.DataFrame(self.queryDB(query), columns=self._col_names(query, self.db.cursor(), self.tableName))
-		df.to_csv( self.dbFile.split('.')[0]+'.csv' )
+		df.to_csv( csvfile )
 
 	def _colnames(self, table=None):
 		if table:
