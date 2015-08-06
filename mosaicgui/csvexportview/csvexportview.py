@@ -31,11 +31,16 @@ class CSVExportWindow(QtGui.QDialog):
 		self.queryData=[]
 
 
-		self.exportAllCheckBox.setChecked(True)
-		self.dbFieldsGroupBox.setEnabled(False)
+		self.dbFieldsGroupBox.setEnabled(True)
+
+		self.advancedCheckBox.setChecked(False)
+		self.advancedGroupBox.setHidden(True)
+
 
 		QtCore.QObject.connect(self.cancelButton, QtCore.SIGNAL("clicked()"), self.OnCancel)
 		QtCore.QObject.connect(self.exportButton, QtCore.SIGNAL("clicked()"), self.OnExport)
+
+		QtCore.QObject.connect(self.advancedCheckBox, QtCore.SIGNAL("clicked(bool)"), self.OnAdvancedChecked)
 
 
 	# SLOTS
@@ -50,6 +55,9 @@ class CSVExportWindow(QtGui.QDialog):
 		self.reject()
 		# QtCore.QObject.connect(self.eventIndexHorizontalSlider, QtCore.SIGNAL('valueChanged ( int )'), self.OnEventIndexSliderChange)
 
+	def OnAdvancedChecked(self, checked):
+		if checked:
+			self.sqlQueryLineEdit.setFocus()
 
 	def openDB(self, dbpath, updateOnIdle=True):
 		"""
@@ -94,8 +102,8 @@ class CSVExportWindow(QtGui.QDialog):
 			raise
 
 	def _genquery(self):
-		if self.exportAllCheckBox.isChecked():
-			basequery = "select * from metadata"
+		if self.advancedCheckBox.isChecked():
+			basequery = str(self.sqlQueryLineEdit.text())
 		else:
 			cols=', '.join([ str(cb.text()) for cb in self.dbFieldsGroupBox.children()[1:] if cb.isChecked() ])
 			basequery = "select "+cols+" from metadata"

@@ -15,19 +15,9 @@
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_2">
    <item>
-    <widget class="QCheckBox" name="exportAllCheckBox">
-     <property name="text">
-      <string>Export All</string>
-     </property>
-     <property name="checked">
-      <bool>true</bool>
-     </property>
-    </widget>
-   </item>
-   <item>
     <widget class="QGroupBox" name="dbFieldsGroupBox">
      <property name="title">
-      <string>Database Fields</string>
+      <string>Select Fields to Export</string>
      </property>
     </widget>
    </item>
@@ -39,10 +29,46 @@
      <property name="sizeHint" stdset="0">
       <size>
        <width>20</width>
-       <height>281</height>
+       <height>217</height>
       </size>
      </property>
     </spacer>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout_2">
+     <item>
+      <widget class="QCheckBox" name="advancedCheckBox">
+       <property name="text">
+        <string>Advanced</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <spacer name="horizontalSpacer_2">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <widget class="QGroupBox" name="advancedGroupBox">
+     <property name="title">
+      <string>SQL Query</string>
+     </property>
+     <layout class="QVBoxLayout" name="verticalLayout">
+      <item>
+       <widget class="QLineEdit" name="sqlQueryLineEdit"/>
+      </item>
+     </layout>
+    </widget>
    </item>
    <item>
     <layout class="QHBoxLayout" name="horizontalLayout">
@@ -80,18 +106,34 @@
  <resources/>
  <connections>
   <connection>
-   <sender>exportAllCheckBox</sender>
+   <sender>advancedCheckBox</sender>
+   <signal>clicked(bool)</signal>
+   <receiver>advancedGroupBox</receiver>
+   <slot>setShown(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>53</x>
+     <y>289</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>59</x>
+     <y>304</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>advancedCheckBox</sender>
    <signal>clicked(bool)</signal>
    <receiver>dbFieldsGroupBox</receiver>
    <slot>setDisabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>51</x>
-     <y>38</y>
+     <x>36</x>
+     <y>279</y>
     </hint>
     <hint type="destinationlabel">
-     <x>50</x>
-     <y>77</y>
+     <x>151</x>
+     <y>45</y>
     </hint>
    </hints>
   </connection>
