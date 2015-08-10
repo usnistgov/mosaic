@@ -6,6 +6,8 @@
 	:License:	See LICENSE.TXT
 	:ChangeLog:
 	.. line-block::
+		8/5/15 		AB 	Added a function to export database tables to CSV
+		8/5/15 		AB 	Misc bug fixes
 		4/1/15 		AB 	Added an estimate of data length to the DB
 		3/23/15 	AB 	Added a raw query function that does not automatically decode column data.
 		11/9/14 	AB  Implemented the analysis log I/O interface for sqlite3 databases.
@@ -17,6 +19,7 @@ import sqlite3
 import base64
 import struct
 import datetime
+import pandas 
 
 import numpy
 import metaMDIO
@@ -80,9 +83,22 @@ class sqlite3MDIO(metaMDIO.metaMDIO):
 
 		self._setuptables()
 
+	def _dbfile(self):
+		"""
+			.. important:: |abstractmethod|
+
+			Return the full path and filename to the database.
+		"""
+		try:
+			return self.dbFilename
+		except:
+			return ""
+
 	def _opendb(self, dbname, **kwargs):
 		if not hasattr(self, 'tableName'):
 			self.tableName='metadata'
+
+		self.dbFilename=dbname
 
 		# colnames and colname types are needed for appending data. If they are not passed
 		# as arguments, no exception is raised. In the future this can be retrieved from the 
@@ -127,8 +143,8 @@ class sqlite3MDIO(metaMDIO.metaMDIO):
 	def writeAnalysisInfo(self, infolist):
 		with self.db:
 			# allow only one entry in this table
-			self.db.execute('DELETE FROM analysislog')
-			self.db.execute( 'INSERT INTO analysisinfo VALUES(?, ?, ?, ?, ?, ?, ?)',  (infolist+[None]))
+			self.db.execute('DELETE FROM analysisinfo')
+			self.db.execute( 'INSERT INTO analysisinfo VALUES(?, ?, ?, ?, ?, ?, ?, ?)',  (infolist+[None]))
 
 
 	def writeAnalysisLog(self, analysislog):
@@ -203,6 +219,14 @@ class sqlite3MDIO(metaMDIO.metaMDIO):
 		except sqlite3.OperationalError, err:
 			raise
 
+	def exportToCSV(self, query):
+		"""
+			Export database records that match the specified query to a CSV flat file.
+		"""
+		csvfile=format_path( self.dbFile.split('.')[0]+'.csv' )
+		df=pandas.DataFrame(self.queryDB(query), columns=self._col_names(query, self.db.cursor(), self.tableName))
+		df.to_csv( csvfile )
+
 	def _colnames(self, table=None):
 		if table:
 			tname=table
@@ -229,7 +253,7 @@ class sqlite3MDIO(metaMDIO.metaMDIO):
 				
 				cols+=[word]
 
-			c1=[ c.rstrip(',') for c in cols ]
+			c1=[ col.rstrip(',') for col in cols ]
 			if c1[0]=='*':
 				return [ str(row[1]) for row in c.execute('PRAGMA table_info('+tablename+'_t)').fetchall() ]
 			else:
@@ -273,6 +297,7 @@ class sqlite3MDIO(metaMDIO.metaMDIO):
 					partitionAlgorithm TEXT, \
 					processingAlgorithm TEXT, \
 					filteringAlgorithm TEXT, \
+					analysisTimeSec REAL, \
 					dataLengthSec REAL, \
 					recIDX INTEGER PRIMARY KEY AUTOINCREMENT \
 				)")
@@ -312,25 +337,32 @@ class sqlite3MDIO(metaMDIO.metaMDIO):
 		return [ d[col] for col in colnames ]
 
 if __name__=="__main__":
-	dbname=resource_path('eventMD-PEG29-Reference.sqlite')
+	dbname=resource_path('eventMD-PEG28-stepResponseAnalysis.sqlite')
 
-	c=sqlite3MDIO()
-	c.openDB(dbname)
+	try:
+		c=sqlite3MDIO()
+		c.openDB(dbname)
 
-	import time
+		import time
 
-	t1=time.time()
-	q=c.queryDB( "select TimeSeries from metadata limit 100, 200" )
-	t2=time.time()
+		t1=time.time()
+		q=c.queryDB( "select TimeSeries from metadata limit 100, 200" )
+		t2=time.time()
 
-	print "Timing: ", round((t2-t1)*1000, 2), " ms"
-	print "Results:", len(q)
+		print "Timing: ", round((t2-t1)*1000, 2), " ms"
+		print "Results:", len(q)
 
-	print c.readSettings()
-	print c.readAnalysisLog()
-	print c.readAnalysisInfo()
+		print c.readSettings()
+		print c.readAnalysisLog()
+		print c.readAnalysisInfo()
 
-	print zip( c.mdColumnNames, c.mdColumnTypes )
-	print
-	print [ c for c in zip( c.mdColumnNames, c.mdColumnTypes ) if c[1] != 'REAL_LIST' ]
+		print zip( c.mdColumnNames, c.mdColumnTypes )
+		print
+		# print [ c for c in zip( c.mdColumnNames, c.mdColumnTypes ) if c[1] != 'REAL_LIST' ]
 
+		c.exportToCSV( "select * from metadata" )
+
+		c.closeDB()
+	except:
+		c.closeDB()
+		raise

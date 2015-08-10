@@ -210,9 +210,12 @@ class StatisticsWindow(QtGui.QDialog):
 			return [0,0]
 
 	def _progressstats(self):
-		etime=self.queryData[-1]/1000.
-		if etime > self.analysisTime:
-			self.analysisTime=etime
+		try:
+			self.analysisTime=list(self.dbHnd.rawQuery("select analysisTimeSec from analysisinfo")[0])[0]
+		except:
+			etime=self.queryData[-1]/1000.
+			if etime > self.analysisTime:
+				self.analysisTime=etime
 
 		try:
 			pctcomplete=100.*self.analysisTime/float(self.trajLength)

@@ -190,7 +190,10 @@ class metaTrajIO(object):
 
 			Return the elapsed time in the time-series in seconds.
 		"""
-		return self.globalDataIndex/float(self.Fs)
+		if not self.initPipe:
+			self._initPipe()
+
+		return (self.globalDataIndex - self.startIndex)/float(self.FsHz) 
 
 	@property 
 	def LastFileProcessed(self):
@@ -364,7 +367,7 @@ class metaTrajIO(object):
 		
 	def scaleData(self, data):
 		"""
-			.. note:: |interfacemethod|
+			.. important:: |interfacemethod|
 
 			Scale the raw data loaded with :func:`~mosaic.metaTrajIO.metaTrajIO.readdata`. Note this function will not necessarily receive the entire data array loaded with :func:`~mosaic.metaTrajIO.metaTrajIO.readdata`. Transformations must be able to process partial data chunks.
 
@@ -384,10 +387,10 @@ class metaTrajIO(object):
 
 				Assuming the amplifier scale and offset values are stored in the class variables ``AmplifierScale`` and ``AmplifierOffset``, the raw data read using :func:`~mosaic.metaTrajIO.metaTrajIO.readdata` can be transformed by :func:`~mosaic.metaTrajIO.metaTrajIO.scaleData`. We can also use this function to change the array data type.
 
-					.. code-block:: python
+			.. code-block:: python
 
-						def scaleData(self, data):
-							return np.array( data*self.AmplifierScale-self.AmplifierOffset, dtype='f8' )
+				def scaleData(self, data):
+					return np.array(data*self.AmplifierScale-self.AmplifierOffset, dtype='f8')
 		"""
 		return data
 
@@ -478,7 +481,11 @@ class metaTrajIO(object):
 		if hasattr(self, 'start'):
 			self.startIndex=int(self.start*self.Fs)
 			if self.startIndex > 0:
-				self.popdata(self.startIndex-1)
+				nBlks=int((self.startIndex-1)/self.CHUNKSIZE)
+				for i in range(nBlks):
+					self.popdata(self.CHUNKSIZE)
+
+				self.popdata( int((self.startIndex-1)%self.CHUNKSIZE) )
 
 	def _setupDataFilter(self):
 		filtsettings=settings.settings( self.datPath ).getSettings(self.datafilter.__name__)

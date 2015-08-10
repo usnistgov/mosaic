@@ -68,6 +68,15 @@ class metaMDIO(object):
 		self._opendb(dbname, **kwargs)
 
 	@abstractmethod
+	def _dbfile(self):
+		"""
+			.. important:: |abstractmethod|
+
+			Return the full path and filename to the database.
+		"""
+		pass
+
+	@abstractmethod
 	def _opendb(self, dbname, **kwargs):
 		"""
 			.. important:: |abstractmethod|
@@ -206,6 +215,11 @@ class metaMDIO(object):
 	def mdColumnTypes(self):
 		return self._coltypes()
 
+	@property 
+	def dbFile(self):
+		return self._dbfile()
+		
 	def _generateRecordKey(self):
 		return float(time.time()+self.pid)
+
 
