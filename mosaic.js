@@ -8,7 +8,7 @@ angular
     })
     .controller('AppCtrl', function ($scope, $timeout, $mdSidenav, $mdUtil, $log) {
       $scope.baseURL = "https://abalijepalli.github.io/mosaic"
-      $scope.docURL = $scope.baseURL+"/html/"
+      $scope.docURL = $scope.baseURL+"/html/index.html"
       $scope.mailingListURL = $scope.baseURL+"/html/doc/mailingList.html"
       $scope.scriptURL = $scope.baseURL+"/html/doc/ScriptingandAdvancedFeatures.html"
       $scope.algoURL = $scope.baseURL+"/html/doc/Algorithms.html"
