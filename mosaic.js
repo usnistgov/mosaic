@@ -18,13 +18,22 @@ angular
       $scope.guiURL = $scope.baseURL+"/html/doc/GraphicalInterface.html"
       $scope.developersURL = $scope.baseURL+"/html/doc/Developers.html"
       $scope.termsURL = $scope.baseURL+"/html/doc/Disclaimer.html"
-      
+
       $scope.toggleLeft = buildToggler('left');
       $scope.toggleRight = buildToggler('right');
+
+      $scope.useCaseURL = generateUseCaseURL();
       /**
        * Build handler to open/close a SideNav; when animation finishes
        * report completion in console
        */
+      function generateUseCaseURL() {
+        var imgs = Array("assets/img/UseCase-01.png", "assets/img/UseCase-02.png");
+        var img = imgs[Math.floor(Math.random()*imgs.length)];
+
+        return img 
+      }
+
       function buildToggler(navID) {
         var debounceFn =  $mdUtil.debounce(function(){
               $mdSidenav(navID)
