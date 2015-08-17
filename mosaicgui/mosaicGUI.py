@@ -45,7 +45,10 @@ class qtAnalysisGUI(mosaicgui.settingsview.settingsview):
 		QtCore.QObject.connect(self.actionLoad_Data, QtCore.SIGNAL('triggered()'), self.OnSelectPath)
 		QtCore.QObject.connect(self.actionSave_Settings, QtCore.SIGNAL('triggered()'), self.OnSaveSettings)
 		QtCore.QObject.connect(self.actionSave_Histogram, QtCore.SIGNAL('triggered()'), self.OnSaveHistogram)
+		QtCore.QObject.connect(self.actionExport_Database_to_CSV, QtCore.SIGNAL('triggered()'), self.OnExportDB)
 		QtCore.QObject.connect(self.actionAbout_MOSAIC, QtCore.SIGNAL('triggered()'), self.OnAboutApp)
+
+		
 		
 		
 		
@@ -231,6 +234,8 @@ class qtAnalysisGUI(mosaicgui.settingsview.settingsview):
 				self.fitEventsView.show()
 				self.plotEventFitsCheckBox.setChecked(True)
 
+				self.exportView.openDBFile(analysisfile)
+
 				# set data path in the console viewer
 				self.consoleLog.openDBFile(analysisfile)
 
@@ -244,6 +249,9 @@ class qtAnalysisGUI(mosaicgui.settingsview.settingsview):
 
 		self.ShowTrajectory=True
 		
+	def OnExportDB(self):
+		self.exportView.show()
+
 	def OnAboutApp(self):
 		self.aboutDialog.show()
 
@@ -263,6 +271,8 @@ class qtAnalysisGUI(mosaicgui.settingsview.settingsview):
 			self.fitEventsView.show()
 
 		self.consoleLog.openDBFile( self.DataFile )
+
+		self.exportView.openDBFile( self.DataFile )
 
 		# self.startAnalysisPushButton.setStyleSheet('QPushButton {color: white; background-color: qlineargradient(spread:pad, x1:0, y1:1, x2:0, y2:0, stop:0 rgba(190, 49, 8), stop:1 rgba(255, 10, 4));}')
 		self.startAnalysisPushButton.setStyleSheet('QPushButton {color: red;}')

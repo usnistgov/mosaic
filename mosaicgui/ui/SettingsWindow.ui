@@ -943,6 +943,7 @@
     <addaction name="actionOpen_Analysis"/>
     <addaction name="actionSave_Settings"/>
     <addaction name="actionSave_Histogram"/>
+    <addaction name="actionExport_Database_to_CSV"/>
     <addaction name="actionStart_Analysis"/>
    </widget>
    <widget class="QMenu" name="menuHelp">
@@ -1081,6 +1082,14 @@
    </property>
    <property name="shortcut">
     <string>Ctrl+Shift+H</string>
+   </property>
+  </action>
+  <action name="actionExport_Database_to_CSV">
+   <property name="text">
+    <string>Export Database to CSV</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Shift+E</string>
    </property>
   </action>
  </widget>

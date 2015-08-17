@@ -22,6 +22,7 @@ import mosaicgui.blockdepthview.blockdepthview
 import mosaicgui.statisticsview.statisticsview
 import mosaicgui.consolelog.consolelog
 import mosaicgui.fiteventsview.fiteventsview
+import mosaicgui.csvexportview.csvexportview
 import mosaicgui.aboutdialog.aboutdialog
 import mosaicgui.datamodel
 
@@ -48,6 +49,7 @@ class settingsview(QtGui.QMainWindow):
 		self.blockDepthWindow = mosaicgui.blockdepthview.blockdepthview.BlockDepthWindow(parent=self)
 		self.statisticsView = mosaicgui.statisticsview.statisticsview.StatisticsWindow(parent=self)
 		self.fitEventsView = mosaicgui.fiteventsview.fiteventsview.FitEventWindow(parent=self)
+		self.exportView = mosaicgui.csvexportview.csvexportview.CSVExportWindow(parent=self)
 		self.aboutDialog = mosaicgui.aboutdialog.aboutdialog.AboutDialog(parent=self)
 		
 

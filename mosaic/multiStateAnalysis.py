@@ -345,11 +345,11 @@ class multiStateAnalysis(metaEventProcessor.metaEventProcessor):
 				self.mdRedChiSq			= sum(np.array(optfit.residual)**2/self.baseSD**2)/optfit.nfree
 					
 				if math.isnan(self.mdRedChiSq):
-					self.rejectEvent('eInvalidRedChiSq')
-				if not (self.mdRCConst>0).all():
-					self.rejectEvent('eInvalidRCConstant')
-				if not (self.mdStateResTime>0).all():
+					self.rejectEvent('eInvalidRedChiSq')	
+				if not (np.array(self.mdStateResTime)>0).all():
 					self.rejectEvent('eNegativeEventDelay')
+				if not (np.array(self.mdRCConst)>0).all():
+					self.rejectEvent('eInvalidRCConst')
 		except:
 			self.rejectEvent('eInvalidEvent')
 
