@@ -5,19 +5,18 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>6. Settings File &mdash; MOSAIC 1.2 documentation</title>
+    <title>6. Settings File &mdash; MOSAIC 1.3 documentation</title>
     
     <link rel="stylesheet" href="../_static/basic.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="../_static/bootstrap-3.2.0/css/bootstrap.min.css" type="text/css" />
-    <link rel="stylesheet" href="../_static/bootstrap-3.2.0/css/bootstrap-theme.min.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/bootswatch-3.2.0/paper/bootstrap.min.css" type="text/css" />
     <link rel="stylesheet" href="../_static/bootstrap-sphinx.css" type="text/css" />
     <link rel="stylesheet" href="../_static/style.css" type="text/css" />
     
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '1.2',
+        VERSION:     '1.3',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -26,13 +25,13 @@
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <script type="text/javascript" src="../_static/js/jquery-1.11.0.min.js"></script>
     <script type="text/javascript" src="../_static/js/jquery-fix.js"></script>
     <script type="text/javascript" src="../_static/bootstrap-3.2.0/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="../_static/bootstrap-sphinx.js"></script>
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
-    <link rel="top" title="MOSAIC 1.2 documentation" href="../index.html" />
+    <link rel="top" title="MOSAIC 1.3 documentation" href="../index.html" />
     <link rel="next" title="7. Database Structure and Query Syntax" href="DatabaseStructure.html" />
     <link rel="prev" title="5. Scripting and Advanced Features" href="ScriptingandAdvancedFeatures.html" />
 
@@ -42,13 +41,13 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 
 	<script type="text/javascript"
-		src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+		src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
 	</script>
 	<script type="text/javascript" id="_fed_an_js_tag" src="//www.nist.gov/js/federated-analytics.all.min.js?agency=NIST&subagency=github&pua=UA-42404149-54&yt=true&exts=ppsx,pps,f90,sch,rtf,wrl,txz,m1v,xlsm,msi,xsd,f,tif,eps,mpg,xml,pl,xlt,c">
 	</script>	
 
   </head>
-  <body>
+  <body role="document">
 
   <div id="navbar" class="navbar navbar-default navbar-fixed-top">
     <div class="container">
@@ -59,16 +58,17 @@
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </button>
-        <a class="navbar-brand" href="../index.html"><img src="../_static/icon_24.png">
+        <a class="navbar-brand" href="../index.html"><img src="../_static/icon_36.png">
            </a>
-        <span class="navbar-text navbar-version pull-left"><b>1.2</b></span>
+        <span class="navbar-text navbar-version pull-left"><b>1.3</b></span>
       </div>
 
         <div class="collapse navbar-collapse nav-collapse">
           <ul class="nav navbar-nav">
             
+                <li><a href="../../latex/MOSAIC.pdf">Download PDF</a></li>
                 <li><a href="mailingList.html">Mailing List</a></li>
-                <li><a href="//github.com/usnistgov/mosaic">Develop MOSAIC</a></li>
+                <li><a href="//github.com/usnistgov/mosaic">Develop</a></li>
                 <li><a href="//github.com/usnistgov/mosaic/issues">Issue Tracker</a></li>
             
             
@@ -83,7 +83,7 @@
       aria-labelledby="dLabelGlobalToc"><ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="Introduction.html">1. Introduction</a></li>
 <li class="toctree-l1"><a class="reference internal" href="GettingStarted.html">2. Getting Started</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Algorithms.html">3. Algorithms in <em>MOSAIC</em></a></li>
+<li class="toctree-l1"><a class="reference internal" href="Algorithms.html">3. Data Processing Algorithms in <em>MOSAIC</em></a></li>
 <li class="toctree-l1"><a class="reference internal" href="GraphicalInterface.html">4. <em>MOSAIC</em> GUI</a></li>
 <li class="toctree-l1"><a class="reference internal" href="ScriptingandAdvancedFeatures.html">5. Scripting and Advanced Features</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="">6. Settings File</a></li>
@@ -127,7 +127,7 @@
       
   <div class="section" id="settings-file">
 <span id="settings-page"></span><h1>6. Settings File<a class="headerlink" href="#settings-file" title="Permalink to this headline">¶</a></h1>
-<p><em>MOSAIC</em> stores its settings in the <a class="reference external" href="http://json.org/">JSON</a> format. When using the graphical interface, a settings file is generated automatically upon starting an analysis, or by clicking <em>Save Settings</em> in the <em>File menu</em>  (see <a class="reference internal" href="GraphicalInterface.html#gui-page"><em>MOSAIC GUI</em></a>).</p>
+<p><em>MOSAIC</em> stores its settings in the <a class="reference external" href="http://json.org/">JSON</a> format. When using the graphical interface, a settings file is generated automatically upon starting an analysis, or by clicking <em>Save Settings</em> in the <em>File menu</em>  (see <a class="reference internal" href="GraphicalInterface.html#gui-page"><span>MOSAIC GUI</span></a>).</p>
 <div class="section" id="settings-layout">
 <h2>6.1. Settings Layout<a class="headerlink" href="#settings-layout" title="Permalink to this headline">¶</a></h2>
 <p><a class="reference external" href="http://json.org/">JSON</a> is a human readable file format that consists of key-value pairs separated by sections. Each section in a JSON object consists of a section name and a list of string key-value pairs.</p>
@@ -141,7 +141,7 @@
 <span class="p">}</span>
 </pre></div>
 </div>
-<p><em>MOSAIC</em> settings define a new section for each class, with key-value pairs corresponding to class attributes that are set upon initialization. This is illustrated below for the stepResponseAnalysis class. The <em>stepResponseAnalysis</em> section in the settings file holds parameters corresponding to the <a class="reference internal" href="../api-doc/mosaic.processing.html#module-mosaic.stepResponseAnalysis" title="mosaic.stepResponseAnalysis"><tt class="xref py py-class docutils literal"><span class="pre">stepResponseAnalysis</span></tt></a> class. Note that that the section name in the settings file is identical to the corresponding class name. Three parameters are then defined within the section that control the behavior of the class.</p>
+<p><em>MOSAIC</em> settings define a new section for each class, with key-value pairs corresponding to class attributes that are set upon initialization. This is illustrated below for the stepResponseAnalysis class. The <em>stepResponseAnalysis</em> section in the settings file holds parameters corresponding to the <a class="reference internal" href="../api-doc/mosaic.processing.html#module-mosaic.stepResponseAnalysis" title="mosaic.stepResponseAnalysis"><code class="xref py py-class docutils literal"><span class="pre">stepResponseAnalysis</span></code></a> class. Note that that the section name in the settings file is identical to the corresponding class name. Three parameters are then defined within the section that control the behavior of the class.</p>
 <div class="highlight-javascript"><div class="highlight"><pre><span class="p">{</span>
         <span class="s2">&quot;stepResponseAnalysis&quot;</span> <span class="o">:</span> <span class="p">{</span>
                 <span class="s2">&quot;FitTol&quot;</span>                        <span class="o">:</span> <span class="s2">&quot;1.e-7&quot;</span><span class="p">,</span>
@@ -151,7 +151,7 @@
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>Finally, <a class="reference internal" href="../api-doc/mosaic.processing.html#module-mosaic.stepResponseAnalysis" title="mosaic.stepResponseAnalysis"><tt class="xref py py-class docutils literal"><span class="pre">stepResponseAnalysis</span></tt></a> is initialized by defining class attributes corresponding to the key-value pairs in the settings file.</p>
+<p>Finally, <a class="reference internal" href="../api-doc/mosaic.processing.html#module-mosaic.stepResponseAnalysis" title="mosaic.stepResponseAnalysis"><code class="xref py py-class docutils literal"><span class="pre">stepResponseAnalysis</span></code></a> is initialized by defining class attributes corresponding to the key-value pairs in the settings file.</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="k">try</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">FitTol</span><span class="o">=</span><span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">settingsDict</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s">&quot;FitTol&quot;</span><span class="p">,</span> <span class="mf">1.e-7</span><span class="p">))</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">FitIters</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">settingsDict</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s">&quot;FitIters&quot;</span><span class="p">,</span> <span class="mi">5000</span><span class="p">))</span>
@@ -166,7 +166,7 @@
 <div class="section" id="trajectory-settings">
 <h2>6.2. Trajectory Settings<a class="headerlink" href="#trajectory-settings" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="common-settings-metatrajio">
-<h3>6.2.1. Common Settings (<a class="reference internal" href="../api-doc/mosaic.meta.html#mosaic.metaTrajIO.metaTrajIO" title="mosaic.metaTrajIO.metaTrajIO"><tt class="xref py py-class docutils literal"><span class="pre">metaTrajIO</span></tt></a>)<a class="headerlink" href="#common-settings-metatrajio" title="Permalink to this headline">¶</a></h3>
+<h3>6.2.1. Common Settings (<a class="reference internal" href="../api-doc/mosaic.meta.html#mosaic.metaTrajIO.metaTrajIO" title="mosaic.metaTrajIO.metaTrajIO"><code class="xref py py-class docutils literal"><span class="pre">metaTrajIO</span></code></a>)<a class="headerlink" href="#common-settings-metatrajio" title="Permalink to this headline">¶</a></h3>
 <blockquote>
 <div><div class="admonition warning">
 <p class="first admonition-title">Warning</p>
@@ -182,54 +182,30 @@ the feedback resistance (Rfb) and feedback capacitance (Cfb) to be passed at ini
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Keyword Args:</th><td class="field-body"><ul class="first">
-<li><p class="first"><cite>dirname</cite> :           all files from a directory (&#8216;&lt;full path to data directory&gt;&#8217;)</p>
-</li>
-<li><p class="first"><cite>nfiles</cite> :            if requesting N files (in addition to dirname) from a specified directory</p>
-</li>
-<li><dl class="first docutils">
-<dt><cite>fnames</cite> <span class="classifier-delimiter">:</span> <span class="classifier">explicit list of filenames ([file1, file2,...]). This argument</span></dt>
-<dd><p class="first last">cannot be used in conjuction with dirname/nfiles. The filter
-argument is ignored when used in combination with fnames.</p>
-</dd>
-</dl>
-</li>
-<li><p class="first"><cite>filter</cite> :            &#8216;&lt;wildcard filter&gt;&#8217; (optional, filter is &#8216;*&#8217; if not specified)</p>
-</li>
-<li><p class="first"><cite>start</cite> :             Data start point in seconds.</p>
-</li>
-<li><p class="first"><cite>end</cite> :               Data end point in seconds.</p>
-</li>
-<li><dl class="first docutils">
-<dt><cite>datafilter</cite> <span class="classifier-delimiter">:</span> <span class="classifier">Handle to the algorithm to use to filter the data. If no algorithm is specified, datafilter</span></dt>
-<dd><p class="first last">is None and no filtering is performed.</p>
-</dd>
-</dl>
-</li>
-<li><p class="first"><cite>dcOffset</cite> :  Subtract a DC offset from the ionic current data.</p>
-</li>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><cite>dirname</cite> :           all files from a directory (&#8216;&lt;full path to data directory&gt;&#8217;)</li>
+<li><cite>nfiles</cite> :            if requesting N files (in addition to dirname) from a specified directory</li>
+<li><cite>fnames</cite> :            explicit list of filenames ([file1, file2,...]). This argument cannot be used in conjuction with dirname/nfiles. The filter argument is ignored when used in combination with fnames.</li>
+<li><cite>filter</cite> :            &#8216;&lt;wildcard filter&gt;&#8217; (optional, filter is &#8216;*&#8217; if not specified)</li>
+<li><cite>start</cite> :             Data start point in seconds.</li>
+<li><cite>end</cite> :                       Data end point in seconds.</li>
+<li><cite>datafilter</cite> :        Handle to the algorithm to use to filter the data. If no algorithm is specified, datafilter     is None and no filtering is performed.</li>
+<li><cite>dcOffset</cite> :          Subtract a DC offset from the ionic current data.</li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Properties:</th><td class="field-body"><ul class="first">
-<li><dl class="first docutils">
-<dt><cite>FsHz</cite> <span class="classifier-delimiter">:</span> <span class="classifier">sampling frequency in Hz. If the data was decimated, this</span></dt>
-<dd><p class="first last">property will hold the sampling frequency after decimation.</p>
-</dd>
-</dl>
-</li>
-<li><p class="first"><cite>LastFileProcessed</cite> : return the data file that was last processed.</p>
-</li>
-<li><p class="first"><cite>ElapsedTimeSeconds</cite> : return the analysis time in sec.</p>
-</li>
+<tr class="field-even field"><th class="field-name">Properties:</th><td class="field-body"><ul class="first simple">
+<li><cite>FsHz</cite> :                                      sampling frequency in Hz. If the data was decimated, this property will hold the sampling frequency after decimation.</li>
+<li><cite>LastFileProcessed</cite> :         return the data file that was last processed.</li>
+<li><cite>ElapsedTimeSeconds</cite> :        return the analysis time in sec.</li>
 </ul>
 </td>
 </tr>
 <tr class="field-odd field"><th class="field-name">Errors:</th><td class="field-body"><ul class="first last simple">
-<li><cite>IncompatibleArgumentsError</cite> : when conflicting arguments are used.</li>
-<li><cite>EmptyDataPipeError</cite> : when out of data.</li>
-<li><cite>FileNotFoundError</cite> : when data files do not exist in the specified path.</li>
-<li><cite>InsufficientArgumentsError</cite> : when incompatible arguments are passed</li>
+<li><cite>IncompatibleArgumentsError</cite> :        when conflicting arguments are used.</li>
+<li><cite>EmptyDataPipeError</cite> :                        when out of data.</li>
+<li><cite>FileNotFoundError</cite> :                         when data files do not exist in the specified path.</li>
+<li><cite>InsufficientArgumentsError</cite> :        when incompatible arguments are passed</li>
 </ul>
 </td>
 </tr>
@@ -238,14 +214,14 @@ argument is ignored when used in combination with fnames.</p>
 </div></blockquote>
 </div>
 <div class="section" id="qdf-files-qdftrajio">
-<h3>6.2.2. QDF Files (<a class="reference internal" href="../api-doc/mosaic.traj.html#mosaic.qdfTrajIO.qdfTrajIO" title="mosaic.qdfTrajIO.qdfTrajIO"><tt class="xref py py-class docutils literal"><span class="pre">qdfTrajIO</span></tt></a>)<a class="headerlink" href="#qdf-files-qdftrajio" title="Permalink to this headline">¶</a></h3>
+<h3>6.2.2. QDF Files (<a class="reference internal" href="../api-doc/mosaic.traj.html#mosaic.qdfTrajIO.qdfTrajIO" title="mosaic.qdfTrajIO.qdfTrajIO"><code class="xref py py-class docutils literal"><span class="pre">qdfTrajIO</span></code></a>)<a class="headerlink" href="#qdf-files-qdftrajio" title="Permalink to this headline">¶</a></h3>
 <blockquote>
 <div><p>Use the readqdf module from EBS to read individual QDF files.</p>
-<p>In addition to <a class="reference internal" href="../api-doc/mosaic.meta.html#mosaic.metaTrajIO.metaTrajIO" title="mosaic.metaTrajIO.metaTrajIO"><tt class="xref py py-class docutils literal"><span class="pre">metaTrajIO</span></tt></a> args, check if the
-feedback resistance (<tt class="docutils literal"><span class="pre">Rfb</span></tt>) and feedback capacitance (<tt class="docutils literal"><span class="pre">Cfb</span></tt>)
+<p>In addition to <a class="reference internal" href="../api-doc/mosaic.meta.html#mosaic.metaTrajIO.metaTrajIO" title="mosaic.metaTrajIO.metaTrajIO"><code class="xref py py-class docutils literal"><span class="pre">metaTrajIO</span></code></a> args, check if the
+feedback resistance (<code class="docutils literal"><span class="pre">Rfb</span></code>) and feedback capacitance (<code class="docutils literal"><span class="pre">Cfb</span></code>)
 are defined to convert qdf binary data into pA.</p>
 <p>A typical settings section to read QDF files is shown below. Note, that
-the values for <tt class="docutils literal"><span class="pre">Rfb</span></tt> and <tt class="docutils literal"><span class="pre">Cfb</span></tt> are specific to the amplifier used.</p>
+the values for <code class="docutils literal"><span class="pre">Rfb</span></code> and <code class="docutils literal"><span class="pre">Cfb</span></code> are specific to the amplifier used.</p>
 <div class="highlight-javascript"><div class="highlight"><pre><span class="s2">&quot;qdfTrajIO&quot;</span><span class="o">:</span> <span class="p">{</span>
 <span class="s2">&quot;Rfb&quot;</span>                           <span class="o">:</span> <span class="mf">9.1</span><span class="nx">e</span><span class="o">+</span><span class="mi">12</span><span class="p">,</span>
 <span class="s2">&quot;Cfb&quot;</span>                           <span class="o">:</span> <span class="mf">1.07</span><span class="nx">e</span><span class="o">-</span><span class="mi">12</span><span class="p">,</span>
@@ -274,7 +250,7 @@ the values for <tt class="docutils literal"><span class="pre">Rfb</span></tt> an
 </td>
 </tr>
 <tr class="field-odd field"><th class="field-name">Errors:</th><td class="field-body"><ul class="first last simple">
-<li><cite>InsufficientArgumentsError</cite> : if the mandatory arguments <tt class="docutils literal"><span class="pre">Rfb</span></tt> and <tt class="docutils literal"><span class="pre">Cfb</span></tt> are not set.</li>
+<li><cite>InsufficientArgumentsError</cite> : if the mandatory arguments <code class="docutils literal"><span class="pre">Rfb</span></code> and <code class="docutils literal"><span class="pre">Cfb</span></code> are not set.</li>
 </ul>
 </td>
 </tr>
@@ -283,7 +259,7 @@ the values for <tt class="docutils literal"><span class="pre">Rfb</span></tt> an
 </div></blockquote>
 </div>
 <div class="section" id="abf-files-abftrajio">
-<h3>6.2.3. ABF Files (<a class="reference internal" href="../api-doc/mosaic.traj.html#mosaic.abfTrajIO.abfTrajIO" title="mosaic.abfTrajIO.abfTrajIO"><tt class="xref py py-class docutils literal"><span class="pre">abfTrajIO</span></tt></a>)<a class="headerlink" href="#abf-files-abftrajio" title="Permalink to this headline">¶</a></h3>
+<h3>6.2.3. ABF Files (<a class="reference internal" href="../api-doc/mosaic.traj.html#mosaic.abfTrajIO.abfTrajIO" title="mosaic.abfTrajIO.abfTrajIO"><code class="xref py py-class docutils literal"><span class="pre">abfTrajIO</span></code></a>)<a class="headerlink" href="#abf-files-abftrajio" title="Permalink to this headline">¶</a></h3>
 <blockquote>
 <div><p>Read ABF1 and ABF2 file formats. Currently, only
 gap-free mode and single channel recordings are supported.</p>
@@ -300,7 +276,7 @@ gap-free mode and single channel recordings are supported.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first last docutils">
-<dt>In addition to <a class="reference internal" href="../api-doc/mosaic.meta.html#mosaic.metaTrajIO.metaTrajIO" title="mosaic.metaTrajIO.metaTrajIO"><tt class="xref py py-class docutils literal"><span class="pre">metaTrajIO</span></tt></a> args,</dt>
+<dt>In addition to <a class="reference internal" href="../api-doc/mosaic.meta.html#mosaic.metaTrajIO.metaTrajIO" title="mosaic.metaTrajIO.metaTrajIO"><code class="xref py py-class docutils literal"><span class="pre">metaTrajIO</span></code></a> args,</dt>
 <dd><p class="first last">None</p>
 </dd>
 </dl>
@@ -311,12 +287,12 @@ gap-free mode and single channel recordings are supported.</p>
 </div></blockquote>
 </div>
 <div class="section" id="binary-files-bintrajio">
-<h3>6.2.4. Binary Files (<a class="reference internal" href="../api-doc/mosaic.traj.html#mosaic.binTrajIO.binTrajIO" title="mosaic.binTrajIO.binTrajIO"><tt class="xref py py-class docutils literal"><span class="pre">binTrajIO</span></tt></a>)<a class="headerlink" href="#binary-files-bintrajio" title="Permalink to this headline">¶</a></h3>
+<h3>6.2.4. Binary Files (<a class="reference internal" href="../api-doc/mosaic.traj.html#mosaic.binTrajIO.binTrajIO" title="mosaic.binTrajIO.binTrajIO"><code class="xref py py-class docutils literal"><span class="pre">binTrajIO</span></code></a>)<a class="headerlink" href="#binary-files-bintrajio" title="Permalink to this headline">¶</a></h3>
 <blockquote>
 <div><p>Read a file that contains interleaved binary data, ordered by column. Only a single
 column that holds ionic current data is read. The current in pA
-is returned after scaling by the amplifier scale factor (<tt class="docutils literal"><span class="pre">AmplifierScale</span></tt>) and
-removing any offsets (<tt class="docutils literal"><span class="pre">AmplifierOffset</span></tt>) if provided.</p>
+is returned after scaling by the amplifier scale factor (<code class="docutils literal"><span class="pre">AmplifierScale</span></code>) and
+removing any offsets (<code class="docutils literal"><span class="pre">AmplifierOffset</span></code>) if provided.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -327,19 +303,19 @@ binary data is assumed to be of the form:</p>
 <blockquote>
 <div><p>[ a_1, b_1, c_1, a_2, b_2, c_2, ... ... ..., a_N, b_N, c_N ]</p>
 </div></blockquote>
-<p>The column layout is specified with the <tt class="docutils literal"><span class="pre">ColumnTypes</span></tt> parameter, which accepts a list of tuples.
+<p>The column layout is specified with the <code class="docutils literal"><span class="pre">ColumnTypes</span></code> parameter, which accepts a list of tuples.
 For the example above, if column <strong>a</strong> is the ionic current in a 64-bit floating point format,
 column <strong>b</strong> is the ionic current representation in 16-bit integer format and column <strong>c</strong> is
-an index in 16-bit integer format, the <tt class="docutils literal"><span class="pre">ColumnTypes</span></tt> paramter is a list with three
+an index in 16-bit integer format, the <code class="docutils literal"><span class="pre">ColumnTypes</span></code> paramter is a list with three
 tuples, one for each column, as shown below:</p>
 <blockquote>
 <div><p>[(&#8216;curr_pA&#8217;, &#8216;float64&#8217;), (&#8216;AD_V&#8217;, &#8216;int16&#8217;), (&#8216;index&#8217;, &#8216;int16&#8217;)]</p>
 </div></blockquote>
 <p>The first element of each tuple is an arbitrary text label and the second element is
 a valid <a class="reference external" href="http://docs.scipy.org/doc/numpy/user/basics.types.html">Numpy type</a>.</p>
-<p>Finally, the <tt class="docutils literal"><span class="pre">IonicCurrentColumn</span></tt> parameter holds the name (text label defined above) of the
+<p>Finally, the <code class="docutils literal"><span class="pre">IonicCurrentColumn</span></code> parameter holds the name (text label defined above) of the
 column that holds the ionic current time-series. Note that if an integer column is selected,
-the <tt class="docutils literal"><span class="pre">AmplifierScale</span></tt> and <tt class="docutils literal"><span class="pre">AmplifierOffset</span></tt> parameters can be used to convert the voltage from
+the <code class="docutils literal"><span class="pre">AmplifierScale</span></code> and <code class="docutils literal"><span class="pre">AmplifierOffset</span></code> parameters can be used to convert the voltage from
 the A/D to a current.</p>
 <p>Assuming that we use a floating point representation of the ionic current, and
 a sampling rate of 50 kHz, a settings section that will read the binary file format
@@ -395,7 +371,7 @@ defined above is:</p>
 </td>
 </tr>
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first docutils">
-<dt>In addition to <a class="reference internal" href="../api-doc/mosaic.meta.html#mosaic.metaTrajIO.metaTrajIO" title="mosaic.metaTrajIO.metaTrajIO"><tt class="xref py py-class docutils literal"><span class="pre">metaTrajIO</span></tt></a> args,</dt>
+<dt>In addition to <a class="reference internal" href="../api-doc/mosaic.meta.html#mosaic.metaTrajIO.metaTrajIO" title="mosaic.metaTrajIO.metaTrajIO"><code class="xref py py-class docutils literal"><span class="pre">metaTrajIO</span></code></a> args,</dt>
 <dd><ul class="first last simple">
 <li><cite>AmplifierScale</cite> :            Full scale of amplifier (pA/2^nbits) that varies with the gain (default: 1.0).</li>
 <li><cite>AmplifierOffset</cite> :           Current offset in the recorded data in pA  (default: 0.0).</li>
@@ -421,10 +397,10 @@ defined above is:</p>
 </div>
 <div class="section" id="optimizing-settings">
 <span id="algorithm-settings-sec"></span><h2>6.3. Optimizing Settings<a class="headerlink" href="#optimizing-settings" title="Permalink to this headline">¶</a></h2>
-<p><em>MOSAIC</em> classes are controlled through the <a class="reference external" href="http://json.org/">JSON</a> settings files as defined above. In most cases, running <em>MOSAIC</em> through the GUI (see <a class="reference internal" href="GraphicalInterface.html#gui-page"><em>MOSAIC GUI</em></a>) should generate satisfactory results. However, settings can be further optimized either by editing a file named <tt class="docutils literal"><span class="pre">.settings</span></tt> stored within the data directory, or by clicking on the <tt class="docutils literal"><span class="pre">Advanced</span> <span class="pre">Settings</span></tt> check-box in the <a class="reference internal" href="GraphicalInterface.html#analysis-setup"><em>Panel A: Analysis Setup</em></a> section of the GUI.</p>
+<p><em>MOSAIC</em> classes are controlled through the <a class="reference external" href="http://json.org/">JSON</a> settings files as defined above. In most cases, running <em>MOSAIC</em> through the GUI (see <a class="reference internal" href="GraphicalInterface.html#gui-page"><span>MOSAIC GUI</span></a>) should generate satisfactory results. However, settings can be further optimized either by editing a file named <code class="docutils literal"><span class="pre">.settings</span></code> stored within the data directory, or by clicking on the <code class="docutils literal"><span class="pre">Advanced</span> <span class="pre">Settings</span></code> check-box in the <a class="reference internal" href="GraphicalInterface.html#analysis-setup"><span>Panel A: Analysis Setup</span></a> section of the GUI.</p>
 <div class="section" id="initial-event-detection-eventsegment">
-<span id="eventseg-settings-sec"></span><h3>6.3.1. Initial Event Detection (<a class="reference internal" href="eventSegment.html#mosaic.eventSegment.eventSegment" title="mosaic.eventSegment.eventSegment"><tt class="xref py py-class docutils literal"><span class="pre">eventSegment</span></tt></a>)<a class="headerlink" href="#initial-event-detection-eventsegment" title="Permalink to this headline">¶</a></h3>
-<p>The first step when analyzing an ionic-current time series is to perform a quick partition to identify events. This is accomplished by overriding the <tt class="xref py py-class docutils literal"><span class="pre">eventPartition</span></tt> class. Currently, the only implementation of event partitioning is the <a class="reference internal" href="eventSegment.html#mosaic.eventSegment.eventSegment" title="mosaic.eventSegment.eventSegment"><tt class="xref py py-class docutils literal"><span class="pre">eventSegment</span></tt></a> algorithm. This algorithm uses a thresholding technique to detect the start and end of an event. When an event is detected the ionic current time-series associated with that event is passed to a processing algorithm for fitting. Settings that can be passed to <a class="reference internal" href="eventSegment.html#mosaic.eventSegment.eventSegment" title="mosaic.eventSegment.eventSegment"><tt class="xref py py-class docutils literal"><span class="pre">eventSegment</span></tt></a> are given below followed by their descriptions.</p>
+<span id="eventseg-settings-sec"></span><h3>6.3.1. Initial Event Detection (<a class="reference internal" href="eventSegment.html#mosaic.eventSegment.eventSegment" title="mosaic.eventSegment.eventSegment"><code class="xref py py-class docutils literal"><span class="pre">eventSegment</span></code></a>)<a class="headerlink" href="#initial-event-detection-eventsegment" title="Permalink to this headline">¶</a></h3>
+<p>The first step when analyzing an ionic-current time series is to perform a quick partition to identify events. This is accomplished by overriding the <code class="xref py py-class docutils literal"><span class="pre">eventPartition</span></code> class. Currently, the only implementation of event partitioning is the <a class="reference internal" href="eventSegment.html#mosaic.eventSegment.eventSegment" title="mosaic.eventSegment.eventSegment"><code class="xref py py-class docutils literal"><span class="pre">eventSegment</span></code></a> algorithm. This algorithm uses a thresholding technique to detect the start and end of an event. When an event is detected the ionic current time-series associated with that event is passed to a processing algorithm for fitting. Settings that can be passed to <a class="reference internal" href="eventSegment.html#mosaic.eventSegment.eventSegment" title="mosaic.eventSegment.eventSegment"><code class="xref py py-class docutils literal"><span class="pre">eventSegment</span></code></a> are given below followed by their descriptions.</p>
 <div class="highlight-javascript"><div class="highlight"><pre><span class="s2">&quot;eventSegment&quot;</span> <span class="o">:</span> <span class="p">{</span>
         <span class="s2">&quot;blockSizeSec&quot;</span>                  <span class="o">:</span> <span class="s2">&quot;0.5&quot;</span><span class="p">,</span>
         <span class="s2">&quot;eventPad&quot;</span>                      <span class="o">:</span> <span class="s2">&quot;50&quot;</span><span class="p">,</span>
@@ -483,8 +459,8 @@ defined above is:</p>
 </table>
 </div>
 <div class="section" id="two-state-identification-stepresponseanalysis">
-<span id="stepresp-settings-sec"></span><h3>6.3.2. Two-State Identification  (<a class="reference internal" href="../api-doc/mosaic.processing.html#mosaic.stepResponseAnalysis.stepResponseAnalysis" title="mosaic.stepResponseAnalysis.stepResponseAnalysis"><tt class="xref py py-class docutils literal"><span class="pre">stepResponseAnalysis</span></tt></a>)<a class="headerlink" href="#two-state-identification-stepresponseanalysis" title="Permalink to this headline">¶</a></h3>
-<p>Once the time-series is partitioned, individual events are processed by a processing algorithm. For simple event patterns (e.g. homopolymers of DNA, PEG, etc.), one can use the <a class="reference internal" href="stepResponse.html#stepresponse-page"><em>Step Response Analysis</em></a> algorithm. Settings that can be passed to this algorithm are below, followed by their descriptions. For a vast majority of cases, the settings below can be used without modification.</p>
+<span id="stepresp-settings-sec"></span><h3>6.3.2. Two-State Identification  (<a class="reference internal" href="../api-doc/mosaic.processing.html#mosaic.stepResponseAnalysis.stepResponseAnalysis" title="mosaic.stepResponseAnalysis.stepResponseAnalysis"><code class="xref py py-class docutils literal"><span class="pre">stepResponseAnalysis</span></code></a>)<a class="headerlink" href="#two-state-identification-stepresponseanalysis" title="Permalink to this headline">¶</a></h3>
+<p>Once the time-series is partitioned, individual events are processed by a processing algorithm. For simple event patterns (e.g. homopolymers of DNA, PEG, etc.), one can use the <a class="reference internal" href="stepResponse.html#stepresponse-page"><span>Step Response Analysis</span></a> algorithm. Settings that can be passed to this algorithm are below, followed by their descriptions. For a vast majority of cases, the settings below can be used without modification.</p>
 <div class="highlight-javascript"><div class="highlight"><pre><span class="s2">&quot;stepResponseAnalysis&quot;</span> <span class="o">:</span> <span class="p">{</span>
         <span class="s2">&quot;FitTol&quot;</span>                        <span class="o">:</span> <span class="s2">&quot;1.e-7&quot;</span><span class="p">,</span>
         <span class="s2">&quot;FitIters&quot;</span>                      <span class="o">:</span> <span class="s2">&quot;50000&quot;</span>
@@ -493,8 +469,8 @@ defined above is:</p>
 </div>
 </div>
 <div class="section" id="multi-state-identification-multistateanalysis">
-<h3>6.3.3. Multi-State Identification  (<a class="reference internal" href="../api-doc/mosaic.processing.html#mosaic.multiStateAnalysis.multiStateAnalysis" title="mosaic.multiStateAnalysis.multiStateAnalysis"><tt class="xref py py-class docutils literal"><span class="pre">multiStateAnalysis</span></tt></a>)<a class="headerlink" href="#multi-state-identification-multistateanalysis" title="Permalink to this headline">¶</a></h3>
-<p>For more complex signals with multiple states, the <a class="reference internal" href="multiState.html#multistate-page"><em>Multi-state Analysis</em></a> algorithm yields better results. The settings passed to this algorithm (described below) are largely similar to <a class="reference internal" href="#stepresp-settings-sec"><em>Two-State Identification  (stepResponseAnalysis)</em></a>.</p>
+<h3>6.3.3. Multi-State Identification  (<a class="reference internal" href="../api-doc/mosaic.processing.html#mosaic.multiStateAnalysis.multiStateAnalysis" title="mosaic.multiStateAnalysis.multiStateAnalysis"><code class="xref py py-class docutils literal"><span class="pre">multiStateAnalysis</span></code></a>)<a class="headerlink" href="#multi-state-identification-multistateanalysis" title="Permalink to this headline">¶</a></h3>
+<p>For more complex signals with multiple states, the <a class="reference internal" href="multiState.html#multistate-page"><span>Multi-state Analysis</span></a> algorithm yields better results. The settings passed to this algorithm (described below) are largely similar to <a class="reference internal" href="#stepresp-settings-sec"><span>Two-State Identification  (stepResponseAnalysis)</span></a>.</p>
 <div class="highlight-javascript"><div class="highlight"><pre><span class="s2">&quot;multiStateAnalysis&quot;</span> <span class="o">:</span> <span class="p">{</span>
         <span class="s2">&quot;FitTol&quot;</span>                        <span class="o">:</span> <span class="s2">&quot;1.e-7&quot;</span><span class="p">,</span>
         <span class="s2">&quot;FitIters&quot;</span>                      <span class="o">:</span> <span class="s2">&quot;50000&quot;</span><span class="p">,</span>
@@ -504,7 +480,7 @@ defined above is:</p>
 </div>
 <div class="admonition hint">
 <p class="first admonition-title">Hint</p>
-<p class="last">The parameter <tt class="docutils literal"><span class="pre">InitThreshold</span></tt> is used for preliminary state identification within multi-state events. As a rule of thumb, this value should be set to roughly half that of <tt class="docutils literal"><span class="pre">eventThreshold</span></tt> in the <a class="reference internal" href="#eventseg-settings-sec"><em>Initial Event Detection (eventSegment)</em></a> section. However, the final value may be adjusted further for optimal results.</p>
+<p class="last">The parameter <code class="docutils literal"><span class="pre">InitThreshold</span></code> is used for preliminary state identification within multi-state events. As a rule of thumb, this value should be set to roughly half that of <code class="docutils literal"><span class="pre">eventThreshold</span></code> in the <a class="reference internal" href="#eventseg-settings-sec"><span>Initial Event Detection (eventSegment)</span></a> section. However, the final value may be adjusted further for optimal results.</p>
 </div>
 </div>
 </div>
@@ -513,7 +489,7 @@ defined above is:</p>
 <div class="highlight-javascript"><div class="highlight"><pre><span class="p">{</span>
         <span class="s2">&quot;eventSegment&quot;</span> <span class="o">:</span> <span class="p">{</span>
                 <span class="s2">&quot;blockSizeSec&quot;</span>                  <span class="o">:</span> <span class="s2">&quot;0.5&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;eventPad&quot;</span>                      <span class="o">:</span> <span class="s2">&quot;50&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;eventPad&quot;</span>                              <span class="o">:</span> <span class="s2">&quot;50&quot;</span><span class="p">,</span>
                 <span class="s2">&quot;minEventLength&quot;</span>                <span class="o">:</span> <span class="s2">&quot;5&quot;</span><span class="p">,</span>
                 <span class="s2">&quot;eventThreshold&quot;</span>                <span class="o">:</span> <span class="s2">&quot;6.0&quot;</span><span class="p">,</span>
                 <span class="s2">&quot;driftThreshold&quot;</span>                <span class="o">:</span> <span class="s2">&quot;999.0&quot;</span><span class="p">,</span>
@@ -526,45 +502,59 @@ defined above is:</p>
                 <span class="s2">&quot;reserveNCPU&quot;</span>                   <span class="o">:</span> <span class="s2">&quot;2&quot;</span>
         <span class="p">},</span>
         <span class="s2">&quot;singleStepEvent&quot;</span> <span class="o">:</span> <span class="p">{</span>
-                <span class="s2">&quot;binSize&quot;</span>                       <span class="o">:</span> <span class="s2">&quot;1.0&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;histPad&quot;</span>                       <span class="o">:</span> <span class="s2">&quot;10&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;binSize&quot;</span>                               <span class="o">:</span> <span class="s2">&quot;1.0&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;histPad&quot;</span>                               <span class="o">:</span> <span class="s2">&quot;10&quot;</span><span class="p">,</span>
                 <span class="s2">&quot;maxFitIters&quot;</span>                   <span class="o">:</span> <span class="s2">&quot;5000&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;a12Ratio&quot;</span>                      <span class="o">:</span> <span class="s2">&quot;1.e4&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;a12Ratio&quot;</span>                              <span class="o">:</span> <span class="s2">&quot;1.e4&quot;</span><span class="p">,</span>
                 <span class="s2">&quot;minEvntTime&quot;</span>                   <span class="o">:</span> <span class="s2">&quot;10.e-6&quot;</span><span class="p">,</span>
                 <span class="s2">&quot;minDataPad&quot;</span>                    <span class="o">:</span> <span class="s2">&quot;75&quot;</span>
         <span class="p">},</span>
         <span class="s2">&quot;stepResponseAnalysis&quot;</span> <span class="o">:</span> <span class="p">{</span>
-                <span class="s2">&quot;FitTol&quot;</span>                        <span class="o">:</span> <span class="s2">&quot;1.e-7&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;FitIters&quot;</span>                      <span class="o">:</span> <span class="s2">&quot;50000&quot;</span>
+                <span class="s2">&quot;FitTol&quot;</span>                                <span class="o">:</span> <span class="s2">&quot;1.e-7&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;FitIters&quot;</span>                              <span class="o">:</span> <span class="s2">&quot;50000&quot;</span>
         <span class="p">},</span>
         <span class="s2">&quot;multiStateAnalysis&quot;</span> <span class="o">:</span> <span class="p">{</span>
-                <span class="s2">&quot;FitTol&quot;</span>                        <span class="o">:</span> <span class="s2">&quot;1.e-7&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;FitIters&quot;</span>                      <span class="o">:</span> <span class="s2">&quot;50000&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;InitThreshold&quot;</span>                 <span class="o">:</span> <span class="s2">&quot;3.0&quot;</span>
-        <span class="p">},</span>
+                <span class="s2">&quot;FitTol&quot;</span>                <span class="o">:</span> <span class="s2">&quot;1.e-7&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;FitIters&quot;</span>              <span class="o">:</span> <span class="s2">&quot;50000&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;InitThreshold&quot;</span> <span class="o">:</span> <span class="s2">&quot;3.0&quot;</span>
+     <span class="p">},</span>
+     <span class="s2">&quot;cusumLevelAnalysis&quot;</span><span class="o">:</span> <span class="p">{</span>
+                        <span class="s2">&quot;StepSize&quot;</span>              <span class="o">:</span> <span class="mf">3.0</span><span class="p">,</span>
+                        <span class="s2">&quot;Threshold&quot;</span>             <span class="o">:</span> <span class="mf">3.0</span>
+<span class="p">},</span>
         <span class="s2">&quot;besselLowpassFilter&quot;</span> <span class="o">:</span> <span class="p">{</span>
                 <span class="s2">&quot;filterOrder&quot;</span>                   <span class="o">:</span> <span class="s2">&quot;6&quot;</span><span class="p">,</span>
                 <span class="s2">&quot;filterCutoff&quot;</span>                  <span class="o">:</span> <span class="s2">&quot;10000&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;decimate&quot;</span>                      <span class="o">:</span> <span class="s2">&quot;1&quot;</span>
+                <span class="s2">&quot;decimate&quot;</span>                              <span class="o">:</span> <span class="s2">&quot;1&quot;</span>
         <span class="p">},</span>
         <span class="s2">&quot;waveletDenoiseFilter&quot;</span> <span class="o">:</span> <span class="p">{</span>
-                <span class="s2">&quot;wavelet&quot;</span>                       <span class="o">:</span> <span class="s2">&quot;sym5&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;level&quot;</span>                         <span class="o">:</span> <span class="s2">&quot;5&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;wavelet&quot;</span>                               <span class="o">:</span> <span class="s2">&quot;sym5&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;level&quot;</span>                                 <span class="o">:</span> <span class="s2">&quot;5&quot;</span><span class="p">,</span>
                 <span class="s2">&quot;thresholdType&quot;</span>                 <span class="o">:</span> <span class="s2">&quot;soft&quot;</span><span class="p">,</span>
                 <span class="s2">&quot;thresholdSubType&quot;</span>              <span class="o">:</span> <span class="s2">&quot;sqtwolog&quot;</span>
         <span class="p">},</span>
-        <span class="p">,</span>
         <span class="s2">&quot;abfTrajIO&quot;</span> <span class="o">:</span> <span class="p">{</span>
-                <span class="s2">&quot;filter&quot;</span>                        <span class="o">:</span> <span class="s2">&quot;*.abf&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;start&quot;</span>                         <span class="o">:</span> <span class="mf">0.0</span><span class="p">,</span>
-                <span class="s2">&quot;dcOffset&quot;</span>                      <span class="o">:</span> <span class="mf">0.0</span>
+                <span class="s2">&quot;filter&quot;</span>                                <span class="o">:</span> <span class="s2">&quot;*.abf&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;start&quot;</span>                                 <span class="o">:</span> <span class="mf">0.0</span><span class="p">,</span>
+                <span class="s2">&quot;dcOffset&quot;</span>                              <span class="o">:</span> <span class="mf">0.0</span>
         <span class="p">},</span>
         <span class="s2">&quot;qdfTrajIO&quot;</span><span class="o">:</span> <span class="p">{</span>
-                <span class="s2">&quot;Rfb&quot;</span>                           <span class="o">:</span> <span class="mf">9.1</span><span class="nx">e</span><span class="o">+</span><span class="mi">12</span><span class="p">,</span>
-                <span class="s2">&quot;Cfb&quot;</span>                           <span class="o">:</span> <span class="mf">1.07</span><span class="nx">e</span><span class="o">-</span><span class="mi">12</span><span class="p">,</span>
-                <span class="s2">&quot;dcOffset&quot;</span>                      <span class="o">:</span> <span class="mf">0.0</span><span class="p">,</span>
-                <span class="s2">&quot;filter&quot;</span>                        <span class="o">:</span> <span class="s2">&quot;*.qdf&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;start&quot;</span>                         <span class="o">:</span> <span class="mf">0.0</span>
+                <span class="s2">&quot;Rfb&quot;</span><span class="o">:</span> <span class="mf">9.1</span><span class="nx">e</span><span class="o">+</span><span class="mi">12</span><span class="p">,</span>
+                <span class="s2">&quot;Cfb&quot;</span><span class="o">:</span> <span class="mf">1.07</span><span class="nx">e</span><span class="o">-</span><span class="mi">12</span><span class="p">,</span>
+                <span class="s2">&quot;dcOffset&quot;</span><span class="o">:</span> <span class="mf">0.0</span><span class="p">,</span>
+                <span class="s2">&quot;filter&quot;</span><span class="o">:</span> <span class="s2">&quot;*.qdf&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;start&quot;</span><span class="o">:</span> <span class="mf">0.0</span>
+        <span class="p">},</span>
+        <span class="s2">&quot;binTrajIO&quot;</span><span class="o">:</span> <span class="p">{</span>
+                <span class="s2">&quot;AmplifierScale&quot;</span><span class="o">:</span> <span class="s2">&quot;1.0&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;AmplifierOffset&quot;</span><span class="o">:</span> <span class="s2">&quot;0.0&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;SamplingFrequency&quot;</span><span class="o">:</span> <span class="s2">&quot;50000&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;HeaderOffset&quot;</span><span class="o">:</span> <span class="s2">&quot;0&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;ColumnTypes&quot;</span><span class="o">:</span> <span class="s2">&quot;[(&#39;curr_pA&#39;, &#39;float64&#39;)]&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;IonicCurrentColumn&quot;</span> <span class="o">:</span> <span class="s2">&quot;curr_pA&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;dcOffset&quot;</span><span class="o">:</span> <span class="s2">&quot;0.0&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;filter&quot;</span><span class="o">:</span> <span class="s2">&quot;*.bin&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;start&quot;</span><span class="o">:</span> <span class="s2">&quot;0.0&quot;</span>
         <span class="p">}</span>
 <span class="p">}</span>
 </pre></div>
@@ -585,22 +575,23 @@ defined above is:</p>
       
     </p>
     <p>
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.2.3.<br/>
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.3.1.<br/>
     </p>
   </div>
 </footer> -->
 <div class="footer" style="vertical-align: center" align="center">
-		<table width="95%" style="vertical-align: center">
-			<col width=60%>
-			<col width=40%>
-			<tr>
-				<td align="left">
-					<a href="mailingList.html"><em>Mailing List</em></a>&nbsp;&nbsp;&nbsp;
-					<a href="Developers.html"><em>MOSAIC Developers</em></a>&nbsp;&nbsp;&nbsp;
-					<a href="http://www.nist.gov/cgi-bin/wwwph/cso.nist.gov?Query=Arvind+Balijepalli"><em>Contact</em></a>&nbsp;&nbsp;&nbsp;
-					<a href="Disclaimer.html"><em>Terms of Use</em></a>
+		<table width="75%" style="vertical-align: center; border-collapse: collapse;">
+			<tr style="padding-bottom: 100px;">
+				<td align="center">
+					<a href="Developers.html" style="color: #696969; padding-left: 50px; padding-right: 50px; text-decoration: none;">MOSAIC Developers</a>
+					<a href="http://www.nist.gov/cgi-bin/wwwph/cso.nist.gov?Query=Arvind+Balijepalli" style="color: #696969; padding-left: 50px; padding-right: 50px; text-decoration: none;">Contact</a>
+					<a href="Disclaimer.html" style="color: #696969; padding-left: 50px; padding-right: 50px; text-decoration: none;">Terms of Use</a>
 				</td>
-				<td align="right"><em>National Institute of Standards and Technology (NIST)</em></td>
+			</tr>
+			<tr style="padding-bottom: 100px;">
+				<td align="center">
+					<a href="http://www.nist.gov/"style="color: #696969; text-decoration: none;"><small>National Institute of Standards and Technology</small></a>
+				</td>
 			</tr>
 		</table>
 </div>

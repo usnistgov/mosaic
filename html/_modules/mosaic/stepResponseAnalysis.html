@@ -5,19 +5,18 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>mosaic.stepResponseAnalysis &mdash; MOSAIC 1.2 documentation</title>
+    <title>mosaic.stepResponseAnalysis &mdash; MOSAIC 1.3 documentation</title>
     
     <link rel="stylesheet" href="../../_static/basic.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="../../_static/bootstrap-3.2.0/css/bootstrap.min.css" type="text/css" />
-    <link rel="stylesheet" href="../../_static/bootstrap-3.2.0/css/bootstrap-theme.min.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/bootswatch-3.2.0/paper/bootstrap.min.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/bootstrap-sphinx.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/style.css" type="text/css" />
     
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
-        VERSION:     '1.2',
+        VERSION:     '1.3',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -26,13 +25,13 @@
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
-    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <script type="text/javascript" src="../../_static/js/jquery-1.11.0.min.js"></script>
     <script type="text/javascript" src="../../_static/js/jquery-fix.js"></script>
     <script type="text/javascript" src="../../_static/bootstrap-3.2.0/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="../../_static/bootstrap-sphinx.js"></script>
     <link rel="shortcut icon" href="../../_static/favicon.ico"/>
-    <link rel="top" title="MOSAIC 1.2 documentation" href="../../index.html" />
+    <link rel="top" title="MOSAIC 1.3 documentation" href="../../index.html" />
     <link rel="up" title="Module code" href="../index.html" />
 
 <meta charset='utf-8'>
@@ -41,13 +40,13 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 
 	<script type="text/javascript"
-		src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+		src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
 	</script>
 	<script type="text/javascript" id="_fed_an_js_tag" src="//www.nist.gov/js/federated-analytics.all.min.js?agency=NIST&subagency=github&pua=UA-42404149-54&yt=true&exts=ppsx,pps,f90,sch,rtf,wrl,txz,m1v,xlsm,msi,xsd,f,tif,eps,mpg,xml,pl,xlt,c">
 	</script>	
 
   </head>
-  <body>
+  <body role="document">
 
   <div id="navbar" class="navbar navbar-default navbar-fixed-top">
     <div class="container">
@@ -58,16 +57,17 @@
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </button>
-        <a class="navbar-brand" href="../../index.html"><img src="../../_static/icon_24.png">
+        <a class="navbar-brand" href="../../index.html"><img src="../../_static/icon_36.png">
            </a>
-        <span class="navbar-text navbar-version pull-left"><b>1.2</b></span>
+        <span class="navbar-text navbar-version pull-left"><b>1.3</b></span>
       </div>
 
         <div class="collapse navbar-collapse nav-collapse">
           <ul class="nav navbar-nav">
             
+                <li><a href="../../../latex/MOSAIC.pdf">Download PDF</a></li>
                 <li><a href="../../doc/mailingList.html">Mailing List</a></li>
-                <li><a href="//github.com/usnistgov/mosaic">Develop MOSAIC</a></li>
+                <li><a href="//github.com/usnistgov/mosaic">Develop</a></li>
                 <li><a href="//github.com/usnistgov/mosaic/issues">Issue Tracker</a></li>
             
             
@@ -82,7 +82,7 @@
       aria-labelledby="dLabelGlobalToc"><ul>
 <li class="toctree-l1"><a class="reference internal" href="../../doc/Introduction.html">1. Introduction</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../doc/GettingStarted.html">2. Getting Started</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../doc/Algorithms.html">3. Algorithms in <em>MOSAIC</em></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../doc/Algorithms.html">3. Data Processing Algorithms in <em>MOSAIC</em></a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../doc/GraphicalInterface.html">4. <em>MOSAIC</em> GUI</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../doc/ScriptingandAdvancedFeatures.html">5. Scripting and Advanced Features</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../doc/settingsFile.html">6. Settings File</a></li>
@@ -133,6 +133,7 @@
 <span class="sd">	:License:	See LICENSE.TXT</span>
 <span class="sd">	:ChangeLog:</span>
 <span class="sd">	.. line-block::</span>
+<span class="sd">		6/24/15 	AB 	Added an option to unlink the RC constants in stepResponseAnalysis.</span>
 <span class="sd">		11/7/14		AB 	Error codes describing event rejection are now more specific.</span>
 <span class="sd">		11/5/14		AB 	Fixed a bug in the event fitting logic that prevented </span>
 <span class="sd">						long events from being correctly analyzed.</span>
@@ -174,11 +175,20 @@
 <span class="sd">		parameters that are stored as metadata including:</span>
 <span class="sd">			1. Blockade depth: the ratio of the open channel current to the blocked current</span>
 <span class="sd">			2. Residence time: the time the molecule spends inside the pore</span>
-<span class="sd">			3. Rise time: the 1/RC of the response to a step input (e.g. the entry or exit of the</span>
-<span class="sd">				molecule into or out of the nanopore).</span>
+<span class="sd">			3. Tau: the RC constant of the response to a step input (e.g. the entry or exit of the molecule into or out of the nanopore).</span>
 
-<span class="sd">		When an event cannot be analyzed, the blockade depth, residence time and rise time are set to -1.</span>
+<span class="sd">		:Keyword Args:</span>
+<span class="sd">			In addition to :class:`~mosaic.metaEventProcessor.metaEventProcessor` args,</span>
+<span class="sd">				- `FitTol` :		Tolerance value for the least squares algorithm that controls the convergence of the fit (Default: `1e-7`).</span>
+<span class="sd">				- `FitIters` : 		Maximum number of iterations before terminating the fit (Default: `50000`).</span>
+<span class="sd">				- `UnlinkRCConst` :		When True, unlinks the RC constants in the fit function to vary independently of each other. (Default: `False`)</span>
+
+<span class="sd">		:Errors:</span>
+<span class="sd">			</span>
+<span class="sd">			When an event cannot be analyzed, the blockade depth, residence time and rise time are set to -1.</span>
+
 <span class="sd">	&quot;&quot;&quot;</span>
+
 	<span class="k">def</span> <span class="nf">_init</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
 		<span class="sd">&quot;&quot;&quot; </span>
 <span class="sd">			Initialize the single step analysis class.</span>
@@ -193,11 +203,12 @@
 		<span class="bp">self</span><span class="o">.</span><span class="n">mdBlockDepth</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
 		<span class="bp">self</span><span class="o">.</span><span class="n">mdResTime</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
 
-		<span class="bp">self</span><span class="o">.</span><span class="n">mdRiseTime</span><span class="o">=-</span><span class="mi">1</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">mdRCConst1</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">mdRCConst2</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
 
-		<span class="bp">self</span><span class="o">.</span><span class="n">mdRedChiSq</span><span class="o">=-</span><span class="mi">1</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">mdRedChiSq</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
 
-		<span class="bp">self</span><span class="o">.</span><span class="n">mdAbsEventStart</span><span class="o">=-</span><span class="mi">1</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">mdAbsEventStart</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
 
 		<span class="c"># Settings for single step event processing</span>
 		<span class="c"># settings for gaussian fits</span>
@@ -206,6 +217,8 @@
 			<span class="bp">self</span><span class="o">.</span><span class="n">FitIters</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">settingsDict</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s">&quot;FitIters&quot;</span><span class="p">,</span> <span class="mi">5000</span><span class="p">))</span>
 
 			<span class="bp">self</span><span class="o">.</span><span class="n">BlockRejectRatio</span><span class="o">=</span><span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">settingsDict</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s">&quot;BlockRejectRatio&quot;</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">))</span>
+
+			<span class="bp">self</span><span class="o">.</span><span class="n">UnlinkRCConst</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">settingsDict</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s">&quot;UnlinkRCConst&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
 		
 		<span class="k">except</span> <span class="ne">ValueError</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
 			<span class="k">raise</span> <span class="n">commonExceptions</span><span class="o">.</span><span class="n">SettingsTypeError</span><span class="p">(</span> <span class="n">err</span> <span class="p">)</span>
@@ -237,11 +250,12 @@
 					<span class="bp">self</span><span class="o">.</span><span class="n">mdEventEnd</span><span class="p">,</span>
 					<span class="bp">self</span><span class="o">.</span><span class="n">mdBlockDepth</span><span class="p">,</span>
 					<span class="bp">self</span><span class="o">.</span><span class="n">mdResTime</span><span class="p">,</span>
-					<span class="bp">self</span><span class="o">.</span><span class="n">mdRiseTime</span><span class="p">,</span>
+					<span class="bp">self</span><span class="o">.</span><span class="n">mdRCConst1</span><span class="p">,</span>
+					<span class="bp">self</span><span class="o">.</span><span class="n">mdRCConst2</span><span class="p">,</span>
 					<span class="bp">self</span><span class="o">.</span><span class="n">mdAbsEventStart</span><span class="p">,</span>
 					<span class="bp">self</span><span class="o">.</span><span class="n">mdRedChiSq</span>
 				<span class="p">]</span>
-		</div>
+</div>
 <div class="viewcode-block" id="stepResponseAnalysis.mdHeadingDataType"><a class="viewcode-back" href="../../api-doc/mosaic.processing.html#mosaic.stepResponseAnalysis.stepResponseAnalysis.mdHeadingDataType">[docs]</a>	<span class="k">def</span> <span class="nf">mdHeadingDataType</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 		<span class="sd">&quot;&quot;&quot; </span>
 <span class="sd">			Return a list of meta-data tags data types.</span>
@@ -249,6 +263,7 @@
 		<span class="k">return</span> <span class="p">[</span>
 					<span class="s">&#39;TEXT&#39;</span><span class="p">,</span> 
 					<span class="s">&#39;REAL&#39;</span><span class="p">,</span> 
+					<span class="s">&#39;REAL&#39;</span><span class="p">,</span>
 					<span class="s">&#39;REAL&#39;</span><span class="p">,</span>
 					<span class="s">&#39;REAL&#39;</span><span class="p">,</span>
 					<span class="s">&#39;REAL&#39;</span><span class="p">,</span>
@@ -271,7 +286,8 @@
 					<span class="s">&#39;EventEnd&#39;</span><span class="p">,</span> 
 					<span class="s">&#39;BlockDepth&#39;</span><span class="p">,</span> 
 					<span class="s">&#39;ResTime&#39;</span><span class="p">,</span> 
-					<span class="s">&#39;RCConstant&#39;</span><span class="p">,</span> 
+					<span class="s">&#39;RCConstant1&#39;</span><span class="p">,</span>
+					<span class="s">&#39;RCConstant2&#39;</span><span class="p">,</span> 
 					<span class="s">&#39;AbsEventStart&#39;</span><span class="p">,</span> 
 					<span class="s">&#39;ReducedChiSquared&#39;</span> 
 				<span class="p">]</span>
@@ -294,7 +310,7 @@
 		
 		<span class="n">fmtstr</span><span class="o">+=</span><span class="s">&#39;</span><span class="se">\t\t</span><span class="s">Max. iterations  = {0}</span><span class="se">\n</span><span class="s">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">FitIters</span><span class="p">)</span>
 		<span class="n">fmtstr</span><span class="o">+=</span><span class="s">&#39;</span><span class="se">\t\t</span><span class="s">Fit tolerance (rel. err in leastsq)  = {0}</span><span class="se">\n</span><span class="s">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">FitTol</span><span class="p">)</span>
-		<span class="n">fmtstr</span><span class="o">+=</span><span class="s">&#39;</span><span class="se">\t\t</span><span class="s">Blockade Depth Rejection = {0}</span><span class="se">\n\n</span><span class="s">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">BlockRejectRatio</span><span class="p">)</span>
+		<span class="n">fmtstr</span><span class="o">+=</span><span class="s">&#39;</span><span class="se">\t\t</span><span class="s">Unlink RC constants = {0}</span><span class="se">\n\n</span><span class="s">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">bool</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">UnlinkRCConst</span><span class="p">))</span>
 
 
 		<span class="k">return</span> <span class="n">fmtstr</span>
@@ -335,7 +351,12 @@
 			<span class="n">params</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="s">&#39;mu2&#39;</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="n">eend</span> <span class="o">*</span> <span class="n">dt</span><span class="p">)</span>
 			<span class="n">params</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="s">&#39;a&#39;</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="p">(</span><span class="n">i0</span><span class="o">-</span><span class="n">blockedCurrent</span><span class="p">),</span> <span class="n">vary</span><span class="o">=</span><span class="n">varyBlockedCurrent</span><span class="p">)</span>
 			<span class="n">params</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="s">&#39;b&#39;</span><span class="p">,</span> <span class="n">value</span> <span class="o">=</span> <span class="n">i0</span><span class="p">)</span>
-			<span class="n">params</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="s">&#39;tau&#39;</span><span class="p">,</span> <span class="n">value</span> <span class="o">=</span> <span class="n">tauVal</span><span class="p">)</span>
+			<span class="n">params</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="s">&#39;tau1&#39;</span><span class="p">,</span> <span class="n">value</span> <span class="o">=</span> <span class="n">tauVal</span><span class="p">)</span>
+
+			<span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">UnlinkRCConst</span><span class="p">:</span>
+				<span class="n">params</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="s">&#39;tau2&#39;</span><span class="p">,</span> <span class="n">value</span> <span class="o">=</span> <span class="n">tauVal</span><span class="p">)</span>
+			<span class="k">else</span><span class="p">:</span>
+				<span class="n">params</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="s">&#39;tau2&#39;</span><span class="p">,</span> <span class="n">value</span> <span class="o">=</span> <span class="n">tauVal</span><span class="p">,</span> <span class="n">expr</span><span class="o">=</span><span class="s">&#39;tau1&#39;</span><span class="p">)</span>
 
 			<span class="n">optfit</span><span class="o">=</span><span class="n">Minimizer</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__objfunc</span><span class="p">,</span> <span class="n">params</span><span class="p">,</span> <span class="n">fcn_args</span><span class="o">=</span><span class="p">(</span><span class="n">ts</span><span class="p">,</span><span class="n">edat</span><span class="p">,))</span>
 			<span class="n">optfit</span><span class="o">.</span><span class="n">prepare_fit</span><span class="p">()</span>
@@ -356,7 +377,8 @@
 					<span class="bp">self</span><span class="o">.</span><span class="n">mdBlockedCurrent</span>	<span class="o">=</span> <span class="n">optfit</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s">&#39;b&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value</span> <span class="o">-</span> <span class="n">optfit</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s">&#39;a&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value</span>
 					<span class="bp">self</span><span class="o">.</span><span class="n">mdEventStart</span>		<span class="o">=</span> <span class="n">optfit</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s">&#39;mu1&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value</span> 
 					<span class="bp">self</span><span class="o">.</span><span class="n">mdEventEnd</span>			<span class="o">=</span> <span class="n">optfit</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s">&#39;mu2&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value</span>
-					<span class="bp">self</span><span class="o">.</span><span class="n">mdRiseTime</span>			<span class="o">=</span> <span class="n">optfit</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s">&#39;tau&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value</span>
+					<span class="bp">self</span><span class="o">.</span><span class="n">mdRCConst1</span>			<span class="o">=</span> <span class="n">optfit</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s">&#39;tau1&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value</span>
+					<span class="bp">self</span><span class="o">.</span><span class="n">mdRCConst2</span>			<span class="o">=</span> <span class="n">optfit</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s">&#39;tau2&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value</span>
 					<span class="bp">self</span><span class="o">.</span><span class="n">mdAbsEventStart</span>	<span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mdEventStart</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">absDataStartIndex</span> <span class="o">*</span> <span class="n">dt</span>
 
 					<span class="bp">self</span><span class="o">.</span><span class="n">mdBlockDepth</span>		<span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mdBlockedCurrent</span><span class="o">/</span><span class="bp">self</span><span class="o">.</span><span class="n">mdOpenChCurrent</span>
@@ -409,13 +431,14 @@
 	<span class="k">def</span> <span class="nf">__objfunc</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">params</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
 		<span class="sd">&quot;&quot;&quot; model decaying sine wave, subtract data	&quot;&quot;&quot;</span>
 		<span class="k">try</span><span class="p">:</span>
-			<span class="n">tau</span> <span class="o">=</span> <span class="n">params</span><span class="p">[</span><span class="s">&#39;tau&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value</span>
+			<span class="n">tau1</span> <span class="o">=</span> <span class="n">params</span><span class="p">[</span><span class="s">&#39;tau1&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value</span>
+			<span class="n">tau2</span> <span class="o">=</span> <span class="n">params</span><span class="p">[</span><span class="s">&#39;tau2&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value</span>
 			<span class="n">mu1</span> <span class="o">=</span> <span class="n">params</span><span class="p">[</span><span class="s">&#39;mu1&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value</span>
 			<span class="n">mu2</span> <span class="o">=</span> <span class="n">params</span><span class="p">[</span><span class="s">&#39;mu2&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value</span>
 			<span class="n">a</span> <span class="o">=</span> <span class="n">params</span><span class="p">[</span><span class="s">&#39;a&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value</span>
 			<span class="n">b</span> <span class="o">=</span> <span class="n">params</span><span class="p">[</span><span class="s">&#39;b&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value</span>
-		    
-			<span class="n">model</span> <span class="o">=</span> <span class="n">fit_funcs</span><span class="o">.</span><span class="n">stepResponseFunc</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">tau</span><span class="p">,</span> <span class="n">mu1</span><span class="p">,</span> <span class="n">mu2</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
+
+			<span class="n">model</span> <span class="o">=</span> <span class="n">fit_funcs</span><span class="o">.</span><span class="n">stepResponseFunc</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">tau1</span><span class="p">,</span> <span class="n">tau2</span><span class="p">,</span> <span class="n">mu1</span><span class="p">,</span> <span class="n">mu2</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
 
 			<span class="k">return</span> <span class="n">model</span> <span class="o">-</span> <span class="n">data</span>
 		<span class="k">except</span> <span class="ne">KeyboardInterrupt</span><span class="p">:</span>
@@ -434,22 +457,23 @@
       
     </p>
     <p>
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.2.3.<br/>
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.3.1.<br/>
     </p>
   </div>
 </footer> -->
 <div class="footer" style="vertical-align: center" align="center">
-		<table width="95%" style="vertical-align: center">
-			<col width=60%>
-			<col width=40%>
-			<tr>
-				<td align="left">
-					<a href="../../doc/mailingList.html"><em>Mailing List</em></a>&nbsp;&nbsp;&nbsp;
-					<a href="../../doc/Developers.html"><em>MOSAIC Developers</em></a>&nbsp;&nbsp;&nbsp;
-					<a href="http://www.nist.gov/cgi-bin/wwwph/cso.nist.gov?Query=Arvind+Balijepalli"><em>Contact</em></a>&nbsp;&nbsp;&nbsp;
-					<a href="../../doc/Disclaimer.html"><em>Terms of Use</em></a>
+		<table width="75%" style="vertical-align: center; border-collapse: collapse;">
+			<tr style="padding-bottom: 100px;">
+				<td align="center">
+					<a href="../../doc/Developers.html" style="color: #696969; padding-left: 50px; padding-right: 50px; text-decoration: none;">MOSAIC Developers</a>
+					<a href="http://www.nist.gov/cgi-bin/wwwph/cso.nist.gov?Query=Arvind+Balijepalli" style="color: #696969; padding-left: 50px; padding-right: 50px; text-decoration: none;">Contact</a>
+					<a href="../../doc/Disclaimer.html" style="color: #696969; padding-left: 50px; padding-right: 50px; text-decoration: none;">Terms of Use</a>
 				</td>
-				<td align="right"><em>National Institute of Standards and Technology (NIST)</em></td>
+			</tr>
+			<tr style="padding-bottom: 100px;">
+				<td align="center">
+					<a href="http://www.nist.gov/"style="color: #696969; text-decoration: none;"><small>National Institute of Standards and Technology</small></a>
+				</td>
 			</tr>
 		</table>
 </div>

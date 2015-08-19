@@ -5,19 +5,18 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>11. API Documentation &mdash; MOSAIC 1.2 documentation</title>
+    <title>11. API Documentation &mdash; MOSAIC 1.3 documentation</title>
     
     <link rel="stylesheet" href="../_static/basic.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="../_static/bootstrap-3.2.0/css/bootstrap.min.css" type="text/css" />
-    <link rel="stylesheet" href="../_static/bootstrap-3.2.0/css/bootstrap-theme.min.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/bootswatch-3.2.0/paper/bootstrap.min.css" type="text/css" />
     <link rel="stylesheet" href="../_static/bootstrap-sphinx.css" type="text/css" />
     <link rel="stylesheet" href="../_static/style.css" type="text/css" />
     
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '1.2',
+        VERSION:     '1.3',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -26,13 +25,13 @@
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <script type="text/javascript" src="../_static/js/jquery-1.11.0.min.js"></script>
     <script type="text/javascript" src="../_static/js/jquery-fix.js"></script>
     <script type="text/javascript" src="../_static/bootstrap-3.2.0/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="../_static/bootstrap-sphinx.js"></script>
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
-    <link rel="top" title="MOSAIC 1.2 documentation" href="../index.html" />
+    <link rel="top" title="MOSAIC 1.3 documentation" href="../index.html" />
     <link rel="next" title="11.1.1. Top-Level Interfaces" href="../api-doc/mosaic.html" />
     <link rel="prev" title="10. Examples" href="examples.html" />
 
@@ -42,13 +41,13 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 
 	<script type="text/javascript"
-		src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+		src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
 	</script>
 	<script type="text/javascript" id="_fed_an_js_tag" src="//www.nist.gov/js/federated-analytics.all.min.js?agency=NIST&subagency=github&pua=UA-42404149-54&yt=true&exts=ppsx,pps,f90,sch,rtf,wrl,txz,m1v,xlsm,msi,xsd,f,tif,eps,mpg,xml,pl,xlt,c">
 	</script>	
 
   </head>
-  <body>
+  <body role="document">
 
   <div id="navbar" class="navbar navbar-default navbar-fixed-top">
     <div class="container">
@@ -59,16 +58,17 @@
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </button>
-        <a class="navbar-brand" href="../index.html"><img src="../_static/icon_24.png">
+        <a class="navbar-brand" href="../index.html"><img src="../_static/icon_36.png">
            </a>
-        <span class="navbar-text navbar-version pull-left"><b>1.2</b></span>
+        <span class="navbar-text navbar-version pull-left"><b>1.3</b></span>
       </div>
 
         <div class="collapse navbar-collapse nav-collapse">
           <ul class="nav navbar-nav">
             
+                <li><a href="../../latex/MOSAIC.pdf">Download PDF</a></li>
                 <li><a href="mailingList.html">Mailing List</a></li>
-                <li><a href="//github.com/usnistgov/mosaic">Develop MOSAIC</a></li>
+                <li><a href="//github.com/usnistgov/mosaic">Develop</a></li>
                 <li><a href="//github.com/usnistgov/mosaic/issues">Issue Tracker</a></li>
             
             
@@ -83,7 +83,7 @@
       aria-labelledby="dLabelGlobalToc"><ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="Introduction.html">1. Introduction</a></li>
 <li class="toctree-l1"><a class="reference internal" href="GettingStarted.html">2. Getting Started</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Algorithms.html">3. Algorithms in <em>MOSAIC</em></a></li>
+<li class="toctree-l1"><a class="reference internal" href="Algorithms.html">3. Data Processing Algorithms in <em>MOSAIC</em></a></li>
 <li class="toctree-l1"><a class="reference internal" href="GraphicalInterface.html">4. <em>MOSAIC</em> GUI</a></li>
 <li class="toctree-l1"><a class="reference internal" href="ScriptingandAdvancedFeatures.html">5. Scripting and Advanced Features</a></li>
 <li class="toctree-l1"><a class="reference internal" href="settingsFile.html">6. Settings File</a></li>
@@ -127,9 +127,9 @@
       
   <div class="section" id="api-documentation">
 <span id="api-docs-page"></span><h1>11. API Documentation<a class="headerlink" href="#api-documentation" title="Permalink to this headline">¶</a></h1>
-<p><em>MOSAIC</em> is designed using object oriented tools, which makes it easy to extend. The API documentation provides class level descriptions of the different modules that can be used in customized code. Meta-Classes (in <em>blue</em> below) define interfaces to five key parts of MOSAIC: time-series IO (<a class="reference internal" href="../api-doc/mosaic.meta.html#mosaic.metaTrajIO.metaTrajIO" title="mosaic.metaTrajIO.metaTrajIO"><tt class="xref py py-class docutils literal"><span class="pre">metaTrajIO</span></tt></a>), time-series filtering (<a class="reference internal" href="../api-doc/mosaic.meta.html#mosaic.metaIOFilter.metaIOFilter" title="mosaic.metaIOFilter.metaIOFilter"><tt class="xref py py-class docutils literal"><span class="pre">metaIOFilter</span></tt></a>), analysis output (<a class="reference internal" href="../api-doc/mosaic.meta.html#mosaic.metaMDIO.metaMDIO" title="mosaic.metaMDIO.metaMDIO"><tt class="xref py py-class docutils literal"><span class="pre">metaMDIO</span></tt></a>), event partition and segmenting (<a class="reference internal" href="../api-doc/mosaic.meta.html#mosaic.metaEventPartition.metaEventPartition" title="mosaic.metaEventPartition.metaEventPartition"><tt class="xref py py-class docutils literal"><span class="pre">metaEventPartition</span></tt></a>), and event processing (<a class="reference internal" href="../api-doc/mosaic.meta.html#mosaic.metaEventProcessor.metaEventProcessor" title="mosaic.metaEventProcessor.metaEventProcessor"><tt class="xref py py-class docutils literal"><span class="pre">metaEventProcessor</span></tt></a>). Sub-classing any of these meta classes and implementing their interface functions allows one to extend <em>MOSAIC</em> while maintaining compatibility with other parts of the program. The diagram below shows the class inheritence in <em>MOSAIC</em>, with top-level classes in <em>gray</em>.</p>
+<p><em>MOSAIC</em> is designed using object oriented tools, which makes it easy to extend. The API documentation provides class level descriptions of the different modules that can be used in customized code. Meta-Classes (in <em>blue</em> below) define interfaces to five key parts of MOSAIC: time-series IO (<a class="reference internal" href="../api-doc/mosaic.meta.html#mosaic.metaTrajIO.metaTrajIO" title="mosaic.metaTrajIO.metaTrajIO"><code class="xref py py-class docutils literal"><span class="pre">metaTrajIO</span></code></a>), time-series filtering (<a class="reference internal" href="../api-doc/mosaic.meta.html#mosaic.metaIOFilter.metaIOFilter" title="mosaic.metaIOFilter.metaIOFilter"><code class="xref py py-class docutils literal"><span class="pre">metaIOFilter</span></code></a>), analysis output (<a class="reference internal" href="../api-doc/mosaic.meta.html#mosaic.metaMDIO.metaMDIO" title="mosaic.metaMDIO.metaMDIO"><code class="xref py py-class docutils literal"><span class="pre">metaMDIO</span></code></a>), event partition and segmenting (<a class="reference internal" href="../api-doc/mosaic.meta.html#mosaic.metaEventPartition.metaEventPartition" title="mosaic.metaEventPartition.metaEventPartition"><code class="xref py py-class docutils literal"><span class="pre">metaEventPartition</span></code></a>), and event processing (<a class="reference internal" href="../api-doc/mosaic.meta.html#mosaic.metaEventProcessor.metaEventProcessor" title="mosaic.metaEventProcessor.metaEventProcessor"><code class="xref py py-class docutils literal"><span class="pre">metaEventProcessor</span></code></a>). Sub-classing any of these meta classes and implementing their interface functions allows one to extend <em>MOSAIC</em> while maintaining compatibility with other parts of the program. The diagram below shows the class inheritence in <em>MOSAIC</em>, with top-level classes in <em>gray</em>.</p>
 <p class="graphviz">
-<img src="../_images/graphviz-c07b819df8b6c041bbae92e71b2962b5ed3a53ca.png" alt="digraph &quot;Graphical Class Hierarchy&quot;
+<img src="../_images/graphviz-b3d5ba7a5845683ed3d82ae25d1a7e01d23825c8.png" alt="digraph &quot;Graphical Class Hierarchy&quot;
 {
   graph [ dpi = 300 ];
   size=&quot;2,1.75&quot;;
@@ -149,7 +149,7 @@
   Node5 -&gt; Node6 [dir=&quot;back&quot;, width=1.0, penwidth=2.5,color=&quot;midnightblue&quot;,fontsize=&quot;20&quot;,style=&quot;solid&quot;,fontname=&quot;Helvetica&quot;];
   Node6 [label=&quot;mosaic.multiStateAnalysis.multi\lStateAnalysis&quot;,height=0.2,width=0.4,color=&quot;black&quot;, fillcolor=&quot;white&quot;, style=&quot;filled&quot;];
   Node5 -&gt; Node7 [dir=&quot;back&quot;, width=1.0, penwidth=2.5,color=&quot;midnightblue&quot;,fontsize=&quot;20&quot;,style=&quot;solid&quot;,fontname=&quot;Helvetica&quot;];
-  Node7 [label=&quot;mosaic.singleStepEvent.single\lStepEvent&quot;,height=0.2,width=0.4,color=&quot;black&quot;, fillcolor=&quot;white&quot;, style=&quot;filled&quot;];
+  Node7 [label=&quot;mosaic.cusumLevelAnalysis.cusum\lLevelAnalysis&quot;,height=0.2,width=0.4,color=&quot;black&quot;, fillcolor=&quot;white&quot;, style=&quot;filled&quot;];
   Node5 -&gt; Node8 [dir=&quot;back&quot;, width=1.0, penwidth=2.5,color=&quot;midnightblue&quot;,fontsize=&quot;20&quot;,style=&quot;solid&quot;,fontname=&quot;Helvetica&quot;];
   Node8 [label=&quot;mosaic.stepResponseAnalysis.step\lResponseAnalysis&quot;,height=0.2,width=0.4,color=&quot;black&quot;, fillcolor=&quot;white&quot;, style=&quot;filled&quot;];
   Node1 -&gt; Node9 [dir=&quot;back&quot;, width=1.0, penwidth=2.5,color=&quot;midnightblue&quot;,fontsize=&quot;20&quot;,style=&quot;solid&quot;,fontname=&quot;Helvetica&quot;];
@@ -215,6 +215,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../api-doc/mosaic.processing.html">11.1.6. Event Processing</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../api-doc/mosaic.processing.html#mosaic-stepresponseanalysis-module">11.1.6.1. mosaic.stepResponseAnalysis module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../api-doc/mosaic.processing.html#mosaic-multistateanalysis-module">11.1.6.2. mosaic.multiStateAnalysis module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api-doc/mosaic.processing.html#mosaic-cusumlevelanalysis-module">11.1.6.3. mosaic.cusumLevelAnalysis module</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../api-doc/mosaic.output.html">11.1.7. Data Output</a><ul>
@@ -225,6 +226,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../api-doc/mosaic.misc.html#module-mosaic.settings">11.1.8.1. mosaic.settings module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../api-doc/mosaic.misc.html#mosaic-utilities-ionic-current-stats-module">11.1.8.2. mosaic.utilities.ionic_current_stats module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../api-doc/mosaic.misc.html#mosaic-utilities-util-module">11.1.8.3. mosaic.utilities.util module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api-doc/mosaic.misc.html#mosaic-utilities-fit-funcs-module">11.1.8.4. mosaic.utilities.fit_funcs module</a></li>
 </ul>
 </li>
 </ul>
@@ -245,22 +247,23 @@
       
     </p>
     <p>
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.2.3.<br/>
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.3.1.<br/>
     </p>
   </div>
 </footer> -->
 <div class="footer" style="vertical-align: center" align="center">
-		<table width="95%" style="vertical-align: center">
-			<col width=60%>
-			<col width=40%>
-			<tr>
-				<td align="left">
-					<a href="mailingList.html"><em>Mailing List</em></a>&nbsp;&nbsp;&nbsp;
-					<a href="Developers.html"><em>MOSAIC Developers</em></a>&nbsp;&nbsp;&nbsp;
-					<a href="http://www.nist.gov/cgi-bin/wwwph/cso.nist.gov?Query=Arvind+Balijepalli"><em>Contact</em></a>&nbsp;&nbsp;&nbsp;
-					<a href="Disclaimer.html"><em>Terms of Use</em></a>
+		<table width="75%" style="vertical-align: center; border-collapse: collapse;">
+			<tr style="padding-bottom: 100px;">
+				<td align="center">
+					<a href="Developers.html" style="color: #696969; padding-left: 50px; padding-right: 50px; text-decoration: none;">MOSAIC Developers</a>
+					<a href="http://www.nist.gov/cgi-bin/wwwph/cso.nist.gov?Query=Arvind+Balijepalli" style="color: #696969; padding-left: 50px; padding-right: 50px; text-decoration: none;">Contact</a>
+					<a href="Disclaimer.html" style="color: #696969; padding-left: 50px; padding-right: 50px; text-decoration: none;">Terms of Use</a>
 				</td>
-				<td align="right"><em>National Institute of Standards and Technology (NIST)</em></td>
+			</tr>
+			<tr style="padding-bottom: 100px;">
+				<td align="center">
+					<a href="http://www.nist.gov/"style="color: #696969; text-decoration: none;"><small>National Institute of Standards and Technology</small></a>
+				</td>
 			</tr>
 		</table>
 </div>

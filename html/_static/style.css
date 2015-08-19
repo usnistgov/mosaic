@@ -8,16 +8,33 @@ a {
 	color: #2F378F;
 }
 .navbar-default {
-	background-image: -webkit-linear-gradient(top, #D4D7D9 0%, #D4D7D9 100%);
+	/*background-image: -webkit-linear-gradient(top, #D4D7D9 0%, #D4D7D9 100%);
 	background-image:      -o-linear-gradient(top, #D4D7D9 0%, #D4D7D9 100%);
 	background-image: -webkit-gradient(linear, left top, left bottom, from(#D4D7D9), to(#D4D7D9));
 	background-image:         linear-gradient(to bottom, #D4D7D9 0%, #D4D7D9 100%);
 	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#D4D7D9', endColorstr='#D4D7D9', GradientType=0);
 	filter: progid:DXImageTransform.Microsoft.gradient(enabled = false);
-	background-repeat: repeat-x;
+	background-repeat: repeat-x;*/
+	background-color: white;
 	border-radius: 4px;
-	-webkit-box-shadow: inset 0 1px 0 rgba(255, 255, 255, .15), 0 1px 5px rgba(0, 0, 0, .075);
-					box-shadow: inset 0 1px 0 rgba(255, 255, 255, .15), 0 1px 5px rgba(0, 0, 0, .075);
+	-webkit-box-shadow: inset 0 1px 0 rgba(255, 255, 255, .15), 0 7px 15px rgba(0, 0, 0, .175);
+					box-shadow: inset 0 1px 0 rgba(255, 255, 255, .15), 0 7px 15px rgba(0, 0, 0, .175);
+}
+.navbar-brand img {
+	margin:0;
+	padding-top: 0px;
+}
+h1 {
+	font-size: 28pt;
+}
+h2 {
+	font-size: 24pt;
+}
+h3 {
+	font-size: 20pt;
+}
+h4 {
+	font-size: 18pt;
 }
 .blurbtext {
 	color: #696969;
@@ -47,10 +64,10 @@ p.highlight-mosaic {
 }
 .footer{
 	color: #696969;
-	font-size: 10pt;
-	padding: 10px;
-	/*padding-top: 20px;*/
-
+	font-size: 12pt;
+}
+.note {
+	background-color: rgba(68, 176, 84, 0.75);	
 }
 .grayscale { 
 	-webkit-filter: grayscale(100%);
@@ -76,10 +93,6 @@ p.downloadtext {
 	padding:0px;
 	font-size: 12pt;
 	text-align: left;
-}
-a.footer{
-	color: #2F378F;
-	text-decoration: none;
 }
 div.highlight-mosaic {
 	margin: 0 auto;
@@ -127,8 +140,12 @@ table.dark {
 	background-color: #EFEFEF;
 }
 table.footer {
-	margin: 0;
+	padding: 0;
 	border-collapse: collapse;
+}
+td.footer {
+	padding-top: 10px;
+	padding-bottom: 20px;
 }
 td.logo {
 	padding: 50px;
@@ -207,13 +224,20 @@ a.downloadtext:hover {
 	cursor: pointer;
 	font-size: 12pt;
 }
-.footer {
-	color: #696969;
-}
 img.mosaiclogo{
 /*	box-shadow: 10px 10px 5px #888888;*/
 }
 img.nistlogo{
 	margin: 0;
 	padding-bottom: 10px;
+}
+code.xref, .py, .py-class, .docutils, .literal, .descname {
+	color: #283593; 
+	font-family: Roboto, sans-serif;
+	font-weight: 300;
+}
+a.internal, .xref, .py, .py-class, .docutils, .literal {
+	color: #283593; 
+	font-family: Roboto, sans-serif;
+	font-weight: 300;
 }

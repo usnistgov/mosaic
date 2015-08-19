@@ -5,19 +5,18 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>4. MOSAIC GUI &mdash; MOSAIC 1.2 documentation</title>
+    <title>4. MOSAIC GUI &mdash; MOSAIC 1.3 documentation</title>
     
     <link rel="stylesheet" href="../_static/basic.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="../_static/bootstrap-3.2.0/css/bootstrap.min.css" type="text/css" />
-    <link rel="stylesheet" href="../_static/bootstrap-3.2.0/css/bootstrap-theme.min.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/bootswatch-3.2.0/paper/bootstrap.min.css" type="text/css" />
     <link rel="stylesheet" href="../_static/bootstrap-sphinx.css" type="text/css" />
     <link rel="stylesheet" href="../_static/style.css" type="text/css" />
     
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '1.2',
+        VERSION:     '1.3',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -26,15 +25,15 @@
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <script type="text/javascript" src="../_static/js/jquery-1.11.0.min.js"></script>
     <script type="text/javascript" src="../_static/js/jquery-fix.js"></script>
     <script type="text/javascript" src="../_static/bootstrap-3.2.0/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="../_static/bootstrap-sphinx.js"></script>
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
-    <link rel="top" title="MOSAIC 1.2 documentation" href="../index.html" />
+    <link rel="top" title="MOSAIC 1.3 documentation" href="../index.html" />
     <link rel="next" title="5. Scripting and Advanced Features" href="ScriptingandAdvancedFeatures.html" />
-    <link rel="prev" title="3. Algorithms in MOSAIC" href="Algorithms.html" />
+    <link rel="prev" title="3. Data Processing Algorithms in MOSAIC" href="Algorithms.html" />
 
 <meta charset='utf-8'>
 <meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
@@ -42,13 +41,13 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 
 	<script type="text/javascript"
-		src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+		src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
 	</script>
 	<script type="text/javascript" id="_fed_an_js_tag" src="//www.nist.gov/js/federated-analytics.all.min.js?agency=NIST&subagency=github&pua=UA-42404149-54&yt=true&exts=ppsx,pps,f90,sch,rtf,wrl,txz,m1v,xlsm,msi,xsd,f,tif,eps,mpg,xml,pl,xlt,c">
 	</script>	
 
   </head>
-  <body>
+  <body role="document">
 
   <div id="navbar" class="navbar navbar-default navbar-fixed-top">
     <div class="container">
@@ -59,16 +58,17 @@
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </button>
-        <a class="navbar-brand" href="../index.html"><img src="../_static/icon_24.png">
+        <a class="navbar-brand" href="../index.html"><img src="../_static/icon_36.png">
            </a>
-        <span class="navbar-text navbar-version pull-left"><b>1.2</b></span>
+        <span class="navbar-text navbar-version pull-left"><b>1.3</b></span>
       </div>
 
         <div class="collapse navbar-collapse nav-collapse">
           <ul class="nav navbar-nav">
             
+                <li><a href="../../latex/MOSAIC.pdf">Download PDF</a></li>
                 <li><a href="mailingList.html">Mailing List</a></li>
-                <li><a href="//github.com/usnistgov/mosaic">Develop MOSAIC</a></li>
+                <li><a href="//github.com/usnistgov/mosaic">Develop</a></li>
                 <li><a href="//github.com/usnistgov/mosaic/issues">Issue Tracker</a></li>
             
             
@@ -83,7 +83,7 @@
       aria-labelledby="dLabelGlobalToc"><ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="Introduction.html">1. Introduction</a></li>
 <li class="toctree-l1"><a class="reference internal" href="GettingStarted.html">2. Getting Started</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Algorithms.html">3. Algorithms in <em>MOSAIC</em></a></li>
+<li class="toctree-l1"><a class="reference internal" href="Algorithms.html">3. Data Processing Algorithms in <em>MOSAIC</em></a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="">4. <em>MOSAIC</em> GUI</a></li>
 <li class="toctree-l1"><a class="reference internal" href="ScriptingandAdvancedFeatures.html">5. Scripting and Advanced Features</a></li>
 <li class="toctree-l1"><a class="reference internal" href="settingsFile.html">6. Settings File</a></li>
@@ -127,7 +127,7 @@
       
   <div class="section" id="projname-gui">
 <span id="gui-page"></span><h1>4. <em>MOSAIC</em> GUI<a class="headerlink" href="#projname-gui" title="Permalink to this headline">¶</a></h1>
-<p><em>MOSAIC</em>&#8216;s GUI interface is designed to allow you to easily setup and run an analysis and to analyze the results of prior trials via a graphical interface; it contains the most commonly used features of <em>MOSAIC</em>.  The GUI contains modular panels for setting up an analysis, running it, and analyzing the results. Here we give you a brief overview of the graphical interface and its basic use. You can learn more in the <a class="reference internal" href="examples.html#examples-page"><em>Examples</em></a> section.</p>
+<p><em>MOSAIC</em>&#8216;s GUI interface is designed to allow you to easily setup and run an analysis and to analyze the results of prior trials via a graphical interface; it contains the most commonly used features of <em>MOSAIC</em>.  The GUI contains modular panels for setting up an analysis, running it, and analyzing the results. Here we give you a brief overview of the graphical interface and its basic use. You can learn more in the <a class="reference internal" href="examples.html#examples-page"><span>Examples</span></a> section.</p>
 <p><strong>Opening the GUI</strong></p>
 <p>If you installed <em>MOSAIC</em> from a precomiled binary, you can open the GUI by double clicking the <em>MOSAIC</em> icon. Alternatively, if you compiled <em>MOSAIC</em> from source code, you can run the GUI from the terminal window &#8211; navigate to the installation directory and type:</p>
 <div class="highlight-console"><div class="highlight"><pre><span class="go">python mosaicgui/mosaicGUI.py</span>
@@ -135,43 +135,43 @@
 </div>
 <div class="admonition hint">
 <p class="first admonition-title">Hint</p>
-<p class="last">Having trobule getting the GUI to start? Frequently, this arises because your PYTHONPATH environment variable is set up incorrectly. To fix this error, first type <tt class="docutils literal"><span class="pre">echo</span> <span class="pre">$PYTHONPATH</span></tt> in the terminal. If you don&#8217;t see the path to the <em>MOSAIC</em> installation in <cite>PYTHONPATH</cite>, consult the operating-system specific instructions (<a class="reference internal" href="InstallOSX.html#setpythonpathosx"><em>OSX</em></a> or <a class="reference internal" href="InstallUbuntu.html#setpythonpathubuntu"><em>Ubuntu</em></a>) to help resolve this issue.</p>
+<p class="last">Having trobule getting the GUI to start? Frequently, this arises because your PYTHONPATH environment variable is set up incorrectly. To fix this error, first type <code class="docutils literal"><span class="pre">echo</span> <span class="pre">$PYTHONPATH</span></code> in the terminal. If you don&#8217;t see the path to the <em>MOSAIC</em> installation in <cite>PYTHONPATH</cite>, consult the operating-system specific instructions (<a class="reference internal" href="InstallOSX.html#setpythonpathosx"><span>OSX</span></a> or <a class="reference internal" href="InstallUbuntu.html#setpythonpathubuntu"><span>Ubuntu</span></a>) to help resolve this issue.</p>
 </div>
 <div class="section" id="interface-overview">
 <h2>4.1. Interface Overview<a class="headerlink" href="#interface-overview" title="Permalink to this headline">¶</a></h2>
-<div class="figure align-center">
+<div class="figure align-center" id="id2">
 <a class="reference internal image-reference" href="../_images/mainpanels-panelLabel.png"><img alt="../_images/mainpanels-panelLabel.png" src="../_images/mainpanels-panelLabel.png" style="width: 85%;" /></a>
-<p class="caption">Primary panels in <em>MOSAIC</em>: (A)Analysis Setup (B) Trajectory Viewer (C) Live Blockade Depth Histogram (D) Live Analysis Statistics (E) Event Viewer.</p>
+<p class="caption"><span class="caption-text">Primary panels in <em>MOSAIC</em>: (A)Analysis Setup (B) Trajectory Viewer (C) Live Blockade Depth Histogram (D) Live Analysis Statistics (E) Event Viewer.</span></p>
 </div>
 <p>The main interface consists of five panels which we go over in detail later in this document. Briefly, these are:</p>
 <ol class="upperalpha simple">
 <li><em>Analysis Setup</em>: This panel is used to set up the analysis parameters.</li>
-<li><em>Trajectory Viewer</em>: This panel shows a snippet of the ionic current time-series and an all points histogram, used to set the baseline and threshold parameters found in <a class="reference internal" href="#analysis-setup"><em>Panel A: Analysis Setup</em></a>.</li>
+<li><em>Trajectory Viewer</em>: This panel shows a snippet of the ionic current time-series and an all points histogram, used to set the baseline and threshold parameters found in <a class="reference internal" href="#analysis-setup"><span>Panel A: Analysis Setup</span></a>.</li>
 <li><em>Blockade Depth Histogram</em>: Once the data processing has started, this panel shows a live blockade depth histogram; a query can be defined to restrict the histogram to data which fulfills a user-defined criteria.</li>
 <li><em>Analysis Statistics</em>: Displays live statistics about the data processed.</li>
-<li><em>Event Viewer</em>: Displays the partitioned events and their fit. This panel is active only if &#8220;Write Events to Disk&#8221; is enabled in the <a class="reference internal" href="#analysis-setup"><em>Analysis Setup.</em></a></li>
+<li><em>Event Viewer</em>: Displays the partitioned events and their fit. This panel is active only if &#8220;Write Events to Disk&#8221; is enabled in the <a class="reference internal" href="#analysis-setup"><span>Analysis Setup.</span></a></li>
 </ol>
 </div>
 <div class="section" id="panels-a-b-analysis-setup-and-trajectory-viewer">
 <h2>4.2. Panels A &amp; B: Analysis Setup and Trajectory Viewer<a class="headerlink" href="#panels-a-b-analysis-setup-and-trajectory-viewer" title="Permalink to this headline">¶</a></h2>
-<div class="figure align-center">
+<div class="figure align-center" id="id3">
 <a class="reference internal image-reference" href="../_images/panelab.png"><img alt="../_images/panelab.png" src="../_images/panelab.png" style="width: 70%;" /></a>
-<p class="caption"><em>Overview of Panels A &amp; B</em>: (A) Analysis setup panel (B) Trajectory viewer panel</p>
+<p class="caption"><span class="caption-text"><em>Overview of Panels A &amp; B</em>: (A) Analysis setup panel (B) Trajectory viewer panel</span></p>
 </div>
 <div class="section" id="panel-a-analysis-setup">
 <span id="analysis-setup"></span><h3>4.2.1. Panel A: Analysis Setup<a class="headerlink" href="#panel-a-analysis-setup" title="Permalink to this headline">¶</a></h3>
 <p><strong>1. Data Settings</strong></p>
 <ul class="simple">
 <li><strong>Path</strong>: Allows user to set the directory containing files to analyze. Click the &#8221;...&#8221; icon to navigate to the directory.</li>
-<li><strong>File Type</strong>: The GUI is natively compatible with either ABF or QDF Files, this field is automatically populated based on the files in the directory you&#8217;ve chosen.The <strong>Rfb</strong> and <strong>Cfb</strong> parameters are needed to correctly analyze QDF files (see <a class="reference internal" href="../api-doc/mosaic.traj.html#module-mosaic.qdfTrajIO" title="mosaic.qdfTrajIO"><tt class="xref py py-class docutils literal"><span class="pre">qdfTrajIO</span></tt></a> for more information)</li>
+<li><strong>File Type</strong>: The GUI is natively compatible with either ABF or QDF Files, this field is automatically populated based on the files in the directory you&#8217;ve chosen.The <strong>Rfb</strong> and <strong>Cfb</strong> parameters are needed to correctly analyze QDF files (see <a class="reference internal" href="../api-doc/mosaic.traj.html#module-mosaic.qdfTrajIO" title="mosaic.qdfTrajIO"><code class="xref py py-class docutils literal"><span class="pre">qdfTrajIO</span></code></a> for more information)</li>
 <li><strong>Rfb &amp; Cfb</strong>: <em>MOSAIC</em> supports the QUB QDF file format used by the <a class="reference external" href="http://electronicbio.com">Electronic Biosciences</a> Nanopatch system. Two additional parameters, the feedback resistance (Rfb) in Ohms and capacitance (Cfb) in Farads are required to appropriately convert the measurements to ionic current.</li>
 <li><strong>Start</strong> and <strong>End</strong>: These parameters allow you to analyze a range of your data. Choose the starting and ending times if you&#8217;d like to analyze a small time segement of your data. If this is left blank, all data will be analyzed.</li>
 <li><strong>DC Offset</strong>: If your measurement contains a systematic bias, it can be manually corrected by entering the DC offset here.</li>
 </ul>
 <p><strong>2. Baseline Current Detection</strong></p>
 <ul class="simple">
-<li><span class="math">\(\mu\)</span>: Mean baseline current, in picoamperes (pA). This is shown schematically in the trajectory viewer (see Label #8). When <em>Auto</em> is selected, this will be greyed out and labeled <tt class="docutils literal"><span class="pre">&lt;auto&gt;</span></tt></li>
-<li><span class="math">\(\sigma\)</span>: Noise level (in pA). This is expected noise level of your baseline. Typically one would set this to the measured RMS noise of the open channel state at the cutoff frequency. When <em>Auto</em> is selected, this will be greyed out and labeled <tt class="docutils literal"><span class="pre">&lt;auto&gt;</span></tt>.</li>
+<li><span class="math">\(\mu\)</span>: Mean baseline current, in picoamperes (pA). This is shown schematically in the trajectory viewer (see Label #8). When <em>Auto</em> is selected, this will be greyed out and labeled <code class="docutils literal"><span class="pre">&lt;auto&gt;</span></code></li>
+<li><span class="math">\(\sigma\)</span>: Noise level (in pA). This is expected noise level of your baseline. Typically one would set this to the measured RMS noise of the open channel state at the cutoff frequency. When <em>Auto</em> is selected, this will be greyed out and labeled <code class="docutils literal"><span class="pre">&lt;auto&gt;</span></code>.</li>
 <li><strong>Auto</strong>: Checking this box enables automatic dectection of the mean baseline current (<span class="math">\(\mu\)</span>) and noise level (<span class="math">\(\sigma\)</span>). When auto is enabled, the values chosen by the software will be displayed in the trajectory viewer panel (see Label #10)</li>
 <li><strong>Block Size</strong>: Controls the amount of data examined to determine the baseline. This also controls the amount of data shown in the trajectory viewer.</li>
 </ul>
@@ -195,9 +195,9 @@
 </ul>
 <p><strong>5. Plot Results and Advanced Settings</strong></p>
 <ul class="simple">
-<li><strong>Event Fits</strong>: Checking this box will show the events viewer (Panel E). This can also be accessed from the file menu <tt class="docutils literal"><span class="pre">View&gt;Plots&gt;Event</span> <span class="pre">Fits</span></tt>. If <em>Write Events to Disk</em> is not enabled this checkbox will be greyed out.</li>
-<li><strong>Blockade Depth Histogram</strong>: Checking this box will show the blockade depth histogram (Panel C). This can also be accessed through the file menu <tt class="docutils literal"><span class="pre">View&gt;Plots&gt;Blockade</span> <span class="pre">Depth</span> <span class="pre">Histogram</span></tt>.</li>
-<li><strong>Advanced Settings</strong>: This opens a dialog window to manually edit settings not otherwise accessible in the GUI. See the <a class="reference internal" href="settingsFile.html#settings-page"><em>Settings File</em></a> section for further details.</li>
+<li><strong>Event Fits</strong>: Checking this box will show the events viewer (Panel E). This can also be accessed from the file menu <code class="docutils literal"><span class="pre">View&gt;Plots&gt;Event</span> <span class="pre">Fits</span></code>. If <em>Write Events to Disk</em> is not enabled this checkbox will be greyed out.</li>
+<li><strong>Blockade Depth Histogram</strong>: Checking this box will show the blockade depth histogram (Panel C). This can also be accessed through the file menu <code class="docutils literal"><span class="pre">View&gt;Plots&gt;Blockade</span> <span class="pre">Depth</span> <span class="pre">Histogram</span></code>.</li>
+<li><strong>Advanced Settings</strong>: This opens a dialog window to manually edit settings not otherwise accessible in the GUI. See the <a class="reference internal" href="settingsFile.html#settings-page"><span>Settings File</span></a> section for further details.</li>
 </ul>
 </div>
 <div class="section" id="panel-b-trajectory-viewer">
@@ -231,22 +231,22 @@
 <h2>4.3. Panels C,D, &amp; E: Blockade Depth Histogram, Statistics, and Event Viewer<a class="headerlink" href="#panels-c-d-e-blockade-depth-histogram-statistics-and-event-viewer" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="panel-c-blockade-depth-histogram">
 <h3>4.3.1. Panel C: Blockade Depth Histogram<a class="headerlink" href="#panel-c-blockade-depth-histogram" title="Permalink to this headline">¶</a></h3>
-<div class="figure align-center">
+<div class="figure align-center" id="id4">
 <a class="reference internal image-reference" href="../_images/bd_hist.png"><img alt="../_images/bd_hist.png" src="../_images/bd_hist.png" style="width: 50%;" /></a>
-<p class="caption">Blockade depth histogram</p>
+<p class="caption"><span class="caption-text">Blockade depth histogram</span></p>
 </div>
 <p>This window shows the blockade depth histogram calculated from the meta-data output by <em>MOSAIC</em>.</p>
 <ul class="simple">
-<li><strong>Filter</strong>: The data displayed in the histogram can be restricted to events that fulfill specific user-defined criteria. For instance, the default filter <tt class="docutils literal"><span class="pre">ResTime</span> <span class="pre">&gt;</span> <span class="pre">0.025</span></tt> only includes events longer than 0.025 ms (or 25 <span class="math">\(\mu s\)</span>). The GUI uses a <a class="reference external" href="http://en.wikipedia.org/wiki/SQL">SQL</a> <cite>select</cite> statement to restrict the events included in the histogram. The text in the <em>Filter</em> field represents the part of the query after the <cite>where</cite> clause, and allows the user to use standard <a class="reference external" href="http://en.wikipedia.org/wiki/SQL">SQL</a> syntax to narrow the results in the plot. See the <a class="reference internal" href="WorkingWithSQLite.html#working-with-sqlite-sec"><em>Work with SQLite</em></a> section for details on <a class="reference external" href="http://en.wikipedia.org/wiki/SQL">SQL</a> syntax.</li>
+<li><strong>Filter</strong>: The data displayed in the histogram can be restricted to events that fulfill specific user-defined criteria. For instance, the default filter <code class="docutils literal"><span class="pre">ResTime</span> <span class="pre">&gt;</span> <span class="pre">0.025</span></code> only includes events longer than 0.025 ms (or 25 <span class="math">\(\mu s\)</span>). The GUI uses a <a class="reference external" href="http://en.wikipedia.org/wiki/SQL">SQL</a> <cite>select</cite> statement to restrict the events included in the histogram. The text in the <em>Filter</em> field represents the part of the query after the <cite>where</cite> clause, and allows the user to use standard <a class="reference external" href="http://en.wikipedia.org/wiki/SQL">SQL</a> syntax to narrow the results in the plot. See the <a class="reference internal" href="WorkingWithSQLite.html#working-with-sqlite-sec"><span>Work with SQLite</span></a> section for details on <a class="reference external" href="http://en.wikipedia.org/wiki/SQL">SQL</a> syntax.</li>
 <li><strong>Bins</strong>: The number of bins in the histogram are defined here. By default, 500 bins are used, but the user can change this necessary.</li>
-<li><strong>Detect Peaks</strong>: Checking <em>Detect Peaks</em> enables a wavelet-based peak detection algorithm. The wavelet level slider controls the sensitivity of the peak detection. Sliding it to the right will decrease the number of peaks picked up. The peaks detected are represented with red dots. Mousing over the detected peaks cause the coordinates of the peak to be displayed in the lower right hand corner of the window. The detected peaks can also be exported to a CSV file from the file menu <tt class="docutils literal"><span class="pre">File&gt;Save</span> <span class="pre">Histogram</span></tt>.</li>
+<li><strong>Detect Peaks</strong>: Checking <em>Detect Peaks</em> enables a wavelet-based peak detection algorithm. The wavelet level slider controls the sensitivity of the peak detection. Sliding it to the right will decrease the number of peaks picked up. The peaks detected are represented with red dots. Mousing over the detected peaks cause the coordinates of the peak to be displayed in the lower right hand corner of the window. The detected peaks can also be exported to a CSV file from the file menu <code class="docutils literal"><span class="pre">File&gt;Save</span> <span class="pre">Histogram</span></code>.</li>
 </ul>
 </div>
 <div class="section" id="panel-d-statistics">
 <h3>4.3.2. Panel D: Statistics<a class="headerlink" href="#panel-d-statistics" title="Permalink to this headline">¶</a></h3>
-<div class="figure align-center">
+<div class="figure align-center" id="id5">
 <a class="reference internal image-reference" href="../_images/statistics.png"><img alt="../_images/statistics.png" src="../_images/statistics.png" style="width: 40%;" /></a>
-<p class="caption">Live statistics window</p>
+<p class="caption"><span class="caption-text">Live statistics window</span></p>
 </div>
 <p>The <em>Statistics Window</em> is displayed when a new analysis is started and displays:</p>
 <ul class="simple">
@@ -258,27 +258,27 @@
 </div>
 <div class="section" id="panel-e-event-viewer">
 <h3>4.3.3. Panel E: Event Viewer<a class="headerlink" href="#panel-e-event-viewer" title="Permalink to this headline">¶</a></h3>
-<div class="figure align-center">
+<div class="figure align-center" id="id6">
 <a class="reference internal image-reference" href="../_images/event_viewerpng.png"><img alt="../_images/event_viewerpng.png" src="../_images/event_viewerpng.png" style="width: 50%;" /></a>
-<p class="caption">Event viewer window</p>
+<p class="caption"><span class="caption-text">Event viewer window</span></p>
 </div>
 <p>If <em>Write to Disk</em> is enabled, this panel allows you to view the first 10,000 events processed. This is useful to ensure the quality of the analysis and to debug potential problems with the settings.</p>
 </div>
 <div class="section" id="console-log">
 <h3>4.3.4. Console Log<a class="headerlink" href="#console-log" title="Permalink to this headline">¶</a></h3>
-<div class="figure align-center">
+<div class="figure align-center" id="id7">
 <a class="reference internal image-reference" href="../_images/console.png"><img alt="../_images/console.png" src="../_images/console.png" style="width: 50%;" /></a>
-<p class="caption">Console log window</p>
+<p class="caption"><span class="caption-text">Console log window</span></p>
 </div>
 <p>When processing is complete, this panel displays a log of the analysis. This log contains useful information such as the analysis settings, the number of events fit, baseline drift, open channel conducatance, etc. This file is written to the database and can be accessed later.</p>
 </div>
 <div class="section" id="advanced-settings">
 <h3>4.3.5. Advanced Settings<a class="headerlink" href="#advanced-settings" title="Permalink to this headline">¶</a></h3>
-<div class="figure align-center">
+<div class="figure align-center" id="id8">
 <a class="reference internal image-reference" href="../_images/advanced-settings.png"><img alt="../_images/advanced-settings.png" src="../_images/advanced-settings.png" style="width: 50%;" /></a>
-<p class="caption">Advanced settings window</p>
+<p class="caption"><span class="caption-text">Advanced settings window</span></p>
 </div>
-<p>This dialog allows you to manually edit advanced settings for uncommon use cases not natively accessible from within the GUI. Further information can be found in the <a class="reference internal" href="settingsFile.html#settings-page"><em>Settings File</em></a>.</p>
+<p>This dialog allows you to manually edit advanced settings for uncommon use cases not natively accessible from within the GUI. Further information can be found in the <a class="reference internal" href="settingsFile.html#settings-page"><span>Settings File</span></a>.</p>
 </div>
 </div>
 </div>
@@ -296,22 +296,23 @@
       
     </p>
     <p>
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.2.3.<br/>
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.3.1.<br/>
     </p>
   </div>
 </footer> -->
 <div class="footer" style="vertical-align: center" align="center">
-		<table width="95%" style="vertical-align: center">
-			<col width=60%>
-			<col width=40%>
-			<tr>
-				<td align="left">
-					<a href="mailingList.html"><em>Mailing List</em></a>&nbsp;&nbsp;&nbsp;
-					<a href="Developers.html"><em>MOSAIC Developers</em></a>&nbsp;&nbsp;&nbsp;
-					<a href="http://www.nist.gov/cgi-bin/wwwph/cso.nist.gov?Query=Arvind+Balijepalli"><em>Contact</em></a>&nbsp;&nbsp;&nbsp;
-					<a href="Disclaimer.html"><em>Terms of Use</em></a>
+		<table width="75%" style="vertical-align: center; border-collapse: collapse;">
+			<tr style="padding-bottom: 100px;">
+				<td align="center">
+					<a href="Developers.html" style="color: #696969; padding-left: 50px; padding-right: 50px; text-decoration: none;">MOSAIC Developers</a>
+					<a href="http://www.nist.gov/cgi-bin/wwwph/cso.nist.gov?Query=Arvind+Balijepalli" style="color: #696969; padding-left: 50px; padding-right: 50px; text-decoration: none;">Contact</a>
+					<a href="Disclaimer.html" style="color: #696969; padding-left: 50px; padding-right: 50px; text-decoration: none;">Terms of Use</a>
 				</td>
-				<td align="right"><em>National Institute of Standards and Technology (NIST)</em></td>
+			</tr>
+			<tr style="padding-bottom: 100px;">
+				<td align="center">
+					<a href="http://www.nist.gov/"style="color: #696969; text-decoration: none;"><small>National Institute of Standards and Technology</small></a>
+				</td>
 			</tr>
 		</table>
 </div>

@@ -145,8 +145,9 @@ html_theme_options = {
   "bootstrap_version": "3",
 
   'navbar_links': [
+        ("Download PDF", "../latex/MOSAIC.pdf", True),
         ("Mailing List", "doc/mailingList"),
-        ("Develop MOSAIC", "//github.com/usnistgov/mosaic", True),
+        ("Develop", "//github.com/usnistgov/mosaic", True),
         ("Issue Tracker", "//github.com/usnistgov/mosaic/issues", True),
    ],
 
@@ -156,6 +157,7 @@ html_theme_options = {
    # Render the current pages TOC in the navbar. (Default: true)
    'navbar_pagenav': False,
    
+   'bootswatch_theme': "paper",
  }
 
 # Add any paths that contain custom themes here, relative to this directory.
@@ -171,7 +173,7 @@ html_theme_options = {
 
 # The name of an image file (relative to this directory) to place at the top
 # of the sidebar.
-html_logo='images/icon_24.png'
+html_logo='images/icon_36.png'
 
 # The name of an image file (within the static path) to use as favicon of the
 # docs.  This file should be a Windows icon file (.ico) being 16x16 or 32x32
@@ -250,7 +252,6 @@ latex_elements = {
     \usepackage{changepage}
     \usepackage{graphicx}
     \usepackage{hyperref}
-
 
     \makeatletter
     \renewcommand{\maketitle}{%
