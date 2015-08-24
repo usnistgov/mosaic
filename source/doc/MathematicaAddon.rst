@@ -19,10 +19,24 @@ MosaicUtils
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 
-*MosaicUtils* provides low level functions to interact with a database output by |projname|. 
+*MosaicUtils* provides low level functions to interact with a database output by |projname|. *MosaicUtils* can use a native Mathematica (**slower, default**) or Python (**faster, but experimental**) backend to query databases output by |projname|.
 
-.. warning:: If you use a virtual environment with Python, please call the SetVirtualEnv function after you install this addon.
+.. note:: To select the Python backend, please call the *SetQueryBackend* function as described below. If you use a virtual environment with Python, please call the *SetVirtualEnv* function after you install this addon.
 
+
+**SetQueryBackend**\[*backend*\]
+
+:Args:
+		- `backend` :	select the *Mathematica* (default) or *Python* (faster, experimental) backend to run SQLite queries.
+:Returns:
+		None
+
+**ReadQueryBackend**\[\]
+
+:Args:
+		None
+:Returns:
+		- The *backend* used to run SQLite queries.
 
 **SetVirtualEnv**\[*virtualenv*\]
 
@@ -65,7 +79,7 @@ Queries the *metadata* table using the supplied SQL query.
 		A nested list of query results.
 
 
-**PlotEvents**\[*dbfile*, *FsKHz*\]
+**PlotEvents**\[*dbfile*, *FsKHz*, *nEvents*\]
 
 Plot the event-time series if stored in the database (see the :ref:`settings-page` section for details on saving time-series to the analysis output).
 
