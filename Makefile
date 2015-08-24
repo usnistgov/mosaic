@@ -53,8 +53,8 @@ clean:
 
 html:
 	$(SPHINXBUILD) -b html $(ALLSPHINXOPTS) $(BUILDDIR)/html
-	python platforms.py
-	python utils.py
+	python download.py
+	# python utils.py
 	python generate_sitemap.py
 	@echo
 	@echo "Build finished. The HTML pages are in $(BUILDDIR)/html."
