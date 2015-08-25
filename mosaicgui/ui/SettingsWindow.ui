@@ -741,17 +741,17 @@
        <widget class="QComboBox" name="processingAlgorithmComboBox">
         <item>
          <property name="text">
-          <string>stepResponseAnalysis</string>
+          <string>ADEPT 2-state</string>
          </property>
         </item>
         <item>
          <property name="text">
-          <string>multiStateAnalysis</string>
+          <string>ADEPT</string>
          </property>
         </item>
         <item>
          <property name="text">
-          <string>cusumLevelAnalysis</string>
+          <string>CUSUM+</string>
          </property>
         </item>
        </widget>

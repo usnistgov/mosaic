@@ -6,6 +6,7 @@
 	:License:	See LICENSE.TXT
 	:ChangeLog:
 	.. line-block::
+		8/24/15 	AB 	Rename algorithm to ADEPT.
 		8/02/15		JF	Added a new test to reject RC Constants <=0
 		4/12/15 	AB 	Refactored code to improve reusability.
 		3/20/15 	AB 	Added a maximum event length setting (MaxEventLength) that automatically rejects events longer than the specified value.
@@ -53,7 +54,7 @@ class datblock:
 		self.sd=util.sd(dat)
 
 
-class multiStateAnalysis(metaEventProcessor.metaEventProcessor):
+class adept(metaEventProcessor.metaEventProcessor):
 	"""
 		Analyze a multi-step event that contains two or more states. This method includes system 
 		information in the analysis, specifically the filtering effects (through the RC constant)
