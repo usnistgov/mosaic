@@ -97,6 +97,7 @@ __settings__="""
 		"stepResponseAnalysis" : {
 			"FitTol"				: "1.e-7",
 			"FitIters"				: "50000",
+			"MaxEventLength" 		: "10000",
 			"UnlinkRCConst" 		: "1"
 		},
 		"multiStateAnalysis" : {

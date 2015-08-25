@@ -6,6 +6,7 @@
 	:License:	See LICENSE.TXT
 	:ChangeLog:
 	.. line-block::
+		8/25/15 	AB 	Added a maximum event length setting (MaxEventLength) that automatically rejects events longer than the specified value.
 		7/23/15		JF  Added a new test to reject RC Constants <=0
 		6/24/15 	AB 	Added an option to unlink the RC constants in stepResponseAnalysis.
 		11/7/14		AB 	Error codes describing event rejection are now more specific.
@@ -91,6 +92,7 @@ class stepResponseAnalysis(metaEventProcessor.metaEventProcessor):
 			self.FitIters=int(self.settingsDict.pop("FitIters", 5000))
 
 			self.BlockRejectRatio=float(self.settingsDict.pop("BlockRejectRatio", 0.8))
+			self.MaxEventLength=int(self.settingsDict.pop("MaxEventLength", 10000))
 
 			self.UnlinkRCConst=int(self.settingsDict.pop("UnlinkRCConst", 1))
 		
@@ -106,6 +108,8 @@ class stepResponseAnalysis(metaEventProcessor.metaEventProcessor):
 			This function implements the core logic to analyze one single step-event.
 		"""
 		try:
+			if (self.eEndEstimate-self.eStartEstimate) > self.MaxEventLength:
+				self.rejectEvent("eMaxLength")
 			# Fit the system transfer function to the event data
 			self.__FitEvent()
 		except:
