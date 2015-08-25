@@ -44,7 +44,7 @@ class InvalidEvent(Exception):
 
 class datblock:
 	"""
-		Smart data block that holds a time-series of data and keeps track
+		Smart data block that holds time-series data and keeps track
 		of its mean and SD.
 	"""
 	def __init__(self, dat):

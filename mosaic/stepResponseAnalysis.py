@@ -6,7 +6,7 @@
 	:License:	See LICENSE.TXT
 	:ChangeLog:
 	.. line-block::
-		7/23/15         JF  Added additional check to reject events with unphysical RC Constants
+		7/23/15		JF  Added a new test to reject RC Constants <=0
 		6/24/15 	AB 	Added an option to unlink the RC constants in stepResponseAnalysis.
 		11/7/14		AB 	Error codes describing event rejection are now more specific.
 		11/5/14		AB 	Fixed a bug in the event fitting logic that prevented 
@@ -32,7 +32,7 @@ from lmfit import minimize, Parameters, Parameter, report_errors, Minimizer
 
 class datblock:
 	""" 
-		Smart data block that holds a time-series of data and keeps track
+		Smart data block that holds time-series data and keeps track
 		of its mean and SD.
 	"""
 	def __init__(self, dat):

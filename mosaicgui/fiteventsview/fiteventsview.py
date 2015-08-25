@@ -243,7 +243,8 @@ class FitEventWindow(QtGui.QDialog):
 				self.eventIndexHorizontalSlider.setMaximum( len(self.queryData)-1 )
 
 		except sqlite3.OperationalError, err:
-			raise err
+			if not "RCConstant1" in str(err):
+				raise err
 		except:
 			raise
 

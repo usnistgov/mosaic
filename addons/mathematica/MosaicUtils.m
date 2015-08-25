@@ -11,6 +11,10 @@
 <<DatabaseLink`
 
 
+(* ::Subsubsection:: *)
+(*Helper Functions*)
+
+
 PrintMDKeys[filename_]:=Module[{db=OpenSQLConnection[JDBC["SQLite",filename]],keys},
 keys=SQLExecute[db,"PRAGMA table_info(metadata);"][[All,2]];
 CloseSQLConnection[db];
@@ -25,8 +29,11 @@ Return[mdtypes]
 ]
 
 
+GetAnalysisAlgorithm[db_]:=pyUnicode[First[Flatten[QueryDB[db, "select processingAlgorithm from analysisinfo"]]]]
+
+
 (* ::Subsubsection:: *)
-(*Utility Functions*)
+(*Backend Utility Functions*)
 
 
 SetQueryBackend[backend_:"Mathematica"]:=Export[FileNameJoin[{$UserBaseDirectory,"Applications",".mosaic_backend" },OperatingSystem->$OperatingSystem],ToString[backend],"Text"]
@@ -47,25 +54,25 @@ readVirtualEnv[]:="";
 (*QueryDB: Mathematica Backend*)
 
 
-QueryDB[filename_, query_] := Module[{db = OpenSQLConnection[JDBC["SQLite", filename]], q, res}, res = SQLExecute[db, query];
-  CloseSQLConnection[db];
-  Return[res]
-  ]/;ReadQueryBackend[]=="Mathematica"
 QueryDB[filename_, query_] := Module[{cols = ColNames[query], db = OpenSQLConnection[JDBC["SQLite", filename]], res, hash, qres, i},
-   hash = Association[#[[1]] -> #[[2]] & /@ Transpose[{SQLExecute[db, "PRAGMA table_info(metadata_t)"][[All, 2]], First[SQLExecute[db, "select * from metadata_t limit 1"]]}]];
+hash = Association[#[[1]] -> #[[2]] & /@ Transpose[{SQLExecute[db, "PRAGMA table_info(metadata_t)"][[All, 2]], First[SQLExecute[db, "select * from metadata_t limit 1"]]}]];
    qres = SQLExecute[db, query];
    res = ParallelTable[DecodeRecord[qres[[i]], cols, hash], {i, Length[qres]}];
    CloseSQLConnection[db];
    Return[res]
-   ] /; StringMatchQ[query, RegularExpression["\\bselect\\b.*\\bmetadata\\b.*"]]&&ReadQueryBackend[]=="Mathematica"
+   ] /;ReadQueryBackend[]=="Mathematica"&& StringMatchQ[query, RegularExpression["\\bselect\\b.*\\bmetadata\\b.*"]]
+QueryDB[filename_, query_] := Module[{db = OpenSQLConnection[JDBC["SQLite", filename]], q, res}, res = SQLExecute[db, query];
+  CloseSQLConnection[db];
+  Return[res]
+  ]/;ReadQueryBackend[]=="Mathematica"
 
 
 ColNames[qstr_] := Flatten[StringSplit[StringSplit[First[StringSplit[qstr, {"select", "from"}]], ","]]]
 
 
 DecodeRecord[rec_, cols_, colhash_] := Module[{c = ExpandCols[cols, colhash], ct},
-  ct = colhash /@ c;
-  Return[(DecodeColumn @@ #) & /@ Transpose[{rec, ct}]]
+ct = colhash /@ c;
+ Return[(DecodeColumn @@ #) & /@ Transpose[{rec, ct}]]
   ]
 
 
@@ -76,7 +83,7 @@ ExpandCols[cols_, colhash_] := Keys[colhash] /; cols == {"*"}
 ExpandCols[cols_, colhash_] := cols
 
 
-DecodeColumn[dat_, dtype_] := DecodeTimeSeries[dat] /; dtype == "REAL_LIST"
+DecodeColumn[dat_, dtype_] := DecodeTimeSeries[dat]/; dtype == "REAL_LIST"
 DecodeColumn[dat_, dtype_] := dat
 
 
@@ -112,15 +119,12 @@ nEventLimit[nEvents_]:=" limit "<>ToString[nEvents]
 pyUnicode=First[StringSplit[ToString[#],"'"]]&;
 
 
-GetAnalysisAlgorithm[db_]:=pyUnicode[First[Flatten[QueryDB[db, "select processingAlgorithm from analysisinfo"]]]]
-
-
 (* ::Subsubsection:: *)
 (*Event Plotting*)
 
 
 PlotEvents[dbname_,FsKHz_, nEvents_:All]:=Module[{q},
-q=QueryDB[dbname, "select ProcessingStatus, BlockedCurrent, OpenChCurrent, EventStart, EventEnd, RCConstant, TimeSeries from metadata"<>nEventLimit[nEvents]];
+q=QueryDB[dbname, "select ProcessingStatus, BlockedCurrent, OpenChCurrent, EventStart, EventEnd, RCConstant1,RCConstant1, TimeSeries from metadata"<>nEventLimit[nEvents]];
 Manipulate[plotsra[pyUnicode[q[[i]][[1]]], ts[q[[i]][[-1]],FsKHz],q[[i]][[2;;-2]] ,FsKHz],{i,1,Length[q],1,Appearance->"Open"}]
 ]/;GetAnalysisAlgorithm[dbname]=="stepResponseAnalysis"
 PlotEvents[dbname_,FsKHz_, nEvents_:All]:=Module[{q},
@@ -187,7 +191,7 @@ StyleBox[\"i\",\nFontSlant->\"Italic\"]\) (pA)",20,FontFamily->"Helvectica"]},Fr
 ]
 
 
-plotsra[status_,ts_,md_,FsKHz_]:=Module[{t,a,\[Mu]1,\[Mu]2,\[Tau],b},
+plotsra[status_,ts_,md_,FsKHz_]:=Module[{t,a,\[Mu]1,\[Mu]2,\[Tau]1,\[Tau]2,b},
 Show[{
 ListPlot[ts,PlotRange->{0,All},PlotStyle->Directive[RGBColor@@({41, 74,130}/255),Opacity[0.75]],PlotMarkers->{Automatic,14},Frame->True,FrameLabel->{Style["\!\(\*
 StyleBox[\"t\",\nFontSlant->\"Italic\"]\) (ms)",20,FontFamily->"Helvectica"],Style["\!\(\*
@@ -197,7 +201,7 @@ Line[{{md[[3]],Abs[md[[2]]]},{md[[3]],Abs[md[[1]]]}}],
 Line[{{md[[4]],Abs[md[[2]]]},{md[[4]],Abs[md[[1]]]}}]
 }],
 ListPlot[{
-Table[{t,Evaluate[(a( (-1+E^((-t+\[Mu]1)/\[Tau])) HeavisideTheta[t-\[Mu]1]+(1-E^((-t+\[Mu]2)/\[Tau])) HeavisideTheta[t-\[Mu]2])+b)/.{a->Abs[md[[1]]-md[[2]]],b->md[[2]],\[Tau]->md[[5]],\[Mu]1->md[[3]],\[Mu]2->md[[4]]}]},{t,ts[[1]][[1]],ts[[-1]][[1]],(1/FsKHz)/10}]
+Table[{t,Evaluate[(a( (-1+E^((-t+\[Mu]1)/\[Tau]1)) HeavisideTheta[t-\[Mu]1]+(1-E^((-t+\[Mu]2)/\[Tau]2)) HeavisideTheta[t-\[Mu]2])+b)/.{a->Abs[md[[1]]-md[[2]]],b->md[[2]],\[Tau]1->md[[5]],\[Tau]2->md[[6]],\[Mu]1->md[[3]],\[Mu]2->md[[4]]}]},{t,ts[[1]][[1]],ts[[-1]][[1]],(1/FsKHz)/10}]
 },PlotStyle->{{Black,Thickness[0.005]},{Black,Thickness[0.005]},{Black,Thickness[0.005]}},Joined->True]
 },ImageSize->600]
 ]/;status=="normal"
