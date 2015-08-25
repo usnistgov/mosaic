@@ -307,7 +307,6 @@ class cusumLevelAnalysis(metaEventProcessor.metaEventProcessor):
                                                         edges = np.delete(edges,i+1)
                                                         minstepflag = 0
                                                         self.nStates -= 1
-                                                        print 'deleting level from %d' % self.nStates
                                                         break
                         if (self.nStates < 3):
                                 self.rejectEvent('eInvalidStates')
