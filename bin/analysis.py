@@ -11,9 +11,9 @@ import mosaic.SingleChannelAnalysis
 import mosaic.eventSegment as es
 
 import mosaic.singleStepEvent as sse
-import mosaic.stepResponseAnalysis as sra 
-import mosaic.multiStateAnalysis as msa
-import mosaic.cusumLevelAnalysis as cla
+import mosaic.adept2State as adept2State
+import mosaic.adept as adept 
+import mosaic.cusumPlus as cusumPlus
 
 from mosaic.qdfTrajIO import *
 from mosaic.abfTrajIO import *
@@ -28,7 +28,7 @@ mosaic.SingleChannelAnalysis.SingleChannelAnalysis(
 			qdfTrajIO, 
 			None,
 			es.eventSegment,
-			sra.stepResponseAnalysis
+			adept2State.adept2State
 		).Run()
 
 mosaic.SingleChannelAnalysis.SingleChannelAnalysis(
@@ -36,5 +36,5 @@ mosaic.SingleChannelAnalysis.SingleChannelAnalysis(
 			qdfTrajIO, 
 			None,
 			es.eventSegment,
-			cla.cusumLevelAnalysis
+			cusumPlus.cusumPlus
 		).Run()
