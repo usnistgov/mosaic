@@ -180,7 +180,7 @@ class stepResponseAnalysis(metaEventProcessor.metaEventProcessor):
 		fmtstr=""
 
 		fmtstr+='\tEvent processing settings:\n\t\t'
-		fmtstr+='Algorithm = {0}\n\n'.format(self.__class__.__name__)
+		fmtstr+='Algorithm = ADEPT 2-State\n\n'
 		
 		fmtstr+='\t\tMax. iterations  = {0}\n'.format(self.FitIters)
 		fmtstr+='\t\tFit tolerance (rel. err in leastsq)  = {0}\n'.format(self.FitTol)

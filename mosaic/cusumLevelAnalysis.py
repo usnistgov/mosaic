@@ -195,7 +195,7 @@ class cusumLevelAnalysis(metaEventProcessor.metaEventProcessor):
 		fmtstr=""
 
 		fmtstr+='\tEvent processing settings:\n\t\t'
-		fmtstr+='Algorithm = {0}\n\n'.format(self.__class__.__name__)
+		fmtstr+='Algorithm = CUSUM+\n\n'
 		
 		fmtstr+='\t\tJump Size  = {0}\n'.format(self.StepSize)
 		fmtstr+='\t\tMin. State Length  = {0}\n'.format(self.MinLength)
