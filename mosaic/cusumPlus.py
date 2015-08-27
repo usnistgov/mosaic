@@ -56,7 +56,7 @@ class cusumPlus(metaEventProcessor.metaEventProcessor):
 
 				.. code-block:: javascript
 
-					"cusumLevelAnalysis": {
+					"cusumPlus": {
 						"StepSize": 3.0, 
 						"MinThreshold": 3.0,
 						"MaxThreshold": 10.0,
