@@ -203,7 +203,10 @@ class guiDataModel(dict):
 		self._updateSettings()
 
 	def EventProcessingAlgorithmLabel(self):
-		return dict([v,k] for k,v in self.eventProcessingAlgoKeys.items())[self["ProcessingAlgorithm"]]
+		try:
+			return dict([v,k] for k,v in self.eventProcessingAlgoKeys.items())[self["ProcessingAlgorithm"]]
+		except KeyError:
+			return self["ProcessingAlgorithm"]
 
 	def _updateSettings(self):
 		sd=self.jsonSettingsObj.settingsDict
