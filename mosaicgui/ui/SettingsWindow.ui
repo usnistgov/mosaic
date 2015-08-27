@@ -373,7 +373,10 @@
            <item>
             <widget class="QLabel" name="label_9">
              <property name="text">
-              <string>μ</string>
+              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;〈&lt;span style=&quot; font-style:italic;&quot;&gt;i&lt;/span&gt;&lt;span style=&quot; font-style:italic; vertical-align:sub;&quot;&gt;0&lt;/span&gt;〉&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+             </property>
+             <property name="textFormat">
+              <enum>Qt::RichText</enum>
              </property>
             </widget>
            </item>
@@ -416,7 +419,10 @@
            <item>
             <widget class="QLabel" name="label_10">
              <property name="text">
-              <string>σ</string>
+              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;〈&lt;span style=&quot; font-style:italic;&quot;&gt;i&lt;/span&gt;&lt;span style=&quot; font-style:italic; vertical-align:sub;&quot;&gt;0&lt;/span&gt;〉&lt;span style=&quot; vertical-align:sub;&quot;&gt;RMS&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+             </property>
+             <property name="textFormat">
+              <enum>Qt::RichText</enum>
              </property>
             </widget>
            </item>

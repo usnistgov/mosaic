@@ -12,7 +12,6 @@ import mosaic.sqlite3MDIO as sqlite
 import mosaicgui.autocompleteedit as autocomplete
 from mosaic.utilities.resource_path import resource_path, last_file_in_directory
 import mosaic.utilities.fit_funcs as fit_funcs
-import mosaic.stepResponseAnalysis as sra
 
 import matplotlib.ticker as ticker
 # from mosaicgui.trajview.trajviewui import Ui_Dialog
