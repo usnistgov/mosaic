@@ -747,12 +747,12 @@
        <widget class="QComboBox" name="processingAlgorithmComboBox">
         <item>
          <property name="text">
-          <string>ADEPT 2-state</string>
+          <string>ADEPT</string>
          </property>
         </item>
         <item>
          <property name="text">
-          <string>ADEPT</string>
+          <string>ADEPT 2-state</string>
          </property>
         </item>
         <item>
