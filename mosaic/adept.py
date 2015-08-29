@@ -31,7 +31,6 @@ import commonExceptions
 import metaEventProcessor
 import mosaic.utilities.util as util
 import mosaic.utilities.fit_funcs as fit_funcs
-import mosaic.cusumLevelAnalysis as cla
 import sys
 import math
 
@@ -220,7 +219,7 @@ class adept(metaEventProcessor.metaEventProcessor):
 		fmtstr=""
 
 		fmtstr+='\tEvent processing settings:\n\t\t'
-		fmtstr+='Algorithm = {0}\n\n'.format(self.__class__.__name__)
+		fmtstr+='Algorithm = ADEPT\n\n'
 		
 		fmtstr+='\t\tMax. iterations  = {0}\n'.format(self.FitIters)
 		fmtstr+='\t\tFit tolerance (rel. err in leastsq)  = {0}\n'.format(self.FitTol)
