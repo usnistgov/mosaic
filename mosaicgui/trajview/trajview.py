@@ -181,8 +181,8 @@ class TrajectoryWindow(QtGui.QDialog):
 				# display the mean current val and thr
 				self.ionicCurrentLabel.setText( 
 						"&#12296;<i>i<sub>0</sub></i>&#12297;={0:.1f} pA, \
-						&#12296;<i>i<sub>0</sub></i>&#12297;<sub>RMS</sub>={1:.1f} pA<br><br>\
-						Threshold={2:.1f} pA ({3:.2f}&#12296;<i>i<sub>0</sub></i>&#12297;<sub>RMS</sub>)".format(self.mu, self.sd, self.mu-self.thr*self.sd, self.thr) 
+						&#963;<sub>i<sub>0</sub></sub>={1:.1f} pA<br><br>\
+						Threshold={2:.1f} pA ({3:.2f}&#963;<sub>i<sub>0</sub></sub>)".format(self.mu, self.sd, self.mu-self.thr*self.sd, self.thr) 
 					)
 
 				# plot data
