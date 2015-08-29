@@ -271,20 +271,20 @@ class settingsview(QtGui.QMainWindow):
 				self.analysisDataModel["Cfb"]=cfb
 
 				# Show QDF specific widgets
-				self.qdfCfbLineEdit.show()				
-				self.qdfRfbLineEdit.show()
-				self.CfbLabel.show()
-				self.RfbLabel.show()
-				self.CfbUnitsLabel.show()
-				self.RfbUnitsLabel.show()
-			else:
+				# self.qdfCfbLineEdit.show()				
+				# self.qdfRfbLineEdit.show()
+				# self.CfbLabel.show()
+				# self.RfbLabel.show()
+				# self.CfbUnitsLabel.show()
+				# self.RfbUnitsLabel.show()
+			# else:
 				# Hide QDF specific widgets
-				self.qdfCfbLineEdit.hide()				
-				self.qdfRfbLineEdit.hide()
-				self.CfbLabel.hide()
-				self.RfbLabel.hide()
-				self.CfbUnitsLabel.hide()
-				self.RfbUnitsLabel.hide()
+				# self.qdfCfbLineEdit.hide()				
+				# self.qdfRfbLineEdit.hide()
+				# self.CfbLabel.hide()
+				# self.RfbLabel.hide()
+				# self.CfbUnitsLabel.hide()
+				# self.RfbUnitsLabel.hide()
 
 
 	def _setThreshold(self, mean, sd, threshold):
