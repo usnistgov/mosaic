@@ -246,6 +246,9 @@ class settingsview(QtGui.QMainWindow):
 		if self.trajViewerWindow:
 			self.trajViewerWindow.waveletLevelSpinBox.setValue(int(self.analysisDataModel["level"]))
 
+		# Hide Rfb and Cfb for QDF files
+		[control.hide() for control in [self.RfbLabel, self.qdfRfbLineEdit, self.RfbUnitsLabel, self.CfbLabel, self.qdfCfbLineEdit, self.CfbUnitsLabel]]
+
 		self.updateDialogs=True
 
 	def _loadEBSState(self):
