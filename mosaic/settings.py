@@ -57,7 +57,15 @@ class settings:
 		self.parseSettingsString( settingstr )
 
 	def parseSettingsString(self, settingstring):
-		self.settingsDict=json.loads( settingstring )
+		self.settingsDict=json.loads( self.migrateSettings(settingstring) )
+
+	def migrateSettings(self, settingstring):
+		s=settingstring
+
+		for setting in __legacy_settings__.keys():
+			s=s.replace(setting, __legacy_settings__[setting])
+
+		return s
 
 	def getSettings(self, section):
 		"""
@@ -150,3 +158,15 @@ __settings__="""
 		}
 	}
 """
+
+__legacy_settings__={
+	"stepResponseAnalysis" : "adept2State",
+	"multiStateAnalysis" : "adept",
+	"cusumLevelAnalysis" : "cusumPlus"
+}
+
+def main():
+	s=settings(".")
+
+if __name__ == '__main__':
+	main()
