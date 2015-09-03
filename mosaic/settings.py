@@ -117,10 +117,10 @@ __settings__="""
             "UnlinkRCConst" 		: "1"
 	     },
 	     "cusumPlus": {
-			"StepSize": 3.0, 
-			"MinThreshold": 3.0,
-			"MaxThreshold": 10.0,
-			"MinLength" : 10
+			"StepSize"				: 3.0, 
+			"MinThreshold"			: 3.0,
+			"MaxThreshold"			: 10.0,
+			"MinLength" 			: 10
     	}, 
 		"besselLowpassFilter" : {
 			"filterOrder"			: "6",
@@ -160,13 +160,14 @@ __settings__="""
 """
 
 __legacy_settings__={
-	"stepResponseAnalysis" : "adept2State",
-	"multiStateAnalysis" : "adept",
-	"cusumLevelAnalysis" : "cusumPlus"
+	"stepResponseAnalysis" 	: "adept2State",
+	"multiStateAnalysis" 	: "adept",
+	"cusumLevelAnalysis" 	: "cusumPlus"
 }
 
-def main():
-	s=settings(".")
 
 if __name__ == '__main__':
-	main()
+	import pprint
+
+	s=settings("data/")
+	pprint.pprint( s.settingsDict )
