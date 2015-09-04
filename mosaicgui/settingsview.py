@@ -223,10 +223,10 @@ class settingsview(QtGui.QMainWindow):
 			self.parallelCoresLabel.hide()	
 
 		procidx= {}
-		for v in self.analysisDataModel.eventProcessingAlgoKeys.values():
+		for v in self.analysisDataModel.eventProcessingAlgoKeys.keys():
 			procidx[v]=self.processingAlgorithmComboBox.findText(v)
 		
-		self.processingAlgorithmComboBox.setCurrentIndex( procidx[self.analysisDataModel["ProcessingAlgorithm"]] )
+		self.processingAlgorithmComboBox.setCurrentIndex( procidx[self.analysisDataModel.EventProcessingAlgorithmLabel()] )
 
 		# If an advanced mode dialog exists, update its settings
 		if self.advancedSettingsDialog:

@@ -1,11 +1,12 @@
 """
-	Analyze a multi-step event with the CUSUM algorithm
+	Analyze a multi-step event with the CUSUM+ algorithm
 
 	:Created:	2/10/2015
  	:Author: 	Kyle Briggs <kbrig035@uottawa.ca>
 	:License:	See LICENSE.TXT
 	:ChangeLog:             
-	.. line-block::         
+	.. line-block::      
+				8/24/15 	AB 	Rename algorithm to CUSUM+   
 				3/20/15 	AB 	Added a new metadata column (mdStateResTime) that saves the residence time of each state to the database.
 				3/18/15		KB	Implemented rise time skipping
 				3/17/15		KB	Implemented adaptive threshold
@@ -37,17 +38,17 @@ class datblock:
 		self.sd=util.sd(dat)
 
 
-class cusumLevelAnalysis(metaEventProcessor.metaEventProcessor):
+class cusumPlus(metaEventProcessor.metaEventProcessor):
 	"""
-		Implements the CUSUM algorithm (used by OpenNanopore for example) in MOSAIC. This approach sacrifices including system information in the analysis in favor of much faster fitting of single- and multi-level events.
+		Implements a modified version of the CUSUM algorithm (used by OpenNanopore for example) in MOSAIC. This approach sacrifices including system information in the analysis in favor of much faster fitting of single- and multi-level events.
 
-		CUSUM will detect jumps that are smaller than `StepSize`, but they will have to be sustained longer. Threshold can be thought of, very roughly, as proportional to the length of time a subevent must be sustained for it to be detected. The algorithm will adjust the actual threshold used on a per-event basis in order to minimize false positive detection of current jumps This algorithm is based on code used in OpenNanopore, which you can read about here: http://pubs.rsc.org/en/Content/ArticleLanding/2012/NR/c2nr30951c#!divAbstract
+		CUSUM+ will detect jumps that are smaller than `StepSize`, but they will have to be sustained longer. Threshold can be thought of, very roughly, as proportional to the length of time a subevent must be sustained for it to be detected. The algorithm will adjust the actual threshold used on a per-event basis in order to minimize false positive detection of current jumps This algorithm is based on code used in OpenNanopore, which you can read about here: http://pubs.rsc.org/en/Content/ArticleLanding/2012/NR/c2nr30951c#!divAbstract
 
 
-                Some known issues with CUSUM:
+                Some known issues with CUSUM+:
 
-                1. If the duration of a sub-event is shorter than than the MinLength parameter, CUSUM will be unable to detect it. CUSUM will not detect events within MinLength of a previous event.
-                2. CUSUM assumes an instantaneous transition between current states. As a result, if the RC rise time of the system is large, CUSUM can trigger and detect intermediate states during the change time. This can be avoided by choosing a number of samples to skip equal to about 2-5RC.
+                1. If the duration of a sub-event is shorter than than the MinLength parameter, CUSUM+ will be unable to detect it. CUSUM+ will not detect events within MinLength of a previous event.
+                2. CUSUM assumes an instantaneous transition between current states. As a result, if the RC rise time of the system is large, CUSUM+ can trigger and detect intermediate states during the change time. This can be avoided by choosing a number of samples to skip equal to about 2-5RC.
                 3. As a consequence of using a statistical t-test, CUSUM can have false positives. The algorithm has an adaptive threshold that tries to minimize the chances of this happening while maintaining good sensitivity (expected number of false positives within an event is less than 1).
 
                 To use it requires four settings:
@@ -55,7 +56,7 @@ class cusumLevelAnalysis(metaEventProcessor.metaEventProcessor):
 
 				.. code-block:: javascript
 
-					"cusumLevelAnalysis": {
+					"cusumPlus": {
 						"StepSize": 3.0, 
 						"MinThreshold": 3.0,
 						"MaxThreshold": 10.0,
@@ -118,7 +119,7 @@ class cusumLevelAnalysis(metaEventProcessor.metaEventProcessor):
 			This function implements the core logic to analyze one single step-event.
 		"""
 		try:
-			# Run CUSUM to detect changes in level
+			# Run CUSUM+ to detect changes in level
 			self.__FitEvent()
 		except:
 			raise
@@ -195,12 +196,12 @@ class cusumLevelAnalysis(metaEventProcessor.metaEventProcessor):
 		fmtstr=""
 
 		fmtstr+='\tEvent processing settings:\n\t\t'
-		fmtstr+='Algorithm = {0}\n\n'.format(self.__class__.__name__)
+		fmtstr+='Algorithm = CUSUM+\n\n'
 		
 		fmtstr+='\t\tJump Size  = {0}\n'.format(self.StepSize)
 		fmtstr+='\t\tMin. State Length  = {0}\n'.format(self.MinLength)
-		fmtstr+='\t\tCUSUM Min. Threshold  = {0}\n'.format(self.MinThreshold)
-		fmtstr+='\t\tCUSUM Max. Threshold  = {0}\n'.format(self.MaxThreshold)
+		fmtstr+='\t\tCUSUM+ Min. Threshold  = {0}\n'.format(self.MinThreshold)
+		fmtstr+='\t\tCUSUM+ Max. Threshold  = {0}\n'.format(self.MaxThreshold)
 
 		return fmtstr
 
@@ -239,7 +240,7 @@ class cusumLevelAnalysis(metaEventProcessor.metaEventProcessor):
 			# control numpy error reporting
 			np.seterr(invalid='ignore', over='ignore', under='ignore')
 
-                        #set up variables for the main CUSUM loop
+                        #set up variables for the main CUSUM+ loop
 			
 			logp = 0 #instantaneous log-likelihood for positive jumps
 			logn = 0 #instantaneous log-likelihood for negative jumps

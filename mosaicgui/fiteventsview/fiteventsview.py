@@ -69,8 +69,8 @@ class FitEventWindow(QtGui.QDialog):
 			self.analysisAlgorithm=str(self.queryDatabase.readAnalysisInfo()[3])
 		except:
 			# If the database doesn't have information on the alogirthm type, 
-			# default to stepResponseAnalysis
-			self.analysisAlgorithm="stepResponseAnalysis"
+			# default to adept2State
+			self.analysisAlgorithm="adept2State"
 
 		# Generate the query string based on the algorithm in the database
 		self.queryString=self.queryStringDict[self.analysisAlgorithm]
@@ -254,31 +254,31 @@ class FitEventWindow(QtGui.QDialog):
 		}
 
 		self.queryStringDict={
-			"stepResponseAnalysis" 	: "select ProcessingStatus, TimeSeries, RCConstant1, RCConstant2, EventStart, EventEnd, BlockedCurrent, OpenChCurrent from metadata limit " + str(self.viewerLimit),
-			"multiStateAnalysis" 	: "select ProcessingStatus, TimeSeries, RCConstant, EventDelay, CurrentStep, OpenChCurrent from metadata limit " + str(self.viewerLimit),
-			"cusumLevelAnalysis" 	: "select ProcessingStatus, TimeSeries, EventDelay, CurrentStep, OpenChCurrent from metadata limit " + str(self.viewerLimit)
+			"adept2State" 	: "select ProcessingStatus, TimeSeries, RCConstant1, RCConstant2, EventStart, EventEnd, BlockedCurrent, OpenChCurrent from metadata limit " + str(self.viewerLimit),
+			"adept" 	: "select ProcessingStatus, TimeSeries, RCConstant, EventDelay, CurrentStep, OpenChCurrent from metadata limit " + str(self.viewerLimit),
+			"cusumPlus" 	: "select ProcessingStatus, TimeSeries, EventDelay, CurrentStep, OpenChCurrent from metadata limit " + str(self.viewerLimit)
 		}
 
 		self.fitFuncHndDict={
-			"stepResponseAnalysis" 	: fit_funcs.stepResponseFunc,
-			"multiStateAnalysis" 	: fit_funcs.multiStateFunc
+			"adept2State" 	: fit_funcs.stepResponseFunc,
+			"adept" 	: fit_funcs.multiStateFunc
 		}
 
 		self.fitFuncArgsDict={
-			"stepResponseAnalysis" 	: "[xfit, q[2], q[3], q[4], q[5], abs(q[7]-q[6]), q[7]]",
-			"multiStateAnalysis" 	: "[xfit, q[2], q[3], q[4], q[5], len(q[3])]"
+			"adept2State" 	: "[xfit, q[2], q[3], q[4], q[5], abs(q[7]-q[6]), q[7]]",
+			"adept" 	: "[xfit, q[2], q[3], q[4], q[5], len(q[3])]"
 		}
 
 		self.stepFuncHndDict={
-			"stepResponseAnalysis" 	: fit_funcs.multiStateStepFunc,
-			"multiStateAnalysis" 	: fit_funcs.multiStateStepFunc,
-			"cusumLevelAnalysis"	: fit_funcs.multiStateStepFunc
+			"adept2State" 	: fit_funcs.multiStateStepFunc,
+			"adept" 	: fit_funcs.multiStateStepFunc,
+			"cusumPlus"	: fit_funcs.multiStateStepFunc
 		}
 
 		self.stepFuncArgsDict={
-			"stepResponseAnalysis" 	: "[xstep, [q[4], q[5]], [-abs(q[7]-q[6]), abs(q[7]-q[6])], q[7], 2]",
-			"multiStateAnalysis" 	: "[xstep, q[3], q[4], q[5], len(q[3])]",
-			"cusumLevelAnalysis" 	: "[xstep, q[2], q[3], q[4], len(q[2])]"
+			"adept2State" 	: "[xstep, [q[4], q[5]], [-abs(q[7]-q[6]), abs(q[7]-q[6])], q[7], 2]",
+			"adept" 	: "[xstep, q[3], q[4], q[5], len(q[3])]",
+			"cusumPlus" 	: "[xstep, q[2], q[3], q[4], len(q[2])]"
 		}
 
 

@@ -6,6 +6,7 @@
 	:License:	See LICENSE.TXT
 	:ChangeLog:
 	.. line-block::
+		8/24/15 	AB 	Rename algorithm to ADEPT 2 State.
 		7/23/15		JF  Added a new test to reject RC Constants <=0
 		6/24/15 	AB 	Added an option to unlink the RC constants in stepResponseAnalysis.
 		11/7/14		AB 	Error codes describing event rejection are now more specific.
@@ -41,7 +42,7 @@ class datblock:
 		self.sd=util.sd(dat)
 
 
-class stepResponseAnalysis(metaEventProcessor.metaEventProcessor):
+class adept2State(metaEventProcessor.metaEventProcessor):
 	""" 
 		Analyze an event that is characteristic of PEG blockades. This method includes system 
 		information in the analysis, specifically the filtering effects (throught the RC constant)
@@ -180,7 +181,7 @@ class stepResponseAnalysis(metaEventProcessor.metaEventProcessor):
 		fmtstr=""
 
 		fmtstr+='\tEvent processing settings:\n\t\t'
-		fmtstr+='Algorithm = {0}\n\n'.format(self.__class__.__name__)
+		fmtstr+='Algorithm = ADEPT 2-State\n\n'
 		
 		fmtstr+='\t\tMax. iterations  = {0}\n'.format(self.FitIters)
 		fmtstr+='\t\tFit tolerance (rel. err in leastsq)  = {0}\n'.format(self.FitTol)

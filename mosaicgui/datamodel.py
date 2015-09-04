@@ -5,6 +5,7 @@
 	:License:	See LICENSE.TXT
 	:ChangeLog:
 		.. line-block::
+			8/24/15 	AB 	Updated algorithm names to ADEPT and CUSUM+
 			6/24/15 	AB 	Added an option to unlink the RC constants in stepResponseAnalysis.
 			3/20/15		AB 	Added MaxEventLength to multiStateAnalysis settings
 			3/6/15 		JF 	Added MinStateLength to multiStateAnalysis setup model
@@ -19,9 +20,9 @@ import mosaic.sqlite3MDIO
 import mosaic.SingleChannelAnalysis
 import mosaic.eventSegment
 
-import mosaic.stepResponseAnalysis
-import mosaic.multiStateAnalysis
-import mosaic.cusumLevelAnalysis
+import mosaic.adept2State
+import mosaic.adept
+import mosaic.cusumPlus
 
 import mosaic.qdfTrajIO
 import mosaic.abfTrajIO
@@ -62,7 +63,6 @@ class guiDataModel(dict):
 		if key == "sdOpenCurr":
 			if dat != -1: dat=abs(self.keyTypesDict[key](val))
 
-
 		try:
 			dict.__setitem__(self, key, self.keyTypesDict[key](dat) )
 		except KeyError:
@@ -91,15 +91,15 @@ class guiDataModel(dict):
 			settingsdict[partAlgo]={}
 			partKeys=self.eventSegmentKeys
 
-		if procAlgo=="stepResponseAnalysis":
+		if procAlgo=="adept2State":
 			settingsdict[procAlgo]={}
-			procKeys=self.stepResponseAnalysisKeys
-		elif procAlgo=="multiStateAnalysis":
+			procKeys=self.adept2StateKeys
+		elif procAlgo=="adept":
 			settingsdict[procAlgo]={}
-			procKeys=self.multiStateAnalysisKeys
-		elif procAlgo=="cusumLevelAnalysis":
+			procKeys=self.adeptKeys
+		elif procAlgo=="cusumPlus":
 			settingsdict[procAlgo]={}
-			procKeys=self.cusumLevelAnalysisKeys
+			procKeys=self.cusumPlusKeys
 
 		# Add a section for data files
 		settingsdict[self.dataTypeKeys[self["DataFilesType"]]]=self.GenerateDataFilesView()
@@ -162,7 +162,7 @@ class guiDataModel(dict):
 				self.analysisSetupKeys[self["DataFilesType"]], 	#self.GenerateDataFilesObject(dataFilterAlgo),
 				filterHnd,
 				self.analysisSetupKeys[str(eventPartitionAlgo)],
-				self.analysisSetupKeys[str(eventProcessingAlgo)]
+				self.analysisSetupKeys[str(self.eventProcessingAlgoKeys[eventProcessingAlgo])]
 			)
 
 	def GenerateDataFilesObject(self, dataFilterAlgo):
@@ -201,6 +201,12 @@ class guiDataModel(dict):
 		self.jsonSettingsObj.parseSettingsString(settingsstr)
 
 		self._updateSettings()
+
+	def EventProcessingAlgorithmLabel(self):
+		try:
+			return dict([v,k] for k,v in self.eventProcessingAlgoKeys.items())[self["ProcessingAlgorithm"]]
+		except KeyError:
+			return self["ProcessingAlgorithm"]
 
 	def _updateSettings(self):
 		sd=self.jsonSettingsObj.settingsDict
@@ -284,13 +290,13 @@ class guiDataModel(dict):
 								"parallelProc"			: int,
 								"reserveNCPU" 			: int
 							}
-		self.stepResponseAnalysisKeys={
+		self.adept2StateKeys={
 								"FitTol" 				: float,
 								"FitIters" 				: int,
 								"BlockRejectRatio" 		: float,
 								"UnlinkRCConst" 			: bool
 							}
-		self.multiStateAnalysisKeys={
+		self.adeptKeys={
 								"FitTol" 				: float,
 								"FitIters" 				: int,
 								"BlockRejectRatio" 		: float,
@@ -299,7 +305,7 @@ class guiDataModel(dict):
 								"MaxEventLength" 		: int,
 								"UnlinkRCConst"			: bool
 							}
-		self.cusumLevelAnalysisKeys={
+		self.cusumPlusKeys={
 								"StepSize"				: float, 
 								"MinThreshold"			: float,
 								"MaxThreshold"			: float,
@@ -342,9 +348,9 @@ class guiDataModel(dict):
 							}
 
 		self.eventProcessingAlgoKeys={
-								"stepResponseAnalysis" 	: "stepResponseAnalysis",
-								"multiStateAnalysis"	: "multiStateAnalysis",
-								"cusumLevelAnalysis"	: "cusumLevelAnalysis"
+								"ADEPT 2-state" 	: "adept2State",
+								"ADEPT"	: "adept",
+								"CUSUM+"	: "cusumPlus"
 							}
 
 		self.filterAlgoKeys={
@@ -361,9 +367,9 @@ class guiDataModel(dict):
 								"BIN" 					: mosaic.binTrajIO.binTrajIO,
 								"SingleChannelAnalysis" : mosaic.SingleChannelAnalysis.SingleChannelAnalysis,
 								"CurrentThreshold" 		: mosaic.eventSegment.eventSegment,
-								"stepResponseAnalysis" 	: mosaic.stepResponseAnalysis.stepResponseAnalysis,
-								"multiStateAnalysis"	: mosaic.multiStateAnalysis.multiStateAnalysis,
-								"cusumLevelAnalysis"	: mosaic.cusumLevelAnalysis.cusumLevelAnalysis,
+								"adept2State" 	: mosaic.adept2State.adept2State,
+								"adept"	: mosaic.adept.adept,
+								"cusumPlus"	: mosaic.cusumPlus.cusumPlus,
 								"waveletDenoiseFilter"	: mosaic.waveletDenoiseFilter.waveletDenoiseFilter
 							}
 
@@ -380,7 +386,7 @@ if __name__ == "__main__":
 	# print q.popdata(10)
 
 
-	print g.GenerateSettingsView("CurrentThreshold", "stepResponseAnalysis", None)
+	print g.GenerateSettingsView("CurrentThreshold", "adept2State", None)
 	# print g.GenerateTrajView()
 	# for k,v in g.iteritems():
 	# 	print k, "=", v

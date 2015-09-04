@@ -6,6 +6,7 @@
 	:License:	See LICENSE.TXT
 	:ChangeLog:
 	.. line-block::
+		8/24/15 	AB 	Updated algorithm names.
 		6/24/15 	AB 	Added an option to unlink the RC constants in stepResponseAnalysis.
 		3/20/15 	AB 	Added MaxEventLength to multiStateAnalysis settings
 		3/6/15		JF	Corrected formatting on cusumLevelAnalysis and multiStateAnalysis dictionary file
@@ -56,7 +57,15 @@ class settings:
 		self.parseSettingsString( settingstr )
 
 	def parseSettingsString(self, settingstring):
-		self.settingsDict=json.loads( settingstring )
+		self.settingsDict=json.loads( self.migrateSettings(settingstring) )
+
+	def migrateSettings(self, settingstring):
+		s=settingstring
+
+		for setting in __legacy_settings__.keys():
+			s=s.replace(setting, __legacy_settings__[setting])
+
+		return s
 
 	def getSettings(self, section):
 		"""
@@ -94,12 +103,12 @@ __settings__="""
 			"minEvntTime" 			: "10.e-6",
 			"minDataPad" 			: "75"
 		},
-		"stepResponseAnalysis" : {
+		"adept2State" : {
 			"FitTol"				: "1.e-7",
 			"FitIters"				: "50000",
 			"UnlinkRCConst" 		: "1"
 		},
-		"multiStateAnalysis" : {
+		"adept" : {
             "FitTol"				: "1.e-7",
             "FitIters"				: "50000",
             "InitThreshold"			: "2.5",
@@ -107,11 +116,11 @@ __settings__="""
             "MaxEventLength" 		: "10000",
             "UnlinkRCConst" 		: "1"
 	     },
-	     "cusumLevelAnalysis": {
-			"StepSize": 3.0, 
-			"MinThreshold": 3.0,
-			"MaxThreshold": 10.0,
-			"MinLength" : 10
+	     "cusumPlus": {
+			"StepSize"				: 3.0, 
+			"MinThreshold"			: 3.0,
+			"MaxThreshold"			: 10.0,
+			"MinLength" 			: 10
     	}, 
 		"besselLowpassFilter" : {
 			"filterOrder"			: "6",
@@ -149,3 +158,16 @@ __settings__="""
 		}
 	}
 """
+
+__legacy_settings__={
+	"stepResponseAnalysis" 	: "adept2State",
+	"multiStateAnalysis" 	: "adept",
+	"cusumLevelAnalysis" 	: "cusumPlus"
+}
+
+
+if __name__ == '__main__':
+	import pprint
+
+	s=settings("data/")
+	pprint.pprint( s.settingsDict )
