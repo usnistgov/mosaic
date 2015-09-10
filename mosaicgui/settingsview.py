@@ -25,6 +25,7 @@ import mosaicgui.fiteventsview.fiteventsview
 import mosaicgui.csvexportview.csvexportview
 import mosaicgui.aboutdialog.aboutdialog
 import mosaicgui.datamodel
+import mosaicgui.datapathedit
 
 class settingsview(QtGui.QMainWindow):
 	def __init__(self, parent = None):
