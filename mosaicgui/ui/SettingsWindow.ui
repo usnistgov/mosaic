@@ -56,7 +56,7 @@
           </widget>
          </item>
          <item>
-          <widget class="QLineEdit" name="datPathLineEdit">
+          <widget class="datapathedit" name="datPathLineEdit">
            <property name="focusPolicy">
             <enum>Qt::ClickFocus</enum>
            </property>
@@ -1086,6 +1086,13 @@
    </property>
   </action>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>datapathedit</class>
+   <extends>QLineEdit</extends>
+   <header>mosaicgui.datapathedit</header>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections>
   <connection>

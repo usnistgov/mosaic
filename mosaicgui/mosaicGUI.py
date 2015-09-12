@@ -48,7 +48,7 @@ class qtAnalysisGUI(mosaicgui.settingsview.settingsview):
 		QtCore.QObject.connect(self.actionExport_Database_to_CSV, QtCore.SIGNAL('triggered()'), self.OnExportDB)
 		QtCore.QObject.connect(self.actionAbout_MOSAIC, QtCore.SIGNAL('triggered()'), self.OnAboutApp)
 
-		
+		QtCore.QObject.connect(self.datPathLineEdit, QtCore.SIGNAL('textChanged(const QString &)'), self.OnDBFileDropped)
 		
 		
 		
@@ -249,6 +249,9 @@ class qtAnalysisGUI(mosaicgui.settingsview.settingsview):
 
 		self.ShowTrajectory=True
 		
+	def OnDBFileDropped(self, text):
+		pass
+
 	def OnExportDB(self):
 		self.exportView.show()
 
