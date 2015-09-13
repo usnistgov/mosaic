@@ -72,23 +72,35 @@ class FitEventWindow(QtGui.QDialog):
 			# default to adept2State
 			self.analysisAlgorithm="adept2State"
 
-		# Generate the query string based on the algorithm in the database
-		self.queryString=self.queryStringDict[self.analysisAlgorithm]
-
-		# Setup the fit function based on the algorithm
+		
 		try:
+			# Generate the query string based on the algorithm in the database
+			self.queryString=self.queryStringDict[self.analysisAlgorithm]
+
+			# Setup the fit function based on the algorithm
 			self.fitFuncHnd=self.fitFuncHndDict[self.analysisAlgorithm]
 			self.fitFuncArgs=self.fitFuncArgsDict[self.analysisAlgorithm]
-		except KeyError:
-			self.fitFuncHnd=None
-			self.fitFuncArgs="[]"
 
-		try:
 			self.stepFuncHnd=self.stepFuncHndDict[self.analysisAlgorithm]
 			self.stepFuncArgs=self.stepFuncArgsDict[self.analysisAlgorithm]
 		except KeyError:
-			self.stepFuncHnd=None
-			self.stepFuncArgs="[]"
+			from mosaic.settings import __legacy_settings__
+		
+			legacyAlgo=__legacy_settings__[self.analysisAlgorithm]
+		
+			self.queryString=self.queryStringDict[legacyAlgo]
+			
+			self.fitFuncHnd=self.fitFuncHndDict[legacyAlgo]
+			self.fitFuncArgs=self.fitFuncArgsDict[legacyAlgo]
+
+			self.stepFuncHnd=self.stepFuncHndDict[legacyAlgo]
+			self.stepFuncArgs=self.stepFuncArgsDict[legacyAlgo]
+
+			# self.fitFuncHnd=None
+			# self.fitFuncArgs="[]"
+
+			# self.stepFuncHnd=None
+			# self.stepFuncArgs="[]"
 
 		self.FskHz=float(FskHz)
 		# print self.FskHz
@@ -261,12 +273,14 @@ class FitEventWindow(QtGui.QDialog):
 
 		self.fitFuncHndDict={
 			"adept2State" 	: fit_funcs.stepResponseFunc,
-			"adept" 	: fit_funcs.multiStateFunc
+			"adept" 	: fit_funcs.multiStateFunc,
+			"cusumPlus" 	: None
 		}
 
 		self.fitFuncArgsDict={
 			"adept2State" 	: "[xfit, q[2], q[3], q[4], q[5], abs(q[7]-q[6]), q[7]]",
-			"adept" 	: "[xfit, q[2], q[3], q[4], q[5], len(q[3])]"
+			"adept" 	: "[xfit, q[2], q[3], q[4], q[5], len(q[3])]",
+			"cusumPlus" 	: "[]"
 		}
 
 		self.stepFuncHndDict={
@@ -283,8 +297,8 @@ class FitEventWindow(QtGui.QDialog):
 
 
 if __name__ == '__main__':
-	# dbfile=resource_path('eventMD-PEG29-Reference.sqlite')
-	dbfile=resource_path('eventMD-tempMSA.sqlite')
+	dbfile=resource_path('eventMD-PEG28-cusumLevelAnalysis.sqlite')
+	# dbfile=resource_path('eventMD-tempMSA.sqlite')
 
 	app = QtGui.QApplication(sys.argv)
 	dmw = FitEventWindow()
