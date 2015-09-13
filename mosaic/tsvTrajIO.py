@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 """
 	An implementation of metaTrajIO that reads tab separated valued (TSV) files
 
@@ -81,7 +82,14 @@ class tsvTrajIO(metaTrajIO.metaTrajIO):
 		"""
 		return self.__readtsv(fname)
 
-	def _formatsettings(self):
+	def _formatsettings(self, logObject):
+		"""
+			Populate `logObject` with settings strings for display
+
+			:Parameters:
+
+				- `logObject` : 	a object that holds logging text (see :class:`~mosaic.utilities.mosaicLog.mosaicLog`)				
+		"""
 		return ""
 
 	def __readtsv(self, fname):

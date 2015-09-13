@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 """ 
 	A class that extends metaEventProcessing to implement the step response algorithm from :cite:`Balijepalli:2014`
 
@@ -22,6 +23,7 @@
 import commonExceptions
 import metaEventProcessor
 import mosaic.utilities.util as util
+import mosaic.utilities.mosaicLog as log
 import mosaic.utilities.fit_funcs as fit_funcs
 import sys
 import math
@@ -178,17 +180,17 @@ class adept2State(metaEventProcessor.metaEventProcessor):
 		""" 
 			Return a formatted string of settings for display
 		"""
-		fmtstr=""
+		logObj=log.mosaicLog()
 
-		fmtstr+='\tEvent processing settings:\n\t\t'
-		fmtstr+='Algorithm = ADEPT 2-State\n\n'
+
+		logObj.addLogHeader( 'Event processing settings:' )
+		logObj.addLogText( 'Algorithm = ADEPT 2-State' )
 		
-		fmtstr+='\t\tMax. iterations  = {0}\n'.format(self.FitIters)
-		fmtstr+='\t\tFit tolerance (rel. err in leastsq)  = {0}\n'.format(self.FitTol)
-		fmtstr+='\t\tUnlink RC constants = {0}\n\n'.format(bool(self.UnlinkRCConst))
+		logObj.addLogText( 'Max. iterations  = {0}'.format(self.FitIters) )
+		logObj.addLogText( 'Fit tolerance (rel. err in leastsq)  = {0}'.format(self.FitTol) )
+		logObj.addLogText( 'Unlink RC constants = {0}'.format(bool(self.UnlinkRCConst)) )
 
-
-		return fmtstr
+		return str(logObj)
 
 	###########################################################################
 	# Local functions

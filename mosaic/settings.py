@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 """
 	Load analysis settings from a JSON file. 
 

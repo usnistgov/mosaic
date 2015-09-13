@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 """
 	Partition a trajectory into individual events and pass each event 
 	to an implementation of eventProcessor
@@ -29,6 +30,7 @@
 		7/17/12		AB	Initial version
 """
 import mosaic.utilities.util as util
+import mosaic.utilities.mosaicLog as log
 from  collections import deque
 
 import metaEventPartition
@@ -90,17 +92,19 @@ class eventSegment(metaEventPartition.metaEventPartition):
 		"""
 			Return a formatted string of settings for display in the output log.
 		"""
-		fmtstr=""
+		logObj=log.mosaicLog()
 
-		fmtstr+='\tEvent segment settings:\n\t\t'
-		fmtstr+='Window size for block operations = {0} s\n'.format(self.blockSizeSec)
-		fmtstr+='\t\tEvent padding = {0} points\n'.format(self.eventPad)
-		fmtstr+='\t\tMin. event rejection length = {0} points\n'.format(self.minEventLength)
-		fmtstr+='\t\tEvent trigger threshold = {0} * SD\n\n'.format(self.eventThreshold)
-		fmtstr+='\t\tDrift error threshold = {0} * SD\n'.format(self.driftThreshold)
-		fmtstr+='\t\tDrift rate error threshold = {0} pA/s\n'.format(self.maxDriftRate)
 
-		return fmtstr	
+		logObj.addLogHeader( 'Event segment settings:' )
+		logObj.addLogText( 'Window size for block operations = {0} s'.format(self.blockSizeSec) )
+		logObj.addLogText( 'Event padding = {0} points'.format(self.eventPad) )
+		logObj.addLogText( 'Min. event rejection length = {0} points'.format(self.minEventLength) )
+		logObj.addLogText( 'Event trigger threshold = {0} * SD'.format(self.eventThreshold) )
+		logObj.addLogText( 'Drift error threshold = {0} * SD'.format(self.driftThreshold) )
+		logObj.addLogText( 'tDrift rate error threshold = {0} pA/s'.format(self.maxDriftRate) )
+
+	
+		return str(logObj)
 
 	def formatstats(self):
 		"""

@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 """
 	Implementation of a wavelet based denoising filter
 
@@ -7,15 +8,17 @@
 	:Author: Arvind Balijepalli
 	:ChangeLog:
 	.. line-block::
+		9/13/15 	AB 	Updated logging to use mosaicLog class
 		8/31/14		AB	Initial version
 """
 import numpy as np 
 import scipy.signal as sig
 import pywt
 
-import metaIOFilter
+import mosaic.metaIOFilter
+import mosaic.utilities.mosaicLog as log
 
-class waveletDenoiseFilter(metaIOFilter.metaIOFilter):
+class waveletDenoiseFilter(mosaic.metaIOFilter.metaIOFilter):
 	"""
 		:Keyword Args:
 			In addition to metaIOFilter args,
@@ -128,17 +131,18 @@ class waveletDenoiseFilter(metaIOFilter.metaIOFilter):
 		"""
 			Return a formatted string of filter settings
 		"""
-		fmtstr=""
+		logObj=log.mosaicLog()
 
-		fmtstr+='\tFilter settings: \n'
-		fmtstr+='\t\tFilter type = {0}\n'.format(self.__class__.__name__)
-		fmtstr+='\t\tWavelet type = {0}\n'.format(self.waveletType)
-		fmtstr+='\t\tWavelet level = {0}\n'.format(self.waveletLevel)
-		fmtstr+='\t\tWavelet threshold type = {0}\n'.format(self.waveletThresholdType)
-		fmtstr+='\t\tWavelet threshold sub-type = {0}\n'.format(self.waveletThresholdSubType)
-		fmtstr+='\t\tDecimation = {0}\n'.format(self.decimate)
+		logObj.addLogHeader( 'Filter settings:' )
+		
+		logObj.addLogText( 'Filter type = {0}'.format(self.__class__.__name__) )
+		logObj.addLogText( 'Wavelet type = {0}'.format(self.waveletType) )
+		logObj.addLogText( 'Wavelet level = {0}'.format(self.waveletLevel) )
+		logObj.addLogText( 'Wavelet threshold type = {0}'.format(self.waveletThresholdType) )
+		logObj.addLogText( 'Wavelet threshold sub-type = {0}'.format(self.waveletThresholdSubType) )
+		logObj.addLogText( 'Decimation = {0}'.format(self.decimate) )
 
-		return fmtstr
+		return str(logObj)
 
 if __name__ == '__main__':
 	import csv

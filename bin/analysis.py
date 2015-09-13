@@ -28,6 +28,14 @@ mosaic.SingleChannelAnalysis.SingleChannelAnalysis(
 			qdfTrajIO, 
 			None,
 			es.eventSegment,
+			adept.adept
+		).Run()
+
+mosaic.SingleChannelAnalysis.SingleChannelAnalysis(
+			'data/',
+			qdfTrajIO, 
+			None,
+			es.eventSegment,
 			adept2State.adept2State
 		).Run()
 

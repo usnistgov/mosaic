@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 """
 	Analyze a multi-step event 
 
@@ -30,6 +31,7 @@
 import commonExceptions
 import metaEventProcessor
 import mosaic.utilities.util as util
+import mosaic.utilities.mosaicLog as log
 import mosaic.utilities.fit_funcs as fit_funcs
 import sys
 import math
@@ -216,17 +218,19 @@ class adept(metaEventProcessor.metaEventProcessor):
 		"""
 			Return a formatted string of settings for display
 		"""
-		fmtstr=""
+		logObj=log.mosaicLog()
 
-		fmtstr+='\tEvent processing settings:\n\t\t'
-		fmtstr+='Algorithm = ADEPT\n\n'
+
+		logObj.addLogHeader( 'Event processing settings:' )
+		logObj.addLogText( 'Algorithm = ADEPT' )
 		
-		fmtstr+='\t\tMax. iterations  = {0}\n'.format(self.FitIters)
-		fmtstr+='\t\tFit tolerance (rel. err in leastsq)  = {0}\n'.format(self.FitTol)
-		fmtstr+='\t\tInitial partition threshold  = {0}\n'.format(self.InitThreshold)
-		fmtstr+='\t\tMin. State Length = {0}\n\n'.format(self.MinStateLength)
+		logObj.addLogText( 'Max. iterations  = {0}'.format(self.FitIters) )
+		logObj.addLogText( 'Fit tolerance (rel. err in leastsq)  = {0}'.format(self.FitTol) )
+		logObj.addLogText( 'Unlink RC constants = {0}'.format(bool(self.UnlinkRCConst)) )
+		logObj.addLogText( 'Initial partition threshold  = {0}\n'.format(self.InitThreshold) )
+		logObj.addLogText( 'Min. State Length = {0}\n\n'.format(self.MinStateLength) )
 
-		return fmtstr
+		return str(logObj)
 
 	###########################################################################
 	# Local functions

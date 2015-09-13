@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 """
 	Analyze a multi-step event with the CUSUM+ algorithm
 
@@ -16,6 +17,7 @@
 import commonExceptions
 import metaEventProcessor
 import mosaic.utilities.util as util
+import mosaic.utilities.mosaicLog as log
 import mosaic.utilities.fit_funcs as fit_funcs
 import sys
 import math
@@ -193,17 +195,18 @@ class cusumPlus(metaEventProcessor.metaEventProcessor):
 		"""
 			Return a formatted string of settings for display
 		"""
-		fmtstr=""
+		logObj=log.mosaicLog()
 
-		fmtstr+='\tEvent processing settings:\n\t\t'
-		fmtstr+='Algorithm = CUSUM+\n\n'
+
+		logObj.addLogHeader( 'Event processing settings:' )
+		logObj.addLogText( 'Algorithm = CUSUM+' )
 		
-		fmtstr+='\t\tJump Size  = {0}\n'.format(self.StepSize)
-		fmtstr+='\t\tMin. State Length  = {0}\n'.format(self.MinLength)
-		fmtstr+='\t\tCUSUM+ Min. Threshold  = {0}\n'.format(self.MinThreshold)
-		fmtstr+='\t\tCUSUM+ Max. Threshold  = {0}\n'.format(self.MaxThreshold)
+		logObj.addLogText( 'Jump Size  = {0}'.format(self.StepSize) )
+		logObj.addLogText( 'Min. State Length  = {0}'.format(self.MinLength) )
+		logObj.addLogText( 'CUSUM+ Min. Threshold  = {0}'.format(self.MinThreshold) )
+		logObj.addLogText( 'CUSUM+ Max. Threshold  = {0}'.format(self.MaxThreshold) )
 
-		return fmtstr
+		return str(logObj)
 
 	###########################################################################
 	# Local functions

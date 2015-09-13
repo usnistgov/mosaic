@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 """
 	Implementation of an 'N' order Bessel filter
 
@@ -6,14 +7,16 @@
 	:License:	See LICENSE.TXT
 	:ChangeLog:
 	.. line-block::
+		9/13/15 	AB 	Updated logging to use mosaicLog class
 		7/1/13		AB	Initial version
 """
 import numpy as np 
 import scipy.signal as sig
 
-import metaIOFilter
+import mosaic.metaIOFilter
+import mosaic.utilities.mosaicLog as log
 
-class besselLowpassFilter(metaIOFilter.metaIOFilter):
+class besselLowpassFilter(mosaic.metaIOFilter.metaIOFilter):
 	"""
 		:Keyword Args:
 		In addition to metaIOFilter.__init__ args,
@@ -63,14 +66,17 @@ class besselLowpassFilter(metaIOFilter.metaIOFilter):
 
 	def formatsettings(self):
 		"""
-			Return a formatted string of filter settings
+			Populate `logObject` with settings strings for display
 		"""
-		fmtstr=""
+		logObj=log.mosaicLog()
 
-		fmtstr+='\tFilter settings: \n'
-		fmtstr+='\t\tFilter type = {0}\n'.format(self.__class__.__name__)
-		fmtstr+='\t\tFilter order = {0}\n'.format(self.filterOrder)
-		fmtstr+='\t\tFilter cutoff = {0} kHz\n'.format(self.filterCutoff*1e-3)
-		fmtstr+='\t\tDecimation = {0}\n'.format(self.decimate)
 
-		return fmtstr
+		logObj.addLogHeader( 'Filter settings:' )
+
+		logObj.addLogText( 'Filter type = {0}'.format(self.__class__.__name__) )
+		logObj.addLogText( 'Filter order = {0}'.format(self.filterOrder) )
+		logObj.addLogText( 'Filter cutoff = {0} kHz'.format(self.filterCutoff*1e-3) )
+		logObj.addLogText( 'Decimation = {0}'.format(self.decimate) )
+		
+		
+		return str(logObj)
