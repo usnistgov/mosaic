@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 """
 	A meta class that defines the interface for filtering data that is read in by any 
 	implementation of metaTrajIO

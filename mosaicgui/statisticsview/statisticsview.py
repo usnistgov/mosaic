@@ -244,7 +244,7 @@ class StatisticsWindow(QtGui.QDialog):
 
 	def _parseanalysislog(self):
 		logstr=self.dbHnd.readAnalysisLog()
-
+		wtime=0
 		if logstr:
 			for line in logstr.split('\n'):
 				if re.search("Total = ", line): 

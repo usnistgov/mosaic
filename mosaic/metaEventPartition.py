@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 """
 	A meta class that quickly partitions trajectories into individual events.
 
