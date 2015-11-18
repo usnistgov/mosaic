@@ -7,7 +7,7 @@ if [ $plat == 'Darwin' ]; then
 fi
 
 
-set -x
+#set -x
 
 pip install -U cython==0.20.1
 pip install -U numpy==1.9.0
