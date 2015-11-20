@@ -17,6 +17,7 @@ import matplotlib.cm as cm
 import matplotlib.mlab as mlab
 import matplotlib.pyplot as plt
 import mosaic.sqlite3MDIO as sql
+import mosaicscripts.plots.mplformat as mplformat
 
 def query(dbname, query_str="select BlockDepth, ResTime from metadata where ProcessingStatus='normal' and BlockDepth > 0 and ResTime > 0.02"):
 	"""
@@ -49,28 +50,8 @@ def contour_plot(dat2d, x_range, y_range, bin_size, contours, colormap, img_inte
 			min_count_pct:		(optional) set bins with < min_count_pct of the maximum to 0
 			axes_type:			(optional) set linear or log axis. Expects a list for X and Y. For example ['linear', 'log'].
 	"""
-	fontlabel_size=16
-	tick_size=16
-	plt.rcParams.update(
-		{
-				'backend': 'wxAgg', 
-				'lines.markersize' : 2, 
-				'font-family': 'sans-serif',
-				'font.sans-serif': 'Helvetica',
-				'font.weight': 200,
-				'axes.labelsize': fontlabel_size, 
-				'text.fontsize': fontlabel_size, 
-				'legend.fontsize': fontlabel_size, 
-				'xtick.labelsize': tick_size, 
-				'ytick.labelsize': tick_size, 
-				'text.usetex': False, 
-				'xtick.major.size': 10,
-				'ytick.major.size': 10,
-				'xtick.major.width': 1,
-				'ytick.major.width': 1,
-				'contour.negative_linestyle': 'solid'
-		}
-	)
+	mplformat.update_rcParams()
+
 	cmap = colormap # plt.get_cmap(colormap)
 
 	try:
