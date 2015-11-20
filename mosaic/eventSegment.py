@@ -101,7 +101,7 @@ class eventSegment(metaEventPartition.metaEventPartition):
 		logObj.addLogText( 'Min. event rejection length = {0} points'.format(self.minEventLength) )
 		logObj.addLogText( 'Event trigger threshold = {0} * SD'.format(self.eventThreshold) )
 		logObj.addLogText( 'Drift error threshold = {0} * SD'.format(self.driftThreshold) )
-		logObj.addLogText( 'tDrift rate error threshold = {0} pA/s'.format(self.maxDriftRate) )
+		logObj.addLogText( 'Drift rate error threshold = {0} pA/s'.format(self.maxDriftRate) )
 
 	
 		return str(logObj)
