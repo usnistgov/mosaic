@@ -307,12 +307,15 @@ class metaTrajIO(object):
 		try:
 			# Get the elements to return
 			t=self.currDataPipe[self.currDataIdx:self.currDataIdx+n]-self.dcOffset
-			if len(t) < n: raise IndexError
+			if len(t) < n: raise IndexError 
 				
 			return t
 		except IndexError, err:
-			self._appenddata()
-			return self.previewdata(n)
+			if self.nearEndOfData>0:
+				return t
+			else:
+				self._appenddata()
+				return self.previewdata(n)
 
 
 	def formatsettings(self):
