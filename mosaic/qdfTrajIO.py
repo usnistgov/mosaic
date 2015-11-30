@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 """
 	QDF implementation of metaTrajIO. Uses the readqdf module from EBS to 
 	read individual qdf files.
@@ -7,6 +8,7 @@
 	:License:	See LICENSE.TXT
 	:ChangeLog:
 	.. line-block::
+		9/13/15 	AB 	Updated logging to use mosaicLog class
 		3/28/15 	AB 	Updated file read code to match new metaTrajIO API.
 		7/18/12		AB	Initial version
 		2/11/14		AB 	Support qdf files that save the current in pA. This needs 
@@ -16,10 +18,11 @@ import types
 
 import numpy as np 
 
-import metaTrajIO
+import mosaic.metaTrajIO
+import mosaic.utilities.mosaicLog as log
 import qdf.readqdf as qdf
 
-class qdfTrajIO(metaTrajIO.metaTrajIO):
+class qdfTrajIO(mosaic.metaTrajIO.metaTrajIO):
 	"""
 		Use the readqdf module from EBS to read individual QDF files.
 
@@ -102,17 +105,18 @@ class qdfTrajIO(metaTrajIO.metaTrajIO):
 		#print "last raw current val in file ", fname, " = ", q[-1]
 		return np.array(q[ : , 1], dtype=np.float64)
 
-	def _formatsettings(self):
+	def _formatsettings(self, logObject):
 		"""
-			Return a formatted string of settings for display
+			Populate `logObject` with settings strings for display
+
+			:Parameters:
+
+				- `logObject` : 	a object that holds logging text (see :class:`~mosaic.utilities.mosaicLog.mosaicLog`)				
 		"""
-		fmtstr=""
-		
 		# for qdf files, add the values of the feedback resistance and capacitance
-		fmtstr+='\n\t\tFeedback resistance = {0} GOhm\n'.format(self.Rfb*1e-9)
-		fmtstr+='\t\tFeedback capacitance = {0} pF\n'.format(self.Cfb*1e12)
+		logObject.addLogText( 'Feedback resistance = {0} GOhm'.format(self.Rfb*1e-9) )
+		logObject.addLogText( 'Feedback capacitance = {0} pF'.format(self.Cfb*1e12) )
 	
-		return fmtstr
 
 if __name__ == '__main__':
 	from mosaic.utilities.resource_path import resource_path

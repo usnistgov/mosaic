@@ -7,10 +7,10 @@ import os
 import glob
 
 import mosaic.settings as settings
-import mosaic.stepResponseAnalysis as sra
 import mosaic.singleStepEvent as sse
-import mosaic.multiStateAnalysis as msa
-import mosaic.cusumLevelAnalysis as cla
+import mosaic.adept2State as a2s 
+import mosaic.adept as adept
+import mosaic.cusumPlus as cpl
 
 import mosaic.eventSegment as es
 
@@ -39,7 +39,7 @@ class ProcessingAlgorithmsCommon(unittest.TestCase):
 		self.testobj.processEvent()
 
 
-class SRATest(ProcessingAlgorithmsCommon):
+class Base2StateTest(ProcessingAlgorithmsCommon):
 	def _setupTestCase(self, datfile, prmfile, algoHnd):
 		[self.Fs, self.dat]=testutil.readcsv(datfile)
 		self.prm=testutil.readparams(prmfile)
@@ -51,7 +51,7 @@ class SRATest(ProcessingAlgorithmsCommon):
 	def runTestCase(self, datfile, prmfile, algoHnd):
 		self._setupTestCase(datfile, prmfile,algoHnd)
 
-		super(SRATest, self).runTestCase(datfile, prmfile, algoHnd)
+		super(Base2StateTest, self).runTestCase(datfile, prmfile, algoHnd)
 
 		self.assertEqual( self.testobj.mdProcessingStatus, 'normal' )
 		self.assertEqual( round(self.testobj.mdBlockDepth,1), 1.0-abs(self.prm['a']) )
@@ -135,9 +135,9 @@ class PEGEventPartitionTest(unittest.TestCase):
 
 		testobj=eventPartHnd(
 							dat, 
-							sra.stepResponseAnalysis, 
+							a2s.adept2State, 
 							epartsettings,
-							sett["stepResponseAnalysis"],
+							sett["adept2State"],
 							json.dumps(sett, indent=4)
 						)
 		testobj.PartitionEvents()
@@ -180,113 +180,113 @@ class EventPartitionTestSuite(PEGEventPartitionTest):
 	def test_e5segP(self):
 		self.runTestCase('testdata/testEventPartition5.csv', 'testdata/testEventPartition5.prm', es.eventSegment, True)
 
-class MSATestSuite(BaseMultiStateTest):
-	def test_e1msa(self):
-		self.runTestCase('testdata/eventLong_0_raw.bin', 'testdata/eventLong_0_params.json', msa.multiStateAnalysis)
+class ADEPT_TestSuite(BaseMultiStateTest):
+	def test_e1adept(self):
+		self.runTestCase('testdata/eventLong_0_raw.bin', 'testdata/eventLong_0_params.json', adept.adept)
 
-	def test_e2msa(self):
-		self.runTestCase('testdata/eventLong_2_raw.bin', 'testdata/eventLong_2_params.json', msa.multiStateAnalysis)
+	def test_e2adept(self):
+		self.runTestCase('testdata/eventLong_2_raw.bin', 'testdata/eventLong_2_params.json', adept.adept)
 
-	def test_e3msa(self):
-		self.runTestCase('testdata/eventLong_3_raw.bin', 'testdata/eventLong_3_params.json', msa.multiStateAnalysis)
+	def test_e3adept(self):
+		self.runTestCase('testdata/eventLong_3_raw.bin', 'testdata/eventLong_3_params.json', adept.adept)
 
-	def test_e4msa(self):
-		self.runTestCase('testdata/eventLong_4_raw.bin', 'testdata/eventLong_4_params.json', msa.multiStateAnalysis)
+	def test_e4adept(self):
+		self.runTestCase('testdata/eventLong_4_raw.bin', 'testdata/eventLong_4_params.json', adept.adept)
 
-	def test_e5msa(self):
-		self.runTestCase('testdata/eventLong_5_raw.bin', 'testdata/eventLong_5_params.json', msa.multiStateAnalysis)
+	def test_e5adept(self):
+		self.runTestCase('testdata/eventLong_5_raw.bin', 'testdata/eventLong_5_params.json', adept.adept)
 
-	def test_e6msa(self):
-		self.runTestCase('testdata/eventLong_6_raw.bin', 'testdata/eventLong_6_params.json', msa.multiStateAnalysis)
+	def test_e6adept(self):
+		self.runTestCase('testdata/eventLong_6_raw.bin', 'testdata/eventLong_6_params.json', adept.adept)
 
-	def test_e7msa(self):
-		self.runTestCase('testdata/eventLong_7_raw.bin', 'testdata/eventLong_7_params.json', msa.multiStateAnalysis)
+	def test_e7adept(self):
+		self.runTestCase('testdata/eventLong_7_raw.bin', 'testdata/eventLong_7_params.json', adept.adept)
 
-	def test_e8msa(self):
-		self.runTestCase('testdata/eventLong_8_raw.bin', 'testdata/eventLong_8_params.json', msa.multiStateAnalysis)
+	def test_e8adept(self):
+		self.runTestCase('testdata/eventLong_8_raw.bin', 'testdata/eventLong_8_params.json', adept.adept)
 
-	def test_e9msa(self):
-		self.runTestCase('testdata/eventLong_10_raw.bin', 'testdata/eventLong_10_params.json', msa.multiStateAnalysis)
+	def test_e9adept(self):
+		self.runTestCase('testdata/eventLong_10_raw.bin', 'testdata/eventLong_10_params.json', adept.adept)
 
-	def test_e10msa(self):
-		self.runTestCase('testdata/eventLong_11_raw.bin', 'testdata/eventLong_11_params.json', msa.multiStateAnalysis)
+	def test_e10adept(self):
+		self.runTestCase('testdata/eventLong_11_raw.bin', 'testdata/eventLong_11_params.json', adept.adept)
 
-class CLATestSuite(BaseMultiStateTest):
-	def test_e1cla(self):
-		self.runTestCase('testdata/eventLong_0_raw.bin', 'testdata/eventLong_0_params.json', cla.cusumLevelAnalysis)
+class CUSUMPlus_TestSuite(BaseMultiStateTest):
+	def test_e1cpl(self):
+		self.runTestCase('testdata/eventLong_0_raw.bin', 'testdata/eventLong_0_params.json', cpl.cusumPlus)
 
-	def test_e2cla(self):
-		self.runTestCase('testdata/eventLong_2_raw.bin', 'testdata/eventLong_2_params.json', cla.cusumLevelAnalysis)
+	def test_e2cpl(self):
+		self.runTestCase('testdata/eventLong_2_raw.bin', 'testdata/eventLong_2_params.json', cpl.cusumPlus)
 
-	def test_e3cla(self):
-		self.runTestCase('testdata/eventLong_3_raw.bin', 'testdata/eventLong_3_params.json', cla.cusumLevelAnalysis)
+	def test_e3cpl(self):
+		self.runTestCase('testdata/eventLong_3_raw.bin', 'testdata/eventLong_3_params.json', cpl.cusumPlus)
 
-	def test_e4cla(self):
-		self.runTestCase('testdata/eventLong_4_raw.bin', 'testdata/eventLong_4_params.json', cla.cusumLevelAnalysis)
+	def test_e4cpl(self):
+		self.runTestCase('testdata/eventLong_4_raw.bin', 'testdata/eventLong_4_params.json', cpl.cusumPlus)
 
-	def test_e5cla(self):
-		self.runTestCase('testdata/eventLong_5_raw.bin', 'testdata/eventLong_5_params.json', cla.cusumLevelAnalysis)
+	def test_e5cpl(self):
+		self.runTestCase('testdata/eventLong_5_raw.bin', 'testdata/eventLong_5_params.json', cpl.cusumPlus)
 
-	def test_e6cla(self):
-		self.runTestCase('testdata/eventLong_6_raw.bin', 'testdata/eventLong_6_params.json', cla.cusumLevelAnalysis)
+	def test_e6cpl(self):
+		self.runTestCase('testdata/eventLong_6_raw.bin', 'testdata/eventLong_6_params.json', cpl.cusumPlus)
 
-	def test_e7cla(self):
-		self.runTestCase('testdata/eventLong_7_raw.bin', 'testdata/eventLong_7_params.json', cla.cusumLevelAnalysis)
+	def test_e7cpl(self):
+		self.runTestCase('testdata/eventLong_7_raw.bin', 'testdata/eventLong_7_params.json', cpl.cusumPlus)
 
-	def test_e8cla(self):
-		self.runTestCase('testdata/eventLong_8_raw.bin', 'testdata/eventLong_8_params.json', cla.cusumLevelAnalysis)
+	def test_e8cpl(self):
+		self.runTestCase('testdata/eventLong_8_raw.bin', 'testdata/eventLong_8_params.json', cpl.cusumPlus)
 
-	def test_e9cla(self):
-		self.runTestCase('testdata/eventLong_10_raw.bin', 'testdata/eventLong_10_params.json', cla.cusumLevelAnalysis)
+	def test_e9cpl(self):
+		self.runTestCase('testdata/eventLong_10_raw.bin', 'testdata/eventLong_10_params.json', cpl.cusumPlus)
 
-	def test_e10cla(self):
-		self.runTestCase('testdata/eventLong_11_raw.bin', 'testdata/eventLong_11_params.json', cla.cusumLevelAnalysis)
+	def test_e10cpl(self):
+		self.runTestCase('testdata/eventLong_11_raw.bin', 'testdata/eventLong_11_params.json', cpl.cusumPlus)
 
-class SRATestSuite(SRATest):
-	def test_e1sra(self):
-		self.runTestCase('testdata/test1.csv', 'testdata/test1.prm', sra.stepResponseAnalysis)
+class ADEPT2State_TestSuite(Base2StateTest):
+	def test_e1a2s(self):
+		self.runTestCase('testdata/test1.csv', 'testdata/test1.prm', a2s.adept2State)
 
-	def test_e2sra(self):
-		self.runTestCase('testdata/test2.csv', 'testdata/test2.prm', sra.stepResponseAnalysis)
+	def test_e2a2s(self):
+		self.runTestCase('testdata/test2.csv', 'testdata/test2.prm', a2s.adept2State)
 
-	def test_e3sra(self):
-		self.runTestCase('testdata/test3.csv', 'testdata/test3.prm', sra.stepResponseAnalysis)
+	def test_e3a2s(self):
+		self.runTestCase('testdata/test3.csv', 'testdata/test3.prm', a2s.adept2State)
 
-	def test_e4sra(self):
-		self.runTestCase('testdata/test4.csv', 'testdata/test4.prm', sra.stepResponseAnalysis)
+	def test_e4a2s(self):
+		self.runTestCase('testdata/test4.csv', 'testdata/test4.prm', a2s.adept2State)
 
-	def test_e5sra(self):
-		self.runTestCase('testdata/test5.csv', 'testdata/test5.prm', sra.stepResponseAnalysis)
+	def test_e5a2s(self):
+		self.runTestCase('testdata/test5.csv', 'testdata/test5.prm', a2s.adept2State)
 
-	def test_e6sra(self):
-		self.runTestCase('testdata/test6.csv', 'testdata/test6.prm', sra.stepResponseAnalysis)
+	def test_e6a2s(self):
+		self.runTestCase('testdata/test6.csv', 'testdata/test6.prm', a2s.adept2State)
 
-	def test_e7sra(self):
-		self.runTestCase('testdata/test7.csv', 'testdata/test7.prm', sra.stepResponseAnalysis)
+	def test_e7a2s(self):
+		self.runTestCase('testdata/test7.csv', 'testdata/test7.prm', a2s.adept2State)
 
-	def test_e8sra(self):
-		self.runTestCase('testdata/test8.csv', 'testdata/test8.prm', sra.stepResponseAnalysis)
+	def test_e8a2s(self):
+		self.runTestCase('testdata/test8.csv', 'testdata/test8.prm', a2s.adept2State)
 
-	def test_e9sra(self):
-		self.runTestCase('testdata/test9.csv', 'testdata/test9.prm', sra.stepResponseAnalysis)
+	def test_e9a2s(self):
+		self.runTestCase('testdata/test9.csv', 'testdata/test9.prm', a2s.adept2State)
 
-	def test_e10sra(self):
-		self.runTestCase('testdata/test10.csv', 'testdata/test10.prm', sra.stepResponseAnalysis)
+	def test_e10a2s(self):
+		self.runTestCase('testdata/test10.csv', 'testdata/test10.prm', a2s.adept2State)
 
-	def test_e11sra(self):
-		self.runTestCase('testdata/test11.csv', 'testdata/test11.prm', sra.stepResponseAnalysis)
+	def test_e11a2s(self):
+		self.runTestCase('testdata/test11.csv', 'testdata/test11.prm', a2s.adept2State)
 
-	def test_e12sra(self):
-		self.runTestCase('testdata/test12.csv', 'testdata/test12.prm', sra.stepResponseAnalysis)
+	def test_e12a2s(self):
+		self.runTestCase('testdata/test12.csv', 'testdata/test12.prm', a2s.adept2State)
 
-	def test_e13sra(self):
-		self.runTestCase('testdata/test13.csv', 'testdata/test13.prm', sra.stepResponseAnalysis)
+	def test_e13a2s(self):
+		self.runTestCase('testdata/test13.csv', 'testdata/test13.prm', a2s.adept2State)
 	
-	def test_e14sra(self):
-		self.runTestCase('testdata/test14.csv', 'testdata/test14.prm', sra.stepResponseAnalysis)
+	def test_e14a2s(self):
+		self.runTestCase('testdata/test14.csv', 'testdata/test14.prm', a2s.adept2State)
 
-	def test_e15sra(self):
-		self.runTestCase('testdata/test15.csv', 'testdata/test15.prm', sra.stepResponseAnalysis)
+	def test_e15a2s(self):
+		self.runTestCase('testdata/test15.csv', 'testdata/test15.prm', a2s.adept2State)
 
 class SSETestSuite(SSETest):
 	def test_e1sse(self):

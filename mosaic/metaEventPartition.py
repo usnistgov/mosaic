@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 """
 	A meta class that quickly partitions trajectories into individual events.
 
@@ -32,8 +33,6 @@ from  collections import deque
 
 import metaEventPartition
 import commonExceptions
-import singleStepEvent as sse 
-import stepResponseAnalysis as sra 
 import metaTrajIO
 import sqlite3MDIO
 from mosaic.utilities.resource_path import format_path

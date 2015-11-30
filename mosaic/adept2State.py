@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 """ 
 	A class that extends metaEventProcessing to implement the step response algorithm from :cite:`Balijepalli:2014`
 
@@ -6,6 +7,7 @@
 	:License:	See LICENSE.TXT
 	:ChangeLog:
 	.. line-block::
+		8/24/15 	AB 	Rename algorithm to ADEPT 2 State.
 		7/23/15		JF  Added a new test to reject RC Constants <=0
 		6/24/15 	AB 	Added an option to unlink the RC constants in stepResponseAnalysis.
 		11/7/14		AB 	Error codes describing event rejection are now more specific.
@@ -21,6 +23,7 @@
 import commonExceptions
 import metaEventProcessor
 import mosaic.utilities.util as util
+import mosaic.utilities.mosaicLog as log
 import mosaic.utilities.fit_funcs as fit_funcs
 import sys
 import math
@@ -41,7 +44,7 @@ class datblock:
 		self.sd=util.sd(dat)
 
 
-class stepResponseAnalysis(metaEventProcessor.metaEventProcessor):
+class adept2State(metaEventProcessor.metaEventProcessor):
 	""" 
 		Analyze an event that is characteristic of PEG blockades. This method includes system 
 		information in the analysis, specifically the filtering effects (throught the RC constant)
@@ -177,17 +180,17 @@ class stepResponseAnalysis(metaEventProcessor.metaEventProcessor):
 		""" 
 			Return a formatted string of settings for display
 		"""
-		fmtstr=""
+		logObj=log.mosaicLog()
 
-		fmtstr+='\tEvent processing settings:\n\t\t'
-		fmtstr+='Algorithm = {0}\n\n'.format(self.__class__.__name__)
+
+		logObj.addLogHeader( 'Event processing settings:' )
+		logObj.addLogText( 'Algorithm = ADEPT 2-State' )
 		
-		fmtstr+='\t\tMax. iterations  = {0}\n'.format(self.FitIters)
-		fmtstr+='\t\tFit tolerance (rel. err in leastsq)  = {0}\n'.format(self.FitTol)
-		fmtstr+='\t\tUnlink RC constants = {0}\n\n'.format(bool(self.UnlinkRCConst))
+		logObj.addLogText( 'Max. iterations  = {0}'.format(self.FitIters) )
+		logObj.addLogText( 'Fit tolerance (rel. err in leastsq)  = {0}'.format(self.FitTol) )
+		logObj.addLogText( 'Unlink RC constants = {0}'.format(bool(self.UnlinkRCConst)) )
 
-
-		return fmtstr
+		return str(logObj)
 
 	###########################################################################
 	# Local functions
