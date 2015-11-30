@@ -7,6 +7,7 @@
 	:License:	See LICENSE.TXT
 	:ChangeLog:
 	.. line-block::
+		11/30/15 	AB 	Added a new keyword ``scale`` to allow scaling TSV data.
 		3/28/15 	AB 	Updated file read code to match new metaTrajIO API.
 		6/30/13		AB 	Added the 'seprator' kwarg to the class initializer to allow any delimited 
 						files to be read. e.g. '"\\"t' (default), ',', etc.
@@ -26,7 +27,8 @@ class tsvTrajIO(metaTrajIO.metaTrajIO):
 			In addition to :class:`~mosaic.metaTrajIO.metaTrajIO` args,
 				- `headers` : 		If True, the first row is ignored (default: True)
 				- `separator` :	set the data separator (defualt: '"\\"t')
-			
+				- `scale` : set the data scale (default: 1). For example to convert from  to pA set ``scale=1e12``.
+
 				Either:
 					- `Fs` : 			Sampling frequency in Hz. If set, all other options are ignored and the first column in the file is assumed to be the current in pA.
 				Or:
@@ -40,6 +42,8 @@ class tsvTrajIO(metaTrajIO.metaTrajIO):
 	def _init(self, **kwargs):
 		# Check if headers are present
 		self.hasHeaders=bool(kwargs.pop('headers', True))
+		self.scale=float(kwargs.pop('scale', 1.0))
+
 		try:
 			# if the sampling frequency is set explicitly, currents 
 			# in pA will be in column 0.
@@ -55,7 +59,7 @@ class tsvTrajIO(metaTrajIO.metaTrajIO):
 			self.timeCol=kwargs.pop('timeCol', 0)
 			self.currCol=kwargs.pop('currCol', 1)
 
-			self.userSetFs=True
+			self.userSetFs=False
 
 		# The default data separator is a tab.
 		self.separator=kwargs.pop('separator', '\t')
@@ -110,14 +114,21 @@ class tsvTrajIO(metaTrajIO.metaTrajIO):
 			p1=r1.next()
 			p2=r1.next()
 
+			dt=float(p2[self.timeCol])-float(p1[self.timeCol])
 			if not hasattr(self, 'Fs'):
-				self.Fs=1000./(p2[self.timeCol]-p1[self.timeCol])
+				self.Fs=1000./dt
 			# else check if it s the same as before
 			else:
-				if self.Fs!=1000./(p2[self.timeCol]-p1[self.timeCol]):
+				if self.Fs!=1000./dt:
 					raise metaTrajIO.SamplingRateChangedError("The sampling rate in the data file '{0}' has changed.".format(fname))
 				
 			# Store the ionic currents for the first two points
-			dat=[p1[self.currCol], p2[self.currCol]]
+			dat=[float(p1[self.currCol]), float(p2[self.currCol])]
 
-			return np.array( dat.extend([ float(row[self.currCol]) for row in r1 ]), dtype=np.float64)
+			dat.extend([ float(row[self.currCol]) for row in r1 ])
+			
+			return np.array( dat, dtype=np.float64)
+
+	def scaleData(self, data):
+		return self.scale*data
+
