@@ -7,6 +7,7 @@
 	:License:	See LICENSE.TXT
 	:ChangeLog:
 	.. line-block::
+		11/30/15 	AB 	Assumes ``timeCol`` is specified in seconds.
 		11/30/15 	AB 	Added a new keyword ``scale`` to allow scaling TSV data.
 		3/28/15 	AB 	Updated file read code to match new metaTrajIO API.
 		6/30/13		AB 	Added the 'seprator' kwarg to the class initializer to allow any delimited 
@@ -115,11 +116,12 @@ class tsvTrajIO(metaTrajIO.metaTrajIO):
 			p2=r1.next()
 
 			dt=float(p2[self.timeCol])-float(p1[self.timeCol])
+			
 			if not hasattr(self, 'Fs'):
-				self.Fs=1000./dt
+				self.Fs=1./dt
 			# else check if it s the same as before
 			else:
-				if self.Fs!=1000./dt:
+				if self.Fs!=1./dt:
 					raise metaTrajIO.SamplingRateChangedError("The sampling rate in the data file '{0}' has changed.".format(fname))
 				
 			# Store the ionic currents for the first two points
