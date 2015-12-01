@@ -56,9 +56,9 @@ class tsvTrajIO(metaTrajIO.metaTrajIO):
 			# If Fs is not set explicitly assume by default two columns,
 			# with time in sec in col 0 and current in pA in column 1, unless
 			# specified otherwise by the user
-			self.nCols=kwargs.pop('nCols', 2)
-			self.timeCol=kwargs.pop('timeCol', 0)
-			self.currCol=kwargs.pop('currCol', 1)
+			self.nCols=int(kwargs.pop('nCols', 2))
+			self.timeCol=int(kwargs.pop('timeCol', 0))
+			self.currCol=int(kwargs.pop('currCol', 1))
 
 			self.userSetFs=False
 
@@ -116,7 +116,7 @@ class tsvTrajIO(metaTrajIO.metaTrajIO):
 			p2=r1.next()
 
 			dt=float(p2[self.timeCol])-float(p1[self.timeCol])
-			
+
 			if not hasattr(self, 'Fs'):
 				self.Fs=1./dt
 			# else check if it s the same as before
