@@ -156,7 +156,14 @@ __settings__="""
 			"dcOffset": "0.0", 
 			"filter": "*.bin", 
 			"start": "0.0"
-		}
+		},
+		"tsvTrajIO": {
+	        "filter" :  "*.tsv", 
+	        "headers" : "False", 
+	        "Fs" :	"500000",
+	        "dcOffset" : 0.0, 
+	        "start" : 0.0 
+    	}
 	}
 """
 

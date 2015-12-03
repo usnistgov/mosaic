@@ -102,6 +102,11 @@
                <string>QDF</string>
               </property>
              </item>
+             <item>
+              <property name="text">
+               <string>TSV</string>
+              </property>
+             </item>
             </widget>
            </item>
           </layout>
