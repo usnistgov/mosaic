@@ -43,7 +43,8 @@ class mosaicDependencies(Command):
         pass
 
     def run(self):
-        os.system('sh .scripts/build-deps-sh')
+        # os.system('sh .scripts/build-deps-sh')
+        os.system('pip install -r requirements.txt')
 
 class mosaicDocumentationDependencies(Command):
     description = "install dependencies for Sphinx documentation."
