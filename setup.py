@@ -34,17 +34,22 @@ class mosaicBinaries(Command):
 
 class mosaicDependencies(Command):
     description = "install MOSAIC dependencies."
-    user_options = []
+    user_options = [
+                    ('upgrade', None, "force packages to upgrade"),
+                    ]
 
     def initialize_options(self):
-        pass
+        self.upgrade=0
 
     def finalize_options(self):
         pass
 
     def run(self):
         # os.system('sh .scripts/build-deps-sh')
-        os.system('pip install -r requirements.txt')
+        if self.upgrade:
+            os.system('pip install -r requirements.txt --upgrade')
+        else:
+            os.system('pip install -r requirements.txt')
 
 class mosaicDocumentationDependencies(Command):
     description = "install dependencies for Sphinx documentation."
