@@ -1,13 +1,4 @@
 {
-    "stepResponseAnalysis": {
-        "FitTol": 1e-07, 
-        "BlockRejectRatio": 0.9, 
-        "FitIters": 50000
-    }, 
-    "cusumLevelAnalysis": {
-        "StepSize": 5.0, 
-        "Threshold": 5.0
-    }, 
     "qdfTrajIO": {
         "filter": "*.qdf", 
         "start": 0.0, 
@@ -15,13 +6,19 @@
         "dcOffset": 0.0, 
         "Rfb": 9100000000.0
     }, 
+    "adept2State": {
+        "FitTol": 1e-07, 
+        "UnlinkRCConst": "1", 
+        "BlockRejectRatio": 0.9, 
+        "FitIters": 50000
+    }, 
     "eventSegment": {
         "meanOpenCurr": -1.0, 
         "slopeOpenCurr": -1.0, 
         "eventPad": 50, 
         "driftThreshold": 999.0, 
         "maxDriftRate": 999.0, 
-        "eventThreshold": 3.9373285645823413, 
+        "eventThreshold": 3.937328564396069, 
         "writeEventTS": 1, 
         "minEventLength": 5, 
         "sdOpenCurr": -1.0, 

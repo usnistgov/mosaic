@@ -10,6 +10,7 @@ from PyQt4 import QtCore, QtGui, uic
 import mosaic.abfTrajIO as abf
 import mosaic.qdfTrajIO as qdf
 import mosaic.binTrajIO as bin
+import mosaic.tsvTrajIO as tsv
 from mosaic.metaTrajIO import FileNotFoundError, EmptyDataPipeError
 from mosaic.utilities.resource_path import resource_path
 from mosaic.utilities.ionic_current_stats import OpenCurrentDist
@@ -105,6 +106,24 @@ class TrajectoryWindow(QtGui.QDialog):
 					self.IOArgs["IonicCurrentColumn"]=self.datadict["IonicCurrentColumn"]
 					self.IOArgs["HeaderOffset"]=self.datadict["HeaderOffset"]
 					self.IOArgs["filter"]=self.datadict["filter"]
+				elif self.datadict["DataFilesType"] ==  "TSV":
+					self.iohnd=tsv.tsvTrajIO
+
+					try:
+						self.IOArgs["filter"]=self.datadict["filter"]
+						self.IOArgs["headers"]=self.datadict["headers"]
+
+						self.IOArgs["nCols"]=self.datadict["nCols"]
+						self.IOArgs["timeCol"]=self.datadict["timeCol"]
+						self.IOArgs["currCol"]=self.datadict["currCol"]
+					except:
+						self.IOArgs["Fs"]=self.datadict["Fs"]
+
+					try:
+						self.IOArgs["scale"]=self.datadict["scale"]
+					except:
+						self.IOArgs["scale"]=1
+
 				else:
 					self.iohnd=abf.abfTrajIO	
 					self.IOArgs["filter"]=self.datadict["filter"]
@@ -180,9 +199,9 @@ class TrajectoryWindow(QtGui.QDialog):
 
 				# display the mean current val and thr
 				self.ionicCurrentLabel.setText( 
-						"&#956;={0:.1f} pA, \
-						&#963;={1:.1f} pA<br><br>\
-						Threshold={2:.1f} pA ({3:.2f}&#963;)".format(self.mu, self.sd, self.mu-self.thr*self.sd, self.thr) 
+						"&#12296;<i>i<sub>0</sub></i>&#12297;={0:.1f} pA, \
+						&#963;<sub>i<sub>0</sub></sub>={1:.1f} pA<br><br>\
+						Threshold={2:.1f} pA ({3:.2f}&#963;<sub>i<sub>0</sub></sub>)".format(self.mu, self.sd, self.mu-self.thr*self.sd, self.thr) 
 					)
 
 				# plot data

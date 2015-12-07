@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 """
 	Read binary ionic current data into numpy arrays
 
@@ -6,6 +7,7 @@
 	:License:	See LICENSE.TXT	
 	:ChangeLog:
 	.. line-block::
+		9/13/15 	AB 	Updated logging to use mosaicLog class
 		4/1/15 		AB 	Added a new property (DataLengthSec) to estimate the length of a data set.
 		3/28/15 	AB 	Optimized file read interface for improved large file support.
 		8/22/14 	AB 	Setup a new property ('LastDataFile') that tracks the current
@@ -22,6 +24,7 @@ import numpy as np
 
 import settings
 from mosaic.utilities.resource_path import format_path, path_separator
+import mosaic.utilities.mosaicLog as log
 
 # define custom exceptions
 class IncompatibleArgumentsError(Exception):
@@ -304,34 +307,38 @@ class metaTrajIO(object):
 		try:
 			# Get the elements to return
 			t=self.currDataPipe[self.currDataIdx:self.currDataIdx+n]-self.dcOffset
-			if len(t) < n: raise IndexError
+			if len(t) < n: raise IndexError 
 				
 			return t
 		except IndexError, err:
-			self._appenddata()
-			return self.previewdata(n)
+			if self.nearEndOfData>0:
+				return t
+			else:
+				self._appenddata()
+				return self.previewdata(n)
 
 
 	def formatsettings(self):
 		"""
 			Return a formatted string of settings for display
 		"""
-		fmtstr=""
+		logObj=log.mosaicLog()
+
+		logObj.addLogHeader( 'Trajectory I/O settings:' )
+		
+		logObj.addLogText( 'Files processed = {0}'.format(self.nFiles-len(self.dataFiles)) )
+		logObj.addLogText( 'Data path = {0}'.format(self.datPath) )
+		logObj.addLogText( 'File format = {0}'.format(self.fileFormat) )
+		logObj.addLogText( 'Sampling frequency = {0} kHz'.format(self.FsHz*1e-3) )
+
+		# Sub-class formatted settings
+		self._formatsettings(logObj)
 
 		# add the filter settings
 		if self.dataFilter:
-			fmtstr+=self.dataFilterObj.formatsettings()
-
-		fmtstr+='\n\tTrajectory I/O settings: \n'
-		fmtstr+='\t\tFiles processed = {0}\n'.format(self.nFiles-len(self.dataFiles))
-		fmtstr+='\t\tData path = {0}\n'.format(self.datPath)
-		fmtstr+='\t\tFile format = {0}\n'.format(self.fileFormat)
-		fmtstr+='\t\tSampling frequency = {0} kHz\n'.format(self.FsHz*1e-3)
-
-		# Sub-class formatted settings
-		fmtstr+=self._formatsettings()
-
-		return fmtstr
+			return str(logObj)+self.dataFilterObj.formatsettings()
+		else:
+			return str(logObj)
 
 	#################################################################
 	# Private API: Interface functions, implemented by sub-classes.
@@ -395,11 +402,15 @@ class metaTrajIO(object):
 		return data
 
 	@abstractmethod
-	def _formatsettings(self):
+	def _formatsettings(self, logObject):
 		"""
 			.. important:: |abstractmethod|
 
-			Return a formatted string of settings for display 
+			Populate `logObject` with settings strings for display
+
+			:Parameters:
+
+				- `logObject` : 	a object that holds logging text (see :class:`~mosaic.utilities.mosaicLog.mosaicLog`)				
 		"""
 		pass
 		

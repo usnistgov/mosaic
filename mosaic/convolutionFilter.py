@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 """
 	Implementation of a weighted moving average (tap delay line) filter
 
@@ -6,14 +7,16 @@
 	:License:	See LICENSE.TXT
 	:ChangeLog:
 	.. line-block::
+		9/13/15 	AB 	Updated logging to use mosaicLog class
 		8/16/13		AB	Initial version
 """
 import numpy as np 
 import scipy.signal as sig
 
-import metaIOFilter
+import mosaic.metaIOFilter
+import mosaic.utilities.mosaicLog as log
 
-class convolutionFilter(metaIOFilter.metaIOFilter):
+class convolutionFilter(mosaic.metaIOFilter.metaIOFilter):
 	"""
 		:Keyword Args:
 		In addition to metaIOFilter.__init__ args,
@@ -47,11 +50,13 @@ class convolutionFilter(metaIOFilter.metaIOFilter):
 		"""
 			Return a formatted string of filter settings
 		"""
-		fmtstr=""
+		logObj=log.mosaicLog()
 
-		fmtstr+='\tFilter settings: \n'
-		fmtstr+='\t\tFilter type = {0}\n'.format(self.__class__.__name__)
-		fmtstr+='\t\tFilter coefficients = {0}\n'.format(self.filterCoeff)
-		fmtstr+='\t\tDecimation = {0}\n'.format(self.decimate)
 
-		return fmtstr
+		logObj.addLogHeader( 'Filter settings:' )
+
+		logObj.addLogText( 'Filter type = {0}'.format(self.__class__.__name__) )
+		logObj.addLogText( 'Filter coefficients = {0}'.format(self.filterCoeff) )
+		logObj.addLogText( 'Decimation = {0}'.format(self.decimate) )
+		
+		return str(logObj)

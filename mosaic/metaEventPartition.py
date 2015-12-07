@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 """
 	A meta class that quickly partitions trajectories into individual events.
 
@@ -6,6 +7,7 @@
 	:License:	See LICENSE.TXT
 	:ChangeLog:
 	.. line-block::
+		12/6/15 	AB 	Add sampling frequency to analysis info table
 		8/18/14		AB 	Fixed parallel processing cleanup.
 		5/17/14		AB 	Delete Plotting support
 		6/22/13		AB 	Added two function hooks to allow plotting 
@@ -32,8 +34,6 @@ from  collections import deque
 
 import metaEventPartition
 import commonExceptions
-import singleStepEvent as sse 
-import stepResponseAnalysis as sra 
 import metaTrajIO
 import sqlite3MDIO
 from mosaic.utilities.resource_path import format_path
@@ -283,7 +283,8 @@ class metaEventPartition(object):
 							type(self.tEventProcObj).__name__,
 							self.fstring,
 							self.trajDataObj.ElapsedTimeSeconds,
-							self.trajDataObj.DataLengthSec
+							self.trajDataObj.DataLengthSec,
+							self.trajDataObj.FsHz
 						])
 
 	def _setupparallel(self):

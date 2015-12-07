@@ -6,6 +6,7 @@
 	:License:	See LICENSE.TXT
 	:ChangeLog:
 	.. line-block::
+		12/6/15 	AB 	Add sampling frequency to analysis info table
 		8/5/15 		AB 	Added a function to export database tables to CSV
 		8/5/15 		AB 	Misc bug fixes
 		4/1/15 		AB 	Added an estimate of data length to the DB
@@ -144,7 +145,7 @@ class sqlite3MDIO(metaMDIO.metaMDIO):
 		with self.db:
 			# allow only one entry in this table
 			self.db.execute('DELETE FROM analysisinfo')
-			self.db.execute( 'INSERT INTO analysisinfo VALUES(?, ?, ?, ?, ?, ?, ?, ?)',  (infolist+[None]))
+			self.db.execute( 'INSERT INTO analysisinfo VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)',  (infolist+[None]))
 
 
 	def writeAnalysisLog(self, analysislog):
@@ -299,6 +300,7 @@ class sqlite3MDIO(metaMDIO.metaMDIO):
 					filteringAlgorithm TEXT, \
 					analysisTimeSec REAL, \
 					dataLengthSec REAL, \
+					FsHz REAL, \
 					recIDX INTEGER PRIMARY KEY AUTOINCREMENT \
 				)")
 

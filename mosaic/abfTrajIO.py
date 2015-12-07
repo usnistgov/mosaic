@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 """
 	A TrajIO class that supports ABF1 and ABF2 file formats via abf/abf.py. Currently, only
 	gap-free mode and single channel recordings are supported.
@@ -7,17 +8,19 @@
 	:License:	See LICENSE.TXT
 	:ChangeLog:
 	.. line-block::
+		9/13/15 	AB 	Updated logging to use mosaicLog class
 		3/28/15 	AB 	Updated file read code to match new metaTrajIO API.
 		5/23/13		AB	Initial version
 
 """
-import metaTrajIO
+import mosaic.metaTrajIO
 import abf.abf as abf
+import mosaic.utilities.mosaicLog as log
 
 import numpy as np
 
 
-class abfTrajIO(metaTrajIO.metaTrajIO):
+class abfTrajIO(mosaic.metaTrajIO.metaTrajIO):
 	"""
 		Read ABF1 and ABF2 file formats. Currently, only 
 		gap-free mode and single channel recordings are supported.
@@ -70,13 +73,14 @@ class abfTrajIO(metaTrajIO.metaTrajIO):
 
 		return dat
 
-	def _formatsettings(self):
+	def _formatsettings(self, logObject):
 		"""
-			Return a formatted string of settings for display
-		"""
-		fmtstr=""
-		
-		fmtstr+='\t\tLowpass filter = {0} kHz\n'.format(self.bandwidth*0.001)
-		fmtstr+='\t\tSignal gain = {0}\n'.format(self.gain)
+			Populate `logObject` with settings strings for display
 
-		return fmtstr
+			:Parameters:
+
+				- `logObject` : 	a object that holds logging text (see :class:`~mosaic.utilities.mosaicLog.mosaicLog`)				
+		"""
+		logObject.addLogText( 'Lowpass filter = {0} kHz'.format(self.bandwidth*0.001) )
+		logObject.addLogText( 'Signal gain = {0}'.format(self.gain) )
+
