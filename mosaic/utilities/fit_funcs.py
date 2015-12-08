@@ -37,6 +37,11 @@ def stepResponseFunc(t, tau1, tau2, mu1, mu2, a, b):
 	except:
 		raise
 
+def curve_fit_wrapper(t, n, *args):
+        tau, mu, a = list(args[0][:n]), list(args[0][n:2*n]), list(args[0][2*n:3*n])
+        return multiStateFunc(t, tau, mu, a, args[0][-1], n)
+        
+
 def multiStateFunc(t, tau, mu, a, b, n):
 	try:
 		func=b

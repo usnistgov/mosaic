@@ -111,7 +111,6 @@ class adept2State(metaEventProcessor.metaEventProcessor):
 		try:
 			# Fit the system transfer function to the event data
 			if sys.platform.startswith('win'):
-                                print sys.platform
                                 self.__WinFitEvent()
                         else:
                                 self.__FitEvent()
