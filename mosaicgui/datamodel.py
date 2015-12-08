@@ -200,6 +200,11 @@ class guiDataModel(dict):
 			except OperationalError:
 				print "Settings not found in ", dbfile, "\n"
 
+			try:
+				self["dbInfoFsHz"]=db.readAnalysisInfo()[7]
+			except:
+				pass
+
 		self._updateSettings()
 
 	def UpdateDataModelFromSettingsString(self, settingsstr):
@@ -234,6 +239,7 @@ class guiDataModel(dict):
 
 	def _setupModelViews(self):
 		self.keyTypesDict={
+								"dbInfoFsHz"			: float,
 								"blockSizeSec" 			: float,
 								"eventPad" 				: int,
 								"minEventLength" 		: int,
