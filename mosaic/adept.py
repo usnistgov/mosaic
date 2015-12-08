@@ -240,32 +240,42 @@ class adept(metaEventProcessor.metaEventProcessor):
 	# Local functions
 	###########################################################################
         def winfitevent(self, edat, initguess):
-                dt = 1000./self.Fs 	# time-step in ms.
+                try:
+                        dt = 1000./self.Fs 	# time-step in ms.
 
-		# control numpy error reporting
-		np.seterr(invalid='ignore', over='ignore', under='ignore')
 
-		ts = np.array([ t*dt for t in range(0,len(edat)) ], dtype='float64')
+                        # control numpy error reporting
+                        np.seterr(invalid='ignore', over='ignore', under='ignore')
 
-		self.nStates=len(initguess)-1
+                        ts = np.array([ t*dt for t in range(0,len(edat)) ], dtype='float64')
 
-		# setup fit params
-		#clumsy way to build a list but the usual list concatenation using list1+list2 was for some reason adding the lists elementwise...
-                params_0 = [5*dt for i in range(1,len(initguess))]
-                for i in range(1,len(initguess)):
-                        params_0.append(initguess[i][1]*dt)
-                for i in range(1,len(initguess)):
-                        params_0.append(initguess[i][0]-initguess[i-1][0])
-                params_0.append(initguess[0][0])
-                
+                        self.nStates=len(initguess)-1
 
-                #lambda function here is necessary in order to fix the value of N, otherwise curve_fit treats that as an optimization parameter
-                popt, pcov = curve_fit(lambda ts, *params_0: fit_funcs.curve_fit_wrapper(ts, self.nStates, params_0), ts, edat, p0=params_0)
-                
-                tau, mu, a = list(popt[:self.nStates]), list(popt[self.nStates:2*self.nStates]), list(popt[2*self.nStates:3*self.nStates])
-                b = popt[-1]
+                        # setup fit params
+                        #clumsy way to build a list but the usual list concatenation using list1+list2 was for some reason adding the lists elementwise...
+                        params_0 = [5*dt for i in range(1,len(initguess))]
+                        for i in range(1,len(initguess)):
+                                params_0.append(initguess[i][1]*dt)
+                        for i in range(1,len(initguess)):
+                                params_0.append(initguess[i][0]-initguess[i-1][0])
+                        params_0.append(initguess[0][0])
+                        
 
-                self.__winrecordevent(tau, mu, a, b)
+                        #lambda function here is necessary in order to fix the value of N, otherwise curve_fit treats that as an optimization parameter
+                        popt, pcov = curve_fit(lambda ts, *params_0: fit_funcs.curve_fit_wrapper(ts, self.nStates, params_0), ts, edat, p0=params_0)
+                        
+                        tau, mu, a = list(popt[:self.nStates]), list(popt[self.nStates:2*self.nStates]), list(popt[2*self.nStates:3*self.nStates])
+                        b = popt[-1]
+
+                        self.__winrecordevent(tau, mu, a, b)
+                except KeyboardInterrupt:
+			self.rejectEvent('eFitUserStop')
+			raise
+		except InvalidEvent:
+			self.rejectEvent('eInvalidEvent')
+		except:
+	 		self.rejectEvent('eFitFailure')
+                        
 	
 	def fitevent(self, edat, initguess):
 		try:
@@ -313,7 +323,6 @@ class adept(metaEventProcessor.metaEventProcessor):
 			self.rejectEvent('eInvalidEvent')
 		except:
 	 		self.rejectEvent('eFitFailure')
-	 		raise
 
 	def __threadList(self, l1, l2):
 		"""thread two lists	"""
