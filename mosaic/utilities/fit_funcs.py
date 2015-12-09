@@ -6,6 +6,7 @@
 	:License:	See LICENSE.TXT	
 	:ChangeLog:
 	.. line-block::
+		12/09/15 	KB 	Added a wrapper for multiStateFunc
 		6/24/15 	AB 	Relaxed stepResponseFunc to include different RC constants 
 						for up and down states.
 		12/31/14 	AB 	Changed multi-state function to include a separate tau for 

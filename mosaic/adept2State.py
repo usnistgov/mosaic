@@ -7,6 +7,7 @@
 	:License:	See LICENSE.TXT
 	:ChangeLog:
 	.. line-block::
+		12/09/15 	KB 	Added Windows specific optimizations
 		8/24/15 	AB 	Rename algorithm to ADEPT 2 State.
 		7/23/15		JF  Added a new test to reject RC Constants <=0
 		6/24/15 	AB 	Added an option to unlink the RC constants in stepResponseAnalysis.

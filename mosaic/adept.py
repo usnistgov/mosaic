@@ -7,6 +7,7 @@
 	:License:	See LICENSE.TXT
 	:ChangeLog:
 	.. line-block::
+		12/09/15 	KB 	Added Windows specific optimizations
 		8/24/15 	AB 	Rename algorithm to ADEPT.
 		8/02/15		JF	Added a new test to reject RC Constants <=0
 		4/12/15 	AB 	Refactored code to improve reusability.
