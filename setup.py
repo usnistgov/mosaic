@@ -138,7 +138,9 @@ setup(
             'mosaic.utest', 
             'mosaic.qdf',
             'mosaic.abf',
-            'mosaic.utilities'
+            'mosaic.utilities',
+            'mosaicscripts',
+            'mosaicscripts.plots'
             ],
     scripts=[
             'bin/analysis.py', 
@@ -148,7 +150,6 @@ setup(
             'addons/MATLAB/openandquery.m', 
             'icons/icon_100px.png',
             '.scripts/install-addons-sh',
-            '.scripts/build-deps-sh', 
             '.scripts/pyinstaller-sh',
             'data/eventMD-PEG28-stepResponseAnalysis.sqlite',
             'data/eventMD-PEG28-cusumLevelAnalysis.sqlite',
@@ -157,13 +158,15 @@ setup(
             'data/SingleChan-0001_state.txt'
             ],
     install_requires=[
-          'numpy==1.8.1',
-          'cython==0.20.1',
-          'scipy==0.15.0',
-          'lmfit==0.7.4',
-          'uncertainties==2.4.6',
-          'matplotlib==1.3.1',
-          'PyWavelets==0.2.2',
+            'cython==0.20.1',
+            'pandas==0.16.2',
+            'lmfit==0.8.3',
+            'uncertainties==2.4.6',
+            'PyWavelets==0.3.0',
+            'nose==1.3.4',
+            'matplotlib==1.4.3',
+            'numpy==1.9.0',
+            'scipy==0.14.0'
       ],
     url='https://usnistgov.github.io/mosaic/',
     license='LICENSE.txt',
