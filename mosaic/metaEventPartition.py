@@ -273,6 +273,27 @@ class metaEventPartition(object):
 			An implementation of this function should separate individual events of interest from a time-series of ionic current recordings. The data pertaining to each event is then passed 		to an instance of metaEventProcessor for detailed analysis. The function will collect the results of this analysis.
 		"""
 		pass
+
+	@abstractmethod
+	def _checkdrift(self, curr):
+		"""
+			.. important:: |abstractmethod|
+
+			Check the open channel current for drift. This function triggers
+			an error when the open channel current drifts from the baseline value
+			by 'driftThreshold' standard deviations.
+			Args:
+				curr 	numpy array of current
+			Returns:
+				None
+			Errors:
+				ExcessiveDriftError 	raised when the open channel current deviates
+										from the baseline by driftThreshold * sigma.
+				DriftRateError			raised when the slope of the open channel current
+										exceeds maxDriftRate
+		"""
+		pass			
+
 	#################################################################
 	# Internal functions
 	#################################################################
@@ -351,8 +372,6 @@ class metaEventPartition(object):
 
 		#### Event Queue ####
 		# self.eventQueue=[]
-
-		self.thrCurr=(abs(self.meanOpenCurr)-self.eventThreshold*abs(self.sdOpenCurr))
 
 		#### Vars for event partition stats ####
 		self.minDrift=abs(self.meanOpenCurr)

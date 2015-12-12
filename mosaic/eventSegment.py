@@ -79,6 +79,15 @@ class eventSegment(metaEventPartition.metaEventPartition):
 		except ValueError as err:
 			raise commonExceptions.SettingsTypeError( err )
 
+		# Calculate the threshold current from eventThreshold.
+		self.thrCurr=(abs(self.meanOpenCurr)-self.eventThreshold*abs(self.sdOpenCurr))
+
+		if self.driftThreshold < 0 or self.maxDriftRate < 0:
+			self.enableCheckDrift=False
+		else:
+			self.enableCheckDrift=True
+
+
 		#### Vars for event partition ####
 		self.eventstart=False
 		self.eventdat=[]
@@ -237,6 +246,12 @@ class eventSegment(metaEventPartition.metaEventPartition):
 				DriftRateError			raised when the slope of the open channel current
 										exceeds maxDriftRate
 		"""
+		# Update the threshold current from eventThreshold.
+		self.thrCurr=(abs(self.meanOpenCurr)-self.eventThreshold*abs(self.sdOpenCurr))
+
+		if not self.enableCheckDrift:
+			return
+
 		[mu,sd,sl]=self._openchanstats(curr)
 		
 		# store stats
