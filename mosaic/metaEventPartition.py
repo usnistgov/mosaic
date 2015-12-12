@@ -414,22 +414,6 @@ class metaEventPartition(object):
 		# write out event segment stats
 		self.outputString+=self.formatstats()
 
-		# print event processing stats. these are limited to how
-		# many events were rejected
-		#nEventsProc=0
-		#for evnt in self.eventQueue:
-		#	if evnt.mdProcessingStatus=='normal':
-		#		nEventsProc+=1
-		#self.outputString+='\tEvent processing stats:\n'
-		#self.outputString+='\t\tAccepted = {0}\n'.format(nEventsProc)
-		#self.outputString+='\t\tRejected = {0}\n'.format(self.eventcount-nEventsProc)
-		#self.outputString+='\t\tRejection rate = {0}\n\n'.format(round(1-nEventsProc/float(self.eventcount),2))
-
-		# Display averaged properties
-		#for p in self.eventQueue[0].mdAveragePropertiesList():
-		#	self.outputString+='\t\t{0} = {1}\n'.format(p, self.__roundufloat( np.mean( [ getattr(evnt, p) for evnt in self.eventQueue if getattr(evnt, p) != -1 ] )) )
-
-		#self.outputString+="\n\n[Settings]\n\tSettings File = '{0}'\n\n".format(self.settingsDict.settingsFile)
 		self.outputString+="\n[Settings]\n"
 
 		# write out trajectory IO settings

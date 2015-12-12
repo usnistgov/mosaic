@@ -8,6 +8,7 @@
 	:License:	See LICENSE.TXT
 	:ChangeLog:
 	.. line-block::
+		12/12/15	AB 	Recalculate baseline currents when drift checks are disabled and baseline detection is set to automatic.
 		12/11/15 	AB 	Refactor code
 		5/17/14		AB  Delete plotting support
 		5/17/14		AB  Add metaMDIO support for meta-data and time-series storage
@@ -254,6 +255,8 @@ class eventSegment(metaEventPartition.metaEventPartition):
 		self.thrCurr=(abs(self.meanOpenCurr)-self.eventThreshold*abs(self.sdOpenCurr))
 
 		if not self.enableCheckDrift:
+			if self.meanOpenCurr == -1. or self.sdOpenCurr == -1. or self.slopeOpenCurr == -1.:
+				[ self.meanOpenCurr, self.sdOpenCurr, self.slopeOpenCurr ] = self._openchanstats(curr)
 			return
 
 		[mu,sd,sl]=self._openchanstats(curr)
