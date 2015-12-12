@@ -8,6 +8,7 @@
 	:License:	See LICENSE.TXT
 	:ChangeLog:
 	.. line-block::
+		12/11/15 	AB 	Refactor code
 		5/17/14		AB  Delete plotting support
 		5/17/14		AB  Add metaMDIO support for meta-data and time-series storage
 		2/14/14		AB 	Pass absdatidx argument to event processing to track absolute time of 
@@ -221,6 +222,40 @@ class eventSegment(metaEventPartition.metaEventPartition):
 			return
 
 
+	def _checkdrift(self, curr):
+		"""
+			Check the open channel current for drift. This function triggers
+			an error when the open channel current drifts from the baseline value
+			by 'driftThreshold' standard deviations.
+			Args:
+				curr 	numpy array of current
+			Returns:
+				None
+			Errors:
+				ExcessiveDriftError 	raised when the open channel current deviates
+										from the baseline by driftThreshold * sigma.
+				DriftRateError			raised when the slope of the open channel current
+										exceeds maxDriftRate
+		"""
+		[mu,sd,sl]=self._openchanstats(curr)
+		
+		# store stats
+		self.minDrift=min(abs(mu), self.minDrift)
+		self.maxDrift=max(abs(mu), self.maxDrift)
+		self.minDriftR=min(sl, self.minDriftR)
+		self.maxDriftR=max(sl, self.maxDriftR)
+
+		sigma=self.driftThreshold
+		if (abs(mu)<(abs(self.meanOpenCurr)-sigma*abs(self.sdOpenCurr))) or abs(mu)>(abs(self.meanOpenCurr)+sigma*abs(self.sdOpenCurr)):
+			raise ExcessiveDriftError("The open channel current ({0:0.2f} pA) deviates from the baseline value ({1:0.2f}) by {2} sigma.".format(mu, self.meanOpenCurr, sigma))
+
+		if (abs(sl)) > abs(self.maxDriftRate):
+			raise DriftRateError("The open channel conductance is changing faster ({0} pA/s) than the allowed rate ({1} pA/s).".format(round(abs(sl),2), abs(round(self.maxDriftRate,2))))
+
+		# Save the open channel conductance stats for the current window
+		self.windowOpenCurrentMean=mu
+		self.windowOpenCurrentSD=sd 
+		self.windowOpenCurrentSlope=sl
 
 	# def __roundufloat(self, uf):
 	# 	u=uncertainties
