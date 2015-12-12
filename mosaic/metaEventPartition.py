@@ -439,11 +439,11 @@ class metaEventPartition(object):
 		self.outputString+=self.formatsettings()+'\n\n'
 
 		# event processing settings
-		self.outputString+=self.tEventProcObj.formatsettings()+'\n\n'
+		self.outputString+=self.tEventProcObj.formatsettings()+'\n'
 
 		# Output files
 		self.outputString+=self.formatoutputfiles()
-		self.outputString+='\tLog file = eventProcessing.log\n\n'
+		self.outputString+='\tLog file = eventProcessing.log\n\n\n'
 
 		# Finally, timing information
 		self.outputString+='[Timing]\n\tSegment trajectory = {0} s\n'.format(round(self.segmentTime,2))

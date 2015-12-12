@@ -110,9 +110,12 @@ class eventSegment(metaEventPartition.metaEventPartition):
 		logObj.addLogText( 'Event padding = {0} points'.format(self.eventPad) )
 		logObj.addLogText( 'Min. event rejection length = {0} points'.format(self.minEventLength) )
 		logObj.addLogText( 'Event trigger threshold = {0:5.2f} * SD'.format(self.eventThreshold) )
-		logObj.addLogText( 'Drift error threshold = {0} * SD'.format(self.driftThreshold) )
-		logObj.addLogText( 'Drift rate error threshold = {0} pA/s'.format(self.maxDriftRate) )
-
+		if self.enableCheckDrift:
+			logObj.addLogText( 'Drift error threshold = {0} * SD'.format(self.driftThreshold) )
+			logObj.addLogText( 'Drift rate error threshold = {0} pA/s'.format(self.maxDriftRate) )
+		else:
+			logObj.addLogText( 'Drift error threshold = ***disabled***' )
+			logObj.addLogText( 'Drift rate error threshold = ***disabled***' )
 	
 		return str(logObj)
 
@@ -120,21 +123,21 @@ class eventSegment(metaEventPartition.metaEventPartition):
 		"""
 			Return a formatted string of statistics for display in the output log.
 		"""
-		fmtstr=""
+		logObj=log.mosaicLog()
 
-		fmtstr+='\tBaseline open channel conductance:\n'
-		fmtstr+='\t\tMean	= {0} pA\n'.format( round(self.meanOpenCurr,2) ) 
-		fmtstr+='\t\tSD	= {0} pA\n'.format( round(self.sdOpenCurr,2) ) 
-		fmtstr+='\t\tSlope 	= {0} pA/s\n'.format( round(self.slopeOpenCurr,2) ) 
+		logObj.addLogHeader( 'Baseline open channel conductance:' )
+		logObj.addLogText( 'Mean	= {0} pA'.format( round(self.meanOpenCurr,2) ) )
+		logObj.addLogText( 'SD	= {0} pA'.format( round(self.sdOpenCurr,2) ) )
+		logObj.addLogText( 'Slope 	= {0} pA/s'.format( round(self.slopeOpenCurr,2) ) )
 		
 
-		fmtstr+='\n\tEvent segment stats:\n'
-		fmtstr+='\t\tEvents detected = {0}\n'.format(self.eventcount)
+		logObj.addLogText( 'Event segment stats:' )
+		logObj.addLogText( 'Events detected = {0}'.format(self.eventcount) )
 
-		fmtstr+='\n\t\tOpen channel drift (max) = {0} * SD\n'.format(abs(round((abs(self.meanOpenCurr)-abs(self.maxDrift))/self.sdOpenCurr,2)))
-		fmtstr+='\t\tOpen channel drift rate (min/max) = ({0}/{1}) pA/s\n\n'.format(round(self.minDriftR,2), round(self.maxDriftR))
-
-		return fmtstr
+		logObj.addLogText( 'Open channel drift (max) = {0} * SD'.format(abs(round((abs(self.meanOpenCurr)-abs(self.maxDrift))/self.sdOpenCurr,2))) )
+		logObj.addLogText( 'Open channel drift rate (min/max) = ({0}/{1}) pA/s'.format(round(self.minDriftR,2), round(self.maxDriftR)) )
+		
+		return str(logObj)
 
 	def formatoutputfiles(self):
 		fmtstr=""

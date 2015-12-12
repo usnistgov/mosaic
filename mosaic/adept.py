@@ -232,8 +232,8 @@ class adept(metaEventProcessor.metaEventProcessor):
 		logObj.addLogText( 'Max. iterations  = {0}'.format(self.FitIters) )
 		logObj.addLogText( 'Fit tolerance (rel. err in leastsq)  = {0}'.format(self.FitTol) )
 		logObj.addLogText( 'Unlink RC constants = {0}'.format(bool(self.UnlinkRCConst)) )
-		logObj.addLogText( 'Initial partition threshold  = {0}\n'.format(self.InitThreshold) )
-		logObj.addLogText( 'Min. State Length = {0}\n\n'.format(self.MinStateLength) )
+		logObj.addLogText( 'Initial partition threshold  = {0}'.format(self.InitThreshold) )
+		logObj.addLogText( 'Min. State Length = {0}'.format(self.MinStateLength) )
 
 		return str(logObj)
 
