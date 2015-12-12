@@ -443,14 +443,14 @@ class metaEventPartition(object):
 
 		# Output files
 		self.outputString+=self.formatoutputfiles()
-		self.outputString+='\tLog file = eventProcessing.log\n\n\n'
+		self.outputString+='\t\tLog file = eventProcessing.log\n\n\n'
 
 		# Finally, timing information
-		self.outputString+='[Timing]\n\tSegment trajectory = {0} s\n'.format(round(self.segmentTime,2))
-		self.outputString+='\tProcess events = {0} s\n\n'.format(round(self.procTime,2))
-		self.outputString+='\tTotal = {0} s\n'.format(round(self.segmentTime+self.procTime,2))
+		self.outputString+='[Timing]\n\t\tSegment trajectory = {0} s\n'.format(round(self.segmentTime,2))
+		self.outputString+='\t\tProcess events = {0} s\n\n'.format(round(self.procTime,2))
+		self.outputString+='\t\tTotal = {0} s\n'.format(round(self.segmentTime+self.procTime,2))
 		if self.eventcount > 0:
-			self.outputString+='\tTime per event = {0} ms\n\n\n'.format(round(1000.*(self.segmentTime+self.procTime)/float(self.eventcount),2))
+			self.outputString+='\t\tTime per event = {0} ms\n\n\n'.format(round(1000.*(self.segmentTime+self.procTime)/float(self.eventcount),2))
 		
 		# write it all out to stdout and also to a file
 		# eventProcessing.log in the data location

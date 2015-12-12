@@ -140,17 +140,18 @@ class eventSegment(metaEventPartition.metaEventPartition):
 		return str(logObj)
 
 	def formatoutputfiles(self):
-		fmtstr=""
+		logObj=log.mosaicLog()
 
-		fmtstr+='[Output]\n'
-		fmtstr+='\tOutput path = {0}\n'.format(self.trajDataObj.datPath)
-		fmtstr+='\tEvent characterization data = '+ self.mdioDBHnd.dbFilename +'\n'
+
+		logObj.addLogSection( '[Output]' )
+		logObj.addLogText( 'Output path = {0}'.format(self.trajDataObj.datPath) )
+		logObj.addLogText( 'Event characterization data = '+ self.mdioDBHnd.dbFilename )
 		if self.writeEventTS:
-			fmtstr+='\tEvent time-series = ***enabled***\n'
+			logObj.addLogText( 'Event time-series = ***enabled***' )
 		else:
-			fmtstr+='\tEvent time-series = ***disabled***\n'
+			logObj.addLogText( 'Event time-series = ***disabled***' )
 
-		return fmtstr
+		return str(logObj)
 
 	#################################################################
 	# Interface functions

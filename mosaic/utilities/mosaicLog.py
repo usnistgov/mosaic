@@ -25,9 +25,14 @@ class mosaicLog(dict):
 
 	def __str__(self):
 		try:
-			logstr='\t'+self["hdr"]+'\n'
+			logstr=self["sec"]+'\n'
 		except KeyError:
 			logstr=""
+
+		try:
+			logstr='\t'+self["hdr"]+'\n'
+		except KeyError:
+			pass
 
 		keys=sorted(self.keys())
 		for k in keys:
@@ -48,9 +53,18 @@ class mosaicLog(dict):
 			yield logCounter
 			logCounter+=1
 
+	def addLogSection(self, section):
+		"""
+			Add a section to the output log.
+
+			:Args:
+				- `section` : 	section heading. Convention requires the text to be placed in square brackets, for example "[Output]"
+		"""
+		self["sec"]=section
+
 	def addLogHeader(self, header):
 		"""
-			Add a section header to the output log.
+			Add a header to the output log.
 
 			:Args:
 				- `header` : 	header text
