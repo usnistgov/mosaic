@@ -7,7 +7,7 @@ def update_rcParams():
 		{
 			'backend': 'wxAgg', 
 			'lines.markersize' : 2, 
-			'font-family': 'sans-serif',
+			# 'font-family': 'sans-serif',
 			'font.sans-serif': 'Helvetica',
 			'font.weight': 200,
 			'axes.labelsize': fontlabel_size, 

@@ -5,22 +5,35 @@
  	:Author: 	Arvind Balijepalli <arvind.balijepalli@nist.gov>
 	:ChangeLog:
 	.. line-block::
+		12/12/15	AB	Generalized plot function to allow different data types
 		11/19/15	AB	Initial version
 """
 import mosaic.abfTrajIO as abf
+import mosaic.qdfTrajIO as qdf
+import mosaic.binTrajIO as bin
+import mosaic.tsvTrajIO as tsv
+
 import matplotlib.pyplot as plt
 import numpy as np
 import mosaicscripts.plots.mplformat as mplformat
 
-def abfPlot(dir, t0, t1, Fs, **kwargs):
+data_types= {
+	"abf" : [abf.abfTrajIO, "*.abf"],
+	"qdf" : [qdf.qdfTrajIO, "*.qdf"],
+	"bin" : [bin.binTrajIO, "*.bin"],
+	"tsv" : [tsv.tsvTrajIO, "*.tsv"]
+}
+def PlotTimeseries(dir, data_type, t0, t1, Fs, **kwargs):
 	"""
 		Generate publication quality time-series plots. 
 
-		dir:		directory containing ABF files
+		dir:		directory containing data files
+		data_type: 	One of "abf", "qdf", "bin" or "tsv".
 		t0: 		start time.
 		t1: 		end time.
 		Fs: 		Sampling rate in Hz.
 		labels:		Axes text labels. For example ```["t (s)", "-i (pA)"]``` for a current vs. time plot.
+		data_args:	(optional) For "qdf", "bin" or "tsv", settings to read in data. See :ref:`settings-page` for details.
 		axes: 		(optional) Show axes (Default: True)
 		highlights:	(optional) Highlight segments of the time-series with a different style (Default: None). For example: 
 				highlights=[
@@ -37,10 +50,14 @@ def abfPlot(dir, t0, t1, Fs, **kwargs):
 	highlights=kwargs.pop('highlights', None)
 	plotopts=kwargs.pop('plotopts', {})
 	polarity=kwargs.pop('polarity', 1.0)
+	data_args=kwargs.pop('data_args', {})
 
-	abfDat=abf.abfTrajIO(dirname=dir, filter='*.abf')
-	t=abfDat.popdata(t0*Fs)
-	plotdata=polarity*abfDat.popdata(int((t1-t0)*Fs))
+	[tsObj, tsFilter] = data_types[data_type]
+
+
+	tsDat=tsObj(dirname=dir, filter=tsFilter, **data_args)
+	t=tsDat.popdata(t0*Fs)
+	plotdata=polarity*tsDat.popdata(int((t1-t0)*Fs))
 
 	fig=plt.figure(facecolor='white')
 
