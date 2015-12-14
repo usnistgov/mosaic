@@ -269,7 +269,6 @@ class adept2State(metaEventProcessor.metaEventProcessor):
 		except:
 			# print optfit.message, optfit.lmdif_message
 	 		self.rejectEvent('eFitFailure')
-	 		raise
 
 			
 	
