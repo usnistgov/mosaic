@@ -180,7 +180,10 @@ class metaEventPartition(object):
 				#print self.meanOpenCurr, self.minDrift, self.maxDrift, self.minDriftR, self.maxDriftR
 
 				# Process the data segment for events
-				self._eventsegment()
+				if (self.meanOpenCurr > self.minBaseline and self.meanOpenCurr < self.maxBaseline) or self.minBaseline == -1.0 or self.maxBaseline == -1.0:
+                                        self._eventsegment()
+                                else: #skip over bad data, no need to abort
+                                        continue
 
 
 		except metaTrajIO.EmptyDataPipeError, err:
@@ -463,7 +466,7 @@ class metaEventPartition(object):
 		#print "nPoints=", n, "len(tstamp)=", len(tstamp), "type(curr)", type(curr)
 		
 		# Calculate the mean and standard deviation of the open state
-		mu, sig=OpenCurrentDist(curr, 0.5)
+		mu, sig=OpenCurrentDist(curr, 0.5, self.minBaseline, self.maxBaseline)
 
 		# Fit the data to a straight line to calculate the slope
 		# ft[0]: slope

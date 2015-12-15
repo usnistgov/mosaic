@@ -77,6 +77,10 @@ class eventSegment(metaEventPartition.metaEventPartition):
 			self.meanOpenCurr=float(self.settingsDict.pop("meanOpenCurr",-1.))
 			self.sdOpenCurr=float(self.settingsDict.pop("sdOpenCurr",-1.))
 			self.slopeOpenCurr=float(self.settingsDict.pop("slopeOpenCurr",-1.))
+			self.minBaseline=float(self.settingsDict.pop("minBaseline",-1.))
+			self.maxBaseline=float(self.settingsDict.pop("maxBaseline",-1.))
+			print self.maxBaseline
+			print self.minBaseline
 		except ValueError as err:
 			raise commonExceptions.SettingsTypeError( err )
 

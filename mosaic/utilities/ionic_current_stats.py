@@ -8,8 +8,9 @@
 """
 import numpy as np 
 from scipy.optimize import curve_fit
+import pylab as pl
 
-def OpenCurrentDist(dat, limit):
+def OpenCurrentDist(dat, limit, minBaseline, maxBaseline):
 	"""
 		Calculate the mean and standard deviation of a time-series.
 		
@@ -28,12 +29,18 @@ def OpenCurrentDist(dat, limit):
 	def _fitfunc(x, a, s, m):
 		return a*np.exp(-(x-m)**2/(2. * s**2))
 
-	y,x=np.histogram(uDat, range=hLimit, bins=100)
+        if minBaseline == -1.0 or maxBaseline == -1.0:
+                y,x=np.histogram(uDat, range=hLimit, bins=100)
+                
+        else:
+                y,x=np.histogram(uDat, range=[minBaseline, maxBaseline], bins=100)
 	try:
 		popt, pcov = curve_fit(_fitfunc, x[:-1], y, p0=[np.max(y), dStd, np.mean(x)])
 		perr=np.sqrt(np.diag(pcov))
 	except:
 		return [0,0]
+	if np.any(perr/popt > 0.5): #0.5 is arbitrary for the moment, for testing. Could be added as a parameter or hard-coded pending testing. 
+                return [0,0]
 
 	return [popt[2], np.abs(popt[1])]
 
