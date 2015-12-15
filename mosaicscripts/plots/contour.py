@@ -34,21 +34,24 @@ def contour_plot(dat2d, x_range, y_range, bin_size, contours, colormap, img_inte
 	"""
 		Generate publication quality contour plots using the ```contour_plot``` function. The function expects a two-dimensional array of data (typically blockade depth and residence time) and several options as listed below:
 
-			dat2d: 			    2-D array with format [[x1,y1], [x2,y2], ... ... ... [xn,yn]]
-			x_range: 			list with min and max in X
-			y_range: 			list with min and max in Y
-			bin_size:			bin size
-			contours:			number of contours
-			colormap:			Colormap to use. Expects a colormap object. See http://matplotlib.org/examples/color/colormaps_reference.html.
-			img_interpolation:	interpolation to use for image
-			xticks:				(optional) specify ticks for the X-axis. List of format [ (tick, label), ...]
-			yticks:				(optional) specify ticks for the X-axis. List of format [ (tick, label), ...]
-			figname:			(optional) figure name if saving an image. File extension determines format.
-			dpi:				(optional) figure resolution
-			colorbar_num_ticks:	(optional) number of ticks in the colorbar
-			cb_round_digits:	(optional) round colorbar ticks to multiple of cb_round_digits. For example, -2 rounds to 100. See python docs.
-			min_count_pct:		(optional) set bins with < min_count_pct of the maximum to 0
-			axes_type:			(optional) set linear or log axis. Expects a list for X and Y. For example ['linear', 'log'].
+		:Args:
+			- `dat2d` : 			    2-D array with format [[x1,y1], [x2,y2], ... ... ... [xn,yn]]
+			- `x_range` : 				list with min and max in X
+			- `y_range` : 				list with min and max in Y
+			- `bin_size` :				bin size
+			- `contours` :				number of contours
+			- `colormap` :				Colormap to use. Expects a colormap object. See http://matplotlib.org/examples/color/colormaps_reference.html.
+			- `img_interpolation` :		interpolation to use for image
+		
+		:Keyword Args:
+			- `xticks` :				(optional) specify ticks for the X-axis. List of format [ (tick, label), ...]
+			- `yticks` :				(optional) specify ticks for the X-axis. List of format [ (tick, label), ...]
+			- `figname` :				(optional) figure name if saving an image. File extension determines format.
+			- `dpi` :					(optional) figure resolution
+			- `colorbar_num_ticks` :	(optional) number of ticks in the colorbar
+			- `cb_round_digits` :		(optional) round colorbar ticks to multiple of cb_round_digits. For example, -2 rounds to 100. See python docs.
+			- `min_count_pct` :			(optional) set bins with < min_count_pct of the maximum to 0
+			- `axes_type` :				(optional) set linear or log axis. Expects a list for X and Y. For example ['linear', 'log'].
 	"""
 	mplformat.update_rcParams()
 
