@@ -20,6 +20,7 @@ def update_rcParams():
 			'ytick.major.size': 10,
 			'xtick.major.width': 1,
 			'ytick.major.width': 1,
-			'contour.negative_linestyle': 'solid'
+			'contour.negative_linestyle': 'solid',
+			'figure.autolayout' : True
 		}
 	)
