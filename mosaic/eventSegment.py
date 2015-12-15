@@ -8,6 +8,7 @@
 	:License:	See LICENSE.TXT
 	:ChangeLog:
 	.. line-block::
+                15/12/15        KB      Bug fixes to baseline recalculation
 		12/12/15	AB 	Recalculate baseline currents when drift checks are disabled and baseline detection is set to automatic.
 		12/11/15 	AB 	Refactor code
 		5/17/14		AB  Delete plotting support

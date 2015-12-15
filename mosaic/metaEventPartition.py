@@ -7,6 +7,7 @@
 	:License:	See LICENSE.TXT
 	:ChangeLog:
 	.. line-block::
+                15/12/15        KB      Program steps over bad data blocks without aborting
 		12/11/15 	AB 	Refactor code
 		12/6/15 	AB 	Add sampling frequency to analysis info table
 		8/18/14		AB 	Fixed parallel processing cleanup.

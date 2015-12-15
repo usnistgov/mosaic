@@ -4,6 +4,7 @@
 	:License:	See LICENSE.TXT	
 	:ChangeLog:
 	.. line-block::
+                15/12/15        KB      Added error checking and limits to baseline calculations
 		10/30/14	AB	Initial version
 """
 import numpy as np 
