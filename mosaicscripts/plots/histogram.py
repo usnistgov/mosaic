@@ -61,11 +61,15 @@ def histogram_plot(dat, nbins, x_range, **kwargs):
 	fill_alpha=kwargs.pop( 'fill_alpha', 0.25)
 	advanced_opts=kwargs.pop( 'advanced_opts', {} )
 
+	plotopts={'color': color}
+	plotopts.update( advanced_opts )
+
+
 	x=np.hstack(np.array(dat))
 
 	h, bins=np.histogram(x, bins=nbins, range=x_range, density=den)
 
-	plt.plot(bins[:-1], h, color=color, **advanced_opts)	
+	plt.plot(bins[:-1], h, **plotopts)	
 	plt.fill_between(bins[:-1], 0, h, facecolor=color, alpha=fill_alpha )
 	plt.xlabel( xlabel )
 	plt.ylabel( ylabel )
