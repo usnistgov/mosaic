@@ -8,7 +8,7 @@
 	:License:	See LICENSE.TXT
 	:ChangeLog:
 	.. line-block::
-                15/12/15        KB      Bug fixes to baseline recalculation
+		15/12/15	KB	Bug fixes to baseline recalculation
 		12/12/15	AB 	Recalculate baseline currents when drift checks are disabled and baseline detection is set to automatic.
 		12/11/15 	AB 	Refactor code
 		5/17/14		AB  Delete plotting support
@@ -51,10 +51,6 @@ class eventSegment(metaEventPartition.metaEventPartition):
 			- `minEventLength` :	Minimum number points in the blocked state to qualify as an event (default: 5)
 			- `eventThreshold` :	Threshold, number of SD away from the open channel mean. If the abs(curr) is less
 							than 'abs(mean)-(eventThreshold*SD)' a new event is registered (default: 6)
-			- `driftThreshold` :	Trigger a drift warning when the mean open channel current deviates by 'driftThreshold'*
-							SD from the baseline open channel current (default: 2)
-			- `maxDriftRate` :	Trigger a warning when the open channel conductance changes at a rate faster 
-							than that specified. (default: 2 pA/s)
 			- `meanOpenCurr` :	Explicitly set mean open channel current. (pA) (default: -1, to 
 							calculate automatically)
 			- `sdOpenCurr` :		Explicitly set open channel current SD. (pA) (default: -1, to 
@@ -73,15 +69,9 @@ class eventSegment(metaEventPartition.metaEventPartition):
 			self.eventPad=int(self.settingsDict.pop("eventPad", 500))
 			self.minEventLength=int(self.settingsDict.pop("minEventLength",5))
 			self.eventThreshold=float(self.settingsDict.pop("eventThreshold",6.0))
-			self.driftThreshold=float(self.settingsDict.pop("driftThreshold",2.0))
-			self.maxDriftRate=float(self.settingsDict.pop("maxDriftRate",2.0))
 			self.meanOpenCurr=float(self.settingsDict.pop("meanOpenCurr",-1.))
 			self.sdOpenCurr=float(self.settingsDict.pop("sdOpenCurr",-1.))
 			self.slopeOpenCurr=float(self.settingsDict.pop("slopeOpenCurr",-1.))
-			self.minBaseline=float(self.settingsDict.pop("minBaseline",-1.))
-			self.maxBaseline=float(self.settingsDict.pop("maxBaseline",-1.))
-			print self.maxBaseline
-			print self.minBaseline
 		except ValueError as err:
 			raise commonExceptions.SettingsTypeError( err )
 
@@ -239,53 +229,6 @@ class eventSegment(metaEventPartition.metaEventPartition):
 					self.preeventdat.clear()
 		except IndexError:
 			return
-
-
-	def _checkdrift(self, curr):
-		"""
-			Check the open channel current for drift. This function triggers
-			an error when the open channel current drifts from the baseline value
-			by 'driftThreshold' standard deviations.
-			Args:
-				curr 	numpy array of current
-			Returns:
-				None
-			Errors:
-				ExcessiveDriftError 	raised when the open channel current deviates
-										from the baseline by driftThreshold * sigma.
-				DriftRateError			raised when the slope of the open channel current
-										exceeds maxDriftRate
-		"""
-		
-
-		if not self.enableCheckDrift:
-			#if self.meanOpenCurr == -1. or self.sdOpenCurr == -1. or self.slopeOpenCurr == -1.:
-			[ self.meanOpenCurr, self.sdOpenCurr, self.slopeOpenCurr ] = self._openchanstats(curr)
-			self.thrCurr=(abs(self.meanOpenCurr)-self.eventThreshold*abs(self.sdOpenCurr))
-			return
-
-		# Update the threshold current from eventThreshold.
-		self.thrCurr=(abs(self.meanOpenCurr)-self.eventThreshold*abs(self.sdOpenCurr))
-
-		[mu,sd,sl]=self._openchanstats(curr)
-		
-		# store stats
-		self.minDrift=min(abs(mu), self.minDrift)
-		self.maxDrift=max(abs(mu), self.maxDrift)
-		self.minDriftR=min(sl, self.minDriftR)
-		self.maxDriftR=max(sl, self.maxDriftR)
-
-		sigma=self.driftThreshold
-		if (abs(mu)<(abs(self.meanOpenCurr)-sigma*abs(self.sdOpenCurr))) or abs(mu)>(abs(self.meanOpenCurr)+sigma*abs(self.sdOpenCurr)):
-			raise ExcessiveDriftError("The open channel current ({0:0.2f} pA) deviates from the baseline value ({1:0.2f}) by {2} sigma.".format(mu, self.meanOpenCurr, sigma))
-
-		if (abs(sl)) > abs(self.maxDriftRate):
-			raise DriftRateError("The open channel conductance is changing faster ({0} pA/s) than the allowed rate ({1} pA/s).".format(round(abs(sl),2), abs(round(self.maxDriftRate,2))))
-
-		# Save the open channel conductance stats for the current window
-		self.windowOpenCurrentMean=mu
-		self.windowOpenCurrentSD=sd 
-		self.windowOpenCurrentSlope=sl
 
 	# def __roundufloat(self, uf):
 	# 	u=uncertainties
