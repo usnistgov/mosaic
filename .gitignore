@@ -4,6 +4,7 @@ data/eventMD-2*sqlite
 .idea/
 MANIFEST
 _docs/
+_mosaic-examples/
 addons/.DS_Store
 addons/mathematica/MosaicAnalysis.nb
 addons/mathematica/MosaicUtils.nb
