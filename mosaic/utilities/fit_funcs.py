@@ -24,6 +24,9 @@ def heaviside(x):
 
 	return out
 	
+def singleExponential(t, a, tau):
+	return a * np.exp(-t/tau)
+
 def stepResponseFunc(t, tau1, tau2, mu1, mu2, a, b):
 	try:
 		t1=(np.exp((mu1-t)/tau1)-1)*heaviside(t-mu1)
