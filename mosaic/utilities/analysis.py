@@ -6,10 +6,9 @@ import math
 import numpy as np
 from scipy.optimize import curve_fit
 
-
 from mosaic.utilities.fit_funcs import singleExponential
 
-def CaptureRate(startTimes):
+def caprate(startTimes):
 	"""
 		Estimate the capture rate from a list of event start times in milliseconds.
 	"""
