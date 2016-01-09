@@ -46,7 +46,10 @@ def histogram_plot(dat, nbins, x_range, **kwargs):
 			- `xticks` :			(optional) specify ticks for the X-axis. List of format [ (tick, label), ...]
 			- `yticks` :			(optional) specify ticks for the X-axis. List of format [ (tick, label), ...]
 			- `figname` :			(optional) figure name if saving an image. File extension determines format.
-			- `dpi` :				(optional) figure resolution
+			- `dpi` :				(optional) figure resolution.
+			- `show` :				(optional) if True (default) call the show() function to display the plot.
+			- `return_histogram` :	(optional) if True, return the histogram values and bins. Default is False.
+
 			- `advanced_opts` :		(optional) a Python dictionary that supplies advanced plotting options. See `Matplotlib plot documentation 
 <http://matplotlib.org/api/pyplot_api.html#matplotlib.pyplot.plot>`_ for details.
 	"""
@@ -59,6 +62,8 @@ def histogram_plot(dat, nbins, x_range, **kwargs):
 	ylabel=kwargs.pop( 'ylabel', '' )
 	color=kwargs.pop( 'color', '#4155A3' )
 	fill_alpha=kwargs.pop( 'fill_alpha', 0.25)
+	show=kwargs.pop('show', True)
+	return_histogram=kwargs.pop('return_histogram', False)
 	advanced_opts=kwargs.pop( 'advanced_opts', {} )
 
 	plotopts={'color': color}
@@ -92,5 +97,10 @@ def histogram_plot(dat, nbins, x_range, **kwargs):
 		)
 	except:
 		pass
-	plt.show()
 
+	if show:
+		plt.show()
+
+
+	if return_histogram:
+		return h, bins[:-1]
