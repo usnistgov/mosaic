@@ -7,6 +7,7 @@
 	:License:	See LICENSE.TXT
 	:ChangeLog:
 	.. line-block::
+		01/10/15 		AB  Rename custom colormaps
 		11/11/15		AB	Initial version
 """
 # -*- coding: utf-8 -*-
@@ -210,10 +211,10 @@ def gen_colormaps():
 			 'alpha':  gen_cmap_alpha(1000)
 			}
 
-	blue1 = matplotlib.colors.LinearSegmentedColormap('Blue1', cdict_Bl)
-	orange1 = matplotlib.colors.LinearSegmentedColormap('Orange1', cdict_Or)
+	mosBlue = matplotlib.colors.LinearSegmentedColormap('mosaicBlue', cdict_Bl)
+	mosOrange = matplotlib.colors.LinearSegmentedColormap('mosaicOrange', cdict_Or)
 
-	plt.register_cmap(cmap=blue1)
-	plt.register_cmap(cmap=orange1)
+	plt.register_cmap(cmap=mosBlue)
+	plt.register_cmap(cmap=mosOrange)
 
 
