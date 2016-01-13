@@ -17,19 +17,7 @@ import numpy as np
 import matplotlib.cm as cm
 import matplotlib.mlab as mlab
 import matplotlib.pyplot as plt
-import mosaic.sqlite3MDIO as sql
 import mosaicscripts.plots.mplformat as mplformat
-
-def query(dbname, query_str="select BlockDepth, ResTime from metadata where ProcessingStatus='normal' and BlockDepth > 0 and ResTime > 0.02"):
-	"""
-		Simple wrapper to perform a query on a MOSAIC database.
-	"""
-	db=sql.sqlite3MDIO()
-	db.openDB(dbname)
-	q=db.queryDB(query_str)
-	db.closeDB()
-
-	return q
 
 def contour_plot(dat2d, x_range, y_range, bin_size, contours, colormap, img_interpolation, **kwargs):
 	"""
