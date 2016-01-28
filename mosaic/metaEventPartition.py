@@ -7,6 +7,7 @@
 	:License:	See LICENSE.TXT
 	:ChangeLog:
 	.. line-block::
+		1/28/16		AB 	Fixed a bug in analysis timing.
 		12/6/15 	AB 	Add sampling frequency to analysis info table
 		8/18/14		AB 	Fixed parallel processing cleanup.
 		5/17/14		AB 	Delete Plotting support
@@ -84,6 +85,8 @@ class metaEventPartition(object):
 
 		self.settingsDict = eventPartitionSettings 
 		self.eventProcSettingsDict = eventProcSettings
+
+		self.procTime=0.0
 
 		try:
 			self.writeEventTS=int(self.settingsDict.pop("writeEventTS",1))
@@ -376,13 +379,13 @@ class metaEventPartition(object):
 	    					sys.stdout.flush()
 
 			self.outputString='\tProcess events: ***NORMAL***\n\n\n'
-			self.procTime=time.time()-startTime
+			self.procTime+=time.time()-startTime
 		except KeyboardInterrupt:
-			self.procTime=time.time()-startTime
+			self.procTime+=time.time()-startTime
 			self.outputString+='\tProcess events: ***USER STOP***\n\n\n'
 		except BaseException, err:
 			self.outputString='\tProcess events: ***ERROR***\n\t\t{0}\n\n\n'.format(str(err))
-			self.procTime=time.time()-startTime
+			self.procTime+=time.time()-startTime
 			raise
 
 		sys.stdout.write('                                                                    \r' )
@@ -426,11 +429,11 @@ class metaEventPartition(object):
 		self.outputString+='\tLog file = eventProcessing.log\n\n'
 
 		# Finally, timing information
-		self.outputString+='[Timing]\n\tSegment trajectory = {0} s\n'.format(round(self.segmentTime,2))
+		self.outputString+='[Timing]\n\tSegment trajectory = {0} s\n'.format(round(self.segmentTime-self.procTime,2))
 		self.outputString+='\tProcess events = {0} s\n\n'.format(round(self.procTime,2))
-		self.outputString+='\tTotal = {0} s\n'.format(round(self.segmentTime+self.procTime,2))
+		self.outputString+='\tTotal = {0} s\n'.format(round(self.segmentTime,2))
 		if self.eventcount > 0:
-			self.outputString+='\tTime per event = {0} ms\n\n\n'.format(round(1000.*(self.segmentTime+self.procTime)/float(self.eventcount),2))
+			self.outputString+='\tTime per event = {0} ms\n\n\n'.format(round(1000.*(self.segmentTime)/float(self.eventcount),2))
 		
 		# write it all out to stdout and also to a file
 		# eventProcessing.log in the data location
@@ -506,6 +509,8 @@ class metaEventPartition(object):
 		self.windowOpenCurrentSlope=sl
 
 	def _processEvent(self, eventobj):
+		startTime=time.time()
+
 		if self.parallelProc:
 			# handle parallel
 			sys.stdout.flush()
@@ -529,3 +534,5 @@ class metaEventPartition(object):
 			# call the process event function and store
 			eventobj.processEvent()
 			# self.eventQueue.append( eventobj )
+
+		self.procTime+=time.time()-startTime
