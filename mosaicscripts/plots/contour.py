@@ -7,6 +7,7 @@
 	:License:	See LICENSE.TXT
 	:ChangeLog:
 	.. line-block::
+		02/05/16 		AB 	Add options to scale z-axis
 		01/10/15 		AB  Rename custom colormaps
 		11/11/15		AB	Initial version
 """
@@ -33,6 +34,7 @@ def contour_plot(dat2d, x_range, y_range, bin_size, contours, colormap, img_inte
 			- `img_interpolation` :		interpolation to use for image
 		
 		:Keyword Args:
+			- `zscale` : 				(optional) plot the probability density if set to `density` or scale to the max count if set to `unity`.
 			- `xticks` :				(optional) specify ticks for the X-axis. List of format [ (tick, label), ...]
 			- `yticks` :				(optional) specify ticks for the X-axis. List of format [ (tick, label), ...]
 			- `figname` :				(optional) figure name if saving an image. File extension determines format.
@@ -53,6 +55,11 @@ def contour_plot(dat2d, x_range, y_range, bin_size, contours, colormap, img_inte
 		y_axes_type=ax[1]
 
 		aspect='auto'
+		zscale=kwargs.pop('zscale', 'None')
+		if zscale=='density': 
+			density = True
+		else:
+			density = False
 	except:
 		x_axes_type='linear'
 		y_axes_type='linear'
@@ -74,13 +81,17 @@ def contour_plot(dat2d, x_range, y_range, bin_size, contours, colormap, img_inte
 		yedges = np.arange(x_range[0], x_range[1], bin_size)
 		x=np.hstack(np.array(x1))
 
+	if zscale=='unity':
+		ZZ,xe,ye=np.histogram2d(y, x, bins=(xedges, yedges))
+		Z=ZZ/ZZ.max()
+	else:
+		Z,xe,ye=np.histogram2d(y, x, bins=(xedges, yedges), normed=density)
 
-	Z,xe,ye=np.histogram2d(y, x, bins=(xedges, yedges))
 	X, Y = np.meshgrid(ye[:-1], xe[:-1])
 
-	lmin=int(kwargs.pop("min_count_pct", 0.0)*Z.max())
-	lmax=int(Z.max())
-	delta_l=int(Z.max()/float(contours))
+	lmin=kwargs.pop("min_count_pct", 0.0)*Z.max()
+	lmax=Z.max()
+	delta_l=Z.max()/float(contours)
 
 
 	lowvals=Z<lmin
@@ -123,7 +134,7 @@ def contour_plot(dat2d, x_range, y_range, bin_size, contours, colormap, img_inte
 
 	try:
 		roundn=kwargs.pop('cb_round_digits', -1)
-		CBIticks=[int(round(d, roundn)) for d in np.arange(0, int(Z.max()), int(Z.max()/float(kwargs["colorbar_num_ticks"])))]
+		CBIticks=[round(d, roundn) for d in np.arange(0, Z.max()+(float(kwargs["colorbar_num_ticks"])-1), Z.max()/(float(kwargs["colorbar_num_ticks"])-1))]
 	except:
 		CBIticks=None
 
