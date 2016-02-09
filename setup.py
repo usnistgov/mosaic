@@ -155,7 +155,8 @@ setup(
             'data/eventMD-PEG28-cusumLevelAnalysis.sqlite',
             'data/.settings',
             'data/SingleChan-0001.qdf',
-            'data/SingleChan-0001_state.txt'
+            'data/SingleChan-0001_state.txt',
+            'commit-hash'
             ],
     install_requires=[
             'cython==0.20.1',
