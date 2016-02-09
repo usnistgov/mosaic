@@ -27,7 +27,10 @@ class AboutDialog(QtGui.QDialog):
 	def _setVersion(self):
 		import mosaic
 
-		self.versionLabel.setText( "Version " + mosaic.__version__ )
+		if mosaic.__build__:
+			self.versionLabel.setText( "Version " + mosaic.__version__ + "\n(Build " + mosaic.__build__ + ")" )
+		else:
+			self.versionLabel.setText( "Version " + mosaic.__version__ )
 
 	def _positionWindow(self):
 		"""
