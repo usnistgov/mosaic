@@ -18,7 +18,10 @@ dict_tree = Tree(get_pandas_path(), prefix='pandas', excludes=["*.pyc"])
 a.datas += dict_tree
 a.binaries = filter(lambda x: 'pandas' not in x[0], a.binaries)
 
-a.datas += [ ('icons/icon_100px.png', '../icons/icon_100px.png',  'DATA')]
+a.datas += [ 
+				('icons/icon_100px.png', '../icons/icon_100px.png',  'DATA'),
+				('commit-hash', '../commit-hash', 'DATA')
+			]
 pyz = PYZ(a.pure)
 # On OS X, collect data files and  build an application bundle
 if sys.platform=='darwin':
