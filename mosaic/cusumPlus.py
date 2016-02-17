@@ -305,7 +305,7 @@ class cusumPlus(metaEventProcessor.metaEventProcessor):
                                 while minstepflag == 0:
                                         minstepflag = 1
                                         currentlevels = [np.average(edat[edges[i]+self.MinLength:edges[i+1]]) for i in range(self.nStates)] #detect current levels during detected sub-events
-                                        toosmall = np.absolute(np.diff(currentlevels)) < self.StepSize*self.baseSD/4
+                                        toosmall = np.absolute(np.diff(currentlevels)) < self.StepSize*self.baseSD/2
                                         for i in range(len(toosmall)):
                                                 if toosmall[i] == True:
                                                         edges = np.delete(edges,i+1)
