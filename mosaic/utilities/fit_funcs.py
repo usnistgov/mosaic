@@ -6,6 +6,7 @@
 	:License:	See LICENSE.TXT	
 	:ChangeLog:
 	.. line-block::
+		12/09/15 	KB 	Added a wrapper for multiStateFunc
 		6/24/15 	AB 	Relaxed stepResponseFunc to include different RC constants 
 						for up and down states.
 		12/31/14 	AB 	Changed multi-state function to include a separate tau for 
@@ -23,6 +24,9 @@ def heaviside(x):
 
 	return out
 	
+def singleExponential(t, a, tau):
+	return a * np.exp(-t/tau)
+
 def stepResponseFunc(t, tau1, tau2, mu1, mu2, a, b):
 	try:
 		t1=(np.exp((mu1-t)/tau1)-1)*heaviside(t-mu1)
@@ -36,6 +40,11 @@ def stepResponseFunc(t, tau1, tau2, mu1, mu2, a, b):
 		return a*( t1+t2 ) + b
 	except:
 		raise
+
+def curve_fit_wrapper(t, n, *args):
+        tau, mu, a = list(args[0][:n]), list(args[0][n:2*n]), list(args[0][2*n:3*n])
+        return multiStateFunc(t, tau, mu, a, args[0][-1], n)
+        
 
 def multiStateFunc(t, tau, mu, a, b, n):
 	try:

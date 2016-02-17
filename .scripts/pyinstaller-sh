@@ -50,8 +50,9 @@ if [ $plat == 'Darwin' ]; then
 	mv icon.icns dist/MOSAIC.app/Contents/Resources
 	echo ${infoplist}>dist/MOSAIC.app/Contents/Info.plist
 	cd dist
-	hdiutil create ./mosaic-${ver}.dmg -srcfolder MOSAIC.app -ov
-	mv ./mosaic-${ver}.dmg ../../dist/
+	hdiutil create -format UDCO -size 200m -o ../../dist/mosaic-${ver}.dmg -srcfolder MOSAIC.app
+	# hdiutil create ./mosaic-${ver}.dmg -srcfolder MOSAIC.app -ov
+	# mv ./mosaic-${ver}.dmg ../../dist/
 else
 	cd dist
 	zip mosaic-x64-${ver}.zip MOSAIC.exe

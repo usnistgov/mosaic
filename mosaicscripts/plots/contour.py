@@ -7,6 +7,8 @@
 	:License:	See LICENSE.TXT
 	:ChangeLog:
 	.. line-block::
+		02/05/16 		AB 	Add options to scale z-axis
+		01/10/15 		AB  Rename custom colormaps
 		11/11/15		AB	Initial version
 """
 # -*- coding: utf-8 -*-
@@ -16,39 +18,31 @@ import numpy as np
 import matplotlib.cm as cm
 import matplotlib.mlab as mlab
 import matplotlib.pyplot as plt
-import mosaic.sqlite3MDIO as sql
 import mosaicscripts.plots.mplformat as mplformat
-
-def query(dbname, query_str="select BlockDepth, ResTime from metadata where ProcessingStatus='normal' and BlockDepth > 0 and ResTime > 0.02"):
-	"""
-		Simple wrapper to perform a query on a MOSAIC database.
-	"""
-	db=sql.sqlite3MDIO()
-	db.openDB(dbname)
-	q=db.queryDB(query_str)
-	db.closeDB()
-
-	return q
 
 def contour_plot(dat2d, x_range, y_range, bin_size, contours, colormap, img_interpolation, **kwargs):
 	"""
 		Generate publication quality contour plots using the ```contour_plot``` function. The function expects a two-dimensional array of data (typically blockade depth and residence time) and several options as listed below:
 
-			dat2d: 			    2-D array with format [[x1,y1], [x2,y2], ... ... ... [xn,yn]]
-			x_range: 			list with min and max in X
-			y_range: 			list with min and max in Y
-			bin_size:			bin size
-			contours:			number of contours
-			colormap:			Colormap to use. Expects a colormap object. See http://matplotlib.org/examples/color/colormaps_reference.html.
-			img_interpolation:	interpolation to use for image
-			xticks:				(optional) specify ticks for the X-axis. List of format [ (tick, label), ...]
-			yticks:				(optional) specify ticks for the X-axis. List of format [ (tick, label), ...]
-			figname:			(optional) figure name if saving an image. File extension determines format.
-			dpi:				(optional) figure resolution
-			colorbar_num_ticks:	(optional) number of ticks in the colorbar
-			cb_round_digits:	(optional) round colorbar ticks to multiple of cb_round_digits. For example, -2 rounds to 100. See python docs.
-			min_count_pct:		(optional) set bins with < min_count_pct of the maximum to 0
-			axes_type:			(optional) set linear or log axis. Expects a list for X and Y. For example ['linear', 'log'].
+		:Args:
+			- `dat2d` : 			    2-D array with format [[x1,y1], [x2,y2], ... ... ... [xn,yn]]
+			- `x_range` : 				list with min and max in X
+			- `y_range` : 				list with min and max in Y
+			- `bin_size` :				bin size
+			- `contours` :				number of contours
+			- `colormap` :				Colormap to use. Expects a colormap object. See http://matplotlib.org/examples/color/colormaps_reference.html.
+			- `img_interpolation` :		interpolation to use for image
+		
+		:Keyword Args:
+			- `zscale` : 				(optional) plot the probability density if set to `density` or scale to the max count if set to `unity`.
+			- `xticks` :				(optional) specify ticks for the X-axis. List of format [ (tick, label), ...]
+			- `yticks` :				(optional) specify ticks for the X-axis. List of format [ (tick, label), ...]
+			- `figname` :				(optional) figure name if saving an image. File extension determines format.
+			- `dpi` :					(optional) figure resolution
+			- `colorbar_num_ticks` :	(optional) number of ticks in the colorbar
+			- `cb_round_digits` :		(optional) round colorbar ticks to multiple of cb_round_digits. For example, -2 rounds to 100. See python docs.
+			- `min_count_pct` :			(optional) set bins with < min_count_pct of the maximum to 0
+			- `axes_type` :				(optional) set linear or log axis. Expects a list for X and Y. For example ['linear', 'log'].
 	"""
 	mplformat.update_rcParams()
 
@@ -61,6 +55,11 @@ def contour_plot(dat2d, x_range, y_range, bin_size, contours, colormap, img_inte
 		y_axes_type=ax[1]
 
 		aspect='auto'
+		zscale=kwargs.pop('zscale', 'None')
+		if zscale=='density': 
+			density = True
+		else:
+			density = False
 	except:
 		x_axes_type='linear'
 		y_axes_type='linear'
@@ -82,13 +81,17 @@ def contour_plot(dat2d, x_range, y_range, bin_size, contours, colormap, img_inte
 		yedges = np.arange(x_range[0], x_range[1], bin_size)
 		x=np.hstack(np.array(x1))
 
+	if zscale=='unity':
+		ZZ,xe,ye=np.histogram2d(y, x, bins=(xedges, yedges))
+		Z=ZZ/ZZ.max()
+	else:
+		Z,xe,ye=np.histogram2d(y, x, bins=(xedges, yedges), normed=density)
 
-	Z,xe,ye=np.histogram2d(y, x, bins=(xedges, yedges))
 	X, Y = np.meshgrid(ye[:-1], xe[:-1])
 
-	lmin=int(kwargs.pop("min_count_pct", 0.0)*Z.max())
-	lmax=int(Z.max())
-	delta_l=int(Z.max()/float(contours))
+	lmin=kwargs.pop("min_count_pct", 0.0)*Z.max()
+	lmax=Z.max()
+	delta_l=Z.max()/float(contours)
 
 
 	lowvals=Z<lmin
@@ -131,7 +134,7 @@ def contour_plot(dat2d, x_range, y_range, bin_size, contours, colormap, img_inte
 
 	try:
 		roundn=kwargs.pop('cb_round_digits', -1)
-		CBIticks=[int(round(d, roundn)) for d in np.arange(0, int(Z.max()), int(Z.max()/float(kwargs["colorbar_num_ticks"])))]
+		CBIticks=[round(d, roundn) for d in np.arange(0, Z.max()+(float(kwargs["colorbar_num_ticks"])-1), Z.max()/(float(kwargs["colorbar_num_ticks"])-1))]
 	except:
 		CBIticks=None
 
@@ -207,10 +210,10 @@ def gen_colormaps():
 			 'alpha':  gen_cmap_alpha(1000)
 			}
 
-	blue1 = matplotlib.colors.LinearSegmentedColormap('Blue1', cdict_Bl)
-	orange1 = matplotlib.colors.LinearSegmentedColormap('Orange1', cdict_Or)
+	mosBlue = matplotlib.colors.LinearSegmentedColormap('mosaicBlue', cdict_Bl)
+	mosOrange = matplotlib.colors.LinearSegmentedColormap('mosaicOrange', cdict_Or)
 
-	plt.register_cmap(cmap=blue1)
-	plt.register_cmap(cmap=orange1)
+	plt.register_cmap(cmap=mosBlue)
+	plt.register_cmap(cmap=mosOrange)
 
 

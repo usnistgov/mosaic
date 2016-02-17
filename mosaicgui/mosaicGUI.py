@@ -230,7 +230,12 @@ class qtAnalysisGUI(mosaicgui.settingsview.settingsview):
 				self.statisticsView.openDBFile( analysisfile, updateOnIdle=False )
 				self.statisticsView.show()
 
-				self.fitEventsView.openDBFile( analysisfile, self.trajViewerWindow.FskHz, updateOnIdle=False )
+				if self.analysisDataModel["dbInfoFsHz"]!=-1:
+					self.fitEventsView.openDBFile( analysisfile, self.analysisDataModel["dbInfoFsHz"]/1000., updateOnIdle=False )
+				else:
+					self.fitEventsView.openDBFile( analysisfile, self.trajViewerWindow.FskHz, updateOnIdle=False )
+
+
 				self.fitEventsView.show()
 				self.plotEventFitsCheckBox.setChecked(True)
 

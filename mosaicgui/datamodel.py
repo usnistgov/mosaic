@@ -27,6 +27,7 @@ import mosaic.cusumPlus
 import mosaic.qdfTrajIO
 import mosaic.abfTrajIO
 import mosaic.binTrajIO
+import mosaic.tsvTrajIO
 
 from mosaic.besselLowpassFilter import *
 import mosaic.waveletDenoiseFilter
@@ -46,6 +47,7 @@ class guiDataModel(dict):
 		self["dcOffset"]=0.0
 		self["Rfb"]=0.0
 		self["Cfb"]=0.0
+		self["scale"]=1.0
 
 		self.jsonSettingsObj=None
 
@@ -140,6 +142,12 @@ class guiDataModel(dict):
 		elif self["DataFilesType"]=="BIN":
 			keys.extend(["AmplifierScale", "AmplifierOffset", "SamplingFrequency", "HeaderOffset", "ColumnTypes", "IonicCurrentColumn"])
 			dargs.update({"filter"	: self["filter"]})
+		elif self["DataFilesType"]=="TSV":
+			if self["nCols"]==-1:
+				keys.extend(["Fs", "scale"])
+			else:
+				keys.extend(["nCols", "timeCol", "currCol", "scale"])
+			dargs.update({"filter"	: self["filter"]})
 		else:
 			dargs.update({"filter"	: self["filter"]})
 
@@ -192,6 +200,11 @@ class guiDataModel(dict):
 			except OperationalError:
 				print "Settings not found in ", dbfile, "\n"
 
+			try:
+				self["dbInfoFsHz"]=db.readAnalysisInfo()[7]
+			except:
+				pass
+
 		self._updateSettings()
 
 	def UpdateDataModelFromSettingsString(self, settingsstr):
@@ -226,6 +239,7 @@ class guiDataModel(dict):
 
 	def _setupModelViews(self):
 		self.keyTypesDict={
+								"dbInfoFsHz"			: float,
 								"blockSizeSec" 			: float,
 								"eventPad" 				: int,
 								"minEventLength" 		: int,
@@ -274,7 +288,12 @@ class guiDataModel(dict):
 								"IonicCurrentColumn"	: str,
 								"filter"				: str,
 								"MinStateLength"		: int,
-								"MaxEventLength" 		: int
+								"MaxEventLength" 		: int,
+								"headers"				: bool,
+								"Fs"					: int,
+								"nCols"					: int,
+								"timeCol"				: int,
+								"currCol"				: int
 							}
 		self.eventSegmentKeys={
 								"blockSizeSec" 			: float,
@@ -341,16 +360,22 @@ class guiDataModel(dict):
 								"HeaderOffset"			: int,
 								"ColumnTypes"			: str,
 								"IonicCurrentColumn"	: str,
-								"filter"				: str
+								"filter"				: str,
+								"headers"				: bool,
+								"Fs"					: int,
+								"nCols"					: int,
+								"timeCol"				: int,
+								"currCol"				: int,
+								"scale"					: float
 							}
 		self.eventPartitionAlgoKeys={
 								"CurrentThreshold" 		: "eventSegment"
 							}
 
 		self.eventProcessingAlgoKeys={
-								"ADEPT 2-state" 	: "adept2State",
-								"ADEPT"	: "adept",
-								"CUSUM+"	: "cusumPlus"
+								"ADEPT 2-state" 		: "adept2State",
+								"ADEPT"					: "adept",
+								"CUSUM+"				: "cusumPlus"
 							}
 
 		self.filterAlgoKeys={
@@ -359,17 +384,19 @@ class guiDataModel(dict):
 		self.dataTypeKeys={
 								"QDF" 					: "qdfTrajIO",
 								"ABF" 					: "abfTrajIO",
-								"BIN" 					: "binTrajIO"
+								"BIN" 					: "binTrajIO",
+								"TSV"					: "tsvTrajIO"
 							}
 		self.analysisSetupKeys={
 								"QDF" 					: mosaic.qdfTrajIO.qdfTrajIO,
 								"ABF" 					: mosaic.abfTrajIO.abfTrajIO,
 								"BIN" 					: mosaic.binTrajIO.binTrajIO,
+								"TSV" 					: mosaic.tsvTrajIO.tsvTrajIO,
 								"SingleChannelAnalysis" : mosaic.SingleChannelAnalysis.SingleChannelAnalysis,
 								"CurrentThreshold" 		: mosaic.eventSegment.eventSegment,
-								"adept2State" 	: mosaic.adept2State.adept2State,
-								"adept"	: mosaic.adept.adept,
-								"cusumPlus"	: mosaic.cusumPlus.cusumPlus,
+								"adept2State" 			: mosaic.adept2State.adept2State,
+								"adept"					: mosaic.adept.adept,
+								"cusumPlus"				: mosaic.cusumPlus.cusumPlus,
 								"waveletDenoiseFilter"	: mosaic.waveletDenoiseFilter.waveletDenoiseFilter
 							}
 
@@ -386,7 +413,7 @@ if __name__ == "__main__":
 	# print q.popdata(10)
 
 
-	print g.GenerateSettingsView("CurrentThreshold", "adept2State", None)
-	# print g.GenerateTrajView()
+	print g.GenerateSettingsView("CurrentThreshold", "ADEPT 2-state", None)
+	print g.GenerateTrajView()
 	# for k,v in g.iteritems():
 	# 	print k, "=", v
