@@ -7,7 +7,8 @@
 	:License:	See LICENSE.TXT
 	:ChangeLog:
 	.. line-block::
-		02/05/16 		AB 	Add options to scale z-axis
+		02/20/16 		AB 	Added an option to plot the z-axis on a log scale.
+		02/05/16 		AB 	Add options to scale z-axis (histogram, density or scaled)
 		01/10/15 		AB  Rename custom colormaps
 		11/11/15		AB	Initial version
 """
@@ -19,6 +20,7 @@ import matplotlib.cm as cm
 import matplotlib.mlab as mlab
 import matplotlib.pyplot as plt
 import mosaicscripts.plots.mplformat as mplformat
+from matplotlib.colors import LogNorm
 
 def contour_plot(dat2d, x_range, y_range, bin_size, contours, colormap, img_interpolation, **kwargs):
 	"""
@@ -43,6 +45,7 @@ def contour_plot(dat2d, x_range, y_range, bin_size, contours, colormap, img_inte
 			- `cb_round_digits` :		(optional) round colorbar ticks to multiple of cb_round_digits. For example, -2 rounds to 100. See python docs.
 			- `min_count_pct` :			(optional) set bins with < min_count_pct of the maximum to 0
 			- `axes_type` :				(optional) set linear or log axis. Expects a list for X and Y. For example ['linear', 'log'].
+			- `z_type` :				(optional) plot the image density on a 'linear' or 'log' scale. Default is 'linear'
 	"""
 	mplformat.update_rcParams()
 
@@ -60,10 +63,18 @@ def contour_plot(dat2d, x_range, y_range, bin_size, contours, colormap, img_inte
 			density = True
 		else:
 			density = False
+
+		zt=kwargs.pop('z_type', 'linear')
+		if zt=='linear':
+			z_type=None
+		else:
+			z_type=LogNorm()
+
 	except:
 		x_axes_type='linear'
 		y_axes_type='linear'
 		aspect=(Y.max()-Y.min())/(X.max()-X.min())
+
 
 	x1,y1=np.transpose(np.array(dat2d))
 
@@ -107,13 +118,15 @@ def contour_plot(dat2d, x_range, y_range, bin_size, contours, colormap, img_inte
 			colors='0.3',
 			origin='lower',
 			linewidths=1.25,
-			extent=[X.min(), X.max(), Y.min(), Y.max()]
+			extent=[X.min(), X.max(), Y.min(), Y.max()],
+			norm=z_type
 			)
 	im = plt.imshow(Z, 
 			interpolation='gaussian', 
 			origin='lower', 
 			extent=[X.min(), X.max(), Y.min(), Y.max()],
-			cmap=cmap
+			cmap=cmap,
+			norm=z_type
 			)
 	plt.axes().set_aspect(aspect=aspect)
 
