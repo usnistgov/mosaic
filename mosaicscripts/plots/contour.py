@@ -50,6 +50,8 @@ def contour_plot(dat2d, x_range, y_range, bin_size, contours, colormap, img_inte
 
 	cmap = colormap # plt.get_cmap(colormap)
 
+	zscale=kwargs.pop('zscale', 'None')
+
 	try:
 		ax=kwargs['axes_type']
 
@@ -62,7 +64,7 @@ def contour_plot(dat2d, x_range, y_range, bin_size, contours, colormap, img_inte
 			z_axes_type=LogNorm()
 
 		aspect='auto'
-		zscale=kwargs.pop('zscale', 'None')
+		
 		if zscale=='density': 
 			density = True
 		else:
@@ -71,9 +73,9 @@ def contour_plot(dat2d, x_range, y_range, bin_size, contours, colormap, img_inte
 	except:
 		x_axes_type='linear'
 		y_axes_type='linear'
-		z_axes_type='linear'
-		aspect=(Y.max()-Y.min())/(X.max()-X.min())
-
+		z_axes_type=None
+		aspect='auto'
+		density=False
 
 	x1,y1=np.transpose(np.array(dat2d))
 
