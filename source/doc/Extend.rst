@@ -77,7 +77,7 @@ The newly defined :class:`~mosaic.binTrajIO.binTrajIO` class can then be used as
                 bin.binTrajIO,
                 None, 
                 es.eventSegment,
-                sra.stepResponseAnalysis
+                mosaic.adept2State.adept2State
             ).Run()
 
 Similar to other `TrajIO` objects, parameters for :class:`~mosaic.binTrajIO.binTrajIO` are obtained from the settings file when used with :class:`~mosaic.SingleChannelAnalysis.SingleChannelAnalysis`. Example settings for :class:`~mosaic.binTrajIO.binTrajIO` that read 16-bit intgers from a binary data file, assuming 50 `kHz` sampling, are shown below.

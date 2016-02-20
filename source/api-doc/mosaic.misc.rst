@@ -23,6 +23,14 @@ mosaic.utilities.util module
     :members:
     :show-inheritance:
 
+mosaic.utilities.mosaicLog module
+---------------------------
+
+.. autoclass:: mosaic.utilities.mosaicLog.mosaicLog
+    :members:
+    :show-inheritance:
+
+
 mosaic.utilities.fit_funcs module
 ---------------------------
 

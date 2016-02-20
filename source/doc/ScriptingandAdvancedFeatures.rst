@@ -20,7 +20,7 @@ Alternatively, one can import sub-modules of |projname| directly into a script t
     
     import mosaic.SingleChannelAnalysis
     import mosaic.eventSegment as es
-    import mosaic.stepResponseAnalysis as sra 
+    import mosaic.adept2State 
     import mosaic.besselLowpassFilter as bessel
 
 
@@ -28,7 +28,7 @@ Import Data and Run an Analysis
 ---------------------------------------------
 
 
-Once the required modules are imported, a basic analysis can be run with the code snippet below. The top-level object that is used to configure and run a new analysis is :py:class:`~mosaic.SingleChannelAnalysis.SingleChannelAnalysis`, which takes five arguments: i) the path to the data directory, ii) a handle to a *TrajIO* object that reads in data (e.g. :py:class:`~mosaic.abfTrajIO.abfTrajIO`), iii) a handle to a data filtering algorithm (e.g. :py:class:`~mosaic.besselLowpassFilter.besselLowpassFilter` or `None` for no filtering), iv) a handle to a partitioning algorithm (e.g. :py:class:`~mosaic.eventSegment.eventSegment`) that partitions the data and v) a handle to a processing algorithm (e.g. :py:class:`~mosaic.stepResponseAnalysis.stepResponseAnalysis`) that processes individual blockade events.
+Once the required modules are imported, a basic analysis can be run with the code snippet below. The top-level object that is used to configure and run a new analysis is :py:class:`~mosaic.SingleChannelAnalysis.SingleChannelAnalysis`, which takes five arguments: i) the path to the data directory, ii) a handle to a *TrajIO* object that reads in data (e.g. :py:class:`~mosaic.abfTrajIO.abfTrajIO`), iii) a handle to a data filtering algorithm (e.g. :py:class:`~mosaic.besselLowpassFilter.besselLowpassFilter` or `None` for no filtering), iv) a handle to a partitioning algorithm (e.g. :py:class:`~mosaic.eventSegment.eventSegment`) that partitions the data and v) a handle to a processing algorithm (e.g. :py:class:`~mosaic.adept2State.adept2State`) that processes individual blockade events.
 
 
 
@@ -40,7 +40,7 @@ Once the required modules are imported, a basic analysis can be run with the cod
                 abf.abfTrajIO,
                 None,
                 es.eventSegment,
-                sra.stepResponseAnalysis
+                moasaic.adept2State.adept2State
             )
 
 The analysis is started by calling the `Run()` function.
@@ -81,7 +81,7 @@ The code listing above analyzes all ABF files in the specified directory. Handle
                 qdf.qdfTrajIO,
                 None,
                 es.eventSegment,
-                sra.stepResponseAnalysis
+                mosaic.adept2State.adept2State
             ).Run() 
 
 
@@ -131,7 +131,7 @@ Upon completion the analysis writes a log file to the directory containing the d
 
 
         Event processing settings:
-            Algorithm = stepResponseAnalysis
+            Algorithm = adept2State
 
             Max. iterations  = 50000
             Fit tolerance (rel. err in leastsq)  = 1e-07
@@ -166,7 +166,7 @@ Filter Data
                 abf.abfTrajIO,
                 bessel.besselLowpassFilter, 
                 es.eventSegment,
-                sra.stepResponseAnalysis
+                mosaic.adept2State.adept2State
             ).Run()
 
 |projname| supports filtering data prior to analysis. This is achieved by passing the `dataFilterHnd` argument to the :py:class:`~mosaic.SingleChannelAnalysis.SingleChannelAnalysis` object. In the code above, the ABF data is filtered using a :py:class:`~mosaic.besselLowpassFilter.besselLowpassFilter`. Parameters for the filter are defined within the settings file as described in the :ref:`settings-page` section.
@@ -214,6 +214,9 @@ It is useful to visualize time-series data to highlight unique characteristics o
 .. figure:: ../images/advancedFig2.png
    :width: 50 %
    :align: center
+
+We have packaged time-series plotting into an easy to use module :py:class:`~mosaicscripts.plots.timeseries`. Run interactive examples in an IPython notebook: |timeseries|
+
 
 **Estimate the Channel Gating Duration**
 
@@ -266,7 +269,7 @@ In the code below, we first process all the ABF files in a specified directory s
         
         import mosaic.SingleChannelAnalysis
         import mosaic.eventSegment as es
-        import mosaic.stepResponseAnalysis as sra 
+        import mosaic.adept2State
         
         import glob
         import pylab as pl
@@ -279,7 +282,7 @@ In the code below, we first process all the ABF files in a specified directory s
                     abf.abfTrajIO,
                     None,
                     es.eventSegment,
-                    sra.stepResponseAnalysis
+                    mosaic.adept2State.adept2State
                 ).Run()
         
         

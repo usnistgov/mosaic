@@ -50,7 +50,8 @@ h4 {
 }
 p.highlight-mosaic {
     padding:10px;
-    color: #696969;
+    /*color: #696969;*/
+    color: black;
     font-size: 16pt;
 /*    font-size: 1.5vw;*/
 }

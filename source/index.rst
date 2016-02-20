@@ -22,9 +22,9 @@ Nanometer-scale pores have demonstrated potential use in biotechnology applicati
 
 
 
-.. note::  If you use |projname| in your work, please cite:
+.. .. note::  If you use |projname| in your work, please cite:
 
-   \A. Balijepalli, J., Ettedgui, A. T. Cornio, J. W. F. Robertson K. P. Cheung, J. J. Kasianowicz & C. Vaz, "`Quantifying Short-Lived Events in Multistate Ionic Current Measurements. <http://pubs.acs.org/doi/abs/10.1021/nn405761y>`_" *ACS Nano* 2014, **8**, 1547–1553.
+..    \A. Balijepalli, J., Ettedgui, A. T. Cornio, J. W. F. Robertson K. P. Cheung, J. J. Kasianowicz & C. Vaz, "`Quantifying Short-Lived Events in Multistate Ionic Current Measurements. <http://pubs.acs.org/doi/abs/10.1021/nn405761y>`_" *ACS Nano* 2014, **8**, 1547–1553.
 
 .. Contents:
 
@@ -36,10 +36,12 @@ Nanometer-scale pores have demonstrated potential use in biotechnology applicati
    doc/GettingStarted
    doc/Algorithms
    doc/GraphicalInterface
-   doc/ScriptingandAdvancedFeatures
    doc/settingsFile
    doc/DatabaseStructure
+   doc/ScriptingandAdvancedFeatures
    doc/Extend
+   doc/PublicationFigures
+   doc/AdvancedAnalysis
    doc/Addons
    doc/examples
    doc/apidocs

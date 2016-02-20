@@ -7,7 +7,8 @@ angular
 
     })
     .controller('AppCtrl', function ($scope, $timeout, $mdSidenav, $mdUtil, $log) {
-      $scope.baseURL = "https://usnistgov.github.io/mosaic/"
+      // $scope.baseURL = "https://usnistgov.github.io/mosaic/"
+      $scope.baseURL = "file:///Users/arvind/Research/Experiments/AnalysisTools/mosaic/_docs"
       $scope.docURL = $scope.baseURL+"/html/index.html"
       $scope.mailingListURL = $scope.baseURL+"/html/doc/mailingList.html"
       $scope.scriptURL = $scope.baseURL+"/html/doc/ScriptingandAdvancedFeatures.html"
@@ -28,7 +29,7 @@ angular
        * report completion in console
        */
       function generateUseCaseURL() {
-        var imgs = Array("assets/img/UseCase-01.png", "assets/img/UseCase-02.png");
+        var imgs = Array("assets/img/UseCase-01.png"/*, "assets/img/UseCase-02.png"*/);
         var img = imgs[Math.floor(Math.random()*imgs.length)];
 
         return img 

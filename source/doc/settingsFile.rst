@@ -22,19 +22,19 @@ JSON_ is a human readable file format that consists of key-value pairs separated
 
 	}
 
-|projname| settings define a new section for each class, with key-value pairs corresponding to class attributes that are set upon initialization. This is illustrated below for the stepResponseAnalysis class. The *stepResponseAnalysis* section in the settings file holds parameters corresponding to the :class:`~mosaic.stepResponseAnalysis` class. Note that that the section name in the settings file is identical to the corresponding class name. Three parameters are then defined within the section that control the behavior of the class.
+|projname| settings define a new section for each class, with key-value pairs corresponding to class attributes that are set upon initialization. This is illustrated below for the adept2State class. The *adept2State* section in the settings file holds parameters corresponding to the :class:`~mosaic.adept2State` class. Note that that the section name in the settings file is identical to the corresponding class name. Three parameters are then defined within the section that control the behavior of the class.
 
 .. sourcecode:: javascript
 
 	{
-		"stepResponseAnalysis" : {
+		"adept2State" : {
 			"FitTol"			: "1.e-7",
 			"FitIters"			: "50000",
 			"BlockRejectRatio"		: "0.9"
 		}
 	}
 
-Finally, :class:`~mosaic.stepResponseAnalysis` is initialized by defining class attributes corresponding to the key-value pairs in the settings file.
+Finally, :class:`~mosaic.adept2State` is initialized by defining class attributes corresponding to the key-value pairs in the settings file.
 
 .. sourcecode:: python
 	
@@ -149,14 +149,14 @@ The first step when analyzing an ionic-current time series is to perform a quick
 
 .. _stepresp-settings-sec:
 
-Two-State Identification  (:class:`~mosaic.stepResponseAnalysis.stepResponseAnalysis`)
+Two-State Identification  (:class:`~mosaic.adept2State.adept2State`)
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Once the time-series is partitioned, individual events are processed by a processing algorithm. For simple event patterns (e.g. homopolymers of DNA, PEG, etc.), one can use the :ref:`stepresponse-page` algorithm. Settings that can be passed to this algorithm are below, followed by their descriptions. For a vast majority of cases, the settings below can be used without modification.
 
 .. sourcecode:: javascript
 
-	"stepResponseAnalysis" : {
+	"adept2State" : {
 		"FitTol"			: "1.e-7",
 		"FitIters"			: "50000"
 	}
@@ -173,7 +173,7 @@ Once the time-series is partitioned, individual events are processed by a proces
 +-------------------+----------------------------------------------------------------------------------------|  
 
 
-Multi-State Identification  (:class:`~mosaic.multiStateAnalysis.multiStateAnalysis`)
+Multi-State Identification  (:class:`~mosaic.adept.adept`)
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 For more complex signals with multiple states, the :ref:`multistate-page` algorithm yields better results. The settings passed to this algorithm (described below) are largely similar to :ref:`stepresp-settings-sec`. 
@@ -181,7 +181,7 @@ For more complex signals with multiple states, the :ref:`multistate-page` algori
 .. sourcecode:: javascript
 	:emphasize-lines: 4
 
-	"multiStateAnalysis" : {
+	"adept" : {
 		"FitTol"			: "1.e-7",
 		"FitIters"			: "50000",
 		"InitThreshold"			: "3.0"
@@ -230,16 +230,16 @@ Default Settings
 			"minEvntTime" 			: "10.e-6",
 			"minDataPad" 			: "75"
 		},
-		"stepResponseAnalysis" : {
+		"adept2State" : {
 			"FitTol"				: "1.e-7",
 			"FitIters"				: "50000"
 		},
-		"multiStateAnalysis" : {
+		"adept" : {
 	                "FitTol"		: "1.e-7",
 	                "FitIters"		: "50000",
 	                "InitThreshold"	: "3.0"
 	     },
-	     "cusumLevelAnalysis": {
+	     "cusumPlus": {
         			"StepSize"		: 3.0, 
         			"Threshold"		: 3.0
     	}, 
