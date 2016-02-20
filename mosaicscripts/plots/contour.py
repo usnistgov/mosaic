@@ -44,8 +44,7 @@ def contour_plot(dat2d, x_range, y_range, bin_size, contours, colormap, img_inte
 			- `colorbar_num_ticks` :	(optional) number of ticks in the colorbar
 			- `cb_round_digits` :		(optional) round colorbar ticks to multiple of cb_round_digits. For example, -2 rounds to 100. See python docs.
 			- `min_count_pct` :			(optional) set bins with < min_count_pct of the maximum to 0
-			- `axes_type` :				(optional) set linear or log axis. Expects a list for X and Y. For example ['linear', 'log'].
-			- `z_type` :				(optional) plot the image density on a 'linear' or 'log' scale. Default is 'linear'
+			- `axes_type` :				(optional) set linear or log axis. Expects a list for X, Y and Z. For example ['linear', 'log', 'log'].
 	"""
 	mplformat.update_rcParams()
 
@@ -57,6 +56,11 @@ def contour_plot(dat2d, x_range, y_range, bin_size, contours, colormap, img_inte
 		x_axes_type=ax[0]
 		y_axes_type=ax[1]
 
+		if ax[2]=='linear':
+			z_axes_type=None
+		else:
+			z_axes_type=LogNorm()
+
 		aspect='auto'
 		zscale=kwargs.pop('zscale', 'None')
 		if zscale=='density': 
@@ -64,15 +68,10 @@ def contour_plot(dat2d, x_range, y_range, bin_size, contours, colormap, img_inte
 		else:
 			density = False
 
-		zt=kwargs.pop('z_type', 'linear')
-		if zt=='linear':
-			z_type=None
-		else:
-			z_type=LogNorm()
-
 	except:
 		x_axes_type='linear'
 		y_axes_type='linear'
+		z_axes_type='linear'
 		aspect=(Y.max()-Y.min())/(X.max()-X.min())
 
 
@@ -119,14 +118,14 @@ def contour_plot(dat2d, x_range, y_range, bin_size, contours, colormap, img_inte
 			origin='lower',
 			linewidths=1.25,
 			extent=[X.min(), X.max(), Y.min(), Y.max()],
-			norm=z_type
+			norm=z_axes_type
 			)
 	im = plt.imshow(Z, 
 			interpolation='gaussian', 
 			origin='lower', 
 			extent=[X.min(), X.max(), Y.min(), Y.max()],
 			cmap=cmap,
-			norm=z_type
+			norm=z_axes_type
 			)
 	plt.axes().set_aspect(aspect=aspect)
 
