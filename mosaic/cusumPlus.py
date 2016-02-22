@@ -299,26 +299,29 @@ class cusumPlus(metaEventProcessor.metaEventProcessor):
                         self.nStates += 1
 			cusum = dict()
 			if (self.nStates < 3):
-                                self.rejectEvent('eInvalidStates')
-                        else:
-                                minstepflag = 0
-                                while minstepflag == 0:
-                                        minstepflag = 1
-                                        currentlevels = [np.average(edat[edges[i]+self.MinLength:edges[i+1]]) for i in range(self.nStates)] #detect current levels during detected sub-events
-                                        toosmall = np.absolute(np.diff(currentlevels)) < self.StepSize*self.baseSD/4
-                                        for i in range(len(toosmall)):
-                                                if toosmall[i] == True:
-                                                        edges = np.delete(edges,i+1)
-                                                        minstepflag = 0
-                                                        self.nStates -= 1
-                                                        break
-                        if (self.nStates < 3):
-                                self.rejectEvent('eInvalidStates')
-                        else:
-                                cusum['CurrentLevels'] = currentlevels
-                                cusum['EventDelay'] = edges * dt #locations of sub-events in the data
-                                cusum['Threshold'] = Threshold #record the threshold used
-                                self.__recordevent(cusum)
+				self.rejectEvent('eInvalidStates')
+			else:
+				minstepflag = 0
+				while minstepflag == 0:
+					minstepflag = 1
+					currentlevels = [np.average(edat[edges[i]+self.MinLength:edges[i+1]]) for i in range(self.nStates)] #detect current levels during detected sub-events
+					toosmall = np.absolute(np.diff(currentlevels)) < self.StepSize*self.baseSD/4
+					for i in range(len(toosmall)):
+						if toosmall[i] == True:
+							edges = np.delete(edges,i+1)
+							minstepflag = 0
+							self.nStates -= 1
+							break
+			if (self.nStates < 3):
+				self.rejectEvent('eInvalidStates')
+			else:
+				cusum['CurrentLevels'] = currentlevels
+				cusum['EventDelay'] = edges * dt #locations of sub-events in the data
+				cusum['Threshold'] = Threshold #record the threshold used
+                                
+				self.CurrentLevels=cusum['CurrentLevels'][1:-1]
+
+				self.__recordevent(cusum)
 		except KeyboardInterrupt:
 			self.rejectEvent('eFitUserStop')
 			raise

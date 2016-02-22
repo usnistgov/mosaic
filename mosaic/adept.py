@@ -34,6 +34,9 @@ import metaEventProcessor
 import mosaic.utilities.util as util
 import mosaic.utilities.mosaicLog as log
 import mosaic.utilities.fit_funcs as fit_funcs
+import mosaic.cusumPlus as cusum
+import mosaic.settings
+
 import sys
 import math
 
@@ -139,13 +142,18 @@ class adept(metaEventProcessor.metaEventProcessor):
 				edat=self.dataPolarity*np.asarray( self.eventData,  dtype='float64' )
 
 				# estimate initial guess for events
-				initguess=self._characterizeevent(edat, np.abs(util.avg(edat[:10])), self.baseSD, self.InitThreshold, 6.)
-			
+				if (self.eEndEstimate-self.eStartEstimate) < 10000:
+					initguess=self._characterizeevent(edat, np.abs(util.avg(edat[:10])), self.baseSD, self.InitThreshold, 6.)
+				else:
+					print (self.eEndEstimate-self.eStartEstimate),
+					initguess=self._cusumInitGuess(edat)
+	
+
 				# Fit the system transfer function to the event data
 				if sys.platform.startswith('win'):
-                                        self.winfitevent(edat,initguess)
-                                else:
-                                        self.fitevent(edat, initguess)
+					self.winfitevent(edat,initguess)
+				else:
+					self.fitevent(edat, initguess)
 		except InvalidEvent:
 			self.rejectEvent('eInvalidEvent')
 		except:
@@ -483,3 +491,32 @@ class adept(metaEventProcessor.metaEventProcessor):
 			del mu[idx]
 
 		return zip(a,mu)
+
+	def _cusumInitGuess(self, edat):
+		settingsDict=mosaic.settings.settings("/", defaultwarn=False )
+
+		cusumSettings=settingsDict.getSettings("cusumPlus")
+		cusumSettings["MinThreshold"]=0.1
+		cusumSettings["MaxThreshold"]=0.1
+		cusumSettings["StepSize"]=18.0 #self.InitThreshold
+
+		print cusumSettings
+		cusumObj=cusum.cusumPlus(
+				edat, 
+				self.Fs,
+				eventstart=self.eStartEstimate,						# event start point
+				eventend=self.eEndEstimate,							# event end point
+				baselinestats=[ self.baseMean, self.baseSD, self.baseSlope ],
+				algosettingsdict=cusumSettings.copy(),
+				savets=False,
+				absdatidx=self.absDataStartIndex,
+				datafilehnd=None
+			)
+		cusumObj.processEvent()
+
+		if cusumObj.mdProcessingStatus != "normal":
+			raise InvalidEvent
+		else:
+			return zip(cusumObj.CurrentLevels, cusumObj.mdEventDelay)
+
+
