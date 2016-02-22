@@ -7,6 +7,7 @@
 	:License:	See LICENSE.TXT
 	:ChangeLog:
 	.. line-block::
+		2/20/16 	AB 	Format settings log.
 		12/09/15 	KB 	Added Windows specific optimizations
 		8/24/15 	AB 	Rename algorithm to ADEPT.
 		8/02/15		JF	Added a new test to reject RC Constants <=0
@@ -240,8 +241,9 @@ class adept(metaEventProcessor.metaEventProcessor):
 		logObj.addLogText( 'Max. iterations  = {0}'.format(self.FitIters) )
 		logObj.addLogText( 'Fit tolerance (rel. err in leastsq)  = {0}'.format(self.FitTol) )
 		logObj.addLogText( 'Unlink RC constants = {0}'.format(bool(self.UnlinkRCConst)) )
-		logObj.addLogText( 'Initial partition threshold  = {0}\n'.format(self.InitThreshold) )
-		logObj.addLogText( 'Min. State Length = {0}\n\n'.format(self.MinStateLength) )
+		logObj.addLogText( 'Initial partition threshold  = {0} sigma'.format(self.InitThreshold) )
+		logObj.addLogText( 'Min. State Length = {0} samples'.format(self.MinStateLength) )
+		logObj.addLogText( 'Max. Event Length = {0} samples'.format(self.MaxEventLength))
 
 		return str(logObj)
 

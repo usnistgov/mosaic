@@ -16,6 +16,10 @@ import mosaic.utilities.fit_funcs as fit_funcs
 import matplotlib.ticker as ticker
 # from mosaicgui.trajview.trajviewui import Ui_Dialog
 
+css = """QLabel {
+      color: red;
+}"""
+
 class FitEventWindow(QtGui.QDialog):
 	def __init__(self, parent = None):
 		self.v=[]
@@ -156,9 +160,14 @@ class FitEventWindow(QtGui.QDialog):
 					ystep=self.stepFuncHnd( *eval(self.stepFuncArgs) )
 					self.mpl_hist.canvas.ax.plot( xstep, ystep, linestyle='--', linewidth='2.0', color=cs)
 
+				self.errLabel.setText(str(""))
 			else:
 				self.mpl_hist.canvas.ax.cla()
 				self.mpl_hist.canvas.ax.plot( xdat, ydat, linestyle='None', marker='o', color='r', markersize=8, markeredgecolor='none', alpha=0.6)
+				
+				# Set error line edit color to red
+				self.errLabel.setStyleSheet(css)
+				self.errLabel.setText("Error: "+str(q[0]))
 
 			self._ticks(5)
 
