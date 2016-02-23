@@ -501,10 +501,9 @@ class adept(metaEventProcessor.metaEventProcessor):
 
 		cusumSettings=settingsDict.getSettings("cusumPlus")
 		cusumSettings["MinThreshold"]=0.1
-		cusumSettings["MaxThreshold"]=0.1
-		cusumSettings["StepSize"]=18.0 #self.InitThreshold
+		cusumSettings["MaxThreshold"]=100.
+		cusumSettings["StepSize"]=3.0*self.InitThreshold
 
-		print cusumSettings
 		cusumObj=cusum.cusumPlus(
 				edat, 
 				self.Fs,
@@ -522,6 +521,6 @@ class adept(metaEventProcessor.metaEventProcessor):
 			# print cusumObj.mdProcessingStatus
 			raise InvalidEvent
 		else:
-			return zip(cusumObj.CurrentLevels, cusumObj.mdEventDelay)
+			return zip(cusumObj.mdCurrentStep, cusumObj.mdEventDelay)
 
 

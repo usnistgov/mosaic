@@ -318,8 +318,6 @@ class cusumPlus(metaEventProcessor.metaEventProcessor):
 				cusum['CurrentLevels'] = currentlevels
 				cusum['EventDelay'] = edges * dt #locations of sub-events in the data
 				cusum['Threshold'] = Threshold #record the threshold used
-                                
-				self.CurrentLevels=cusum['CurrentLevels'][1:-1]
 
 				self.__recordevent(cusum)
 		except KeyboardInterrupt:
