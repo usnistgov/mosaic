@@ -503,7 +503,7 @@ class adept(metaEventProcessor.metaEventProcessor):
 		cusumSettings["MinThreshold"]=0.1
 		cusumSettings["MaxThreshold"]=100.
 		cusumSettings["StepSize"]=3.0*self.InitThreshold
-		cusumSettings["MinLength"]=1.6*self.minStateLength
+		cusumSettings["MinLength"]=1.6*self.MinStateLength
 
 		cusumObj=cusum.cusumPlus(
 				edat, 
