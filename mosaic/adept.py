@@ -7,6 +7,7 @@
 	:License:	See LICENSE.TXT
 	:ChangeLog:
 	.. line-block::
+		2/22/16 	AB 	Use CUSUM to estimate intial guesses in ADEPT for long events.
 		2/20/16 	AB 	Format settings log.
 		12/09/15 	KB 	Added Windows specific optimizations
 		8/24/15 	AB 	Rename algorithm to ADEPT.
@@ -146,7 +147,7 @@ class adept(metaEventProcessor.metaEventProcessor):
 				if (self.eEndEstimate-self.eStartEstimate) < 10000:
 					initguess=self._characterizeevent(edat, np.abs(util.avg(edat[:10])), self.baseSD, self.InitThreshold, 6.)
 				else:
-					print (self.eEndEstimate-self.eStartEstimate),
+					# print (self.eEndEstimate-self.eStartEstimate),
 					initguess=self._cusumInitGuess(edat)
 	
 
@@ -371,6 +372,7 @@ class adept(metaEventProcessor.metaEventProcessor):
                 dt = 1000./self.Fs 	# time-step in ms.
                 try:
 			if self.nStates<2:
+				# print self.nStates
 				self.rejectEvent('eInvalidStates')
 			elif mu[0] < 0.0 or mu[self.nStates-1] < 0.0:
 				self.rejectEvent('eInvalidResTime')
@@ -442,12 +444,12 @@ class adept(metaEventProcessor.metaEventProcessor):
 				
 				self.mdRedChiSq			= sum(np.array(optfit.residual)**2/self.baseSD**2)/optfit.nfree
 					
-				if math.isnan(self.mdRedChiSq):
-					self.rejectEvent('eInvalidRedChiSq')	
-				if not (np.array(self.mdStateResTime)>0).all():
-					self.rejectEvent('eNegativeEventDelay')
-				if not (np.array(self.mdRCConst)>0).all():
-					self.rejectEvent('eInvalidRCConst')
+				# if math.isnan(self.mdRedChiSq):
+				# 	self.rejectEvent('eInvalidRedChiSq')	
+				# if not (np.array(self.mdStateResTime)>0).all():
+				# 	self.rejectEvent('eNegativeEventDelay')
+				# if not (np.array(self.mdRCConst)>0).all():
+				# 	self.rejectEvent('eInvalidRCConst')
 		except:
 			self.rejectEvent('eInvalidEvent')
 
@@ -517,6 +519,7 @@ class adept(metaEventProcessor.metaEventProcessor):
 		cusumObj.processEvent()
 
 		if cusumObj.mdProcessingStatus != "normal":
+			# print cusumObj.mdProcessingStatus
 			raise InvalidEvent
 		else:
 			return zip(cusumObj.CurrentLevels, cusumObj.mdEventDelay)
