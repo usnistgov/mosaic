@@ -7,6 +7,8 @@
 	:License:	See LICENSE.TXT
 	:ChangeLog:
 	.. line-block::
+		2/22/16 	AB 	Use CUSUM to estimate intial guesses in ADEPT for long events.
+		2/20/16 	AB 	Format settings log.
 		12/09/15 	KB 	Added Windows specific optimizations
 		8/24/15 	AB 	Rename algorithm to ADEPT.
 		8/02/15		JF	Added a new test to reject RC Constants <=0
@@ -34,6 +36,9 @@ import metaEventProcessor
 import mosaic.utilities.util as util
 import mosaic.utilities.mosaicLog as log
 import mosaic.utilities.fit_funcs as fit_funcs
+import mosaic.cusumPlus as cusum
+import mosaic.settings
+
 import sys
 import math
 
@@ -139,13 +144,18 @@ class adept(metaEventProcessor.metaEventProcessor):
 				edat=self.dataPolarity*np.asarray( self.eventData,  dtype='float64' )
 
 				# estimate initial guess for events
-				initguess=self._characterizeevent(edat, np.abs(util.avg(edat[:10])), self.baseSD, self.InitThreshold, 6.)
-			
+				if (self.eEndEstimate-self.eStartEstimate) < 10000:
+					initguess=self._characterizeevent(edat, np.abs(util.avg(edat[:10])), self.baseSD, self.InitThreshold, 6.)
+				else:
+					# print (self.eEndEstimate-self.eStartEstimate),
+					initguess=self._cusumInitGuess(edat)
+	
+
 				# Fit the system transfer function to the event data
 				if sys.platform.startswith('win'):
-                                        self.winfitevent(edat,initguess)
-                                else:
-                                        self.fitevent(edat, initguess)
+					self.winfitevent(edat,initguess)
+				else:
+					self.fitevent(edat, initguess)
 		except InvalidEvent:
 			self.rejectEvent('eInvalidEvent')
 		except:
@@ -232,8 +242,9 @@ class adept(metaEventProcessor.metaEventProcessor):
 		logObj.addLogText( 'Max. iterations  = {0}'.format(self.FitIters) )
 		logObj.addLogText( 'Fit tolerance (rel. err in leastsq)  = {0}'.format(self.FitTol) )
 		logObj.addLogText( 'Unlink RC constants = {0}'.format(bool(self.UnlinkRCConst)) )
-		logObj.addLogText( 'Initial partition threshold  = {0}\n'.format(self.InitThreshold) )
-		logObj.addLogText( 'Min. State Length = {0}\n\n'.format(self.MinStateLength) )
+		logObj.addLogText( 'Initial partition threshold  = {0} sigma'.format(self.InitThreshold) )
+		logObj.addLogText( 'Min. State Length = {0} samples'.format(self.MinStateLength) )
+		logObj.addLogText( 'Max. Event Length = {0} samples'.format(self.MaxEventLength))
 
 		return str(logObj)
 
@@ -361,6 +372,7 @@ class adept(metaEventProcessor.metaEventProcessor):
                 dt = 1000./self.Fs 	# time-step in ms.
                 try:
 			if self.nStates<2:
+				# print self.nStates
 				self.rejectEvent('eInvalidStates')
 			elif mu[0] < 0.0 or mu[self.nStates-1] < 0.0:
 				self.rejectEvent('eInvalidResTime')
@@ -432,12 +444,12 @@ class adept(metaEventProcessor.metaEventProcessor):
 				
 				self.mdRedChiSq			= sum(np.array(optfit.residual)**2/self.baseSD**2)/optfit.nfree
 					
-				if math.isnan(self.mdRedChiSq):
-					self.rejectEvent('eInvalidRedChiSq')	
-				if not (np.array(self.mdStateResTime)>0).all():
-					self.rejectEvent('eNegativeEventDelay')
-				if not (np.array(self.mdRCConst)>0).all():
-					self.rejectEvent('eInvalidRCConst')
+				# if math.isnan(self.mdRedChiSq):
+				# 	self.rejectEvent('eInvalidRedChiSq')	
+				# if not (np.array(self.mdStateResTime)>0).all():
+				# 	self.rejectEvent('eNegativeEventDelay')
+				# if not (np.array(self.mdRCConst)>0).all():
+				# 	self.rejectEvent('eInvalidRCConst')
 		except:
 			self.rejectEvent('eInvalidEvent')
 
@@ -483,3 +495,32 @@ class adept(metaEventProcessor.metaEventProcessor):
 			del mu[idx]
 
 		return zip(a,mu)
+
+	def _cusumInitGuess(self, edat):
+		settingsDict=mosaic.settings.settings("/", defaultwarn=False )
+
+		cusumSettings=settingsDict.getSettings("cusumPlus")
+		cusumSettings["MinThreshold"]=0.1
+		cusumSettings["MaxThreshold"]=100.
+		cusumSettings["StepSize"]=3.0*self.InitThreshold
+
+		cusumObj=cusum.cusumPlus(
+				edat, 
+				self.Fs,
+				eventstart=self.eStartEstimate,						# event start point
+				eventend=self.eEndEstimate,							# event end point
+				baselinestats=[ self.baseMean, self.baseSD, self.baseSlope ],
+				algosettingsdict=cusumSettings.copy(),
+				savets=False,
+				absdatidx=self.absDataStartIndex,
+				datafilehnd=None
+			)
+		cusumObj.processEvent()
+
+		if cusumObj.mdProcessingStatus != "normal":
+			# print cusumObj.mdProcessingStatus
+			raise InvalidEvent
+		else:
+			return zip(cusumObj.mdCurrentStep, cusumObj.mdEventDelay)
+
+

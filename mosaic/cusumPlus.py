@@ -319,6 +319,7 @@ class cusumPlus(metaEventProcessor.metaEventProcessor):
                                 cusum['EventDelay'] = edges * dt #locations of sub-events in the data
                                 cusum['Threshold'] = Threshold #record the threshold used
                                 self.__recordevent(cusum)
+
 		except KeyboardInterrupt:
 			self.rejectEvent('eFitUserStop')
 			raise
