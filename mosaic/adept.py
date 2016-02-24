@@ -274,7 +274,7 @@ class adept(metaEventProcessor.metaEventProcessor):
                         
 
                         #lambda function here is necessary in order to fix the value of N, otherwise curve_fit treats that as an optimization parameter
-                        popt, pcov = curve_fit(lambda ts, *params_0: fit_funcs.curve_fit_wrapper(ts, self.nStates, params_0), ts, edat, p0=params_0)
+                        popt, pcov = curve_fit(lambda ts, *params_0: fit_funcs.curve_fit_wrapper(ts, self.nStates, params_0), ts, edat, p0=params_0, maxfev=self.FitIters)
                         
                         tau, mu, a = list(popt[:self.nStates]), list(popt[self.nStates:2*self.nStates]), list(popt[2*self.nStates:3*self.nStates])
                         b = popt[-1]
@@ -503,6 +503,7 @@ class adept(metaEventProcessor.metaEventProcessor):
 		cusumSettings["MinThreshold"]=0.1
 		cusumSettings["MaxThreshold"]=100.
 		cusumSettings["StepSize"]=3.0*self.InitThreshold
+		cusumSettings["MinLength"]=1.6*self.MinStateLength
 
 		cusumObj=cusum.cusumPlus(
 				edat, 
