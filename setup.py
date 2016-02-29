@@ -118,7 +118,6 @@ class mosaicDocs(Command):
             os.system("make -C _docs clean html latexpdf")
         else:
             os.system("make -C _docs html latexpdf")
-        
 
 setup(
     cmdclass={
@@ -138,9 +137,7 @@ setup(
             'mosaic.utest', 
             'mosaic.qdf',
             'mosaic.abf',
-            'mosaic.utilities',
-            'mosaicscripts',
-            'mosaicscripts.plots'
+            'mosaic.utilities'
             ],
     scripts=[
             'bin/analysis.py', 
@@ -156,19 +153,10 @@ setup(
             'data/.settings',
             'data/SingleChan-0001.qdf',
             'data/SingleChan-0001_state.txt',
-            'commit-hash'
+            'commit-hash',
+            'requirements.txt'
             ],
-    install_requires=[
-            'cython==0.20.1',
-            'pandas==0.16.2',
-            'lmfit==0.8.3',
-            'uncertainties==2.4.6',
-            'PyWavelets==0.3.0',
-            'nose==1.3.4',
-            'matplotlib==1.4.3',
-            'numpy==1.9.0',
-            'scipy==0.14.0'
-      ],
+    install_requires=open('requirements.txt').read().splitlines(),
     url='https://usnistgov.github.io/mosaic/',
     license='LICENSE.txt',
     description='A Modular Single-Molecule Analysis Interface.',
