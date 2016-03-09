@@ -61,6 +61,14 @@ class BaseMultiStateTest(object):
 		self.noiseRMS=self.prm['noisefArtHz']*np.sqrt(self.prm['BkHz']*1000.)/1000.
 				
 		self.sett = (settings.settings('.', defaultwarn=False).settingsDict)[algoHnd.__name__]
+		# self.sett={}
+
+		# self.sett["InitThreshold"] = 4.5
+		# self.sett["MinStateLength"] = 10
+		# self.sett["FitIters"] = 5000
+		# self.sett["FitTol"] = 1.0e-7
+		# self.sett["MaxEventLength"] = 100000
+		# self.sett["UnlinkRCConst"] = 0
 	
 	def runTestCase(self, datfile, prmfile, algoHnd):
 		self._setupTestCase(datfile, prmfile,algoHnd)
@@ -136,12 +144,12 @@ class EventPartition_TestSuite(EventPartitionTest):
 
 class Multistate_TestSuite(BaseMultiStateTest):
 	def test_adept(self):
-		for i in [0,2,3,4,5,6,7,8,10,11,12,14,15,16,18,19]:
+		for i in range(0,20): #[0,2,3,4,5,6,7,8,10,11,12,14,15,16,17,18,19,20]:
 			basename='testdata/eventLong_'+str(i)
 			yield self.runTestCase, basename+'_raw.bin', basename+'_params.json', adept.adept
 
 	def test_cusum(self):
-		for i in [0,2,3,4,5,6,7,8,10,11,12,14,15,16,17,18,19,20]:
+		for i in range(0,20): #[0,2,3,4,5,6,7,8,10,11,12,14,15,16,17,18,19,20]:
 			basename='testdata/eventLong_'+str(i)
 			baseobj=BaseMultiStateTest()
 

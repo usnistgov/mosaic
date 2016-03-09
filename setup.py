@@ -6,7 +6,7 @@ import sys
 class mosaicUnitTests(Command):
     description = "run the MOSAIC unit test suite."
     user_options = [
-                    ('testoutput', None, "verbose test output"),
+                    ('testoutput', 't', "verbose test output"),
                     ]
 
     def initialize_options(self):
