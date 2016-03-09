@@ -5,19 +5,21 @@ import sys
 
 class mosaicUnitTests(Command):
     description = "run the MOSAIC unit test suite."
-    user_options = []
+    user_options = [
+                    ('testoutput', None, "verbose test output"),
+                    ]
 
     def initialize_options(self):
-        self.cwd = None
+        self.testoutput=None
 
     def finalize_options(self):
-        self.cwd = os.getcwd()
+        pass
 
     def run(self):
-        if not self.verbose:
-            os.system('nosetests -w mosaic/utest/ mosaicTests.py')
-        else:
+        if self.testoutput:
             os.system('nosetests -v -w mosaic/utest/ mosaicTests.py')
+        else:
+            os.system('nosetests -w mosaic/utest/ mosaicTests.py')
 
 class mosaicBinaries(Command):
     description = "build MOSAIC binaries."
