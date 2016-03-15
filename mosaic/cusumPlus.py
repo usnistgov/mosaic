@@ -326,8 +326,7 @@ class cusumPlus(metaEventProcessor.metaEventProcessor):
 		except InvalidEvent:
 			self.rejectEvent('eInvalidEvent')
 		except:
-	 		self.rejectEvent('eFitFailure')
-	 		raise
+	 		self.rejectEvent('eUnknownError')
 
 
 	def __recordevent(self, cusum):
