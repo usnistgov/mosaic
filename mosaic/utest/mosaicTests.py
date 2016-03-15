@@ -144,12 +144,12 @@ class EventPartition_TestSuite(EventPartitionTest):
 
 class Multistate_TestSuite(BaseMultiStateTest):
 	def test_adept(self):
-		for i in range(0,20): #[0,2,3,4,5,6,7,8,10,11,12,14,15,16,17,18,19,20]:
+		for i in [0,2,3,4,5,6,7,8,10,11,12,14,15,16,17,18,19,20]:
 			basename='testdata/eventLong_'+str(i)
 			yield self.runTestCase, basename+'_raw.bin', basename+'_params.json', adept.adept
 
 	def test_cusum(self):
-		for i in range(0,20): #[0,2,3,4,5,6,7,8,10,11,12,14,15,16,17,18,19,20]:
+		for i in [0,2,3,4,5,6,7,8,10,11,12,14,15,16,17,18,19,20]:
 			basename='testdata/eventLong_'+str(i)
 			baseobj=BaseMultiStateTest()
 
