@@ -7,6 +7,7 @@
 	:License:	See LICENSE.TXT
 	:ChangeLog:
 	.. line-block::
+		3/16/16 	AB 	Migrate InitThreshold setting to CUSUM StepSize.
 		2/22/16 	AB 	Use CUSUM to estimate intial guesses in ADEPT for long events.
 		2/20/16 	AB 	Format settings log.
 		12/09/15 	KB 	Added Windows specific optimizations
@@ -64,7 +65,7 @@ class adept(metaEventProcessor.metaEventProcessor):
 
 		:Keyword Args:
 			In addition to :class:`~mosaic.metaEventProcessor.metaEventProcessor` args,
-				- `InitThreshold` : 	internal threshold for initial state determination (default: 5.0)
+				- `StepSize` :			The multiple of the standard deviations considered significant to dtecting an event (default: 3.0).
 				- `MinStateLength` : 	minimum number of data points required to assign a state within an event (default: 4)
 				- `MaxEventLength` :	maximum length (in data points) of events that will be processed (default: 10000)
 				- `FitTol` :			fit tolerance for convergence (default: 1.e-7)
@@ -110,12 +111,20 @@ class adept(metaEventProcessor.metaEventProcessor):
 		try:
 			self.FitTol=float(self.settingsDict.pop("FitTol", 1.e-7))
 			self.FitIters=int(self.settingsDict.pop("FitIters", 5000))
-			self.InitThreshold=float(self.settingsDict.pop("InitThreshold", 5.0))
+			self.StepSize=float(self.settingsDict.pop("StepSize", 3.0))
 			self.MinStateLength=float(self.settingsDict.pop("MinStateLength", 4))
 			self.MaxEventLength=int(self.settingsDict.pop("MaxEventLength", 10000))
 			self.UnlinkRCConst=int(self.settingsDict.pop("UnlinkRCConst", 1))
+
+			# initThr=float(self.settingsDict["InitThreshold"])
+			# if initThr:
+			# 	print "Warning: InitThreshold is deprecated. Please use StepSize instead (see the docs for additional information). StepSize set to {0}".format(3.0*initThr)
+			# 	self.StepSize=3.0*initThr
+
 		except ValueError as err:
 			raise commonExceptions.SettingsTypeError( err )
+		# except KeyError:
+		# 	pass
 
 
 	###########################################################################
@@ -226,7 +235,7 @@ class adept(metaEventProcessor.metaEventProcessor):
 		logObj.addLogText( 'Max. iterations  = {0}'.format(self.FitIters) )
 		logObj.addLogText( 'Fit tolerance (rel. err in leastsq)  = {0}'.format(self.FitTol) )
 		logObj.addLogText( 'Unlink RC constants = {0}'.format(bool(self.UnlinkRCConst)) )
-		logObj.addLogText( 'Initial partition threshold  = {0} sigma'.format(self.InitThreshold) )
+		logObj.addLogText( 'Initial partition step size  = {0}'.format(self.StepSize) )
 		logObj.addLogText( 'Min. State Length = {0} samples'.format(self.MinStateLength) )
 		logObj.addLogText( 'Max. Event Length = {0} samples'.format(self.MaxEventLength))
 
@@ -421,7 +430,7 @@ class adept(metaEventProcessor.metaEventProcessor):
 		cusumSettings={}
 		cusumSettings["MinThreshold"]=0.1
 		cusumSettings["MaxThreshold"]=100.
-		cusumSettings["StepSize"]=3.0*self.InitThreshold
+		cusumSettings["StepSize"]=self.StepSize
 		cusumSettings["MinLength"]=self.MinStateLength
 
 		# print cusumSettings
