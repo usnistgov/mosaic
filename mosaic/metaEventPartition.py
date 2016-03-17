@@ -343,7 +343,7 @@ class metaEventPartition(object):
 		if self.meanOpenCurr == -1. or self.sdOpenCurr == -1. or self.slopeOpenCurr == -1.:
 			[ self.meanOpenCurr, self.sdOpenCurr, self.slopeOpenCurr ] = self._openchanstats(self.trajDataObj.previewdata(self.nPoints))
 		else:
-			print "Automatic open channel state estimation has been disabled."
+			print "WARNING: Automatic open channel state estimation has been disabled."
 
 		# Initialize a FIFO queue to keep track of open channel conductance
 		#self.openchanFIFO=npfifo.npfifo(nPoints)
