@@ -5,6 +5,7 @@
 	:License:	See LICENSE.TXT
 	:ChangeLog:
 		.. line-block::
+			3/16/16 	AB 	Migrate InitThreshold setting to CUSUM StepSize.
 			8/24/15 	AB 	Updated algorithm names to ADEPT and CUSUM+
 			6/24/15 	AB 	Added an option to unlink the RC constants in stepResponseAnalysis.
 			3/20/15		AB 	Added MaxEventLength to multiStateAnalysis settings
@@ -319,7 +320,7 @@ class guiDataModel(dict):
 								"FitTol" 				: float,
 								"FitIters" 				: int,
 								"BlockRejectRatio" 		: float,
-								"InitThreshold"			: float,
+								"StepSize"			: float,
 								"MinStateLength"		: int,
 								"MaxEventLength" 		: int,
 								"UnlinkRCConst"			: bool
