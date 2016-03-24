@@ -105,8 +105,8 @@ class metaEventPartition(object):
 		self.mdioDBHnd.initDB(
 								dbPath=self.trajDataObj.datPath, 
 								tableName='metadata',
-								colNames=(self.tEventProcObj.mdHeadings())+['TimeSeries'],
-								colNames_t=(self.tEventProcObj.mdHeadingDataType())+['REAL_LIST']
+								colNames=(self.tEventProcObj.mdHeadings()),
+								colNames_t=(self.tEventProcObj.mdHeadingDataType())
 							)
 		self.mdioDBHnd.writeSettings(settingsString)
 		if self.trajDataObj.dataFilter:
@@ -314,8 +314,8 @@ class metaEventPartition(object):
 												[ 
 													"sqlite3MDIO", 
 													self.mdioDBHnd.dbFilename,
-													(self.tEventProcObj.mdHeadings())+['TimeSeries'],
-													(self.tEventProcObj.mdHeadingDataType())+['REAL_LIST'] 
+													(self.tEventProcObj.mdHeadings()),
+													(self.tEventProcObj.mdHeadingDataType()) 
 												],
 											)
 										)

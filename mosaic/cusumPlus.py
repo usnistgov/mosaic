@@ -126,7 +126,7 @@ class cusumPlus(metaEventProcessor.metaEventProcessor):
 		except:
 			raise
 
-	def mdList(self):
+	def _mdList(self):
 		"""
 			Return a list of meta-data from the analysis of single step events. We explicitly
 			control the order of the data to keep formatting consistent. 				
@@ -146,7 +146,7 @@ class cusumPlus(metaEventProcessor.metaEventProcessor):
 					self.mdThreshold
 				]
 		
-	def mdHeadingDataType(self):
+	def _mdHeadingDataType(self):
 		"""
 			Return a list of meta-data tags data types.
 		"""
@@ -165,7 +165,7 @@ class cusumPlus(metaEventProcessor.metaEventProcessor):
 					'REAL'
 				]
 
-	def mdHeadings(self):
+	def _mdHeadings(self):
 		"""
 			Explicity set the metadata to print out.
 		"""

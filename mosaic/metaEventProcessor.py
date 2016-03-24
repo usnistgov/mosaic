@@ -88,9 +88,13 @@ class metaEventProcessor(object):
 		"""
 			This is the equivalent of a pure virtual function in C++. 
 		"""
+		start_time=time.time()
+
 		self.dataPolarity=float(np.sign(np.mean(self.eventData)))
 
 		self._processEvent()
+
+		self.mdEventProcessTime=1000.*(time.time()-start_time)
 
 		if not self.saveTS:
 			self.eventData=[]
@@ -112,7 +116,7 @@ class metaEventProcessor(object):
 		pass
 
 	@abstractmethod
-	def mdList(self):
+	def _mdList(self):
 		"""
 			.. important:: |abstractmethod|
 
@@ -121,7 +125,7 @@ class metaEventProcessor(object):
 		pass
 	
 	@abstractmethod
-	def mdHeadings(self):
+	def _mdHeadings(self):
 		"""
 			.. important:: |abstractmethod|
 
@@ -130,7 +134,7 @@ class metaEventProcessor(object):
 		pass
 
 	@abstractmethod
-	def mdHeadingDataType(self):
+	def _mdHeadingDataType(self):
 		"""
 			.. important:: |abstractmethod|
 
@@ -151,6 +155,19 @@ class metaEventProcessor(object):
 		pass
 		#return []
 
+	def mdHeadings(self):
+		"""
+			Return a list of meta-data tags for display purposes.
+		"""
+		return self._mdHeadings()+['ProcessTime', 'TimeSeries']
+
+	def mdHeadingDataType(self):
+		"""
+			Return a list of meta-data tags data types.
+		"""
+		return self._mdHeadingDataType()+['REAL', 'REAL_LIST']
+
+
 	def rejectEvent(self, status):
 		"""
 			Set an event as rejected if it doesn't pass tests in processing.
@@ -169,7 +186,7 @@ class metaEventProcessor(object):
 		"""
 		try:
 			if self.dataFileHnd:
-				self.dataFileHnd.writeRecord( (self.mdList())+[self.eventData] )
+				self.dataFileHnd.writeRecord( (self._mdList())+[self.mdEventProcessTime, self.eventData] )
 		except sqlite3.OperationalError, err:
 			# If the db is locked, wait 1 s and try again.
 			print err
