@@ -144,10 +144,6 @@ class adept(metaEventProcessor.metaEventProcessor):
 				# estimate initial guess for events
 				initguess=self._cusumInitGuess(self.eventData)
 				
-				# Fit the system transfer function to the event data
-				# if sys.platform.startswith('win'):
-				# 	self.winfitevent(edat,initguess)
-				# else:
 				self.fitevent(edat, initguess)
 		except InvalidEvent:
 			self.rejectEvent('eInvalidEvent')
@@ -244,43 +240,6 @@ class adept(metaEventProcessor.metaEventProcessor):
 	###########################################################################
 	# Local functions
 	###########################################################################
-        def winfitevent(self, edat, initguess):
-                try:
-                        dt = 1000./self.Fs 	# time-step in ms.
-
-
-                        # control numpy error reporting
-                        np.seterr(invalid='ignore', over='ignore', under='ignore')
-
-                        ts = np.array([ t*dt for t in range(0,len(edat)) ], dtype='float64')
-
-                        self.nStates=len(initguess)-1
-
-                        # setup fit params
-                        #clumsy way to build a list but the usual list concatenation using list1+list2 was for some reason adding the lists elementwise...
-                        params_0 = [5*dt for i in range(1,len(initguess))]
-                        for i in range(1,len(initguess)):
-                                params_0.append(initguess[i][1]*dt)
-                        for i in range(1,len(initguess)):
-                                params_0.append(initguess[i][0]-initguess[i-1][0])
-                        params_0.append(initguess[0][0])
-                        
-
-                        #lambda function here is necessary in order to fix the value of N, otherwise curve_fit treats that as an optimization parameter
-                        popt, pcov = curve_fit(lambda ts, *params_0: fit_funcs.curve_fit_wrapper(ts, self.nStates, params_0), ts, edat, p0=params_0, maxfev=self.FitIters)
-                        
-                        tau, mu, a = list(popt[:self.nStates]), list(popt[self.nStates:2*self.nStates]), list(popt[2*self.nStates:3*self.nStates])
-                        b = popt[-1]
-
-                        self._winrecordevent(tau, mu, a, b)
-                except KeyboardInterrupt:
-			self.rejectEvent('eFitUserStop')
-			raise
-		except InvalidEvent:
-			self.rejectEvent('eInvalidEvent')
-		except:
-	 		self.rejectEvent('eFitFailure')
-
 	def fitevent(self, edat, initguess):
 		try:
 			dt = 1000./self.Fs 	# time-step in ms.
@@ -340,49 +299,6 @@ class adept(metaEventProcessor.metaEventProcessor):
 			return model - data
 		except KeyboardInterrupt:
 			raise
-
-        def _winrecordevent(self, tau, mu, a, b):
-                dt = 1000./self.Fs 	# time-step in ms.
-                try:
-			if self.nStates<2:
-				# print self.nStates
-				self.rejectEvent('eInvalidStates')
-			elif mu[0] < 0.0 or mu[self.nStates-1] < 0.0:
-				self.rejectEvent('eInvalidResTime')
-			# The start of the event is set past the length of the data
-			elif mu[self.nStates-1] > (1000./self.Fs)*(len(self.eventData)-1):
-				self.rejectEvent('eInvalidStartTime')
-			else:
-				self.mdOpenChCurrent 	= b 
-				self.mdCurrentStep		= a
-				
-				self.mdNStates			= self.nStates
-
-				self.mdBlockDepth 		= np.cumsum( self.mdCurrentStep[:-1] )/self.mdOpenChCurrent + 1
-
-				self.mdEventDelay		= mu
-
-				self.mdStateResTime 	= np.diff(self.mdEventDelay)
-
-				self.mdEventStart		= mu[0]
-				self.mdEventEnd			= mu[self.nStates-1]
-				self.mdRCConst			= tau
-
-				self.mdResTime			= self.mdEventEnd - self.mdEventStart
-
-				self.mdAbsEventStart	= self.mdEventStart + self.absDataStartIndex * dt
-				
-				self.mdRedChiSq			= 0 #not returned by curve_fit afaik
-					
-				if math.isnan(self.mdRedChiSq):
-					self.rejectEvent('eInvalidRedChiSq')	
-				if not (np.array(self.mdStateResTime)>0).all():
-					self.rejectEvent('eNegativeEventDelay')
-				if not (np.array(self.mdRCConst)>0).all():
-					self.rejectEvent('eInvalidRCConst')
-		except:
-			self.rejectEvent('eInvalidEvent')
-
 			
 	def _recordevent(self, optfit):
 		dt = 1000./self.Fs 	# time-step in ms.
