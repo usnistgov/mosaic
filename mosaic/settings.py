@@ -128,11 +128,11 @@ __settings__="""
 		},
 		"adept" : {
             "FitTol"				: "1.e-7",
-            "FitIters"				: "50000",
+            "FitIters"				: "1000",
             "StepSize"				: "2.5",
             "MinStateLength"		: "10",
-            "MaxEventLength" 		: "10000",
-            "UnlinkRCConst" 		: "1"
+            "MaxEventLength" 		: "50000",
+            "UnlinkRCConst" 		: "0"
 	     },
 	     "cusumPlus": {
 			"StepSize"				: 3.0, 

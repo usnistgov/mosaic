@@ -51,6 +51,9 @@ class Base2StateTest(object):
 
 
 class BaseMultiStateTest(object):
+	def almostEqual(self, a, b, tol):
+		return abs(a - b) <= tol
+
 	def _setupTestCase(self, datfile, prmfile, algoHnd):
 		self.dat=testutil.readDataRAW(datfile)
 		self.prm=testutil.readParametersJSON(prmfile)
@@ -87,6 +90,8 @@ class BaseMultiStateTest(object):
 		testobj.processEvent()
 
 		assert testobj.mdProcessingStatus == 'normal'
+		assert self.almostEqual( testobj.mdNStates, self.prm['n'], 1)
+		assert self.almostEqual( testobj.mdOpenChCurrent, self.prm['OpenChCurrent'], 1.0)
 		
 
 class EventPartitionTest(object):
