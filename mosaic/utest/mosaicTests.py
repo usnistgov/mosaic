@@ -95,7 +95,6 @@ class BaseMultiStateTest(object):
 		
 
 class EventPartitionTest(object):
-
 	def setUp(self):
 		self.datapath = 'testdata'
 
@@ -135,31 +134,31 @@ class EventPartitionTest(object):
 		for f in glob.glob('testdata/*.sqlite'):
 			os.remove(f)
 
-class EventPartition_TestSuite(EventPartitionTest):
+class EventPartitionSingle_TestSuite(EventPartitionTest):
 	def test_eventPartition(self):
-		for i in range(1,5):
+		for i in range(1,6):
 			basename='testdata/testEventPartition'+str(i)
 			yield self.runTestCase, basename+'.csv', basename+'.prm', es.eventSegment, False
 
+class EventPartitionParallel_TestSuite(EventPartitionTest):
 	def test_eventPartition(self):
-		for i in range(1,5):
+		for i in range(1,6):
 			basename='testdata/testEventPartition'+str(i)
 			yield self.runTestCase, basename+'.csv', basename+'.prm', es.eventSegment, True
 
-
-class Multistate_TestSuite(BaseMultiStateTest):
+class ADEPT_TestSuite(BaseMultiStateTest):
 	def test_adept(self):
 		for i in [0,2,3,4,5,6,7,8,10,11,12,14,15,16,17,18,19,20]:
 			basename='testdata/eventLong_'+str(i)
 			yield self.runTestCase, basename+'_raw.bin', basename+'_params.json', adept.adept
 
+class CUSUM_TestSuite(BaseMultiStateTest):
 	def test_cusum(self):
 		for i in [0,2,3,4,5,6,7,8,10,11,12,14,15,16,17,18,19,20]:
 			basename='testdata/eventLong_'+str(i)
 			baseobj=BaseMultiStateTest()
 
 			yield self.runTestCase, basename+'_raw.bin', basename+'_params.json', cpl.cusumPlus
-
 
 class TwoState_TestSuite(Base2StateTest):
 	def test_adept2state(self):
