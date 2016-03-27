@@ -211,8 +211,8 @@ class StatisticsWindow(QtGui.QDialog):
 
 		try:
 			pctcomplete=100.*self.analysisTime/float(self.trajLength)
-			
-			if pctcomplete<5.:
+
+			if pctcomplete<0.05:
 				return round(pctcomplete, 1), "calculating ..."
 			elif pctcomplete>90:
 				return int(round(pctcomplete/10.0)*10.0), self._formattime(int(self.wallTime/pctcomplete*(100.-pctcomplete)))
