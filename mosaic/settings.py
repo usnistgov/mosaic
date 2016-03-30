@@ -124,7 +124,7 @@ __settings__="""
 		"adept2State" : {
 			"FitTol"				: "1.e-7",
 			"FitIters"				: "50000",
-			"UnlinkRCConst" 		: "1"
+			"LinkRCConst" 			: "1"
 		},
 		"adept" : {
             "FitTol"				: "1.e-7",
@@ -132,7 +132,7 @@ __settings__="""
             "StepSize"				: "2.5",
             "MinStateLength"		: "10",
             "MaxEventLength" 		: "50000",
-            "UnlinkRCConst" 		: "0"
+            "LinkRCConst" 			: "1"
 	     },
 	     "cusumPlus": {
 			"StepSize"				: 3.0, 

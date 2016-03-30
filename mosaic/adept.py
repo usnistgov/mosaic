@@ -7,6 +7,7 @@
 	:License:	See LICENSE.TXT
 	:ChangeLog:
 	.. line-block::
+		03/30/16 	AB 	Change UnlinkRCConst to LinkRCConst to avoid double negatives.
 		3/16/16 	AB 	Migrate InitThreshold setting to CUSUM StepSize.
 		2/22/16 	AB 	Use CUSUM to estimate intial guesses in ADEPT for long events.
 		2/20/16 	AB 	Format settings log.
@@ -70,7 +71,7 @@ class adept(metaEventProcessor.metaEventProcessor):
 				- `MaxEventLength` :	maximum length (in data points) of events that will be processed (default: 10000)
 				- `FitTol` :			fit tolerance for convergence (default: 1.e-7)
 				- `FitIters` :			maximum fit iterations (default: 5000)
-				- `UnlinkRCConst` :			When True, unlinks the RC constants in the fit function to vary independently of each other. (Default: `True`)
+				- `LinkRCConst` :	When True, the RC constants associated with each state in the fit function are varied together. (Default: `True`)
 
 		:Errors:
 
@@ -114,7 +115,7 @@ class adept(metaEventProcessor.metaEventProcessor):
 			self.StepSize=float(self.settingsDict.pop("StepSize", 3.0))
 			self.MinStateLength=float(self.settingsDict.pop("MinStateLength", 4))
 			self.MaxEventLength=int(self.settingsDict.pop("MaxEventLength", 10000))
-			self.UnlinkRCConst=int(self.settingsDict.pop("UnlinkRCConst", 1))
+			self.LinkRCConst=int(self.settingsDict.pop("LinkRCConst", 1))
 
 			# initThr=float(self.settingsDict["InitThreshold"])
 			# if initThr:
@@ -230,7 +231,7 @@ class adept(metaEventProcessor.metaEventProcessor):
 		
 		logObj.addLogText( 'Max. iterations  = {0}'.format(self.FitIters) )
 		logObj.addLogText( 'Fit tolerance (rel. err in leastsq)  = {0}'.format(self.FitTol) )
-		logObj.addLogText( 'Unlink RC constants = {0}'.format(bool(self.UnlinkRCConst)) )
+		logObj.addLogText( 'Link RC constants = {0}'.format(bool(self.LinkRCConst)) )
 		logObj.addLogText( 'Initial partition step size  = {0}'.format(self.StepSize) )
 		logObj.addLogText( 'Min. State Length = {0} samples'.format(self.MinStateLength) )
 		logObj.addLogText( 'Max. Event Length = {0} samples'.format(self.MaxEventLength))
@@ -257,13 +258,13 @@ class adept(metaEventProcessor.metaEventProcessor):
 			for i in range(0, len(initguess)):
 				params.add('a'+str(i), value=initguess[i][0]) 
 				params.add('mu'+str(i), value=initguess[i][1]) 
-				if self.UnlinkRCConst:
-					params.add('tau'+str(i), value=dt*5.)
-				else:
+				if self.LinkRCConst:				
 					if i==0:
 						params.add('tau'+str(i), value=dt*5.)
 					else:
 						params.add('tau'+str(i), value=dt*5., expr='tau0')
+				else:
+					params.add('tau'+str(i), value=dt*5.)
 
 			params.add('b', value=self.baseMean )
 			
