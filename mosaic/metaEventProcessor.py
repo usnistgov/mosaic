@@ -8,6 +8,7 @@
 	:License:	See LICENSE.TXT
 	:ChangeLog:
 	.. line-block::
+		3/30/16 	AB 	Fixed function timing resolution on Windows
 		8/30/14		AB 	Added a timeout/retry to handle DB locked error.
 		5/17/14		AB  Add metaMDIO support for meta-data and time-series storage
 		2/16/14		AB 	Define new kwarg, absdatidx to allow capture rate estimation.
@@ -80,6 +81,12 @@ class metaEventProcessor(object):
 		# meta-data attrs that are common to all event processing
 		self.mdProcessingStatus='normal'
 
+		# Setup platform-dependent timing function
+		if sys.platform.startswith('win'):
+			self.timingFunc=time.clock
+		else:
+			self.timingFunc=time.time
+
 		# print self.settingsDict
 		# Call sub-class initialization
 		self._init(**kwargs)
@@ -88,13 +95,13 @@ class metaEventProcessor(object):
 		"""
 			This is the equivalent of a pure virtual function in C++. 
 		"""
-		start_time=time.time()
+		start_time=self.timingFunc()
 
 		self.dataPolarity=float(np.sign(np.mean(self.eventData)))
 
 		self._processEvent()
 
-		self.mdEventProcessTime=1000.*(time.time()-start_time)
+		self.mdEventProcessTime=1000.*(self.timingFunc()-start_time)
 
 		if not self.saveTS:
 			self.eventData=[]
