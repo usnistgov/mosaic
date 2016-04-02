@@ -382,9 +382,10 @@ class metaTrajIO(object):
 		except (StopIteration, AttributeError):
 			# Read a new data file to get more data
 			fname=self.popfnames()
-			self.processedFilenames.extend([[fname, self.fileFormat, os.path.getmtime(fname)]])
 
+			self.processedFilenames.extend([[fname, self.fileFormat, os.path.getmtime(fname)]])
 			if fname:
+				self.processedFilenames.extend([[fname, self.fileFormat, os.path.getmtime(fname)]])
 				self.rawData=self.readdata( fname )
 				self.dataGenerator=self._createGenerator()
 				self._appenddata()
