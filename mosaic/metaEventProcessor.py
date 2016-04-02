@@ -8,6 +8,7 @@
 	:License:	See LICENSE.TXT
 	:ChangeLog:
 	.. line-block::
+		3/30/16 	AB 	Fixed function timing resolution on Windows
 		8/30/14		AB 	Added a timeout/retry to handle DB locked error.
 		5/17/14		AB  Add metaMDIO support for meta-data and time-series storage
 		2/16/14		AB 	Define new kwarg, absdatidx to allow capture rate estimation.
@@ -80,6 +81,12 @@ class metaEventProcessor(object):
 		# meta-data attrs that are common to all event processing
 		self.mdProcessingStatus='normal'
 
+		# Setup platform-dependent timing function
+		if sys.platform.startswith('win'):
+			self.timingFunc=time.clock
+		else:
+			self.timingFunc=time.time
+
 		# print self.settingsDict
 		# Call sub-class initialization
 		self._init(**kwargs)
@@ -88,9 +95,13 @@ class metaEventProcessor(object):
 		"""
 			This is the equivalent of a pure virtual function in C++. 
 		"""
+		start_time=self.timingFunc()
+
 		self.dataPolarity=float(np.sign(np.mean(self.eventData)))
 
 		self._processEvent()
+
+		self.mdEventProcessTime=1000.*(self.timingFunc()-start_time)
 
 		if not self.saveTS:
 			self.eventData=[]
@@ -112,7 +123,7 @@ class metaEventProcessor(object):
 		pass
 
 	@abstractmethod
-	def mdList(self):
+	def _mdList(self):
 		"""
 			.. important:: |abstractmethod|
 
@@ -121,7 +132,7 @@ class metaEventProcessor(object):
 		pass
 	
 	@abstractmethod
-	def mdHeadings(self):
+	def _mdHeadings(self):
 		"""
 			.. important:: |abstractmethod|
 
@@ -130,7 +141,7 @@ class metaEventProcessor(object):
 		pass
 
 	@abstractmethod
-	def mdHeadingDataType(self):
+	def _mdHeadingDataType(self):
 		"""
 			.. important:: |abstractmethod|
 
@@ -151,15 +162,30 @@ class metaEventProcessor(object):
 		pass
 		#return []
 
+	def mdHeadings(self):
+		"""
+			Return a list of meta-data tags for display purposes.
+		"""
+		return self._mdHeadings()+['ProcessTime', 'TimeSeries']
+
+	def mdHeadingDataType(self):
+		"""
+			Return a list of meta-data tags data types.
+		"""
+		return self._mdHeadingDataType()+['REAL', 'REAL_LIST']
+
+
 	def rejectEvent(self, status):
 		"""
 			Set an event as rejected if it doesn't pass tests in processing.
 			The status is assigned to mdProcessingStatus.
 		"""
-		# set all meta data to -1
-		[ self._setRejectMetadata(mdHead) for mdHead in self.__dict__.keys() if mdHead.startswith('md')==True ]
-		# set processing status to status
-		self.mdProcessingStatus=status
+		# Only reject events if this is the first error i.e. status == normal
+		if self.mdProcessingStatus=='normal':
+			# set all meta data to -1
+			[ self._setRejectMetadata(mdHead) for mdHead in self.__dict__.keys() if mdHead.startswith('md')==True ]
+			# set processing status to status
+			self.mdProcessingStatus=status
 
 	def writeEvent(self):
 		"""
@@ -167,7 +193,7 @@ class metaEventProcessor(object):
 		"""
 		try:
 			if self.dataFileHnd:
-				self.dataFileHnd.writeRecord( (self.mdList())+[self.eventData] )
+				self.dataFileHnd.writeRecord( (self._mdList())+[self.mdEventProcessTime, self.eventData] )
 		except sqlite3.OperationalError, err:
 			# If the db is locked, wait 1 s and try again.
 			print err

@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 """
 	Read binary ionic current data into numpy arrays
 
@@ -6,6 +7,7 @@
 	:License:	See LICENSE.TXT	
 	:ChangeLog:
 	.. line-block::
+		9/13/15 	AB 	Updated logging to use mosaicLog class
 		4/4/15		AB 	Merge changes from devel-1.0 	
 		4/1/15 		AB 	Added a new property (DataLengthSec) to estimate the length of a data set.
 		3/28/15 	AB 	Optimized file read interface for improved large file support.
@@ -25,6 +27,7 @@ import numpy as np
 
 import settings
 from mosaic.utilities.resource_path import format_path, path_separator
+import mosaic.utilities.mosaicLog as log
 
 # define custom exceptions
 class IncompatibleArgumentsError(Exception):
@@ -155,6 +158,9 @@ class metaTrajIO(object):
 		# exceeds 1 million data points.
 		self.currDataIdx=0
 
+		# a var that determines if the end of the data stream is imminent.
+		self.nearEndOfData=0
+
 		# A global index that tracks the number of data points retrieved.
 		self.globalDataIndex=0
 
@@ -194,7 +200,10 @@ class metaTrajIO(object):
 
 			Return the elapsed time in the time-series in seconds.
 		"""
-		return self.globalDataIndex/float(self.Fs)
+		if not self.initPipe:
+			self._initPipe()
+
+		return (self.globalDataIndex - self.startIndex)/float(self.FsHz) 
 
 	@property 
 	def LastFileProcessed(self):
@@ -249,6 +258,9 @@ class metaTrajIO(object):
 		if not self.initPipe:
 			self._initPipe()
 
+		if self.nearEndOfData>1:
+			raise EmptyDataPipeError("End of data.")
+
 		# If the global index exceeds the specied end point, raise an EmptyDataPipError
 		if hasattr(self, "end"):
 			if self.globalDataIndex > self.endIndex:
@@ -273,8 +285,16 @@ class metaTrajIO(object):
 			# return the popped data
 			return t
 		except IndexError, err:
-			self._appenddata()
-			return self.popdata(n)
+			if self.nearEndOfData>0:
+				self.currDataIdx+=n
+				self.globalDataIndex+=n
+				
+				self.nearEndOfData+=1
+
+				return t
+			else:
+				self._appenddata()
+				return self.popdata(n)
 				
 	def previewdata(self, n):
 		"""
@@ -302,34 +322,38 @@ class metaTrajIO(object):
 		try:
 			# Get the elements to return
 			t=self.currDataPipe[self.currDataIdx:self.currDataIdx+n]-self.dcOffset
-			if len(t) < n: raise IndexError
+			if len(t) < n: raise IndexError 
 				
 			return t
 		except IndexError, err:
-			self._appenddata()
-			return self.previewdata(n)
+			if self.nearEndOfData>0:
+				return t
+			else:
+				self._appenddata()
+				return self.previewdata(n)
 
 
 	def formatsettings(self):
 		"""
 			Return a formatted string of settings for display
 		"""
-		fmtstr=""
+		logObj=log.mosaicLog()
+
+		logObj.addLogHeader( 'Trajectory I/O settings:' )
+		
+		logObj.addLogText( 'Files processed = {0}'.format(self.nFiles-len(self.dataFiles)) )
+		logObj.addLogText( 'Data path = {0}'.format(self.datPath) )
+		logObj.addLogText( 'File format = {0}'.format(self.fileFormat) )
+		logObj.addLogText( 'Sampling frequency = {0} kHz'.format(self.FsHz*1e-3) )
+
+		# Sub-class formatted settings
+		self._formatsettings(logObj)
 
 		# add the filter settings
 		if self.dataFilter:
-			fmtstr+=self.dataFilterObj.formatsettings()
-
-		fmtstr+='\n\tTrajectory I/O settings: \n'
-		fmtstr+='\t\tFiles processed = {0}\n'.format(self.nFiles-len(self.dataFiles))
-		fmtstr+='\t\tData path = {0}\n'.format(self.datPath)
-		fmtstr+='\t\tFile format = {0}\n'.format(self.fileFormat)
-		fmtstr+='\t\tSampling frequency = {0} kHz\n'.format(self.FsHz*1e-3)
-
-		# Sub-class formatted settings
-		fmtstr+=self._formatsettings()
-
-		return fmtstr
+			return str(logObj)+self.dataFilterObj.formatsettings()
+		else:
+			return str(logObj)
 
 	#################################################################
 	# Private API: Interface functions, implemented by sub-classes.
@@ -360,13 +384,14 @@ class metaTrajIO(object):
 			fname=self.popfnames()
 			self.processedFilenames.extend([[fname, self.fileFormat, os.path.getmtime(fname)]])
 
-			self.rawData=self.readdata( fname )
-			self.dataGenerator=self._createGenerator()
-			self._appenddata()
+			if fname:
+				self.rawData=self.readdata( fname )
+				self.dataGenerator=self._createGenerator()
+				self._appenddata()
 		
 	def scaleData(self, data):
 		"""
-			.. note:: |interfacemethod|
+			.. important:: |interfacemethod|
 
 			Scale the raw data loaded with :func:`~mosaic.metaTrajIO.metaTrajIO.readdata`. Note this function will not necessarily receive the entire data array loaded with :func:`~mosaic.metaTrajIO.metaTrajIO.readdata`. Transformations must be able to process partial data chunks.
 
@@ -386,19 +411,23 @@ class metaTrajIO(object):
 
 				Assuming the amplifier scale and offset values are stored in the class variables ``AmplifierScale`` and ``AmplifierOffset``, the raw data read using :func:`~mosaic.metaTrajIO.metaTrajIO.readdata` can be transformed by :func:`~mosaic.metaTrajIO.metaTrajIO.scaleData`. We can also use this function to change the array data type.
 
-					.. code-block:: python
+			.. code-block:: python
 
-						def scaleData(self, data):
-							return np.array( data*self.AmplifierScale-self.AmplifierOffset, dtype='f8' )
+				def scaleData(self, data):
+					return np.array(data*self.AmplifierScale-self.AmplifierOffset, dtype='f8')
 		"""
 		return data
 
 	@abstractmethod
-	def _formatsettings(self):
+	def _formatsettings(self, logObject):
 		"""
 			.. important:: |abstractmethod|
 
-			Return a formatted string of settings for display 
+			Populate `logObject` with settings strings for display
+
+			:Parameters:
+
+				- `logObject` : 	a object that holds logging text (see :class:`~mosaic.utilities.mosaicLog.mosaicLog`)				
 		"""
 		pass
 		
@@ -454,7 +483,10 @@ class metaTrajIO(object):
 		try:
 			return self.dataFiles.pop(0)
 		except IndexError:
-			raise EmptyDataPipeError("End of data.")
+			if self.nearEndOfData:
+				raise EmptyDataPipeError("End of data.")
+			else:
+				self.nearEndOfData+=1
 
 	#################################################################
 	# Internal Functions
@@ -466,18 +498,22 @@ class metaTrajIO(object):
 		
 		self.initPipe=True
 
-		# Drop the first 'n' points specified by the start keyword
-		if hasattr(self, 'start'):
-			self.startIndex=int(self.start*self.Fs)
-			if self.startIndex > 0:
-				self.popdata(self.startIndex-1)
-
 		# Set the end point
 		if hasattr(self, 'end'):
 			self.endIndex=int((self.end-1)*self.Fs)
 			self.datLenSec=self.end-self.start
 		else:
 			self.datLenSec=(len(self.rawData)/float(self.Fs)*(len(self.dataFiles)+1))
+			
+		# Drop the first 'n' points specified by the start keyword
+		if hasattr(self, 'start'):
+			self.startIndex=int(self.start*self.Fs)
+			if self.startIndex > 0:
+				nBlks=int((self.startIndex-1)/self.CHUNKSIZE)
+				for i in range(nBlks):
+					self.popdata(self.CHUNKSIZE)
+
+				self.popdata( int((self.startIndex-1)%self.CHUNKSIZE) )
 
 	def _setupDataFilter(self):
 		filtsettings=settings.settings( self.datPath ).getSettings(self.datafilter.__name__)

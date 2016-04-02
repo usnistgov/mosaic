@@ -9,13 +9,17 @@ import sqlite3
 from PyQt4 import QtCore, QtGui, uic
 
 import mosaic.sqlite3MDIO as sqlite
+import mosaic.errors as err
 import mosaicgui.autocompleteedit as autocomplete
 from mosaic.utilities.resource_path import resource_path, last_file_in_directory
 import mosaic.utilities.fit_funcs as fit_funcs
-import mosaic.stepResponseAnalysis as sra
 
 import matplotlib.ticker as ticker
 # from mosaicgui.trajview.trajviewui import Ui_Dialog
+
+css = """QLabel {
+      color: red;
+}"""
 
 class FitEventWindow(QtGui.QDialog):
 	def __init__(self, parent = None):
@@ -41,6 +45,9 @@ class FitEventWindow(QtGui.QDialog):
 		self.idleTimer.start(3000)
 
 		self.updateDataOnIdle=True
+
+		# setup error descriptions
+		self.errText=err.errors()
 
 		# setup hash tables used in this class
 		self._setupdict()
@@ -70,26 +77,38 @@ class FitEventWindow(QtGui.QDialog):
 			self.analysisAlgorithm=str(self.queryDatabase.readAnalysisInfo()[3])
 		except:
 			# If the database doesn't have information on the alogirthm type, 
-			# default to stepResponseAnalysis
-			self.analysisAlgorithm="stepResponseAnalysis"
+			# default to adept2State
+			self.analysisAlgorithm="adept2State"
 
-		# Generate the query string based on the algorithm in the database
-		self.queryString=self.queryStringDict[self.analysisAlgorithm]
-
-		# Setup the fit function based on the algorithm
+		
 		try:
+			# Generate the query string based on the algorithm in the database
+			self.queryString=self.queryStringDict[self.analysisAlgorithm]
+
+			# Setup the fit function based on the algorithm
 			self.fitFuncHnd=self.fitFuncHndDict[self.analysisAlgorithm]
 			self.fitFuncArgs=self.fitFuncArgsDict[self.analysisAlgorithm]
-		except KeyError:
-			self.fitFuncHnd=None
-			self.fitFuncArgs="[]"
 
-		try:
 			self.stepFuncHnd=self.stepFuncHndDict[self.analysisAlgorithm]
 			self.stepFuncArgs=self.stepFuncArgsDict[self.analysisAlgorithm]
 		except KeyError:
-			self.stepFuncHnd=None
-			self.stepFuncArgs="[]"
+			from mosaic.settings import __legacy_settings__
+		
+			legacyAlgo=__legacy_settings__[self.analysisAlgorithm]
+		
+			self.queryString=self.queryStringDict[legacyAlgo]
+			
+			self.fitFuncHnd=self.fitFuncHndDict[legacyAlgo]
+			self.fitFuncArgs=self.fitFuncArgsDict[legacyAlgo]
+
+			self.stepFuncHnd=self.stepFuncHndDict[legacyAlgo]
+			self.stepFuncArgs=self.stepFuncArgsDict[legacyAlgo]
+
+			# self.fitFuncHnd=None
+			# self.fitFuncArgs="[]"
+
+			# self.stepFuncHnd=None
+			# self.stepFuncArgs="[]"
 
 		self.FskHz=float(FskHz)
 		# print self.FskHz
@@ -145,9 +164,14 @@ class FitEventWindow(QtGui.QDialog):
 					ystep=self.stepFuncHnd( *eval(self.stepFuncArgs) )
 					self.mpl_hist.canvas.ax.plot( xstep, ystep, linestyle='--', linewidth='2.0', color=cs)
 
+				self.errLabel.setText(str(""))
 			else:
 				self.mpl_hist.canvas.ax.cla()
 				self.mpl_hist.canvas.ax.plot( xdat, ydat, linestyle='None', marker='o', color='r', markersize=8, markeredgecolor='none', alpha=0.6)
+				
+				# Set error line edit color to red
+				self.errLabel.setStyleSheet(css)
+				self.errLabel.setText("Error: "+ self.errText[str(q[0])] )
 
 			self._ticks(5)
 
@@ -243,7 +267,8 @@ class FitEventWindow(QtGui.QDialog):
 				self.eventIndexHorizontalSlider.setMaximum( len(self.queryData)-1 )
 
 		except sqlite3.OperationalError, err:
-			raise err
+			if not "RCConstant1" in str(err):
+				raise err
 		except:
 			raise
 
@@ -254,37 +279,39 @@ class FitEventWindow(QtGui.QDialog):
 		}
 
 		self.queryStringDict={
-			"stepResponseAnalysis" 	: "select ProcessingStatus, TimeSeries, RCConstant, EventStart, EventEnd, BlockedCurrent, OpenChCurrent from metadata limit " + str(self.viewerLimit),
-			"multiStateAnalysis" 	: "select ProcessingStatus, TimeSeries, RCConstant, EventDelay, CurrentStep, OpenChCurrent from metadata limit " + str(self.viewerLimit),
-			"cusumLevelAnalysis" 	: "select ProcessingStatus, TimeSeries, EventDelay, CurrentStep, OpenChCurrent from metadata limit " + str(self.viewerLimit)
+			"adept2State" 	: "select ProcessingStatus, TimeSeries, RCConstant1, RCConstant2, EventStart, EventEnd, BlockedCurrent, OpenChCurrent from metadata limit " + str(self.viewerLimit),
+			"adept" 	: "select ProcessingStatus, TimeSeries, RCConstant, EventDelay, CurrentStep, OpenChCurrent from metadata limit " + str(self.viewerLimit),
+			"cusumPlus" 	: "select ProcessingStatus, TimeSeries, EventDelay, CurrentStep, OpenChCurrent from metadata limit " + str(self.viewerLimit)
 		}
 
 		self.fitFuncHndDict={
-			"stepResponseAnalysis" 	: fit_funcs.stepResponseFunc,
-			"multiStateAnalysis" 	: fit_funcs.multiStateFunc
+			"adept2State" 	: fit_funcs.stepResponseFunc,
+			"adept" 	: fit_funcs.multiStateFunc,
+			"cusumPlus" 	: None
 		}
 
 		self.fitFuncArgsDict={
-			"stepResponseAnalysis" 	: "[xfit, q[2], q[3], q[4], abs(q[6]-q[5]), q[6]]",
-			"multiStateAnalysis" 	: "[xfit, q[2], q[3], q[4], q[5], len(q[3])]"
+			"adept2State" 	: "[xfit, q[2], q[3], q[4], q[5], abs(q[7]-q[6]), q[7]]",
+			"adept" 	: "[xfit, q[2], q[3], q[4], q[5], len(q[3])]",
+			"cusumPlus" 	: "[]"
 		}
 
 		self.stepFuncHndDict={
-			"stepResponseAnalysis" 	: fit_funcs.multiStateStepFunc,
-			"multiStateAnalysis" 	: fit_funcs.multiStateStepFunc,
-			"cusumLevelAnalysis"	: fit_funcs.multiStateStepFunc
+			"adept2State" 	: fit_funcs.multiStateStepFunc,
+			"adept" 	: fit_funcs.multiStateStepFunc,
+			"cusumPlus"	: fit_funcs.multiStateStepFunc
 		}
 
 		self.stepFuncArgsDict={
-			"stepResponseAnalysis" 	: "[xstep, [q[3], q[4]], [-abs(q[6]-q[5]), abs(q[6]-q[5])], q[6], 2]",
-			"multiStateAnalysis" 	: "[xstep, q[3], q[4], q[5], len(q[3])]",
-			"cusumLevelAnalysis" 	: "[xstep, q[2], q[3], q[4], len(q[2])]"
+			"adept2State" 	: "[xstep, [q[4], q[5]], [-abs(q[7]-q[6]), abs(q[7]-q[6])], q[7], 2]",
+			"adept" 	: "[xstep, q[3], q[4], q[5], len(q[3])]",
+			"cusumPlus" 	: "[xstep, q[2], q[3], q[4], len(q[2])]"
 		}
 
 
 if __name__ == '__main__':
-	# dbfile=resource_path('eventMD-PEG29-Reference.sqlite')
-	dbfile=resource_path('eventMD-tempMSA.sqlite')
+	dbfile=resource_path('eventMD-PEG28-cusumLevelAnalysis.sqlite')
+	# dbfile=resource_path('eventMD-tempMSA.sqlite')
 
 	app = QtGui.QApplication(sys.argv)
 	dmw = FitEventWindow()

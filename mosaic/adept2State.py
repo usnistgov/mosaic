@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 """ 
 	A class that extends metaEventProcessing to implement the step response algorithm from :cite:`Balijepalli:2014`
 
@@ -6,6 +7,11 @@
 	:License:	See LICENSE.TXT
 	:ChangeLog:
 	.. line-block::
+		03/30/16 	AB 	Change UnlinkRCConst to LinkRCConst to avoid double negatives.
+		12/09/15 	KB 	Added Windows specific optimizations
+		8/24/15 	AB 	Rename algorithm to ADEPT 2 State.
+		7/23/15		JF  Added a new test to reject RC Constants <=0
+		6/24/15 	AB 	Added an option to unlink the RC constants in stepResponseAnalysis.
 		11/7/14		AB 	Error codes describing event rejection are now more specific.
 		11/5/14		AB 	Fixed a bug in the event fitting logic that prevented 
 						long events from being correctly analyzed.
@@ -19,18 +25,20 @@
 import commonExceptions
 import metaEventProcessor
 import mosaic.utilities.util as util
+import mosaic.utilities.mosaicLog as log
 import mosaic.utilities.fit_funcs as fit_funcs
 import sys
 import math
 
 import numpy as np
 import scipy.optimize
+from scipy.optimize import curve_fit
 
 from lmfit import minimize, Parameters, Parameter, report_errors, Minimizer
 
 class datblock:
 	""" 
-		Smart data block that holds a time-series of data and keeps track
+		Smart data block that holds time-series data and keeps track
 		of its mean and SD.
 	"""
 	def __init__(self, dat):
@@ -39,7 +47,7 @@ class datblock:
 		self.sd=util.sd(dat)
 
 
-class stepResponseAnalysis(metaEventProcessor.metaEventProcessor):
+class adept2State(metaEventProcessor.metaEventProcessor):
 	""" 
 		Analyze an event that is characteristic of PEG blockades. This method includes system 
 		information in the analysis, specifically the filtering effects (throught the RC constant)
@@ -47,11 +55,20 @@ class stepResponseAnalysis(metaEventProcessor.metaEventProcessor):
 		parameters that are stored as metadata including:
 			1. Blockade depth: the ratio of the open channel current to the blocked current
 			2. Residence time: the time the molecule spends inside the pore
-			3. Rise time: the 1/RC of the response to a step input (e.g. the entry or exit of the
-				molecule into or out of the nanopore).
+			3. Tau: the RC constant of the response to a step input (e.g. the entry or exit of the molecule into or out of the nanopore).
 
-		When an event cannot be analyzed, the blockade depth, residence time and rise time are set to -1.
+		:Keyword Args:
+			In addition to :class:`~mosaic.metaEventProcessor.metaEventProcessor` args,
+				- `FitTol` :		Tolerance value for the least squares algorithm that controls the convergence of the fit (Default: `1e-7`).
+				- `FitIters` : 		Maximum number of iterations before terminating the fit (Default: `50000`).
+				- `LinkRCConst` :	When True, the RC constants associated with each state in the fit function are varied together. (Default: `True`)
+
+		:Errors:
+			
+			When an event cannot be analyzed, the blockade depth, residence time and rise time are set to -1.
+
 	"""
+
 	def _init(self, **kwargs):
 		""" 
 			Initialize the single step analysis class.
@@ -66,11 +83,12 @@ class stepResponseAnalysis(metaEventProcessor.metaEventProcessor):
 		self.mdBlockDepth = -1
 		self.mdResTime = -1
 
-		self.mdRiseTime=-1
+		self.mdRCConst1 = -1
+		self.mdRCConst2 = -1
 
-		self.mdRedChiSq=-1
+		self.mdRedChiSq = -1
 
-		self.mdAbsEventStart=-1
+		self.mdAbsEventStart = -1
 
 		# Settings for single step event processing
 		# settings for gaussian fits
@@ -79,7 +97,8 @@ class stepResponseAnalysis(metaEventProcessor.metaEventProcessor):
 			self.FitIters=int(self.settingsDict.pop("FitIters", 5000))
 
 			self.BlockRejectRatio=float(self.settingsDict.pop("BlockRejectRatio", 0.8))
-		
+
+			self.LinkRCConst=int(self.settingsDict.pop("LinkRCConst", 1))
 		except ValueError as err:
 			raise commonExceptions.SettingsTypeError( err )
 
@@ -93,11 +112,14 @@ class stepResponseAnalysis(metaEventProcessor.metaEventProcessor):
 		"""
 		try:
 			# Fit the system transfer function to the event data
-			self.__FitEvent()
+			if sys.platform.startswith('win'):
+                                self.__WinFitEvent()
+                        else:
+                                self.__FitEvent()
 		except:
 			raise
 
-	def mdList(self):
+	def _mdList(self):
 		""" 
 			Return a list of meta-data from the analysis of single step events. We explicitly
 			control the order of the data to keep formatting consistent. 				
@@ -110,12 +132,13 @@ class stepResponseAnalysis(metaEventProcessor.metaEventProcessor):
 					self.mdEventEnd,
 					self.mdBlockDepth,
 					self.mdResTime,
-					self.mdRiseTime,
+					self.mdRCConst1,
+					self.mdRCConst2,
 					self.mdAbsEventStart,
 					self.mdRedChiSq
 				]
-		
-	def mdHeadingDataType(self):
+
+	def _mdHeadingDataType(self):
 		""" 
 			Return a list of meta-data tags data types.
 		"""
@@ -129,10 +152,11 @@ class stepResponseAnalysis(metaEventProcessor.metaEventProcessor):
 					'REAL',
 					'REAL',
 					'REAL',
+					'REAL',
 					'REAL'
 				]
 
-	def mdHeadings(self):
+	def _mdHeadings(self):
 		""" 
 			Explicity set the metadata to print out.
 		"""
@@ -144,7 +168,8 @@ class stepResponseAnalysis(metaEventProcessor.metaEventProcessor):
 					'EventEnd', 
 					'BlockDepth', 
 					'ResTime', 
-					'RCConstant', 
+					'RCConstant1',
+					'RCConstant2', 
 					'AbsEventStart', 
 					'ReducedChiSquared' 
 				]
@@ -160,21 +185,94 @@ class stepResponseAnalysis(metaEventProcessor.metaEventProcessor):
 		""" 
 			Return a formatted string of settings for display
 		"""
-		fmtstr=""
+		logObj=log.mosaicLog()
 
-		fmtstr+='\tEvent processing settings:\n\t\t'
-		fmtstr+='Algorithm = {0}\n\n'.format(self.__class__.__name__)
+
+		logObj.addLogHeader( 'Event processing settings:' )
+		logObj.addLogText( 'Algorithm = ADEPT 2-State' )
 		
-		fmtstr+='\t\tMax. iterations  = {0}\n'.format(self.FitIters)
-		fmtstr+='\t\tFit tolerance (rel. err in leastsq)  = {0}\n'.format(self.FitTol)
-		fmtstr+='\t\tBlockade Depth Rejection = {0}\n\n'.format(self.BlockRejectRatio)
+		logObj.addLogText( 'Max. iterations  = {0}'.format(self.FitIters) )
+		logObj.addLogText( 'Fit tolerance (rel. err in leastsq)  = {0}'.format(self.FitTol) )
+		logObj.addLogText( 'Link RC constants = {0}'.format(bool(self.LinkRCConst)) )
 
-
-		return fmtstr
+		return str(logObj)
 
 	###########################################################################
 	# Local functions
 	###########################################################################
+        def __WinFitEvent(self):
+                try:
+                        i0=np.abs(self.baseMean)
+			i0sig=self.baseSD
+			dt = 1000./self.Fs 	# time-step in ms.
+			# edat=np.asarray( np.abs(self.eventData),  dtype='float64' )
+			edat=self.dataPolarity*np.asarray( self.eventData,  dtype='float64' )
+
+			blockedCurrent=min(edat)
+			tauVal=dt
+
+			estart 	= self.__eventStartIndex( self.__threadList( edat, range(0,len(edat)) ), i0, i0sig ) - 1
+			eend 	= self.__eventEndIndex( self.__threadList( edat, range(0,len(edat)) ), i0, i0sig ) - 2
+
+			# For long events, fix the blocked current to speed up the fit
+			if (eend-estart) > 1000:
+				blockedCurrent=np.mean(edat[estart+50:eend-50])
+
+			# control numpy error reporting
+			np.seterr(invalid='ignore', over='ignore', under='ignore')
+
+			ts = np.array([ t*dt for t in range(0,len(edat)) ], dtype='float64')
+
+                        #initial guesses
+			tau1 = tauVal
+			tau2 = tauVal
+			mu1 = estart*dt
+			mu2 = eend*dt
+			a = (i0-blockedCurrent)
+			b = i0
+			init_guess = [tau1, tau2, mu1, mu2, a, b]
+			popt, pcov = curve_fit(fit_funcs.stepResponseFunc, ts, edat, p0=init_guess)
+
+			tau1 = popt[0]
+			tau2 = popt[1]
+			mu1 = popt[2]
+			mu2 = popt[3]
+			a = popt[4]
+			b = popt[5]
+
+			if mu1 < 0 or mu2 < 0:
+                                self.rejectEvent('eInvalidResTime')
+                        if mu1 > ts[-1]:
+                                self.rejectEvent('eInvalidEventStart')
+                        else:
+                                self.mdOpenChCurrent 	= b 
+				self.mdBlockedCurrent	= b-a
+				self.mdEventStart	= mu1
+				self.mdEventEnd		= mu2
+				self.mdRCConst1		= tau1
+				self.mdRCConst2		= tau2
+				self.mdAbsEventStart	= self.mdEventStart + self.absDataStartIndex * dt
+
+				self.mdBlockDepth	= self.mdBlockedCurrent/self.mdOpenChCurrent
+				self.mdResTime		= self.mdEventEnd - self.mdEventStart
+					
+				self.mdRedChiSq		= 0 #for now, as a placeholder
+				if math.isnan(self.mdRedChiSq):
+					self.rejectEvent('eInvalidChiSq')
+				if self.mdBlockDepth < 0 or self.mdBlockDepth > 1:
+					self.rejectEvent('eInvalidBlockDepth')
+				if self.mdRCConst1 <= 0 or self.mdRCConst2 <= 0:
+					self.rejectEvent('eInvalidRCConstant')
+
+		except KeyboardInterrupt:
+			self.rejectEvent('eFitUserStop')
+			raise
+		except:
+			# print optfit.message, optfit.lmdif_message
+	 		self.rejectEvent('eFitFailure')
+
+			
+	
 	def __FitEvent(self):
 		try:
 			varyBlockedCurrent=True
@@ -208,7 +306,13 @@ class stepResponseAnalysis(metaEventProcessor.metaEventProcessor):
 			params.add('mu2', value=eend * dt)
 			params.add('a', value=(i0-blockedCurrent), vary=varyBlockedCurrent)
 			params.add('b', value = i0)
-			params.add('tau', value = tauVal)
+			params.add('tau1', value = tauVal)
+
+			if self.LinkRCConst:
+				params.add('tau2', value = tauVal, expr='tau1')
+			else:
+				params.add('tau2', value = tauVal)
+
 
 			optfit=Minimizer(self.__objfunc, params, fcn_args=(ts,edat,))
 			optfit.prepare_fit()
@@ -229,7 +333,8 @@ class stepResponseAnalysis(metaEventProcessor.metaEventProcessor):
 					self.mdBlockedCurrent	= optfit.params['b'].value - optfit.params['a'].value
 					self.mdEventStart		= optfit.params['mu1'].value 
 					self.mdEventEnd			= optfit.params['mu2'].value
-					self.mdRiseTime			= optfit.params['tau'].value
+					self.mdRCConst1			= optfit.params['tau1'].value
+					self.mdRCConst2			= optfit.params['tau2'].value
 					self.mdAbsEventStart	= self.mdEventStart + self.absDataStartIndex * dt
 
 					self.mdBlockDepth		= self.mdBlockedCurrent/self.mdOpenChCurrent
@@ -247,6 +352,8 @@ class stepResponseAnalysis(metaEventProcessor.metaEventProcessor):
 						self.rejectEvent('eInvalidChiSq')
 					if self.mdBlockDepth < 0 or self.mdBlockDepth > 1:
 						self.rejectEvent('eInvalidBlockDepth')
+					if self.mdRCConst1 <= 0 or self.mdRCConst2 <= 0:
+						self.rejectEvent('eInvalidRCConstant')
 
 					#print i0, i0sig, [optfit.params['a'].value, optfit.params['b'].value, optfit.params['mu1'].value, optfit.params['mu2'].value, optfit.params['tau'].value]
 			else:
@@ -280,15 +387,16 @@ class stepResponseAnalysis(metaEventProcessor.metaEventProcessor):
 			return -1
 
 	def __objfunc(self, params, t, data):
-		""" model decaying sine wave, subtract data	"""
+		""" single step response model parameters """
 		try:
-			tau = params['tau'].value
+			tau1 = params['tau1'].value
+			tau2 = params['tau2'].value
 			mu1 = params['mu1'].value
 			mu2 = params['mu2'].value
 			a = params['a'].value
 			b = params['b'].value
-		    
-			model = fit_funcs.stepResponseFunc(t, tau, mu1, mu2, a, b)
+
+			model = fit_funcs.stepResponseFunc(t, tau1, tau2, mu1, mu2, a, b)
 
 			return model - data
 		except KeyboardInterrupt:

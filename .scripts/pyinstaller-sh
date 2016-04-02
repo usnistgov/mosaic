@@ -6,6 +6,7 @@ plat=`uname`
 
 v1=$(<mosaic/_version.py)
 ver=`echo $v1 | cut -d= -f2 | cut -d\" -f2`
+build=`cat commit-hash`
 read -d '' info1 <<-"EOF"
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
@@ -50,12 +51,13 @@ if [ $plat == 'Darwin' ]; then
 	mv icon.icns dist/MOSAIC.app/Contents/Resources
 	echo ${infoplist}>dist/MOSAIC.app/Contents/Info.plist
 	cd dist
-	hdiutil create ./mosaic-${ver}.dmg -srcfolder MOSAIC.app -ov
-	mv ./mosaic-${ver}.dmg ../../dist/
+	hdiutil create -size 225m -o ../../dist/mosaic-${ver}-${build}.dmg -srcfolder MOSAIC.app
+	# hdiutil create ./mosaic-${ver}.dmg -srcfolder MOSAIC.app -ov
+	# mv ./mosaic-${ver}.dmg ../../dist/
 else
 	cd dist
-	zip mosaic-x64-${ver}.zip MOSAIC.exe
-	mv ./mosaic-x64-${ver}.zip ../../dist/
+	zip mosaic-x64-${ver}-${build}.zip MOSAIC.exe
+	mv ./mosaic-x64-${ver}-${build}.zip ../../dist/
 fi
 
 cd ../..

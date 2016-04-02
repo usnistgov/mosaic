@@ -6,6 +6,9 @@
 	:License:	See LICENSE.TXT	
 	:ChangeLog:
 	.. line-block::
+		12/09/15 	KB 	Added a wrapper for multiStateFunc
+		6/24/15 	AB 	Relaxed stepResponseFunc to include different RC constants 
+						for up and down states.
 		12/31/14 	AB 	Changed multi-state function to include a separate tau for 
 						each state following Balijepalli et al, ACS Nano 2014.
 		11/19/14	AB	Initial version
@@ -21,10 +24,13 @@ def heaviside(x):
 
 	return out
 	
-def stepResponseFunc(t, tau, mu1, mu2, a, b):
+def singleExponential(t, a, tau):
+	return a * np.exp(-t/tau)
+
+def stepResponseFunc(t, tau1, tau2, mu1, mu2, a, b):
 	try:
-		t1=(np.exp((mu1-t)/tau)-1)*heaviside(t-mu1)
-		t2=(1-np.exp((mu2-t)/tau))*heaviside(t-mu2)
+		t1=(np.exp((mu1-t)/tau1)-1)*heaviside(t-mu1)
+		t2=(1-np.exp((mu2-t)/tau2))*heaviside(t-mu2)
 
 		# Either t1, t2 or both could contain NaN due to fixed precision arithmetic errors.
 		# In this case, we can set those values to zero.
@@ -34,6 +40,11 @@ def stepResponseFunc(t, tau, mu1, mu2, a, b):
 		return a*( t1+t2 ) + b
 	except:
 		raise
+
+def curve_fit_wrapper(t, n, *args):
+        tau, mu, a = list(args[0][:n]), list(args[0][n:2*n]), list(args[0][2*n:3*n])
+        return multiStateFunc(t, tau, mu, a, args[0][-1], n)
+        
 
 def multiStateFunc(t, tau, mu, a, b, n):
 	try:

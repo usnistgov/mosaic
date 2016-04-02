@@ -23,8 +23,10 @@ import mosaicgui.statisticsview.statisticsview
 import mosaicgui.consolelog.consolelog
 import mosaicgui.fileview.fileview
 import mosaicgui.fiteventsview.fiteventsview
+import mosaicgui.csvexportview.csvexportview
 import mosaicgui.aboutdialog.aboutdialog
 import mosaicgui.datamodel
+import mosaicgui.datapathedit
 
 class settingsview(QtGui.QMainWindow):
 	def __init__(self, parent = None):
@@ -50,6 +52,7 @@ class settingsview(QtGui.QMainWindow):
 		self.blockDepthWindow = mosaicgui.blockdepthview.blockdepthview.BlockDepthWindow(parent=self)
 		self.statisticsView = mosaicgui.statisticsview.statisticsview.StatisticsWindow(parent=self)
 		self.fitEventsView = mosaicgui.fiteventsview.fiteventsview.FitEventWindow(parent=self)
+		self.exportView = mosaicgui.csvexportview.csvexportview.CSVExportWindow(parent=self)
 		self.aboutDialog = mosaicgui.aboutdialog.aboutdialog.AboutDialog(parent=self)
 		
 
@@ -151,7 +154,8 @@ class settingsview(QtGui.QMainWindow):
 		datidx= { 
 					"QDF" : self.datTypeComboBox.findText("QDF"), 
 					"ABF" : self.datTypeComboBox.findText("ABF"),
-					"BIN" : self.datTypeComboBox.findText("BIN")
+					"BIN" : self.datTypeComboBox.findText("BIN"),
+					"TSV" : self.datTypeComboBox.findText("TSV")
 				}
 		path=model["DataFilesPath"] 
 		if len(glob.glob(format_path( str(path)+'/*qdf') )) > 0:
@@ -166,6 +170,12 @@ class settingsview(QtGui.QMainWindow):
 		elif len(glob.glob( format_path(str(path)+'/*dat') )) > 0:
 			self.datTypeComboBox.setCurrentIndex( datidx["BIN"] )
 			model["filter"]="*.dat"
+		elif len(glob.glob( format_path(str(path)+'/*tsv') )) > 0:
+			self.datTypeComboBox.setCurrentIndex( datidx["TSV"] )
+			model["filter"]="*.tsv"
+		elif len(glob.glob( format_path(str(path)+'/*txt') )) > 0:
+			self.datTypeComboBox.setCurrentIndex( datidx["TSV"] )
+			model["filter"]="*.txt"
 
 		# store the  data type in the trajviewer data struct
 		model["DataFilesType"] = str(self.datTypeComboBox.currentText())
@@ -225,10 +235,10 @@ class settingsview(QtGui.QMainWindow):
 			self.parallelCoresLabel.hide()	
 
 		procidx= {}
-		for v in self.analysisDataModel.eventProcessingAlgoKeys.values():
+		for v in self.analysisDataModel.eventProcessingAlgoKeys.keys():
 			procidx[v]=self.processingAlgorithmComboBox.findText(v)
 		
-		self.processingAlgorithmComboBox.setCurrentIndex( procidx[self.analysisDataModel["ProcessingAlgorithm"]] )
+		self.processingAlgorithmComboBox.setCurrentIndex( procidx[self.analysisDataModel.EventProcessingAlgorithmLabel()] )
 
 		# If an advanced mode dialog exists, update its settings
 		if self.advancedSettingsDialog:
@@ -247,6 +257,9 @@ class settingsview(QtGui.QMainWindow):
 		# If the trajviewer is initialized, update the denoising settings
 		if self.trajViewerWindow:
 			self.trajViewerWindow.waveletLevelSpinBox.setValue(int(self.analysisDataModel["level"]))
+
+		# Hide Rfb and Cfb for QDF files
+		[control.hide() for control in [self.RfbLabel, self.qdfRfbLineEdit, self.RfbUnitsLabel, self.CfbLabel, self.qdfCfbLineEdit, self.CfbUnitsLabel]]
 
 		self.updateDialogs=True
 
@@ -270,20 +283,20 @@ class settingsview(QtGui.QMainWindow):
 				self.analysisDataModel["Cfb"]=cfb
 
 				# Show QDF specific widgets
-				self.qdfCfbLineEdit.show()				
-				self.qdfRfbLineEdit.show()
-				self.CfbLabel.show()
-				self.RfbLabel.show()
-				self.CfbUnitsLabel.show()
-				self.RfbUnitsLabel.show()
-			else:
+				# self.qdfCfbLineEdit.show()				
+				# self.qdfRfbLineEdit.show()
+				# self.CfbLabel.show()
+				# self.RfbLabel.show()
+				# self.CfbUnitsLabel.show()
+				# self.RfbUnitsLabel.show()
+			# else:
 				# Hide QDF specific widgets
-				self.qdfCfbLineEdit.hide()				
-				self.qdfRfbLineEdit.hide()
-				self.CfbLabel.hide()
-				self.RfbLabel.hide()
-				self.CfbUnitsLabel.hide()
-				self.RfbUnitsLabel.hide()
+				# self.qdfCfbLineEdit.hide()				
+				# self.qdfRfbLineEdit.hide()
+				# self.CfbLabel.hide()
+				# self.RfbLabel.hide()
+				# self.CfbUnitsLabel.hide()
+				# self.RfbUnitsLabel.hide()
 
 
 	def _setThreshold(self, mean, sd, threshold):

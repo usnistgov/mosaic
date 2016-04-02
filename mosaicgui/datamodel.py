@@ -5,8 +5,12 @@
 	:License:	See LICENSE.TXT
 	:ChangeLog:
 		.. line-block::
-			3/20/15			AB 	Added MaxEventLength to multiStateAnalysis settings
-			3/6/15 			JF 	Added MinStateLength to multiStateAnalysis setup model
+			03/30/16 	AB 	Change UnlinkRCConst to LinkRCConst.
+			3/16/16 	AB 	Migrate InitThreshold setting to CUSUM StepSize.
+			8/24/15 	AB 	Updated algorithm names to ADEPT and CUSUM+
+			6/24/15 	AB 	Added an option to unlink the RC constants in stepResponseAnalysis.
+			3/20/15		AB 	Added MaxEventLength to multiStateAnalysis settings
+			3/6/15 		JF 	Added MinStateLength to multiStateAnalysis setup model
 """	
 import json
 import os
@@ -18,13 +22,14 @@ import mosaic.sqlite3MDIO
 import mosaic.SingleChannelAnalysis
 import mosaic.eventSegment
 
-import mosaic.stepResponseAnalysis
-import mosaic.multiStateAnalysis
-import mosaic.cusumLevelAnalysis
+import mosaic.adept2State
+import mosaic.adept
+import mosaic.cusumPlus
 
 import mosaic.qdfTrajIO
 import mosaic.abfTrajIO
 import mosaic.binTrajIO
+import mosaic.tsvTrajIO
 
 from mosaic.besselLowpassFilter import *
 import mosaic.waveletDenoiseFilter
@@ -44,6 +49,7 @@ class guiDataModel(dict):
 		self["dcOffset"]=0.0
 		self["Rfb"]=0.0
 		self["Cfb"]=0.0
+		self["scale"]=1.0
 
 		self.jsonSettingsObj=None
 
@@ -60,7 +66,6 @@ class guiDataModel(dict):
 			if dat != -1: dat=abs(self.keyTypesDict[key](val))
 		if key == "sdOpenCurr":
 			if dat != -1: dat=abs(self.keyTypesDict[key](val))
-
 
 		try:
 			dict.__setitem__(self, key, self.keyTypesDict[key](dat) )
@@ -90,15 +95,15 @@ class guiDataModel(dict):
 			settingsdict[partAlgo]={}
 			partKeys=self.eventSegmentKeys
 
-		if procAlgo=="stepResponseAnalysis":
+		if procAlgo=="adept2State":
 			settingsdict[procAlgo]={}
-			procKeys=self.stepResponseAnalysisKeys
-		elif procAlgo=="multiStateAnalysis":
+			procKeys=self.adept2StateKeys
+		elif procAlgo=="adept":
 			settingsdict[procAlgo]={}
-			procKeys=self.multiStateAnalysisKeys
-		elif procAlgo=="cusumLevelAnalysis":
+			procKeys=self.adeptKeys
+		elif procAlgo=="cusumPlus":
 			settingsdict[procAlgo]={}
-			procKeys=self.cusumLevelAnalysisKeys
+			procKeys=self.cusumPlusKeys
 
 		# Add a section for data files
 		settingsdict[self.dataTypeKeys[self["DataFilesType"]]]=self.GenerateDataFilesView()
@@ -139,6 +144,12 @@ class guiDataModel(dict):
 		elif self["DataFilesType"]=="BIN":
 			keys.extend(["AmplifierScale", "AmplifierOffset", "SamplingFrequency", "HeaderOffset", "ColumnTypes", "IonicCurrentColumn"])
 			dargs.update({"filter"	: self["filter"]})
+		elif self["DataFilesType"]=="TSV":
+			if self["nCols"]==-1:
+				keys.extend(["Fs", "scale"])
+			else:
+				keys.extend(["nCols", "timeCol", "currCol", "scale"])
+			dargs.update({"filter"	: self["filter"]})
 		else:
 			dargs.update({"filter"	: self["filter"]})
 
@@ -161,7 +172,7 @@ class guiDataModel(dict):
 				self.analysisSetupKeys[self["DataFilesType"]], 	#self.GenerateDataFilesObject(dataFilterAlgo),
 				filterHnd,
 				self.analysisSetupKeys[str(eventPartitionAlgo)],
-				self.analysisSetupKeys[str(eventProcessingAlgo)]
+				self.analysisSetupKeys[str(self.eventProcessingAlgoKeys[eventProcessingAlgo])]
 			)
 
 	def GenerateDataFilesObject(self, dataFilterAlgo):
@@ -191,6 +202,11 @@ class guiDataModel(dict):
 			except OperationalError:
 				print "Settings not found in ", dbfile, "\n"
 
+			try:
+				self["dbInfoFsHz"]=db.readAnalysisInfo()[7]
+			except:
+				pass
+
 		self._updateSettings()
 
 	def UpdateDataModelFromSettingsString(self, settingsstr):
@@ -200,6 +216,12 @@ class guiDataModel(dict):
 		self.jsonSettingsObj.parseSettingsString(settingsstr)
 
 		self._updateSettings()
+
+	def EventProcessingAlgorithmLabel(self):
+		try:
+			return dict([v,k] for k,v in self.eventProcessingAlgoKeys.items())[self["ProcessingAlgorithm"]]
+		except KeyError:
+			return self["ProcessingAlgorithm"]
 
 	def _updateSettings(self):
 		sd=self.jsonSettingsObj.settingsDict
@@ -219,6 +241,7 @@ class guiDataModel(dict):
 
 	def _setupModelViews(self):
 		self.keyTypesDict={
+								"dbInfoFsHz"			: float,
 								"blockSizeSec" 			: float,
 								"eventPad" 				: int,
 								"minEventLength" 		: int,
@@ -267,7 +290,12 @@ class guiDataModel(dict):
 								"IonicCurrentColumn"	: str,
 								"filter"				: str,
 								"MinStateLength"		: int,
-								"MaxEventLength" 		: int
+								"MaxEventLength" 		: int,
+								"headers"				: bool,
+								"Fs"					: int,
+								"nCols"					: int,
+								"timeCol"				: int,
+								"currCol"				: int
 							}
 		self.eventSegmentKeys={
 								"blockSizeSec" 			: float,
@@ -283,20 +311,22 @@ class guiDataModel(dict):
 								"parallelProc"			: int,
 								"reserveNCPU" 			: int
 							}
-		self.stepResponseAnalysisKeys={
-								"FitTol" 				: float,
-								"FitIters" 				: int,
-								"BlockRejectRatio" 		: float
-							}
-		self.multiStateAnalysisKeys={
+		self.adept2StateKeys={
 								"FitTol" 				: float,
 								"FitIters" 				: int,
 								"BlockRejectRatio" 		: float,
-								"InitThreshold"			: float,
-								"MinStateLength"		: int,
-								"MaxEventLength" 		: int
+								"LinkRCConst" 		: bool
 							}
-		self.cusumLevelAnalysisKeys={
+		self.adeptKeys={
+								"FitTol" 				: float,
+								"FitIters" 				: int,
+								"BlockRejectRatio" 		: float,
+								"StepSize"			: float,
+								"MinStateLength"		: int,
+								"MaxEventLength" 		: int,
+								"LinkRCConst"			: bool
+							}
+		self.cusumPlusKeys={
 								"StepSize"				: float, 
 								"MinThreshold"			: float,
 								"MaxThreshold"			: float,
@@ -332,16 +362,22 @@ class guiDataModel(dict):
 								"HeaderOffset"			: int,
 								"ColumnTypes"			: str,
 								"IonicCurrentColumn"	: str,
-								"filter"				: str
+								"filter"				: str,
+								"headers"				: bool,
+								"Fs"					: int,
+								"nCols"					: int,
+								"timeCol"				: int,
+								"currCol"				: int,
+								"scale"					: float
 							}
 		self.eventPartitionAlgoKeys={
 								"CurrentThreshold" 		: "eventSegment"
 							}
 
 		self.eventProcessingAlgoKeys={
-								"stepResponseAnalysis" 	: "stepResponseAnalysis",
-								"multiStateAnalysis"	: "multiStateAnalysis",
-								"cusumLevelAnalysis"	: "cusumLevelAnalysis"
+								"ADEPT 2-state" 		: "adept2State",
+								"ADEPT"					: "adept",
+								"CUSUM+"				: "cusumPlus"
 							}
 
 		self.filterAlgoKeys={
@@ -350,17 +386,19 @@ class guiDataModel(dict):
 		self.dataTypeKeys={
 								"QDF" 					: "qdfTrajIO",
 								"ABF" 					: "abfTrajIO",
-								"BIN" 					: "binTrajIO"
+								"BIN" 					: "binTrajIO",
+								"TSV"					: "tsvTrajIO"
 							}
 		self.analysisSetupKeys={
 								"QDF" 					: mosaic.qdfTrajIO.qdfTrajIO,
 								"ABF" 					: mosaic.abfTrajIO.abfTrajIO,
 								"BIN" 					: mosaic.binTrajIO.binTrajIO,
+								"TSV" 					: mosaic.tsvTrajIO.tsvTrajIO,
 								"SingleChannelAnalysis" : mosaic.SingleChannelAnalysis.SingleChannelAnalysis,
 								"CurrentThreshold" 		: mosaic.eventSegment.eventSegment,
-								"stepResponseAnalysis" 	: mosaic.stepResponseAnalysis.stepResponseAnalysis,
-								"multiStateAnalysis"	: mosaic.multiStateAnalysis.multiStateAnalysis,
-								"cusumLevelAnalysis"	: mosaic.cusumLevelAnalysis.cusumLevelAnalysis,
+								"adept2State" 			: mosaic.adept2State.adept2State,
+								"adept"					: mosaic.adept.adept,
+								"cusumPlus"				: mosaic.cusumPlus.cusumPlus,
 								"waveletDenoiseFilter"	: mosaic.waveletDenoiseFilter.waveletDenoiseFilter
 							}
 
@@ -377,7 +415,7 @@ if __name__ == "__main__":
 	# print q.popdata(10)
 
 
-	print g.GenerateSettingsView("CurrentThreshold", "stepResponseAnalysis", None)
-	# print g.GenerateTrajView()
+	print g.GenerateSettingsView("CurrentThreshold", "ADEPT 2-state", None)
+	print g.GenerateTrajView()
 	# for k,v in g.iteritems():
 	# 	print k, "=", v

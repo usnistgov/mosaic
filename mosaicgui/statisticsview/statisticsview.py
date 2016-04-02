@@ -3,6 +3,7 @@ from __future__ import with_statement
 import sys
 import math
 import os
+import platform
 import csv
 import sqlite3
 import time
@@ -15,6 +16,7 @@ from PyQt4.QtCore import Qt
 
 import mosaic.sqlite3MDIO as sqlite
 from mosaic.utilities.resource_path import resource_path, last_file_in_directory
+from mosaic.utilities.analysis import caprate
 import mosaicgui.sqlQueryWorker as sqlworker
 
 css = """QLabel {
@@ -146,8 +148,21 @@ class StatisticsWindow(QtGui.QDialog):
 
 				pctcomplete,remaintime=self._progressstats()
 
-				self.progressLabel.setText( str(pctcomplete)+"%" )
-				self.analysisprogressBar.setValue(int(pctcomplete))
+				try:
+					self.analysisprogressBar.setValue(int(pctcomplete))		
+
+					if platform.system()=='Darwin':
+						if pctcomplete=='n/a':
+							pctstr=str(pctcomplete)
+						else:
+							pctstr=str(pctcomplete)+"%"
+					else:
+						pctstr=""
+
+					self.progressLabel.setText( pctstr )
+				except ValueError:
+					self.analysisprogressBar.setValue(0)					
+
 				self.remaintimeLabel.setText( remaintime )
 
 				if self.updateDataOnIdle:
@@ -171,16 +186,7 @@ class StatisticsWindow(QtGui.QDialog):
 		if len(self.queryData) < 200:
 			return [0,0]
 
-		arrtimes=np.diff(self.queryData)/1000.		
-		counts, bins = np.histogram(arrtimes, bins=100, density=True)
-		
-		try:
-			popt, pcov = curve_fit(self._fitfunc, bins[:len(counts)], counts, p0=[1, np.mean(arrtimes)])
-			perr=np.sqrt(np.diag(pcov))
-		except:
-			return [0,0]
-
-		return self._roundcaprate([ 1/popt[1], 1/(popt[1]*math.sqrt(len(self.queryData))) ])
+		return self._roundcaprate(caprate(self.queryData))
 	
 	def _roundcaprate(self, caprate):
 		try:
@@ -196,14 +202,17 @@ class StatisticsWindow(QtGui.QDialog):
 			return [0,0]
 
 	def _progressstats(self):
-		etime=self.queryData[-1]/1000.
-		if etime > self.analysisTime:
-			self.analysisTime=etime
+		try:
+			self.analysisTime=list(self.dbHnd.rawQuery("select analysisTimeSec from analysisinfo")[0])[0]
+		except:
+			etime=self.queryData[-1]/1000.
+			if etime > self.analysisTime:
+				self.analysisTime=etime
 
 		try:
 			pctcomplete=100.*self.analysisTime/float(self.trajLength)
-			
-			if pctcomplete<5.:
+
+			if pctcomplete<0.05:
 				return round(pctcomplete, 1), "calculating ..."
 			elif pctcomplete>90:
 				return int(round(pctcomplete/10.0)*10.0), self._formattime(int(self.wallTime/pctcomplete*(100.-pctcomplete)))
@@ -227,7 +236,7 @@ class StatisticsWindow(QtGui.QDialog):
 
 	def _parseanalysislog(self):
 		logstr=self.dbHnd.readAnalysisLog()
-
+		wtime=0
 		if logstr:
 			for line in logstr.split('\n'):
 				if re.search("Total = ", line): 
@@ -239,9 +248,6 @@ class StatisticsWindow(QtGui.QDialog):
 		else:
 			return ""
 
-	def _fitfunc(self, t, a, tau):
-		return a * np.exp(-t/tau)
-
 	def OnAppIdle(self):
 		if not self.updateDataOnIdle:
 			return
@@ -250,8 +256,7 @@ class StatisticsWindow(QtGui.QDialog):
 			self._updatequery()
 
 if __name__ == '__main__':
-	# dbfile=resource_path('eventMD-PEG28-stepResponseAnalysis.sqlite')
-	dbfile="/Users/arvind/Desktop/50bp_500kHz/800mV/eventMD-20150404-221533_MSA.sqlite"
+	dbfile=resource_path('eventMD-PEG28-stepResponseAnalysis.sqlite')
 	# dbfile=resource_path('eventMD-tempMSA.sqlite')
 
 	app = QtGui.QApplication(sys.argv)

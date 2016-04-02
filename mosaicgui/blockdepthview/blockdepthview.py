@@ -167,28 +167,25 @@ class BlockDepthWindow(QtGui.QDialog):
 			xrngmin=max( min(self.queryData), 0)
 			xrngmax=min( max(self.queryData), 1)
 
-			self.blockDepthHist=self.mpl_hist.canvas.ax.hist( 
-						self.queryData, 
-						bins=self.nBins, 
-						range=[xrngmin,xrngmax],
-						normed=0, 
-						histtype='step',
-						rwidth=0.1,
-						color=c
-					)
+			self.blockDepthHist=np.histogram(
+					self.queryData, 
+					bins=self.nBins, 
+					range=[xrngmin,xrngmax],
+					normed=0
+				)
+			hist, bins=self.blockDepthHist
 
+			self.mpl_hist.canvas.ax.plot( bins[:-1], hist, color=c)
 			ylims=self.mpl_hist.canvas.ax.get_ylim()
 
 			# draw peak positions
 			if self.peakDetectCheckBox.isChecked():
-				h=self.blockDepthHist
-
 				minsnr=max(1,0.2*self.maxLevel)
-				self.peakLocations = signal.find_peaks_cwt(h[0], widths=np.arange(1, self.maxLevel), min_snr=minsnr )
+				self.peakLocations = signal.find_peaks_cwt(hist, widths=np.arange(1, self.maxLevel), min_snr=minsnr )
 				
 				peakind=self.peakLocations
 
-				self.mpl_hist.canvas.ax.scatter(h[1][peakind], h[0][peakind], color='red')
+				self.mpl_hist.canvas.ax.scatter(bins[peakind], hist[peakind], color='red')
 					
 			self.mpl_hist.canvas.ax.set_xlabel('<i>/<i0>', fontsize=10)
 			self.mpl_hist.canvas.ax.set_ylabel('counts', fontsize=10)
