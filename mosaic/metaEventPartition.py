@@ -39,6 +39,7 @@ import metaTrajIO
 import sqlite3MDIO
 from mosaic.utilities.resource_path import format_path
 from mosaic.utilities.ionic_current_stats import OpenCurrentDist
+import mosaic.utilities.mosaicTiming as mosaicTiming
 
 # custom errors
 class ExcessiveDriftError(Exception):
@@ -119,6 +120,8 @@ class metaEventPartition(object):
 		if self.parallelProc:
 			self._setupparallel()
 
+		# Setup function timing
+		self.timingObj=mosaicTiming.mosaicTiming()
 
 		self._init(trajDataObj, eventProcHnd, eventPartitionSettings, eventProcSettings)
 
@@ -166,7 +169,7 @@ class metaEventPartition(object):
 		self._setuppartition()
 
 		try:
-			startTime=time.time()
+			startTime=self.timingObj.time()
 			while(1):	
 				# with each pass obtain more data and
 				d=self.trajDataObj.popdata(self.nPoints)
@@ -186,13 +189,13 @@ class metaEventPartition(object):
 
 
 		except metaTrajIO.EmptyDataPipeError, err:
-			self.segmentTime=time.time()-startTime
+			self.segmentTime=self.timingObj.time()-startTime
 			self.outputString='[Status]\n\tSegment trajectory: ***NORMAL***\n'
 		except (ExcessiveDriftError, DriftRateError) as err:
-			self.segmentTime=time.time()-startTime
+			self.segmentTime=self.timingObj.time()-startTime
 			self.outputString='[Status]\n\tSegment trajectory: ***ERROR***\n\t\t{0}\n'.format(str(err))
 		except KeyboardInterrupt, err:
-			self.segmentTime=time.time()-startTime
+			self.segmentTime=self.timingObj.time()-startTime
 			self.outputString='[Status]\n\tSegment trajectory: ***USER STOP***\n'
 		except:
 			raise
@@ -364,7 +367,7 @@ class metaEventPartition(object):
 
 	def _cleanupeventprocessing(self):
 		# Process individual events identified by the segmenting algorithm
-		startTime=time.time()
+		startTime=self.timingObj.time()
 		try:
 			if self.parallelProc:
 				# gather up any remaining results from the worker processes
@@ -379,13 +382,13 @@ class metaEventPartition(object):
 	    					sys.stdout.flush()
 
 			self.outputString='\tProcess events: ***NORMAL***\n\n\n'
-			self.procTime+=time.time()-startTime
+			self.procTime+=self.timingObj.time()-startTime
 		except KeyboardInterrupt:
-			self.procTime+=time.time()-startTime
+			self.procTime+=self.timingObj.time()-startTime
 			self.outputString+='\tProcess events: ***USER STOP***\n\n\n'
 		except BaseException, err:
 			self.outputString='\tProcess events: ***ERROR***\n\t\t{0}\n\n\n'.format(str(err))
-			self.procTime+=time.time()-startTime
+			self.procTime+=self.timingObj.time()-startTime
 			raise
 
 		sys.stdout.write('                                                                    \r' )
@@ -509,7 +512,7 @@ class metaEventPartition(object):
 		self.windowOpenCurrentSlope=sl
 
 	def _processEvent(self, eventobj):
-		startTime=time.time()
+		startTime=self.timingObj.time()
 
 		if self.parallelProc:
 			# handle parallel
@@ -535,4 +538,4 @@ class metaEventPartition(object):
 			eventobj.processEvent()
 			# self.eventQueue.append( eventobj )
 
-		self.procTime+=time.time()-startTime
+		self.procTime+=self.timingObj.time()-startTime
