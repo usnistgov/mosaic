@@ -76,8 +76,8 @@ if [ $plat == 'Darwin' ]; then
 			set arrangement of viewOptions to not arranged
 			set icon size of viewOptions to 72
 			set background picture of viewOptions to file ".background:DMGbg72dp.png"
-			set position of item "MOSAIC.app" of container window to {160, 225}
-			set position of item "Applications" of container window to {455, 225}
+			set position of item "MOSAIC.app" of container window to {160, 165}
+			set position of item "Applications" of container window to {455, 165}
 			close
 			open
 			update without registering applications
