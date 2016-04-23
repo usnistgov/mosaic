@@ -2,20 +2,23 @@
 import sys
 import mosaicgui.mosaicGUI as mosaicgui
 from PyQt4 import QtCore
-# from PyQt4.QtCore import Qt
+from mosaicgui.updateService import updateService
 from PyQt4 import QtGui
 
 
 def main():
 	app = QtGui.QApplication(sys.argv)
-	dmw = mosaicgui.qtAnalysisGUI()
-	dmw.show()
-	dmw.raise_()
 
-	# cleanup processing
-	app.connect(app, QtCore.SIGNAL("aboutToQuit()"), dmw.OnQuit)
+	u=updateService()	
+	if not u.CheckUpdate():
+		dmw = mosaicgui.qtAnalysisGUI()
+		dmw.show()
+		dmw.raise_()
+
+		# cleanup processing
+		app.connect(app, QtCore.SIGNAL("aboutToQuit()"), dmw.OnQuit)
 	
-	sys.exit(app.exec_())
+		sys.exit(app.exec_())
 
 if __name__ == '__main__':
 	if sys.platform.startswith('win'):
