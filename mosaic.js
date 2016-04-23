@@ -19,6 +19,7 @@ angular
       $scope.guiURL = $scope.baseURL+"/html/doc/GraphicalInterface.html"
       $scope.developersURL = $scope.baseURL+"/html/doc/Developers.html"
       $scope.termsURL = $scope.baseURL+"/html/doc/Disclaimer.html"
+      $scope.contactURL = "http://www.nist.gov/cgi-bin/wwwph/cso.nist.gov?Query=Arvind+Balijepalli"
 
       $scope.toggleLeft = buildToggler('left');
       $scope.toggleRight = buildToggler('right');

@@ -1,6 +1,13 @@
 import glob
 import os
+import shutil
 
 for g in glob.glob('*_files*'):
-	os.system( 'mv {0} {1}'.format(g[:-6]+'.rst', 'source/doc/') )
-	os.system( 'mv {0} {1}'.format(g[:-6]+'_files', 'source/doc/') )
+	try:
+		shutil.rmtree( os.path.abspath( 'source/doc/'+g[:-6]+'_files' ) )
+	except OSError, err:
+		print err
+		pass
+
+	shutil.copy( os.path.abspath(g[:-6]+'.rst'), os.path.abspath('source/doc/') )
+	shutil.move( os.path.abspath(g[:-6]+'_files'), os.path.abspath('source/doc/') )

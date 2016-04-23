@@ -5,19 +5,18 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>mosaic.metaEventPartition &mdash; MOSAIC 1.2 documentation</title>
+    <title>mosaic.metaEventPartition &mdash; MOSAIC 1.3b1 documentation</title>
     
     <link rel="stylesheet" href="../../_static/basic.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="../../_static/bootstrap-3.2.0/css/bootstrap.min.css" type="text/css" />
-    <link rel="stylesheet" href="../../_static/bootstrap-3.2.0/css/bootstrap-theme.min.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/bootswatch-3.3.4/paper/bootstrap.min.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/bootstrap-sphinx.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/style.css" type="text/css" />
     
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
-        VERSION:     '1.2',
+        VERSION:     '1.3b1',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -26,13 +25,13 @@
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
-    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <script type="text/javascript" src="../../_static/js/jquery-1.11.0.min.js"></script>
     <script type="text/javascript" src="../../_static/js/jquery-fix.js"></script>
-    <script type="text/javascript" src="../../_static/bootstrap-3.2.0/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../../_static/bootstrap-3.3.4/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="../../_static/bootstrap-sphinx.js"></script>
     <link rel="shortcut icon" href="../../_static/favicon.ico"/>
-    <link rel="top" title="MOSAIC 1.2 documentation" href="../../index.html" />
+    <link rel="top" title="MOSAIC 1.3b1 documentation" href="../../index.html" />
     <link rel="up" title="Module code" href="../index.html" />
 
 <meta charset='utf-8'>
@@ -41,13 +40,13 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 
 	<script type="text/javascript"
-		src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+		src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
 	</script>
 	<script type="text/javascript" id="_fed_an_js_tag" src="//www.nist.gov/js/federated-analytics.all.min.js?agency=NIST&subagency=github&pua=UA-42404149-54&yt=true&exts=ppsx,pps,f90,sch,rtf,wrl,txz,m1v,xlsm,msi,xsd,f,tif,eps,mpg,xml,pl,xlt,c">
 	</script>	
 
   </head>
-  <body>
+  <body role="document">
 
   <div id="navbar" class="navbar navbar-default navbar-fixed-top">
     <div class="container">
@@ -58,16 +57,17 @@
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </button>
-        <a class="navbar-brand" href="../../index.html"><img src="../../_static/icon_24.png">
+        <a class="navbar-brand" href="../../index.html"><img src="../../_static/icon_36.png">
            </a>
-        <span class="navbar-text navbar-version pull-left"><b>1.2</b></span>
+        <span class="navbar-text navbar-version pull-left"><b>1.3b1</b></span>
       </div>
 
         <div class="collapse navbar-collapse nav-collapse">
           <ul class="nav navbar-nav">
             
+                <li><a href="../../../latex/MOSAIC.pdf">Download PDF</a></li>
                 <li><a href="../../doc/mailingList.html">Mailing List</a></li>
-                <li><a href="//github.com/usnistgov/mosaic">Develop MOSAIC</a></li>
+                <li><a href="//github.com/usnistgov/mosaic">Develop</a></li>
                 <li><a href="//github.com/usnistgov/mosaic/issues">Issue Tracker</a></li>
             
             
@@ -81,18 +81,20 @@
       role="menu"
       aria-labelledby="dLabelGlobalToc"><ul>
 <li class="toctree-l1"><a class="reference internal" href="../../doc/Introduction.html">1. Introduction</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../doc/GettingStarted.html">2. Getting Started</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../doc/Algorithms.html">3. Algorithms in <em>MOSAIC</em></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../doc/Algorithms.html">2. Data Processing Algorithms in <em>MOSAIC</em></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../doc/GettingStarted.html">3. Getting Started</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../doc/GraphicalInterface.html">4. <em>MOSAIC</em> GUI</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../doc/ScriptingandAdvancedFeatures.html">5. Scripting and Advanced Features</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../doc/settingsFile.html">6. Settings File</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../doc/DatabaseStructure.html">7. Database Structure and Query Syntax</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../doc/settingsFile.html">5. Settings File</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../doc/DatabaseStructure.html">6. Database Structure and Query Syntax</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../doc/ScriptingandAdvancedFeatures.html">7. Scripting and Advanced Features</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../doc/Extend.html">8. Extend <em>MOSAIC</em></a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../doc/Addons.html">9. Addons</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../doc/examples.html">10. Examples</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../doc/apidocs.html">11. API Documentation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../doc/ChangeLog.html">12. Change Log</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../doc/References.html">13. Bibliography</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../doc/PublicationFigures.html">9. Publication Quality Figures</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../doc/AdvancedAnalysis.html">10. Advanced Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../doc/Addons.html">11. Addons</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../doc/examples.html">12. Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../doc/apidocs.html">13. API Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../doc/ChangeLog.html">14. Change Log</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../doc/References.html">15. Bibliography</a></li>
 </ul>
 </ul>
 </li>
@@ -122,9 +124,10 @@
 
 <div class="container">
   <div class="row">
-    <div class="col-md-12">
+    <div class="col-md-12 content">
       
   <h1>Source code for mosaic.metaEventPartition</h1><div class="highlight"><pre>
+<span class="c1"># -*- coding: utf-8 -*-</span>
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">	A meta class that quickly partitions trajectories into individual events.</span>
 
@@ -133,6 +136,8 @@
 <span class="sd">	:License:	See LICENSE.TXT</span>
 <span class="sd">	:ChangeLog:</span>
 <span class="sd">	.. line-block::</span>
+<span class="sd">		1/28/16		AB 	Fixed a bug in analysis timing.</span>
+<span class="sd">		12/6/15 	AB 	Add sampling frequency to analysis info table</span>
 <span class="sd">		8/18/14		AB 	Fixed parallel processing cleanup.</span>
 <span class="sd">		5/17/14		AB 	Delete Plotting support</span>
 <span class="sd">		6/22/13		AB 	Added two function hooks to allow plotting </span>
@@ -159,14 +164,13 @@
 
 <span class="kn">import</span> <span class="nn">metaEventPartition</span>
 <span class="kn">import</span> <span class="nn">commonExceptions</span>
-<span class="kn">import</span> <span class="nn">singleStepEvent</span> <span class="kn">as</span> <span class="nn">sse</span> 
-<span class="kn">import</span> <span class="nn">stepResponseAnalysis</span> <span class="kn">as</span> <span class="nn">sra</span> 
 <span class="kn">import</span> <span class="nn">metaTrajIO</span>
 <span class="kn">import</span> <span class="nn">sqlite3MDIO</span>
 <span class="kn">from</span> <span class="nn">mosaic.utilities.resource_path</span> <span class="kn">import</span> <span class="n">format_path</span>
 <span class="kn">from</span> <span class="nn">mosaic.utilities.ionic_current_stats</span> <span class="kn">import</span> <span class="n">OpenCurrentDist</span>
+<span class="kn">import</span> <span class="nn">mosaic.utilities.mosaicTiming</span> <span class="kn">as</span> <span class="nn">mosaicTiming</span>
 
-<span class="c"># custom errors</span>
+<span class="c1"># custom errors</span>
 <span class="k">class</span> <span class="nc">ExcessiveDriftError</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
 	<span class="k">pass</span>
 
@@ -205,53 +209,52 @@
 		<span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">			Initialize a new event segment object</span>
 <span class="sd">		&quot;&quot;&quot;</span>
-		<span class="c"># Required arguments</span>
+		<span class="c1"># Required arguments</span>
 		<span class="bp">self</span><span class="o">.</span><span class="n">trajDataObj</span><span class="o">=</span><span class="n">trajDataObj</span>
 		<span class="bp">self</span><span class="o">.</span><span class="n">eventProcHnd</span><span class="o">=</span><span class="n">eventProcHnd</span>
 
 		<span class="bp">self</span><span class="o">.</span><span class="n">settingsDict</span> <span class="o">=</span> <span class="n">eventPartitionSettings</span> 
 		<span class="bp">self</span><span class="o">.</span><span class="n">eventProcSettingsDict</span> <span class="o">=</span> <span class="n">eventProcSettings</span>
 
+		<span class="bp">self</span><span class="o">.</span><span class="n">procTime</span><span class="o">=</span><span class="mf">0.0</span>
+
 		<span class="k">try</span><span class="p">:</span>
-			<span class="bp">self</span><span class="o">.</span><span class="n">writeEventTS</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">settingsDict</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s">&quot;writeEventTS&quot;</span><span class="p">,</span><span class="mi">1</span><span class="p">))</span>
-			<span class="bp">self</span><span class="o">.</span><span class="n">parallelProc</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">settingsDict</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s">&quot;parallelProc&quot;</span><span class="p">,</span><span class="mi">1</span><span class="p">))</span>
-			<span class="bp">self</span><span class="o">.</span><span class="n">reserveNCPU</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">settingsDict</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s">&quot;reserveNCPU&quot;</span><span class="p">,</span><span class="mi">2</span><span class="p">))</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">writeEventTS</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">settingsDict</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;writeEventTS&quot;</span><span class="p">,</span><span class="mi">1</span><span class="p">))</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">parallelProc</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">settingsDict</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;parallelProc&quot;</span><span class="p">,</span><span class="mi">1</span><span class="p">))</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">reserveNCPU</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">settingsDict</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;reserveNCPU&quot;</span><span class="p">,</span><span class="mi">2</span><span class="p">))</span>
 		<span class="k">except</span> <span class="ne">ValueError</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
 			<span class="k">raise</span> <span class="n">commonExceptions</span><span class="o">.</span><span class="n">SettingsTypeError</span><span class="p">(</span> <span class="n">err</span> <span class="p">)</span>
 
 		<span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span>
 
-		<span class="bp">self</span><span class="o">.</span><span class="n">logFileHnd</span><span class="o">=</span><span class="nb">open</span><span class="p">(</span><span class="n">format_path</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">trajDataObj</span><span class="o">.</span><span class="n">datPath</span><span class="o">+</span><span class="s">&#39;/eventProcessing.log&#39;</span><span class="p">),</span><span class="s">&#39;w&#39;</span><span class="p">)</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">logFileHnd</span><span class="o">=</span><span class="nb">open</span><span class="p">(</span><span class="n">format_path</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">trajDataObj</span><span class="o">.</span><span class="n">datPath</span><span class="o">+</span><span class="s1">&#39;/eventProcessing.log&#39;</span><span class="p">),</span><span class="s1">&#39;w&#39;</span><span class="p">)</span>
 		
 		<span class="bp">self</span><span class="o">.</span><span class="n">tEventProcObj</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">eventProcHnd</span><span class="p">([],</span> <span class="bp">self</span><span class="o">.</span><span class="n">trajDataObj</span><span class="o">.</span><span class="n">FsHz</span><span class="p">,</span> <span class="n">eventstart</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span><span class="n">eventend</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">baselinestats</span><span class="o">=</span><span class="p">[</span> <span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span> <span class="p">],</span> <span class="n">algosettingsdict</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">eventProcSettingsDict</span><span class="o">.</span><span class="n">copy</span><span class="p">(),</span> <span class="n">savets</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">absdatidx</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">datafileHnd</span><span class="o">=</span><span class="bp">None</span> <span class="p">)</span>
 
 		<span class="bp">self</span><span class="o">.</span><span class="n">mdioDBHnd</span><span class="o">=</span><span class="n">sqlite3MDIO</span><span class="o">.</span><span class="n">sqlite3MDIO</span><span class="p">()</span>
 		<span class="bp">self</span><span class="o">.</span><span class="n">mdioDBHnd</span><span class="o">.</span><span class="n">initDB</span><span class="p">(</span>
 								<span class="n">dbPath</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">trajDataObj</span><span class="o">.</span><span class="n">datPath</span><span class="p">,</span> 
-								<span class="n">tableName</span><span class="o">=</span><span class="s">&#39;metadata&#39;</span><span class="p">,</span>
-								<span class="n">colNames</span><span class="o">=</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tEventProcObj</span><span class="o">.</span><span class="n">mdHeadings</span><span class="p">())</span><span class="o">+</span><span class="p">[</span><span class="s">&#39;TimeSeries&#39;</span><span class="p">],</span>
-								<span class="n">colNames_t</span><span class="o">=</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tEventProcObj</span><span class="o">.</span><span class="n">mdHeadingDataType</span><span class="p">())</span><span class="o">+</span><span class="p">[</span><span class="s">&#39;REAL_LIST&#39;</span><span class="p">]</span>
+								<span class="n">tableName</span><span class="o">=</span><span class="s1">&#39;metadata&#39;</span><span class="p">,</span>
+								<span class="n">colNames</span><span class="o">=</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tEventProcObj</span><span class="o">.</span><span class="n">mdHeadings</span><span class="p">()),</span>
+								<span class="n">colNames_t</span><span class="o">=</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tEventProcObj</span><span class="o">.</span><span class="n">mdHeadingDataType</span><span class="p">())</span>
 							<span class="p">)</span>
 		<span class="bp">self</span><span class="o">.</span><span class="n">mdioDBHnd</span><span class="o">.</span><span class="n">writeSettings</span><span class="p">(</span><span class="n">settingsString</span><span class="p">)</span>
 		<span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">trajDataObj</span><span class="o">.</span><span class="n">dataFilter</span><span class="p">:</span>
-			<span class="n">fstring</span><span class="o">=</span><span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">trajDataObj</span><span class="o">.</span><span class="n">dataFilterObj</span><span class="p">)</span><span class="o">.</span><span class="n">__name__</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">fstring</span><span class="o">=</span><span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">trajDataObj</span><span class="o">.</span><span class="n">dataFilterObj</span><span class="p">)</span><span class="o">.</span><span class="n">__name__</span>
 		<span class="k">else</span><span class="p">:</span>
-			<span class="n">fstring</span><span class="o">=</span><span class="s">&#39;None&#39;</span>
-		<span class="bp">self</span><span class="o">.</span><span class="n">mdioDBHnd</span><span class="o">.</span><span class="n">writeAnalysisInfo</span><span class="p">([</span>
-							<span class="bp">self</span><span class="o">.</span><span class="n">trajDataObj</span><span class="o">.</span><span class="n">datPath</span><span class="p">,</span>
-							<span class="bp">self</span><span class="o">.</span><span class="n">trajDataObj</span><span class="o">.</span><span class="n">fileFormat</span><span class="p">,</span>
-							<span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__name__</span><span class="p">,</span>
-							<span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tEventProcObj</span><span class="p">)</span><span class="o">.</span><span class="n">__name__</span><span class="p">,</span>
-							<span class="n">fstring</span><span class="p">,</span>
-						<span class="p">])</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">fstring</span><span class="o">=</span><span class="s1">&#39;None&#39;</span>
+
+		<span class="bp">self</span><span class="o">.</span><span class="n">_writeanalysisinfo</span><span class="p">()</span>
 
 		<span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">parallelProc</span><span class="p">:</span>
 			<span class="bp">self</span><span class="o">.</span><span class="n">_setupparallel</span><span class="p">()</span>
 
+		<span class="c1"># Setup function timing</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">timingObj</span><span class="o">=</span><span class="n">mosaicTiming</span><span class="o">.</span><span class="n">mosaicTiming</span><span class="p">()</span>
 
 		<span class="bp">self</span><span class="o">.</span><span class="n">_init</span><span class="p">(</span><span class="n">trajDataObj</span><span class="p">,</span> <span class="n">eventProcHnd</span><span class="p">,</span> <span class="n">eventPartitionSettings</span><span class="p">,</span> <span class="n">eventProcSettings</span><span class="p">)</span>
 
-	<span class="c"># Define enter and exit funcs so this class can be used with a context manager</span>
+	<span class="c1"># Define enter and exit funcs so this class can be used with a context manager</span>
 	<span class="k">def</span> <span class="nf">__enter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 		<span class="k">return</span> <span class="bp">self</span>
 
@@ -263,92 +266,95 @@
 <span class="sd">			Stop processing data.</span>
 <span class="sd">		&quot;&quot;&quot;</span>
 		<span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">parallelProc</span><span class="p">:</span>
-			<span class="c"># send a STOP message to all the processes</span>
+			<span class="c1"># send a STOP message to all the processes</span>
 			<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">parallelProcDict</span><span class="p">)):</span>
-				<span class="bp">self</span><span class="o">.</span><span class="n">SendJobsChan</span><span class="o">.</span><span class="n">zmqSendData</span><span class="p">(</span><span class="s">&#39;job&#39;</span><span class="p">,</span><span class="s">&#39;STOP&#39;</span><span class="p">)</span>
+				<span class="bp">self</span><span class="o">.</span><span class="n">SendJobsChan</span><span class="o">.</span><span class="n">zmqSendData</span><span class="p">(</span><span class="s1">&#39;job&#39;</span><span class="p">,</span><span class="s1">&#39;STOP&#39;</span><span class="p">)</span>
 			
-			<span class="c"># wait for the processes to terminate</span>
+			<span class="c1"># wait for the processes to terminate</span>
 			<span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">parallelProcDict</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
 				<span class="n">os</span><span class="o">.</span><span class="n">kill</span><span class="p">(</span> <span class="bp">self</span><span class="o">.</span><span class="n">parallelProcDict</span><span class="p">[</span><span class="n">k</span><span class="p">]</span><span class="o">.</span><span class="n">pid</span><span class="p">,</span> <span class="n">signal</span><span class="o">.</span><span class="n">SIGINT</span> <span class="p">)</span>
-				<span class="c"># self.parallelProcDict[k].terminate()</span>
+				<span class="c1"># self.parallelProcDict[k].terminate()</span>
 			<span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">parallelProcDict</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
 				<span class="bp">self</span><span class="o">.</span><span class="n">parallelProcDict</span><span class="p">[</span><span class="n">k</span><span class="p">]</span><span class="o">.</span><span class="n">join</span><span class="p">()</span>
 
-			<span class="c"># shutdown the zmq channels</span>
+			<span class="c1"># shutdown the zmq channels</span>
 			<span class="bp">self</span><span class="o">.</span><span class="n">SendJobsChan</span><span class="o">.</span><span class="n">zmqShutdown</span><span class="p">()</span>
 			<span class="bp">self</span><span class="o">.</span><span class="n">RecvResultsChan</span><span class="o">.</span><span class="n">zmqShutdown</span><span class="p">()</span>
 
-		<span class="bp">self</span><span class="o">.</span><span class="n">_stop</span><span class="p">()</span>
-</div>
+		<span class="bp">self</span><span class="o">.</span><span class="n">_stop</span><span class="p">()</span></div>
+
 <div class="viewcode-block" id="metaEventPartition.PartitionEvents"><a class="viewcode-back" href="../../api-doc/mosaic.meta.html#mosaic.metaEventPartition.metaEventPartition.PartitionEvents">[docs]</a>	<span class="k">def</span> <span class="nf">PartitionEvents</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 		<span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">			Partition events within a time-series.</span>
 <span class="sd">		&quot;&quot;&quot;</span>
-		<span class="bp">self</span><span class="o">.</span><span class="n">outputString</span><span class="o">=</span><span class="s">&quot;Start time: &quot;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s">&#39;%Y-%m-</span><span class="si">%d</span><span class="s"> %I:%M %p&#39;</span><span class="p">))</span><span class="o">+</span><span class="s">&quot;</span><span class="se">\n\n</span><span class="s">&quot;</span>
-		<span class="c"># write out first stage results</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">outputString</span><span class="o">=</span><span class="s2">&quot;Start time: &quot;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s1">&#39;%Y-%m-</span><span class="si">%d</span><span class="s1"> %I:%M %p&#39;</span><span class="p">))</span><span class="o">+</span><span class="s2">&quot;</span><span class="se">\n\n</span><span class="s2">&quot;</span>
+		<span class="c1"># write out first stage results</span>
 		<span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">outputString</span><span class="p">)</span>
 		<span class="bp">self</span><span class="o">.</span><span class="n">logFileHnd</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">outputString</span><span class="p">)</span>
-		<span class="c"># write the start time to the database</span>
+		<span class="c1"># write the start time to the database</span>
 		<span class="bp">self</span><span class="o">.</span><span class="n">mdioDBHnd</span><span class="o">.</span><span class="n">writeAnalysisLog</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">outputString</span><span class="p">)</span>
 
-		<span class="c"># Initialize segmentation</span>
+		<span class="c1"># Initialize segmentation</span>
 		<span class="bp">self</span><span class="o">.</span><span class="n">_setuppartition</span><span class="p">()</span>
 
 		<span class="k">try</span><span class="p">:</span>
-			<span class="n">startTime</span><span class="o">=</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+			<span class="n">startTime</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">timingObj</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
 			<span class="k">while</span><span class="p">(</span><span class="mi">1</span><span class="p">):</span>	
-				<span class="c"># with each pass obtain more data and</span>
+				<span class="c1"># with each pass obtain more data and</span>
 				<span class="n">d</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">trajDataObj</span><span class="o">.</span><span class="n">popdata</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">nPoints</span><span class="p">)</span>
-				<span class="c"># Check for excessive open channel drift</span>
+				<span class="c1"># Check for excessive open channel drift</span>
 				<span class="bp">self</span><span class="o">.</span><span class="n">_checkdrift</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
 
-				<span class="c"># store the new data into a local store</span>
+				<span class="c1"># store the new data into a local store</span>
 				<span class="bp">self</span><span class="o">.</span><span class="n">currData</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">d</span><span class="p">))</span>
 				
-				<span class="c">#print self.meanOpenCurr, self.minDrift, self.maxDrift, self.minDriftR, self.maxDriftR</span>
+				<span class="c1"># update analysis info</span>
+				<span class="bp">self</span><span class="o">.</span><span class="n">_writeanalysisinfo</span><span class="p">()</span>
 
-				<span class="c"># Process the data segment for events</span>
+				<span class="c1">#print self.meanOpenCurr, self.minDrift, self.maxDrift, self.minDriftR, self.maxDriftR</span>
+
+				<span class="c1"># Process the data segment for events</span>
 				<span class="bp">self</span><span class="o">.</span><span class="n">_eventsegment</span><span class="p">()</span>
 
 
 		<span class="k">except</span> <span class="n">metaTrajIO</span><span class="o">.</span><span class="n">EmptyDataPipeError</span><span class="p">,</span> <span class="n">err</span><span class="p">:</span>
-			<span class="bp">self</span><span class="o">.</span><span class="n">segmentTime</span><span class="o">=</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span><span class="o">-</span><span class="n">startTime</span>
-			<span class="bp">self</span><span class="o">.</span><span class="n">outputString</span><span class="o">=</span><span class="s">&#39;[Status]</span><span class="se">\n\t</span><span class="s">Segment trajectory: ***NORMAL***</span><span class="se">\n</span><span class="s">&#39;</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">segmentTime</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">timingObj</span><span class="o">.</span><span class="n">time</span><span class="p">()</span><span class="o">-</span><span class="n">startTime</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">outputString</span><span class="o">=</span><span class="s1">&#39;[Status]</span><span class="se">\n\t</span><span class="s1">Segment trajectory: ***NORMAL***</span><span class="se">\n</span><span class="s1">&#39;</span>
 		<span class="k">except</span> <span class="p">(</span><span class="n">ExcessiveDriftError</span><span class="p">,</span> <span class="n">DriftRateError</span><span class="p">)</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
-			<span class="bp">self</span><span class="o">.</span><span class="n">segmentTime</span><span class="o">=</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span><span class="o">-</span><span class="n">startTime</span>
-			<span class="bp">self</span><span class="o">.</span><span class="n">outputString</span><span class="o">=</span><span class="s">&#39;[Status]</span><span class="se">\n\t</span><span class="s">Segment trajectory: ***ERROR***</span><span class="se">\n\t\t</span><span class="s">{0}</span><span class="se">\n</span><span class="s">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">err</span><span class="p">))</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">segmentTime</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">timingObj</span><span class="o">.</span><span class="n">time</span><span class="p">()</span><span class="o">-</span><span class="n">startTime</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">outputString</span><span class="o">=</span><span class="s1">&#39;[Status]</span><span class="se">\n\t</span><span class="s1">Segment trajectory: ***ERROR***</span><span class="se">\n\t\t</span><span class="s1">{0}</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">err</span><span class="p">))</span>
 		<span class="k">except</span> <span class="ne">KeyboardInterrupt</span><span class="p">,</span> <span class="n">err</span><span class="p">:</span>
-			<span class="bp">self</span><span class="o">.</span><span class="n">segmentTime</span><span class="o">=</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span><span class="o">-</span><span class="n">startTime</span>
-			<span class="bp">self</span><span class="o">.</span><span class="n">outputString</span><span class="o">=</span><span class="s">&#39;[Status]</span><span class="se">\n\t</span><span class="s">Segment trajectory: ***USER STOP***</span><span class="se">\n</span><span class="s">&#39;</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">segmentTime</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">timingObj</span><span class="o">.</span><span class="n">time</span><span class="p">()</span><span class="o">-</span><span class="n">startTime</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">outputString</span><span class="o">=</span><span class="s1">&#39;[Status]</span><span class="se">\n\t</span><span class="s1">Segment trajectory: ***USER STOP***</span><span class="se">\n</span><span class="s1">&#39;</span>
 		<span class="k">except</span><span class="p">:</span>
 			<span class="k">raise</span>
 
-		<span class="c"># write out first stage results</span>
+		<span class="c1"># write out first stage results</span>
 		<span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">outputString</span><span class="p">)</span>
 		<span class="bp">self</span><span class="o">.</span><span class="n">logFileHnd</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">outputString</span><span class="p">)</span>
 
-		<span class="c"># write the first stage output log to the database</span>
+		<span class="c1"># write the first stage output log to the database</span>
 		<span class="n">tstr</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">mdioDBHnd</span><span class="o">.</span><span class="n">readAnalysisLog</span><span class="p">()</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">outputString</span>
 		<span class="bp">self</span><span class="o">.</span><span class="n">mdioDBHnd</span><span class="o">.</span><span class="n">writeAnalysisLog</span><span class="p">(</span><span class="n">tstr</span><span class="p">)</span>
 		
-		<span class="c"># Finish processing events</span>
+		<span class="c1"># Finish processing events</span>
 		<span class="bp">self</span><span class="o">.</span><span class="n">_cleanupeventprocessing</span><span class="p">()</span>
 
-		<span class="c"># Write the output log file</span>
+		<span class="c1"># Write the output log file</span>
 		<span class="bp">self</span><span class="o">.</span><span class="n">_writeoutputlog</span><span class="p">()</span>
 	
 		<span class="bp">self</span><span class="o">.</span><span class="n">logFileHnd</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">outputString</span><span class="p">)</span>
 		<span class="bp">self</span><span class="o">.</span><span class="n">logFileHnd</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
 
-		<span class="c"># write the output log to the database</span>
+		<span class="c1"># write the output log to the database</span>
 		<span class="n">tstr</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">mdioDBHnd</span><span class="o">.</span><span class="n">readAnalysisLog</span><span class="p">()</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">outputString</span>
 		<span class="bp">self</span><span class="o">.</span><span class="n">mdioDBHnd</span><span class="o">.</span><span class="n">writeAnalysisLog</span><span class="p">(</span><span class="n">tstr</span><span class="p">)</span>
 
-		<span class="bp">self</span><span class="o">.</span><span class="n">mdioDBHnd</span><span class="o">.</span><span class="n">closeDB</span><span class="p">()</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">mdioDBHnd</span><span class="o">.</span><span class="n">closeDB</span><span class="p">()</span></div>
 
-	<span class="c">#################################################################</span>
-	<span class="c"># Interface functions</span>
-	<span class="c">#################################################################</span></div>
+	<span class="c1">#################################################################</span>
+	<span class="c1"># Interface functions</span>
+	<span class="c1">#################################################################</span>
 	<span class="nd">@abstractmethod</span>
 <div class="viewcode-block" id="metaEventPartition._init"><a class="viewcode-back" href="../../api-doc/mosaic.meta.html#mosaic.metaEventPartition.metaEventPartition._init">[docs]</a>	<span class="k">def</span> <span class="nf">_init</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">trajDataObj</span><span class="p">,</span> <span class="n">eventProcHnd</span><span class="p">,</span> <span class="n">eventPartitionSettings</span><span class="p">,</span> <span class="n">eventProcSettings</span><span class="p">):</span>
 		<span class="sd">&quot;&quot;&quot;</span>
@@ -356,8 +362,8 @@
 
 <span class="sd">			This function is called at the end of the class constructor to perform additional initialization specific to the algorithm being implemented. The arguments to this function are identical to those passed to the class constructor.</span>
 <span class="sd">		&quot;&quot;&quot;</span>
-		<span class="k">pass</span>
-</div>
+		<span class="k">pass</span></div>
+
 	<span class="nd">@abstractmethod</span>
 <div class="viewcode-block" id="metaEventPartition._stop"><a class="viewcode-back" href="../../api-doc/mosaic.meta.html#mosaic.metaEventPartition.metaEventPartition._stop">[docs]</a>	<span class="k">def</span> <span class="nf">_stop</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 		<span class="sd">&quot;&quot;&quot;</span>
@@ -365,8 +371,8 @@
 
 <span class="sd">			Stop partitioning events froma time-series</span>
 <span class="sd">		&quot;&quot;&quot;</span>
-		<span class="k">pass</span>
-</div>
+		<span class="k">pass</span></div>
+
 	<span class="nd">@abstractmethod</span>
 <div class="viewcode-block" id="metaEventPartition.formatsettings"><a class="viewcode-back" href="../../api-doc/mosaic.meta.html#mosaic.metaEventPartition.metaEventPartition.formatsettings">[docs]</a>	<span class="k">def</span> <span class="nf">formatsettings</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 		<span class="sd">&quot;&quot;&quot;</span>
@@ -374,8 +380,8 @@
 
 <span class="sd">			Return a formatted string of settings for display</span>
 <span class="sd">		&quot;&quot;&quot;</span>
-		<span class="k">pass</span>
-</div>
+		<span class="k">pass</span></div>
+
 	<span class="nd">@abstractmethod</span>
 <div class="viewcode-block" id="metaEventPartition.formatstats"><a class="viewcode-back" href="../../api-doc/mosaic.meta.html#mosaic.metaEventPartition.metaEventPartition.formatstats">[docs]</a>	<span class="k">def</span> <span class="nf">formatstats</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 		<span class="sd">&quot;&quot;&quot;</span>
@@ -383,16 +389,16 @@
 
 <span class="sd">			Return a formatted string of statistics for display</span>
 <span class="sd">		&quot;&quot;&quot;</span>
-		<span class="k">pass</span>
-</div>
+		<span class="k">pass</span></div>
+
 	<span class="nd">@abstractmethod</span>
 <div class="viewcode-block" id="metaEventPartition.formatoutputfiles"><a class="viewcode-back" href="../../api-doc/mosaic.meta.html#mosaic.metaEventPartition.metaEventPartition.formatoutputfiles">[docs]</a>	<span class="k">def</span> <span class="nf">formatoutputfiles</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 		<span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">			.. important:: |abstractmethod|</span>
 
 <span class="sd">			Return a formatted string of output files.</span>
-<span class="sd">		&quot;&quot;&quot;</span>
-</div>
+<span class="sd">		&quot;&quot;&quot;</span></div>
+
 	<span class="nd">@abstractmethod</span>
 <div class="viewcode-block" id="metaEventPartition._eventsegment"><a class="viewcode-back" href="../../api-doc/mosaic.meta.html#mosaic.metaEventPartition.metaEventPartition._eventsegment">[docs]</a>	<span class="k">def</span> <span class="nf">_eventsegment</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 		<span class="sd">&quot;&quot;&quot;</span>
@@ -400,21 +406,33 @@
 
 <span class="sd">			An implementation of this function should separate individual events of interest from a time-series of ionic current recordings. The data pertaining to each event is then passed 		to an instance of metaEventProcessor for detailed analysis. The function will collect the results of this analysis.</span>
 <span class="sd">		&quot;&quot;&quot;</span>
-		<span class="k">pass</span>
-	<span class="c">#################################################################</span>
-	<span class="c"># Internal functions</span>
-	<span class="c">#################################################################</span></div>
+		<span class="k">pass</span></div>
+	<span class="c1">#################################################################</span>
+	<span class="c1"># Internal functions</span>
+	<span class="c1">#################################################################</span>
+	<span class="k">def</span> <span class="nf">_writeanalysisinfo</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">mdioDBHnd</span><span class="o">.</span><span class="n">writeAnalysisInfo</span><span class="p">([</span>
+							<span class="bp">self</span><span class="o">.</span><span class="n">trajDataObj</span><span class="o">.</span><span class="n">datPath</span><span class="p">,</span>
+							<span class="bp">self</span><span class="o">.</span><span class="n">trajDataObj</span><span class="o">.</span><span class="n">fileFormat</span><span class="p">,</span>
+							<span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__name__</span><span class="p">,</span>
+							<span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tEventProcObj</span><span class="p">)</span><span class="o">.</span><span class="n">__name__</span><span class="p">,</span>
+							<span class="bp">self</span><span class="o">.</span><span class="n">fstring</span><span class="p">,</span>
+							<span class="bp">self</span><span class="o">.</span><span class="n">trajDataObj</span><span class="o">.</span><span class="n">ElapsedTimeSeconds</span><span class="p">,</span>
+							<span class="bp">self</span><span class="o">.</span><span class="n">trajDataObj</span><span class="o">.</span><span class="n">DataLengthSec</span><span class="p">,</span>
+							<span class="bp">self</span><span class="o">.</span><span class="n">trajDataObj</span><span class="o">.</span><span class="n">FsHz</span>
+						<span class="p">])</span>
+
 	<span class="k">def</span> <span class="nf">_setupparallel</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-		<span class="c"># check if parallel is available</span>
+		<span class="c1"># check if parallel is available</span>
 		<span class="k">try</span><span class="p">:</span>
 			<span class="kn">import</span> <span class="nn">zmqWorker</span>
 			<span class="kn">import</span> <span class="nn">zmqIO</span>
 		<span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
-			<span class="k">print</span> <span class="s">&quot;Parallel processing is not available.</span><span class="se">\n</span><span class="s">&quot;</span>
+			<span class="k">print</span> <span class="s2">&quot;Parallel processing is not available.</span><span class="se">\n</span><span class="s2">&quot;</span>
 			<span class="bp">self</span><span class="o">.</span><span class="n">parallelProc</span><span class="o">=</span><span class="bp">False</span>
 			<span class="k">return</span>
 
-		<span class="c"># setup parallel processing here</span>
+		<span class="c1"># setup parallel processing here</span>
 		<span class="bp">self</span><span class="o">.</span><span class="n">parallelProcDict</span><span class="o">=</span><span class="p">{}</span>
 
 		<span class="n">nworkers</span><span class="o">=</span><span class="n">multiprocessing</span><span class="o">.</span><span class="n">cpu_count</span><span class="p">()</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">reserveNCPU</span>
@@ -422,135 +440,135 @@
 			<span class="bp">self</span><span class="o">.</span><span class="n">parallelProcDict</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">multiprocessing</span><span class="o">.</span><span class="n">Process</span><span class="p">(</span>
 											<span class="n">target</span><span class="o">=</span><span class="n">zmqWorker</span><span class="o">.</span><span class="n">zmqWorker</span><span class="p">,</span> 
 											<span class="n">args</span><span class="o">=</span><span class="p">(</span> 
-												<span class="p">{</span> <span class="s">&#39;job&#39;</span> <span class="p">:</span> <span class="s">&#39;127.0.0.1:&#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="mi">5500</span><span class="p">)</span> <span class="p">},</span> 
-												<span class="p">{</span> <span class="s">&#39;results&#39;</span> <span class="p">:</span> <span class="s">&#39;127.0.0.1:&#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="mi">5600</span><span class="o">+</span><span class="n">i</span><span class="o">*</span><span class="mi">10</span><span class="p">)</span> <span class="p">},</span> 
-												<span class="s">&quot;processEvent&quot;</span><span class="p">,</span>
+												<span class="p">{</span> <span class="s1">&#39;job&#39;</span> <span class="p">:</span> <span class="s1">&#39;127.0.0.1:&#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="mi">5500</span><span class="p">)</span> <span class="p">},</span> 
+												<span class="p">{</span> <span class="s1">&#39;results&#39;</span> <span class="p">:</span> <span class="s1">&#39;127.0.0.1:&#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="mi">5600</span><span class="o">+</span><span class="n">i</span><span class="o">*</span><span class="mi">10</span><span class="p">)</span> <span class="p">},</span> 
+												<span class="s2">&quot;processEvent&quot;</span><span class="p">,</span>
 												<span class="p">[</span> 
-													<span class="s">&quot;sqlite3MDIO&quot;</span><span class="p">,</span> 
+													<span class="s2">&quot;sqlite3MDIO&quot;</span><span class="p">,</span> 
 													<span class="bp">self</span><span class="o">.</span><span class="n">mdioDBHnd</span><span class="o">.</span><span class="n">dbFilename</span><span class="p">,</span>
-													<span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tEventProcObj</span><span class="o">.</span><span class="n">mdHeadings</span><span class="p">())</span><span class="o">+</span><span class="p">[</span><span class="s">&#39;TimeSeries&#39;</span><span class="p">],</span>
-													<span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tEventProcObj</span><span class="o">.</span><span class="n">mdHeadingDataType</span><span class="p">())</span><span class="o">+</span><span class="p">[</span><span class="s">&#39;REAL_LIST&#39;</span><span class="p">]</span> 
+													<span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tEventProcObj</span><span class="o">.</span><span class="n">mdHeadings</span><span class="p">()),</span>
+													<span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tEventProcObj</span><span class="o">.</span><span class="n">mdHeadingDataType</span><span class="p">())</span> 
 												<span class="p">],</span>
 											<span class="p">)</span>
 										<span class="p">)</span>
 			<span class="bp">self</span><span class="o">.</span><span class="n">parallelProcDict</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
-		<span class="c"># allow the processes to start up</span>
+		<span class="c1"># allow the processes to start up</span>
 		<span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
 
 		<span class="n">tdict</span><span class="o">=</span><span class="p">{}</span>
-		<span class="p">[</span> <span class="n">tdict</span><span class="o">.</span><span class="n">update</span><span class="p">(</span> <span class="p">{</span><span class="s">&#39;results&#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="p">:</span> <span class="s">&#39;127.0.0.1:&#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="mi">5600</span><span class="o">+</span><span class="n">i</span><span class="o">*</span><span class="mi">10</span><span class="p">)</span> <span class="p">}</span> <span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">nworkers</span><span class="p">)</span> <span class="p">]</span>
-		<span class="c"># Parallel processing also needs zmq handles to send data to the worker processes and retrieve the results</span>
-		<span class="bp">self</span><span class="o">.</span><span class="n">SendJobsChan</span><span class="o">=</span><span class="n">zmqIO</span><span class="o">.</span><span class="n">zmqIO</span><span class="p">(</span><span class="n">zmqIO</span><span class="o">.</span><span class="n">PUSH</span><span class="p">,</span> <span class="p">{</span> <span class="s">&#39;job&#39;</span> <span class="p">:</span> <span class="s">&#39;127.0.0.1:&#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="mi">5500</span><span class="p">)</span> <span class="p">}</span> <span class="p">)</span>
+		<span class="p">[</span> <span class="n">tdict</span><span class="o">.</span><span class="n">update</span><span class="p">(</span> <span class="p">{</span><span class="s1">&#39;results&#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="p">:</span> <span class="s1">&#39;127.0.0.1:&#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="mi">5600</span><span class="o">+</span><span class="n">i</span><span class="o">*</span><span class="mi">10</span><span class="p">)</span> <span class="p">}</span> <span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">nworkers</span><span class="p">)</span> <span class="p">]</span>
+		<span class="c1"># Parallel processing also needs zmq handles to send data to the worker processes and retrieve the results</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">SendJobsChan</span><span class="o">=</span><span class="n">zmqIO</span><span class="o">.</span><span class="n">zmqIO</span><span class="p">(</span><span class="n">zmqIO</span><span class="o">.</span><span class="n">PUSH</span><span class="p">,</span> <span class="p">{</span> <span class="s1">&#39;job&#39;</span> <span class="p">:</span> <span class="s1">&#39;127.0.0.1:&#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="mi">5500</span><span class="p">)</span> <span class="p">}</span> <span class="p">)</span>
 		<span class="bp">self</span><span class="o">.</span><span class="n">RecvResultsChan</span><span class="o">=</span><span class="n">zmqIO</span><span class="o">.</span><span class="n">zmqIO</span><span class="p">(</span><span class="n">zmqIO</span><span class="o">.</span><span class="n">PULL</span><span class="p">,</span> <span class="n">tdict</span> <span class="p">)</span>
 
 	<span class="k">def</span> <span class="nf">_setuppartition</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-		<span class="c"># At the start of a run, store baseline stats for the open channel state</span>
-		<span class="c"># Later, we use these values to detect drift</span>
-		<span class="c"># First, calculate the number of points to include using the blockSizeSec </span>
-		<span class="c"># class attribute and the sampling frequency specified in trajDataObj</span>
+		<span class="c1"># At the start of a run, store baseline stats for the open channel state</span>
+		<span class="c1"># Later, we use these values to detect drift</span>
+		<span class="c1"># First, calculate the number of points to include using the blockSizeSec </span>
+		<span class="c1"># class attribute and the sampling frequency specified in trajDataObj</span>
 		<span class="bp">self</span><span class="o">.</span><span class="n">nPoints</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">blockSizeSec</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">trajDataObj</span><span class="o">.</span><span class="n">FsHz</span><span class="p">)</span>
 
-		<span class="c"># a global counter that keeps track of the position in data pipe.</span>
+		<span class="c1"># a global counter that keeps track of the position in data pipe.</span>
 		<span class="bp">self</span><span class="o">.</span><span class="n">globalDataIndex</span><span class="o">=</span><span class="mi">0</span>
 		<span class="bp">self</span><span class="o">.</span><span class="n">dataStart</span><span class="o">=</span><span class="mi">0</span>
 
 		<span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">meanOpenCurr</span> <span class="o">==</span> <span class="o">-</span><span class="mf">1.</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">sdOpenCurr</span> <span class="o">==</span> <span class="o">-</span><span class="mf">1.</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">slopeOpenCurr</span> <span class="o">==</span> <span class="o">-</span><span class="mf">1.</span><span class="p">:</span>
 			<span class="p">[</span> <span class="bp">self</span><span class="o">.</span><span class="n">meanOpenCurr</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">sdOpenCurr</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">slopeOpenCurr</span> <span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_openchanstats</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">trajDataObj</span><span class="o">.</span><span class="n">previewdata</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">nPoints</span><span class="p">))</span>
 		<span class="k">else</span><span class="p">:</span>
-			<span class="k">print</span> <span class="s">&quot;Automatic open channel state estimation has been disabled.&quot;</span>
+			<span class="k">print</span> <span class="s2">&quot;WARNING: Automatic open channel state estimation has been disabled.&quot;</span>
 
-		<span class="c"># Initialize a FIFO queue to keep track of open channel conductance</span>
-		<span class="c">#self.openchanFIFO=npfifo.npfifo(nPoints)</span>
+		<span class="c1"># Initialize a FIFO queue to keep track of open channel conductance</span>
+		<span class="c1">#self.openchanFIFO=npfifo.npfifo(nPoints)</span>
 		
-		<span class="c"># setup a local data store that is used by the main event partition loop</span>
+		<span class="c1"># setup a local data store that is used by the main event partition loop</span>
 		<span class="bp">self</span><span class="o">.</span><span class="n">currData</span> <span class="o">=</span> <span class="n">deque</span><span class="p">()</span>
 
-		<span class="c">#### Event Queue ####</span>
-		<span class="c"># self.eventQueue=[]</span>
+		<span class="c1">#### Event Queue ####</span>
+		<span class="c1"># self.eventQueue=[]</span>
 
 		<span class="bp">self</span><span class="o">.</span><span class="n">thrCurr</span><span class="o">=</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">meanOpenCurr</span><span class="p">)</span><span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">eventThreshold</span><span class="o">*</span><span class="nb">abs</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sdOpenCurr</span><span class="p">))</span>
 
-		<span class="c">#### Vars for event partition stats ####</span>
+		<span class="c1">#### Vars for event partition stats ####</span>
 		<span class="bp">self</span><span class="o">.</span><span class="n">minDrift</span><span class="o">=</span><span class="nb">abs</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">meanOpenCurr</span><span class="p">)</span>
 		<span class="bp">self</span><span class="o">.</span><span class="n">maxDrift</span><span class="o">=</span><span class="nb">abs</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">meanOpenCurr</span><span class="p">)</span>
 		<span class="bp">self</span><span class="o">.</span><span class="n">minDriftR</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">slopeOpenCurr</span>
 		<span class="bp">self</span><span class="o">.</span><span class="n">maxDriftR</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">slopeOpenCurr</span>
 
 	<span class="k">def</span> <span class="nf">_cleanupeventprocessing</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-		<span class="c"># Process individual events identified by the segmenting algorithm</span>
-		<span class="n">startTime</span><span class="o">=</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+		<span class="c1"># Process individual events identified by the segmenting algorithm</span>
+		<span class="n">startTime</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">timingObj</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
 		<span class="k">try</span><span class="p">:</span>
 			<span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">parallelProc</span><span class="p">:</span>
-				<span class="c"># gather up any remaining results from the worker processes</span>
+				<span class="c1"># gather up any remaining results from the worker processes</span>
 				<span class="k">while</span> <span class="bp">self</span><span class="o">.</span><span class="n">eventprocessedcount</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">eventcount</span><span class="p">:</span>
 					<span class="n">recvdat</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">RecvResultsChan</span><span class="o">.</span><span class="n">zmqReceiveData</span><span class="p">()</span>
-					<span class="k">if</span> <span class="n">recvdat</span> <span class="o">!=</span> <span class="s">&quot;&quot;</span><span class="p">:</span>
-						<span class="c">#store the processed event</span>
+					<span class="k">if</span> <span class="n">recvdat</span> <span class="o">!=</span> <span class="s2">&quot;&quot;</span><span class="p">:</span>
+						<span class="c1">#store the processed event</span>
 						<span class="bp">self</span><span class="o">.</span><span class="n">eventprocessedcount</span><span class="o">+=</span><span class="mi">1</span>
 
 						<span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">eventprocessedcount</span><span class="o">%</span><span class="mi">100</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-							<span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&#39;Processing </span><span class="si">%d</span><span class="s"> of </span><span class="si">%d</span><span class="s"> events.</span><span class="se">\r</span><span class="s">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">eventprocessedcount</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">eventcount</span><span class="p">)</span> <span class="p">)</span>
+							<span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;Processing </span><span class="si">%d</span><span class="s1"> of </span><span class="si">%d</span><span class="s1"> events.</span><span class="se">\r</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">eventprocessedcount</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">eventcount</span><span class="p">)</span> <span class="p">)</span>
 	    					<span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span>
 
-			<span class="bp">self</span><span class="o">.</span><span class="n">outputString</span><span class="o">=</span><span class="s">&#39;</span><span class="se">\t</span><span class="s">Process events: ***NORMAL***</span><span class="se">\n\n\n</span><span class="s">&#39;</span>
-			<span class="bp">self</span><span class="o">.</span><span class="n">procTime</span><span class="o">=</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span><span class="o">-</span><span class="n">startTime</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">outputString</span><span class="o">=</span><span class="s1">&#39;</span><span class="se">\t</span><span class="s1">Process events: ***NORMAL***</span><span class="se">\n\n\n</span><span class="s1">&#39;</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">procTime</span><span class="o">+=</span><span class="bp">self</span><span class="o">.</span><span class="n">timingObj</span><span class="o">.</span><span class="n">time</span><span class="p">()</span><span class="o">-</span><span class="n">startTime</span>
 		<span class="k">except</span> <span class="ne">KeyboardInterrupt</span><span class="p">:</span>
-			<span class="bp">self</span><span class="o">.</span><span class="n">procTime</span><span class="o">=</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span><span class="o">-</span><span class="n">startTime</span>
-			<span class="bp">self</span><span class="o">.</span><span class="n">outputString</span><span class="o">+=</span><span class="s">&#39;</span><span class="se">\t</span><span class="s">Process events: ***USER STOP***</span><span class="se">\n\n\n</span><span class="s">&#39;</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">procTime</span><span class="o">+=</span><span class="bp">self</span><span class="o">.</span><span class="n">timingObj</span><span class="o">.</span><span class="n">time</span><span class="p">()</span><span class="o">-</span><span class="n">startTime</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">outputString</span><span class="o">+=</span><span class="s1">&#39;</span><span class="se">\t</span><span class="s1">Process events: ***USER STOP***</span><span class="se">\n\n\n</span><span class="s1">&#39;</span>
 		<span class="k">except</span> <span class="ne">BaseException</span><span class="p">,</span> <span class="n">err</span><span class="p">:</span>
-			<span class="bp">self</span><span class="o">.</span><span class="n">outputString</span><span class="o">=</span><span class="s">&#39;</span><span class="se">\t</span><span class="s">Process events: ***ERROR***</span><span class="se">\n\t\t</span><span class="s">{0}</span><span class="se">\n\n\n</span><span class="s">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">err</span><span class="p">))</span>
-			<span class="bp">self</span><span class="o">.</span><span class="n">procTime</span><span class="o">=</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span><span class="o">-</span><span class="n">startTime</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">outputString</span><span class="o">=</span><span class="s1">&#39;</span><span class="se">\t</span><span class="s1">Process events: ***ERROR***</span><span class="se">\n\t\t</span><span class="s1">{0}</span><span class="se">\n\n\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">err</span><span class="p">))</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">procTime</span><span class="o">+=</span><span class="bp">self</span><span class="o">.</span><span class="n">timingObj</span><span class="o">.</span><span class="n">time</span><span class="p">()</span><span class="o">-</span><span class="n">startTime</span>
 			<span class="k">raise</span>
 
-		<span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&#39;                                                                    </span><span class="se">\r</span><span class="s">&#39;</span> <span class="p">)</span>
+		<span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;                                                                    </span><span class="se">\r</span><span class="s1">&#39;</span> <span class="p">)</span>
 		<span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span>
 
 	<span class="k">def</span> <span class="nf">_writeoutputlog</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-		<span class="bp">self</span><span class="o">.</span><span class="n">outputString</span><span class="o">+=</span><span class="s">&#39;[Summary]</span><span class="se">\n</span><span class="s">&#39;</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">outputString</span><span class="o">+=</span><span class="s1">&#39;[Summary]</span><span class="se">\n</span><span class="s1">&#39;</span>
 
-		<span class="c"># write out event segment stats</span>
+		<span class="c1"># write out event segment stats</span>
 		<span class="bp">self</span><span class="o">.</span><span class="n">outputString</span><span class="o">+=</span><span class="bp">self</span><span class="o">.</span><span class="n">formatstats</span><span class="p">()</span>
 
-		<span class="c"># print event processing stats. these are limited to how</span>
-		<span class="c"># many events were rejected</span>
-		<span class="c">#nEventsProc=0</span>
-		<span class="c">#for evnt in self.eventQueue:</span>
-		<span class="c">#	if evnt.mdProcessingStatus==&#39;normal&#39;:</span>
-		<span class="c">#		nEventsProc+=1</span>
-		<span class="c">#self.outputString+=&#39;\tEvent processing stats:\n&#39;</span>
-		<span class="c">#self.outputString+=&#39;\t\tAccepted = {0}\n&#39;.format(nEventsProc)</span>
-		<span class="c">#self.outputString+=&#39;\t\tRejected = {0}\n&#39;.format(self.eventcount-nEventsProc)</span>
-		<span class="c">#self.outputString+=&#39;\t\tRejection rate = {0}\n\n&#39;.format(round(1-nEventsProc/float(self.eventcount),2))</span>
+		<span class="c1"># print event processing stats. these are limited to how</span>
+		<span class="c1"># many events were rejected</span>
+		<span class="c1">#nEventsProc=0</span>
+		<span class="c1">#for evnt in self.eventQueue:</span>
+		<span class="c1">#	if evnt.mdProcessingStatus==&#39;normal&#39;:</span>
+		<span class="c1">#		nEventsProc+=1</span>
+		<span class="c1">#self.outputString+=&#39;\tEvent processing stats:\n&#39;</span>
+		<span class="c1">#self.outputString+=&#39;\t\tAccepted = {0}\n&#39;.format(nEventsProc)</span>
+		<span class="c1">#self.outputString+=&#39;\t\tRejected = {0}\n&#39;.format(self.eventcount-nEventsProc)</span>
+		<span class="c1">#self.outputString+=&#39;\t\tRejection rate = {0}\n\n&#39;.format(round(1-nEventsProc/float(self.eventcount),2))</span>
 
-		<span class="c"># Display averaged properties</span>
-		<span class="c">#for p in self.eventQueue[0].mdAveragePropertiesList():</span>
-		<span class="c">#	self.outputString+=&#39;\t\t{0} = {1}\n&#39;.format(p, self.__roundufloat( np.mean( [ getattr(evnt, p) for evnt in self.eventQueue if getattr(evnt, p) != -1 ] )) )</span>
+		<span class="c1"># Display averaged properties</span>
+		<span class="c1">#for p in self.eventQueue[0].mdAveragePropertiesList():</span>
+		<span class="c1">#	self.outputString+=&#39;\t\t{0} = {1}\n&#39;.format(p, self.__roundufloat( np.mean( [ getattr(evnt, p) for evnt in self.eventQueue if getattr(evnt, p) != -1 ] )) )</span>
 
-		<span class="c">#self.outputString+=&quot;\n\n[Settings]\n\tSettings File = &#39;{0}&#39;\n\n&quot;.format(self.settingsDict.settingsFile)</span>
-		<span class="bp">self</span><span class="o">.</span><span class="n">outputString</span><span class="o">+=</span><span class="s">&quot;</span><span class="se">\n</span><span class="s">[Settings]</span><span class="se">\n</span><span class="s">&quot;</span>
+		<span class="c1">#self.outputString+=&quot;\n\n[Settings]\n\tSettings File = &#39;{0}&#39;\n\n&quot;.format(self.settingsDict.settingsFile)</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">outputString</span><span class="o">+=</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">[Settings]</span><span class="se">\n</span><span class="s2">&quot;</span>
 
-		<span class="c"># write out trajectory IO settings</span>
-		<span class="bp">self</span><span class="o">.</span><span class="n">outputString</span><span class="o">+=</span><span class="bp">self</span><span class="o">.</span><span class="n">trajDataObj</span><span class="o">.</span><span class="n">formatsettings</span><span class="p">()</span><span class="o">+</span><span class="s">&#39;</span><span class="se">\n</span><span class="s">&#39;</span>
+		<span class="c1"># write out trajectory IO settings</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">outputString</span><span class="o">+=</span><span class="bp">self</span><span class="o">.</span><span class="n">trajDataObj</span><span class="o">.</span><span class="n">formatsettings</span><span class="p">()</span><span class="o">+</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span>
 		
-		<span class="c"># write out event segment settings/stats</span>
-		<span class="bp">self</span><span class="o">.</span><span class="n">outputString</span><span class="o">+=</span><span class="bp">self</span><span class="o">.</span><span class="n">formatsettings</span><span class="p">()</span><span class="o">+</span><span class="s">&#39;</span><span class="se">\n\n</span><span class="s">&#39;</span>
+		<span class="c1"># write out event segment settings/stats</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">outputString</span><span class="o">+=</span><span class="bp">self</span><span class="o">.</span><span class="n">formatsettings</span><span class="p">()</span><span class="o">+</span><span class="s1">&#39;</span><span class="se">\n\n</span><span class="s1">&#39;</span>
 
-		<span class="c"># event processing settings</span>
-		<span class="bp">self</span><span class="o">.</span><span class="n">outputString</span><span class="o">+=</span><span class="bp">self</span><span class="o">.</span><span class="n">tEventProcObj</span><span class="o">.</span><span class="n">formatsettings</span><span class="p">()</span><span class="o">+</span><span class="s">&#39;</span><span class="se">\n\n</span><span class="s">&#39;</span>
+		<span class="c1"># event processing settings</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">outputString</span><span class="o">+=</span><span class="bp">self</span><span class="o">.</span><span class="n">tEventProcObj</span><span class="o">.</span><span class="n">formatsettings</span><span class="p">()</span><span class="o">+</span><span class="s1">&#39;</span><span class="se">\n\n</span><span class="s1">&#39;</span>
 
-		<span class="c"># Output files</span>
+		<span class="c1"># Output files</span>
 		<span class="bp">self</span><span class="o">.</span><span class="n">outputString</span><span class="o">+=</span><span class="bp">self</span><span class="o">.</span><span class="n">formatoutputfiles</span><span class="p">()</span>
-		<span class="bp">self</span><span class="o">.</span><span class="n">outputString</span><span class="o">+=</span><span class="s">&#39;</span><span class="se">\t</span><span class="s">Log file = eventProcessing.log</span><span class="se">\n\n</span><span class="s">&#39;</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">outputString</span><span class="o">+=</span><span class="s1">&#39;</span><span class="se">\t</span><span class="s1">Log file = eventProcessing.log</span><span class="se">\n\n</span><span class="s1">&#39;</span>
 
-		<span class="c"># Finally, timing information</span>
-		<span class="bp">self</span><span class="o">.</span><span class="n">outputString</span><span class="o">+=</span><span class="s">&#39;[Timing]</span><span class="se">\n\t</span><span class="s">Segment trajectory = {0} s</span><span class="se">\n</span><span class="s">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">segmentTime</span><span class="p">,</span><span class="mi">2</span><span class="p">))</span>
-		<span class="bp">self</span><span class="o">.</span><span class="n">outputString</span><span class="o">+=</span><span class="s">&#39;</span><span class="se">\t</span><span class="s">Process events = {0} s</span><span class="se">\n\n</span><span class="s">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">procTime</span><span class="p">,</span><span class="mi">2</span><span class="p">))</span>
-		<span class="bp">self</span><span class="o">.</span><span class="n">outputString</span><span class="o">+=</span><span class="s">&#39;</span><span class="se">\t</span><span class="s">Total = {0} s</span><span class="se">\n</span><span class="s">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">segmentTime</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">procTime</span><span class="p">,</span><span class="mi">2</span><span class="p">))</span>
+		<span class="c1"># Finally, timing information</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">outputString</span><span class="o">+=</span><span class="s1">&#39;[Timing]</span><span class="se">\n\t</span><span class="s1">Segment trajectory = {0} s</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">segmentTime</span><span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">procTime</span><span class="p">,</span><span class="mi">2</span><span class="p">))</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">outputString</span><span class="o">+=</span><span class="s1">&#39;</span><span class="se">\t</span><span class="s1">Process events = {0} s</span><span class="se">\n\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">procTime</span><span class="p">,</span><span class="mi">2</span><span class="p">))</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">outputString</span><span class="o">+=</span><span class="s1">&#39;</span><span class="se">\t</span><span class="s1">Total = {0} s</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">segmentTime</span><span class="p">,</span><span class="mi">2</span><span class="p">))</span>
 		<span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">eventcount</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
-			<span class="bp">self</span><span class="o">.</span><span class="n">outputString</span><span class="o">+=</span><span class="s">&#39;</span><span class="se">\t</span><span class="s">Time per event = {0} ms</span><span class="se">\n\n\n</span><span class="s">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="mf">1000.</span><span class="o">*</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">segmentTime</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">procTime</span><span class="p">)</span><span class="o">/</span><span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">eventcount</span><span class="p">),</span><span class="mi">2</span><span class="p">))</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">outputString</span><span class="o">+=</span><span class="s1">&#39;</span><span class="se">\t</span><span class="s1">Time per event = {0} ms</span><span class="se">\n\n\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="mf">1000.</span><span class="o">*</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">segmentTime</span><span class="p">)</span><span class="o">/</span><span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">eventcount</span><span class="p">),</span><span class="mi">2</span><span class="p">))</span>
 		
-		<span class="c"># write it all out to stdout and also to a file</span>
-		<span class="c"># eventProcessing.log in the data location</span>
+		<span class="c1"># write it all out to stdout and also to a file</span>
+		<span class="c1"># eventProcessing.log in the data location</span>
 		<span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">outputString</span><span class="p">)</span>
 			
 	<span class="k">def</span> <span class="nf">_openchanstats</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">curr</span><span class="p">):</span>
@@ -569,21 +587,21 @@
 <span class="sd">		&quot;&quot;&quot;</span>
 		<span class="n">n</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">curr</span><span class="p">)</span>
 
-		<span class="c">#curr=self.trajDataObj.previewdata(nPoints)</span>
+		<span class="c1">#curr=self.trajDataObj.previewdata(nPoints)</span>
 		<span class="n">t</span><span class="o">=</span><span class="mf">1.</span><span class="o">/</span><span class="bp">self</span><span class="o">.</span><span class="n">trajDataObj</span><span class="o">.</span><span class="n">FsHz</span>
 		<span class="n">tstamp</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">n</span><span class="o">*</span><span class="n">t</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)[:</span><span class="n">n</span><span class="p">]</span>
 
-		<span class="c">#print &quot;nPoints=&quot;, n, &quot;len(tstamp)=&quot;, len(tstamp), &quot;type(curr)&quot;, type(curr)</span>
+		<span class="c1">#print &quot;nPoints=&quot;, n, &quot;len(tstamp)=&quot;, len(tstamp), &quot;type(curr)&quot;, type(curr)</span>
 		
-		<span class="c"># Calculate the mean and standard deviation of the open state</span>
+		<span class="c1"># Calculate the mean and standard deviation of the open state</span>
 		<span class="n">mu</span><span class="p">,</span> <span class="n">sig</span><span class="o">=</span><span class="n">OpenCurrentDist</span><span class="p">(</span><span class="n">curr</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">)</span>
 
-		<span class="c"># Fit the data to a straight line to calculate the slope</span>
-		<span class="c"># ft[0]: slope</span>
-		<span class="c"># ft[1]: y-intercept (mean current)</span>
+		<span class="c1"># Fit the data to a straight line to calculate the slope</span>
+		<span class="c1"># ft[0]: slope</span>
+		<span class="c1"># ft[1]: y-intercept (mean current)</span>
 		<span class="n">ft</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">polyfit</span><span class="p">(</span><span class="n">tstamp</span><span class="p">,</span> <span class="n">curr</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
 
-		<span class="c"># Return stats</span>
+		<span class="c1"># Return stats</span>
 		<span class="k">return</span> <span class="p">[</span> <span class="n">mu</span><span class="p">,</span> <span class="n">sig</span><span class="p">,</span> <span class="n">ft</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="p">]</span>
 	
 		
@@ -604,7 +622,7 @@
 <span class="sd">		&quot;&quot;&quot;</span>
 		<span class="p">[</span><span class="n">mu</span><span class="p">,</span><span class="n">sd</span><span class="p">,</span><span class="n">sl</span><span class="p">]</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_openchanstats</span><span class="p">(</span><span class="n">curr</span><span class="p">)</span>
 		
-		<span class="c"># store stats</span>
+		<span class="c1"># store stats</span>
 		<span class="bp">self</span><span class="o">.</span><span class="n">minDrift</span><span class="o">=</span><span class="nb">min</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">mu</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">minDrift</span><span class="p">)</span>
 		<span class="bp">self</span><span class="o">.</span><span class="n">maxDrift</span><span class="o">=</span><span class="nb">max</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">mu</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">maxDrift</span><span class="p">)</span>
 		<span class="bp">self</span><span class="o">.</span><span class="n">minDriftR</span><span class="o">=</span><span class="nb">min</span><span class="p">(</span><span class="n">sl</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">minDriftR</span><span class="p">)</span>
@@ -612,40 +630,44 @@
 
 		<span class="n">sigma</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">driftThreshold</span>
 		<span class="k">if</span> <span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">mu</span><span class="p">)</span><span class="o">&lt;</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">meanOpenCurr</span><span class="p">)</span><span class="o">-</span><span class="n">sigma</span><span class="o">*</span><span class="nb">abs</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sdOpenCurr</span><span class="p">)))</span> <span class="ow">or</span> <span class="nb">abs</span><span class="p">(</span><span class="n">mu</span><span class="p">)</span><span class="o">&gt;</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">meanOpenCurr</span><span class="p">)</span><span class="o">+</span><span class="n">sigma</span><span class="o">*</span><span class="nb">abs</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sdOpenCurr</span><span class="p">)):</span>
-			<span class="k">raise</span> <span class="n">ExcessiveDriftError</span><span class="p">(</span><span class="s">&quot;The open channel current ({0:0.2f} pA) deviates from the baseline value ({1:0.2f}) by {2} sigma.&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">mu</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">meanOpenCurr</span><span class="p">,</span> <span class="n">sigma</span><span class="p">))</span>
+			<span class="k">raise</span> <span class="n">ExcessiveDriftError</span><span class="p">(</span><span class="s2">&quot;The open channel current ({0:0.2f} pA) deviates from the baseline value ({1:0.2f}) by {2} sigma.&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">mu</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">meanOpenCurr</span><span class="p">,</span> <span class="n">sigma</span><span class="p">))</span>
 
 		<span class="k">if</span> <span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">sl</span><span class="p">))</span> <span class="o">&gt;</span> <span class="nb">abs</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">maxDriftRate</span><span class="p">):</span>
-			<span class="k">raise</span> <span class="n">DriftRateError</span><span class="p">(</span><span class="s">&quot;The open channel conductance is changing faster ({0} pA/s) than the allowed rate ({1} pA/s).&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">sl</span><span class="p">),</span><span class="mi">2</span><span class="p">),</span> <span class="nb">abs</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">maxDriftRate</span><span class="p">,</span><span class="mi">2</span><span class="p">))))</span>
+			<span class="k">raise</span> <span class="n">DriftRateError</span><span class="p">(</span><span class="s2">&quot;The open channel conductance is changing faster ({0} pA/s) than the allowed rate ({1} pA/s).&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">sl</span><span class="p">),</span><span class="mi">2</span><span class="p">),</span> <span class="nb">abs</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">maxDriftRate</span><span class="p">,</span><span class="mi">2</span><span class="p">))))</span>
 
-		<span class="c"># Save the open channel conductance stats for the current window</span>
+		<span class="c1"># Save the open channel conductance stats for the current window</span>
 		<span class="bp">self</span><span class="o">.</span><span class="n">windowOpenCurrentMean</span><span class="o">=</span><span class="n">mu</span>
 		<span class="bp">self</span><span class="o">.</span><span class="n">windowOpenCurrentSD</span><span class="o">=</span><span class="n">sd</span> 
 		<span class="bp">self</span><span class="o">.</span><span class="n">windowOpenCurrentSlope</span><span class="o">=</span><span class="n">sl</span>
 
 	<span class="k">def</span> <span class="nf">_processEvent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">eventobj</span><span class="p">):</span>
+		<span class="n">startTime</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">timingObj</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+
 		<span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">parallelProc</span><span class="p">:</span>
-			<span class="c"># handle parallel</span>
+			<span class="c1"># handle parallel</span>
 			<span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span>
 
-			<span class="bp">self</span><span class="o">.</span><span class="n">SendJobsChan</span><span class="o">.</span><span class="n">zmqSendData</span><span class="p">(</span><span class="s">&#39;job&#39;</span><span class="p">,</span> <span class="n">cPickle</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">eventobj</span><span class="p">))</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">SendJobsChan</span><span class="o">.</span><span class="n">zmqSendData</span><span class="p">(</span><span class="s1">&#39;job&#39;</span><span class="p">,</span> <span class="n">cPickle</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">eventobj</span><span class="p">))</span>
 			
-			<span class="c"># check for a message 100 times. If an empty message is recevied quit immediately</span>
+			<span class="c1"># check for a message 100 times. If an empty message is recevied quit immediately</span>
 			<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">100</span><span class="p">):</span>	
 				<span class="n">recvdat</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">RecvResultsChan</span><span class="o">.</span><span class="n">zmqReceiveData</span><span class="p">()</span>
-				<span class="k">if</span> <span class="n">recvdat</span><span class="o">==</span><span class="s">&quot;&quot;</span><span class="p">:</span>	<span class="c"># bail on receiving an empty message</span>
+				<span class="k">if</span> <span class="n">recvdat</span><span class="o">==</span><span class="s2">&quot;&quot;</span><span class="p">:</span>	<span class="c1"># bail on receiving an empty message</span>
 					<span class="k">return</span>
 
 				<span class="bp">self</span><span class="o">.</span><span class="n">eventprocessedcount</span><span class="o">+=</span><span class="mi">1</span>
-				<span class="c">#store the processed event</span>
-				<span class="c"># self.eventQueue.append( cPickle.loads(recvdat) )</span>
+				<span class="c1">#store the processed event</span>
+				<span class="c1"># self.eventQueue.append( cPickle.loads(recvdat) )</span>
 
 		<span class="k">else</span><span class="p">:</span>
-			<span class="c"># First set the meta-data IO object in eventobj</span>
+			<span class="c1"># First set the meta-data IO object in eventobj</span>
 			<span class="n">eventobj</span><span class="o">.</span><span class="n">dataFileHnd</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">mdioDBHnd</span>
 
-			<span class="c"># call the process event function and store</span>
+			<span class="c1"># call the process event function and store</span>
 			<span class="n">eventobj</span><span class="o">.</span><span class="n">processEvent</span><span class="p">()</span>
-			<span class="c"># self.eventQueue.append( eventobj )</span></div>
+			<span class="c1"># self.eventQueue.append( eventobj )</span>
+
+		<span class="bp">self</span><span class="o">.</span><span class="n">procTime</span><span class="o">+=</span><span class="bp">self</span><span class="o">.</span><span class="n">timingObj</span><span class="o">.</span><span class="n">time</span><span class="p">()</span><span class="o">-</span><span class="n">startTime</span></div>
 </pre></div>
 
     </div>
@@ -660,7 +682,7 @@
       
     </p>
     <p>
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.2.3.<br/>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.5.<br/>
     </p>
   </div>
 </footer> -->
@@ -670,9 +692,8 @@
 			<col width=40%>
 			<tr>
 				<td align="left">
-					<a href="../../doc/mailingList.html"><em>Mailing List</em></a>&nbsp;&nbsp;&nbsp;
 					<a href="../../doc/Developers.html"><em>MOSAIC Developers</em></a>&nbsp;&nbsp;&nbsp;
-					<a href="http://www.nist.gov/cgi-bin/wwwph/cso.nist.gov?Query=Arvind+Balijepalli"><em>Contact</em></a>&nbsp;&nbsp;&nbsp;
+					<a href="http://www.nist.gov/pml/div683/grp06/abalijepalli.cfm"><em>Contact</em></a>&nbsp;&nbsp;&nbsp;
 					<a href="../../doc/Disclaimer.html"><em>Terms of Use</em></a>
 				</td>
 				<td align="right"><em>National Institute of Standards and Technology (NIST)</em></td>

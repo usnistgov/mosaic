@@ -3,12 +3,30 @@
 Change Log
 =================================
 
+**v1.3**
+
+- Added CUSUM algorithm (see pull requests #34, #43, #45, and #46)
+- Streamlined unit test framework. Added new tests for CUSUM.
+- [GUI] Performance optimization.
+- [GUI] Added CUSUM support to MOSAIC GUI.
+- [GUI] Fit window in MOSAIC GUI displays idealized pulses overlays.
+- [GUI] Added additional analysis statistics.
+- [Addons] Added CUSUM support to Mathematica addon (PlotEvents in MosaicUtils.m)
+- [Addons] Mathematica queries are handled through an external Python script.
+- [Addons] Added an option to limit PlotEvents in Mathematica addon to N events.
+- Updated MOSAIC dependencies to include newer packages. Run 'python setup.py mosaic_deps' to update.
+- Added a new metadata column (mdStateResTime) that saves the residence time of each state to the database. This affects multiStateAnalysis and cusumLevelAnalysis.
+- Removed mosaicgui from PyPi. 'pip install mosaic-nist' only installs command line modules. 
+- Top level ConvertToCSV supports arbitrary file extensions.
+- Fixes issues #36, #37, #38, #39 and #47.
+- Known Issues: See #8 and #10.
+
 **v1.2**
 
-Added support for arbitrary binary file formats (#33)
-[GUI] Included binary file support.
-Documentation updates and bug fixes.
-Known Issues: See #8 and #10.
+- Added support for arbitrary binary file formats (#33)
+- [GUI] Included binary file support.
+- Documentation updates and bug fixes.
+- Known Issues: See #8 and #10.
 
 **v1.1**
 

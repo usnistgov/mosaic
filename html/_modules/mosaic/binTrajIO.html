@@ -5,19 +5,18 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>mosaic.binTrajIO &mdash; MOSAIC 1.2 documentation</title>
+    <title>mosaic.binTrajIO &mdash; MOSAIC 1.3b1 documentation</title>
     
     <link rel="stylesheet" href="../../_static/basic.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="../../_static/bootstrap-3.2.0/css/bootstrap.min.css" type="text/css" />
-    <link rel="stylesheet" href="../../_static/bootstrap-3.2.0/css/bootstrap-theme.min.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/bootswatch-3.3.4/paper/bootstrap.min.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/bootstrap-sphinx.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/style.css" type="text/css" />
     
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
-        VERSION:     '1.2',
+        VERSION:     '1.3b1',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -26,13 +25,13 @@
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
-    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <script type="text/javascript" src="../../_static/js/jquery-1.11.0.min.js"></script>
     <script type="text/javascript" src="../../_static/js/jquery-fix.js"></script>
-    <script type="text/javascript" src="../../_static/bootstrap-3.2.0/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../../_static/bootstrap-3.3.4/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="../../_static/bootstrap-sphinx.js"></script>
     <link rel="shortcut icon" href="../../_static/favicon.ico"/>
-    <link rel="top" title="MOSAIC 1.2 documentation" href="../../index.html" />
+    <link rel="top" title="MOSAIC 1.3b1 documentation" href="../../index.html" />
     <link rel="up" title="Module code" href="../index.html" />
 
 <meta charset='utf-8'>
@@ -41,13 +40,13 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 
 	<script type="text/javascript"
-		src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+		src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
 	</script>
 	<script type="text/javascript" id="_fed_an_js_tag" src="//www.nist.gov/js/federated-analytics.all.min.js?agency=NIST&subagency=github&pua=UA-42404149-54&yt=true&exts=ppsx,pps,f90,sch,rtf,wrl,txz,m1v,xlsm,msi,xsd,f,tif,eps,mpg,xml,pl,xlt,c">
 	</script>	
 
   </head>
-  <body>
+  <body role="document">
 
   <div id="navbar" class="navbar navbar-default navbar-fixed-top">
     <div class="container">
@@ -58,16 +57,17 @@
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </button>
-        <a class="navbar-brand" href="../../index.html"><img src="../../_static/icon_24.png">
+        <a class="navbar-brand" href="../../index.html"><img src="../../_static/icon_36.png">
            </a>
-        <span class="navbar-text navbar-version pull-left"><b>1.2</b></span>
+        <span class="navbar-text navbar-version pull-left"><b>1.3b1</b></span>
       </div>
 
         <div class="collapse navbar-collapse nav-collapse">
           <ul class="nav navbar-nav">
             
+                <li><a href="../../../latex/MOSAIC.pdf">Download PDF</a></li>
                 <li><a href="../../doc/mailingList.html">Mailing List</a></li>
-                <li><a href="//github.com/usnistgov/mosaic">Develop MOSAIC</a></li>
+                <li><a href="//github.com/usnistgov/mosaic">Develop</a></li>
                 <li><a href="//github.com/usnistgov/mosaic/issues">Issue Tracker</a></li>
             
             
@@ -81,18 +81,20 @@
       role="menu"
       aria-labelledby="dLabelGlobalToc"><ul>
 <li class="toctree-l1"><a class="reference internal" href="../../doc/Introduction.html">1. Introduction</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../doc/GettingStarted.html">2. Getting Started</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../doc/Algorithms.html">3. Algorithms in <em>MOSAIC</em></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../doc/Algorithms.html">2. Data Processing Algorithms in <em>MOSAIC</em></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../doc/GettingStarted.html">3. Getting Started</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../doc/GraphicalInterface.html">4. <em>MOSAIC</em> GUI</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../doc/ScriptingandAdvancedFeatures.html">5. Scripting and Advanced Features</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../doc/settingsFile.html">6. Settings File</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../doc/DatabaseStructure.html">7. Database Structure and Query Syntax</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../doc/settingsFile.html">5. Settings File</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../doc/DatabaseStructure.html">6. Database Structure and Query Syntax</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../doc/ScriptingandAdvancedFeatures.html">7. Scripting and Advanced Features</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../doc/Extend.html">8. Extend <em>MOSAIC</em></a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../doc/Addons.html">9. Addons</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../doc/examples.html">10. Examples</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../doc/apidocs.html">11. API Documentation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../doc/ChangeLog.html">12. Change Log</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../doc/References.html">13. Bibliography</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../doc/PublicationFigures.html">9. Publication Quality Figures</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../doc/AdvancedAnalysis.html">10. Advanced Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../doc/Addons.html">11. Addons</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../doc/examples.html">12. Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../doc/apidocs.html">13. API Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../doc/ChangeLog.html">14. Change Log</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../doc/References.html">15. Bibliography</a></li>
 </ul>
 </ul>
 </li>
@@ -122,9 +124,10 @@
 
 <div class="container">
   <div class="row">
-    <div class="col-md-12">
+    <div class="col-md-12 content">
       
   <h1>Source code for mosaic.binTrajIO</h1><div class="highlight"><pre>
+<span class="c1"># -*- coding: utf-8 -*-</span>
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">Binary file implementation of metaTrajIO. Read raw binary files with specified record sizes</span>
 
@@ -133,7 +136,8 @@
 <span class="sd">	:License:	See LICENSE.TXT</span>
 <span class="sd">	:ChangeLog:</span>
 <span class="sd">	.. line-block::</span>
-
+<span class="sd">		9/13/15 	AB 	Updated logging to use mosaicLog class</span>
+<span class="sd">		3/28/15 	AB 	Updated file read code to match new metaTrajIO API.</span>
 <span class="sd">		1/27/15 	AB 	Memory map files on read.</span>
 <span class="sd">		1/26/15 	AB 	Refactored code to read interleaved binary data. </span>
 <span class="sd">		7/27/14		AB 	Update interface to specify python PythonStructCode instead of </span>
@@ -145,6 +149,7 @@
 <span class="kn">import</span> <span class="nn">struct</span>
 
 <span class="kn">import</span> <span class="nn">mosaic.metaTrajIO</span>
+<span class="kn">import</span> <span class="nn">mosaic.utilities.mosaicLog</span> <span class="kn">as</span> <span class="nn">log</span>
 
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
 
@@ -247,19 +252,19 @@
 <span class="sd">				None</span>
 <span class="sd">	&quot;&quot;&quot;</span>
 	<span class="k">def</span> <span class="nf">_init</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-		<span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s">&#39;SamplingFrequency&#39;</span><span class="p">):</span>
-			<span class="k">raise</span> <span class="n">metaTrajIO</span><span class="o">.</span><span class="n">InsufficientArgumentsError</span><span class="p">(</span><span class="s">&quot;{0} requires the sampling rate in Hz to be defined.&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__name__</span><span class="p">))</span>
+		<span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;SamplingFrequency&#39;</span><span class="p">):</span>
+			<span class="k">raise</span> <span class="n">metaTrajIO</span><span class="o">.</span><span class="n">InsufficientArgumentsError</span><span class="p">(</span><span class="s2">&quot;{0} requires the sampling rate in Hz to be defined.&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__name__</span><span class="p">))</span>
 
-		<span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s">&#39;ColumnTypes&#39;</span><span class="p">):</span>
-			<span class="k">raise</span> <span class="n">metaTrajIO</span><span class="o">.</span><span class="n">InsufficientArgumentsError</span><span class="p">(</span><span class="s">&quot;{0} requires the column types to be defined.&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__name__</span><span class="p">))</span>
+		<span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;ColumnTypes&#39;</span><span class="p">):</span>
+			<span class="k">raise</span> <span class="n">metaTrajIO</span><span class="o">.</span><span class="n">InsufficientArgumentsError</span><span class="p">(</span><span class="s2">&quot;{0} requires the column types to be defined.&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__name__</span><span class="p">))</span>
 		<span class="k">else</span><span class="p">:</span>
 			<span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ColumnTypes</span><span class="p">)</span> <span class="ow">is</span> <span class="nb">str</span> <span class="ow">or</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ColumnTypes</span><span class="p">)</span> <span class="ow">is</span> <span class="nb">unicode</span><span class="p">:</span> 
 				<span class="bp">self</span><span class="o">.</span><span class="n">ColumnTypes</span><span class="o">=</span><span class="nb">eval</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ColumnTypes</span><span class="p">)</span>
 		
-		<span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s">&#39;IonicCurrentColumn&#39;</span><span class="p">):</span>
-			<span class="k">raise</span> <span class="n">metaTrajIO</span><span class="o">.</span><span class="n">InsufficientArgumentsError</span><span class="p">(</span><span class="s">&quot;{0} requires the ionic current column to be defined.&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__name__</span><span class="p">))</span>
+		<span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;IonicCurrentColumn&#39;</span><span class="p">):</span>
+			<span class="k">raise</span> <span class="n">metaTrajIO</span><span class="o">.</span><span class="n">InsufficientArgumentsError</span><span class="p">(</span><span class="s2">&quot;{0} requires the ionic current column to be defined.&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__name__</span><span class="p">))</span>
 		
-		<span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s">&#39;HeaderOffset&#39;</span><span class="p">):</span>
+		<span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;HeaderOffset&#39;</span><span class="p">):</span>
 			<span class="bp">self</span><span class="o">.</span><span class="n">HeaderOffset</span><span class="o">=</span><span class="mi">0</span>
 
 		<span class="k">try</span><span class="p">:</span>
@@ -268,76 +273,87 @@
 			<span class="bp">self</span><span class="o">.</span><span class="n">IonicCurrentColumn</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">ColumnTypes</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
 			<span class="bp">self</span><span class="o">.</span><span class="n">IonicCurrentType</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">ColumnTypes</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span>
 
-			<span class="k">print</span> <span class="s">&quot;IonicCurrentColumn {0} not found. Defaulting to {1}.&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">err</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">IonicCurrentColumn</span><span class="p">)</span>
+			<span class="k">print</span> <span class="s2">&quot;IonicCurrentColumn {0} not found. Defaulting to {1}.&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">err</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">IonicCurrentColumn</span><span class="p">)</span>
 
 
-		<span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s">&#39;AmplifierScale&#39;</span><span class="p">):</span>
+		<span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;AmplifierScale&#39;</span><span class="p">):</span>
 			<span class="bp">self</span><span class="o">.</span><span class="n">AmplifierScale</span><span class="o">=</span><span class="mf">1.0</span>
 		<span class="k">else</span><span class="p">:</span>
 			<span class="bp">self</span><span class="o">.</span><span class="n">AmplifierScale</span><span class="o">=</span><span class="nb">float</span><span class="p">(</span><span class="nb">eval</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">AmplifierScale</span><span class="p">))</span>
 
-		<span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s">&#39;AmplifierOffset&#39;</span><span class="p">):</span> 
+		<span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;AmplifierOffset&#39;</span><span class="p">):</span> 
 			<span class="bp">self</span><span class="o">.</span><span class="n">AmplifierOffset</span><span class="o">=</span><span class="mf">0.0</span>
 		<span class="k">else</span><span class="p">:</span>
 			<span class="bp">self</span><span class="o">.</span><span class="n">AmplifierOffset</span><span class="o">=</span><span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">AmplifierOffset</span><span class="p">)</span>
 
-		<span class="c"># additional meta data</span>
-		<span class="bp">self</span><span class="o">.</span><span class="n">fileFormat</span><span class="o">=</span><span class="s">&#39;bin&#39;</span>
+		<span class="c1"># additional meta data</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">fileFormat</span><span class="o">=</span><span class="s1">&#39;bin&#39;</span>
 
-		<span class="c"># set the sampling frequency in Hz.</span>
-		<span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s">&#39;Fs&#39;</span><span class="p">):</span>	
+		<span class="c1"># set the sampling frequency in Hz.</span>
+		<span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;Fs&#39;</span><span class="p">):</span>	
 			<span class="bp">self</span><span class="o">.</span><span class="n">Fs</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">SamplingFrequency</span>
 
 <div class="viewcode-block" id="binTrajIO.readdata"><a class="viewcode-back" href="../../api-doc/mosaic.traj.html#mosaic.binTrajIO.binTrajIO.readdata">[docs]</a>	<span class="k">def</span> <span class="nf">readdata</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fname</span><span class="p">):</span>
 		<span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">			Read one or more files and append their data to the data pipeline.</span>
-<span class="sd">			Set a class attribute Fs with the sampling frequency in Hz.</span>
+<span class="sd">			Return raw data from a single data file. Set a class </span>
+<span class="sd">			attribute Fs with the sampling frequency in Hz.</span>
 
 <span class="sd">			:Parameters:</span>
-<span class="sd">				- `fname` :  list of data files to read</span>
-<span class="sd">			:Returns:</span>
-<span class="sd">				None</span>
-<span class="sd">			:Errors:</span>
-<span class="sd">				None</span>
-<span class="sd">		&quot;&quot;&quot;</span>
-		<span class="n">tempdata</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([])</span>
-		<span class="c"># Read binary data and add it to the data pipe</span>
-		<span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">fname</span><span class="p">:</span>
-			<span class="n">tempdata</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">hstack</span><span class="p">((</span> <span class="n">tempdata</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">readBinaryFile</span><span class="p">(</span><span class="n">f</span><span class="p">)</span> <span class="p">))</span>
 
-		<span class="k">return</span> <span class="n">tempdata</span>
-		</div>
-	<span class="k">def</span> <span class="nf">_formatsettings</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-		<span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">			Return a formatted string of settings for display</span>
+<span class="sd">				- `fname` :  fileame to read</span>
+<span class="sd">			</span>
+<span class="sd">			:Returns:</span>
+<span class="sd">			</span>
+<span class="sd">				- An array object that holds raw (unscaled) data from `fname`</span>
+<span class="sd">			</span>
+<span class="sd">			:Errors:</span>
+
+<span class="sd">				None</span>
 <span class="sd">		&quot;&quot;&quot;</span>
-		<span class="n">fmtstr</span><span class="o">=</span><span class="s">&quot;&quot;</span>
+		<span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">readBinaryFile</span><span class="p">(</span><span class="n">fname</span><span class="p">)</span></div>
 		
-		<span class="n">fmtstr</span><span class="o">+=</span><span class="s">&#39;</span><span class="se">\n\t\t</span><span class="s">Amplifier scale = {0} pA</span><span class="se">\n</span><span class="s">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">AmplifierScale</span><span class="p">)</span>
-		<span class="n">fmtstr</span><span class="o">+=</span><span class="s">&#39;</span><span class="se">\t\t</span><span class="s">Amplifier offset = {0} pA</span><span class="se">\n</span><span class="s">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">AmplifierOffset</span><span class="p">)</span>
-		<span class="n">fmtstr</span><span class="o">+=</span><span class="s">&#39;</span><span class="se">\t\t</span><span class="s">Header offset = {0} bytes</span><span class="se">\n</span><span class="s">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">HeaderOffset</span><span class="p">)</span>
-		<span class="n">fmtstr</span><span class="o">+=</span><span class="s">&#39;</span><span class="se">\t\t</span><span class="s">Data type = </span><span class="se">\&#39;</span><span class="s">{0}</span><span class="se">\&#39;\n</span><span class="s">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">IonicCurrentType</span><span class="p">)</span>
-	
-		<span class="k">return</span> <span class="n">fmtstr</span>
+	<span class="k">def</span> <span class="nf">_formatsettings</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">logObject</span><span class="p">):</span>
+		<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">			Populate `logObject` with settings strings for display</span>
+
+<span class="sd">			:Parameters:</span>
+
+<span class="sd">				- `logObject` : 	a object that holds logging text (see :class:`~mosaic.utilities.mosaicLog.mosaicLog`)				</span>
+<span class="sd">		&quot;&quot;&quot;</span>
+		<span class="n">logObject</span><span class="o">.</span><span class="n">addLogText</span><span class="p">(</span> <span class="s1">&#39;Amplifier scale = {0} pA&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">AmplifierScale</span><span class="p">)</span> <span class="p">)</span>
+		<span class="n">logObject</span><span class="o">.</span><span class="n">addLogText</span><span class="p">(</span> <span class="s1">&#39;Amplifier offset = {0} pA&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">AmplifierOffset</span><span class="p">)</span> <span class="p">)</span>
+		<span class="n">logObject</span><span class="o">.</span><span class="n">addLogText</span><span class="p">(</span> <span class="s1">&#39;Header offset = {0} bytes&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">HeaderOffset</span><span class="p">)</span> <span class="p">)</span>
+		<span class="n">logObject</span><span class="o">.</span><span class="n">addLogText</span><span class="p">(</span> <span class="s1">&#39;Data type = </span><span class="se">\&#39;</span><span class="s1">{0}</span><span class="se">\&#39;</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">IonicCurrentType</span><span class="p">)</span> <span class="p">)</span>
 
 	<span class="k">def</span> <span class="nf">readBinaryFile</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fname</span><span class="p">):</span>
-		<span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">transformData</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">memmap</span><span class="p">(</span><span class="n">fname</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">ColumnTypes</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s">&#39;r&#39;</span><span class="p">,</span> <span class="n">offset</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">HeaderOffset</span><span class="p">)[</span><span class="bp">self</span><span class="o">.</span><span class="n">IonicCurrentColumn</span><span class="p">])</span>
+		<span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">memmap</span><span class="p">(</span><span class="n">fname</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">ColumnTypes</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="n">offset</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">HeaderOffset</span><span class="p">)[</span><span class="bp">self</span><span class="o">.</span><span class="n">IonicCurrentColumn</span><span class="p">]</span>
 		
-	<span class="k">def</span> <span class="nf">transformData</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
-		<span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">data</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">AmplifierScale</span><span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">AmplifierOffset</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
-</div>
-<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
-	<span class="kn">from</span> <span class="nn">mosaic.utilities.resource_path</span> <span class="kn">import</span> <span class="n">resource_path</span>
+<div class="viewcode-block" id="binTrajIO.scaleData"><a class="viewcode-back" href="../../api-doc/mosaic.traj.html#mosaic.binTrajIO.binTrajIO.scaleData">[docs]</a>	<span class="k">def</span> <span class="nf">scaleData</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+		<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">			See :func:`mosaic.metaTrajIO.metaTrajIO.scaleData`.</span>
+<span class="sd">		&quot;&quot;&quot;</span>
+		<span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">data</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">AmplifierScale</span><span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">AmplifierOffset</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span></div></div>
 
-	<span class="k">print</span> <span class="n">binTrajIO</span><span class="p">(</span>
-			<span class="n">fnames</span><span class="o">=</span><span class="p">[</span><span class="s">&#39;data/SingleChan-0001_1.bin&#39;</span><span class="p">],</span> 
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+	<span class="kn">from</span> <span class="nn">mosaic.utilities.resource_path</span> <span class="kn">import</span> <span class="n">resource_path</span>
+	<span class="kn">import</span> <span class="nn">os</span>
+
+	<span class="n">b</span><span class="o">=</span><span class="n">binTrajIO</span><span class="p">(</span>
+			<span class="n">fnames</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;data/SingleChan-0001_1.bin&#39;</span><span class="p">],</span> 
 			<span class="n">dcOffset</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> 
 			<span class="n">start</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> 
-			<span class="n">ColumnTypes</span><span class="o">=</span><span class="p">[(</span><span class="s">&#39;curr&#39;</span><span class="p">,</span> <span class="s">&#39;float64&#39;</span><span class="p">)],</span> 
-			<span class="n">IonicCurrentColumn</span><span class="o">=</span><span class="s">&#39;curr&#39;</span><span class="p">,</span> 
+			<span class="n">ColumnTypes</span><span class="o">=</span><span class="p">[(</span><span class="s1">&#39;curr&#39;</span><span class="p">,</span> <span class="s1">&#39;float64&#39;</span><span class="p">)],</span> 
+			<span class="n">IonicCurrentColumn</span><span class="o">=</span><span class="s1">&#39;curr&#39;</span><span class="p">,</span> 
 			<span class="n">HeaderOffset</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> 
 			<span class="n">SamplingFrequency</span><span class="o">=</span><span class="mi">500000</span>
-		<span class="p">)</span><span class="o">.</span><span class="n">popdata</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+		<span class="p">)</span>
+
+	<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">100</span><span class="p">):</span>
+		<span class="n">d</span><span class="o">=</span><span class="n">b</span><span class="o">.</span><span class="n">popdata</span><span class="p">(</span><span class="mi">100000</span><span class="p">)</span>
+		<span class="k">print</span> <span class="nb">len</span><span class="p">(</span><span class="n">d</span><span class="p">),</span> <span class="n">d</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">d</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">d</span><span class="p">),</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">b</span><span class="o">.</span><span class="n">LastFileProcessed</span><span class="p">),</span> <span class="n">b</span><span class="o">.</span><span class="n">ElapsedTimeSeconds</span>
+
+
+
 </pre></div>
 
     </div>
@@ -352,7 +368,7 @@
       
     </p>
     <p>
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.2.3.<br/>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.5.<br/>
     </p>
   </div>
 </footer> -->
@@ -362,9 +378,8 @@
 			<col width=40%>
 			<tr>
 				<td align="left">
-					<a href="../../doc/mailingList.html"><em>Mailing List</em></a>&nbsp;&nbsp;&nbsp;
 					<a href="../../doc/Developers.html"><em>MOSAIC Developers</em></a>&nbsp;&nbsp;&nbsp;
-					<a href="http://www.nist.gov/cgi-bin/wwwph/cso.nist.gov?Query=Arvind+Balijepalli"><em>Contact</em></a>&nbsp;&nbsp;&nbsp;
+					<a href="http://www.nist.gov/pml/div683/grp06/abalijepalli.cfm"><em>Contact</em></a>&nbsp;&nbsp;&nbsp;
 					<a href="../../doc/Disclaimer.html"><em>Terms of Use</em></a>
 				</td>
 				<td align="right"><em>National Institute of Standards and Technology (NIST)</em></td>

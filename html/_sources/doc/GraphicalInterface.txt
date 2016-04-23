@@ -15,7 +15,7 @@ If you installed |projname| from a precomiled binary, you can open the GUI by do
 
 .. sourcecode:: console
 
-     python mosaicgui/mosaicGUI.py
+     python runMOSAIC
 
 .. hint:: Having trobule getting the GUI to start? Frequently, this arises because your PYTHONPATH environment variable is set up incorrectly. To fix this error, first type ``echo $PYTHONPATH`` in the terminal. If you don't see the path to the |projname| installation in `PYTHONPATH`, consult the operating-system specific instructions (:ref:`OSX <setPYTHONPATHOSX>` or :ref:`Ubuntu <setPYTHONPATHUbuntu>`) to help resolve this issue.
 

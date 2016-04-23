@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>mosaic.utilities.mosaicLog &mdash; MOSAIC 1.3b1 documentation</title>
+    
+    <link rel="stylesheet" href="../../../_static/basic.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/bootswatch-3.3.4/paper/bootstrap.min.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/bootstrap-sphinx.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/style.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '1.3b1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="../../../_static/js/jquery-1.11.0.min.js"></script>
+    <script type="text/javascript" src="../../../_static/js/jquery-fix.js"></script>
+    <script type="text/javascript" src="../../../_static/bootstrap-3.3.4/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../../../_static/bootstrap-sphinx.js"></script>
+    <link rel="shortcut icon" href="../../../_static/favicon.ico"/>
+    <link rel="top" title="MOSAIC 1.3b1 documentation" href="../../../index.html" />
+    <link rel="up" title="Module code" href="../../index.html" />
+
+<meta charset='utf-8'>
+<meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
+<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
+<meta name="apple-mobile-web-app-capable" content="yes">
+
+	<script type="text/javascript"
+		src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+	</script>
+	<script type="text/javascript" id="_fed_an_js_tag" src="//www.nist.gov/js/federated-analytics.all.min.js?agency=NIST&subagency=github&pua=UA-42404149-54&yt=true&exts=ppsx,pps,f90,sch,rtf,wrl,txz,m1v,xlsm,msi,xsd,f,tif,eps,mpg,xml,pl,xlt,c">
+	</script>	
+
+  </head>
+  <body role="document">
+
+  <div id="navbar" class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="../../../index.html"><img src="../../../_static/icon_36.png">
+           </a>
+        <span class="navbar-text navbar-version pull-left"><b>1.3b1</b></span>
+      </div>
+
+        <div class="collapse navbar-collapse nav-collapse">
+          <ul class="nav navbar-nav">
+            
+                <li><a href="../../../../latex/MOSAIC.pdf">Download PDF</a></li>
+                <li><a href="../../../doc/mailingList.html">Mailing List</a></li>
+                <li><a href="//github.com/usnistgov/mosaic">Develop</a></li>
+                <li><a href="//github.com/usnistgov/mosaic/issues">Issue Tracker</a></li>
+            
+            
+              <li class="dropdown globaltoc-container">
+  <a role="button"
+     id="dLabelGlobalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="../../../index.html">Contents <b class="caret"></b></a>
+  <ul class="dropdown-menu globaltoc"
+      role="menu"
+      aria-labelledby="dLabelGlobalToc"><ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../doc/Introduction.html">1. Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../doc/Algorithms.html">2. Data Processing Algorithms in <em>MOSAIC</em></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../doc/GettingStarted.html">3. Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../doc/GraphicalInterface.html">4. <em>MOSAIC</em> GUI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../doc/settingsFile.html">5. Settings File</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../doc/DatabaseStructure.html">6. Database Structure and Query Syntax</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../doc/ScriptingandAdvancedFeatures.html">7. Scripting and Advanced Features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../doc/Extend.html">8. Extend <em>MOSAIC</em></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../doc/PublicationFigures.html">9. Publication Quality Figures</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../doc/AdvancedAnalysis.html">10. Advanced Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../doc/Addons.html">11. Addons</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../doc/examples.html">12. Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../doc/apidocs.html">13. API Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../doc/ChangeLog.html">14. Change Log</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../doc/References.html">15. Bibliography</a></li>
+</ul>
+</ul>
+</li>
+              
+            
+            
+            
+            
+            
+              <li class="hidden-sm"></li>
+            
+          </ul>
+
+          
+            
+<form class="navbar-form navbar-right" action="../../../search.html" method="get">
+ <div class="form-group">
+  <input type="text" name="q" class="form-control" placeholder="Search" />
+ </div>
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+          
+        </div>
+    </div>
+  </div>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-12 content">
+      
+  <h1>Source code for mosaic.utilities.mosaicLog</h1><div class="highlight"><pre>
+<span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">	A logging file object that allows arbitrary formatting of log text.</span>
+
+<span class="sd">	:Created:	09/12/2015</span>
+<span class="sd"> 	:Author: 	Arvind Balijepalli &lt;arvind.balijepalli@nist.gov&gt;</span>
+<span class="sd">	:License:	See LICENSE.TXT	</span>
+<span class="sd">	:ChangeLog:</span>
+<span class="sd">	.. line-block::</span>
+<span class="sd">		09/12/15	AB	Initial version</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="mosaicLog"><a class="viewcode-back" href="../../../api-doc/mosaic.misc.html#mosaic.utilities.mosaicLog.mosaicLog">[docs]</a><span class="k">class</span> <span class="nc">mosaicLog</span><span class="p">(</span><span class="nb">dict</span><span class="p">):</span>
+	<span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">gLogCounter</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_logCounter</span><span class="p">()</span>
+
+	<span class="k">def</span> <span class="nf">__setitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">val</span><span class="p">):</span>
+		<span class="k">if</span> <span class="n">key</span><span class="o">==</span><span class="s2">&quot;log&quot;</span><span class="p">:</span>
+			<span class="nb">dict</span><span class="o">.</span><span class="n">__setitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">gLogCounter</span><span class="o">.</span><span class="n">next</span><span class="p">()),</span> <span class="n">val</span> <span class="p">)</span>
+		<span class="k">else</span><span class="p">:</span>
+			<span class="nb">dict</span><span class="o">.</span><span class="n">__setitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">val</span> <span class="p">)</span>
+
+	<span class="k">def</span> <span class="nf">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
+		<span class="k">return</span> <span class="nb">dict</span><span class="o">.</span><span class="n">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">)</span>
+
+	<span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+		<span class="k">try</span><span class="p">:</span>
+			<span class="n">logstr</span><span class="o">=</span><span class="s1">&#39;</span><span class="se">\t</span><span class="s1">&#39;</span><span class="o">+</span><span class="bp">self</span><span class="p">[</span><span class="s2">&quot;hdr&quot;</span><span class="p">]</span><span class="o">+</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span>
+		<span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+			<span class="n">logstr</span><span class="o">=</span><span class="s2">&quot;&quot;</span>
+
+		<span class="n">keys</span><span class="o">=</span><span class="nb">sorted</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+		<span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">keys</span><span class="p">:</span>
+			<span class="k">if</span> <span class="n">k</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;log&quot;</span><span class="p">):</span>
+				<span class="n">logstr</span><span class="o">+=</span><span class="s1">&#39;</span><span class="se">\t\t</span><span class="s1">&#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="p">[</span><span class="n">k</span><span class="p">])</span><span class="o">+</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span>
+
+		<span class="n">logstr</span><span class="o">+=</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span>
+		<span class="k">return</span> <span class="n">logstr</span>
+
+	<span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+		<span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="nb">dict</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
+			<span class="bp">self</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">v</span>
+
+	<span class="k">def</span> <span class="nf">_logCounter</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+		<span class="n">logCounter</span><span class="o">=</span><span class="mi">0</span>
+
+		<span class="k">while</span> <span class="p">(</span><span class="bp">True</span><span class="p">):</span>
+			<span class="k">yield</span> <span class="n">logCounter</span>
+			<span class="n">logCounter</span><span class="o">+=</span><span class="mi">1</span>
+
+<div class="viewcode-block" id="mosaicLog.addLogHeader"><a class="viewcode-back" href="../../../api-doc/mosaic.misc.html#mosaic.utilities.mosaicLog.mosaicLog.addLogHeader">[docs]</a>	<span class="k">def</span> <span class="nf">addLogHeader</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">header</span><span class="p">):</span>
+		<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">			Add a section header to the output log.</span>
+
+<span class="sd">			:Args:</span>
+<span class="sd">				- `header` : 	header text</span>
+<span class="sd">		&quot;&quot;&quot;</span>
+		<span class="bp">self</span><span class="p">[</span><span class="s2">&quot;hdr&quot;</span><span class="p">]</span><span class="o">=</span><span class="n">header</span></div>
+
+<div class="viewcode-block" id="mosaicLog.addLogText"><a class="viewcode-back" href="../../../api-doc/mosaic.misc.html#mosaic.utilities.mosaicLog.mosaicLog.addLogText">[docs]</a>	<span class="k">def</span> <span class="nf">addLogText</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">log</span><span class="p">):</span>
+		<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">			Add text to the output log.</span>
+
+<span class="sd">			:Args:</span>
+<span class="sd">				- `log` : 	log text</span>
+<span class="sd">		&quot;&quot;&quot;</span>
+		<span class="bp">self</span><span class="p">[</span><span class="s2">&quot;log&quot;</span><span class="p">]</span><span class="o">=</span><span class="n">log</span></div></div>
+
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+	<span class="n">m</span><span class="o">=</span><span class="n">mosaicLog</span><span class="p">()</span>
+
+	<span class="n">m</span><span class="o">.</span><span class="n">addLogHeader</span><span class="p">(</span><span class="s2">&quot;Event processing settings:&quot;</span><span class="p">)</span>
+	<span class="n">m</span><span class="o">.</span><span class="n">addLogText</span><span class="p">(</span> <span class="s2">&quot;Algorithm = ADEPT&quot;</span> <span class="p">)</span>
+	<span class="n">m</span><span class="o">.</span><span class="n">addLogText</span><span class="p">(</span> <span class="s2">&quot;Max. iterations  = {0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="mi">10000</span><span class="p">)</span> <span class="p">)</span>
+	<span class="n">m</span><span class="o">.</span><span class="n">addLogText</span><span class="p">(</span> <span class="s2">&quot;Fit tolerance (rel. err in leastsq)  = {0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="mf">1.e-7</span><span class="p">)</span> <span class="p">)</span>
+	<span class="n">m</span><span class="o">.</span><span class="n">addLogText</span><span class="p">(</span> <span class="s2">&quot;Initial partition threshold  = {0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="mf">2.5</span><span class="p">)</span> <span class="p">)</span>
+	<span class="n">m</span><span class="o">.</span><span class="n">addLogText</span><span class="p">(</span> <span class="s2">&quot;Min. State Length = {0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span> <span class="p">)</span>
+
+	<span class="k">print</span> <span class="n">m</span>
+</pre></div>
+
+    </div>
+      
+  </div>
+</div>
+<!-- 
+<footer class="footer">
+  <div class="container">
+    <p class="pull-right">
+      <a href="#">Back to top</a>
+      
+    </p>
+    <p>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.5.<br/>
+    </p>
+  </div>
+</footer> -->
+<div class="footer" style="vertical-align: center" align="center">
+		<table width="95%" style="vertical-align: center">
+			<col width=60%>
+			<col width=40%>
+			<tr>
+				<td align="left">
+					<a href="../../../doc/Developers.html"><em>MOSAIC Developers</em></a>&nbsp;&nbsp;&nbsp;
+					<a href="http://www.nist.gov/pml/div683/grp06/abalijepalli.cfm"><em>Contact</em></a>&nbsp;&nbsp;&nbsp;
+					<a href="../../../doc/Disclaimer.html"><em>Terms of Use</em></a>
+				</td>
+				<td align="right"><em>National Institute of Standards and Technology (NIST)</em></td>
+			</tr>
+		</table>
+</div>
+
+  </body>
+</html>

@@ -30,6 +30,13 @@ mosaic.utilities.mosaicLog module
     :members:
     :show-inheritance:
 
+mosaic.utilities.mosaicTiming module
+---------------------------
+
+.. automodule:: mosaic.utilities.mosaicTiming
+    :members:
+    :show-inheritance:
+
 
 mosaic.utilities.fit_funcs module
 ---------------------------
@@ -37,6 +44,7 @@ mosaic.utilities.fit_funcs module
 .. automodule:: mosaic.utilities.fit_funcs
     :members:
     :show-inheritance:
+
 
 .. mosaic.zmqIO module
 .. ----------------------------

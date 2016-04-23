@@ -76,9 +76,9 @@
                 <img src="assets/img/icon.png">
               </div>
             </div>
-            <div flex="60">
+            <div flex="65">
               <h1>Extract More From Your Data </h1>
-              <p>MOSAIC is a modular single-molecule analysis toolbox to decode multi-state nanopore and single-molecule data. Read the <a href="{{docURL}}" style="text-decoration: underline; color: black; font-family: 'Roboto', sans-serif; font-weight: 300;">documentation</a> for additional information.</p>
+              <p>MOSAIC is a modular single-molecule analysis toolbox to decode multi-state single-molecule and nanopore time-series data. Read the <a href="{{docURL}}" style="text-decoration: underline; color: black; font-family: 'Roboto', sans-serif; font-weight: 300;">documentation</a> for additional information.</p>
 
               <md-list class="md-1-line">
                 <md-list-item><div class="md-list-item-text"> > <a href="{{algoURL}}">Powerful Algorithms</a></div></md-list-item>
@@ -86,7 +86,7 @@
                 <md-list-item><div class="md-list-item-text"> > <a href="{{addonURL}}">Integrates Into Your Workflow</a></div></md-list-item>
               </md-list>
               <p><small>
-                If you use MOSAIC, please cite: <a style="color:#696969; text-decoration: underline;" href="http://pubs.acs.org/doi/abs/10.1021/nn405761y">ACS Nano <em>2014</em>, <b>8</b>, 1547–1553</a>.
+                If you use MOSAIC, please cite: <!-- <a style="color:#696969; text-decoration: underline;" href="#">Anal. Chem. <em>2016</em>, <b>X</b>, yyyy</a> and --> <a style="color:#696969; text-decoration: underline;" href="http://pubs.acs.org/doi/abs/10.1021/nn405761y">ACS Nano <em>2014</em>, <b>8</b>, 1547</a>.
               </small></p>
                  
             </div>
@@ -187,12 +187,12 @@
                         MOSAIC’s flexible approach to data processing allows the seamless analysis of solid-state and biological nanopore data. 
                       </p>
                       <p>
-                        Have an interesting problem that MOSAIC helped solve? <a href="http://www.nist.gov/cgi-bin/wwwph/cso.nist.gov?Query=Arvind+Balijepalli" style="color: #696969; font-family: 'Roboto', sans-serif; font-size: 16px; font-weight: 200;">Contact us</a> to have it highlighted.
+                        Have an interesting problem that MOSAIC helped solve? <!-- <a href="http://www.nist.gov/cgi-bin/wwwph/cso.nist.gov?Query=Arvind+Balijepalli" style="color: #696969; font-family: 'Roboto', sans-serif; font-size: 16px; font-weight: 200;">Contact us</a> -->Contact us to have it highlighted.
                       </p>
                     </md-card-content>
                     
                     <div flex class="md-actions" layout="row" layout-align="end end">
-                      <md-button aria-label="Learn More" ng-href="{{exampleURL}}"><h4>Learn More</h4></md-button>
+                      <md-button aria-label="Learn More" ng-href={{contactURL}}><h4>Contact</h4></md-button>
                     </div>
               </md-card>
             </div>
@@ -227,7 +227,7 @@
                 <a href="{{developersURL}}"><h2>MOSAIC Developers</h2></a>
             </div>
             <div flex>
-                <a href="http://www.nist.gov/cgi-bin/wwwph/cso.nist.gov?Query=Arvind+Balijepalli"><h2>Contact</h2></a>
+                <a href={{contactURL}}><h2>Contact</h2></a>
             </div>
             <div flex>
               <a href="{{termsURL}}"><h2>Terms of Use</h2></a>

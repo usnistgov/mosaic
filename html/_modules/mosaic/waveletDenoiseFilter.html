@@ -5,19 +5,18 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>mosaic.waveletDenoiseFilter &mdash; MOSAIC 1.2 documentation</title>
+    <title>mosaic.waveletDenoiseFilter &mdash; MOSAIC 1.3b1 documentation</title>
     
     <link rel="stylesheet" href="../../_static/basic.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="../../_static/bootstrap-3.2.0/css/bootstrap.min.css" type="text/css" />
-    <link rel="stylesheet" href="../../_static/bootstrap-3.2.0/css/bootstrap-theme.min.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/bootswatch-3.3.4/paper/bootstrap.min.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/bootstrap-sphinx.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/style.css" type="text/css" />
     
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
-        VERSION:     '1.2',
+        VERSION:     '1.3b1',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -26,13 +25,13 @@
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
-    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <script type="text/javascript" src="../../_static/js/jquery-1.11.0.min.js"></script>
     <script type="text/javascript" src="../../_static/js/jquery-fix.js"></script>
-    <script type="text/javascript" src="../../_static/bootstrap-3.2.0/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../../_static/bootstrap-3.3.4/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="../../_static/bootstrap-sphinx.js"></script>
     <link rel="shortcut icon" href="../../_static/favicon.ico"/>
-    <link rel="top" title="MOSAIC 1.2 documentation" href="../../index.html" />
+    <link rel="top" title="MOSAIC 1.3b1 documentation" href="../../index.html" />
     <link rel="up" title="Module code" href="../index.html" />
 
 <meta charset='utf-8'>
@@ -41,13 +40,13 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 
 	<script type="text/javascript"
-		src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+		src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
 	</script>
 	<script type="text/javascript" id="_fed_an_js_tag" src="//www.nist.gov/js/federated-analytics.all.min.js?agency=NIST&subagency=github&pua=UA-42404149-54&yt=true&exts=ppsx,pps,f90,sch,rtf,wrl,txz,m1v,xlsm,msi,xsd,f,tif,eps,mpg,xml,pl,xlt,c">
 	</script>	
 
   </head>
-  <body>
+  <body role="document">
 
   <div id="navbar" class="navbar navbar-default navbar-fixed-top">
     <div class="container">
@@ -58,16 +57,17 @@
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </button>
-        <a class="navbar-brand" href="../../index.html"><img src="../../_static/icon_24.png">
+        <a class="navbar-brand" href="../../index.html"><img src="../../_static/icon_36.png">
            </a>
-        <span class="navbar-text navbar-version pull-left"><b>1.2</b></span>
+        <span class="navbar-text navbar-version pull-left"><b>1.3b1</b></span>
       </div>
 
         <div class="collapse navbar-collapse nav-collapse">
           <ul class="nav navbar-nav">
             
+                <li><a href="../../../latex/MOSAIC.pdf">Download PDF</a></li>
                 <li><a href="../../doc/mailingList.html">Mailing List</a></li>
-                <li><a href="//github.com/usnistgov/mosaic">Develop MOSAIC</a></li>
+                <li><a href="//github.com/usnistgov/mosaic">Develop</a></li>
                 <li><a href="//github.com/usnistgov/mosaic/issues">Issue Tracker</a></li>
             
             
@@ -81,18 +81,20 @@
       role="menu"
       aria-labelledby="dLabelGlobalToc"><ul>
 <li class="toctree-l1"><a class="reference internal" href="../../doc/Introduction.html">1. Introduction</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../doc/GettingStarted.html">2. Getting Started</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../doc/Algorithms.html">3. Algorithms in <em>MOSAIC</em></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../doc/Algorithms.html">2. Data Processing Algorithms in <em>MOSAIC</em></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../doc/GettingStarted.html">3. Getting Started</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../doc/GraphicalInterface.html">4. <em>MOSAIC</em> GUI</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../doc/ScriptingandAdvancedFeatures.html">5. Scripting and Advanced Features</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../doc/settingsFile.html">6. Settings File</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../doc/DatabaseStructure.html">7. Database Structure and Query Syntax</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../doc/settingsFile.html">5. Settings File</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../doc/DatabaseStructure.html">6. Database Structure and Query Syntax</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../doc/ScriptingandAdvancedFeatures.html">7. Scripting and Advanced Features</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../doc/Extend.html">8. Extend <em>MOSAIC</em></a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../doc/Addons.html">9. Addons</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../doc/examples.html">10. Examples</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../doc/apidocs.html">11. API Documentation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../doc/ChangeLog.html">12. Change Log</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../doc/References.html">13. Bibliography</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../doc/PublicationFigures.html">9. Publication Quality Figures</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../doc/AdvancedAnalysis.html">10. Advanced Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../doc/Addons.html">11. Addons</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../doc/examples.html">12. Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../doc/apidocs.html">13. API Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../doc/ChangeLog.html">14. Change Log</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../doc/References.html">15. Bibliography</a></li>
 </ul>
 </ul>
 </li>
@@ -122,9 +124,10 @@
 
 <div class="container">
   <div class="row">
-    <div class="col-md-12">
+    <div class="col-md-12 content">
       
   <h1>Source code for mosaic.waveletDenoiseFilter</h1><div class="highlight"><pre>
+<span class="c1"># -*- coding: utf-8 -*-</span>
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">	Implementation of a wavelet based denoising filter</span>
 
@@ -134,15 +137,17 @@
 <span class="sd">	:Author: Arvind Balijepalli</span>
 <span class="sd">	:ChangeLog:</span>
 <span class="sd">	.. line-block::</span>
+<span class="sd">		9/13/15 	AB 	Updated logging to use mosaicLog class</span>
 <span class="sd">		8/31/14		AB	Initial version</span>
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span> 
 <span class="kn">import</span> <span class="nn">scipy.signal</span> <span class="kn">as</span> <span class="nn">sig</span>
 <span class="kn">import</span> <span class="nn">pywt</span>
 
-<span class="kn">import</span> <span class="nn">metaIOFilter</span>
+<span class="kn">import</span> <span class="nn">mosaic.metaIOFilter</span>
+<span class="kn">import</span> <span class="nn">mosaic.utilities.mosaicLog</span> <span class="kn">as</span> <span class="nn">log</span>
 
-<div class="viewcode-block" id="waveletDenoiseFilter"><a class="viewcode-back" href="../../api-doc/mosaic.filter.html#mosaic.waveletDenoiseFilter.waveletDenoiseFilter">[docs]</a><span class="k">class</span> <span class="nc">waveletDenoiseFilter</span><span class="p">(</span><span class="n">metaIOFilter</span><span class="o">.</span><span class="n">metaIOFilter</span><span class="p">):</span>
+<div class="viewcode-block" id="waveletDenoiseFilter"><a class="viewcode-back" href="../../api-doc/mosaic.filter.html#mosaic.waveletDenoiseFilter.waveletDenoiseFilter">[docs]</a><span class="k">class</span> <span class="nc">waveletDenoiseFilter</span><span class="p">(</span><span class="n">mosaic</span><span class="o">.</span><span class="n">metaIOFilter</span><span class="o">.</span><span class="n">metaIOFilter</span><span class="p">):</span>
 	<span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">		:Keyword Args:</span>
 <span class="sd">			In addition to metaIOFilter args,</span>
@@ -155,21 +160,15 @@
 		<span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">		&quot;&quot;&quot;</span>	
 		<span class="k">try</span><span class="p">:</span>
-			<span class="bp">self</span><span class="o">.</span><span class="n">waveletType</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="n">kwargs</span><span class="p">[</span><span class="s">&#39;wavelet&#39;</span><span class="p">])</span>
-			<span class="bp">self</span><span class="o">.</span><span class="n">waveletLevel</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="n">kwargs</span><span class="p">[</span><span class="s">&#39;level&#39;</span><span class="p">])</span>
-			<span class="bp">self</span><span class="o">.</span><span class="n">waveletThresholdType</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="n">kwargs</span><span class="p">[</span><span class="s">&#39;thresholdType&#39;</span><span class="p">])</span>
-			<span class="bp">self</span><span class="o">.</span><span class="n">waveletThresholdSubType</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="n">kwargs</span><span class="p">[</span><span class="s">&#39;thresholdSubType&#39;</span><span class="p">])</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">waveletType</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;wavelet&#39;</span><span class="p">])</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">waveletLevel</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;level&#39;</span><span class="p">])</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">waveletThresholdType</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;thresholdType&#39;</span><span class="p">])</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">waveletThresholdSubType</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;thresholdSubType&#39;</span><span class="p">])</span>
 
 			<span class="bp">self</span><span class="o">.</span><span class="n">maxWaveletLevel</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">waveletLevel</span>
 		<span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
-			<span class="k">print</span> <span class="s">&quot;Missing mandatory arguments &#39;wavelet&#39;, &#39;level&#39; or &#39;threshold&#39;&quot;</span>
+			<span class="k">print</span> <span class="s2">&quot;Missing mandatory arguments &#39;wavelet&#39;, &#39;level&#39; or &#39;threshold&#39;&quot;</span>
 
-		<span class="bp">self</span><span class="o">.</span><span class="n">thrtypedict</span><span class="o">=</span>	<span class="p">{</span>
-								<span class="s">&#39;soft&#39;</span> 		<span class="p">:</span> <span class="n">pywt</span><span class="o">.</span><span class="n">thresholding</span><span class="o">.</span><span class="n">soft</span><span class="p">,</span>
-								<span class="s">&#39;hard&#39;</span> 		<span class="p">:</span> <span class="n">pywt</span><span class="o">.</span><span class="n">thresholding</span><span class="o">.</span><span class="n">hard</span><span class="p">,</span>
-								<span class="s">&#39;greater&#39;</span> 	<span class="p">:</span> <span class="n">pywt</span><span class="o">.</span><span class="n">thresholding</span><span class="o">.</span><span class="n">greater</span><span class="p">,</span>
-								<span class="s">&#39;less&#39;</span>		<span class="p">:</span> <span class="n">pywt</span><span class="o">.</span><span class="n">thresholding</span><span class="o">.</span><span class="n">less</span>
-							<span class="p">}</span>
 
 <div class="viewcode-block" id="waveletDenoiseFilter.filterData"><a class="viewcode-back" href="../../api-doc/mosaic.filter.html#mosaic.waveletDenoiseFilter.waveletDenoiseFilter.filterData">[docs]</a>	<span class="k">def</span> <span class="nf">filterData</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">icurr</span><span class="p">,</span> <span class="n">Fs</span><span class="p">):</span>
 		<span class="sd">&quot;&quot;&quot;</span>
@@ -179,31 +178,30 @@
 <span class="sd">				- `icurr` :	ionic current in pA</span>
 <span class="sd">				- `Fs` :	original sampling frequency in Hz</span>
 <span class="sd">		&quot;&quot;&quot;</span>
-		<span class="c"># self.eventData=icurr</span>
+		<span class="c1"># self.eventData=icurr</span>
 		<span class="bp">self</span><span class="o">.</span><span class="n">Fs</span><span class="o">=</span><span class="n">Fs</span>
 
-		<span class="c"># Set up the wavelet</span>
+		<span class="c1"># Set up the wavelet</span>
 		<span class="n">w</span><span class="o">=</span><span class="n">pywt</span><span class="o">.</span><span class="n">Wavelet</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">waveletType</span><span class="p">)</span>
 
-		<span class="c"># Calculate the maximum wavelet level for the data length</span>
+		<span class="c1"># Calculate the maximum wavelet level for the data length</span>
 		<span class="bp">self</span><span class="o">.</span><span class="n">maxWaveletLevel</span><span class="o">=</span><span class="n">pywt</span><span class="o">.</span><span class="n">dwt_max_level</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">icurr</span><span class="p">),</span> <span class="n">filter_len</span><span class="o">=</span><span class="n">w</span><span class="o">.</span><span class="n">dec_len</span><span class="p">)</span>
 
-		<span class="c"># Perform a wavelet decomposition to the specified level</span>
-		<span class="n">wcoeff</span> <span class="o">=</span> <span class="n">pywt</span><span class="o">.</span><span class="n">wavedec</span><span class="p">(</span><span class="n">icurr</span><span class="p">,</span> <span class="n">w</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s">&#39;sym&#39;</span><span class="p">,</span> <span class="n">level</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">waveletLevel</span><span class="p">)</span>
+		<span class="c1"># Perform a wavelet decomposition to the specified level</span>
+		<span class="n">wcoeff</span> <span class="o">=</span> <span class="n">pywt</span><span class="o">.</span><span class="n">wavedec</span><span class="p">(</span><span class="n">icurr</span><span class="p">,</span> <span class="n">w</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;sym&#39;</span><span class="p">,</span> <span class="n">level</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">waveletLevel</span><span class="p">)</span>
 
-		<span class="c"># Perform a simple threshold by setting all the detailed coefficients</span>
-		<span class="c"># up to level n-1 to zero</span>
+		<span class="c1"># Perform a simple threshold by setting all the detailed coefficients</span>
+		<span class="c1"># up to level n-1 to zero</span>
 		<span class="n">thresh</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">wcoeff</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">_thselect</span><span class="p">(</span><span class="n">wcoeff</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">waveletThresholdSubType</span><span class="p">)</span>
-		<span class="n">thrfunc</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">thrtypedict</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">waveletThresholdType</span><span class="p">]</span>
 
-		<span class="c"># print thresh, np.std(wcoeff[-1])</span>
-		<span class="n">wcoeff</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span> <span class="o">=</span> <span class="p">[</span> <span class="n">thrfunc</span><span class="p">(</span><span class="n">wc</span><span class="p">,</span> <span class="n">thresh</span><span class="p">)</span> <span class="k">for</span> <span class="n">wc</span> <span class="ow">in</span> <span class="n">wcoeff</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span> <span class="p">]</span>
-		<span class="c"># for i in range(1, self.waveletLevel):</span>
-		<span class="c"># 	wcoeff[-i]=np.zeros(len(wcoeff[-i]))</span>
+		<span class="c1"># print thresh, np.std(wcoeff[-1])</span>
+		<span class="n">wcoeff</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span> <span class="o">=</span> <span class="p">[</span> <span class="n">pywt</span><span class="o">.</span><span class="n">threshold</span><span class="p">(</span><span class="n">wc</span><span class="p">,</span> <span class="n">thresh</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">waveletThresholdType</span><span class="p">)</span> <span class="k">for</span> <span class="n">wc</span> <span class="ow">in</span> <span class="n">wcoeff</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span> <span class="p">]</span>
+		<span class="c1"># for i in range(1, self.waveletLevel):</span>
+		<span class="c1"># 	wcoeff[-i]=np.zeros(len(wcoeff[-i]))</span>
 
-		<span class="c"># Reconstruct the signal with the thresholded wavelet coefficients</span>
-		<span class="bp">self</span><span class="o">.</span><span class="n">eventData</span> <span class="o">=</span> <span class="n">pywt</span><span class="o">.</span><span class="n">waverec</span><span class="p">(</span><span class="n">wcoeff</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">waveletType</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s">&#39;sym&#39;</span><span class="p">)</span>
-</div>
+		<span class="c1"># Reconstruct the signal with the thresholded wavelet coefficients</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">eventData</span> <span class="o">=</span> <span class="n">pywt</span><span class="o">.</span><span class="n">waverec</span><span class="p">(</span><span class="n">wcoeff</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">waveletType</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;sym&#39;</span><span class="p">)</span></div>
+
 	<span class="k">def</span> <span class="nf">_thselect</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dat</span><span class="p">,</span> <span class="n">thtype</span><span class="p">):</span>
 		<span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">			A python port of Matlab thselect.m</span>
@@ -222,7 +220,7 @@
 			<span class="k">if</span> <span class="n">eta</span> <span class="o">&lt;</span> <span class="n">crit</span><span class="p">:</span>
 				<span class="n">thr</span> <span class="o">=</span> <span class="n">hthr</span>
 			<span class="k">else</span><span class="p">:</span>
-				<span class="n">thr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_thselect</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="s">&#39;rigrsure&#39;</span><span class="p">),</span><span class="n">hthr</span><span class="p">)</span>
+				<span class="n">thr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_thselect</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="s1">&#39;rigrsure&#39;</span><span class="p">),</span><span class="n">hthr</span><span class="p">)</span>
 
 			<span class="k">return</span> <span class="n">thr</span>
 
@@ -239,90 +237,92 @@
 
 		<span class="k">try</span><span class="p">:</span>
 			<span class="n">thalgo</span><span class="o">=</span><span class="p">{</span>
-					<span class="c"># &#39;rigrsure&#39; 	: _rigrsure, </span>
-					<span class="c"># &#39;heursure&#39;	: _heursure,</span>
-					<span class="s">&#39;sqtwolog&#39;</span>	<span class="p">:</span> <span class="n">_sqtwolog</span><span class="p">,</span>
-					<span class="s">&#39;minimaxi&#39;</span>	<span class="p">:</span> <span class="n">_minimaxi</span>
+					<span class="c1"># &#39;rigrsure&#39; 	: _rigrsure, </span>
+					<span class="c1"># &#39;heursure&#39;	: _heursure,</span>
+					<span class="s1">&#39;sqtwolog&#39;</span>	<span class="p">:</span> <span class="n">_sqtwolog</span><span class="p">,</span>
+					<span class="s1">&#39;minimaxi&#39;</span>	<span class="p">:</span> <span class="n">_minimaxi</span>
 			 	<span class="p">}[</span><span class="n">thtype</span><span class="p">]</span>
 			<span class="k">return</span> <span class="n">thalgo</span><span class="p">(</span><span class="n">dat</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">dat</span><span class="p">))</span>
 		<span class="k">except</span> <span class="ne">KeyError</span><span class="p">,</span> <span class="n">err</span><span class="p">:</span>
-			<span class="k">print</span> <span class="s">&quot;Thresholding algorithm &#39;&quot;</span> <span class="o">+</span> <span class="n">thtype</span> <span class="o">+</span> <span class="s">&quot;&#39; is not available. Using default threshold (sqtwolog).</span><span class="se">\n</span><span class="s">&quot;</span>
-			<span class="c"># default</span>
-			<span class="bp">self</span><span class="o">.</span><span class="n">waveletThresholdSubType</span><span class="o">=</span><span class="s">&#39;sqtwolog&#39;</span>
+			<span class="k">print</span> <span class="s2">&quot;Thresholding algorithm &#39;&quot;</span> <span class="o">+</span> <span class="n">thtype</span> <span class="o">+</span> <span class="s2">&quot;&#39; is not available. Using default threshold (sqtwolog).</span><span class="se">\n</span><span class="s2">&quot;</span>
+			<span class="c1"># default</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">waveletThresholdSubType</span><span class="o">=</span><span class="s1">&#39;sqtwolog&#39;</span>
 			<span class="k">return</span> <span class="n">_sqtwolog</span><span class="p">(</span><span class="n">dat</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">dat</span><span class="p">))</span>
 
 <div class="viewcode-block" id="waveletDenoiseFilter.formatsettings"><a class="viewcode-back" href="../../api-doc/mosaic.filter.html#mosaic.waveletDenoiseFilter.waveletDenoiseFilter.formatsettings">[docs]</a>	<span class="k">def</span> <span class="nf">formatsettings</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 		<span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">			Return a formatted string of filter settings</span>
 <span class="sd">		&quot;&quot;&quot;</span>
-		<span class="n">fmtstr</span><span class="o">=</span><span class="s">&quot;&quot;</span>
+		<span class="n">logObj</span><span class="o">=</span><span class="n">log</span><span class="o">.</span><span class="n">mosaicLog</span><span class="p">()</span>
 
-		<span class="n">fmtstr</span><span class="o">+=</span><span class="s">&#39;</span><span class="se">\t</span><span class="s">Filter settings: </span><span class="se">\n</span><span class="s">&#39;</span>
-		<span class="n">fmtstr</span><span class="o">+=</span><span class="s">&#39;</span><span class="se">\t\t</span><span class="s">Filter type = {0}</span><span class="se">\n</span><span class="s">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__class__</span><span class="o">.</span><span class="n">__name__</span><span class="p">)</span>
-		<span class="n">fmtstr</span><span class="o">+=</span><span class="s">&#39;</span><span class="se">\t\t</span><span class="s">Wavelet type = {0}</span><span class="se">\n</span><span class="s">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">waveletType</span><span class="p">)</span>
-		<span class="n">fmtstr</span><span class="o">+=</span><span class="s">&#39;</span><span class="se">\t\t</span><span class="s">Wavelet level = {0}</span><span class="se">\n</span><span class="s">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">waveletLevel</span><span class="p">)</span>
-		<span class="n">fmtstr</span><span class="o">+=</span><span class="s">&#39;</span><span class="se">\t\t</span><span class="s">Wavelet threshold type = {0}</span><span class="se">\n</span><span class="s">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">waveletThresholdType</span><span class="p">)</span>
-		<span class="n">fmtstr</span><span class="o">+=</span><span class="s">&#39;</span><span class="se">\t\t</span><span class="s">Wavelet threshold sub-type = {0}</span><span class="se">\n</span><span class="s">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">waveletThresholdSubType</span><span class="p">)</span>
-		<span class="n">fmtstr</span><span class="o">+=</span><span class="s">&#39;</span><span class="se">\t\t</span><span class="s">Decimation = {0}</span><span class="se">\n</span><span class="s">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">decimate</span><span class="p">)</span>
+		<span class="n">logObj</span><span class="o">.</span><span class="n">addLogHeader</span><span class="p">(</span> <span class="s1">&#39;Filter settings:&#39;</span> <span class="p">)</span>
+		
+		<span class="n">logObj</span><span class="o">.</span><span class="n">addLogText</span><span class="p">(</span> <span class="s1">&#39;Filter type = {0}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__class__</span><span class="o">.</span><span class="n">__name__</span><span class="p">)</span> <span class="p">)</span>
+		<span class="n">logObj</span><span class="o">.</span><span class="n">addLogText</span><span class="p">(</span> <span class="s1">&#39;Wavelet type = {0}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">waveletType</span><span class="p">)</span> <span class="p">)</span>
+		<span class="n">logObj</span><span class="o">.</span><span class="n">addLogText</span><span class="p">(</span> <span class="s1">&#39;Wavelet level = {0}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">waveletLevel</span><span class="p">)</span> <span class="p">)</span>
+		<span class="n">logObj</span><span class="o">.</span><span class="n">addLogText</span><span class="p">(</span> <span class="s1">&#39;Wavelet threshold type = {0}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">waveletThresholdType</span><span class="p">)</span> <span class="p">)</span>
+		<span class="n">logObj</span><span class="o">.</span><span class="n">addLogText</span><span class="p">(</span> <span class="s1">&#39;Wavelet threshold sub-type = {0}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">waveletThresholdSubType</span><span class="p">)</span> <span class="p">)</span>
+		<span class="n">logObj</span><span class="o">.</span><span class="n">addLogText</span><span class="p">(</span> <span class="s1">&#39;Decimation = {0}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">decimate</span><span class="p">)</span> <span class="p">)</span>
 
-		<span class="k">return</span> <span class="n">fmtstr</span>
-</div></div>
-<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
+		<span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="n">logObj</span><span class="p">)</span></div></div>
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
 	<span class="kn">import</span> <span class="nn">csv</span>
 	<span class="kn">from</span> <span class="nn">os.path</span> <span class="kn">import</span> <span class="n">expanduser</span>
 
-	<span class="n">root</span><span class="o">=</span><span class="n">expanduser</span><span class="p">(</span><span class="s">&#39;~&#39;</span><span class="p">)</span><span class="o">+</span><span class="s">&#39;/Research/Experiments/AnalysisTools/Wavelet Denoising/waveletsteps/&#39;</span>
-	<span class="n">rawfile</span><span class="o">=</span><span class="n">root</span><span class="o">+</span><span class="s">&#39;DenoisedSym5Long/testEventPartition1.csv&#39;</span>
+	<span class="n">root</span><span class="o">=</span><span class="n">expanduser</span><span class="p">(</span><span class="s1">&#39;~&#39;</span><span class="p">)</span><span class="o">+</span><span class="s1">&#39;/Research/Experiments/AnalysisTools/Wavelet Denoising/waveletsteps/&#39;</span>
+	<span class="n">rawfile</span><span class="o">=</span><span class="n">root</span><span class="o">+</span><span class="s1">&#39;DenoisedSym5Long/testEventPartition1.csv&#39;</span>
 	<span class="n">rawdat</span><span class="o">=</span><span class="p">[]</span>
-	<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">rawfile</span><span class="p">,</span> <span class="s">&#39;rb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">eventfile</span><span class="p">:</span>
-		<span class="n">eventreader</span> <span class="o">=</span> <span class="n">csv</span><span class="o">.</span><span class="n">reader</span><span class="p">(</span><span class="n">eventfile</span><span class="p">,</span> <span class="n">delimiter</span><span class="o">=</span><span class="s">&#39;,&#39;</span><span class="p">)</span>
+	<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">rawfile</span><span class="p">,</span> <span class="s1">&#39;rb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">eventfile</span><span class="p">:</span>
+		<span class="n">eventreader</span> <span class="o">=</span> <span class="n">csv</span><span class="o">.</span><span class="n">reader</span><span class="p">(</span><span class="n">eventfile</span><span class="p">,</span> <span class="n">delimiter</span><span class="o">=</span><span class="s1">&#39;,&#39;</span><span class="p">)</span>
 		<span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">eventreader</span><span class="p">:</span>
-			<span class="c"># rawdat+=[float(row[1])]</span>
+			<span class="c1"># rawdat+=[float(row[1])]</span>
 			<span class="n">rawdat</span><span class="o">+=</span><span class="p">[</span><span class="nb">float</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="mi">0</span><span class="p">])]</span>
 
 	
 	<span class="n">wavefilter</span><span class="o">=</span><span class="n">waveletDenoiseFilter</span><span class="p">(</span>
-				<span class="n">wavelet</span><span class="o">=</span><span class="s">&#39;sym5&#39;</span><span class="p">,</span> 
+				<span class="n">wavelet</span><span class="o">=</span><span class="s1">&#39;sym5&#39;</span><span class="p">,</span> 
 				<span class="n">level</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> 
-				<span class="n">thresholdType</span><span class="o">=</span><span class="s">&#39;soft&#39;</span><span class="p">,</span> 
-				<span class="n">thresholdSubType</span><span class="o">=</span><span class="s">&#39;minimaxi&#39;</span><span class="p">,</span> 
-				<span class="n">sdOpenCurr</span><span class="o">=</span><span class="s">&#39;-1&#39;</span>
+				<span class="n">thresholdType</span><span class="o">=</span><span class="s1">&#39;soft&#39;</span><span class="p">,</span> 
+				<span class="n">thresholdSubType</span><span class="o">=</span><span class="s1">&#39;minimaxi&#39;</span><span class="p">,</span> 
+				<span class="n">sdOpenCurr</span><span class="o">=</span><span class="s1">&#39;-1&#39;</span>
 			<span class="p">)</span>
 	<span class="n">wavefilter</span><span class="o">.</span><span class="n">filterData</span><span class="p">(</span><span class="n">rawdat</span><span class="p">,</span> <span class="mi">1000</span><span class="p">)</span>
 	<span class="k">print</span> <span class="n">wavefilter</span><span class="o">.</span><span class="n">formatsettings</span><span class="p">()</span>
-	<span class="n">np</span><span class="o">.</span><span class="n">savetxt</span><span class="p">(</span><span class="n">root</span><span class="o">+</span><span class="s">&#39;DenoisedSym5Long/testEventPartition1_denoised.csv&#39;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">wavefilter</span><span class="o">.</span><span class="n">filteredData</span><span class="p">),</span> <span class="n">delimiter</span><span class="o">=</span><span class="s">&quot;,&quot;</span><span class="p">)</span>
+	<span class="n">np</span><span class="o">.</span><span class="n">savetxt</span><span class="p">(</span><span class="n">root</span><span class="o">+</span><span class="s1">&#39;DenoisedSym5Long/testEventPartition1_denoised.csv&#39;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">wavefilter</span><span class="o">.</span><span class="n">filteredData</span><span class="p">),</span> <span class="n">delimiter</span><span class="o">=</span><span class="s2">&quot;,&quot;</span><span class="p">)</span>
 	
 
 
 
 
-	<span class="c"># rawdatpad=np.lib.pad(rawdat, (0,1024-len(rawdat)), &#39;constant&#39;)</span>
-	<span class="c"># print len(rawdatpad)</span>
-	<span class="c"># sym5 = pywt.Wavelet(&#39;sym5&#39;)</span>
-	<span class="c"># print sym5</span>
-	<span class="c"># ca1, cd5, cd4, cd3, cd2, cd1 = pywt.wavedec(rawdat, &#39;sym5&#39;, mode=&#39;sym&#39;, level=5)</span>
-	<span class="c"># coeff = pywt.wavedec(rawdat, &#39;sym5&#39;, mode=&#39;sym&#39;, level=5)</span>
-	<span class="c"># print np.array(coeff).shape</span>
+	<span class="c1"># rawdatpad=np.lib.pad(rawdat, (0,1024-len(rawdat)), &#39;constant&#39;)</span>
+	<span class="c1"># print len(rawdatpad)</span>
+	<span class="c1"># sym5 = pywt.Wavelet(&#39;sym5&#39;)</span>
+	<span class="c1"># print sym5</span>
+	<span class="c1"># ca1, cd5, cd4, cd3, cd2, cd1 = pywt.wavedec(rawdat, &#39;sym5&#39;, mode=&#39;sym&#39;, level=5)</span>
+	<span class="c1"># coeff = pywt.wavedec(rawdat, &#39;sym5&#39;, mode=&#39;sym&#39;, level=5)</span>
+	<span class="c1"># print np.array(coeff).shape</span>
 
-	<span class="c"># np.savetxt(root+&#39;cd1.csv&#39;, np.asarray(cd1), delimiter=&quot;,&quot;)</span>
-	<span class="c"># np.savetxt(root+&#39;cd2.csv&#39;, np.asarray(cd1), delimiter=&quot;,&quot;)</span>
-	<span class="c"># np.savetxt(root+&#39;cd3.csv&#39;, np.asarray(cd1), delimiter=&quot;,&quot;)</span>
-	<span class="c"># np.savetxt(root+&#39;cd4.csv&#39;, np.asarray(cd1), delimiter=&quot;,&quot;)</span>
-	<span class="c"># np.savetxt(root+&#39;cd5.csv&#39;, np.asarray(cd1), delimiter=&quot;,&quot;)</span>
-	<span class="c"># np.savetxt(root+&#39;ca1.csv&#39;, np.asarray(cd1), delimiter=&quot;,&quot;)</span>
+	<span class="c1"># np.savetxt(root+&#39;cd1.csv&#39;, np.asarray(cd1), delimiter=&quot;,&quot;)</span>
+	<span class="c1"># np.savetxt(root+&#39;cd2.csv&#39;, np.asarray(cd1), delimiter=&quot;,&quot;)</span>
+	<span class="c1"># np.savetxt(root+&#39;cd3.csv&#39;, np.asarray(cd1), delimiter=&quot;,&quot;)</span>
+	<span class="c1"># np.savetxt(root+&#39;cd4.csv&#39;, np.asarray(cd1), delimiter=&quot;,&quot;)</span>
+	<span class="c1"># np.savetxt(root+&#39;cd5.csv&#39;, np.asarray(cd1), delimiter=&quot;,&quot;)</span>
+	<span class="c1"># np.savetxt(root+&#39;ca1.csv&#39;, np.asarray(cd1), delimiter=&quot;,&quot;)</span>
 
-	<span class="c"># mcd1=np.zeros(len(cd1))</span>
-	<span class="c"># mcd2=np.zeros(len(cd2))</span>
-	<span class="c"># mcd3=np.zeros(len(cd3))</span>
-	<span class="c"># mcd4=np.zeros(len(cd4))</span>
+	<span class="c1"># mcd1=np.zeros(len(cd1))</span>
+	<span class="c1"># mcd2=np.zeros(len(cd2))</span>
+	<span class="c1"># mcd3=np.zeros(len(cd3))</span>
+	<span class="c1"># mcd4=np.zeros(len(cd4))</span>
 
-	<span class="c"># for i in range(1,5):</span>
-	<span class="c"># 	coeff[-i]=np.zeros(len(coeff[-i]))</span>
+	<span class="c1"># for i in range(1,5):</span>
+	<span class="c1"># 	coeff[-i]=np.zeros(len(coeff[-i]))</span>
 
-	<span class="c"># print coeff</span>
-	<span class="c"># # rec=pywt.waverec([ca1, cd5, mcd4, mcd3, mcd2, mcd1], sym5, mode=&#39;sym&#39;)</span>
-	<span class="c"># rec=pywt.waverec(coeff, sym5, mode=&#39;sym&#39;)</span>
-	<span class="c"># np.savetxt(root+&#39;rec_event.csv&#39;, np.asarray(rec), delimiter=&quot;,&quot;)</span>
+	<span class="c1"># print coeff</span>
+	<span class="c1"># # rec=pywt.waverec([ca1, cd5, mcd4, mcd3, mcd2, mcd1], sym5, mode=&#39;sym&#39;)</span>
+	<span class="c1"># rec=pywt.waverec(coeff, sym5, mode=&#39;sym&#39;)</span>
+	<span class="c1"># np.savetxt(root+&#39;rec_event.csv&#39;, np.asarray(rec), delimiter=&quot;,&quot;)</span>
+
 </pre></div>
 
     </div>
@@ -337,7 +337,7 @@
       
     </p>
     <p>
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.2.3.<br/>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.5.<br/>
     </p>
   </div>
 </footer> -->
@@ -347,9 +347,8 @@
 			<col width=40%>
 			<tr>
 				<td align="left">
-					<a href="../../doc/mailingList.html"><em>Mailing List</em></a>&nbsp;&nbsp;&nbsp;
 					<a href="../../doc/Developers.html"><em>MOSAIC Developers</em></a>&nbsp;&nbsp;&nbsp;
-					<a href="http://www.nist.gov/cgi-bin/wwwph/cso.nist.gov?Query=Arvind+Balijepalli"><em>Contact</em></a>&nbsp;&nbsp;&nbsp;
+					<a href="http://www.nist.gov/pml/div683/grp06/abalijepalli.cfm"><em>Contact</em></a>&nbsp;&nbsp;&nbsp;
 					<a href="../../doc/Disclaimer.html"><em>Terms of Use</em></a>
 				</td>
 				<td align="right"><em>National Institute of Standards and Technology (NIST)</em></td>

@@ -1,0 +1,109 @@
+
+*Generate publication time-series plots using the
+mosaicscripts.plots.timeseries module.*
+
+::
+
+    :Created:   11/19/2015
+    :Author:    Arvind Balijepalli <arvind.balijepalli@nist.gov>
+    :License:   See LICENSE.TXT
+    :ChangeLog:
+        12/12/15    AB  Generalized plot function to allow different data types  
+        11/20/15    AB  Initial version
+
+.. code:: python
+
+    import mosaicscripts.plots.timeseries as ts
+
+Plots are generated using the ``mosaicscripts.plots.timeseries`` module.
+See the `timeseries module <../mosaicscripts/plots/timeseries.py>`__ for
+additional details.
+
+Basic usage to plot 1 second of ionic current vs. time is shown below.
+The ``plotopts`` argument is used to style the curve in the plot.
+
+.. code:: python
+
+    ts.PlotTimeseries(
+        "../data/",
+        "abf",
+        5.0, 
+        6.0, 
+        50000,
+        labels=["t (s)", "-i (pA)"],
+        axes=True,
+        polarity=-1,
+        plotopts={
+            'color' : '#3F50A0',
+            'marker' : '.',
+            'markersize' : 0.2   
+        }
+    )
+
+
+
+.. image:: source/doc/_files/source/doc/_3_0.png
+
+
+Plotting other data types is also straightforward. The next example
+demonstrates plotting a time-series in the QUB data format (QDF). Note
+that the conversion to voltage to current is performed with the ``Rfb``
+and ``Cfb`` parameters, passed to the plotting function as a dictionary.
+
+.. code:: python
+
+    ts.PlotTimeseries(
+        "../data/",
+        "qdf",
+        0.25, 
+        0.75, 
+        500000,
+        labels=["t (s)", "-i (pA)"],
+        axes=True,
+        polarity=1,
+        plotopts={
+            'color' : '#3F50A0',
+            'marker' : '.',
+            'markersize' : 0.2   
+        },
+        data_args={"Rfb" : 9.1e9, "Cfb": 1.07e-12}
+    )
+
+
+
+.. image:: source/doc/_files/source/doc/_5_0.png
+
+
+Segments of timeseries can be highlighted for emphasis or to show
+specific features. Three blockade events are plotted using different
+colors in the example below.
+
+.. code:: python
+
+    ts.PlotTimeseries(
+        "../data/", 
+        "abf",
+        5.0, 
+        6.0, 
+        50000,
+        labels=["t (s)", "-i (pA)"],
+        axes=True,
+        polarity=-1,
+        plotopts={
+            'color' : 'gray',
+            'marker' : '.',
+            'markersize' : 0.2   
+        },
+        highlights=[
+            [[0.282, 0.293], {'color' : '#3F50A0', 'marker' : '.', 'markersize' : 0.1}],
+            [[0.584, 0.597], {'color' : '#D42324', 'marker' : '.', 'markersize' : 0.1}],
+            [[0.685, 0.695], {'color' : '#EB751A', 'marker' : '.', 'markersize' : 0.1}]
+        ],
+        figname="timeseries.png"
+    )
+
+
+
+.. image:: source/doc/_files/source/doc/_7_0.png
+
+

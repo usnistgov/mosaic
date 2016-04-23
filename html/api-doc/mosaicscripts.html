@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>13.1.9. MOSAIC Script Repository &mdash; MOSAIC 1.3b1 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/basic.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/bootswatch-3.3.4/paper/bootstrap.min.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/bootstrap-sphinx.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/style.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.3b1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="../_static/js/jquery-1.11.0.min.js"></script>
+    <script type="text/javascript" src="../_static/js/jquery-fix.js"></script>
+    <script type="text/javascript" src="../_static/bootstrap-3.3.4/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../_static/bootstrap-sphinx.js"></script>
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="top" title="MOSAIC 1.3b1 documentation" href="../index.html" />
+    <link rel="up" title="13. API Documentation" href="../doc/apidocs.html" />
+    <link rel="next" title="14. Change Log" href="../doc/ChangeLog.html" />
+    <link rel="prev" title="13.1.8. Miscellaneous" href="mosaic.misc.html" />
+
+<meta charset='utf-8'>
+<meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
+<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
+<meta name="apple-mobile-web-app-capable" content="yes">
+
+	<script type="text/javascript"
+		src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+	</script>
+	<script type="text/javascript" id="_fed_an_js_tag" src="//www.nist.gov/js/federated-analytics.all.min.js?agency=NIST&subagency=github&pua=UA-42404149-54&yt=true&exts=ppsx,pps,f90,sch,rtf,wrl,txz,m1v,xlsm,msi,xsd,f,tif,eps,mpg,xml,pl,xlt,c">
+	</script>	
+
+  </head>
+  <body role="document">
+
+  <div id="navbar" class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="../index.html"><img src="../_static/icon_36.png">
+           </a>
+        <span class="navbar-text navbar-version pull-left"><b>1.3b1</b></span>
+      </div>
+
+        <div class="collapse navbar-collapse nav-collapse">
+          <ul class="nav navbar-nav">
+            
+                <li><a href="../../latex/MOSAIC.pdf">Download PDF</a></li>
+                <li><a href="../doc/mailingList.html">Mailing List</a></li>
+                <li><a href="//github.com/usnistgov/mosaic">Develop</a></li>
+                <li><a href="//github.com/usnistgov/mosaic/issues">Issue Tracker</a></li>
+            
+            
+              <li class="dropdown globaltoc-container">
+  <a role="button"
+     id="dLabelGlobalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="../index.html">Contents <b class="caret"></b></a>
+  <ul class="dropdown-menu globaltoc"
+      role="menu"
+      aria-labelledby="dLabelGlobalToc"><ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../doc/Introduction.html">1. Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../doc/Algorithms.html">2. Data Processing Algorithms in <em>MOSAIC</em></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../doc/GettingStarted.html">3. Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../doc/GraphicalInterface.html">4. <em>MOSAIC</em> GUI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../doc/settingsFile.html">5. Settings File</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../doc/DatabaseStructure.html">6. Database Structure and Query Syntax</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../doc/ScriptingandAdvancedFeatures.html">7. Scripting and Advanced Features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../doc/Extend.html">8. Extend <em>MOSAIC</em></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../doc/PublicationFigures.html">9. Publication Quality Figures</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../doc/AdvancedAnalysis.html">10. Advanced Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../doc/Addons.html">11. Addons</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../doc/examples.html">12. Examples</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../doc/apidocs.html">13. API Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../doc/ChangeLog.html">14. Change Log</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../doc/References.html">15. Bibliography</a></li>
+</ul>
+</ul>
+</li>
+              
+            
+            
+            
+            
+            
+              <li class="hidden-sm"></li>
+            
+          </ul>
+
+          
+            
+<form class="navbar-form navbar-right" action="../search.html" method="get">
+ <div class="form-group">
+  <input type="text" name="q" class="form-control" placeholder="Search" />
+ </div>
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+          
+        </div>
+    </div>
+  </div>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-12 content">
+      
+  <div class="section" id="mosaic-script-repository">
+<h1>13.1.9. MOSAIC Script Repository<a class="headerlink" href="#mosaic-script-repository" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="module-mosaicscripts.plots.timeseries">
+<span id="mosaicscripts-plots-timeseries-module"></span><h2>13.1.9.1. mosaicscripts.plots.timeseries module<a class="headerlink" href="#module-mosaicscripts.plots.timeseries" title="Permalink to this headline">¶</a></h2>
+<p>Plot an ionic current time-series.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Created:</th><td class="field-body">11/19/2015</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Author:</th><td class="field-body">Arvind Balijepalli &lt;<a class="reference external" href="mailto:arvind&#46;balijepalli&#37;&#52;&#48;nist&#46;gov">arvind<span>&#46;</span>balijepalli<span>&#64;</span>nist<span>&#46;</span>gov</a>&gt;</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">ChangeLog:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+<div class="line-block">
+<div class="line">12/12/15        AB      Generalized plot function to allow different data types</div>
+<div class="line">11/19/15        AB      Initial version</div>
+</div>
+<dl class="function">
+<dt id="mosaicscripts.plots.timeseries.PlotTimeseries">
+<code class="descclassname">mosaicscripts.plots.timeseries.</code><code class="descname">PlotTimeseries</code><span class="sig-paren">(</span><em>dir</em>, <em>data_type</em>, <em>t0</em>, <em>t1</em>, <em>Fs</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaicscripts/plots/timeseries.html#PlotTimeseries"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mosaicscripts.plots.timeseries.PlotTimeseries" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generate publication quality time-series plots.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Args:</th><td class="field-body"><ul class="first simple">
+<li><cite>dir</cite> :                       directory containing data files</li>
+<li><cite>data_type</cite> :         One of &#8220;abf&#8221;, &#8220;qdf&#8221;, &#8220;bin&#8221; or &#8220;tsv&#8221;.</li>
+<li><cite>t0</cite> :                        start time.</li>
+<li><cite>t1</cite> :                        end time.</li>
+<li><cite>Fs</cite> :                        Sampling rate in Hz.</li>
+<li><cite>labels</cite> :            Axes text labels. For example <code class="docutils literal"><span class="pre">`[&quot;t</span> <span class="pre">(s)&quot;,</span> <span class="pre">&quot;-i</span> <span class="pre">(pA)&quot;]`</span></code> for a current vs. time plot.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Keyword Args:</th><td class="field-body"><ul class="first">
+<li><p class="first"><cite>data_args</cite> :         (optional) For &#8220;qdf&#8221;, &#8220;bin&#8221; or &#8220;tsv&#8221;, settings to read in data. See <a class="reference internal" href="../doc/settingsFile.html#settings-page"><span>Settings File</span></a> for details.</p>
+</li>
+<li><p class="first"><cite>axes</cite> :                      (optional) Show axes (Default: True)</p>
+</li>
+<li><dl class="first docutils">
+<dt><cite>highlights</cite> <span class="classifier-delimiter">:</span> <span class="classifier">(optional) Highlight segments of the time-series with a different style (Default: None). For example: </span></dt>
+<dd><dl class="first docutils">
+<dt>highlights=[</dt>
+<dd><p class="first last">[[0.282, 0.293], {&#8216;color&#8217; : &#8216;#3F50A0&#8217;, &#8216;marker&#8217; : &#8216;.&#8217;, &#8216;markersize&#8217; : 0.1}],
+[[0.584, 0.597], {&#8216;color&#8217; : &#8216;#D42324&#8217;, &#8216;marker&#8217; : &#8216;.&#8217;, &#8216;markersize&#8217; : 0.1}],
+[[0.685, 0.695], {&#8216;color&#8217; : &#8216;#EB751A&#8217;, &#8216;marker&#8217; : &#8216;.&#8217;, &#8216;markersize&#8217; : 0.1}]</p>
+</dd>
+</dl>
+<p class="last">]</p>
+</dd>
+</dl>
+</li>
+</ul>
+<p class="last">Highlight three events at specied location (arg 1: start, end) with specified styles.
+- <cite>plotopts</cite> :          (optional) Specify plot style. See <a class="reference external" href="http://matplotlib.org/api/pyplot_api.html#matplotlib.pyplot.plot">http://matplotlib.org/api/pyplot_api.html#matplotlib.pyplot.plot</a> for details.
+- <cite>figname</cite> :                           (optional) figure name if saving an image. File extension determines format.
+- <cite>dpi</cite> :                                       (optional) figure resolution</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="module-mosaicscripts.plots.histogram">
+<span id="mosaicscripts-plots-histogram-module"></span><h2>13.1.9.2. mosaicscripts.plots.histogram module<a class="headerlink" href="#module-mosaicscripts.plots.histogram" title="Permalink to this headline">¶</a></h2>
+<p>1-D Histogram plot.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Created:</th><td class="field-body">12/13/2015</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Author:</th><td class="field-body">Arvind Balijepalli &lt;<a class="reference external" href="mailto:arvind&#46;balijepalli&#37;&#52;&#48;nist&#46;gov">arvind<span>&#46;</span>balijepalli<span>&#64;</span>nist<span>&#46;</span>gov</a>&gt;</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">License:</th><td class="field-body">See LICENSE.TXT</td>
+</tr>
+<tr class="field-even field"><th class="field-name">ChangeLog:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+<div class="line-block">
+<div class="line">12/13/15                AB      Initial version</div>
+</div>
+<dl class="function">
+<dt id="mosaicscripts.plots.histogram.histogram_plot">
+<code class="descclassname">mosaicscripts.plots.histogram.</code><code class="descname">histogram_plot</code><span class="sig-paren">(</span><em>dat</em>, <em>nbins</em>, <em>x_range</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaicscripts/plots/histogram.html#histogram_plot"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mosaicscripts.plots.histogram.histogram_plot" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div><p>Generate publication quality contour plots using the <code class="docutils literal"><span class="pre">`contour_plot`</span></code> function. The function expects a two-dimensional array of data (typically blockade depth and residence time) and several options as listed below:</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Args:</th><td class="field-body"><ul class="first simple">
+<li><cite>dat</cite> :                           2-D array with format [[x1,y1], [x2,y2], ... ... ... [xn,yn]]</li>
+<li><cite>nbinx</cite> :                             number of bins.</li>
+<li><cite>x_range</cite> :                   list with min and max in X. If <cite>None</cite>, min and max values of the data set the range.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Keyword Args:</th><td class="field-body"><ul class="first last simple">
+<li><cite>density</cite> :                   (optional) If True, display the probability density function. Default is <cite>False</cite></li>
+<li><cite>color</cite> :                             (optional) Plot color. Default is <cite>#4155A3</cite>.</li>
+<li><cite>fill_alpha</cite> :                (optional) Fill transperancy. 0 turns off fill. Default is 0.25.</li>
+<li><cite>xticks</cite> :                    (optional) specify ticks for the X-axis. List of format [ (tick, label), ...]</li>
+<li><cite>yticks</cite> :                    (optional) specify ticks for the X-axis. List of format [ (tick, label), ...]</li>
+<li><cite>figname</cite> :                   (optional) figure name if saving an image. File extension determines format.</li>
+<li><cite>dpi</cite> :                               (optional) figure resolution.</li>
+<li><cite>show</cite> :                              (optional) if True (default) call the show() function to display the plot.</li>
+<li><cite>return_histogram</cite> :  (optional) if True, return the histogram values and bins. Default is False.</li>
+<li><cite>advanced_opts</cite> :             (optional) a Python dictionary that supplies advanced plotting options. See <a href="#id1"><span class="problematic" id="id2">`</span></a>Matplotlib plot documentation</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+<p>&lt;<a class="reference external" href="http://matplotlib.org/api/pyplot_api.html#matplotlib.pyplot.plot">http://matplotlib.org/api/pyplot_api.html#matplotlib.pyplot.plot</a>&gt;`_ for details.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-mosaicscripts.plots.contour">
+<span id="mosaicscripts-plots-contour-module"></span><h2>13.1.9.3. mosaicscripts.plots.contour module<a class="headerlink" href="#module-mosaicscripts.plots.contour" title="Permalink to this headline">¶</a></h2>
+<p>Contour plot overlaid on top of an image.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Created:</th><td class="field-body">11/11/2015</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Author:</th><td class="field-body">Arvind Balijepalli &lt;<a class="reference external" href="mailto:arvind&#46;balijepalli&#37;&#52;&#48;nist&#46;gov">arvind<span>&#46;</span>balijepalli<span>&#64;</span>nist<span>&#46;</span>gov</a>&gt;</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">License:</th><td class="field-body">See LICENSE.TXT</td>
+</tr>
+<tr class="field-even field"><th class="field-name">ChangeLog:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+<div class="line-block">
+<div class="line">02/05/16                AB      Add options to scale z-axis</div>
+<div class="line">01/10/15                AB  Rename custom colormaps</div>
+<div class="line">11/11/15                AB      Initial version</div>
+</div>
+<dl class="function">
+<dt id="mosaicscripts.plots.contour.contour_plot">
+<code class="descclassname">mosaicscripts.plots.contour.</code><code class="descname">contour_plot</code><span class="sig-paren">(</span><em>dat2d</em>, <em>x_range</em>, <em>y_range</em>, <em>bin_size</em>, <em>contours</em>, <em>colormap</em>, <em>img_interpolation</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaicscripts/plots/contour.html#contour_plot"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mosaicscripts.plots.contour.contour_plot" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generate publication quality contour plots using the <code class="docutils literal"><span class="pre">`contour_plot`</span></code> function. The function expects a two-dimensional array of data (typically blockade depth and residence time) and several options as listed below:</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Args:</th><td class="field-body"><ul class="first simple">
+<li><cite>dat2d</cite> :                         2-D array with format [[x1,y1], [x2,y2], ... ... ... [xn,yn]]</li>
+<li><cite>x_range</cite> :                           list with min and max in X</li>
+<li><cite>y_range</cite> :                           list with min and max in Y</li>
+<li><cite>bin_size</cite> :                          bin size</li>
+<li><cite>contours</cite> :                          number of contours</li>
+<li><cite>colormap</cite> :                          Colormap to use. Expects a colormap object. See <a class="reference external" href="http://matplotlib.org/examples/color/colormaps_reference.html">http://matplotlib.org/examples/color/colormaps_reference.html</a>.</li>
+<li><cite>img_interpolation</cite> :         interpolation to use for image</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Keyword Args:</th><td class="field-body"><ul class="first last simple">
+<li><cite>zscale</cite> :                            (optional) plot the probability density if set to <cite>density</cite> or scale to the max count if set to <cite>unity</cite>.</li>
+<li><cite>xticks</cite> :                            (optional) specify ticks for the X-axis. List of format [ (tick, label), ...]</li>
+<li><cite>yticks</cite> :                            (optional) specify ticks for the X-axis. List of format [ (tick, label), ...]</li>
+<li><cite>figname</cite> :                           (optional) figure name if saving an image. File extension determines format.</li>
+<li><cite>dpi</cite> :                                       (optional) figure resolution</li>
+<li><cite>colorbar_num_ticks</cite> :        (optional) number of ticks in the colorbar</li>
+<li><cite>cb_round_digits</cite> :           (optional) round colorbar ticks to multiple of cb_round_digits. For example, -2 rounds to 100. See python docs.</li>
+<li><cite>min_count_pct</cite> :                     (optional) set bins with &lt; min_count_pct of the maximum to 0</li>
+<li><cite>axes_type</cite> :                         (optional) set linear or log axis. Expects a list for X and Y. For example [&#8216;linear&#8217;, &#8216;log&#8217;].</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+</div>
+
+
+    </div>
+      
+  </div>
+</div>
+<!-- 
+<footer class="footer">
+  <div class="container">
+    <p class="pull-right">
+      <a href="#">Back to top</a>
+      
+    </p>
+    <p>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.5.<br/>
+    </p>
+  </div>
+</footer> -->
+<div class="footer" style="vertical-align: center" align="center">
+		<table width="95%" style="vertical-align: center">
+			<col width=60%>
+			<col width=40%>
+			<tr>
+				<td align="left">
+					<a href="../doc/Developers.html"><em>MOSAIC Developers</em></a>&nbsp;&nbsp;&nbsp;
+					<a href="http://www.nist.gov/pml/div683/grp06/abalijepalli.cfm"><em>Contact</em></a>&nbsp;&nbsp;&nbsp;
+					<a href="../doc/Disclaimer.html"><em>Terms of Use</em></a>
+				</td>
+				<td align="right"><em>National Institute of Standards and Technology (NIST)</em></td>
+			</tr>
+		</table>
+</div>
+
+  </body>
+</html>

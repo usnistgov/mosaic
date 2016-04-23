@@ -27,3 +27,4 @@ API Documentation
    ../api-doc/mosaic.processing
    ../api-doc/mosaic.output
    ../api-doc/mosaic.misc
+   ../api-doc/mosaicscripts
