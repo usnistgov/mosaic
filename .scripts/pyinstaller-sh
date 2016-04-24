@@ -42,7 +42,7 @@ read -d '' info2 <<-"EOF"
 EOF
 infoplist="$info1$ver$info2"
 
-cd pyinstaller
+pushd pyinstaller
 rm -rf dist/* build/*
 pyinstaller mosaic.spec
 
@@ -50,15 +50,54 @@ if [ $plat == 'Darwin' ]; then
 	sh ../.scripts/create_osx_icons.sh
 	mv icon.icns dist/MOSAIC.app/Contents/Resources
 	echo ${infoplist}>dist/MOSAIC.app/Contents/Info.plist
-	cd dist
-	hdiutil create -size 225m -o ../../dist/mosaic-${ver}-${build}.dmg -srcfolder MOSAIC.app
-	# hdiutil create ./mosaic-${ver}.dmg -srcfolder MOSAIC.app -ov
-	# mv ./mosaic-${ver}.dmg ../../dist/
+	pushd dist
+	hdiutil create -format UDRW  -volname MOSAIC -size 225m -o ../../dist/mosaic-${ver}-${build}_temp.dmg -srcfolder MOSAIC.app
+	
+	# mount it and save the device
+	DEVICE=$(hdiutil attach -readwrite -noverify "../../dist/mosaic-${ver}-${build}_temp.dmg" | egrep '^/dev/' | sed 1q | awk '{print $1}')
+	sleep 2
+
+	pushd /Volumes/MOSAIC
+	ln -s /Applications
+	popd
+   
+	mkdir /Volumes/MOSAIC/.background 
+	sips -s dpiWidth 72 -s dpiHeight 72 ../../icons/DMGbg.png --out /Volumes/MOSAIC/.background/DMGbg72dp.png
+
+	echo '
+	tell application "Finder"
+		tell disk "MOSAIC"
+			open
+			set current view of container window to icon view
+			set toolbar visible of container window to false
+			set statusbar visible of container window to false
+			set the bounds of container window to {400, 100, 1010, 440}
+			set viewOptions to the icon view options of container window
+			set arrangement of viewOptions to not arranged
+			set icon size of viewOptions to 72
+			set background picture of viewOptions to file ".background:DMGbg72dp.png"
+			set position of item "MOSAIC.app" of container window to {160, 165}
+			set position of item "Applications" of container window to {455, 165}
+			close
+			open
+			update without registering applications
+			delay 2
+		end tell
+	end tell
+	' | osascript
+
+	hdiutil detach "${DEVICE}"
+
+	hdiutil convert "../../dist/mosaic-${ver}-${build}_temp.dmg" -format UDZO -imagekey zlib-level=9 -o "../../dist/mosaic-${ver}-${build}.dmg"
+	
+	rm "../../dist/mosaic-${ver}-${build}_temp.dmg"
+	popd
 else
-	cd dist
+	pushd dist
 	zip mosaic-x64-${ver}-${build}.zip MOSAIC.exe
 	mv ./mosaic-x64-${ver}-${build}.zip ../../dist/
+	popd
 fi
 
-cd ../..
+popd
 

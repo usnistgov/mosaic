@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 import sys
 import sqlite3
-import time
 from os.path import expanduser
 import mosaic.sqlite3MDIO as sqlite
 from PyQt4 import QtCore, QtGui
@@ -32,20 +31,13 @@ class sqlQueryWorker(QtCore.QObject):
 	@QtCore.pyqtSlot(str)
 	def queryDB(self, q):
 		try:
-			# t1=time.time()
 			self.queryDatabase=sqlite.sqlite3MDIO()
 			self.queryDatabase.openDB(self.dbFile)
 
-			# t1a=time.time()
 			self.resultsReady.emit(self.queryDatabase.queryDB(str(q)), "")
-			# t2a=time.time()
-
+			
 			self.queryDatabase.closeDB()
-			# t2=time.time()
-
-			# print "query time = ", t2a-t1a
-			# print "overhead = ", (t2-t1)-(t2a-t1a)
-			# print "total time = ", t2-t1
+			
 		except sqlite3.OperationalError, err:
 			self.queryDatabase.closeDB()
 			self.resultsReady.emit([], str(err))
@@ -78,23 +70,15 @@ class sqlQueryWorker(QtCore.QObject):
 	@QtCore.pyqtSlot(str, str)
 	def queryDB2(self, q1, q2):
 		try:
-			# t1=time.time()
 			self.queryDatabase=sqlite.sqlite3MDIO()
 			self.queryDatabase.openDB(self.dbFile)
 
-			# t1a=time.time()
 			r1=self.queryDatabase.queryDB(str(q1))
 			r2=self.queryDatabase.queryDB(str(q2))
 
 			self.resultsReady2.emit(r1, r2, "")
-			# t2a=time.time()
 
 			self.queryDatabase.closeDB()
-			# t2=time.time()
-
-			# print "query time = ", t2a-t1a
-			# print "overhead = ", (t2-t1)-(t2a-t1a)
-			# print "total time = ", t2-t1
 		except sqlite3.OperationalError, err:
 			self.queryDatabase.closeDB()
 			self.resultsReady.emit([], str(err))
@@ -131,7 +115,6 @@ if __name__ == '__main__':
 	
 	obj.finished.connect(thread.quit)
 
-	# time.sleep(10)
 	thread.start()
 
 	QtCore.QMetaObject.invokeMethod(obj, 'dbColumnNames', Qt.QueuedConnection, QtCore.Q_ARG(bool, False) )

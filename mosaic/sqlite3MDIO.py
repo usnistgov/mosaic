@@ -367,13 +367,7 @@ if __name__=="__main__":
 		c=sqlite3MDIO()
 		c.openDB(dbname)
 
-		import time
-
-		t1=time.time()
 		q=c.queryDB( "select TimeSeries from metadata limit 100, 200" )
-		t2=time.time()
-
-		print "Timing: ", round((t2-t1)*1000, 2), " ms"
 		print "Results:", len(q)
 
 		print c.readSettings()

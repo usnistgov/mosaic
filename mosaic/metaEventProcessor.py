@@ -18,8 +18,7 @@
 """
 from abc import ABCMeta, abstractmethod
 import types
-import sys
-import time
+import mosaic.utilities.mosaicTiming as mosaicTiming
 import sqlite3
 import numpy as np
 
@@ -81,11 +80,8 @@ class metaEventProcessor(object):
 		# meta-data attrs that are common to all event processing
 		self.mdProcessingStatus='normal'
 
-		# Setup platform-dependent timing function
-		if sys.platform.startswith('win'):
-			self.timingFunc=time.clock
-		else:
-			self.timingFunc=time.time
+		# Setup function timing
+		self.timingObj=mosaicTiming.mosaicTiming()
 
 		# print self.settingsDict
 		# Call sub-class initialization
@@ -95,13 +91,13 @@ class metaEventProcessor(object):
 		"""
 			This is the equivalent of a pure virtual function in C++. 
 		"""
-		start_time=self.timingFunc()
+		start_time=self.timingObj.time()
 
 		self.dataPolarity=float(np.sign(np.mean(self.eventData)))
 
 		self._processEvent()
 
-		self.mdEventProcessTime=1000.*(self.timingFunc()-start_time)
+		self.mdEventProcessTime=1000.*(self.timingObj.time()-start_time)
 
 		if not self.saveTS:
 			self.eventData=[]

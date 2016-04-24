@@ -318,18 +318,8 @@ class qtAnalysisGUI(mosaicgui.settingsview.settingsview):
 		self.processedFiles.closeDB()
 
 def main():
-	app = QtGui.QApplication(sys.argv)
-	dmw = qtAnalysisGUI()
-	dmw.show()
-	dmw.raise_()
-
-	# cleanup processing
-	app.connect(app, QtCore.SIGNAL("aboutToQuit()"), dmw.OnQuit)
-	
-	sys.exit(app.exec_())
+	print "Type 'python runMOSAIC' to start MOSAIC.\n"
 
 if __name__ == '__main__':
-	if sys.platform.startswith('win'):
-		multiprocessing.freeze_support()
 	main()
 
