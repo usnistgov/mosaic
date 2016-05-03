@@ -155,7 +155,6 @@ setup(
             'data/.settings',
             'data/SingleChan-0001.qdf',
             'data/SingleChan-0001_state.txt',
-            'commit-hash',
             'requirements.txt'
             ],
     install_requires=open('requirements.txt').read().splitlines(),
