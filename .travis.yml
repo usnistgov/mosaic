@@ -1,0 +1,23 @@
+language: python
+sudo: false
+python:
+  - "2.7"
+notifications:
+  email: 
+    on_failure: always
+addons:
+  apt:
+    packages:
+    - libblas-dev
+    - liblapack-dev
+    - gfortran
+cache:
+  - apt
+  - directories:
+    - $HOME/.cache/pip
+before_install:
+  - pip install -U pip
+install:
+  - travis_wait travis_retry pip install -r requirements.txt --upgrade
+script: 
+  - python setup.py mosaic_tests
