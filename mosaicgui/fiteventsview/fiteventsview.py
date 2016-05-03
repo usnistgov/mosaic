@@ -9,12 +9,17 @@ import sqlite3
 from PyQt4 import QtCore, QtGui, uic
 
 import mosaic.sqlite3MDIO as sqlite
+import mosaic.errors as err
 import mosaicgui.autocompleteedit as autocomplete
 from mosaic.utilities.resource_path import resource_path, last_file_in_directory
 import mosaic.utilities.fit_funcs as fit_funcs
 
 import matplotlib.ticker as ticker
 # from mosaicgui.trajview.trajviewui import Ui_Dialog
+
+css = """QLabel {
+      color: red;
+}"""
 
 class FitEventWindow(QtGui.QDialog):
 	def __init__(self, parent = None):
@@ -40,6 +45,9 @@ class FitEventWindow(QtGui.QDialog):
 		self.idleTimer.start(3000)
 
 		self.updateDataOnIdle=True
+
+		# setup error descriptions
+		self.errText=err.errors()
 
 		# setup hash tables used in this class
 		self._setupdict()
@@ -156,9 +164,14 @@ class FitEventWindow(QtGui.QDialog):
 					ystep=self.stepFuncHnd( *eval(self.stepFuncArgs) )
 					self.mpl_hist.canvas.ax.plot( xstep, ystep, linestyle='--', linewidth='2.0', color=cs)
 
+				self.errLabel.setText(str(""))
 			else:
 				self.mpl_hist.canvas.ax.cla()
 				self.mpl_hist.canvas.ax.plot( xdat, ydat, linestyle='None', marker='o', color='r', markersize=8, markeredgecolor='none', alpha=0.6)
+				
+				# Set error line edit color to red
+				self.errLabel.setStyleSheet(css)
+				self.errLabel.setText("Error: "+ self.errText[str(q[0])] )
 
 			self._ticks(5)
 

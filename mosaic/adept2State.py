@@ -7,6 +7,8 @@
 	:License:	See LICENSE.TXT
 	:ChangeLog:
 	.. line-block::
+		03/30/16 	AB 	Change UnlinkRCConst to LinkRCConst to avoid double negatives.
+		12/09/15 	KB 	Added Windows specific optimizations
 		8/24/15 	AB 	Rename algorithm to ADEPT 2 State.
 		7/23/15		JF  Added a new test to reject RC Constants <=0
 		6/24/15 	AB 	Added an option to unlink the RC constants in stepResponseAnalysis.
@@ -30,6 +32,7 @@ import math
 
 import numpy as np
 import scipy.optimize
+from scipy.optimize import curve_fit
 
 from lmfit import minimize, Parameters, Parameter, report_errors, Minimizer
 
@@ -58,7 +61,7 @@ class adept2State(metaEventProcessor.metaEventProcessor):
 			In addition to :class:`~mosaic.metaEventProcessor.metaEventProcessor` args,
 				- `FitTol` :		Tolerance value for the least squares algorithm that controls the convergence of the fit (Default: `1e-7`).
 				- `FitIters` : 		Maximum number of iterations before terminating the fit (Default: `50000`).
-				- `UnlinkRCConst` :		When True, unlinks the RC constants in the fit function to vary independently of each other. (Default: `False`)
+				- `LinkRCConst` :	When True, the RC constants associated with each state in the fit function are varied together. (Default: `True`)
 
 		:Errors:
 			
@@ -95,8 +98,7 @@ class adept2State(metaEventProcessor.metaEventProcessor):
 
 			self.BlockRejectRatio=float(self.settingsDict.pop("BlockRejectRatio", 0.8))
 
-			self.UnlinkRCConst=int(self.settingsDict.pop("UnlinkRCConst", 1))
-		
+			self.LinkRCConst=int(self.settingsDict.pop("LinkRCConst", 1))
 		except ValueError as err:
 			raise commonExceptions.SettingsTypeError( err )
 
@@ -110,11 +112,14 @@ class adept2State(metaEventProcessor.metaEventProcessor):
 		"""
 		try:
 			# Fit the system transfer function to the event data
-			self.__FitEvent()
+			if sys.platform.startswith('win'):
+                                self.__WinFitEvent()
+                        else:
+                                self.__FitEvent()
 		except:
 			raise
 
-	def mdList(self):
+	def _mdList(self):
 		""" 
 			Return a list of meta-data from the analysis of single step events. We explicitly
 			control the order of the data to keep formatting consistent. 				
@@ -133,7 +138,7 @@ class adept2State(metaEventProcessor.metaEventProcessor):
 					self.mdRedChiSq
 				]
 
-	def mdHeadingDataType(self):
+	def _mdHeadingDataType(self):
 		""" 
 			Return a list of meta-data tags data types.
 		"""
@@ -151,7 +156,7 @@ class adept2State(metaEventProcessor.metaEventProcessor):
 					'REAL'
 				]
 
-	def mdHeadings(self):
+	def _mdHeadings(self):
 		""" 
 			Explicity set the metadata to print out.
 		"""
@@ -188,13 +193,86 @@ class adept2State(metaEventProcessor.metaEventProcessor):
 		
 		logObj.addLogText( 'Max. iterations  = {0}'.format(self.FitIters) )
 		logObj.addLogText( 'Fit tolerance (rel. err in leastsq)  = {0}'.format(self.FitTol) )
-		logObj.addLogText( 'Unlink RC constants = {0}'.format(bool(self.UnlinkRCConst)) )
+		logObj.addLogText( 'Link RC constants = {0}'.format(bool(self.LinkRCConst)) )
 
 		return str(logObj)
 
 	###########################################################################
 	# Local functions
 	###########################################################################
+        def __WinFitEvent(self):
+                try:
+                        i0=np.abs(self.baseMean)
+			i0sig=self.baseSD
+			dt = 1000./self.Fs 	# time-step in ms.
+			# edat=np.asarray( np.abs(self.eventData),  dtype='float64' )
+			edat=self.dataPolarity*np.asarray( self.eventData,  dtype='float64' )
+
+			blockedCurrent=min(edat)
+			tauVal=dt
+
+			estart 	= self.__eventStartIndex( self.__threadList( edat, range(0,len(edat)) ), i0, i0sig ) - 1
+			eend 	= self.__eventEndIndex( self.__threadList( edat, range(0,len(edat)) ), i0, i0sig ) - 2
+
+			# For long events, fix the blocked current to speed up the fit
+			if (eend-estart) > 1000:
+				blockedCurrent=np.mean(edat[estart+50:eend-50])
+
+			# control numpy error reporting
+			np.seterr(invalid='ignore', over='ignore', under='ignore')
+
+			ts = np.array([ t*dt for t in range(0,len(edat)) ], dtype='float64')
+
+                        #initial guesses
+			tau1 = tauVal
+			tau2 = tauVal
+			mu1 = estart*dt
+			mu2 = eend*dt
+			a = (i0-blockedCurrent)
+			b = i0
+			init_guess = [tau1, tau2, mu1, mu2, a, b]
+			popt, pcov = curve_fit(fit_funcs.stepResponseFunc, ts, edat, p0=init_guess)
+
+			tau1 = popt[0]
+			tau2 = popt[1]
+			mu1 = popt[2]
+			mu2 = popt[3]
+			a = popt[4]
+			b = popt[5]
+
+			if mu1 < 0 or mu2 < 0:
+                                self.rejectEvent('eInvalidResTime')
+                        if mu1 > ts[-1]:
+                                self.rejectEvent('eInvalidEventStart')
+                        else:
+                                self.mdOpenChCurrent 	= b 
+				self.mdBlockedCurrent	= b-a
+				self.mdEventStart	= mu1
+				self.mdEventEnd		= mu2
+				self.mdRCConst1		= tau1
+				self.mdRCConst2		= tau2
+				self.mdAbsEventStart	= self.mdEventStart + self.absDataStartIndex * dt
+
+				self.mdBlockDepth	= self.mdBlockedCurrent/self.mdOpenChCurrent
+				self.mdResTime		= self.mdEventEnd - self.mdEventStart
+					
+				self.mdRedChiSq		= 0 #for now, as a placeholder
+				if math.isnan(self.mdRedChiSq):
+					self.rejectEvent('eInvalidChiSq')
+				if self.mdBlockDepth < 0 or self.mdBlockDepth > 1:
+					self.rejectEvent('eInvalidBlockDepth')
+				if self.mdRCConst1 <= 0 or self.mdRCConst2 <= 0:
+					self.rejectEvent('eInvalidRCConstant')
+
+		except KeyboardInterrupt:
+			self.rejectEvent('eFitUserStop')
+			raise
+		except:
+			# print optfit.message, optfit.lmdif_message
+	 		self.rejectEvent('eFitFailure')
+
+			
+	
 	def __FitEvent(self):
 		try:
 			varyBlockedCurrent=True
@@ -230,10 +308,11 @@ class adept2State(metaEventProcessor.metaEventProcessor):
 			params.add('b', value = i0)
 			params.add('tau1', value = tauVal)
 
-			if self.UnlinkRCConst:
-				params.add('tau2', value = tauVal)
-			else:
+			if self.LinkRCConst:
 				params.add('tau2', value = tauVal, expr='tau1')
+			else:
+				params.add('tau2', value = tauVal)
+
 
 			optfit=Minimizer(self.__objfunc, params, fcn_args=(ts,edat,))
 			optfit.prepare_fit()
@@ -274,7 +353,7 @@ class adept2State(metaEventProcessor.metaEventProcessor):
 					if self.mdBlockDepth < 0 or self.mdBlockDepth > 1:
 						self.rejectEvent('eInvalidBlockDepth')
 					if self.mdRCConst1 <= 0 or self.mdRCConst2 <= 0:
-						self.rejectEVent('eInvalidRCConstant')
+						self.rejectEvent('eInvalidRCConstant')
 
 					#print i0, i0sig, [optfit.params['a'].value, optfit.params['b'].value, optfit.params['mu1'].value, optfit.params['mu2'].value, optfit.params['tau'].value]
 			else:

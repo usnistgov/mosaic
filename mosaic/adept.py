@@ -7,6 +7,11 @@
 	:License:	See LICENSE.TXT
 	:ChangeLog:
 	.. line-block::
+		03/30/16 	AB 	Change UnlinkRCConst to LinkRCConst to avoid double negatives.
+		3/16/16 	AB 	Migrate InitThreshold setting to CUSUM StepSize.
+		2/22/16 	AB 	Use CUSUM to estimate intial guesses in ADEPT for long events.
+		2/20/16 	AB 	Format settings log.
+		12/09/15 	KB 	Added Windows specific optimizations
 		8/24/15 	AB 	Rename algorithm to ADEPT.
 		8/02/15		JF	Added a new test to reject RC Constants <=0
 		4/12/15 	AB 	Refactored code to improve reusability.
@@ -33,27 +38,20 @@ import metaEventProcessor
 import mosaic.utilities.util as util
 import mosaic.utilities.mosaicLog as log
 import mosaic.utilities.fit_funcs as fit_funcs
+import mosaic.cusumPlus as cusum
+import mosaic.settings
+
 import sys
 import math
 
 import numpy as np
 import scipy.optimize
+from scipy.optimize import curve_fit
 
 from lmfit import minimize, Parameters, Parameter, report_errors, Minimizer
 
 class InvalidEvent(Exception):
 	pass
-
-class datblock:
-	"""
-		Smart data block that holds time-series data and keeps track
-		of its mean and SD.
-	"""
-	def __init__(self, dat):
-		self.data=dat
-		self.mean=util.avg(dat)
-		self.sd=util.sd(dat)
-
 
 class adept(metaEventProcessor.metaEventProcessor):
 	"""
@@ -68,12 +66,12 @@ class adept(metaEventProcessor.metaEventProcessor):
 
 		:Keyword Args:
 			In addition to :class:`~mosaic.metaEventProcessor.metaEventProcessor` args,
-				- `InitThreshold` : 	internal threshold for initial state determination (default: 5.0)
+				- `StepSize` :			The multiple of the standard deviations considered significant to dtecting an event (default: 3.0).
 				- `MinStateLength` : 	minimum number of data points required to assign a state within an event (default: 4)
 				- `MaxEventLength` :	maximum length (in data points) of events that will be processed (default: 10000)
 				- `FitTol` :			fit tolerance for convergence (default: 1.e-7)
 				- `FitIters` :			maximum fit iterations (default: 5000)
-				- `UnlinkRCConst` :			When True, unlinks the RC constants in the fit function to vary independently of each other. (Default: `True`)
+				- `LinkRCConst` :	When True, the RC constants associated with each state in the fit function are varied together. (Default: `True`)
 
 		:Errors:
 
@@ -114,12 +112,20 @@ class adept(metaEventProcessor.metaEventProcessor):
 		try:
 			self.FitTol=float(self.settingsDict.pop("FitTol", 1.e-7))
 			self.FitIters=int(self.settingsDict.pop("FitIters", 5000))
-			self.InitThreshold=float(self.settingsDict.pop("InitThreshold", 5.0))
+			self.StepSize=float(self.settingsDict.pop("StepSize", 3.0))
 			self.MinStateLength=float(self.settingsDict.pop("MinStateLength", 4))
 			self.MaxEventLength=int(self.settingsDict.pop("MaxEventLength", 10000))
-			self.UnlinkRCConst=int(self.settingsDict.pop("UnlinkRCConst", 1))
+			self.LinkRCConst=int(self.settingsDict.pop("LinkRCConst", 1))
+
+			# initThr=float(self.settingsDict["InitThreshold"])
+			# if initThr:
+			# 	print "Warning: InitThreshold is deprecated. Please use StepSize instead (see the docs for additional information). StepSize set to {0}".format(3.0*initThr)
+			# 	self.StepSize=3.0*initThr
+
 		except ValueError as err:
 			raise commonExceptions.SettingsTypeError( err )
+		# except KeyError:
+		# 	pass
 
 
 	###########################################################################
@@ -137,16 +143,15 @@ class adept(metaEventProcessor.metaEventProcessor):
 				edat=self.dataPolarity*np.asarray( self.eventData,  dtype='float64' )
 
 				# estimate initial guess for events
-				initguess=self._characterizeevent(edat, np.abs(util.avg(edat[:10])), self.baseSD, self.InitThreshold, 6.)
-			
-				# Fit the system transfer function to the event data
+				initguess=self._cusumInitGuess(self.eventData)
+				
 				self.fitevent(edat, initguess)
 		except InvalidEvent:
 			self.rejectEvent('eInvalidEvent')
 		except:
 			raise
 
-	def mdList(self):
+	def _mdList(self):
 		"""
 			Return a list of meta-data from the analysis of single step events. We explicitly
 			control the order of the data to keep formatting consistent. 				
@@ -167,7 +172,7 @@ class adept(metaEventProcessor.metaEventProcessor):
 					self.mdRedChiSq
 				]
 		
-	def mdHeadingDataType(self):
+	def _mdHeadingDataType(self):
 		"""
 			Return a list of meta-data tags data types.
 		"""
@@ -187,7 +192,7 @@ class adept(metaEventProcessor.metaEventProcessor):
 					'REAL'
 				]
 
-	def mdHeadings(self):
+	def _mdHeadings(self):
 		"""
 			Explicity set the metadata to print out.
 		"""
@@ -226,9 +231,10 @@ class adept(metaEventProcessor.metaEventProcessor):
 		
 		logObj.addLogText( 'Max. iterations  = {0}'.format(self.FitIters) )
 		logObj.addLogText( 'Fit tolerance (rel. err in leastsq)  = {0}'.format(self.FitTol) )
-		logObj.addLogText( 'Unlink RC constants = {0}'.format(bool(self.UnlinkRCConst)) )
-		logObj.addLogText( 'Initial partition threshold  = {0}\n'.format(self.InitThreshold) )
-		logObj.addLogText( 'Min. State Length = {0}\n\n'.format(self.MinStateLength) )
+		logObj.addLogText( 'Link RC constants = {0}'.format(bool(self.LinkRCConst)) )
+		logObj.addLogText( 'Initial partition step size  = {0}'.format(self.StepSize) )
+		logObj.addLogText( 'Min. State Length = {0} samples'.format(self.MinStateLength) )
+		logObj.addLogText( 'Max. Event Length = {0} samples'.format(self.MaxEventLength))
 
 		return str(logObj)
 
@@ -244,33 +250,33 @@ class adept(metaEventProcessor.metaEventProcessor):
 
 			ts = np.array([ t*dt for t in range(0,len(edat)) ], dtype='float64')
 
-			self.nStates=len(initguess)-1
+			self.nStates=len(initguess)
 
 			# setup fit params
 			params=Parameters()
 
-			for i in range(1, len(initguess)):
-				params.add('a'+str(i-1), value=initguess[i][0]-initguess[i-1][0]) 
-				params.add('mu'+str(i-1), value=initguess[i][1]*dt) 
-				if self.UnlinkRCConst:
-					params.add('tau'+str(i-1), value=dt*5.)
-				else:
-					if i-1==0:
-						params.add('tau'+str(i-1), value=dt*5.)
+			for i in range(0, len(initguess)):
+				params.add('a'+str(i), value=initguess[i][0]) 
+				params.add('mu'+str(i), value=initguess[i][1]) 
+				if self.LinkRCConst:				
+					if i==0:
+						params.add('tau'+str(i), value=dt*5.)
 					else:
-						params.add('tau'+str(i-1), value=dt*5., expr='tau0')
+						params.add('tau'+str(i), value=dt*5., expr='tau0')
+				else:
+					params.add('tau'+str(i), value=dt*5.)
 
-			params.add('b', value=initguess[0][0])
+			params.add('b', value=self.baseMean )
 			
 
-			optfit=Minimizer(self.__objfunc, params, fcn_args=(ts,edat,))
+			optfit=Minimizer(self._objfunc, params, fcn_args=(ts,edat,))
 			optfit.prepare_fit()
 
 	
 			optfit.leastsq(xtol=self.FitTol,ftol=self.FitTol,maxfev=self.FitIters)
 
 			if optfit.success:
-				self.__recordevent(optfit)
+				self._recordevent(optfit)
 			else:
 				#print optfit.message, optfit.lmdif_message
 				self.rejectEvent('eFitConvergence')
@@ -281,28 +287,8 @@ class adept(metaEventProcessor.metaEventProcessor):
 			self.rejectEvent('eInvalidEvent')
 		except:
 	 		self.rejectEvent('eFitFailure')
-	 		raise
 
-	def __threadList(self, l1, l2):
-		"""thread two lists	"""
-		try:
-			return map( lambda x,y : (x,y), l1, l2 )
-		except KeyboardInterrupt:
-			raise
-
-	def __eventEndIndex(self, dat, mu, sigma):
-		try:
-			return ([ d for d in dat if d[0] < (mu-2*sigma) ][-1][1]+1)
-		except IndexError:
-			return -1
-
-	def __eventStartIndex(self, dat, mu, sigma):
-		try:
-			return ([ d for d in dat if d[0] < (mu-2.75*sigma) ][0][1]+1)
-		except IndexError:
-			return -1
-
-	def __objfunc(self, params, t, data):
+	def _objfunc(self, params, t, data):
 		""" model parameters for multistate blockade """
 		try:
 			b = params['b'].value
@@ -314,8 +300,8 @@ class adept(metaEventProcessor.metaEventProcessor):
 			return model - data
 		except KeyboardInterrupt:
 			raise
-
-	def __recordevent(self, optfit):
+			
+	def _recordevent(self, optfit):
 		dt = 1000./self.Fs 	# time-step in ms.
 
 		try:
@@ -348,54 +334,41 @@ class adept(metaEventProcessor.metaEventProcessor):
 				
 				self.mdRedChiSq			= sum(np.array(optfit.residual)**2/self.baseSD**2)/optfit.nfree
 					
-				if math.isnan(self.mdRedChiSq):
-					self.rejectEvent('eInvalidRedChiSq')	
+				# if math.isnan(self.mdRedChiSq):
+				# 	self.rejectEvent('eInvalidRedChiSq')	
 				if not (np.array(self.mdStateResTime)>0).all():
 					self.rejectEvent('eNegativeEventDelay')
-				if not (np.array(self.mdRCConst)>0).all():
+				elif not (np.array(self.mdRCConst)>0).all():
 					self.rejectEvent('eInvalidRCConst')
 		except:
 			self.rejectEvent('eInvalidEvent')
 
-	def _levelchange(self, dat, sMean, sSD, nSD, blksz):
-		start_i=None
-		start_slope=None
-		for i in range(int(blksz/2.0), len(dat)-int(blksz/2.0)):
-			p1, p2= i-int(blksz/2.0), i+int(blksz/2.0)
-			if abs(util.avg(dat[p1:p2])-sMean) > nSD * sSD:
-				if not start_i:	
-					start_i=i
-					start_slope=dat[p2]-dat[p1]
-				elif np.sign(start_slope) != np.sign(dat[p2]-dat[p1]):
-					if start_slope < 0:
-						avgCurr=np.min(dat[start_i:p2])
-					else:
-						avgCurr=np.max(dat[start_i:p2])
-					return [start_i, avgCurr]
+	def _cusumInitGuess(self, edat):
+		cusumSettings={}
+		cusumSettings["MinThreshold"]=0.1
+		cusumSettings["MaxThreshold"]=100.
+		cusumSettings["StepSize"]=self.StepSize
+		cusumSettings["MinLength"]=self.MinStateLength
 
-		raise InvalidEvent()
+		# print cusumSettings
 
-	def _characterizeevent(self, dat, mean, sd, nSD, blksz):
-		tdat=dat
-		tt=[0, mean]
-		mu=[0]
-		a=[mean]
-		t1=0
-		while (1):
-			tt=self._levelchange( tdat[t1:], tt[1], sd, nSD, blksz )
-			t1+=tt[0]
-			mu.append(t1)
-			a.append(tt[1])
-			if abs(tt[1]) > (mean-nSD*sd):
-				break
+		cusumObj=cusum.cusumPlus(
+				edat, 
+				self.Fs,
+				eventstart=self.eStartEstimate,						# event start point
+				eventend=self.eEndEstimate,							# event end point
+				baselinestats=[ self.baseMean, self.baseSD, self.baseSlope ],
+				algosettingsdict=cusumSettings.copy(),
+				savets=False,
+				absdatidx=self.absDataStartIndex,
+				datafilehnd=None
+			)
+		cusumObj.processEvent()
 
-		delIdx=[]
-		for i in range(2, len(mu)-1):
-			if mu[i]-mu[i-1] < self.MinStateLength:
-				delIdx.extend([i])
+		if cusumObj.mdProcessingStatus != "normal":
+			# raise InvalidEvent
+			self.rejectEvent(cusumObj.mdProcessingStatus)
+		else:
+			return zip(cusumObj.mdCurrentStep, cusumObj.mdEventDelay)
 
-		for idx in sorted(delIdx, reverse=True):
-			del a[idx]
-			del mu[idx]
 
-		return zip(a,mu)

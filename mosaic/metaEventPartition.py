@@ -7,6 +7,7 @@
 	:License:	See LICENSE.TXT
 	:ChangeLog:
 	.. line-block::
+		1/28/16		AB 	Fixed a bug in analysis timing.
 		12/6/15 	AB 	Add sampling frequency to analysis info table
 		8/18/14		AB 	Fixed parallel processing cleanup.
 		5/17/14		AB 	Delete Plotting support
@@ -38,6 +39,7 @@ import metaTrajIO
 import sqlite3MDIO
 from mosaic.utilities.resource_path import format_path
 from mosaic.utilities.ionic_current_stats import OpenCurrentDist
+import mosaic.utilities.mosaicTiming as mosaicTiming
 
 # custom errors
 class ExcessiveDriftError(Exception):
@@ -85,6 +87,8 @@ class metaEventPartition(object):
 		self.settingsDict = eventPartitionSettings 
 		self.eventProcSettingsDict = eventProcSettings
 
+		self.procTime=0.0
+
 		try:
 			self.writeEventTS=int(self.settingsDict.pop("writeEventTS",1))
 			self.parallelProc=int(self.settingsDict.pop("parallelProc",1))
@@ -102,8 +106,8 @@ class metaEventPartition(object):
 		self.mdioDBHnd.initDB(
 								dbPath=self.trajDataObj.datPath, 
 								tableName='metadata',
-								colNames=(self.tEventProcObj.mdHeadings())+['TimeSeries'],
-								colNames_t=(self.tEventProcObj.mdHeadingDataType())+['REAL_LIST']
+								colNames=(self.tEventProcObj.mdHeadings()),
+								colNames_t=(self.tEventProcObj.mdHeadingDataType())
 							)
 		self.mdioDBHnd.writeSettings(settingsString)
 		if self.trajDataObj.dataFilter:
@@ -116,6 +120,8 @@ class metaEventPartition(object):
 		if self.parallelProc:
 			self._setupparallel()
 
+		# Setup function timing
+		self.timingObj=mosaicTiming.mosaicTiming()
 
 		self._init(trajDataObj, eventProcHnd, eventPartitionSettings, eventProcSettings)
 
@@ -163,7 +169,7 @@ class metaEventPartition(object):
 		self._setuppartition()
 
 		try:
-			startTime=time.time()
+			startTime=self.timingObj.time()
 			while(1):	
 				# with each pass obtain more data and
 				d=self.trajDataObj.popdata(self.nPoints)
@@ -183,13 +189,13 @@ class metaEventPartition(object):
 
 
 		except metaTrajIO.EmptyDataPipeError, err:
-			self.segmentTime=time.time()-startTime
+			self.segmentTime=self.timingObj.time()-startTime
 			self.outputString='[Status]\n\tSegment trajectory: ***NORMAL***\n'
 		except (ExcessiveDriftError, DriftRateError) as err:
-			self.segmentTime=time.time()-startTime
+			self.segmentTime=self.timingObj.time()-startTime
 			self.outputString='[Status]\n\tSegment trajectory: ***ERROR***\n\t\t{0}\n'.format(str(err))
 		except KeyboardInterrupt, err:
-			self.segmentTime=time.time()-startTime
+			self.segmentTime=self.timingObj.time()-startTime
 			self.outputString='[Status]\n\tSegment trajectory: ***USER STOP***\n'
 		except:
 			raise
@@ -311,8 +317,8 @@ class metaEventPartition(object):
 												[ 
 													"sqlite3MDIO", 
 													self.mdioDBHnd.dbFilename,
-													(self.tEventProcObj.mdHeadings())+['TimeSeries'],
-													(self.tEventProcObj.mdHeadingDataType())+['REAL_LIST'] 
+													(self.tEventProcObj.mdHeadings()),
+													(self.tEventProcObj.mdHeadingDataType()) 
 												],
 											)
 										)
@@ -340,7 +346,7 @@ class metaEventPartition(object):
 		if self.meanOpenCurr == -1. or self.sdOpenCurr == -1. or self.slopeOpenCurr == -1.:
 			[ self.meanOpenCurr, self.sdOpenCurr, self.slopeOpenCurr ] = self._openchanstats(self.trajDataObj.previewdata(self.nPoints))
 		else:
-			print "Automatic open channel state estimation has been disabled."
+			print "WARNING: Automatic open channel state estimation has been disabled."
 
 		# Initialize a FIFO queue to keep track of open channel conductance
 		#self.openchanFIFO=npfifo.npfifo(nPoints)
@@ -361,7 +367,7 @@ class metaEventPartition(object):
 
 	def _cleanupeventprocessing(self):
 		# Process individual events identified by the segmenting algorithm
-		startTime=time.time()
+		startTime=self.timingObj.time()
 		try:
 			if self.parallelProc:
 				# gather up any remaining results from the worker processes
@@ -376,13 +382,13 @@ class metaEventPartition(object):
 	    					sys.stdout.flush()
 
 			self.outputString='\tProcess events: ***NORMAL***\n\n\n'
-			self.procTime=time.time()-startTime
+			self.procTime+=self.timingObj.time()-startTime
 		except KeyboardInterrupt:
-			self.procTime=time.time()-startTime
+			self.procTime+=self.timingObj.time()-startTime
 			self.outputString+='\tProcess events: ***USER STOP***\n\n\n'
 		except BaseException, err:
 			self.outputString='\tProcess events: ***ERROR***\n\t\t{0}\n\n\n'.format(str(err))
-			self.procTime=time.time()-startTime
+			self.procTime+=self.timingObj.time()-startTime
 			raise
 
 		sys.stdout.write('                                                                    \r' )
@@ -426,11 +432,11 @@ class metaEventPartition(object):
 		self.outputString+='\tLog file = eventProcessing.log\n\n'
 
 		# Finally, timing information
-		self.outputString+='[Timing]\n\tSegment trajectory = {0} s\n'.format(round(self.segmentTime,2))
+		self.outputString+='[Timing]\n\tSegment trajectory = {0} s\n'.format(round(self.segmentTime-self.procTime,2))
 		self.outputString+='\tProcess events = {0} s\n\n'.format(round(self.procTime,2))
-		self.outputString+='\tTotal = {0} s\n'.format(round(self.segmentTime+self.procTime,2))
+		self.outputString+='\tTotal = {0} s\n'.format(round(self.segmentTime,2))
 		if self.eventcount > 0:
-			self.outputString+='\tTime per event = {0} ms\n\n\n'.format(round(1000.*(self.segmentTime+self.procTime)/float(self.eventcount),2))
+			self.outputString+='\tTime per event = {0} ms\n\n\n'.format(round(1000.*(self.segmentTime)/float(self.eventcount),2))
 		
 		# write it all out to stdout and also to a file
 		# eventProcessing.log in the data location
@@ -506,6 +512,8 @@ class metaEventPartition(object):
 		self.windowOpenCurrentSlope=sl
 
 	def _processEvent(self, eventobj):
+		startTime=self.timingObj.time()
+
 		if self.parallelProc:
 			# handle parallel
 			sys.stdout.flush()
@@ -529,3 +537,5 @@ class metaEventPartition(object):
 			# call the process event function and store
 			eventobj.processEvent()
 			# self.eventQueue.append( eventobj )
+
+		self.procTime+=self.timingObj.time()-startTime
