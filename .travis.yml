@@ -3,7 +3,8 @@ sudo: false
 python:
   - "2.7"
 notifications:
-  email: false
+  email: 
+    on_failure: true
 addons:
   apt:
     packages:
