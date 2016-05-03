@@ -19,4 +19,4 @@ before_install:
 install:
   - travis_wait travis_retry pip install -r requirements.txt --upgrade
 script: 
-  - nosetests -w mosaic/utest/ mosaicTests.py
+  - python setup.py mosaic_tests
