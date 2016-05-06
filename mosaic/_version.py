@@ -4,7 +4,7 @@ from mosaic.utilities.resource_path import resource_path
 __version__="1.3"
 
 try:
-	__build__=subprocess.check_output(['git', 'rev-parse', '--short', 'HEAD']).strip()
+	__build__=subprocess.check_output(['git', 'rev-parse', '--short', 'HEAD'], stderr=subprocess.STDOUT).strip()
 except:
 	__build__=""
 
