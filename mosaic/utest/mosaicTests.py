@@ -134,6 +134,21 @@ class EventPartitionTest(object):
 		for f in glob.glob('testdata/*.sqlite'):
 			os.remove(f)
 
+class ModuleImportTest(object):
+	def runTestCase(self, modulename):
+		module=__import__(modulename)
+
+		for submod in modulename.split('.')[1:]:
+			module=getattr(module, submod)
+
+		return
+
+class DependencyVersionTest(object):
+	def runTestCase(self, dep, minver):
+		module=__import__(dep)
+
+		assert module.__version__ >= minver
+
 class EventPartitionSingle_TestSuite(EventPartitionTest):
 	def test_eventPartition(self):
 		for i in range(1,6):
@@ -165,3 +180,79 @@ class TwoState_TestSuite(Base2StateTest):
 		for i in range(1,15):
 			basename='testdata/test'+str(i)
 			yield self.runTestCase, basename+'.csv', basename+'.prm', a2s.adept2State
+
+class DepencencyVersion_TestSuite(DependencyVersionTest):
+	def test_dependencyVersion(self):
+		with open('../../requirements.txt', 'r') as req:
+			modlist=req.read()
+
+		for mod in modlist.split():
+			m,v=mod.split('==')
+
+			# This is a hack to handle non-essential deps
+			if m not in ['pyinstaller', 'PyWavelets']:
+				yield self.runTestCase, m, v
+
+class ModuleImport_TestSuite(ModuleImportTest):
+	def test_moduleImport(self):
+		moduleList=[
+		'mosaic',
+		'mosaic.ConvertToCSV', 
+		'mosaic.besselLowpassFilter',	
+		'mosaic.metaEventPartition', 
+		'mosaic.settings',
+		'mosaic.SingleChannelAnalysis',	
+		'mosaic.binTrajIO', 
+		'mosaic.metaEventProcessor', 
+		'mosaic.singleStepEvent', 
+		'mosaic.commonExceptions', 
+		'mosaic.metaIOFilter', 
+		'mosaic.sqlite3MDIO',
+		'mosaic._version', 
+		'mosaic.convolutionFilter',
+		'mosaic.metaMDIO', 
+		'mosaic.tsvTrajIO',
+		'mosaic.abfTrajIO', 
+		'mosaic.cusumPlus', 
+		'mosaic.metaTrajIO', 
+		'mosaic.waveletDenoiseFilter',
+		'mosaic.adept', 
+		'mosaic.errors', 
+		'mosaic.pproc', 
+		'mosaic.zmqIO',
+		'mosaic.adept2State',
+		'mosaic.eventSegment', 
+		'mosaic.qdfTrajIO', 
+		'mosaic.zmqWorker',
+		'mosaic.utilities.ionic_current_stats', 
+		'mosaic.utilities.resource_path',
+		'mosaic.utilities.analysis',
+		'mosaic.utilities.mosaicLog',
+		'mosaic.utilities.sqlQuery',
+		'mosaic.utilities.fit_funcs',
+		'mosaic.utilities.mosaicTiming',
+		'mosaic.utilities.util',
+		'mosaicgui',
+		'mosaicgui.EBSStateFileDict',
+		'mosaicgui.autocompleteedit',
+		'mosaicgui.mosaicGUI',
+		'mosaicgui.sqlQueryWorker',
+		'mosaicgui.datamodel', 
+		'mosaicgui.mplwidget',
+		'mosaicgui.updateService',
+		'mosaicgui.analysisWorker',
+		'mosaicgui.datapathedit',
+		'mosaicgui.settingsview',
+		'mosaicgui.aboutdialog.aboutdialog',
+		'mosaicgui.advancedsettings.advancedsettings',
+		'mosaicgui.blockdepthview.blockdepthview',
+		'mosaicgui.consolelog.consolelog',
+		'mosaicgui.csvexportview.csvexportview',
+		'mosaicgui.fileview.fileview',
+		'mosaicgui.fiteventsview.fiteventsview',
+		'mosaicgui.statisticsview.statisticsview',
+		'mosaicgui.trajview.trajview'
+		]
+
+		for module in moduleList:
+			yield self.runTestCase, module
