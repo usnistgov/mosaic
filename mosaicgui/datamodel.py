@@ -49,6 +49,7 @@ class guiDataModel(dict):
 		self["dcOffset"]=0.0
 		self["Rfb"]=0.0
 		self["Cfb"]=0.0
+		self["format"]="V"
 		self["scale"]=1.0
 
 		self.jsonSettingsObj=None
@@ -139,8 +140,10 @@ class guiDataModel(dict):
 		dargs={}
 
 		if self["DataFilesType"]=="QDF":
-			keys.extend(["Rfb", "Cfb"])
-			dargs.update({"filter"	: self["filter"]})
+			keys.extend(["Rfb", "Cfb", "format"])
+			dargs.update({
+				"filter"	: self["filter"]
+				})
 		elif self["DataFilesType"]=="BIN":
 			keys.extend(["AmplifierScale", "AmplifierOffset", "SamplingFrequency", "HeaderOffset", "ColumnTypes", "IonicCurrentColumn"])
 			dargs.update({"filter"	: self["filter"]})
@@ -272,6 +275,7 @@ class guiDataModel(dict):
 								"end"	 				: float,
 								"Rfb" 					: float,
 								"Cfb" 					: float,
+								"format"				: str,
 								"ProcessingAlgorithm"	: str,
 								"PartitionAlgorithm"	: str,
 								"FilterAlgorithm"		: str,
@@ -356,6 +360,7 @@ class guiDataModel(dict):
 								"start" 				: float,
 								"Rfb" 					: float,
 								"Cfb" 					: float,
+								"format"				: str,
 								"AmplifierScale"		: str,
 								"AmplifierOffset"		: str,
 								"SamplingFrequency"		: int,

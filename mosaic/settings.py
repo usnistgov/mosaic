@@ -161,7 +161,8 @@ __settings__="""
 			"Cfb": 1.07e-12, 
 			"dcOffset": 0.0, 
 			"filter": "*.qdf", 
-			"start": 0.0
+			"start": 0.0,
+			"format" : "V"
 		},
 		"binTrajIO": {
 			"AmplifierScale": "1.0", 
