@@ -32,8 +32,6 @@ class ModuleImport_TestSuite(ModuleImportTest):
 		'mosaic.waveletDenoiseFilter',
 		'mosaic.adept', 
 		'mosaic.errors', 
-		'mosaic.pproc', 
-		'mosaic.zmqIO',
 		'mosaic.adept2State',
 		'mosaic.eventSegment', 
 		'mosaic.qdfTrajIO', 

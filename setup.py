@@ -15,9 +15,9 @@ class mosaicUnitTests(Command):
 
     def run(self):
         if self.verbose:
-            os.system('nosetests -v -w mosaic/utest/ mosaicTests.py')
+            os.system('nosetests -v -w mosaic/utest/')
         else:
-            os.system('nosetests -w mosaic/utest/ mosaicTests.py')
+            os.system('nosetests -w mosaic/utest/')
 
 class mosaicBinaries(Command):
     description = "build MOSAIC binaries."
