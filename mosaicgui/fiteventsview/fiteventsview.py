@@ -60,7 +60,7 @@ class FitEventWindow(QtGui.QDialog):
 		QtCore.QObject.connect(self.eventIndexLineEdit, QtCore.SIGNAL('editingFinished()'), self.OnEventIndexLineEditChange)
 		QtCore.QObject.connect(self.eventIndexLineEdit, QtCore.SIGNAL('editingFinished()'), self.OnEventIndexLineEditChange)
 		QtCore.QObject.connect(self.eventIndexHorizontalSlider, QtCore.SIGNAL('valueChanged ( int )'), self.OnEventIndexSliderChange)
-
+		QtCore.QObject.connect(self.eventParamsCheckBox, QtCore.SIGNAL('stateChanged( int )'), self.OnEventParamsCheckboxState)
 
 	def openDB(self, dbpath, FskHz, updateOnIdle=True):
 		"""
@@ -245,6 +245,12 @@ class FitEventWindow(QtGui.QDialog):
 	def OnEventIndexSliderChange(self, value):
 		self.eventIndex=int(value)
 		self.update_graph()
+
+	def OnEventParamsCheckboxState(self, state):
+		if state:
+			self.setGeometry(1050, 295, 375, 450)
+		else:
+			self.setGeometry(1050, 295, 375, 350)
 
 	def OnAppIdle(self):
 		if not self.updateDataOnIdle:
