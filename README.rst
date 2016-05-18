@@ -1,3 +1,6 @@
+.. image:: https://travis-ci.org/usnistgov/mosaic.svg?branch=devel-1.0
+    :target: https://travis-ci.org/usnistgov/mosaic
+    
 MOSAIC: A modular single-molecule analysis interface
 =================================
 
@@ -6,9 +9,7 @@ MOSAIC is a single molecule analysis toolbox that automatically decodes multi-st
 
 Nanometer-scale pores have demonstrated potential use in biotechnology applications, including DNA sequencing, single-molecule force spectroscopy, and single-molecule mass spectrometry. The data modeling and analysis methods implemented in MOSAIC allow for dramatic improvements in the quantification of molecular interactions with the channel in each of these applications.
 
-**If you use MOSAIC in your work, please cite:**
-
-\A. Balijepalli, J., Ettedgui, A. T. Cornio, J. W. F. Robertson K. P. Cheung, J. J. Kasianowicz & C. Vaz, "`Quantifying Short-Lived Events in Multistate Ionic Current Measurements. <http://pubs.acs.org/doi/abs/10.1021/nn405761y>`_" *ACS Nano* 2014, **8**, 1547–1553.
+**If you use MOSAIC in your work, please cite:** `ACS Nano 2014, 8, 1547–1553.  <http://pubs.acs.org/doi/abs/10.1021/nn405761y>`_
 
 
 Installation
@@ -55,7 +56,8 @@ Change Log
 - Added a new metadata column (mdStateResTime) that saves the residence time of each state to the database. This affects ADEPT and CUSUM+.
 - Removed mosaicgui from PyPi. 'pip install mosaic-nist' only installs command line modules. 
 - Top level ConvertToCSV supports arbitrary file extensions.
-
+- Added Travis continous integration support.
+- [GUI] Added a table that displays fit parameters in the event viewer window.
 - [GUI] Added more descriptive fit errors.
 - [GUI] Added CUSUM+ support to MOSAIC GUI.
 - [GUI] Export SQLITE database to CSV (#56).

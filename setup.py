@@ -5,21 +5,19 @@ import sys
 
 class mosaicUnitTests(Command):
     description = "run the MOSAIC unit test suite."
-    user_options = [
-                    ('testoutput', 't', "verbose test output"),
-                    ]
+    user_options = []
 
     def initialize_options(self):
-        self.testoutput=None
+        pass
 
     def finalize_options(self):
         pass
 
     def run(self):
-        if self.testoutput:
-            os.system('nosetests -v -w mosaic/utest/ mosaicTests.py')
+        if self.verbose:
+            os.system('nosetests -v -w mosaic/utest/')
         else:
-            os.system('nosetests -w mosaic/utest/ mosaicTests.py')
+            os.system('nosetests -w mosaic/utest/')
 
 class mosaicBinaries(Command):
     description = "build MOSAIC binaries."
@@ -123,6 +121,8 @@ class mosaicDocs(Command):
 
 setup(
     cmdclass={
+        'test'              : mosaicUnitTests, 
+        'nosetests'         : mosaicUnitTests, 
         'mosaic_tests'      : mosaicUnitTests, 
         'mosaic_docs'       : mosaicDocs, 
         'mosaic_bin'        : mosaicBinaries, 
@@ -163,5 +163,4 @@ setup(
     license='LICENSE.txt',
     description='A Modular Single-Molecule Analysis Interface.',
     long_description=open('README.rst').read(),
-    # include_dirs=[numpy.get_include()],
 )

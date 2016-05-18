@@ -71,7 +71,7 @@ class metaEventPartition(object):
 		current working directory)
 
 			- `writeEventTS` :	Write event current data to file. (default: 1, write data to file)
-			- `parallelProc` :	Process events in parallel using the pproc module. (default: 1, Yes)
+			- `parallelProc` :	Process events in parallel. (default: 1, Yes)
 			- `reserveNCPU` :		Reserve the specified number of CPUs and exclude them from the parallel pool
 	"""
 	__metaclass__=ABCMeta

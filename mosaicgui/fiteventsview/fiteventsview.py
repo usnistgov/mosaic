@@ -52,12 +52,17 @@ class FitEventWindow(QtGui.QDialog):
 		# setup hash tables used in this class
 		self._setupdict()
 
+		self._columnhead=[u"\u3008i\u2C7C\u27E9/\u3008i\u2080\u27E9", u"t\u2C7C (\u00B5s)"]
+
+		self.tableModel = FitViewModel(self, [['N/A'], ['N/A']], [self._columnhead,['1']])
+		self.fitStatesTableView.setModel(self.tableModel)		
+
 		QtCore.QObject.connect(self.nextEventToolButton, QtCore.SIGNAL("clicked()"), self.OnNextButton)
 		QtCore.QObject.connect(self.previousEventToolButton, QtCore.SIGNAL("clicked()"), self.OnPreviousButton)
 		QtCore.QObject.connect(self.eventIndexLineEdit, QtCore.SIGNAL('editingFinished()'), self.OnEventIndexLineEditChange)
 		QtCore.QObject.connect(self.eventIndexLineEdit, QtCore.SIGNAL('editingFinished()'), self.OnEventIndexLineEditChange)
 		QtCore.QObject.connect(self.eventIndexHorizontalSlider, QtCore.SIGNAL('valueChanged ( int )'), self.OnEventIndexSliderChange)
-
+		QtCore.QObject.connect(self.eventParamsCheckBox, QtCore.SIGNAL('stateChanged( int )'), self.OnEventParamsCheckboxState)
 
 	def openDB(self, dbpath, FskHz, updateOnIdle=True):
 		"""
@@ -91,6 +96,8 @@ class FitEventWindow(QtGui.QDialog):
 
 			self.stepFuncHnd=self.stepFuncHndDict[self.analysisAlgorithm]
 			self.stepFuncArgs=self.stepFuncArgsDict[self.analysisAlgorithm]
+
+			self.bdFuncArgs=self.blockDepthArgsDict[self.analysisAlgorithm]
 		except KeyError:
 			from mosaic.settings import __legacy_settings__
 		
@@ -103,6 +110,8 @@ class FitEventWindow(QtGui.QDialog):
 
 			self.stepFuncHnd=self.stepFuncHndDict[legacyAlgo]
 			self.stepFuncArgs=self.stepFuncArgsDict[legacyAlgo]
+
+			self.bdFuncArgs=self.blockDepthArgsDict[legacyAlgo]
 
 			# self.fitFuncHnd=None
 			# self.fitFuncArgs="[]"
@@ -130,7 +139,7 @@ class FitEventWindow(QtGui.QDialog):
 			Position settings window at the top left corner
 		"""
 		screen = QtGui.QDesktopWidget().screenGeometry()
-		self.setGeometry(1050, 295, 375, 350)
+		self.setGeometry(1050, 295, 375, 510)
 		# self.move( (-screen.width()/2)+200, -screen.height()/2 )
 
 
@@ -165,6 +174,10 @@ class FitEventWindow(QtGui.QDialog):
 					self.mpl_hist.canvas.ax.plot( xstep, ystep, linestyle='--', linewidth='2.0', color=cs)
 
 				self.errLabel.setText(str(""))
+
+				header, data=self._bdTable(*eval(self.bdFuncArgs))
+				self.tableModel.update( header, data ) 
+				self.fitStatesTableView.resizeColumnsToContents()
 			else:
 				self.mpl_hist.canvas.ax.cla()
 				self.mpl_hist.canvas.ax.plot( xdat, ydat, linestyle='None', marker='o', color='r', markersize=8, markeredgecolor='none', alpha=0.6)
@@ -172,6 +185,8 @@ class FitEventWindow(QtGui.QDialog):
 				# Set error line edit color to red
 				self.errLabel.setStyleSheet(css)
 				self.errLabel.setText("Error: "+ self.errText[str(q[0])] )
+
+				self.tableModel.update( [self._columnhead,['1']], [['N/A'], ['N/A']] )
 
 			self._ticks(5)
 
@@ -233,6 +248,12 @@ class FitEventWindow(QtGui.QDialog):
 		self.eventIndex=int(value)
 		self.update_graph()
 
+	def OnEventParamsCheckboxState(self, state):
+		if state:
+			self.setGeometry(1050, 295, 375, 470)
+		else:
+			self.setGeometry(1050, 295, 375, 370)
+
 	def OnAppIdle(self):
 		if not self.updateDataOnIdle:
 			return
@@ -272,6 +293,13 @@ class FitEventWindow(QtGui.QDialog):
 		except:
 			raise
 
+	def _bdTable(self, currentStep, openChCurr, eventDelay, nStates):
+		header=[ str(i) for i in range(1, nStates+1)]
+		blockDepth=[ str(round(bd, 4)) for bd in (np.cumsum(np.array([openChCurr]+currentStep))[1:])/openChCurr][:nStates]
+		resTimes=[ str(round(rt, 2)) for rt in np.diff(eventDelay)*1000. ]
+
+		return [ [self._columnhead, header], [ blockDepth, resTimes] ]
+
 	def _setupdict(self):
 		self.keyDict={
 			QtCore.Qt.Key_Right : 	self.OnNextButton,
@@ -280,37 +308,94 @@ class FitEventWindow(QtGui.QDialog):
 
 		self.queryStringDict={
 			"adept2State" 	: "select ProcessingStatus, TimeSeries, RCConstant1, RCConstant2, EventStart, EventEnd, BlockedCurrent, OpenChCurrent from metadata limit " + str(self.viewerLimit),
-			"adept" 	: "select ProcessingStatus, TimeSeries, RCConstant, EventDelay, CurrentStep, OpenChCurrent from metadata limit " + str(self.viewerLimit),
+			"adept" 		: "select ProcessingStatus, TimeSeries, RCConstant, EventDelay, CurrentStep, OpenChCurrent from metadata limit " + str(self.viewerLimit),
 			"cusumPlus" 	: "select ProcessingStatus, TimeSeries, EventDelay, CurrentStep, OpenChCurrent from metadata limit " + str(self.viewerLimit)
 		}
 
 		self.fitFuncHndDict={
 			"adept2State" 	: fit_funcs.stepResponseFunc,
-			"adept" 	: fit_funcs.multiStateFunc,
+			"adept" 		: fit_funcs.multiStateFunc,
 			"cusumPlus" 	: None
 		}
 
 		self.fitFuncArgsDict={
 			"adept2State" 	: "[xfit, q[2], q[3], q[4], q[5], abs(q[7]-q[6]), q[7]]",
-			"adept" 	: "[xfit, q[2], q[3], q[4], q[5], len(q[3])]",
+			"adept" 		: "[xfit, q[2], q[3], q[4], q[5], len(q[3])]",
 			"cusumPlus" 	: "[]"
 		}
 
 		self.stepFuncHndDict={
 			"adept2State" 	: fit_funcs.multiStateStepFunc,
-			"adept" 	: fit_funcs.multiStateStepFunc,
-			"cusumPlus"	: fit_funcs.multiStateStepFunc
+			"adept" 		: fit_funcs.multiStateStepFunc,
+			"cusumPlus"		: fit_funcs.multiStateStepFunc
 		}
 
 		self.stepFuncArgsDict={
 			"adept2State" 	: "[xstep, [q[4], q[5]], [-abs(q[7]-q[6]), abs(q[7]-q[6])], q[7], 2]",
-			"adept" 	: "[xstep, q[3], q[4], q[5], len(q[3])]",
+			"adept" 		: "[xstep, q[3], q[4], q[5], len(q[3])]",
 			"cusumPlus" 	: "[xstep, q[2], q[3], q[4], len(q[2])]"
 		}
 
+		self.blockDepthArgsDict={
+			"adept2State" 	: "[[-abs(q[7]-q[6])], q[7], [q[4],q[5]], 1]",
+			"adept" 		: "[q[4], q[5], q[3], len(q[3])-1]",
+			"cusumPlus" 	: "[q[3], q[4], q[2], len(q[2])-1]"
+		}
+
+class FitViewModel(QtCore.QAbstractTableModel):
+	def __init__(self, parent, data, header, *args):
+		QtCore.QAbstractTableModel.__init__(self, parent, *args)
+
+		self.data=data
+		self.header=header
+
+	def rowCount(self, parent):
+		try:
+			return len(self.data)
+		except IndexError:
+			return 0
+
+	def columnCount(self, parent):
+		try:
+			return len(self.data[0])
+		except IndexError:
+			return 0
+
+	def data(self, index, role):
+		if not index.isValid():
+			return None
+		elif role != QtCore.Qt.DisplayRole:
+			return None
+
+		return self.data[index.row()][index.column()]
+
+	def headerData(self, idx, orientation, role):
+		try:
+			if orientation == QtCore.Qt.Vertical and role == QtCore.Qt.DisplayRole:
+				return self.header[0][idx]
+			elif orientation == QtCore.Qt.Horizontal and role == QtCore.Qt.DisplayRole:
+				return self.header[1][idx]
+		except IndexError:
+			return None
+
+	def sort(self, col, order):
+		self.emit(QtCore.SIGNAL("layoutAboutToBeChanged()"))
+		self.data = sorted(self.data, key=operator.itemgetter(col))
+
+		if order == QtCore.Qt.DescendingOrder:
+			self.data.reverse()
+		
+		self.emit(QtCore.SIGNAL("layoutChanged()"))
+
+	def update(self, header, data):
+		self.header=header
+		self.data=data
+
+		self.emit(QtCore.SIGNAL("layoutChanged()"))
 
 if __name__ == '__main__':
 	dbfile=resource_path('eventMD-PEG28-cusumLevelAnalysis.sqlite')
+	# dbfile=resource_path('eventMD-PEG28-ADEPT2State.sqlite')
 	# dbfile=resource_path('eventMD-tempMSA.sqlite')
 
 	app = QtGui.QApplication(sys.argv)
