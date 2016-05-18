@@ -52,7 +52,9 @@ class FitEventWindow(QtGui.QDialog):
 		# setup hash tables used in this class
 		self._setupdict()
 
-		self.tableModel = FitViewModel(self, [['N/A','N/A','N/A'], ['N/A','N/A','N/A']], [["<i>/<i_0>", "Res. Time (us)"],['1', '2', '3']])
+		self._columnhead=[u"\u3008i\u2C7C\u27E9/\u3008i\u2080\u27E9", u"t\u2C7C (\u00B5s)"]
+
+		self.tableModel = FitViewModel(self, [['N/A'], ['N/A']], [self._columnhead,['1']])
 		self.fitStatesTableView.setModel(self.tableModel)		
 
 		QtCore.QObject.connect(self.nextEventToolButton, QtCore.SIGNAL("clicked()"), self.OnNextButton)
@@ -184,7 +186,7 @@ class FitEventWindow(QtGui.QDialog):
 				self.errLabel.setStyleSheet(css)
 				self.errLabel.setText("Error: "+ self.errText[str(q[0])] )
 
-				self.tableModel.update( [], [] )
+				self.tableModel.update( [self._columnhead,['1']], [['N/A'], ['N/A']] )
 
 			self._ticks(5)
 
@@ -248,9 +250,9 @@ class FitEventWindow(QtGui.QDialog):
 
 	def OnEventParamsCheckboxState(self, state):
 		if state:
-			self.setGeometry(1050, 295, 375, 450)
+			self.setGeometry(1050, 295, 375, 470)
 		else:
-			self.setGeometry(1050, 295, 375, 350)
+			self.setGeometry(1050, 295, 375, 370)
 
 	def OnAppIdle(self):
 		if not self.updateDataOnIdle:
@@ -296,7 +298,7 @@ class FitEventWindow(QtGui.QDialog):
 		blockDepth=[ str(round(bd, 4)) for bd in (np.cumsum(np.array([openChCurr]+currentStep))[1:])/openChCurr][:nStates]
 		resTimes=[ str(round(rt, 2)) for rt in np.diff(eventDelay)*1000. ]
 
-		return [ [[u"\u3008i\u2C7C\u27E9/\u3008i\u2080\u27E9", u"t\u2C7C (\u00B5s)"], header], [ blockDepth, resTimes] ]
+		return [ [self._columnhead, header], [ blockDepth, resTimes] ]
 
 	def _setupdict(self):
 		self.keyDict={
