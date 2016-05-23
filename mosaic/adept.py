@@ -7,6 +7,7 @@
 	:License:	See LICENSE.TXT
 	:ChangeLog:
 	.. line-block::
+		05/22/16    JF  Added new test to reject BD < 0 or BD > 1, improved readability of error tests.
 		03/30/16 	AB 	Change UnlinkRCConst to LinkRCConst to avoid double negatives.
 		3/16/16 	AB 	Migrate InitThreshold setting to CUSUM StepSize.
 		2/22/16 	AB 	Use CUSUM to estimate intial guesses in ADEPT for long events.
@@ -336,10 +337,13 @@ class adept(metaEventProcessor.metaEventProcessor):
 					
 				# if math.isnan(self.mdRedChiSq):
 				# 	self.rejectEvent('eInvalidRedChiSq')	
-				if not (np.array(self.mdStateResTime)>0).all():
+				if ((np.array(self.mdBlockDepth)<0).all() or (np.array(self.mdBlockDepth)>1).all()):
+					self.rejectEvent('eInvalidBlockDepth')
+				if (np.array(self.mdStateResTime)<0).all():
 					self.rejectEvent('eNegativeEventDelay')
-				elif not (np.array(self.mdRCConst)>0).all():
+				elif (np.array(self.mdRCConst)<0).all():
 					self.rejectEvent('eInvalidRCConst')
+
 		except:
 			self.rejectEvent('eInvalidEvent')
 
