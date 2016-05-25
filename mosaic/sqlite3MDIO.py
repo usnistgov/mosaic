@@ -24,6 +24,8 @@ import pandas
 
 import numpy
 import metaMDIO
+
+import mosaic
 from mosaic.utilities.resource_path import resource_path, format_path
 
 class data_record(dict):
@@ -145,7 +147,7 @@ class sqlite3MDIO(metaMDIO.metaMDIO):
 		with self.db:
 			# allow only one entry in this table
 			self.db.execute('DELETE FROM analysisinfo')
-			self.db.execute( 'INSERT INTO analysisinfo VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)',  (infolist+[None]))
+			self.db.execute( 'INSERT INTO analysisinfo VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',  (infolist+[mosaic.__version__, mosaic.__build__, None]))
 
 
 	def writeAnalysisLog(self, analysislog):
@@ -301,6 +303,8 @@ class sqlite3MDIO(metaMDIO.metaMDIO):
 					analysisTimeSec REAL, \
 					dataLengthSec REAL, \
 					FsHz REAL, \
+					mosaicVer TEXT, \
+					mosaicBuild TEXT, \
 					recIDX INTEGER PRIMARY KEY AUTOINCREMENT \
 				)")
 
@@ -345,13 +349,7 @@ if __name__=="__main__":
 		c=sqlite3MDIO()
 		c.openDB(dbname)
 
-		import time
-
-		t1=time.time()
 		q=c.queryDB( "select TimeSeries from metadata limit 100, 200" )
-		t2=time.time()
-
-		print "Timing: ", round((t2-t1)*1000, 2), " ms"
 		print "Results:", len(q)
 
 		print c.readSettings()

@@ -2,22 +2,26 @@ from setuptools import setup, Command
 import mosaic
 import os
 import sys
+import nose
 
 class mosaicUnitTests(Command):
     description = "run the MOSAIC unit test suite."
     user_options = []
 
     def initialize_options(self):
-        self.cwd = None
+        pass
 
     def finalize_options(self):
-        self.cwd = os.getcwd()
+        pass
 
     def run(self):
-        if not self.verbose:
-            os.system('nosetests -w mosaic/utest/ mosaicTests.py')
-        else:
-            os.system('nosetests -v -w mosaic/utest/ mosaicTests.py')
+        try:
+            if self.verbose:
+                return nose.main(argv=['mosaic', '-v', '--where=mosaic/utest/'])
+            else:
+                return nose.main(argv=['mosaic', '--where=mosaic/utest/'])
+        except:
+            raise
 
 class mosaicBinaries(Command):
     description = "build MOSAIC binaries."
@@ -118,10 +122,11 @@ class mosaicDocs(Command):
             os.system("make -C _docs clean html latexpdf")
         else:
             os.system("make -C _docs html latexpdf")
-        
 
 setup(
     cmdclass={
+        'test'              : mosaicUnitTests, 
+        'nosetests'         : mosaicUnitTests, 
         'mosaic_tests'      : mosaicUnitTests, 
         'mosaic_docs'       : mosaicDocs, 
         'mosaic_bin'        : mosaicBinaries, 
@@ -138,9 +143,7 @@ setup(
             'mosaic.utest', 
             'mosaic.qdf',
             'mosaic.abf',
-            'mosaic.utilities',
-            'mosaicscripts',
-            'mosaicscripts.plots'
+            'mosaic.utilities'
             ],
     scripts=[
             'bin/analysis.py', 
@@ -155,22 +158,13 @@ setup(
             'data/eventMD-PEG28-cusumLevelAnalysis.sqlite',
             'data/.settings',
             'data/SingleChan-0001.qdf',
-            'data/SingleChan-0001_state.txt'
+            'data/SingleChan-0001_state.txt',
+            'commit-hash',
+            'requirements.txt'
             ],
-    install_requires=[
-            'cython==0.20.1',
-            'pandas==0.16.2',
-            'lmfit==0.8.3',
-            'uncertainties==2.4.6',
-            'PyWavelets==0.3.0',
-            'nose==1.3.4',
-            'matplotlib==1.4.3',
-            'numpy==1.9.0',
-            'scipy==0.14.0'
-      ],
+    install_requires=open('requirements.txt').read().splitlines(),
     url='https://usnistgov.github.io/mosaic/',
     license='LICENSE.txt',
     description='A Modular Single-Molecule Analysis Interface.',
     long_description=open('README.rst').read(),
-    # include_dirs=[numpy.get_include()],
 )

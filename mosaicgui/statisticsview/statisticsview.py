@@ -16,6 +16,7 @@ from PyQt4.QtCore import Qt
 
 import mosaic.sqlite3MDIO as sqlite
 from mosaic.utilities.resource_path import resource_path, last_file_in_directory
+from mosaic.utilities.analysis import caprate
 import mosaicgui.sqlQueryWorker as sqlworker
 
 css = """QLabel {
@@ -185,16 +186,7 @@ class StatisticsWindow(QtGui.QDialog):
 		if len(self.queryData) < 200:
 			return [0,0]
 
-		arrtimes=np.diff(self.queryData)/1000.		
-		counts, bins = np.histogram(arrtimes, bins=100, density=True)
-		
-		try:
-			popt, pcov = curve_fit(self._fitfunc, bins[:len(counts)], counts, p0=[1, np.mean(arrtimes)])
-			perr=np.sqrt(np.diag(pcov))
-		except:
-			return [0,0]
-
-		return self._roundcaprate([ 1/popt[1], 1/(popt[1]*math.sqrt(len(self.queryData))) ])
+		return self._roundcaprate(caprate(self.queryData))
 	
 	def _roundcaprate(self, caprate):
 		try:
@@ -219,8 +211,8 @@ class StatisticsWindow(QtGui.QDialog):
 
 		try:
 			pctcomplete=100.*self.analysisTime/float(self.trajLength)
-			
-			if pctcomplete<5.:
+
+			if pctcomplete<0.05:
 				return round(pctcomplete, 1), "calculating ..."
 			elif pctcomplete>90:
 				return int(round(pctcomplete/10.0)*10.0), self._formattime(int(self.wallTime/pctcomplete*(100.-pctcomplete)))
@@ -255,9 +247,6 @@ class StatisticsWindow(QtGui.QDialog):
 			return wtime
 		else:
 			return ""
-
-	def _fitfunc(self, t, a, tau):
-		return a * np.exp(-t/tau)
 
 	def OnAppIdle(self):
 		if not self.updateDataOnIdle:

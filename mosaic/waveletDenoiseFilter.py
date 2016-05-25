@@ -40,12 +40,6 @@ class waveletDenoiseFilter(mosaic.metaIOFilter.metaIOFilter):
 		except KeyError:
 			print "Missing mandatory arguments 'wavelet', 'level' or 'threshold'"
 
-		self.thrtypedict=	{
-								'soft' 		: pywt.thresholding.soft,
-								'hard' 		: pywt.thresholding.hard,
-								'greater' 	: pywt.thresholding.greater,
-								'less'		: pywt.thresholding.less
-							}
 
 	def filterData(self, icurr, Fs):
 		"""
@@ -70,10 +64,9 @@ class waveletDenoiseFilter(mosaic.metaIOFilter.metaIOFilter):
 		# Perform a simple threshold by setting all the detailed coefficients
 		# up to level n-1 to zero
 		thresh=np.std(wcoeff[-1])*self._thselect(wcoeff, self.waveletThresholdSubType)
-		thrfunc=self.thrtypedict[self.waveletThresholdType]
 
 		# print thresh, np.std(wcoeff[-1])
-		wcoeff[1:] = [ thrfunc(wc, thresh) for wc in wcoeff[1:] ]
+		wcoeff[1:] = [ pywt.threshold(wc, thresh, self.waveletThresholdType) for wc in wcoeff[1:] ]
 		# for i in range(1, self.waveletLevel):
 		# 	wcoeff[-i]=np.zeros(len(wcoeff[-i]))
 

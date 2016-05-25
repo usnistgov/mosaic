@@ -27,16 +27,19 @@ class AboutDialog(QtGui.QDialog):
 	def _setVersion(self):
 		import mosaic
 
-		self.versionLabel.setText( "Version " + mosaic.__version__ )
+		try:
+			if mosaic.__build__=="":
+				self.versionLabel.setText( "Version " + mosaic.__version__ )
+			else:
+				self.versionLabel.setText( "Version " + mosaic.__version__ + " (" + mosaic.__build__ + ")" )
+		except:
+			self.versionLabel.setText( "Version " + mosaic.__version__ )
 
 	def _positionWindow(self):
 		"""
 			Position settings window at the top left corner
 		"""
-		if sys.platform=='win32':
-			self.setGeometry(38, 250, 300, 200)
-		else:
-			self.setGeometry(38, 250, 300, 200)
+		self.setGeometry(38, 250, 300, 200)
 		
 if __name__ == '__main__':
 	app = QtGui.QApplication(sys.argv)

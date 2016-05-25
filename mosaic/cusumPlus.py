@@ -126,7 +126,7 @@ class cusumPlus(metaEventProcessor.metaEventProcessor):
 		except:
 			raise
 
-	def mdList(self):
+	def _mdList(self):
 		"""
 			Return a list of meta-data from the analysis of single step events. We explicitly
 			control the order of the data to keep formatting consistent. 				
@@ -146,7 +146,7 @@ class cusumPlus(metaEventProcessor.metaEventProcessor):
 					self.mdThreshold
 				]
 		
-	def mdHeadingDataType(self):
+	def _mdHeadingDataType(self):
 		"""
 			Return a list of meta-data tags data types.
 		"""
@@ -165,7 +165,7 @@ class cusumPlus(metaEventProcessor.metaEventProcessor):
 					'REAL'
 				]
 
-	def mdHeadings(self):
+	def _mdHeadings(self):
 		"""
 			Explicity set the metadata to print out.
 		"""
@@ -301,18 +301,32 @@ class cusumPlus(metaEventProcessor.metaEventProcessor):
 			if (self.nStates < 3):
                                 self.rejectEvent('eInvalidStates')
                         else:
-                                cusum['CurrentLevels'] = [np.average(edat[edges[i]+self.MinLength:edges[i+1]]) for i in range(self.nStates)] #detect current levels during detected sub-events
+                                minstepflag = 0
+                                while minstepflag == 0:
+                                        minstepflag = 1
+                                        currentlevels = [np.average(edat[edges[i]+self.MinLength:edges[i+1]]) for i in range(self.nStates)] #detect current levels during detected sub-events
+                                        toosmall = np.absolute(np.diff(currentlevels)) < self.StepSize*self.baseSD/2
+                                        for i in range(len(toosmall)):
+                                                if toosmall[i] == True:
+                                                        edges = np.delete(edges,i+1)
+                                                        minstepflag = 0
+                                                        self.nStates -= 1
+                                                        break
+                        if (self.nStates < 3):
+                                self.rejectEvent('eInvalidStates')
+                        else:
+                                cusum['CurrentLevels'] = currentlevels
                                 cusum['EventDelay'] = edges * dt #locations of sub-events in the data
                                 cusum['Threshold'] = Threshold #record the threshold used
                                 self.__recordevent(cusum)
+
 		except KeyboardInterrupt:
 			self.rejectEvent('eFitUserStop')
 			raise
 		except InvalidEvent:
 			self.rejectEvent('eInvalidEvent')
 		except:
-	 		self.rejectEvent('eFitFailure')
-	 		raise
+	 		self.rejectEvent('eUnknownError')
 
 
 	def __recordevent(self, cusum):

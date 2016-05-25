@@ -96,6 +96,7 @@ class TrajectoryWindow(QtGui.QDialog):
 					self.IOArgs["filter"]=self.datadict["filter"]
 					self.IOArgs["Rfb"]=self.datadict["Rfb"]
 					self.IOArgs["Cfb"]=self.datadict["Cfb"]
+					self.IOArgs["format"]=self.datadict["format"]
 				elif self.datadict["DataFilesType"] ==  "BIN":
 					self.iohnd=bin.binTrajIO
 

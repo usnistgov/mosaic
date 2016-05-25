@@ -16,6 +16,10 @@ import mosaic.utilities.fit_funcs as fit_funcs
 import matplotlib.ticker as ticker
 # from mosaicgui.trajview.trajviewui import Ui_Dialog
 
+css = """QLabel {
+      color: red;
+}"""
+
 class CSVExportWindow(QtGui.QDialog):
 	def __init__(self, parent = None):
 		self.v=[]
@@ -44,11 +48,13 @@ class CSVExportWindow(QtGui.QDialog):
 
 	# SLOTS
 	def OnExport(self):
-		# print self.FskHz
-		self._exportCSV()
+		try:
+			self._exportCSV()
 
-		self.accept()
-		# pass
+			self.accept()
+		except sqlite3.OperationalError, err:
+			self.errorLabel.setStyleSheet(css)
+			self.errorLabel.setText( "ERROR: "+str(err) )
 
 	def OnCancel(self):
 		self.reject()
@@ -70,7 +76,6 @@ class CSVExportWindow(QtGui.QDialog):
 
 		self._updateDBFields()
 
-
 	def closeDB(self):
 		if self.queryDatabase:
 			self.queryDatabase.closeDB()
@@ -80,7 +85,7 @@ class CSVExportWindow(QtGui.QDialog):
 			Position settings window at the top left corner
 		"""
 		screen = QtGui.QDesktopWidget().screenGeometry()
-		self.setGeometry(50, 200, 250, 150)
+		self.setGeometry(50, 200, 300, 150)
 		# self.move( (-screen.width()/2)+200, -screen.height()/2 )
 
 	def _updateDBFields(self):
@@ -116,7 +121,7 @@ if __name__ == '__main__':
 
 	app = QtGui.QApplication(sys.argv)
 	dmw = CSVExportWindow()
-	
+
 	dmw.openDBFile(dbfile, 500)
 	dmw.show()
 	dmw.raise_()

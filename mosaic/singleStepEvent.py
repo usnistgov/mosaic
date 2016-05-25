@@ -96,7 +96,7 @@ class singleStepEvent(metaEventProcessor.metaEventProcessor):
 		except:
 			raise
 
-	def mdList(self):
+	def _mdList(self):
 		"""
 			Return a list of meta-data from the analysis of single step events. We explicitly
 			control the order of the data to keep formatting consistent. 				
@@ -113,7 +113,7 @@ class singleStepEvent(metaEventProcessor.metaEventProcessor):
 				]
 		
 
-	def mdHeadings(self):
+	def _mdHeadings(self):
 		"""
 			Explicity set the metadata to print out.
 		"""
@@ -128,7 +128,7 @@ class singleStepEvent(metaEventProcessor.metaEventProcessor):
 					'A12TempOutput' 
 				]
 
-	def mdHeadingDataType(self):
+	def _mdHeadingDataType(self):
 		"""
 			Return a list of meta-data tags data types.
 		"""

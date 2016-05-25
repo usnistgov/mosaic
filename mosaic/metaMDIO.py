@@ -10,7 +10,7 @@
 		3/1/14		AB	Initial version
 """
 import os
-import time
+import mosaic.utilities.mosaicTiming as mosaicTiming
 from abc import ABCMeta, abstractmethod
 
 class InsufficientArgumentsError(Exception):
@@ -31,6 +31,9 @@ class metaMDIO(object):
 
 	def __init__(self):
 		self.pid=os.getpid()
+		
+		# Setup function timing
+		self.timingObj=mosaicTiming.mosaicTiming()
 
 	def initDB(self, **kwargs):
 		"""
@@ -220,6 +223,6 @@ class metaMDIO(object):
 		return self._dbfile()
 		
 	def _generateRecordKey(self):
-		return float(time.time()+self.pid)
+		return float(self.timingObj.time()+self.pid)
 
 

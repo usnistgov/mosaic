@@ -5,6 +5,8 @@
 	:License:	See LICENSE.TXT
 	:ChangeLog:
 		.. line-block::
+			03/30/16 	AB 	Change UnlinkRCConst to LinkRCConst.
+			3/16/16 	AB 	Migrate InitThreshold setting to CUSUM StepSize.
 			8/24/15 	AB 	Updated algorithm names to ADEPT and CUSUM+
 			6/24/15 	AB 	Added an option to unlink the RC constants in stepResponseAnalysis.
 			3/20/15		AB 	Added MaxEventLength to multiStateAnalysis settings
@@ -47,6 +49,7 @@ class guiDataModel(dict):
 		self["dcOffset"]=0.0
 		self["Rfb"]=0.0
 		self["Cfb"]=0.0
+		self["format"]="V"
 		self["scale"]=1.0
 
 		self.jsonSettingsObj=None
@@ -137,8 +140,10 @@ class guiDataModel(dict):
 		dargs={}
 
 		if self["DataFilesType"]=="QDF":
-			keys.extend(["Rfb", "Cfb"])
-			dargs.update({"filter"	: self["filter"]})
+			keys.extend(["Rfb", "Cfb", "format"])
+			dargs.update({
+				"filter"	: self["filter"]
+				})
 		elif self["DataFilesType"]=="BIN":
 			keys.extend(["AmplifierScale", "AmplifierOffset", "SamplingFrequency", "HeaderOffset", "ColumnTypes", "IonicCurrentColumn"])
 			dargs.update({"filter"	: self["filter"]})
@@ -270,6 +275,7 @@ class guiDataModel(dict):
 								"end"	 				: float,
 								"Rfb" 					: float,
 								"Cfb" 					: float,
+								"format"				: str,
 								"ProcessingAlgorithm"	: str,
 								"PartitionAlgorithm"	: str,
 								"FilterAlgorithm"		: str,
@@ -313,16 +319,16 @@ class guiDataModel(dict):
 								"FitTol" 				: float,
 								"FitIters" 				: int,
 								"BlockRejectRatio" 		: float,
-								"UnlinkRCConst" 			: bool
+								"LinkRCConst" 		: bool
 							}
 		self.adeptKeys={
 								"FitTol" 				: float,
 								"FitIters" 				: int,
 								"BlockRejectRatio" 		: float,
-								"InitThreshold"			: float,
+								"StepSize"			: float,
 								"MinStateLength"		: int,
 								"MaxEventLength" 		: int,
-								"UnlinkRCConst"			: bool
+								"LinkRCConst"			: bool
 							}
 		self.cusumPlusKeys={
 								"StepSize"				: float, 
@@ -354,6 +360,7 @@ class guiDataModel(dict):
 								"start" 				: float,
 								"Rfb" 					: float,
 								"Cfb" 					: float,
+								"format"				: str,
 								"AmplifierScale"		: str,
 								"AmplifierOffset"		: str,
 								"SamplingFrequency"		: int,

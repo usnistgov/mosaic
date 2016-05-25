@@ -1,3 +1,6 @@
+.. image:: https://travis-ci.org/usnistgov/mosaic.svg?branch=devel-1.0
+    :target: https://travis-ci.org/usnistgov/mosaic
+    
 MOSAIC: A modular single-molecule analysis interface
 =================================
 
@@ -6,9 +9,7 @@ MOSAIC is a single molecule analysis toolbox that automatically decodes multi-st
 
 Nanometer-scale pores have demonstrated potential use in biotechnology applications, including DNA sequencing, single-molecule force spectroscopy, and single-molecule mass spectrometry. The data modeling and analysis methods implemented in MOSAIC allow for dramatic improvements in the quantification of molecular interactions with the channel in each of these applications.
 
-**If you use MOSAIC in your work, please cite:**
-
-\A. Balijepalli, J., Ettedgui, A. T. Cornio, J. W. F. Robertson K. P. Cheung, J. J. Kasianowicz & C. Vaz, "`Quantifying Short-Lived Events in Multistate Ionic Current Measurements. <http://pubs.acs.org/doi/abs/10.1021/nn405761y>`_" *ACS Nano* 2014, **8**, 1547–1553.
+**If you use MOSAIC in your work, please cite:** `ACS Nano 2014, 8, 1547–1553.  <http://pubs.acs.org/doi/abs/10.1021/nn405761y>`_
 
 
 Installation
@@ -44,22 +45,32 @@ Change Log
 
 **v1.3**
 
-- Added CUSUM algorithm (see pull requests #34, #43, #45, and #46)
-- Streamlined unit test framework. Added new tests for CUSUM.
-- [GUI] Added CUSUM support to MOSAIC GUI.
+- Added a brand new MOSAIC examples repository that contains plotting scripts and Jupyter notebooks (https://github.com/usnistgov/mosaic-examples)
+
+- Added CUSUM+ algorithm (see pull requests #34, #43, #45, and #46)
+- Renamed StepResponseAnalysis to ADEPT 2-state.
+- Renamed multiStateAnalysis to ADEPT.
+- CUSUM+ is now used to generate initial guesses for ADEPT
+- Streamlined unit test framework. Added new tests for CUSUM+.
+- Updated MOSAIC dependencies to include newer package versions and pandas. Run 'python setup.py mosaic_deps' to update.
+- Added a new metadata column (mdStateResTime) that saves the residence time of each state to the database. This affects ADEPT and CUSUM+.
+- Removed mosaicgui from PyPi. 'pip install mosaic-nist' only installs command line modules. 
+- Top level ConvertToCSV supports arbitrary file extensions.
+- Added Travis continous integration support.
+- [GUI] Added a table that displays fit parameters in the event viewer window.
+- [GUI] Added more descriptive fit errors.
+- [GUI] Added CUSUM+ support to MOSAIC GUI.
 - [GUI] Export SQLITE database to CSV (#56).
 - [GUI] Performance optimizations.
 - [GUI] Fit window in MOSAIC GUI displays idealized pulses overlays.
 - [GUI] Added additional analysis statistics.
-- [Addons] Added CUSUM support to Mathematica addon (PlotEvents in MosaicUtils.m)
+
+- [Addons] Added CUSUM+ support to Mathematica addon (PlotEvents in MosaicUtils.m)
 - [Addons] Mathematica queries are *optionally* handled through an external Python script to improve performance.
 - [Addons] Added an option to limit PlotEvents in Mathematica addon to N events.
-- Updated MOSAIC dependencies to include newer package versions and pandas. Run 'python setup.py mosaic_deps' to update.
-- Added a new metadata column (mdStateResTime) that saves the residence time of each state to the database. This affects multiStateAnalysis and cusumLevelAnalysis.
-- Removed mosaicgui from PyPi. 'pip install mosaic-nist' only installs command line modules. 
-- Top level ConvertToCSV supports arbitrary file extensions.
-- Fixes issues #36, #37, #38, #39, #47, #48, #54 and #56.
-- Known Issues: See #8, #10 and #40.
+
+- Fixes issues #36, #37, #38, #39, #47, #48, #54, #56, #58, #62, #65 and #66.
+- Known Issues: See #8, #10, #40, #63 and #69.
 
 **v1.2**
 
