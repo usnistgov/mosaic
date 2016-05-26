@@ -371,7 +371,7 @@ class adept(metaEventProcessor.metaEventProcessor):
 
 		if cusumObj.mdProcessingStatus != "normal":
 			# raise InvalidEvent
-			self.rejectEvent(cusumObj.mdProcessingStatus)
+			self.rejectEvent(cusumObj.mdProcessingStatus+"_init")
 		else:
 			return zip(cusumObj.mdCurrentStep, cusumObj.mdEventDelay)
 
