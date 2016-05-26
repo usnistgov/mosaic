@@ -21,6 +21,7 @@ import types
 import mosaic.utilities.mosaicTiming as mosaicTiming
 import sqlite3
 import numpy as np
+import mosaic
 
 # custom errors
 class MissingMDIOError(Exception):
@@ -178,8 +179,9 @@ class metaEventProcessor(object):
 		"""
 		# Only reject events if this is the first error i.e. status == normal
 		if self.mdProcessingStatus=='normal':
-			# set all meta data to -1
-			[ self._setRejectMetadata(mdHead) for mdHead in self.__dict__.keys() if mdHead.startswith('md')==True ]
+			if not mosaic.DeveloperMode:
+				# set all meta data to -1
+				[ self._setRejectMetadata(mdHead) for mdHead in self.__dict__.keys() if mdHead.startswith('md')==True ]
 			# set processing status to status
 			self.mdProcessingStatus=status
 
