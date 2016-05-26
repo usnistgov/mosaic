@@ -1,4 +1,5 @@
 *.pyc
+*.pyo
 data/eventMD-2*sqlite
 .DS_Store
 .idea/
