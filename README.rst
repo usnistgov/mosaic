@@ -54,6 +54,7 @@ Change Log
 - Streamlined unit test framework. Added new tests for CUSUM+.
 - Updated MOSAIC dependencies to include newer package versions and pandas. Run 'python setup.py mosaic_deps' to update.
 - Added a new metadata column (mdStateResTime) that saves the residence time of each state to the database. This affects ADEPT and CUSUM+.
+- Added support for warning status codes that begin with 'w'. These codes preserve metadata in the SQLite output and are used to flag events that need closer inspection.
 - Removed mosaicgui from PyPi. 'pip install mosaic-nist' only installs command line modules. 
 - Top level ConvertToCSV supports arbitrary file extensions.
 - Added Travis continous integration support.
@@ -61,6 +62,7 @@ Change Log
 - [GUI] Added more descriptive fit errors.
 - [GUI] Added CUSUM+ support to MOSAIC GUI.
 - [GUI] Export SQLITE database to CSV (#56).
+- [GUI] Support for warning codes in fit event viewer.
 - [GUI] Performance optimizations.
 - [GUI] Fit window in MOSAIC GUI displays idealized pulses overlays.
 - [GUI] Added additional analysis statistics.
@@ -69,7 +71,6 @@ Change Log
 - [Addons] Mathematica queries are *optionally* handled through an external Python script to improve performance.
 - [Addons] Added an option to limit PlotEvents in Mathematica addon to N events.
 
-- Fixes issues #36, #37, #38, #39, #47, #48, #54, #56, #58, #62, #65 and #66.
 - Known Issues: See #8, #10, #40, #63 and #69.
 
 **v1.2**
