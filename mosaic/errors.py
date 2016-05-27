@@ -7,6 +7,7 @@
 	:License:	See LICENSE.TXT
 	:ChangeLog:
 	.. line-block::
+		5/27/16 	AB 	Added support for ADEPT initial guess errors that end in '_init'
 		3/12/16		AB	Initial version	
 """
 
@@ -16,8 +17,11 @@ class errors(dict):
 
 	def __getitem__(self, key):
 		try:
-			val=dict.__getitem__(self, key)
-			return val+" ("+key+")"
+			if key.endswith("_init"):
+				val=dict.__getitem__(self, key.split("_")[0])
+			else:
+				val=dict.__getitem__(self, key)
+			return "("+key+") "+val
 		except KeyError:
 			return "Unknown error ("+key+")"
 
@@ -44,3 +48,4 @@ if __name__ == '__main__':
 
 	print e["eInvalidEvent"]
 	print e["eInvalidRCConst"]
+	print e["eInvalidStates_init"]
