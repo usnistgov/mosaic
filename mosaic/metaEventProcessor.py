@@ -8,6 +8,8 @@
 	:License:	See LICENSE.TXT
 	:ChangeLog:
 	.. line-block::
+		5/27/16 	AB 	Add a flagEvent function that should be used to set a non-critical warning status.
+		5/26/16 	AB 	If developer mode is enabled (in mosaic/_global), metadata is not set to -1 when an error occurs.
 		3/30/16 	AB 	Fixed function timing resolution on Windows
 		8/30/14		AB 	Added a timeout/retry to handle DB locked error.
 		5/17/14		AB  Add metaMDIO support for meta-data and time-series storage
@@ -171,6 +173,16 @@ class metaEventProcessor(object):
 		"""
 		return self._mdHeadingDataType()+['REAL', 'REAL_LIST']
 
+
+	def flagEvent(self, status):
+		"""
+			Set a warning status that starts with 'w' for non-critical errors. 
+			Metadata for these events is preserved and the user can be warned (e.g., in the GUI.)
+
+		"""
+		# Trigger if this is the first warning i.e. status == normal
+		if self.mdProcessingStatus=='normal':
+			self.mdProcessingStatus=status
 
 	def rejectEvent(self, status):
 		"""
