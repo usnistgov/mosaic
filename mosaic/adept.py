@@ -7,6 +7,7 @@
 	:License:	See LICENSE.TXT
 	:ChangeLog:
 	.. line-block::
+		05/27/16 	AB 	Added warnings when the reduced chi squared is not a number and if the fit parameters are unchanged from the initial guess values.
 		05/22/16    JF  Added new test to reject BD < 0 or BD > 1, improved readability of error tests.
 		03/30/16 	AB 	Change UnlinkRCConst to LinkRCConst to avoid double negatives.
 		3/16/16 	AB 	Migrate InitThreshold setting to CUSUM StepSize.
@@ -252,6 +253,7 @@ class adept(metaEventProcessor.metaEventProcessor):
 			ts = np.array([ t*dt for t in range(0,len(edat)) ], dtype='float64')
 
 			self.nStates=len(initguess)
+			initRCConst=dt*5.
 
 			# setup fit params
 			params=Parameters()
@@ -261,22 +263,26 @@ class adept(metaEventProcessor.metaEventProcessor):
 				params.add('mu'+str(i), value=initguess[i][1]) 
 				if self.LinkRCConst:				
 					if i==0:
-						params.add('tau'+str(i), value=dt*5.)
+						params.add('tau'+str(i), value=initRCConst)
 					else:
-						params.add('tau'+str(i), value=dt*5., expr='tau0')
+						params.add('tau'+str(i), value=initRCConst, expr='tau0')
 				else:
-					params.add('tau'+str(i), value=dt*5.)
+					params.add('tau'+str(i), value=initRCConst)
 
 			params.add('b', value=self.baseMean )
 			
 
+			igdict=params.valuesdict()
+
 			optfit=Minimizer(self._objfunc, params, fcn_args=(ts,edat,))
 			optfit.prepare_fit()
-
-	
 			optfit.leastsq(xtol=self.FitTol,ftol=self.FitTol,maxfev=self.FitIters)
 
 			if optfit.success:
+				tt=[init[0] for init, final in zip(igdict.items(), (optfit.params.valuesdict()).items()) if init==final]
+				if len(tt) > 0:
+					self.flagEvent('wInitGuessUnchanged')
+
 				self._recordevent(optfit)
 			else:
 				#print optfit.message, optfit.lmdif_message
@@ -335,8 +341,10 @@ class adept(metaEventProcessor.metaEventProcessor):
 				
 				self.mdRedChiSq			= sum(np.array(optfit.residual)**2/self.baseSD**2)/optfit.nfree
 					
-				# if math.isnan(self.mdRedChiSq):
-				# 	self.rejectEvent('eInvalidRedChiSq')	
+				if math.isnan(self.mdRedChiSq):
+					print "wInvalidRedChiSq"
+					self.flagEvent('wInvalidRedChiSq')	
+
 				if ((np.array(self.mdBlockDepth)<0).all() or (np.array(self.mdBlockDepth)>1).all()):
 					self.rejectEvent('eInvalidBlockDepth')
 				if (np.array(self.mdStateResTime)<0).all():
