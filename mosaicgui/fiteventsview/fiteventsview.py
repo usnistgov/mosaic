@@ -18,7 +18,10 @@ import matplotlib.ticker as ticker
 # from mosaicgui.trajview.trajviewui import Ui_Dialog
 
 css = """QLabel {
-      color: red;
+      color: FireBrick;
+}"""
+css_warning = """QLabel {
+      color: OrangeRed;
 }"""
 
 class FitEventWindow(QtGui.QDialog):
@@ -155,7 +158,7 @@ class FitEventWindow(QtGui.QDialog):
 
 			np.seterr(invalid='ignore', over='ignore', under='ignore')
 			# fit function data
-			if str(q[0])=="normal":
+			if str(q[0])=="normal" or str(q[0]).startswith('w'):
 				c='#%02x%02x%02x' % (72,91,144)
 				cf='#%02x%02x%02x' % (50,50,47)
 				cs='#%02x%02x%02x' % (170,41,45)
@@ -173,7 +176,12 @@ class FitEventWindow(QtGui.QDialog):
 					ystep=self.stepFuncHnd( *eval(self.stepFuncArgs) )
 					self.mpl_hist.canvas.ax.plot( xstep, ystep, linestyle='--', linewidth='2.0', color=cs)
 
-				self.errLabel.setText(str(""))
+				if str(q[0]).startswith('w'):
+					# Set error line edit color to orange
+					self.errLabel.setStyleSheet(css_warning)
+					self.errLabel.setText("Warning: "+ self.errText[str(q[0])] )
+				else:
+					self.errLabel.setText(str(""))
 
 				header, data=self._bdTable(*eval(self.bdFuncArgs))
 				self.tableModel.update( header, data ) 
