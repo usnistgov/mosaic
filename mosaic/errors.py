@@ -7,6 +7,7 @@
 	:License:	See LICENSE.TXT
 	:ChangeLog:
 	.. line-block::
+		5/27/16 	AB 	Added support for warning codes.
 		5/27/16 	AB 	Added support for ADEPT initial guess errors that end in '_init'
 		3/12/16		AB	Initial version	
 """
@@ -35,11 +36,13 @@ class errors(dict):
 		"eFitUserStop" 			: "Analysis was stopped by the user.",
 		"eFitFailure" 			: "The least squares fit of the event failed.",
 		"eFitConvergence" 		: "The least squares fit of the event did not converge to the specified tolerance.",
-		"eInvalidRedChiSq" 		: "The reduced chi squared estimate of the fit was not a number.",
 		"eInvalidChiSq" 		: "The reduced chi squared estimate of the fit was not a number.",
 		"eInvalidOpenChCurr" 	: "The open channel current estimate of the fit was not a number",
 		"eInvalidBlockDepth"	: "The blockade depth is outside the valid range of 0 to 1.",
-		"eInvalidRCConst" 		: "The RC constant estimate of the event transient is negative or not a number."
+		"eInvalidRCConst" 		: "The RC constant estimate of the event transient is negative or not a number.",
+
+		"wInvalidRedChiSq" 		: "The reduced chi squared estimate of the fit was not a number.",
+		"wInitGuessUnchanged"	: "At least one optimized fit parameter is unchanged from the initial guess."
 	}
 
 
@@ -49,3 +52,4 @@ if __name__ == '__main__':
 	print e["eInvalidEvent"]
 	print e["eInvalidRCConst"]
 	print e["eInvalidStates_init"]
+	print e["wInvalidRedChiSq"]
