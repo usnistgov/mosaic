@@ -20,6 +20,8 @@ a.binaries = filter(lambda x: 'pandas' not in x[0], a.binaries)
 
 a.datas += [ 
 				('icons/icon_100px.png', '../icons/icon_100px.png',  'DATA'),
+				('icons/error-128.png', '../icons/error-128.png',  'DATA'),
+				('icons/warning-128.png', '../icons/warning-128.png',  'DATA'),
 				('commit-hash', '../commit-hash', 'DATA')
 			]
 pyz = PYZ(a.pure)

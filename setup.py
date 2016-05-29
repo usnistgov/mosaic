@@ -132,6 +132,8 @@ setup(
             'addons/mathematica/Util.m', 
             'addons/MATLAB/openandquery.m', 
             'icons/icon_100px.png',
+            'icons/error-128.png',
+            'icons/warning-128.png',
             '.scripts/install-addons-sh',
             '.scripts/pyinstaller-sh',
             'data/eventMD-PEG28-stepResponseAnalysis.sqlite',

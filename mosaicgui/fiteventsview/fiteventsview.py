@@ -178,9 +178,12 @@ class FitEventWindow(QtGui.QDialog):
 
 				if str(q[0]).startswith('w'):
 					# Set error line edit color to orange
-					self.errLabel.setStyleSheet(css_warning)
-					self.errLabel.setText("Warning: "+ self.errText[str(q[0])] )
+					# self.errLabel.setStyleSheet(css_warning)
+					# self.errLabel.setText("Warning: "+ self.errText[str(q[0])] )
+					self.errIcon.setText("<html><img height='24' width='24' src='"+resource_path("icons/warning-128.png")+"'></html>")
+					self.errLabel.setText(self.errText[str(q[0])])
 				else:
+					self.errIcon.setText(str(""))
 					self.errLabel.setText(str(""))
 
 				header, data=self._bdTable(*eval(self.bdFuncArgs))
@@ -191,8 +194,10 @@ class FitEventWindow(QtGui.QDialog):
 				self.mpl_hist.canvas.ax.plot( xdat, ydat, linestyle='None', marker='o', color='r', markersize=8, markeredgecolor='none', alpha=0.6)
 				
 				# Set error line edit color to red
-				self.errLabel.setStyleSheet(css)
-				self.errLabel.setText("Error: "+ self.errText[str(q[0])] )
+				# self.errLabel.setStyleSheet(css)
+				# self.errLabel.setText("Error: "+ self.errText[str(q[0])] )
+				self.errIcon.setText("<html><img height='24' width='24' src='"+resource_path("icons/error-128.png")+"'></html>")
+				self.errLabel.setText(self.errText[str(q[0])])
 
 				self.tableModel.update( [self._columnhead,['1']], [['N/A'], ['N/A']] )
 

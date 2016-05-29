@@ -23,9 +23,9 @@ class errors(dict):
 				val=dict.__getitem__(self, key.split("_")[0])
 			else:
 				val=dict.__getitem__(self, key)
-			return "("+key+") "+val
+			return val
 		except KeyError:
-			return "Unknown error ("+key+")"
+			return "Unknown error"
 
 	error_dict={
 		"eInvalidEvent" 		: "A valid event was not found in the data.",
