@@ -5,6 +5,8 @@ import os
 import logging
 import traceback
 
+__all__ = ["zmqIO", "IllegalConnectionType"]
+
 # enumerated types
 PUBLISH		= 0
 SUBSCRIBE	= 1

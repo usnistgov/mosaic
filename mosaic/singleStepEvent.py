@@ -22,6 +22,8 @@ import scipy.optimize
 
 import uncertainties
 
+__all__ = ["singleStepEvent"]
+
 class datblock:
 	"""
 		Smart data block that holds a time-series of data and keeps track

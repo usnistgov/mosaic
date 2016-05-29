@@ -52,6 +52,8 @@ from scipy.optimize import curve_fit
 
 from lmfit import minimize, Parameters, Parameter, report_errors, Minimizer
 
+__all__ = ["adept", "InvalidEvent"]
+
 class InvalidEvent(Exception):
 	pass
 
@@ -342,7 +344,7 @@ class adept(metaEventProcessor.metaEventProcessor):
 				self.mdRedChiSq			= sum(np.array(optfit.residual)**2/self.baseSD**2)/optfit.nfree
 					
 				if math.isnan(self.mdRedChiSq):
-					print "wInvalidRedChiSq"
+					# print "wInvalidRedChiSq"
 					self.flagEvent('wInvalidRedChiSq')	
 
 				if ((np.array(self.mdBlockDepth)<0).all() or (np.array(self.mdBlockDepth)>1).all()):

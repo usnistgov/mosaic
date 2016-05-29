@@ -41,6 +41,8 @@ from mosaic.utilities.resource_path import format_path
 from mosaic.utilities.ionic_current_stats import OpenCurrentDist
 import mosaic.utilities.mosaicTiming as mosaicTiming
 
+__all__ = ["metaEventPartition", "ExcessiveDriftError", "DriftRateError"]
+
 # custom errors
 class ExcessiveDriftError(Exception):
 	pass

@@ -13,6 +13,8 @@ import os
 import mosaic.utilities.mosaicTiming as mosaicTiming
 from abc import ABCMeta, abstractmethod
 
+__all__ = ["metaMDIO", "InsufficientArgumentsError"]
+
 class InsufficientArgumentsError(Exception):
 	pass
 

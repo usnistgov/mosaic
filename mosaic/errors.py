@@ -11,6 +11,7 @@
 		5/27/16 	AB 	Added support for ADEPT initial guess errors that end in '_init'
 		3/12/16		AB	Initial version	
 """
+__all__ = ["errors"]
 
 class errors(dict):
 	def __init__(self):

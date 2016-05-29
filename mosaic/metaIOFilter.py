@@ -13,6 +13,8 @@
 from abc import ABCMeta, abstractmethod
 import mosaic.utilities.util as util
 
+__all__ = ["metaIOFilter"]
+
 class metaIOFilter(object):
 	"""
 		.. warning:: |metaclass|

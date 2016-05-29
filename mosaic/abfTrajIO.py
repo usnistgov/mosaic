@@ -19,6 +19,7 @@ import mosaic.utilities.mosaicLog as log
 
 import numpy as np
 
+__all__ = ["abfTrajIO"]
 
 class abfTrajIO(mosaic.metaTrajIO.metaTrajIO):
 	"""

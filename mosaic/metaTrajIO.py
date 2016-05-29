@@ -26,6 +26,8 @@ import settings
 from mosaic.utilities.resource_path import format_path, path_separator
 import mosaic.utilities.mosaicLog as log
 
+__all__ = ["metaTrajIO", "IncompatibleArgumentsError", "IncorrectDataFormat", "EndOfFileError", "SamplingRateChangedError", "EmptyDataPipeError", "FileNotFoundError"]
+
 # define custom exceptions
 class IncompatibleArgumentsError(Exception):
 	pass

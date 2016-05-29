@@ -25,6 +25,8 @@ import sqlite3
 import numpy as np
 import mosaic
 
+__all__ = ["metaEventProcessor", "MissingMDIOError"]
+
 # custom errors
 class MissingMDIOError(Exception):
 	pass

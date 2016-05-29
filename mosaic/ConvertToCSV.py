@@ -5,13 +5,13 @@
  	:Author: 	Arvind Balijepalli <arvind.balijepalli@nist.gov>
 	:License:	See LICENSE.TXT	
 """
-__docformat__ = 'restructuredtext'
-
 import itertools
 import string
 
 from mosaic.metaTrajIO import EmptyDataPipeError
 import numpy
+
+__all__ = ["ConvertToCSV"]
 
 class ConvertToCSV(object):
 	"""

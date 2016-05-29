@@ -2,6 +2,8 @@ import zmqIO
 import cPickle
 import sqlite3MDIO
 
+__all__ = ["zmqWorker", "InvalidFunctionName"]
+
 class InvalidFunctionName(Exception):
 	pass
 

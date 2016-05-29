@@ -35,6 +35,8 @@ from  collections import deque
 
 import metaEventPartition
 
+__all__ = ["eventSegment"]
+
 class eventSegment(metaEventPartition.metaEventPartition):
 	"""
 		Implement an event partitioning algorithm by sub-classing the metaEventPartition class

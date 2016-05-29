@@ -25,6 +25,8 @@ import json
 import os
 import os.path
 
+__all__ = ["settings"]
+
 class settings:
 	"""
 			Initialize a settings object. 

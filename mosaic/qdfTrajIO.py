@@ -22,6 +22,8 @@ import mosaic.metaTrajIO
 import mosaic.utilities.mosaicLog as log
 import qdf.readqdf as qdf
 
+__all__ = ["qdfTrajIO"]
+
 class qdfTrajIO(mosaic.metaTrajIO.metaTrajIO):
 	"""
 		Use the readqdf module from EBS to read individual QDF files.

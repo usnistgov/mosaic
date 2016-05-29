@@ -16,6 +16,8 @@ import os
 import signal
 import json
 
+__all__ = ["SingleChannelAnalysis", "run_eventpartition"]
+
 def run_eventpartition( trajdataObj, eventPartHnd, eventProcHnd, settingsdict):
 	try:
 		with eventPartHnd(

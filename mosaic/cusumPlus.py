@@ -24,6 +24,7 @@ import math
 from scipy.optimize import minimize, fsolve
 import numpy as np
 
+__all__ = ["cusumPlus", "InvalidEvent"]
 
 class InvalidEvent(Exception):
 	pass

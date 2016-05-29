@@ -36,6 +36,8 @@ from scipy.optimize import curve_fit
 
 from lmfit import minimize, Parameters, Parameter, report_errors, Minimizer
 
+__all__ = ["adept2State"]
+
 class datblock:
 	""" 
 		Smart data block that holds time-series data and keeps track

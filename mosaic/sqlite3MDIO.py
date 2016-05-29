@@ -28,6 +28,8 @@ import metaMDIO
 import mosaic
 from mosaic.utilities.resource_path import resource_path, format_path
 
+__all__ = ["sqlite3MDIO", "data_record"]
+
 class data_record(dict):
 	"""
 		Smart data record structure that automatically encodes/decodes data for storage

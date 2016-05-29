@@ -16,6 +16,8 @@ import scipy.signal as sig
 import mosaic.metaIOFilter
 import mosaic.utilities.mosaicLog as log
 
+__all__ = ["convolutionFilter"]
+
 class convolutionFilter(mosaic.metaIOFilter.metaIOFilter):
 	"""
 		:Keyword Args:

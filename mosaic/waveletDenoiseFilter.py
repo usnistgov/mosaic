@@ -18,6 +18,8 @@ import pywt
 import mosaic.metaIOFilter
 import mosaic.utilities.mosaicLog as log
 
+__all__ = ["waveletDenoiseFilter"]
+
 class waveletDenoiseFilter(mosaic.metaIOFilter.metaIOFilter):
 	"""
 		:Keyword Args:

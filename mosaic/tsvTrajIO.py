@@ -20,6 +20,8 @@ import numpy as np
 import metaTrajIO
 import csv
 
+__all__ = ["tsvTrajIO"]
+
 class tsvTrajIO(metaTrajIO.metaTrajIO):
 	"""
 		Read tab separated valued (TSV) files. 
