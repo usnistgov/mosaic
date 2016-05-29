@@ -3,25 +3,7 @@ import mosaic
 import os
 import sys
 import nose
-
-class mosaicUnitTests(Command):
-    description = "run the MOSAIC unit test suite."
-    user_options = []
-
-    def initialize_options(self):
-        pass
-
-    def finalize_options(self):
-        pass
-
-    def run(self):
-        try:
-            if self.verbose:
-                return nose.main(argv=['mosaic', '-v', '--where=mosaic/utest/'])
-            else:
-                return nose.main(argv=['mosaic', '--where=mosaic/utest/'])
-        except:
-            raise
+from mosaic.utest.mosaicUnitTests import _mosaicUnitTests
 
 class mosaicBinaries(Command):
     description = "build MOSAIC binaries."
@@ -39,7 +21,7 @@ class mosaicBinaries(Command):
 class mosaicDependencies(Command):
     description = "install MOSAIC dependencies."
     user_options = [
-                    ('upgrade', None, "force packages to upgrade"),
+                    ('upgrade', 'u', "force packages to upgrade"),
                     ]
 
     def initialize_options(self):
@@ -71,15 +53,13 @@ class mosaicDocumentationDependencies(Command):
 class mosaicAddons(Command):
     description = "install MOSAIC addons (Mathematica, Igor and Matlab scripts)."
     user_options = [ 
-                    ('mathematica', None, "install Mathematica scripts"),
-                    ('igor', None, "install IGOR SQLite drivers"),
-                    ('all', None, "install all scripts"),
+                    ('mathematica', 'm', "install Mathematica scripts"),
+                    ('igor', 'i', "install IGOR SQLite drivers")
                     ]
 
     def initialize_options(self):
         self.mathematica = 0
         self.igor = 0
-        self.all = 0
 
     def finalize_options(self):
         pass
@@ -125,9 +105,9 @@ class mosaicDocs(Command):
 
 setup(
     cmdclass={
-        'test'              : mosaicUnitTests, 
-        'nosetests'         : mosaicUnitTests, 
-        'mosaic_tests'      : mosaicUnitTests, 
+        'test'              : _mosaicUnitTests(Command), 
+        'nosetests'         : _mosaicUnitTests(Command), 
+        'mosaic_tests'      : _mosaicUnitTests(Command), 
         'mosaic_docs'       : mosaicDocs, 
         'mosaic_bin'        : mosaicBinaries, 
         'mosaic_deps'       : mosaicDependencies, 
