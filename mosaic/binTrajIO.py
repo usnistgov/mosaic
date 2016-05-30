@@ -7,7 +7,7 @@ Binary file implementation of metaTrajIO. Read raw binary files with specified r
 	:License:	See LICENSE.TXT
 	:ChangeLog:
 	.. line-block::
-		9/13/15 	AB 	Updated logging to use mosaicLog class
+		9/13/15 	AB 	Updated logging to use mosaicLogFormat class
 		3/28/15 	AB 	Updated file read code to match new metaTrajIO API.
 		1/27/15 	AB 	Memory map files on read.
 		1/26/15 	AB 	Refactored code to read interleaved binary data. 
@@ -20,7 +20,7 @@ Binary file implementation of metaTrajIO. Read raw binary files with specified r
 import struct
 
 import mosaic.metaTrajIO
-import mosaic.utilities.mosaicLog as log
+import mosaic.utilities.mosaicLogFormat as log
 
 import numpy as np
 
@@ -191,7 +191,7 @@ class binTrajIO(mosaic.metaTrajIO.metaTrajIO):
 
 			:Parameters:
 
-				- `logObject` : 	a object that holds logging text (see :class:`~mosaic.utilities.mosaicLog.mosaicLog`)				
+				- `logObject` : 	a object that holds logging text (see :class:`~mosaic.utilities.mosaicLogFormat.mosaicLogFormat`)				
 		"""
 		logObject.addLogText( 'Amplifier scale = {0} pA'.format(self.AmplifierScale) )
 		logObject.addLogText( 'Amplifier offset = {0} pA'.format(self.AmplifierOffset) )

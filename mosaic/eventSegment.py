@@ -30,7 +30,7 @@
 		7/17/12		AB	Initial version
 """
 import mosaic.utilities.util as util
-import mosaic.utilities.mosaicLog as log
+import mosaic.utilities.mosaicLogFormat as log
 from  collections import deque
 
 import metaEventPartition
@@ -94,7 +94,7 @@ class eventSegment(metaEventPartition.metaEventPartition):
 		"""
 			Return a formatted string of settings for display in the output log.
 		"""
-		logObj=log.mosaicLog()
+		logObj=log.mosaicLogFormat()
 
 
 		logObj.addLogHeader( 'Event segment settings:' )

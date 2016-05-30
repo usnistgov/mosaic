@@ -8,7 +8,7 @@
 	:License:	See LICENSE.TXT
 	:ChangeLog:
 	.. line-block::
-		9/13/15 	AB 	Updated logging to use mosaicLog class
+		9/13/15 	AB 	Updated logging to use mosaicLogFormat class
 		3/28/15 	AB 	Updated file read code to match new metaTrajIO API.
 		7/18/12		AB	Initial version
 		2/11/14		AB 	Support qdf files that save the current in pA. This needs 
@@ -19,7 +19,7 @@ import types
 import numpy as np 
 
 import mosaic.metaTrajIO
-import mosaic.utilities.mosaicLog as log
+import mosaic.utilities.mosaicLogFormat as log
 import qdf.readqdf as qdf
 
 __all__ = ["qdfTrajIO"]
@@ -113,7 +113,7 @@ class qdfTrajIO(mosaic.metaTrajIO.metaTrajIO):
 
 			:Parameters:
 
-				- `logObject` : 	a object that holds logging text (see :class:`~mosaic.utilities.mosaicLog.mosaicLog`)				
+				- `logObject` : 	a object that holds logging text (see :class:`~mosaic.utilities.mosaicLogFormat.mosaicLogFormat`)				
 		"""
 		# for qdf files, add the values of the feedback resistance and capacitance
 		logObject.addLogText( 'Feedback resistance = {0} GOhm'.format(self.Rfb*1e-9) )

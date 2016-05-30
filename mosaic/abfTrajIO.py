@@ -8,14 +8,14 @@
 	:License:	See LICENSE.TXT
 	:ChangeLog:
 	.. line-block::
-		9/13/15 	AB 	Updated logging to use mosaicLog class
+		9/13/15 	AB 	Updated logging to use mosaicLogFormat class
 		3/28/15 	AB 	Updated file read code to match new metaTrajIO API.
 		5/23/13		AB	Initial version
 
 """
 import mosaic.metaTrajIO
 import abf.abf as abf
-import mosaic.utilities.mosaicLog as log
+import mosaic.utilities.mosaicLogFormat as log
 
 import numpy as np
 
@@ -80,7 +80,7 @@ class abfTrajIO(mosaic.metaTrajIO.metaTrajIO):
 
 			:Parameters:
 
-				- `logObject` : 	a object that holds logging text (see :class:`~mosaic.utilities.mosaicLog.mosaicLog`)				
+				- `logObject` : 	a object that holds logging text (see :class:`~mosaic.utilities.mosaicLogFormat.mosaicLogFormat`)				
 		"""
 		logObject.addLogText( 'Lowpass filter = {0} kHz'.format(self.bandwidth*0.001) )
 		logObject.addLogText( 'Signal gain = {0}'.format(self.gain) )

@@ -7,14 +7,14 @@
 	:License:	See LICENSE.TXT
 	:ChangeLog:
 	.. line-block::
-		9/13/15 	AB 	Updated logging to use mosaicLog class
+		9/13/15 	AB 	Updated logging to use mosaicLogFormat class
 		8/16/13		AB	Initial version
 """
 import numpy as np 
 import scipy.signal as sig
 
 import mosaic.metaIOFilter
-import mosaic.utilities.mosaicLog as log
+import mosaic.utilities.mosaicLogFormat as log
 
 __all__ = ["convolutionFilter"]
 
@@ -52,7 +52,7 @@ class convolutionFilter(mosaic.metaIOFilter.metaIOFilter):
 		"""
 			Return a formatted string of filter settings
 		"""
-		logObj=log.mosaicLog()
+		logObj=log.mosaicLogFormat()
 
 
 		logObj.addLogHeader( 'Filter settings:' )

@@ -7,7 +7,7 @@
 	:License:	See LICENSE.TXT	
 	:ChangeLog:
 	.. line-block::
-		9/13/15 	AB 	Updated logging to use mosaicLog class
+		9/13/15 	AB 	Updated logging to use mosaicLogFormat class
 		4/1/15 		AB 	Added a new property (DataLengthSec) to estimate the length of a data set.
 		3/28/15 	AB 	Optimized file read interface for improved large file support.
 		8/22/14 	AB 	Setup a new property ('LastDataFile') that tracks the current
@@ -24,7 +24,7 @@ import numpy as np
 
 import settings
 from mosaic.utilities.resource_path import format_path, path_separator
-import mosaic.utilities.mosaicLog as log
+import mosaic.utilities.mosaicLogFormat as log
 
 __all__ = ["metaTrajIO", "IncompatibleArgumentsError", "IncorrectDataFormat", "EndOfFileError", "SamplingRateChangedError", "EmptyDataPipeError", "FileNotFoundError"]
 
@@ -324,7 +324,7 @@ class metaTrajIO(object):
 		"""
 			Return a formatted string of settings for display
 		"""
-		logObj=log.mosaicLog()
+		logObj=log.mosaicLogFormat()
 
 		logObj.addLogHeader( 'Trajectory I/O settings:' )
 		
@@ -412,7 +412,7 @@ class metaTrajIO(object):
 
 			:Parameters:
 
-				- `logObject` : 	a object that holds logging text (see :class:`~mosaic.utilities.mosaicLog.mosaicLog`)				
+				- `logObject` : 	a object that holds logging text (see :class:`~mosaic.utilities.mosaicLogFormat.mosaicLogFormat`)				
 		"""
 		pass
 		

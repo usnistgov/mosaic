@@ -23,8 +23,7 @@ import datetime
 import pandas 
 
 import numpy
-import metaMDIO
-
+import mosaic.metaMDIO
 import mosaic
 from mosaic.utilities.resource_path import resource_path, format_path
 
@@ -64,7 +63,7 @@ class data_record(dict):
 		for k, v in dict(*args, **kwargs).iteritems():
 			self[k] = v
 
-class sqlite3MDIO(metaMDIO.metaMDIO):
+class sqlite3MDIO(mosaic.metaMDIO.metaMDIO):
 	"""
 	"""
 	def _initdb(self, **kwargs):

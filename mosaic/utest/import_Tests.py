@@ -39,7 +39,7 @@ class ModuleImport_TestSuite(ModuleImportTest):
 		'mosaic.utilities.ionic_current_stats', 
 		'mosaic.utilities.resource_path',
 		'mosaic.utilities.analysis',
-		'mosaic.utilities.mosaicLog',
+		'mosaic.utilities.mosaicLogFormat',
 		'mosaic.utilities.sqlQuery',
 		'mosaic.utilities.fit_funcs',
 		'mosaic.utilities.mosaicTiming',

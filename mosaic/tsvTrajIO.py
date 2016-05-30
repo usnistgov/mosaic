@@ -95,7 +95,7 @@ class tsvTrajIO(metaTrajIO.metaTrajIO):
 
 			:Parameters:
 
-				- `logObject` : 	a object that holds logging text (see :class:`~mosaic.utilities.mosaicLog.mosaicLog`)				
+				- `logObject` : 	a object that holds logging text (see :class:`~mosaic.utilities.mosaicLogFormat.mosaicLogFormat`)				
 		"""
 		return ""
 

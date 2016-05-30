@@ -38,7 +38,7 @@
 import commonExceptions
 import metaEventProcessor
 import mosaic.utilities.util as util
-import mosaic.utilities.mosaicLog as log
+import mosaic.utilities.mosaicLogFormat as log
 import mosaic.utilities.fit_funcs as fit_funcs
 import mosaic.cusumPlus as cusum
 import mosaic.settings
@@ -227,7 +227,7 @@ class adept(metaEventProcessor.metaEventProcessor):
 		"""
 			Return a formatted string of settings for display
 		"""
-		logObj=log.mosaicLog()
+		logObj=log.mosaicLogFormat()
 
 
 		logObj.addLogHeader( 'Event processing settings:' )
