@@ -11,6 +11,8 @@
 import time
 import sys
 
+__all__=["mosaicTiming"]
+
 class mosaicTiming:
 	"""
 		Profile code by attaching an instance of this class to any function. All the methods in this class are valid for the function being profiled.

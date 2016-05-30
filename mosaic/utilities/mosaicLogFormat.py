@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-	A logging file object that allows arbitrary formatting of log text.
+	An object that allows arbitrary formatting of log text.
 
 	:Created:	09/12/2015
  	:Author: 	Arvind Balijepalli <arvind.balijepalli@nist.gov>
@@ -10,7 +10,9 @@
 		09/12/15	AB	Initial version
 """
 
-class mosaicLog(dict):
+__all__=["mosaicLogFormat"]
+
+class mosaicLogFormat(dict):
 	def __init__(self):
 		self.gLogCounter=self._logCounter()
 

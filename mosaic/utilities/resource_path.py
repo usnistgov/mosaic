@@ -3,6 +3,8 @@ import os
 import glob
 import string
 
+__all__=["path_separator", "resource_path", "last_file_in_directory", "format_path", "NotFoundError"]
+
 class NotFoundError(Exception):
 	pass
 

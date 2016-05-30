@@ -3,6 +3,8 @@
 """
 import mosaic.sqlite3MDIO as sql
 
+__all__=["query"]
+
 def query(dbname, query_str):
 	"""
 		Simple wrapper to perform a query on a MOSAIC database.

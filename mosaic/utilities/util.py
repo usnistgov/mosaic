@@ -4,6 +4,8 @@
 import sys
 import numpy
 
+__all__=["avg", "sd", "filter", "partition", "decimate", "commonest", "selectS", "flat2", "WindowSizeError"]
+
 class WindowSizeError:
 	pass
 
