@@ -44,7 +44,7 @@ class ModuleImport_TestSuite(ModuleImportTest):
 		'mosaic.utilities.fit_funcs',
 		'mosaic.utilities.mosaicTiming',
 		'mosaic.utilities.util',
-		'mosaic.utilities.mosaicLogging'
+		'mosaic.utilities.mosaicLogging',
 		'mosaicgui',
 		'mosaicgui.EBSStateFileDict',
 		'mosaicgui.autocompleteedit',
