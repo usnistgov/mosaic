@@ -6,6 +6,7 @@
 	:License:	See LICENSE.TXT
 	:ChangeLog:
 	.. line-block::
+		05/31/16 	AB 	Added a new dbPath property.
 		11/9/14 	AB 	Added an interface to read/write the output log of an analysis from/to a DB.
 		3/1/14		AB	Initial version
 """
@@ -219,6 +220,10 @@ class metaMDIO(object):
 	@property 
 	def mdColumnTypes(self):
 		return self._coltypes()
+
+	@property 
+	def dbPath(self):
+		return self.dbPath
 
 	@property 
 	def dbFile(self):
