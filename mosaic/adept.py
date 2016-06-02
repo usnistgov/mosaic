@@ -38,7 +38,7 @@
 import commonExceptions
 import metaEventProcessor
 import mosaic.utilities.util as util
-import mosaic.utilities.mosaicLogFormat as log
+import mosaic.utilities.mosaicLogging as mlog
 import mosaic.utilities.fit_funcs as fit_funcs
 import mosaic.cusumPlus as cusum
 import mosaic.settings
@@ -111,6 +111,7 @@ class adept(metaEventProcessor.metaEventProcessor):
 
 		self.nStates=-1
 
+		self.adeptLogger=mlog.mosaicLogging().getLogger(__name__)
 		# Settings for single step event processing
 		# settings for gaussian fits
 		try:
@@ -227,20 +228,15 @@ class adept(metaEventProcessor.metaEventProcessor):
 		"""
 			Return a formatted string of settings for display
 		"""
-		logObj=log.mosaicLogFormat()
-
-
-		logObj.addLogHeader( 'Event processing settings:' )
-		logObj.addLogText( 'Algorithm = ADEPT' )
+		self.adeptLogger.info( '\tEvent processing settings:' )
+		self.adeptLogger.info( '\t\tAlgorithm = ADEPT' )
 		
-		logObj.addLogText( 'Max. iterations  = {0}'.format(self.FitIters) )
-		logObj.addLogText( 'Fit tolerance (rel. err in leastsq)  = {0}'.format(self.FitTol) )
-		logObj.addLogText( 'Link RC constants = {0}'.format(bool(self.LinkRCConst)) )
-		logObj.addLogText( 'Initial partition step size  = {0}'.format(self.StepSize) )
-		logObj.addLogText( 'Min. State Length = {0} samples'.format(self.MinStateLength) )
-		logObj.addLogText( 'Max. Event Length = {0} samples'.format(self.MaxEventLength))
-
-		return str(logObj)
+		self.adeptLogger.info( '\t\tMax. iterations  = {0}'.format(self.FitIters) )
+		self.adeptLogger.info( '\t\tFit tolerance (rel. err in leastsq)  = {0}'.format(self.FitTol) )
+		self.adeptLogger.info( '\t\tLink RC constants = {0}'.format(bool(self.LinkRCConst)) )
+		self.adeptLogger.info( '\t\tInitial partition step size  = {0}'.format(self.StepSize) )
+		self.adeptLogger.info( '\t\tMin. State Length = {0} samples'.format(self.MinStateLength) )
+		self.adeptLogger.info( '\t\tMax. Event Length = {0} samples'.format(self.MaxEventLength))
 
 	###########################################################################
 	# Local functions

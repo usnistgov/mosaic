@@ -21,6 +21,7 @@
 from abc import ABCMeta, abstractmethod
 import types
 import mosaic.utilities.mosaicTiming as mosaicTiming
+import mosaic.utilities.mosaicLogging as mlog
 import sqlite3
 import numpy as np
 import mosaic
@@ -64,6 +65,8 @@ class metaEventProcessor(object):
 		"""
 		self.eventData=icurr
 		self.Fs=Fs
+
+		self.logger=mlog.mosaicLogging().getLogger(name=__name__)
 
 		# Will throw a key error if not passed
 		self.eStartEstimate=kwargs['eventstart']

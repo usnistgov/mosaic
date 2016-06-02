@@ -19,7 +19,7 @@ import types
 import numpy as np 
 
 import mosaic.metaTrajIO
-import mosaic.utilities.mosaicLogFormat as log
+import mosaic.utilities.mosaicLogging as mlog
 import qdf.readqdf as qdf
 
 __all__ = ["qdfTrajIO"]
@@ -67,6 +67,8 @@ class qdfTrajIO(mosaic.metaTrajIO.metaTrajIO):
 
 		# additional meta data
 		self.fileFormat='qdf'
+
+		self.qdfLogger=mlog.mosaicLogging().getLogger(name=__name__)
 
 	def readdata(self, fname):
 		"""
@@ -116,8 +118,8 @@ class qdfTrajIO(mosaic.metaTrajIO.metaTrajIO):
 				- `logObject` : 	a object that holds logging text (see :class:`~mosaic.utilities.mosaicLogFormat.mosaicLogFormat`)				
 		"""
 		# for qdf files, add the values of the feedback resistance and capacitance
-		logObject.addLogText( 'Feedback resistance = {0} GOhm'.format(self.Rfb*1e-9) )
-		logObject.addLogText( 'Feedback capacitance = {0} pF'.format(self.Cfb*1e12) )
+		self.qdfLogger.info( '\t\tFeedback resistance = {0} GOhm'.format(self.Rfb*1e-9) )
+		self.qdfLogger.info( '\t\tFeedback capacitance = {0} pF'.format(self.Cfb*1e12) )
 	
 
 if __name__ == '__main__':

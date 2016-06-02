@@ -14,7 +14,7 @@ import numpy as np
 import scipy.signal as sig
 
 import mosaic.metaIOFilter
-import mosaic.utilities.mosaicLogFormat as log
+import mosaic.utilities.mosaicLogging as mlog
 
 __all__ = ["convolutionFilter"]
 
@@ -35,6 +35,8 @@ class convolutionFilter(mosaic.metaIOFilter.metaIOFilter):
 
 		self.filtBuf=np.array([])
 
+		self.logger=mlog.mosaicLogging().getLogger(__name__)
+
 	def filterData(self, icurr, Fs):
 		"""
 			Denoise an ionic current time-series and store it in self.eventData
@@ -52,13 +54,9 @@ class convolutionFilter(mosaic.metaIOFilter.metaIOFilter):
 		"""
 			Return a formatted string of filter settings
 		"""
-		logObj=log.mosaicLogFormat()
+		self.logger.info( '\tFilter settings:' )
 
-
-		logObj.addLogHeader( 'Filter settings:' )
-
-		logObj.addLogText( 'Filter type = {0}'.format(self.__class__.__name__) )
-		logObj.addLogText( 'Filter coefficients = {0}'.format(self.filterCoeff) )
-		logObj.addLogText( 'Decimation = {0}'.format(self.decimate) )
+		self.logger.info( '\t\tFilter type = {0}'.format(self.__class__.__name__) )
+		self.logger.info( '\t\tFilter coefficients = {0}'.format(self.filterCoeff) )
+		self.logger.info( '\t\tDecimation = {0}'.format(self.decimate) )
 		
-		return str(logObj)

@@ -17,7 +17,7 @@
 import commonExceptions
 import metaEventProcessor
 import mosaic.utilities.util as util
-import mosaic.utilities.mosaicLogFormat as log
+import mosaic.utilities.mosaicLogging as mlog
 import mosaic.utilities.fit_funcs as fit_funcs
 import sys
 import math
@@ -102,6 +102,8 @@ class cusumPlus(metaEventProcessor.metaEventProcessor):
 		self.mdThreshold=-1
 
 		self.nStates=-1
+
+		self.cusumLogger=mlog.mosaicLogging().getLogger(__name__)
 
 		# Settings for detection of changed in current level
 		try:
@@ -196,18 +198,14 @@ class cusumPlus(metaEventProcessor.metaEventProcessor):
 		"""
 			Return a formatted string of settings for display
 		"""
-		logObj=log.mosaicLogFormat()
-
-
-		logObj.addLogHeader( 'Event processing settings:' )
-		logObj.addLogText( 'Algorithm = CUSUM+' )
+		self.cusumLogger.info( '\tEvent processing settings:' )
+		self.cusumLogger.info( '\t\tAlgorithm = CUSUM+' )
 		
-		logObj.addLogText( 'Jump Size  = {0}'.format(self.StepSize) )
-		logObj.addLogText( 'Min. State Length  = {0}'.format(self.MinLength) )
-		logObj.addLogText( 'CUSUM+ Min. Threshold  = {0}'.format(self.MinThreshold) )
-		logObj.addLogText( 'CUSUM+ Max. Threshold  = {0}'.format(self.MaxThreshold) )
+		self.cusumLogger.info( '\t\tJump Size  = {0}'.format(self.StepSize) )
+		self.cusumLogger.info( '\t\tMin. State Length  = {0}'.format(self.MinLength) )
+		self.cusumLogger.info( '\t\tCUSUM+ Min. Threshold  = {0}'.format(self.MinThreshold) )
+		self.cusumLogger.info( '\t\tCUSUM+ Max. Threshold  = {0}'.format(self.MaxThreshold) )
 
-		return str(logObj)
 
 	###########################################################################
 	# Local functions

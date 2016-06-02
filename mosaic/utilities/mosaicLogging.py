@@ -32,37 +32,40 @@ class MessageFormatter(logging.Formatter):
         record.msg = record.msg.strip()
         return super(MessageFormatter, self).format(record)
 
+
 class mosaicLogging(object):
 	__metaclass__ = metaSingleton
 
 	_loggers = {}
 
 	if sys.platform.startswith('darwin'):
-		logdir=os.path.expanduser('~')+"/Library/Logs/MOSAIC/"
+		logdir=os.path.expanduser('~')+"/Library/Logs/MOSAIC"
 		if not os.path.exists(logdir):
 			os.mkdir(logdir)
 		logname=logdir+"/mosaic.log"
 	elif sys.platform.startswith('linux'):
 		logname="/var/log/mosaic.log"
 	else:
-		lognamd="mosaic.log"
+		logname="mosaic.log"
+
+	log=logging.getLogger()
+	log.setLevel(logging.DEBUG)
 
 	formatstr=MessageFormatter("%(asctime)-8s %(levelname)-8s %(name)-12s: %(message)s", datefmt="%Y-%m-%d %H:%M:%S")
 
-	logging.basicConfig(
-			stream=sys.stdout,
-			format="%(message)s",
-			level=logging.INFO
-		)
-	log=logging.getLogger()
+	sfh=logging.StreamHandler(stream=sys.stdout)
+	sfh.setFormatter(logging.Formatter("%(message)s"))
+	sfh.setLevel(logging.INFO)
 
-	rfh=logging.handlers.RotatingFileHandler(logname, maxBytes=mosaic.LogSize, backupCount=5)
+	rfh=logging.handlers.RotatingFileHandler(filename=logname, maxBytes=mosaic.LogSize, backupCount=5)
 	rfh.setFormatter(formatstr)
 	if mosaic.DeveloperMode:
 		rfh.setLevel(logging.DEBUG)
 	else:
 		rfh.setLevel(logging.INFO)
+	
 	log.addHandler(rfh)
+	log.addHandler(sfh)
 
 	sh=None
 
@@ -74,23 +77,23 @@ class mosaicLogging(object):
 		if not name:
 			logger=logging.getLogger()
 		elif name not in mosaicLogging._loggers.keys():
-			mosaicLogging._loggers[name] = logging.getLogger(str(name))
-		logger=mosaicLogging._loggers[name]
+			logger=logging.getLogger(str(name))
+			mosaicLogging._loggers[name]=logger
+		else:
+			logger=mosaicLogging._loggers[name]
 
 		if dbHnd:
+			# if a db handle is set, update all loggers with the new handle
 			mosaicLogging.sh=sqliteHandler(dbHnd)
 			mosaicLogging.sh.setLevel(logging.INFO)
 			mosaicLogging.sh.setFormatter(logging.Formatter("%(message)s\n"))
-			logger.addHandler(mosaicLogging.sh)
-	
-		# if locallog:
-		# 	if mosaicLogging.fh==None:
-		# 		mosaicLogging.fh=logging.FileHandler(locallog, mode=filemode)
-		# 		mosaicLogging.fh.setLevel(logging.INFO)
-		# 		mosaicLogging.fh.setFormatter(logging.Formatter("%(message)s"))
-		
-		# if mosaicLogging.fh:
-		# 	logger.addHandler(mosaicLogging.fh)
+
+			for name in mosaicLogging._loggers.keys():
+				l=mosaicLogging._loggers[name]
+				for h in l.handlers:
+					if isinstance(h, sqliteHandler):
+						l.removeHandler(h)
+				
+				l.addHandler(mosaicLogging.sh)
 	
 		return logger
-

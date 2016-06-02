@@ -16,7 +16,7 @@ import scipy.signal as sig
 import pywt
 
 import mosaic.metaIOFilter
-import mosaic.utilities.mosaicLogFormat as log
+import mosaic.utilities.mosaicLogging as mlog
 
 __all__ = ["waveletDenoiseFilter"]
 
@@ -41,6 +41,8 @@ class waveletDenoiseFilter(mosaic.metaIOFilter.metaIOFilter):
 			self.maxWaveletLevel=self.waveletLevel
 		except KeyError:
 			print "Missing mandatory arguments 'wavelet', 'level' or 'threshold'"
+
+		self.logger=mlog.mosaicLogging().getLogger(__name__)
 
 
 	def filterData(self, icurr, Fs):
@@ -126,18 +128,14 @@ class waveletDenoiseFilter(mosaic.metaIOFilter.metaIOFilter):
 		"""
 			Return a formatted string of filter settings
 		"""
-		logObj=log.mosaicLogFormat()
-
-		logObj.addLogHeader( 'Filter settings:' )
+		self.logger.info( '\tFilter settings:' )
 		
-		logObj.addLogText( 'Filter type = {0}'.format(self.__class__.__name__) )
-		logObj.addLogText( 'Wavelet type = {0}'.format(self.waveletType) )
-		logObj.addLogText( 'Wavelet level = {0}'.format(self.waveletLevel) )
-		logObj.addLogText( 'Wavelet threshold type = {0}'.format(self.waveletThresholdType) )
-		logObj.addLogText( 'Wavelet threshold sub-type = {0}'.format(self.waveletThresholdSubType) )
-		logObj.addLogText( 'Decimation = {0}'.format(self.decimate) )
-
-		return str(logObj)
+		self.logger.info( '\t\tFilter type = {0}'.format(self.__class__.__name__) )
+		self.logger.info( '\t\tWavelet type = {0}'.format(self.waveletType) )
+		self.logger.info( '\t\tWavelet level = {0}'.format(self.waveletLevel) )
+		self.logger.info( '\t\tWavelet threshold type = {0}'.format(self.waveletThresholdType) )
+		self.logger.info( '\t\tWavelet threshold sub-type = {0}'.format(self.waveletThresholdSubType) )
+		self.logger.info( '\t\tDecimation = {0}'.format(self.decimate) )
 
 if __name__ == '__main__':
 	import csv

@@ -1,9 +1,16 @@
+import mosaic.utilities.mosaicLogging as mlog 
+
 class ModuleImportTest(object):
+	log=mlog.mosaicLogging().getLogger(__name__)
+	
 	def runTestCase(self, modulename):
 		module=__import__(modulename)
 
+		ModuleImportTest.log.debug("import "+modulename)
+
 		for submod in modulename.split('.')[1:]:
 			module=getattr(module, submod)
+			ModuleImportTest.log.debug("import "+submod)
 
 		return
 		

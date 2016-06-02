@@ -97,7 +97,7 @@ class tsvTrajIO(metaTrajIO.metaTrajIO):
 
 				- `logObject` : 	a object that holds logging text (see :class:`~mosaic.utilities.mosaicLogFormat.mosaicLogFormat`)				
 		"""
-		return ""
+		pass
 
 	def __readtsv(self, fname):
 		"""

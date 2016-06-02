@@ -40,6 +40,7 @@ import sqlite3MDIO
 from mosaic.utilities.resource_path import format_path
 from mosaic.utilities.ionic_current_stats import OpenCurrentDist
 import mosaic.utilities.mosaicTiming as mosaicTiming
+import mosaic.utilities.mosaicLogging as mlog
 
 __all__ = ["metaEventPartition", "ExcessiveDriftError", "DriftRateError"]
 
@@ -100,8 +101,6 @@ class metaEventPartition(object):
 
 		sys.stdout.flush()
 
-		self.logFileHnd=open(format_path(self.trajDataObj.datPath+'/eventProcessing.log'),'w')
-		
 		self.tEventProcObj=self.eventProcHnd([], self.trajDataObj.FsHz, eventstart=0,eventend=0, baselinestats=[ 0,0,0 ], algosettingsdict=self.eventProcSettingsDict.copy(), savets=False, absdatidx=0, datafileHnd=None )
 
 		self.mdioDBHnd=sqlite3MDIO.sqlite3MDIO()
@@ -112,6 +111,13 @@ class metaEventPartition(object):
 								colNames_t=(self.tEventProcObj.mdHeadingDataType())
 							)
 		self.mdioDBHnd.writeSettings(settingsString)
+
+		self.logger=mlog.mosaicLogging().getLogger(name=__name__, dbHnd=self.mdioDBHnd)
+		self.logger.debug('Event Segment Initialization')
+
+		# [self.logger.debug(l.strip('\t')) for l in settingsString.split('\n')]
+		self.logger.debug(settingsString)
+
 		if self.trajDataObj.dataFilter:
 			self.fstring=type(self.trajDataObj.dataFilterObj).__name__
 		else:
@@ -160,13 +166,8 @@ class metaEventPartition(object):
 		"""
 			Partition events within a time-series.
 		"""
-		self.outputString="Start time: "+str(datetime.datetime.now().strftime('%Y-%m-%d %I:%M %p'))+"\n\n"
-		# write out first stage results
-		sys.stdout.write(self.outputString)
-		self.logFileHnd.write(self.outputString)
-		# write the start time to the database
-		self.mdioDBHnd.writeAnalysisLog(self.outputString)
-
+		self.logger.info("\nStart time: "+str(datetime.datetime.now().strftime('%Y-%m-%d %I:%M %p'))+"\n\n")
+		
 		# Initialize segmentation
 		self._setuppartition()
 
@@ -192,36 +193,26 @@ class metaEventPartition(object):
 
 		except metaTrajIO.EmptyDataPipeError, err:
 			self.segmentTime=self.timingObj.time()-startTime
-			self.outputString='[Status]\n\tSegment trajectory: ***NORMAL***\n'
+			self.logger.info('[Status]')
+			self.logger.info('\tSegment trajectory: ***NORMAL***')
 		except (ExcessiveDriftError, DriftRateError) as err:
 			self.segmentTime=self.timingObj.time()-startTime
-			self.outputString='[Status]\n\tSegment trajectory: ***ERROR***\n\t\t{0}\n'.format(str(err))
+			self.logger.info('[Status]')
+			self.logger.info('\tSegment trajectory: ***ERROR***')
+			self.logger.info('\t\t{0}'.format(str(err)))
 		except KeyboardInterrupt, err:
 			self.segmentTime=self.timingObj.time()-startTime
-			self.outputString='[Status]\n\tSegment trajectory: ***USER STOP***\n'
+			self.logger.info('[Status]')
+			self.logger.info('\tSegment trajectory: ***USER STOP***')
 		except:
 			raise
 
-		# write out first stage results
-		sys.stdout.write(self.outputString)
-		self.logFileHnd.write(self.outputString)
-
-		# write the first stage output log to the database
-		tstr=self.mdioDBHnd.readAnalysisLog()+self.outputString
-		self.mdioDBHnd.writeAnalysisLog(tstr)
-		
 		# Finish processing events
 		self._cleanupeventprocessing()
 
 		# Write the output log file
 		self._writeoutputlog()
-	
-		self.logFileHnd.write(self.outputString)
-		self.logFileHnd.close()
-
-		# write the output log to the database
-		tstr=self.mdioDBHnd.readAnalysisLog()+self.outputString
-		self.mdioDBHnd.writeAnalysisLog(tstr)
+			
 
 		self.mdioDBHnd.closeDB()
 
@@ -348,7 +339,7 @@ class metaEventPartition(object):
 		if self.meanOpenCurr == -1. or self.sdOpenCurr == -1. or self.slopeOpenCurr == -1.:
 			[ self.meanOpenCurr, self.sdOpenCurr, self.slopeOpenCurr ] = self._openchanstats(self.trajDataObj.previewdata(self.nPoints))
 		else:
-			print "WARNING: Automatic open channel state estimation has been disabled."
+			self.logger.warning("WARNING: Automatic open channel state estimation has been disabled.")
 
 		# Initialize a FIFO queue to keep track of open channel conductance
 		#self.openchanFIFO=npfifo.npfifo(nPoints)
@@ -383,13 +374,14 @@ class metaEventPartition(object):
 							sys.stdout.write('Processing %d of %d events.\r' % (self.eventprocessedcount,self.eventcount) )
 	    					sys.stdout.flush()
 
-			self.outputString='\tProcess events: ***NORMAL***\n\n\n'
+			self.logger.info('\tProcess events: ***NORMAL***')
 			self.procTime+=self.timingObj.time()-startTime
 		except KeyboardInterrupt:
 			self.procTime+=self.timingObj.time()-startTime
-			self.outputString+='\tProcess events: ***USER STOP***\n\n\n'
+			self.logger.info('\tProcess events: ***USER STOP***')
 		except BaseException, err:
-			self.outputString='\tProcess events: ***ERROR***\n\t\t{0}\n\n\n'.format(str(err))
+			self.logger.info('\tProcess events: ***ERROR***')
+			self.logger.info('\t\t{0}'.format(str(err)))
 			self.procTime+=self.timingObj.time()-startTime
 			raise
 
@@ -397,53 +389,45 @@ class metaEventPartition(object):
 		sys.stdout.flush()
 
 	def _writeoutputlog(self):
-		self.outputString+='[Summary]\n'
+		self.logger.info('[Summary]')
 
 		# write out event segment stats
-		self.outputString+=self.formatstats()
+		self.formatstats()
 
-		# print event processing stats. these are limited to how
-		# many events were rejected
-		#nEventsProc=0
-		#for evnt in self.eventQueue:
-		#	if evnt.mdProcessingStatus=='normal':
-		#		nEventsProc+=1
-		#self.outputString+='\tEvent processing stats:\n'
-		#self.outputString+='\t\tAccepted = {0}\n'.format(nEventsProc)
-		#self.outputString+='\t\tRejected = {0}\n'.format(self.eventcount-nEventsProc)
-		#self.outputString+='\t\tRejection rate = {0}\n\n'.format(round(1-nEventsProc/float(self.eventcount),2))
+		# print event processing stats. Stats are limited to how many events were rejected
+		nTotal=len(self.mdioDBHnd.queryDB("select ProcessingStatus from metadata"))
+		nRejected=len(self.mdioDBHnd.queryDB("select ProcessingStatus from metadata where ProcessingStatus!='normal'"))
+		nWarn=len(self.mdioDBHnd.queryDB("select ProcessingStatus from metadata where ProcessingStatus LIKE 'w%'"))
 
-		# Display averaged properties
-		#for p in self.eventQueue[0].mdAveragePropertiesList():
-		#	self.outputString+='\t\t{0} = {1}\n'.format(p, self.__roundufloat( np.mean( [ getattr(evnt, p) for evnt in self.eventQueue if getattr(evnt, p) != -1 ] )) )
+		self.logger.info('\tEvent processing stats:')
+		self.logger.info('\t\tTotal = {0}'.format(nTotal) )
+		self.logger.info('\t\tWarning = {0}'.format(nWarn) )	
+		self.logger.info('\t\tError = {0}'.format(nRejected) )
+		self.logger.info('\t\tError rate = {0} %'.format(100.*round(nRejected/float(nTotal),4)) )
 
-		#self.outputString+="\n\n[Settings]\n\tSettings File = '{0}'\n\n".format(self.settingsDict.settingsFile)
-		self.outputString+="\n[Settings]\n"
+		self.logger.info("[Settings]")
 
 		# write out trajectory IO settings
-		self.outputString+=self.trajDataObj.formatsettings()+'\n'
+		self.trajDataObj.formatsettings()
 		
 		# write out event segment settings/stats
-		self.outputString+=self.formatsettings()+'\n\n'
+		self.formatsettings()
 
 		# event processing settings
-		self.outputString+=self.tEventProcObj.formatsettings()+'\n\n'
+		self.tEventProcObj.formatsettings()
 
 		# Output files
-		self.outputString+=self.formatoutputfiles()
-		self.outputString+='\tLog file = eventProcessing.log\n\n'
+		self.formatoutputfiles()
+		self.logger.info('\tLog file = eventProcessing.log')
 
 		# Finally, timing information
-		self.outputString+='[Timing]\n\tSegment trajectory = {0} s\n'.format(round(self.segmentTime-self.procTime,2))
-		self.outputString+='\tProcess events = {0} s\n\n'.format(round(self.procTime,2))
-		self.outputString+='\tTotal = {0} s\n'.format(round(self.segmentTime,2))
+		self.logger.info('[Timing]')
+		self.logger.info('\tSegment trajectory = {0} s'.format(round(self.segmentTime-self.procTime,2)))
+		self.logger.info('\tProcess events = {0} s'.format(round(self.procTime,2)))
+		self.logger.info('\tTotal = {0} s'.format(round(self.segmentTime,2)))
 		if self.eventcount > 0:
-			self.outputString+='\tTime per event = {0} ms\n\n\n'.format(round(1000.*(self.segmentTime)/float(self.eventcount),2))
-		
-		# write it all out to stdout and also to a file
-		# eventProcessing.log in the data location
-		sys.stdout.write(self.outputString)
-			
+			self.logger.info('\tTime per event = {0} ms\n\n'.format(round(1000.*(self.segmentTime)/float(self.eventcount),2)))
+					
 	def _openchanstats(self, curr):
 		"""
 			Estimate the mean, standard deviation and slope of 
@@ -504,9 +488,11 @@ class metaEventPartition(object):
 		sigma=self.driftThreshold
 		if (abs(mu)<(abs(self.meanOpenCurr)-sigma*abs(self.sdOpenCurr))) or abs(mu)>(abs(self.meanOpenCurr)+sigma*abs(self.sdOpenCurr)):
 			raise ExcessiveDriftError("The open channel current ({0:0.2f} pA) deviates from the baseline value ({1:0.2f}) by {2} sigma.".format(mu, self.meanOpenCurr, sigma))
+			self.logger.error("The open channel current ({0:0.2f} pA) deviates from the baseline value ({1:0.2f}) by {2} sigma.".format(mu, self.meanOpenCurr, sigma))
 
 		if (abs(sl)) > abs(self.maxDriftRate):
 			raise DriftRateError("The open channel conductance is changing faster ({0} pA/s) than the allowed rate ({1} pA/s).".format(round(abs(sl),2), abs(round(self.maxDriftRate,2))))
+			self.logger.error("The open channel conductance is changing faster ({0} pA/s) than the allowed rate ({1} pA/s).".format(round(abs(sl),2), abs(round(self.maxDriftRate,2))))
 
 		# Save the open channel conductance stats for the current window
 		self.windowOpenCurrentMean=mu

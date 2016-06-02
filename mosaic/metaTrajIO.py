@@ -24,7 +24,7 @@ import numpy as np
 
 import settings
 from mosaic.utilities.resource_path import format_path, path_separator
-import mosaic.utilities.mosaicLogFormat as log
+import mosaic.utilities.mosaicLogging as mlog
 
 __all__ = ["metaTrajIO", "IncompatibleArgumentsError", "IncorrectDataFormat", "EndOfFileError", "SamplingRateChangedError", "EmptyDataPipeError", "FileNotFoundError"]
 
@@ -166,6 +166,8 @@ class metaTrajIO(object):
 		self.datLenSec=0
 
 		self.initPipe=False
+
+		self.logger=mlog.mosaicLogging().getLogger(name=__name__)
 
 		# Call sub-class init
 		self._init(**kwargs)
@@ -324,23 +326,20 @@ class metaTrajIO(object):
 		"""
 			Return a formatted string of settings for display
 		"""
-		logObj=log.mosaicLogFormat()
-
-		logObj.addLogHeader( 'Trajectory I/O settings:' )
+		self.logger.info( '\tTrajectory I/O settings:' )
 		
-		logObj.addLogText( 'Files processed = {0}'.format(self.nFiles-len(self.dataFiles)) )
-		logObj.addLogText( 'Data path = {0}'.format(self.datPath) )
-		logObj.addLogText( 'File format = {0}'.format(self.fileFormat) )
-		logObj.addLogText( 'Sampling frequency = {0} kHz'.format(self.FsHz*1e-3) )
+		self.logger.info( '\t\tFiles processed = {0}'.format(self.nFiles-len(self.dataFiles)) )
+		self.logger.info( '\t\tData path = {0}'.format(self.datPath) )
+		self.logger.info( '\t\tFile format = {0}'.format(self.fileFormat) )
+		self.logger.info( '\t\tSampling frequency = {0} kHz'.format(self.FsHz*1e-3) )
 
 		# Sub-class formatted settings
-		self._formatsettings(logObj)
+		self._formatsettings("")
 
 		# add the filter settings
 		if self.dataFilter:
-			return str(logObj)+self.dataFilterObj.formatsettings()
-		else:
-			return str(logObj)
+			self.dataFilterObj.formatsettings()
+
 
 	#################################################################
 	# Private API: Interface functions, implemented by sub-classes.

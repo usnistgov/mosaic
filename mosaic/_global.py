@@ -1,3 +1,3 @@
 # Control global settings
-DeveloperMode=False
-Logging=False
+DeveloperMode=True
+LogSize=1048576

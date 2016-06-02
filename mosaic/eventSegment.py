@@ -31,8 +31,9 @@
 """
 import mosaic.utilities.util as util
 import mosaic.utilities.mosaicLogFormat as log
+from mosaic.utilities.resource_path import format_path
+import mosaic.utilities.mosaicLogging as mlog
 from  collections import deque
-
 import metaEventPartition
 
 __all__ = ["eventSegment"]
@@ -81,6 +82,7 @@ class eventSegment(metaEventPartition.metaEventPartition):
 			raise commonExceptions.SettingsTypeError( err )
 
 		#### Vars for event partition ####
+		self.esLogger=mlog.mosaicLogging().getLogger(name=__name__, dbHnd=self.mdioDBHnd)
 		self.eventstart=False
 		self.eventdat=[]
 		self.preeventdat=deque(maxlen=self.eventPad)
@@ -94,52 +96,36 @@ class eventSegment(metaEventPartition.metaEventPartition):
 		"""
 			Return a formatted string of settings for display in the output log.
 		"""
-		logObj=log.mosaicLogFormat()
-
-
-		logObj.addLogHeader( 'Event segment settings:' )
-		logObj.addLogText( 'Window size for block operations = {0} s'.format(self.blockSizeSec) )
-		logObj.addLogText( 'Event padding = {0} points'.format(self.eventPad) )
-		logObj.addLogText( 'Min. event rejection length = {0} points'.format(self.minEventLength) )
-		logObj.addLogText( 'Event trigger threshold = {0:5.2f} * SD'.format(self.eventThreshold) )
-		logObj.addLogText( 'Drift error threshold = {0} * SD'.format(self.driftThreshold) )
-		logObj.addLogText( 'Drift rate error threshold = {0} pA/s'.format(self.maxDriftRate) )
-
-	
-		return str(logObj)
+		self.esLogger.info( '\tEvent segment settings:' )
+		self.esLogger.info( '\t\tWindow size for block operations = {0} s'.format(self.blockSizeSec) )
+		self.esLogger.info( '\t\tEvent padding = {0} points'.format(self.eventPad) )
+		self.esLogger.info( '\t\tMin. event rejection length = {0} points'.format(self.minEventLength) )
+		self.esLogger.info( '\t\tEvent trigger threshold = {0:5.2f} * SD'.format(self.eventThreshold) )
+		self.esLogger.info( '\t\tDrift error threshold = {0} * SD'.format(self.driftThreshold) )
+		self.esLogger.info( '\t\tDrift rate error threshold = {0} pA/s'.format(self.maxDriftRate) )
 
 	def formatstats(self):
 		"""
 			Return a formatted string of statistics for display in the output log.
 		"""
-		fmtstr=""
-
-		fmtstr+='\tBaseline open channel conductance:\n'
-		fmtstr+='\t\tMean	= {0} pA\n'.format( round(self.meanOpenCurr,2) ) 
-		fmtstr+='\t\tSD	= {0} pA\n'.format( round(self.sdOpenCurr,2) ) 
-		fmtstr+='\t\tSlope 	= {0} pA/s\n'.format( round(self.slopeOpenCurr,2) ) 
+		self.esLogger.info('\tBaseline open channel conductance:')
+		self.esLogger.info('\t\tMean	= {0} pA'.format( round(self.meanOpenCurr,2) )) 
+		self.esLogger.info('\t\tSD	= {0} pA'.format( round(self.sdOpenCurr,2) ) )
+		self.esLogger.info('\t\tSlope 	= {0} pA/s'.format( round(self.slopeOpenCurr,2) ) )
 		
+		self.esLogger.info('\tEvent segment stats:')
 
-		fmtstr+='\n\tEvent segment stats:\n'
-		fmtstr+='\t\tEvents detected = {0}\n'.format(self.eventcount)
-
-		fmtstr+='\n\t\tOpen channel drift (max) = {0} * SD\n'.format(abs(round((abs(self.meanOpenCurr)-abs(self.maxDrift))/self.sdOpenCurr,2)))
-		fmtstr+='\t\tOpen channel drift rate (min/max) = ({0}/{1}) pA/s\n\n'.format(round(self.minDriftR,2), round(self.maxDriftR))
-
-		return fmtstr
+		self.esLogger.info('\t\tOpen channel drift (max) = {0} * SD'.format(abs(round((abs(self.meanOpenCurr)-abs(self.maxDrift))/self.sdOpenCurr,2))))
+		self.esLogger.info('\t\tOpen channel drift rate (min/max) = ({0}/{1}) pA/s'.format(round(self.minDriftR,2), round(self.maxDriftR)))
 
 	def formatoutputfiles(self):
-		fmtstr=""
-
-		fmtstr+='[Output]\n'
-		fmtstr+='\tOutput path = {0}\n'.format(self.trajDataObj.datPath)
-		fmtstr+='\tEvent characterization data = '+ self.mdioDBHnd.dbFilename +'\n'
+		self.esLogger.info('[Output]')
+		self.esLogger.info('\tOutput path = {0}'.format(self.trajDataObj.datPath))
+		self.esLogger.info('\tEvent characterization data = '+ self.mdioDBHnd.dbFilename )
 		if self.writeEventTS:
-			fmtstr+='\tEvent time-series = ***enabled***\n'
+			self.esLogger.info('\tEvent time-series = ***enabled***')
 		else:
-			fmtstr+='\tEvent time-series = ***disabled***\n'
-
-		return fmtstr
+			self.esLogger.info('\tEvent time-series = ***disabled***')
 
 	#################################################################
 	# Interface functions

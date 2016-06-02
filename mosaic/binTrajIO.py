@@ -20,7 +20,7 @@ Binary file implementation of metaTrajIO. Read raw binary files with specified r
 import struct
 
 import mosaic.metaTrajIO
-import mosaic.utilities.mosaicLogFormat as log
+import mosaic.utilities.mosaicLogging as mlog
 
 import numpy as np
 
@@ -166,6 +166,8 @@ class binTrajIO(mosaic.metaTrajIO.metaTrajIO):
 		if not hasattr(self, 'Fs'):	
 			self.Fs=self.SamplingFrequency
 
+		self.binLogger=mlog.mosaicLogging().getLogger(name=__name__)
+
 	def readdata(self, fname):
 		"""
 			Return raw data from a single data file. Set a class 
@@ -193,10 +195,10 @@ class binTrajIO(mosaic.metaTrajIO.metaTrajIO):
 
 				- `logObject` : 	a object that holds logging text (see :class:`~mosaic.utilities.mosaicLogFormat.mosaicLogFormat`)				
 		"""
-		logObject.addLogText( 'Amplifier scale = {0} pA'.format(self.AmplifierScale) )
-		logObject.addLogText( 'Amplifier offset = {0} pA'.format(self.AmplifierOffset) )
-		logObject.addLogText( 'Header offset = {0} bytes'.format(self.HeaderOffset) )
-		logObject.addLogText( 'Data type = \'{0}\''.format(self.IonicCurrentType) )
+		self.binLogger.info( '\t\tAmplifier scale = {0} pA'.format(self.AmplifierScale) )
+		self.binLogger.info( '\t\tAmplifier offset = {0} pA'.format(self.AmplifierOffset) )
+		self.binLogger.info( '\t\tHeader offset = {0} bytes'.format(self.HeaderOffset) )
+		self.binLogger.info( '\t\tData type = \'{0}\''.format(self.IonicCurrentType) )
 
 	def readBinaryFile(self, fname):
 		return np.memmap(fname, dtype=self.ColumnTypes, mode='r', offset=self.HeaderOffset)[self.IonicCurrentColumn]

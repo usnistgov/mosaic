@@ -25,7 +25,7 @@
 import commonExceptions
 import metaEventProcessor
 import mosaic.utilities.util as util
-import mosaic.utilities.mosaicLogFormat as log
+import mosaic.utilities.mosaicLogging as mlog
 import mosaic.utilities.fit_funcs as fit_funcs
 import sys
 import math
@@ -91,6 +91,8 @@ class adept2State(metaEventProcessor.metaEventProcessor):
 		self.mdRedChiSq = -1
 
 		self.mdAbsEventStart = -1
+
+		self.a2sLogger=mlog.mosaicLogging().getLogger(__name__)
 
 		# Settings for single step event processing
 		# settings for gaussian fits
@@ -187,17 +189,13 @@ class adept2State(metaEventProcessor.metaEventProcessor):
 		""" 
 			Return a formatted string of settings for display
 		"""
-		logObj=log.mosaicLogFormat()
-
-
-		logObj.addLogHeader( 'Event processing settings:' )
-		logObj.addLogText( 'Algorithm = ADEPT 2-State' )
+		self.a2sLogger.info( '\tEvent processing settings:' )
+		self.a2sLogger.info( '\t\tAlgorithm = ADEPT 2-State' )
 		
-		logObj.addLogText( 'Max. iterations  = {0}'.format(self.FitIters) )
-		logObj.addLogText( 'Fit tolerance (rel. err in leastsq)  = {0}'.format(self.FitTol) )
-		logObj.addLogText( 'Link RC constants = {0}'.format(bool(self.LinkRCConst)) )
+		self.a2sLogger.info( '\t\tMax. iterations  = {0}'.format(self.FitIters) )
+		self.a2sLogger.info( '\t\tFit tolerance (rel. err in leastsq)  = {0}'.format(self.FitTol) )
+		self.a2sLogger.info( '\t\tLink RC constants = {0}'.format(bool(self.LinkRCConst)) )
 
-		return str(logObj)
 
 	###########################################################################
 	# Local functions

@@ -2,7 +2,7 @@
 	A class that extends metaMDIO to implement SQLite support for metadata storage.
 
 	:Created:	9/28/2014
- 	:Author: 	Arvind Balijepalli <arvind.balijepalli@nist.gov>
+	:Author: 	Arvind Balijepalli <arvind.balijepalli@nist.gov>
 	:License:	See LICENSE.TXT
 	:ChangeLog:
 	.. line-block::
@@ -22,12 +22,15 @@ import struct
 import datetime
 import pandas 
 
+
 import numpy
 import mosaic.metaMDIO
 import mosaic
 from mosaic.utilities.resource_path import resource_path, format_path
+import mosaic.utilities.mosaicLogging as mlog
 
-__all__ = ["sqlite3MDIO", "data_record"]
+
+__all__ = ["sqlite3MDIO", "data_record", "sqliteHandler"]
 
 class data_record(dict):
 	"""
@@ -62,7 +65,7 @@ class data_record(dict):
 	def update(self, *args, **kwargs):
 		for k, v in dict(*args, **kwargs).iteritems():
 			self[k] = v
-
+		
 class sqlite3MDIO(mosaic.metaMDIO.metaMDIO):
 	"""
 	"""
@@ -73,19 +76,27 @@ class sqlite3MDIO(mosaic.metaMDIO.metaMDIO):
 			Args:
 				tableName   name of database table. Default is 'metadata'
 		"""
+		self.logger=mlog.mosaicLogging().getLogger(__name__)
+
 		if not hasattr(self, 'tableName'):
 			self.tableName='metadata'
 		if not hasattr(self, 'colNames'):
 			raise metaMDIO.InsufficientArgumentsError("Missing arguments: 'colNames' must be supplied to initialize {0}".format(type(self).__name__))
+			self.logger.error("Missing arguments: 'colNames' must be supplied to initialize {0}".format(type(self).__name__))
 		if not hasattr(self, 'colNames_t'):
 			raise metaMDIO.InsufficientArgumentsError("Missing arguments: 'colNames_t' must be supplied to initialize {0}".format(type(self).__name__))
+			self.logger.error("Missing arguments: 'colNames_t' must be supplied to initialize {0}".format(type(self).__name__))
 
 		dbTimeout=kwargs.pop('timeout', 11.0)
+		self.logger.debug("DB Timeout ="+str(dbTimeout))
 
 		self.dbFilename=format_path(self.dbPath+'/'+'eventMD-' +str(datetime.datetime.now().strftime('%Y%m%d-%H%M%S'))+'.sqlite')
+		self.logger.debug("dbFilename ="+self.dbFilename)
 		self.db = sqlite3.connect(self.dbFilename, detect_types=sqlite3.PARSE_DECLTYPES, timeout=dbTimeout)
 
 		self._setuptables()
+
+		self.logger.debug("DB setup complete.")
 
 	def _dbfile(self):
 		"""
@@ -178,7 +189,10 @@ class sqlite3MDIO(mosaic.metaMDIO.metaMDIO):
 			c.execute( 'select logstring from analysislog' )
 			settstr=c.fetchall()
 			
-			return list(settstr[0])[0]
+			if len(settstr)>0:
+				return list(settstr[0])[0]
+			else:
+				return ""
 			# return base64.b64decode(list(settstr[0])[0])
 		except sqlite3.OperationalError, err:
 			raise

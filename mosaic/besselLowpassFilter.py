@@ -14,7 +14,7 @@ import numpy as np
 import scipy.signal as sig
 
 import mosaic.metaIOFilter
-import mosaic.utilities.mosaicLogFormat as log
+import mosaic.utilities.mosaicLogging as mlog
 
 __all__ = ["besselLowpassFilter"]
 
@@ -34,6 +34,8 @@ class besselLowpassFilter(mosaic.metaIOFilter.metaIOFilter):
 			self.filterCutoff=float(kwargs['filterCutoff'])
 		except KeyError:
 			print "Missing mandatory arguments 'filterOrder' or 'filterCutoff'"
+
+		self.logger=mlog.mosaicLogging().getLogger(__name__)
 
 
 	def filterData(self, icurr, Fs):
@@ -70,15 +72,10 @@ class besselLowpassFilter(mosaic.metaIOFilter.metaIOFilter):
 		"""
 			Populate `logObject` with settings strings for display
 		"""
-		logObj=log.mosaicLogFormat()
+		self.logger.info( '\tFilter settings:' )
 
-
-		logObj.addLogHeader( 'Filter settings:' )
-
-		logObj.addLogText( 'Filter type = {0}'.format(self.__class__.__name__) )
-		logObj.addLogText( 'Filter order = {0}'.format(self.filterOrder) )
-		logObj.addLogText( 'Filter cutoff = {0} kHz'.format(self.filterCutoff*1e-3) )
-		logObj.addLogText( 'Decimation = {0}'.format(self.decimate) )
+		self.logger.info( '\t\tFilter type = {0}'.format(self.__class__.__name__) )
+		self.logger.info( '\t\tFilter order = {0}'.format(self.filterOrder) )
+		self.logger.info( '\t\tFilter cutoff = {0} kHz'.format(self.filterCutoff*1e-3) )
+		self.logger.info( '\t\tDecimation = {0}'.format(self.decimate) )
 		
-		
-		return str(logObj)

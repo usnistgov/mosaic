@@ -15,7 +15,7 @@
 """
 import mosaic.metaTrajIO
 import abf.abf as abf
-import mosaic.utilities.mosaicLogFormat as log
+import mosaic.utilities.mosaicLogging as mlog
 
 import numpy as np
 
@@ -42,7 +42,7 @@ class abfTrajIO(mosaic.metaTrajIO.metaTrajIO):
 				None
 		"""
 	def _init(self, **kwargs):
-		pass
+		self.abfLogger=mlog.mosaicLogging().getLogger(name=__name__)
 	
 	def readdata(self, fname):
 		"""
@@ -82,6 +82,6 @@ class abfTrajIO(mosaic.metaTrajIO.metaTrajIO):
 
 				- `logObject` : 	a object that holds logging text (see :class:`~mosaic.utilities.mosaicLogFormat.mosaicLogFormat`)				
 		"""
-		logObject.addLogText( 'Lowpass filter = {0} kHz'.format(self.bandwidth*0.001) )
-		logObject.addLogText( 'Signal gain = {0}'.format(self.gain) )
+		self.abfLogger.info( 'Lowpass filter = {0} kHz'.format(self.bandwidth*0.001) )
+		self.abfLogger.info( 'Signal gain = {0}'.format(self.gain) )
 
