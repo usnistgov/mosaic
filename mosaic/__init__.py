@@ -6,7 +6,7 @@ import mosaic.utilities
 
 import mosaic.commonExceptions
 import mosaic.errors
-import mosaic.zmqIO
+# import mosaic.zmqIO
 import mosaic.settings
 
 import mosaic.metaTrajIO 
@@ -42,7 +42,7 @@ __all__.extend(mosaic.utilities.__all__)
 
 __all__.extend(mosaic.commonExceptions.__all__)
 __all__.extend(mosaic.errors.__all__)
-__all__.extend(mosaic.zmqIO.__all__)
+# __all__.extend(mosaic.zmqIO.__all__)
 __all__.extend(mosaic.settings.__all__)
 
 __all__.extend(mosaic.metaTrajIO.__all__)
