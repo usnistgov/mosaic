@@ -55,7 +55,7 @@ class mosaicLogging(object):
 
 	sfh=logging.StreamHandler(stream=sys.stdout)
 	sfh.setFormatter(logging.Formatter("%(message)s"))
-	sfh.setLevel(logging.INFO)
+	sfh.setLevel(logging.WARNING)
 
 	rfh=logging.handlers.RotatingFileHandler(filename=logname, maxBytes=mosaic.LogSize, backupCount=5)
 	rfh.setFormatter(formatstr)

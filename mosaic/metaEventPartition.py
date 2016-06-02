@@ -418,7 +418,6 @@ class metaEventPartition(object):
 
 		# Output files
 		self.formatoutputfiles()
-		self.logger.info('\tLog file = eventProcessing.log')
 
 		# Finally, timing information
 		self.logger.info('[Timing]')
@@ -427,6 +426,8 @@ class metaEventPartition(object):
 		self.logger.info('\tTotal = {0} s'.format(round(self.segmentTime,2)))
 		if self.eventcount > 0:
 			self.logger.info('\tTime per event = {0} ms\n\n'.format(round(1000.*(self.segmentTime)/float(self.eventcount),2)))
+
+		print self.mdioDBHnd.readAnalysisLog()
 					
 	def _openchanstats(self, curr):
 		"""
