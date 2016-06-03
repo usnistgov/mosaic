@@ -46,7 +46,9 @@ class mosaicLogging(object):
 	sfh=logging.StreamHandler(stream=sys.stdout)
 	sfh.setFormatter(logging.Formatter("%(message)s"))
 	sfh.setLevel(logging.WARNING)
+	log.addHandler(sfh)
 
+	# Rotating File Handler
 	if sys.platform.startswith('darwin'):
 		logdir=os.path.expanduser('~')+"/Library/Logs/MOSAIC"
 		if not os.path.exists(logdir):
@@ -71,7 +73,6 @@ class mosaicLogging(object):
 		rfh.setLevel(logging.INFO)
 	
 	log.addHandler(rfh)
-	log.addHandler(sfh)
 
 	sh=None
 
