@@ -16,6 +16,7 @@ import logging
 import logging.handlers
 import mosaic
 from mosaic.utilities.mosaicLogHandlers import sqliteHandler
+from mosaic.utilities.resource_path import format_path
 
 __all__=["mosaicLogging", "metaSingleton", "MessageFormatter"]
 
@@ -50,18 +51,18 @@ class mosaicLogging(object):
 
 	# Rotating File Handler
 	if sys.platform.startswith('darwin'):
-		logdir=os.path.expanduser('~')+"/Library/Logs/MOSAIC"
+		logdir=format_path(os.path.expanduser('~')+"/Library/Logs/MOSAIC")
 		if not os.path.exists(logdir):
 			os.mkdir(logdir)
-		logname=logdir+"/mosaic.log"
+		logname=format_path(logdir+"/mosaic.log")
 	elif sys.platform.startswith('linux'):
 		if os.getuid()==0:
-			logname="/var/log/mosaic.log"
+			logname=format_path("/var/log/mosaic.log")
 		else:
 			log.info("To save logs to '/var/log/ run MOSAIC with sudo.")
-			logname=os.path.expanduser("~")+"/mosaic.log"
+			logname=format_path(os.path.expanduser("~")+"/mosaic.log")
 	else:
-		logname="mosaic.log"
+		logname=format_path(os.path.expanduser("~")+"mosaic.log")
 
 
 	rfh=logging.handlers.RotatingFileHandler(filename=logname, maxBytes=mosaic.LogSize, backupCount=5)
