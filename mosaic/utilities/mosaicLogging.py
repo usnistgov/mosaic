@@ -38,16 +38,6 @@ class mosaicLogging(object):
 
 	_loggers = {}
 
-	if sys.platform.startswith('darwin'):
-		logdir=os.path.expanduser('~')+"/Library/Logs/MOSAIC"
-		if not os.path.exists(logdir):
-			os.mkdir(logdir)
-		logname=logdir+"/mosaic.log"
-	elif sys.platform.startswith('linux'):
-		logname="/var/log/mosaic.log"
-	else:
-		logname="mosaic.log"
-
 	log=logging.getLogger()
 	log.setLevel(logging.DEBUG)
 
@@ -57,7 +47,23 @@ class mosaicLogging(object):
 	sfh.setFormatter(logging.Formatter("%(message)s"))
 	sfh.setLevel(logging.WARNING)
 
+	if sys.platform.startswith('darwin'):
+		logdir=os.path.expanduser('~')+"/Library/Logs/MOSAIC"
+		if not os.path.exists(logdir):
+			os.mkdir(logdir)
+		logname=logdir+"/mosaic.log"
+	elif sys.platform.startswith('linux'):
+		if os.getuid()==0:
+			logname="/var/log/mosaic.log"
+		else:
+			log.info("To save logs to '/var/log/ run MOSAIC with sudo.")
+			logname=os.path.expanduser("~")+"/mosaic.log"
+	else:
+		logname="mosaic.log"
+
+
 	rfh=logging.handlers.RotatingFileHandler(filename=logname, maxBytes=mosaic.LogSize, backupCount=5)
+	# rfh=logging.handlers.SysLogHandler(address='/dev/log/')
 	rfh.setFormatter(formatstr)
 	if mosaic.DeveloperMode:
 		rfh.setLevel(logging.DEBUG)
