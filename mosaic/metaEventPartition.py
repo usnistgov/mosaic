@@ -432,7 +432,12 @@ class metaEventPartition(object):
 		if self.eventcount > 0:
 			self.logger.info('\tTime per event = {0} ms\n\n'.format(round(1000.*(self.segmentTime)/float(self.eventcount),2)))
 
-		print self.mdioDBHnd.readAnalysisLog()
+		logfile=self.mdioDBHnd.dbFilename.replace('eventMD', 'eventProcessing').replace('sqlite', 'log')
+		log=self.mdioDBHnd.readAnalysisLog()
+		print log
+		with open(logfile, 'w') as f:
+			f.write(log)
+
 					
 	def _openchanstats(self, curr):
 		"""
