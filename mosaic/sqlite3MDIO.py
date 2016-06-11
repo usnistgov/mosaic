@@ -14,7 +14,7 @@
 		11/9/14 	AB  Implemented the analysis log I/O interface for sqlite3 databases.
 		9/28/14		AB 	Initial version
 """
-
+import sys
 
 import sqlite3
 import base64
@@ -28,6 +28,7 @@ import mosaic.metaMDIO
 import mosaic
 from mosaic.utilities.resource_path import resource_path, format_path
 import mosaic.utilities.mosaicLogging as mlog
+from mosaic.utilities.mosaicLogFormat import _d
 
 
 __all__ = ["sqlite3MDIO", "data_record", "sqliteHandler"]
@@ -88,15 +89,15 @@ class sqlite3MDIO(mosaic.metaMDIO.metaMDIO):
 			self.logger.error("Missing arguments: 'colNames_t' must be supplied to initialize {0}".format(type(self).__name__))
 
 		dbTimeout=kwargs.pop('timeout', 11.0)
-		self.logger.debug("DB Timeout ="+str(dbTimeout))
+		self.logger.debug(_d("DB Timeout = {0}", dbTimeout))
 
 		self.dbFilename=format_path(self.dbPath+'/'+'eventMD-' +str(datetime.datetime.now().strftime('%Y%m%d-%H%M%S'))+'.sqlite')
-		self.logger.debug("dbFilename ="+self.dbFilename)
+		self.logger.debug(_d("dbFilename {0}", self.dbFilename))
 		self.db = sqlite3.connect(self.dbFilename, detect_types=sqlite3.PARSE_DECLTYPES, timeout=dbTimeout)
 
 		self._setuptables()
 
-		self.logger.debug("DB setup complete.")
+		self.logger.debug(_d("DB setup complete."))
 
 	def _dbfile(self):
 		"""
@@ -110,7 +111,14 @@ class sqlite3MDIO(mosaic.metaMDIO.metaMDIO):
 			return ""
 
 	def _opendb(self, dbname, **kwargs):
+		try:
+			self.logger.debug(_d("open DB {0}", dbname))
+		except AttributeError:
+			self.logger=mlog.mosaicLogging().getLogger(__name__)
+			self.logger.debug(_d("open DB {0}", dbname))
+
 		if not hasattr(self, 'tableName'):
+			self.logger.debug(_d("Attribute tableName not found. Setting tableName to 'metadata'"))
 			self.tableName='metadata'
 
 		self.dbFilename=dbname
@@ -218,7 +226,9 @@ class sqlite3MDIO(mosaic.metaMDIO.metaMDIO):
 			c = self.db.cursor()
 
 			c.execute(str(query))
-		
+			
+			self.logger.debug(_d("{0}", query))
+
 			return c.fetchall()
 		except sqlite3.OperationalError, err:
 			raise
@@ -230,6 +240,8 @@ class sqlite3MDIO(mosaic.metaMDIO.metaMDIO):
 
 			colnames=self._col_names(query, c, self.tableName)
 			colnames_t=list(str(c) for c in (c.execute( 'select '+','.join(colnames)+' from '+self.tableName+'_t' ).fetchall())[0])
+
+			self.logger.debug(_d("{0}", query))
 
 			c.execute(str(query))
 		
@@ -244,6 +256,8 @@ class sqlite3MDIO(mosaic.metaMDIO.metaMDIO):
 		csvfile=format_path( self.dbFile.split('.')[0]+'.csv' )
 		df=pandas.DataFrame(self.queryDB(query), columns=self._col_names(query, self.db.cursor(), self.tableName))
 		df.to_csv( csvfile )
+
+		self.logger.debug(_d("{0}", csvfile))
 
 	def _colnames(self, table=None):
 		if table:
@@ -363,6 +377,7 @@ if __name__=="__main__":
 	try:
 		c=sqlite3MDIO()
 		c.openDB(dbname)
+		c.logger.debug('test')
 
 		q=c.queryDB( "select TimeSeries from metadata limit 100, 200" )
 		print "Results:", len(q)
@@ -378,6 +393,7 @@ if __name__=="__main__":
 		c.exportToCSV( "select * from metadata" )
 
 		c.closeDB()
+		
 	except:
-		c.closeDB()
+		# c.closeDB()
 		raise

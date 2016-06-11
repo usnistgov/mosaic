@@ -44,10 +44,10 @@ class mosaicLogging(object):
 
 	formatstr=MessageFormatter("%(asctime)-8s %(levelname)-8s %(name)-12s: %(message)s", datefmt="%Y-%m-%d %H:%M:%S")
 
-	sfh=logging.StreamHandler(stream=sys.stdout)
-	sfh.setFormatter(logging.Formatter("%(message)s"))
-	sfh.setLevel(logging.WARNING)
-	log.addHandler(sfh)
+	# sfh=logging.StreamHandler(stream=sys.stdout)
+	# sfh.setFormatter(logging.Formatter("%(message)s"))
+	# sfh.setLevel(logging.WARNING)
+	# log.addHandler(sfh)
 
 	# Rotating File Handler
 	if sys.platform.startswith('darwin'):

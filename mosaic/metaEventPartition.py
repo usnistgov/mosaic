@@ -41,6 +41,7 @@ from mosaic.utilities.resource_path import format_path
 from mosaic.utilities.ionic_current_stats import OpenCurrentDist
 import mosaic.utilities.mosaicTiming as mosaicTiming
 import mosaic.utilities.mosaicLogging as mlog
+from mosaic.utilities.mosaicLogFormat import _d
 
 __all__ = ["metaEventPartition", "ExcessiveDriftError", "DriftRateError"]
 
@@ -113,10 +114,8 @@ class metaEventPartition(object):
 		self.mdioDBHnd.writeSettings(settingsString)
 
 		self.logger=mlog.mosaicLogging().getLogger(name=__name__, dbHnd=self.mdioDBHnd)
-		self.logger.debug('Event Segment Initialization')
-
-		# [self.logger.debug(l.strip('\t')) for l in settingsString.split('\n')]
-		self.logger.debug(settingsString)
+		self.logger.debug(_d("Event Segment Initialization"))
+		self.logger.debug(_d("{0}", settingsString))
 
 		if self.trajDataObj.dataFilter:
 			self.fstring=type(self.trajDataObj.dataFilterObj).__name__
