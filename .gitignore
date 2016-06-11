@@ -52,3 +52,6 @@ data/eventMD-P28-bin.sqlite
 commit-hash
 mosaic/utest/testdata/*.sqlite
 data/eventMD-PEG28-ADEPT2State.sqlite
+doctrees
+latex
+_nistpages/
