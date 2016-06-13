@@ -26,7 +26,7 @@ import numpy as np
 import settings
 from mosaic.utilities.resource_path import format_path, path_separator
 import mosaic.utilities.mosaicLogging as mlog
-from mosaic.utilities.mosaicLogFormat import _d
+from mosaic.utilities.mosaicLogFormat import _dprop
 
 __all__ = ["metaTrajIO", "IncompatibleArgumentsError", "IncorrectDataFormat", "EndOfFileError", "SamplingRateChangedError", "EmptyDataPipeError", "FileNotFoundError"]
 
@@ -188,10 +188,10 @@ class metaTrajIO(object):
 			self._initPipe()
 
 		if not self.dataFilter:
-			self.logger.debug("Sampling frequency {0}".format(self.Fs))
+			self.logger.debug(_dprop("Sampling frequency {0}", self.Fs))
 			return self.Fs
 		else:
-			self.logger.debug("Sampling frequency {0} ({1})".format(self.dataFilterObj.filterFs, type(self.dataFilterObj).__name__))
+			self.logger.debug(_dprop("Sampling frequency {0} ({1})", self.dataFilterObj.filterFs, type(self.dataFilterObj).__name__))
 			return self.dataFilterObj.filterFs
 
 	@property
@@ -204,7 +204,10 @@ class metaTrajIO(object):
 		if not self.initPipe:
 			self._initPipe()
 
-		return (self.globalDataIndex - self.startIndex)/float(self.FsHz) 
+		elapsedTime=(self.globalDataIndex - self.startIndex)/float(self.FsHz) 
+		self.logger.debug(_dprop("Elapsed time {0} s", elapsedTime))
+
+		return elapsedTime
 
 	@property 
 	def LastFileProcessed(self):
@@ -213,6 +216,8 @@ class metaTrajIO(object):
 			
 			Return the last data file that was processed
 		"""
+		self.logger.debug(_dprop("Current data file {0}", self.currentFilename))
+
 		return self.currentFilename
 
 	@property 
@@ -226,7 +231,7 @@ class metaTrajIO(object):
 		if not self.initPipe:
 			self._initPipe()
 
-		self.logger.debug("Data Length {0} s".format(self.datLenSec))
+		self.logger.debug(_dprop("Data Length {0} s", self.datLenSec))
 		return self.datLenSec
 
 
