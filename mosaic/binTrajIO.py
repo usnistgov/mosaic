@@ -187,13 +187,9 @@ class binTrajIO(mosaic.metaTrajIO.metaTrajIO):
 		"""
 		return self.readBinaryFile(fname)
 		
-	def _formatsettings(self, logObject):
+	def _formatsettings(self):
 		"""
-			Populate `logObject` with settings strings for display
-
-			:Parameters:
-
-				- `logObject` : 	a object that holds logging text (see :class:`~mosaic.utilities.mosaicLogFormat.mosaicLogFormat`)				
+			Log settings strings
 		"""
 		self.binLogger.info( '\t\tAmplifier scale = {0} pA'.format(self.AmplifierScale) )
 		self.binLogger.info( '\t\tAmplifier offset = {0} pA'.format(self.AmplifierOffset) )

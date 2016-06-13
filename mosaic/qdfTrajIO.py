@@ -109,13 +109,9 @@ class qdfTrajIO(mosaic.metaTrajIO.metaTrajIO):
 		#print "last raw current val in file ", fname, " = ", q[-1]
 		return np.array(q[ : , 1], dtype=np.float64)
 
-	def _formatsettings(self, logObject):
+	def _formatsettings(self):
 		"""
-			Populate `logObject` with settings strings for display
-
-			:Parameters:
-
-				- `logObject` : 	a object that holds logging text (see :class:`~mosaic.utilities.mosaicLogFormat.mosaicLogFormat`)				
+			Log settings strings
 		"""
 		# for qdf files, add the values of the feedback resistance and capacitance
 		self.qdfLogger.info( '\t\tFeedback resistance = {0} GOhm'.format(self.Rfb*1e-9) )

@@ -89,13 +89,9 @@ class tsvTrajIO(metaTrajIO.metaTrajIO):
 		"""
 		return self.__readtsv(fname)
 
-	def _formatsettings(self, logObject):
+	def _formatsettings(self):
 		"""
-			Populate `logObject` with settings strings for display
-
-			:Parameters:
-
-				- `logObject` : 	a object that holds logging text (see :class:`~mosaic.utilities.mosaicLogFormat.mosaicLogFormat`)				
+			Log settings strings
 		"""
 		pass
 

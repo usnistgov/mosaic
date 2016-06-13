@@ -74,13 +74,9 @@ class abfTrajIO(mosaic.metaTrajIO.metaTrajIO):
 
 		return dat
 
-	def _formatsettings(self, logObject):
+	def _formatsettings(self):
 		"""
-			Populate `logObject` with settings strings for display
-
-			:Parameters:
-
-				- `logObject` : 	a object that holds logging text (see :class:`~mosaic.utilities.mosaicLogFormat.mosaicLogFormat`)				
+			Log settings strings
 		"""
 		self.abfLogger.info( 'Lowpass filter = {0} kHz'.format(self.bandwidth*0.001) )
 		self.abfLogger.info( 'Signal gain = {0}'.format(self.gain) )

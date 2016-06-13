@@ -339,7 +339,7 @@ class metaTrajIO(object):
 		self.logger.info( '\t\tSampling frequency = {0} kHz'.format(self.FsHz*1e-3) )
 
 		# Sub-class formatted settings
-		self._formatsettings("")
+		self._formatsettings()
 
 		# add the filter settings
 		if self.dataFilter:
@@ -408,15 +408,9 @@ class metaTrajIO(object):
 		return data
 
 	@abstractmethod
-	def _formatsettings(self, logObject):
+	def _formatsettings(self):
 		"""
-			.. important:: |abstractmethod|
-
-			Populate `logObject` with settings strings for display
-
-			:Parameters:
-
-				- `logObject` : 	a object that holds logging text (see :class:`~mosaic.utilities.mosaicLogFormat.mosaicLogFormat`)				
+			Log settings strings
 		"""
 		pass
 		
