@@ -30,7 +30,7 @@ mosaic/.DS_Store
 mosaic/utest/.DS_Store
 mosaic/utest/gentests/
 mosaic/utest/testdata/.DS_Store
-mosaic/utest/testdata/eventProcessing.log
+mosaic/utest/testdata/eventProcessing*.log
 mosaic_devel_image.sh
 mosaic_nist.egg-info/
 mosaicgui/csvexportview/.DS_Store
