@@ -1,3 +1,3 @@
 # Control global settings
 DeveloperMode=False
-LogSize=1048576
+LogSize=int(1<<20) # 1 MB
