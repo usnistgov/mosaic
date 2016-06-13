@@ -92,6 +92,8 @@ class metaEventPartition(object):
 		self.eventProcSettingsDict = eventProcSettings
 
 		self.procTime=0.0
+		self.FsHz=self.trajDataObj.FsHz
+		self.DataLengthSec=self.trajDataObj.DataLengthSec
 
 		try:
 			self.writeEventTS=int(self.settingsDict.pop("writeEventTS",1))
@@ -102,7 +104,7 @@ class metaEventPartition(object):
 
 		sys.stdout.flush()
 
-		self.tEventProcObj=self.eventProcHnd([], self.trajDataObj.FsHz, eventstart=0,eventend=0, baselinestats=[ 0,0,0 ], algosettingsdict=self.eventProcSettingsDict.copy(), savets=False, absdatidx=0, datafileHnd=None )
+		self.tEventProcObj=self.eventProcHnd([], self.FsHz, eventstart=0,eventend=0, baselinestats=[ 0,0,0 ], algosettingsdict=self.eventProcSettingsDict.copy(), savets=False, absdatidx=0, datafileHnd=None )
 
 		self.mdioDBHnd=sqlite3MDIO.sqlite3MDIO()
 		self.mdioDBHnd.initDB(
@@ -281,8 +283,8 @@ class metaEventPartition(object):
 							type(self.tEventProcObj).__name__,
 							self.fstring,
 							self.trajDataObj.ElapsedTimeSeconds,
-							self.trajDataObj.DataLengthSec,
-							self.trajDataObj.FsHz
+							self.DataLengthSec,
+							self.FsHz
 						])
 
 	def _setupparallel(self):
@@ -335,7 +337,7 @@ class metaEventPartition(object):
 		# Later, we use these values to detect drift
 		# First, calculate the number of points to include using the blockSizeSec 
 		# class attribute and the sampling frequency specified in trajDataObj
-		self.nPoints=int(self.blockSizeSec*self.trajDataObj.FsHz)
+		self.nPoints=int(self.blockSizeSec*self.FsHz)
 
 		# a global counter that keeps track of the position in data pipe.
 		self.globalDataIndex=0
@@ -456,7 +458,7 @@ class metaEventPartition(object):
 		n=len(curr)
 
 		#curr=self.trajDataObj.previewdata(nPoints)
-		t=1./self.trajDataObj.FsHz
+		t=1./self.FsHz
 		tstamp=np.arange(0, n*t, t, dtype=np.float64)[:n]
 
 		#print "nPoints=", n, "len(tstamp)=", len(tstamp), "type(curr)", type(curr)

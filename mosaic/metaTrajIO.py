@@ -204,7 +204,12 @@ class metaTrajIO(object):
 		if not self.initPipe:
 			self._initPipe()
 
-		elapsedTime=(self.globalDataIndex - self.startIndex)/float(self.FsHz) 
+		if not self.dataFilter:
+			Fs=self.Fs
+		else:
+			Fs=self.dataFilterObj.filterFs
+
+		elapsedTime=(self.globalDataIndex - self.startIndex)/float(Fs) 
 		self.logger.debug(_dprop("Elapsed time {0} s", elapsedTime))
 
 		return elapsedTime

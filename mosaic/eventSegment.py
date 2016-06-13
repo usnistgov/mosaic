@@ -142,8 +142,6 @@ class eventSegment(metaEventPartition.metaEventPartition):
 			the event by 'eventPad' points and hand off to the event processing algorithm.
 		"""
 		try:
-			FsHz=self.trajDataObj.FsHz
-			
 			while(1):
 				t=self.currData.popleft()
 				self.globalDataIndex+=1
@@ -196,7 +194,7 @@ class eventSegment(metaEventPartition.metaEventPartition):
 						self._processEvent(
 							 self.eventProcHnd(
 								list(self.preeventdat) + self.eventdat + eventpaddat, 
-								FsHz,
+								self.FsHz,
 								eventstart=len(self.preeventdat)+1,						# event start point
 								eventend=len(self.preeventdat)+len(self.eventdat)+1,	# event end point
 								baselinestats=[ self.meanOpenCurr, self.sdOpenCurr, self.slopeOpenCurr ],
