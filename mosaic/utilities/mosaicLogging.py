@@ -44,11 +44,6 @@ class mosaicLogging(object):
 
 	formatstr=MessageFormatter("%(asctime)-8s %(levelname)-8s %(name)-12s: %(message)s", datefmt="%Y-%m-%d %H:%M:%S")
 
-	# sfh=logging.StreamHandler(stream=sys.stdout)
-	# sfh.setFormatter(logging.Formatter("%(message)s"))
-	# sfh.setLevel(logging.WARNING)
-	# log.addHandler(sfh)
-
 	# Rotating File Handler
 	if sys.platform.startswith('darwin'):
 		logdir=format_path(os.path.expanduser('~')+"/Library/Logs/MOSAIC")
@@ -59,14 +54,13 @@ class mosaicLogging(object):
 		if os.getuid()==0:
 			logname=format_path("/var/log/mosaic.log")
 		else:
-			log.info("To save logs to '/var/log/ run MOSAIC with sudo.")
+			log.info("MOSAIC log will be saved to ~/mosaic.log. Run MOSAIC with sudo to save logs to '/var/log/.")
 			logname=format_path(os.path.expanduser("~")+"/mosaic.log")
 	else:
 		logname=format_path(os.path.expanduser("~")+"mosaic.log")
 
 
 	rfh=logging.handlers.RotatingFileHandler(filename=logname, maxBytes=mosaic.LogSize, backupCount=5)
-	# rfh=logging.handlers.SysLogHandler(address='/dev/log/')
 	rfh.setFormatter(formatstr)
 	if mosaic.DeveloperMode:
 		rfh.setLevel(logging.DEBUG)
