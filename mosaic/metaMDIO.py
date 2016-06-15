@@ -12,6 +12,7 @@
 import os
 import mosaic.utilities.mosaicTiming as mosaicTiming
 from abc import ABCMeta, abstractmethod
+from mosaic.utilities.mosaicLogFormat import mosaic_property
 
 __all__ = ["metaMDIO", "InsufficientArgumentsError"]
 
@@ -212,15 +213,15 @@ class metaMDIO(object):
 		"""
 		pass
 
-	@property 
+	@mosaic_property 
 	def mdColumnNames(self):
 		return self._colnames()
 
-	@property 
+	@mosaic_property 
 	def mdColumnTypes(self):
 		return self._coltypes()
 
-	@property 
+	@mosaic_property 
 	def dbFile(self):
 		return self._dbfile()
 		

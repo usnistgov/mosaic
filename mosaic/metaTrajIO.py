@@ -26,7 +26,7 @@ import numpy as np
 import settings
 from mosaic.utilities.resource_path import format_path, path_separator
 import mosaic.utilities.mosaicLogging as mlog
-from mosaic.utilities.mosaicLogFormat import _dprop
+from mosaic.utilities.mosaicLogFormat import _dprop, mosaic_property
 
 __all__ = ["metaTrajIO", "IncompatibleArgumentsError", "IncorrectDataFormat", "EndOfFileError", "SamplingRateChangedError", "EmptyDataPipeError", "FileNotFoundError"]
 
@@ -194,7 +194,7 @@ class metaTrajIO(object):
 			self.logger.debug(_dprop("Sampling frequency {0} ({1})", self.dataFilterObj.filterFs, type(self.dataFilterObj).__name__))
 			return self.dataFilterObj.filterFs
 
-	@property
+	@mosaic_property
 	def ElapsedTimeSeconds(self):
 		"""
 			.. important:: |property|
@@ -210,22 +210,19 @@ class metaTrajIO(object):
 			Fs=self.dataFilterObj.filterFs
 
 		elapsedTime=(self.globalDataIndex - self.startIndex)/float(Fs) 
-		self.logger.debug(_dprop("Elapsed time {0} s", elapsedTime))
 
 		return elapsedTime
 
-	@property 
+	@mosaic_property 
 	def LastFileProcessed(self):
 		"""
 			.. important:: |property|
 			
 			Return the last data file that was processed
 		"""
-		self.logger.debug(_dprop("Current data file {0}", self.currentFilename))
-
 		return self.currentFilename
 
-	@property 
+	@mosaic_property 
 	def DataLengthSec(self):
 		"""
 			.. important:: |property|
@@ -236,7 +233,6 @@ class metaTrajIO(object):
 		if not self.initPipe:
 			self._initPipe()
 
-		self.logger.debug(_dprop("Data Length {0} s", self.datLenSec))
 		return self.datLenSec
 
 
@@ -479,6 +475,7 @@ class metaTrajIO(object):
 			if self.nearEndOfData:
 				raise EmptyDataPipeError("End of data.")
 			else:
+				self.logger.debug("End of data is approaching.")
 				self.nearEndOfData+=1
 
 	#################################################################

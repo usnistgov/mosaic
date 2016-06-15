@@ -12,6 +12,7 @@
 """
 from abc import ABCMeta, abstractmethod
 import mosaic.utilities.util as util
+from mosaic.utilities.mosaicLogFormat import mosaic_property
 
 __all__ = ["metaIOFilter"]
 
@@ -73,7 +74,7 @@ class metaIOFilter(object):
 		"""
 		pass
 
-	@property
+	@mosaic_property
 	def filteredData(self):
 		"""
 			Return filtered data
@@ -81,7 +82,7 @@ class metaIOFilter(object):
 		# return util.decimate(self.eventData, self.decimate)
 		return self.eventData[::self.decimate]
 
-	@property
+	@mosaic_property
 	def filterFs(self):
 		"""
 			Return the sampling frequency of filtered data.
