@@ -1,3 +1,3 @@
 # Control global settings
 DeveloperMode=False
-LogSize=int(1<<20) # 1 MB
+LogSizeBytes=int(2<<20) # 2 MB

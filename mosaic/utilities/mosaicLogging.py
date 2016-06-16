@@ -60,7 +60,7 @@ class mosaicLogging(object):
 		logname=format_path(os.path.expanduser("~")+"mosaic.log")
 
 
-	rfh=logging.handlers.RotatingFileHandler(filename=logname, maxBytes=mosaic.LogSize, backupCount=5)
+	rfh=logging.handlers.RotatingFileHandler(filename=logname, maxBytes=mosaic.LogSizeBytes, backupCount=5)
 	rfh.setFormatter(formatstr)
 	if mosaic.DeveloperMode:
 		rfh.setLevel(logging.DEBUG)
