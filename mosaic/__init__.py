@@ -36,6 +36,12 @@ import mosaic.sqlite3MDIO
 import mosaic.ConvertToCSV
 import mosaic.SingleChannelAnalysis
 
+from mosaic.utilities.mosaicLogging import mosaicExceptionHandler
+
+import sys
+
+sys.excepthook=mosaicExceptionHandler
+
 __all__=[]
 
 __all__.extend(mosaic.utilities.__all__)

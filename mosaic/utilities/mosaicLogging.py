@@ -18,7 +18,18 @@ import mosaic
 from mosaic.utilities.mosaicLogHandlers import sqliteHandler
 from mosaic.utilities.resource_path import format_path
 
-__all__=["mosaicLogging", "metaSingleton", "MessageFormatter"]
+__all__=["mosaicLogging", "metaSingleton", "MessageFormatter", "mosaicExceptionHandler"]
+
+def mosaicExceptionHandler(extype, exvalue, extb):
+	if issubclass(extype, KeyboardInterrupt):
+		sys.__excepthook__(extype, exvalue, extb)
+		return
+
+	logger=mosaicLogging().getLogger(__name__)
+	handler = logging.StreamHandler(stream=sys.stderr)
+	logger.addHandler(handler)
+	logger.critical("", exc_info=(extype, exvalue, extb))
+
 
 class metaSingleton(type):
 	_instances = {}
