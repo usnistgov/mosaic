@@ -29,20 +29,22 @@ class timingData(dict):
 		self["counter"]=0
 
 	def _currentTime(self):
-		return "Timing for \"{0}\": iterations={1}, last={2:0.3f} ms".format(
-								self["funcname"], 
-								self["counter"], 
-								self["last"]
-							) 
+		return [
+			"Timing for \"{0}\": iterations={1}, last={2:0.3f} ms",
+			self["funcname"], 
+			self["counter"], 
+			self["last"]
+		] 
 
 	def _timingStatistics(self):
-		return "Summary timing for \"{0}\": iterations={1}, total={2:0.3f} ms, maximum={2:0.3f} ms, average={3:0.3f} ms".format(
-								self["funcname"], 
-								self["counter"], 
-								self["total"], 
-								self["maxtime"], 
-								self["total"]/self["counter"]
-							) 
+		return [
+			"Summary timing for \"{0}\": iterations={1}, total={2:0.3f} ms, maximum={3:0.3f} ms, average={4:0.3f} ms",
+			self["funcname"], 
+			self["counter"], 
+			self["total"], 
+			self["maxtime"], 
+			self["total"]/float(self["counter"])
+		]
 
 class mosaicTiming(object):
 	"""
@@ -139,13 +141,7 @@ class mosaicTiming(object):
 		"""
 		if self.TimingEnabled:
 			for k, v in self.timingDataDict.iteritems():
-				self.logger.info(
-									"Timing for \"{0}\": iterations={1}, last={2:0.3f} ms".format(
-										v["funcname"], 
-										v["counter"], 
-										v["last"]
-									) 
-								)
+				self.logger.debug( _d(*v._currentTime()) )
 		
 	def PrintStatistics(self):
 		"""
@@ -154,15 +150,7 @@ class mosaicTiming(object):
 		if self.TimingEnabled:
 			for k, v in self.timingDataDict.iteritems():
 				try:
-					self.logger.info( 
-									"Summary timing for \"{0}\": iterations={1}, total={2:0.3f} ms, maximum={2:0.3f} ms, average={3:0.3f} ms".format(
-										v["funcname"], 
-										v["counter"], 
-										v["total"], 
-										v["maxtime"], 
-										v["total"]/v["counter"]
-									) 
-								)
+					self.logger.debug( _d(*v._timingStatistics()) )
 				except ZeroDivisionError:
 					self.logger.error( "ERROR: No timing data is available.")
 
