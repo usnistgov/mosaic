@@ -13,6 +13,7 @@
 """
 import sys
 import mosaic.utilities.mosaicLogging as mlog
+import mosaic
 
 __all__=["mosaicLogFormat"]
 
@@ -70,24 +71,27 @@ class mosaic_property(object):
 			raise AttributeError("unreadable attribute")
 
 		rval=self.fget(obj)
-		logger=mlog.mosaicLogging().getLogger(name=self.fget.__name__)
-		logger.debug(_dprop( "GET {0}={1}", self.fget.__name__, rval ))
+		if mosaic.LogProperties:
+			logger=mlog.mosaicLogging().getLogger(name=self.fget.__name__)
+			logger.debug(_dprop( "GET {0}={1}", self.fget.__name__, rval ))
 		return rval
 
 	def __set__(self, obj, value):
 		if self.fset is None:
 			raise AttributeError("can't set attribute")
 
-		logger=mlog.mosaicLogging().getLogger(name=self.fset.__name__)
-		logger.debug(_dprop( "SET {0}={1}", self.fset.__name__, value ))
+		if mosaic.LogProperties:
+			logger=mlog.mosaicLogging().getLogger(name=self.fset.__name__)
+			logger.debug(_dprop( "SET {0}={1}", self.fset.__name__, value ))
 		self.fset(obj, value)
 
 	def __delete__(self, obj):
 		if self.fdel is None:
 			raise AttributeError("can't delete attribute")
 
-		logger=mlog.mosaicLogging().getLogger(name=self.fdel.__name__)
-		logger.debug(_dprop( "DEL {0}", self.fdel.__name__ ))
+		if mosaic.LogProperties:
+			logger=mlog.mosaicLogging().getLogger(name=self.fdel.__name__)
+			logger.debug(_dprop( "DEL {0}", self.fdel.__name__ ))
 
 		self.fdel(obj)
 
