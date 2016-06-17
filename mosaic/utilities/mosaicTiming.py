@@ -97,14 +97,13 @@ class mosaicTiming(object):
 				
 				try:
 					funcTimingObj=self.timingDataDict[func.__name__]
-				
-					self._updateTiming(funcTimingObj, t1, t2)
 				except KeyError:
 					funcname=func.__name__
 					funcTimingObj=timingData(funcname)
-
 					self.timingDataDict[funcname]=funcTimingObj
 
+				self._updateTiming(funcTimingObj, t1, t2)
+				
 				if not self.TimingSummary:
 					logger=mlog.mosaicLogging().getLogger(func.__name__)
 					logger.debug(_d(
