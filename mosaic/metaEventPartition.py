@@ -45,6 +45,8 @@ from mosaic.utilities.mosaicLogFormat import _d
 
 __all__ = ["metaEventPartition", "ExcessiveDriftError", "DriftRateError"]
 
+partitionTimer=mosaicTiming.mosaicTiming()
+
 # custom errors
 class ExcessiveDriftError(Exception):
 	pass
@@ -87,6 +89,9 @@ class metaEventPartition(object):
 		# Required arguments
 		self.trajDataObj=trajDataObj
 		self.eventProcHnd=eventProcHnd
+
+		# Reset function timer since esTimer is a class variable
+		partitionTimer.Reset()	
 
 		self.settingsDict = eventPartitionSettings 
 		self.eventProcSettingsDict = eventProcSettings
@@ -163,6 +168,10 @@ class metaEventPartition(object):
 
 		self._stop()
 
+		partitionTimer.PrintStatistics()
+
+		self.mdioDBHnd.closeDB()
+
 	def PartitionEvents(self):
 		"""
 			Partition events within a time-series.
@@ -214,8 +223,6 @@ class metaEventPartition(object):
 		# Write the output log file
 		self._writeoutputlog()
 			
-
-		self.mdioDBHnd.closeDB()
 
 	#################################################################
 	# Interface functions
@@ -512,6 +519,7 @@ class metaEventPartition(object):
 		self.windowOpenCurrentSD=sd 
 		self.windowOpenCurrentSlope=sl
 
+	@metaEventPartition.partitionTimer.FunctionTiming
 	def _processEvent(self, eventobj):
 		startTime=self.timingObj.time()
 

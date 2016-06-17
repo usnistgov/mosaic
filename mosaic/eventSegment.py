@@ -8,6 +8,7 @@
 	:License:	See LICENSE.TXT
 	:ChangeLog:
 	.. line-block::
+		6/17/16 	AB 	Log function timing in developer mode.
 		5/17/14		AB  Delete plotting support
 		5/17/14		AB  Add metaMDIO support for meta-data and time-series storage
 		2/14/14		AB 	Pass absdatidx argument to event processing to track absolute time of 
@@ -62,7 +63,6 @@ class eventSegment(metaEventPartition.metaEventPartition):
 			- `slopeOpenCurr` :	Explicitly set open channel current slope. (default: -1, to 
 							calculate automatically)
 	"""
-
 	def _init(self, trajDataObj, eventProcHnd, eventPartitionSettings, eventProcSettings):
 		"""
 			Segment a trajectory
@@ -131,6 +131,7 @@ class eventSegment(metaEventPartition.metaEventPartition):
 	# Interface functions
 	#################################################################
 	"""#@profile"""
+	@metaEventPartition.partitionTimer.FunctionTiming
 	def _eventsegment(self):
 		"""
 			Cut up a trajectory into individual events. This algorithm uses
