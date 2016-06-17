@@ -21,7 +21,7 @@ data/a_eventMD-tempMSA.sqlite
 data/eventMD-20150723-204414.csv
 data/eventMD-PEG28-cusumLevelAnalysis.csv
 data/eventMD-PEG28-stepResponseAnalysis.csv
-data/eventProcessing.log
+data/eventProcessing*.log
 dist/
 gists/
 icons/.DS_Store
