@@ -12,6 +12,7 @@
 """
 import sys
 import os
+import warnings
 import logging
 import logging.handlers
 import mosaic
@@ -56,19 +57,25 @@ class mosaicLogging(object):
 	formatstr=MessageFormatter("%(asctime)-8s %(levelname)-8s %(name)-12s: %(message)s", datefmt="%Y-%m-%d %H:%M:%S")
 
 	# Rotating File Handler
-	if sys.platform.startswith('darwin'):
-		logdir=format_path(os.path.expanduser('~')+"/Library/Logs/MOSAIC")
-		if not os.path.exists(logdir):
-			os.mkdir(logdir)
-		logname=format_path(logdir+"/mosaic.log")
-	elif sys.platform.startswith('linux'):
-		if os.getuid()==0:
-			logname=format_path("/var/log/mosaic.log")
+	try:
+		logdir=mosaic.LogLocation
+	except AttributeError, err:
+		defaultLogLocation=True
+
+		if sys.platform.startswith('darwin'):
+			logdir=format_path(os.path.expanduser('~')+"/Library/Logs/MOSAIC")
+			if not os.path.exists(logdir):
+				os.mkdir(logdir)
+		elif sys.platform.startswith('linux'):
+			if os.getuid()==0:
+				logdir="/var/log/"
+			else:
+				log.info("MOSAIC log will be saved to ~/mosaic.log. Run MOSAIC with sudo to save logs to '/var/log/.")
+				logdir=os.path.expanduser("~")
 		else:
-			log.info("MOSAIC log will be saved to ~/mosaic.log. Run MOSAIC with sudo to save logs to '/var/log/.")
-			logname=format_path(os.path.expanduser("~")+"/mosaic.log")
-	else:
-		logname=format_path(os.path.expanduser("~")+"mosaic.log")
+			logdir=os.path.expanduser("~")
+
+	logname=format_path(logdir+"/mosaic.log")
 
 
 	rfh=logging.handlers.RotatingFileHandler(filename=logname, maxBytes=mosaic.LogSizeBytes, backupCount=5)
@@ -79,6 +86,11 @@ class mosaicLogging(object):
 		rfh.setLevel(logging.INFO)
 	
 	log.addHandler(rfh)
+
+	if defaultLogLocation:
+		warntext="WARNING: Global settings attribute 'LogLocation' was not defined. Logs will be saved to the default location: {0}".format(logname)
+		log.warning(warntext)
+		warnings.warn(warntext, RuntimeWarning)
 
 	sh=None
 
@@ -110,3 +122,8 @@ class mosaicLogging(object):
 				l.addHandler(mosaicLogging.sh)
 	
 		return logger
+
+if __name__ == '__main__':
+	logger=mosaicLogging().getLogger(__name__)
+
+	logger.debug("Test debug message")

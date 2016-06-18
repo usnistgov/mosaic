@@ -297,7 +297,7 @@ class metaEventPartition(object):
 	def _setupparallel(self):
 		# disable parallel
 		if self.parallelProc:
-			self.logger.warn("WARNING: Parallel processing is not available.")
+			self.logger.warning("WARNING: Parallel processing is not available.")
 		self.parallelProc=False
 		return
 		
@@ -306,7 +306,7 @@ class metaEventPartition(object):
 			import zmqWorker
 			import zmqIO
 		except ImportError:
-			self.logger.warn("WARNING: Parallel processing is not available.")
+			self.logger.warning("WARNING: Parallel processing is not available.")
 			self.parallelProc=False
 			return
 

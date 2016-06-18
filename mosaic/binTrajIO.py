@@ -146,7 +146,7 @@ class binTrajIO(mosaic.metaTrajIO.metaTrajIO):
 			self.IonicCurrentColumn=self.ColumnTypes[0][0]
 			self.IonicCurrentType=self.ColumnTypes[0][1]
 
-			logging.warn("WARNING: IonicCurrentColumn {0} not found. Defaulting to {1}.".format(err, self.IonicCurrentColumn))
+			logging.warning("WARNING: IonicCurrentColumn {0} not found. Defaulting to {1}.".format(err, self.IonicCurrentColumn))
 
 
 		if not hasattr(self, 'AmplifierScale'):

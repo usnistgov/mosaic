@@ -73,6 +73,13 @@ class mosaicTiming(object):
 		else:
 			self.timingFunc=time.time
 		
+	# Define enter and exit funcs so this class can be used with a context manager
+	def __enter__(self):
+		return self
+
+	def __exit__(self, type, value, traceback):
+		self.PrintStatistics()
+
 	def FunctionTiming(self, func):
 		"""
 			Pass the function to be profiled as an argument. Alternatively with python 2.4+, attach a decorator to the function being profiled

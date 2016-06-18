@@ -27,6 +27,7 @@ import settings
 from mosaic.utilities.resource_path import format_path, path_separator
 import mosaic.utilities.mosaicLogging as mlog
 from mosaic.utilities.mosaicLogFormat import _dprop, mosaic_property
+import mosaic.utilities.mosaicTiming as mtime
 
 __all__ = ["metaTrajIO", "IncompatibleArgumentsError", "IncorrectDataFormat", "EndOfFileError", "SamplingRateChangedError", "EmptyDataPipeError", "FileNotFoundError"]
 
@@ -45,6 +46,8 @@ class EmptyDataPipeError(Exception):
 	pass
 class FileNotFoundError(Exception):
 	pass
+
+trajTimer=mtime.mosaicTiming()
 
 class metaTrajIO(object):
 	"""
@@ -174,6 +177,9 @@ class metaTrajIO(object):
 		# Call sub-class init
 		self._init(**kwargs)
 
+	def __del__(self):
+		trajTimer.PrintStatistics()
+
 	#################################################################
 	# Public API: functions
 	#################################################################
@@ -235,7 +241,7 @@ class metaTrajIO(object):
 
 		return self.datLenSec
 
-
+	@trajTimer.FunctionTiming
 	def popdata(self, n):
 		"""
 			Pop data points from self.currDataPipe. This function uses recursion 
@@ -508,7 +514,7 @@ class metaTrajIO(object):
 	def _setupDataFilter(self):
 		filtsettings=settings.settings( self.datPath ).getSettings(self.datafilter.__name__)
 		if filtsettings=={}:
-			logging.warn("WARNING: No settings found for '{0}'. Data filtering is disabled".format(str(self.datafilter.__name__)))
+			logging.warning("WARNING: No settings found for '{0}'. Data filtering is disabled".format(str(self.datafilter.__name__)))
 			self.dataFilter=False
 			return
 
