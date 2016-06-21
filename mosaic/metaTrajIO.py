@@ -177,8 +177,9 @@ class metaTrajIO(object):
 		# Call sub-class init
 		self._init(**kwargs)
 
-	def __del__(self):
+	def Stop(self):
 		trajTimer.PrintStatistics()
+		raise EmptyDataPipeError("End of data.")
 
 	#################################################################
 	# Public API: functions
@@ -265,12 +266,12 @@ class metaTrajIO(object):
 			self._initPipe()
 
 		if self.nearEndOfData>1:
-			raise EmptyDataPipeError("End of data.")
+			self.Stop()
 
 		# If the global index exceeds the specied end point, raise an EmptyDataPipError
 		if hasattr(self, "end"):
 			if self.globalDataIndex > self.endIndex:
-				raise EmptyDataPipeError("End of data.")
+				self.Stop()
 
 		try:
 			# Get the elements to return: index to (index+n)
@@ -479,7 +480,7 @@ class metaTrajIO(object):
 			return self.dataFiles.pop(0)
 		except IndexError:
 			if self.nearEndOfData:
-				raise EmptyDataPipeError("End of data.")
+				self.Stop()
 			else:
 				self.logger.debug("End of data is approaching.")
 				self.nearEndOfData+=1

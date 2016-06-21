@@ -46,7 +46,7 @@ class timingData(dict):
 			self["total"]/float(self["counter"])
 		]
 
-class mosaicTiming(object):
+class mosaicTiming:
 	"""
 		Profile code by attaching an instance of this class to any function. All the methods in this class are valid for the function being profiled.
 	"""
@@ -73,11 +73,10 @@ class mosaicTiming(object):
 		else:
 			self.timingFunc=time.time
 		
-	# Define enter and exit funcs so this class can be used with a context manager
 	def __enter__(self):
 		return self
 
-	def __exit__(self, type, value, traceback):
+	def __exit__(self, exc_type, exc_value, traceback):
 		self.PrintStatistics()
 
 	def FunctionTiming(self, func):
@@ -170,14 +169,11 @@ class mosaicTiming(object):
 
 
 if __name__ == '__main__':
-	funcTimer=mosaicTiming()
+	with mosaicTiming() as funcTimer:
+		@funcTimer.FunctionTiming
+		def someFunc():
+			time.sleep(0.01)
 
-	@funcTimer.FunctionTiming
-	def someFunc():
-		time.sleep(0.01)
+		for i in range(10):
+			someFunc()
 
-	for i in range(10):
-		someFunc()
-
-	# summarize the profiling results for someFunc
-	funcTimer.PrintStatistics()
