@@ -47,6 +47,10 @@ class MessageFormatter(logging.Formatter):
 
 
 class mosaicLogging(object):
+	"""
+		A custom logging class that uses the Python logging facility. Logs are automatically saved to a metaMDIO instance,
+		and to a file log when DeveloperMode is active.
+	"""
 	__metaclass__ = metaSingleton
 
 	_loggers = {}
@@ -99,6 +103,25 @@ class mosaicLogging(object):
 
 	@staticmethod
 	def getLogger(name=None, dbHnd=None):
+		"""
+			Get a logger instance. 
+
+			:Parameters:
+
+				- `name`  : Logger name
+				- `dbHnd` : MetaMDIO handle to allow logs to be saved to the database.
+
+			:Usage:
+
+				In this example, we get an instance of a logger with the module name and log a debug message.
+
+				.. code-block:: python 
+
+					logger=mosaicLogging().getLogger(__name__)
+
+					logger.debug("Test debug message")
+
+		"""
 		if not name:
 			logger=logging.getLogger()
 		elif name not in mosaicLogging._loggers.keys():

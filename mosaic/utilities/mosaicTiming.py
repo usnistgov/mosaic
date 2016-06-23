@@ -81,8 +81,15 @@ class mosaicTiming:
 
 	def FunctionTiming(self, func):
 		"""
-			Pass the function to be profiled as an argument. Alternatively with python 2.4+, attach a decorator to the function being profiled
-			For example:
+			Pass the function to be profiled as an argument. Alternatively with python 2.4+, attach a decorator to the function being profiled.
+
+			:Parameters:
+					- `func` :    function to be profiled
+
+			:Usage:
+			
+				.. code-block:: python
+				
 					funcTimer=mosaicTiming.mosaicTiming()
 
 					@funcTimer.FunctionTiming
@@ -91,9 +98,6 @@ class mosaicTiming:
 
 					# summarize the profiling results for someFunc
 					funcTimer.PrintStatistics()
-
-			:Parameters:
-					- `func` :    function to be profiled
 		"""
 		def timing_wrapper(*args, **kwargs):
 			if self.TimingEnabled:
