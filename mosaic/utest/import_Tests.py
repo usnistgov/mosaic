@@ -42,7 +42,7 @@ class ModuleImport_TestSuite(ModuleImportTest):
 		'mosaic.adept2State',
 		'mosaic.eventSegment', 
 		'mosaic.qdfTrajIO', 
-		'mosaic.zmqWorker',
+		# 'mosaic.zmqWorker',
 		'mosaic.utilities.ionic_current_stats', 
 		'mosaic.utilities.resource_path',
 		'mosaic.utilities.analysis',
