@@ -7,7 +7,8 @@ angular
 
     })
     .controller('AppCtrl', function ($scope, $timeout, $mdSidenav, $mdUtil, $log) {
-      $scope.baseURL = "https://usnistgov.github.io/mosaic/"
+      // $scope.baseURL = "https://usnistgov.github.io/mosaic/"
+      $scope.baseURL = "file:///Users/arvind/Research/Experiments/AnalysisTools/mosaic/_docs"
       $scope.docURL = $scope.baseURL+"/html/index.html"
       $scope.mailingListURL = $scope.baseURL+"/html/doc/mailingList.html"
       $scope.scriptURL = $scope.baseURL+"/html/doc/ScriptingandAdvancedFeatures.html"
@@ -18,6 +19,7 @@ angular
       $scope.guiURL = $scope.baseURL+"/html/doc/GraphicalInterface.html"
       $scope.developersURL = $scope.baseURL+"/html/doc/Developers.html"
       $scope.termsURL = $scope.baseURL+"/html/doc/Disclaimer.html"
+      $scope.contactURL = "http://www.nist.gov/cgi-bin/wwwph/cso.nist.gov?Query=Arvind+Balijepalli"
 
       $scope.toggleLeft = buildToggler('left');
       $scope.toggleRight = buildToggler('right');

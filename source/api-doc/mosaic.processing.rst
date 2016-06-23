@@ -1,34 +1,34 @@
 Event Processing
 =======================
 
-mosaic.stepResponseAnalysis module
+mosaic.adept2State module
 -------------------------------------------
 
-.. inheritance-diagram:: mosaic.stepResponseAnalysis
+.. inheritance-diagram:: mosaic.adept2State
    :parts: 2
 
-.. automodule:: mosaic.stepResponseAnalysis
+.. automodule:: mosaic.adept2State
     :members:
     :show-inheritance:
 
-mosaic.multiStateAnalysis module
+mosaic.adept module
 -----------------------------------------
 
-.. inheritance-diagram:: mosaic.multiStateAnalysis
+.. inheritance-diagram:: mosaic.adept
    :parts: 2
 
    
-.. automodule:: mosaic.multiStateAnalysis
+.. automodule:: mosaic.adept
     :members:
     :show-inheritance:
 
-mosaic.cusumLevelAnalysis module
+mosaic.cusumPlus module
 -----------------------------------------
 
-.. inheritance-diagram:: mosaic.cusumLevelAnalysis
+.. inheritance-diagram:: mosaic.cusumPlus
    :parts: 2
 
    
-.. automodule:: mosaic.cusumLevelAnalysis
+.. automodule:: mosaic.cusumPlus
     :members:
     :show-inheritance:

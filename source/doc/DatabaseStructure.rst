@@ -61,4 +61,16 @@ The *analysissettings* table contains a single text entry that stores the settin
 
 .. include:: ../doc/WorkingWithSQLite.rst
 
+Export to CSV
+---------------------------------------------
+
+.. figure:: ../images/dbExport.png
+    :width: 25%
+    :align: center
+
+
+.. figure:: ../images/dbExportSQL.png
+    :width: 25%
+    :align: center
+
 .. include:: ../aliases.rst

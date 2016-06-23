@@ -5,19 +5,18 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>11.1.1. Top-Level Interfaces &mdash; MOSAIC 1.2 documentation</title>
+    <title>13.1.1. Top-Level Interfaces &mdash; MOSAIC 1.3b3 documentation</title>
     
     <link rel="stylesheet" href="../_static/basic.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="../_static/bootstrap-3.2.0/css/bootstrap.min.css" type="text/css" />
-    <link rel="stylesheet" href="../_static/bootstrap-3.2.0/css/bootstrap-theme.min.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/bootswatch-3.3.4/paper/bootstrap.min.css" type="text/css" />
     <link rel="stylesheet" href="../_static/bootstrap-sphinx.css" type="text/css" />
     <link rel="stylesheet" href="../_static/style.css" type="text/css" />
     
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '1.2',
+        VERSION:     '1.3b3',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -26,16 +25,16 @@
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <script type="text/javascript" src="../_static/js/jquery-1.11.0.min.js"></script>
     <script type="text/javascript" src="../_static/js/jquery-fix.js"></script>
-    <script type="text/javascript" src="../_static/bootstrap-3.2.0/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../_static/bootstrap-3.3.4/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="../_static/bootstrap-sphinx.js"></script>
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
-    <link rel="top" title="MOSAIC 1.2 documentation" href="../index.html" />
-    <link rel="up" title="11. API Documentation" href="../doc/apidocs.html" />
-    <link rel="next" title="11.1.2. Meta-Classes" href="mosaic.meta.html" />
-    <link rel="prev" title="11. API Documentation" href="../doc/apidocs.html" />
+    <link rel="top" title="MOSAIC 1.3b3 documentation" href="../index.html" />
+    <link rel="up" title="13. API Documentation" href="../doc/apidocs.html" />
+    <link rel="next" title="13.1.2. Meta-Classes" href="mosaic.meta.html" />
+    <link rel="prev" title="13. API Documentation" href="../doc/apidocs.html" />
 
 <meta charset='utf-8'>
 <meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
@@ -43,13 +42,13 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 
 	<script type="text/javascript"
-		src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+		src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
 	</script>
 	<script type="text/javascript" id="_fed_an_js_tag" src="//www.nist.gov/js/federated-analytics.all.min.js?agency=NIST&subagency=github&pua=UA-42404149-54&yt=true&exts=ppsx,pps,f90,sch,rtf,wrl,txz,m1v,xlsm,msi,xsd,f,tif,eps,mpg,xml,pl,xlt,c">
 	</script>	
 
   </head>
-  <body>
+  <body role="document">
 
   <div id="navbar" class="navbar navbar-default navbar-fixed-top">
     <div class="container">
@@ -60,16 +59,17 @@
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </button>
-        <a class="navbar-brand" href="../index.html"><img src="../_static/icon_24.png">
+        <a class="navbar-brand" href="../index.html"><img src="../_static/icon_36.png">
            </a>
-        <span class="navbar-text navbar-version pull-left"><b>1.2</b></span>
+        <span class="navbar-text navbar-version pull-left"><b>1.3b3</b></span>
       </div>
 
         <div class="collapse navbar-collapse nav-collapse">
           <ul class="nav navbar-nav">
             
+                <li><a href="../../latex/MOSAIC.pdf">Download PDF</a></li>
                 <li><a href="../doc/mailingList.html">Mailing List</a></li>
-                <li><a href="//github.com/usnistgov/mosaic">Develop MOSAIC</a></li>
+                <li><a href="//github.com/usnistgov/mosaic">Develop</a></li>
                 <li><a href="//github.com/usnistgov/mosaic/issues">Issue Tracker</a></li>
             
             
@@ -83,18 +83,20 @@
       role="menu"
       aria-labelledby="dLabelGlobalToc"><ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../doc/Introduction.html">1. Introduction</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../doc/GettingStarted.html">2. Getting Started</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../doc/Algorithms.html">3. Algorithms in <em>MOSAIC</em></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../doc/Algorithms.html">2. Data Processing Algorithms in <em>MOSAIC</em></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../doc/GettingStarted.html">3. Getting Started</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../doc/GraphicalInterface.html">4. <em>MOSAIC</em> GUI</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../doc/ScriptingandAdvancedFeatures.html">5. Scripting and Advanced Features</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../doc/settingsFile.html">6. Settings File</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../doc/DatabaseStructure.html">7. Database Structure and Query Syntax</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../doc/settingsFile.html">5. Settings File</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../doc/DatabaseStructure.html">6. Database Structure and Query Syntax</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../doc/ScriptingandAdvancedFeatures.html">7. Scripting and Advanced Features</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../doc/Extend.html">8. Extend <em>MOSAIC</em></a></li>
-<li class="toctree-l1"><a class="reference internal" href="../doc/Addons.html">9. Addons</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../doc/examples.html">10. Examples</a></li>
-<li class="toctree-l1 current"><a class="reference internal" href="../doc/apidocs.html">11. API Documentation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../doc/ChangeLog.html">12. Change Log</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../doc/References.html">13. Bibliography</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../doc/PublicationFigures.html">9. Publication Quality Figures</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../doc/AdvancedAnalysis.html">10. Advanced Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../doc/Addons.html">11. Addons</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../doc/DeveloperTools.html">12. Developer Tools</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../doc/apidocs.html">13. API Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../doc/ChangeLog.html">14. Change Log</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../doc/References.html">15. Bibliography</a></li>
 </ul>
 </ul>
 </li>
@@ -124,12 +126,12 @@
 
 <div class="container">
   <div class="row">
-    <div class="col-md-12">
+    <div class="col-md-12 content">
       
   <div class="section" id="top-level-interfaces">
-<h1>11.1.1. Top-Level Interfaces<a class="headerlink" href="#top-level-interfaces" title="Permalink to this headline">¶</a></h1>
+<h1>13.1.1. Top-Level Interfaces<a class="headerlink" href="#top-level-interfaces" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="module-mosaic.SingleChannelAnalysis">
-<span id="mosaic-singlechannelanalysis-module"></span><h2>11.1.1.1. mosaic.SingleChannelAnalysis module<a class="headerlink" href="#module-mosaic.SingleChannelAnalysis" title="Permalink to this headline">¶</a></h2>
+<span id="mosaic-singlechannelanalysis-module"></span><h2>13.1.1.1. mosaic.SingleChannelAnalysis module<a class="headerlink" href="#module-mosaic.SingleChannelAnalysis" title="Permalink to this headline">¶</a></h2>
 <p>Top level module to run a single channel analysis.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -150,8 +152,8 @@
 </div>
 <dl class="class">
 <dt id="mosaic.SingleChannelAnalysis.SingleChannelAnalysis">
-<em class="property">class </em><tt class="descclassname">mosaic.SingleChannelAnalysis.</tt><tt class="descname">SingleChannelAnalysis</tt><big>(</big><em>dataPath</em>, <em>trajDataHnd</em>, <em>dataFilterHnd</em>, <em>eventPartitionHnd</em>, <em>eventProcHnd</em><big>)</big><a class="reference internal" href="../_modules/mosaic/SingleChannelAnalysis.html#SingleChannelAnalysis"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mosaic.SingleChannelAnalysis.SingleChannelAnalysis" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference external" href="http://docs.python.org/library/functions.html#object" title="(in Python v2.7)"><tt class="xref py py-class docutils literal"><span class="pre">object</span></tt></a></p>
+<em class="property">class </em><code class="descclassname">mosaic.SingleChannelAnalysis.</code><code class="descname">SingleChannelAnalysis</code><span class="sig-paren">(</span><em>dataPath</em>, <em>trajDataHnd</em>, <em>dataFilterHnd</em>, <em>eventPartitionHnd</em>, <em>eventProcHnd</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/SingleChannelAnalysis.html#SingleChannelAnalysis"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mosaic.SingleChannelAnalysis.SingleChannelAnalysis" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/2/library/functions.html#object" title="(in Python v2.7)"><code class="xref py py-class docutils literal"><span class="pre">object</span></code></a></p>
 <p>Run a single channel analysis. This is the entry point class for the analysis.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -159,10 +161,10 @@
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
 <li><cite>dataPath</cite> : full path to the data directory</li>
-<li><cite>trajDataHnd</cite> : a handle to an implementation of <tt class="xref py py-class docutils literal"><span class="pre">metaTrajIO</span></tt></li>
-<li><cite>dataFilterHnd</cite> : a handle to an impementation of <tt class="xref py py-class docutils literal"><span class="pre">metaIOFilter</span></tt></li>
-<li><cite>eventPartitionHnd</cite> : a handle to a sub-class of <tt class="xref py py-class docutils literal"><span class="pre">metaEventPartition</span></tt></li>
-<li><cite>eventProcHnd</cite> : a handle to a sub-class of <tt class="xref py py-class docutils literal"><span class="pre">metaEventProcessor</span></tt></li>
+<li><cite>trajDataHnd</cite> : a handle to an implementation of <code class="xref py py-class docutils literal"><span class="pre">metaTrajIO</span></code></li>
+<li><cite>dataFilterHnd</cite> : a handle to an impementation of <code class="xref py py-class docutils literal"><span class="pre">metaIOFilter</span></code></li>
+<li><cite>eventPartitionHnd</cite> : a handle to a sub-class of <code class="xref py py-class docutils literal"><span class="pre">metaEventPartition</span></code></li>
+<li><cite>eventProcHnd</cite> : a handle to a sub-class of <code class="xref py py-class docutils literal"><span class="pre">metaEventProcessor</span></code></li>
 </ul>
 </td>
 </tr>
@@ -170,7 +172,7 @@
 </table>
 <dl class="method">
 <dt id="mosaic.SingleChannelAnalysis.SingleChannelAnalysis.Run">
-<tt class="descname">Run</tt><big>(</big><em>forkProcess=False</em><big>)</big><a class="reference internal" href="../_modules/mosaic/SingleChannelAnalysis.html#SingleChannelAnalysis.Run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mosaic.SingleChannelAnalysis.SingleChannelAnalysis.Run" title="Permalink to this definition">¶</a></dt>
+<code class="descname">Run</code><span class="sig-paren">(</span><em>forkProcess=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/SingleChannelAnalysis.html#SingleChannelAnalysis.Run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mosaic.SingleChannelAnalysis.SingleChannelAnalysis.Run" title="Permalink to this definition">¶</a></dt>
 <dd><p>Start an analysis.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -187,7 +189,7 @@
 
 <dl class="method">
 <dt id="mosaic.SingleChannelAnalysis.SingleChannelAnalysis.Stop">
-<tt class="descname">Stop</tt><big>(</big><big>)</big><a class="reference internal" href="../_modules/mosaic/SingleChannelAnalysis.html#SingleChannelAnalysis.Stop"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mosaic.SingleChannelAnalysis.SingleChannelAnalysis.Stop" title="Permalink to this definition">¶</a></dt>
+<code class="descname">Stop</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/SingleChannelAnalysis.html#SingleChannelAnalysis.Stop"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mosaic.SingleChannelAnalysis.SingleChannelAnalysis.Stop" title="Permalink to this definition">¶</a></dt>
 <dd><p>Stop a running analysis.</p>
 </dd></dl>
 
@@ -195,7 +197,7 @@
 
 </div>
 <div class="section" id="module-mosaic.ConvertToCSV">
-<span id="mosaic-converttocsv-module"></span><h2>11.1.1.2. mosaic.ConvertToCSV module<a class="headerlink" href="#module-mosaic.ConvertToCSV" title="Permalink to this headline">¶</a></h2>
+<span id="mosaic-converttocsv-module"></span><h2>13.1.1.2. mosaic.ConvertToCSV module<a class="headerlink" href="#module-mosaic.ConvertToCSV" title="Permalink to this headline">¶</a></h2>
 <p>Top level module to convert any data file readble by TrajIO objects into a comma separated value text file.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -211,13 +213,13 @@
 </table>
 <dl class="method">
 <dt id="mosaic.ConvertToCSV.ConvertToCSV._filename">
-<tt class="descclassname">ConvertToCSV.</tt><tt class="descname">_filename</tt><big>(</big><big>)</big><a class="reference internal" href="../_modules/mosaic/ConvertToCSV.html#ConvertToCSV._filename"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mosaic.ConvertToCSV.ConvertToCSV._filename" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">ConvertToCSV.</code><code class="descname">_filename</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/ConvertToCSV.html#ConvertToCSV._filename"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mosaic.ConvertToCSV.ConvertToCSV._filename" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return a output filename that contains the data file prefix and and the block index.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="mosaic.ConvertToCSV.ConvertToCSV._creategenerator">
-<tt class="descclassname">ConvertToCSV.</tt><tt class="descname">_creategenerator</tt><big>(</big><big>)</big><a class="reference internal" href="../_modules/mosaic/ConvertToCSV.html#ConvertToCSV._creategenerator"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mosaic.ConvertToCSV.ConvertToCSV._creategenerator" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">ConvertToCSV.</code><code class="descname">_creategenerator</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/ConvertToCSV.html#ConvertToCSV._creategenerator"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mosaic.ConvertToCSV.ConvertToCSV._creategenerator" title="Permalink to this definition">¶</a></dt>
 <dd><p>Create a new filename generator if the file prefix has changed. 
 The generator returns a filename incremented by a counter each time 
 its next() function is called.</p>
@@ -225,8 +227,8 @@ its next() function is called.</p>
 
 <dl class="class">
 <dt id="mosaic.ConvertToCSV.ConvertToCSV">
-<em class="property">class </em><tt class="descclassname">mosaic.ConvertToCSV.</tt><tt class="descname">ConvertToCSV</tt><big>(</big><em>trajDataObj</em>, <em>outdir=None</em><big>)</big><a class="reference internal" href="../_modules/mosaic/ConvertToCSV.html#ConvertToCSV"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mosaic.ConvertToCSV.ConvertToCSV" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference external" href="http://docs.python.org/library/functions.html#object" title="(in Python v2.7)"><tt class="xref py py-class docutils literal"><span class="pre">object</span></tt></a></p>
+<em class="property">class </em><code class="descclassname">mosaic.ConvertToCSV.</code><code class="descname">ConvertToCSV</code><span class="sig-paren">(</span><em>trajDataObj</em>, <em>outdir=None</em>, <em>extension='csv'</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/ConvertToCSV.html#ConvertToCSV"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mosaic.ConvertToCSV.ConvertToCSV" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/2/library/functions.html#object" title="(in Python v2.7)"><code class="xref py py-class docutils literal"><span class="pre">object</span></code></a></p>
 <p>Convert data read from a sub-class of metaTrajIO to a comma separated text file</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -242,7 +244,7 @@ its next() function is called.</p>
 </table>
 <dl class="method">
 <dt id="mosaic.ConvertToCSV.ConvertToCSV.Convert">
-<tt class="descname">Convert</tt><big>(</big><em>blockSize</em><big>)</big><a class="reference internal" href="../_modules/mosaic/ConvertToCSV.html#ConvertToCSV.Convert"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mosaic.ConvertToCSV.ConvertToCSV.Convert" title="Permalink to this definition">¶</a></dt>
+<code class="descname">Convert</code><span class="sig-paren">(</span><em>blockSize</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/ConvertToCSV.html#ConvertToCSV.Convert"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mosaic.ConvertToCSV.ConvertToCSV.Convert" title="Permalink to this definition">¶</a></dt>
 <dd><p>Start converting data</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -275,7 +277,7 @@ its next() function is called.</p>
       
     </p>
     <p>
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.2.3.<br/>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.4.<br/>
     </p>
   </div>
 </footer> -->
@@ -285,9 +287,8 @@ its next() function is called.</p>
 			<col width=40%>
 			<tr>
 				<td align="left">
-					<a href="../doc/mailingList.html"><em>Mailing List</em></a>&nbsp;&nbsp;&nbsp;
 					<a href="../doc/Developers.html"><em>MOSAIC Developers</em></a>&nbsp;&nbsp;&nbsp;
-					<a href="http://www.nist.gov/cgi-bin/wwwph/cso.nist.gov?Query=Arvind+Balijepalli"><em>Contact</em></a>&nbsp;&nbsp;&nbsp;
+					<a href="http://www.nist.gov/pml/div683/grp06/abalijepalli.cfm"><em>Contact</em></a>&nbsp;&nbsp;&nbsp;
 					<a href="../doc/Disclaimer.html"><em>Terms of Use</em></a>
 				</td>
 				<td align="right"><em>National Institute of Standards and Technology (NIST)</em></td>

@@ -5,19 +5,18 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>9. Addons &mdash; MOSAIC 1.2 documentation</title>
+    <title>11. Addons &mdash; MOSAIC 1.3b3 documentation</title>
     
     <link rel="stylesheet" href="../_static/basic.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="../_static/bootstrap-3.2.0/css/bootstrap.min.css" type="text/css" />
-    <link rel="stylesheet" href="../_static/bootstrap-3.2.0/css/bootstrap-theme.min.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/bootswatch-3.3.4/paper/bootstrap.min.css" type="text/css" />
     <link rel="stylesheet" href="../_static/bootstrap-sphinx.css" type="text/css" />
     <link rel="stylesheet" href="../_static/style.css" type="text/css" />
     
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '1.2',
+        VERSION:     '1.3b3',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -26,15 +25,15 @@
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <script type="text/javascript" src="../_static/js/jquery-1.11.0.min.js"></script>
     <script type="text/javascript" src="../_static/js/jquery-fix.js"></script>
-    <script type="text/javascript" src="../_static/bootstrap-3.2.0/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../_static/bootstrap-3.3.4/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="../_static/bootstrap-sphinx.js"></script>
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
-    <link rel="top" title="MOSAIC 1.2 documentation" href="../index.html" />
-    <link rel="next" title="10. Examples" href="examples.html" />
-    <link rel="prev" title="8. Extend MOSAIC" href="Extend.html" />
+    <link rel="top" title="MOSAIC 1.3b3 documentation" href="../index.html" />
+    <link rel="next" title="12. Developer Tools" href="DeveloperTools.html" />
+    <link rel="prev" title="10. Advanced Analysis" href="AdvancedAnalysis.html" />
 
 <meta charset='utf-8'>
 <meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
@@ -42,13 +41,13 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 
 	<script type="text/javascript"
-		src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+		src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
 	</script>
 	<script type="text/javascript" id="_fed_an_js_tag" src="//www.nist.gov/js/federated-analytics.all.min.js?agency=NIST&subagency=github&pua=UA-42404149-54&yt=true&exts=ppsx,pps,f90,sch,rtf,wrl,txz,m1v,xlsm,msi,xsd,f,tif,eps,mpg,xml,pl,xlt,c">
 	</script>	
 
   </head>
-  <body>
+  <body role="document">
 
   <div id="navbar" class="navbar navbar-default navbar-fixed-top">
     <div class="container">
@@ -59,16 +58,17 @@
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </button>
-        <a class="navbar-brand" href="../index.html"><img src="../_static/icon_24.png">
+        <a class="navbar-brand" href="../index.html"><img src="../_static/icon_36.png">
            </a>
-        <span class="navbar-text navbar-version pull-left"><b>1.2</b></span>
+        <span class="navbar-text navbar-version pull-left"><b>1.3b3</b></span>
       </div>
 
         <div class="collapse navbar-collapse nav-collapse">
           <ul class="nav navbar-nav">
             
+                <li><a href="../../latex/MOSAIC.pdf">Download PDF</a></li>
                 <li><a href="mailingList.html">Mailing List</a></li>
-                <li><a href="//github.com/usnistgov/mosaic">Develop MOSAIC</a></li>
+                <li><a href="//github.com/usnistgov/mosaic">Develop</a></li>
                 <li><a href="//github.com/usnistgov/mosaic/issues">Issue Tracker</a></li>
             
             
@@ -82,18 +82,20 @@
       role="menu"
       aria-labelledby="dLabelGlobalToc"><ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="Introduction.html">1. Introduction</a></li>
-<li class="toctree-l1"><a class="reference internal" href="GettingStarted.html">2. Getting Started</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Algorithms.html">3. Algorithms in <em>MOSAIC</em></a></li>
+<li class="toctree-l1"><a class="reference internal" href="Algorithms.html">2. Data Processing Algorithms in <em>MOSAIC</em></a></li>
+<li class="toctree-l1"><a class="reference internal" href="GettingStarted.html">3. Getting Started</a></li>
 <li class="toctree-l1"><a class="reference internal" href="GraphicalInterface.html">4. <em>MOSAIC</em> GUI</a></li>
-<li class="toctree-l1"><a class="reference internal" href="ScriptingandAdvancedFeatures.html">5. Scripting and Advanced Features</a></li>
-<li class="toctree-l1"><a class="reference internal" href="settingsFile.html">6. Settings File</a></li>
-<li class="toctree-l1"><a class="reference internal" href="DatabaseStructure.html">7. Database Structure and Query Syntax</a></li>
+<li class="toctree-l1"><a class="reference internal" href="settingsFile.html">5. Settings File</a></li>
+<li class="toctree-l1"><a class="reference internal" href="DatabaseStructure.html">6. Database Structure and Query Syntax</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ScriptingandAdvancedFeatures.html">7. Scripting and Advanced Features</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Extend.html">8. Extend <em>MOSAIC</em></a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="">9. Addons</a></li>
-<li class="toctree-l1"><a class="reference internal" href="examples.html">10. Examples</a></li>
-<li class="toctree-l1"><a class="reference internal" href="apidocs.html">11. API Documentation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="ChangeLog.html">12. Change Log</a></li>
-<li class="toctree-l1"><a class="reference internal" href="References.html">13. Bibliography</a></li>
+<li class="toctree-l1"><a class="reference internal" href="PublicationFigures.html">9. Publication Quality Figures</a></li>
+<li class="toctree-l1"><a class="reference internal" href="AdvancedAnalysis.html">10. Advanced Analysis</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">11. Addons</a></li>
+<li class="toctree-l1"><a class="reference internal" href="DeveloperTools.html">12. Developer Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="apidocs.html">13. API Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ChangeLog.html">14. Change Log</a></li>
+<li class="toctree-l1"><a class="reference internal" href="References.html">15. Bibliography</a></li>
 </ul>
 </ul>
 </li>
@@ -123,23 +125,72 @@
 
 <div class="container">
   <div class="row">
-    <div class="col-md-12">
+    <div class="col-md-12 content">
       
   <div class="section" id="addons">
-<span id="addons-page"></span><h1>9. Addons<a class="headerlink" href="#addons" title="Permalink to this headline">¶</a></h1>
-<p>The output of <em>MOSAIC</em> is often processed further to generate plots or performe more sophisticated analysis. We facilitate this process by providing addon packages that make it easy to import the <a class="reference external" href="http://www.sqlite.org/">SQLite</a> database generated by a <em>MOSAIC</em> analysis into <a class="reference internal" href="MathematicaAddon.html#mathematica-addons-sec"><em>Mathematica</em></a>, <a class="reference internal" href="MatlabAddon.html#matlab-addons-sec"><em>Matlab</em></a> or <a class="reference internal" href="IgorAddon.html#igor-addons-sec"><em>IGOR</em></a>. The interfaces for these programs are described in more detail in this section.</p>
+<span id="addons-page"></span><h1>11. Addons<a class="headerlink" href="#addons" title="Permalink to this headline">¶</a></h1>
+<p>The output of <em>MOSAIC</em> is often processed further to generate plots or performe more sophisticated analysis. We facilitate this process by providing addon packages that make it easy to import the <a class="reference external" href="http://www.sqlite.org/">SQLite</a> database generated by a <em>MOSAIC</em> analysis into <a class="reference internal" href="MathematicaAddon.html#mathematica-addons-sec"><span class="std std-ref">Mathematica</span></a>, <a class="reference internal" href="MatlabAddon.html#matlab-addons-sec"><span class="std std-ref">Matlab</span></a> or <a class="reference internal" href="IgorAddon.html#igor-addons-sec"><span class="std std-ref">IGOR</span></a>. The interfaces for these programs are described in more detail in this section.</p>
 <div class="section" id="mathematica">
-<span id="mathematica-addons-sec"></span><h2>9.1. Mathematica<a class="headerlink" href="#mathematica" title="Permalink to this headline">¶</a></h2>
+<span id="mathematica-addons-sec"></span><h2>11.1. Mathematica<a class="headerlink" href="#mathematica" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="installation">
-<h3>9.1.1. Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h3>
-<p>The analysis output generated by <em>MOSAIC</em> can be imported into <a class="reference external" href="http://www.wolfram.com/mathematica/">Mathematica</a> for further processing. This accomplished with two packages: the low level <a class="reference internal" href="MathematicaAddon.html#mathematicamosaicutilssec"><em>MosaicUtils</em></a> and <a class="reference internal" href="MathematicaAddon.html#mathematica-mosaicanalysis-sec"><em>MosaicAnalysis</em></a>, which contains additional analysis routines. The addon package must first be installed to one of the locations in the <a class="reference external" href="http://www.wolfram.com/mathematica/">Mathematica</a> path. Alternatively, the required package files can be installed to the <em>Applications</em> folder using <em>setuptools</em> on Mac OS X and Linux by issuing the command below in the root folder of the <em>MOSAIC</em> code. Instructions for installing the package files for Windows are available <a class="reference external" href="http://reference.wolfram.com/language/tutorial/ConfigurationFiles.html">here</a>.</p>
-<div class="highlight-console"><div class="highlight"><pre><span class="go">python setup.py mosaic_addons --mathematica</span>
+<h3>11.1.1. Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h3>
+<p>The analysis output generated by <em>MOSAIC</em> can be imported into <a class="reference external" href="http://www.wolfram.com/mathematica/">Mathematica</a> for further processing. This accomplished with two packages: the low level <a class="reference internal" href="MathematicaAddon.html#mathematicamosaicutilssec"><span class="std std-ref">MosaicUtils</span></a> and <a class="reference internal" href="MathematicaAddon.html#mathematica-mosaicanalysis-sec"><span class="std std-ref">MosaicAnalysis</span></a>, which contains additional analysis routines. The addon package must first be installed to one of the locations in the <a class="reference external" href="http://www.wolfram.com/mathematica/">Mathematica</a> path. Alternatively, the required package files can be installed to the <em>Applications</em> folder using <em>setuptools</em> on Mac OS X and Linux by issuing the command below in the root folder of the <em>MOSAIC</em> code. Instructions for installing the package files for Windows are available <a class="reference external" href="http://reference.wolfram.com/language/tutorial/ConfigurationFiles.html">here</a>.</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="go">python setup.py mosaic_addons --mathematica</span>
 </pre></div>
 </div>
 </div>
 <div class="section" id="mosaicutils">
-<span id="mathematicamosaicutilssec"></span><h3>9.1.2. MosaicUtils<a class="headerlink" href="#mosaicutils" title="Permalink to this headline">¶</a></h3>
-<p><em>MosaicUtils</em> provides low level functions to interact with a database output by <em>MOSAIC</em>.</p>
+<span id="mathematicamosaicutilssec"></span><h3>11.1.2. MosaicUtils<a class="headerlink" href="#mosaicutils" title="Permalink to this headline">¶</a></h3>
+<p><em>MosaicUtils</em> provides low level functions to interact with a database output by <em>MOSAIC</em>. <em>MosaicUtils</em> can use a native Mathematica (<strong>slower, default</strong>) or Python (<strong>faster, but experimental</strong>) backend to query databases output by <em>MOSAIC</em>.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">To select the Python backend, please call the <em>SetQueryBackend</em> function as described below. If you use a virtual environment with Python, please call the <em>SetVirtualEnv</em> function after you install this addon.</p>
+</div>
+<p><strong>SetQueryBackend</strong>[<em>backend</em>]</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Args:</th><td class="field-body"><ul class="first simple">
+<li><cite>backend</cite> :   select the <em>Mathematica</em> (default) or <em>Python</em> (faster, experimental) backend to run SQLite queries.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">None</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p><strong>ReadQueryBackend</strong>[]</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Args:</th><td class="field-body"><p class="first">None</p>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><ul class="first last simple">
+<li>The <em>backend</em> used to run SQLite queries.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p><strong>SetVirtualEnv</strong>[<em>virtualenv</em>]</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Args:</th><td class="field-body"><ul class="first simple">
+<li><cite>virtualenv</cite> :        name of the virtual environment configured for use with MOSAIC</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">None</p>
+</td>
+</tr>
+</tbody>
+</table>
 <p><strong>PrintMDKeys</strong>[<em>dbfile</em>]</p>
 <p>Returns a list of column headings from the <em>metadata</em> table.</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -189,8 +240,8 @@
 </tr>
 </tbody>
 </table>
-<p><strong>PlotEvents</strong>[<em>dbfile</em>, <em>FsKHz</em>]</p>
-<p>Plot the event-time series if stored in the database (see the <a class="reference internal" href="settingsFile.html#settings-page"><em>Settings File</em></a> section for details on saving time-series to the analysis output).</p>
+<p><strong>PlotEvents</strong>[<em>dbfile</em>, <em>FsKHz</em>, <em>nEvents</em>]</p>
+<p>Plot the event-time series if stored in the database (see the <a class="reference internal" href="settingsFile.html#settings-page"><span class="std std-ref">Settings File</span></a> section for details on saving time-series to the analysis output).</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -198,6 +249,7 @@
 <tr class="field-odd field"><th class="field-name">Args:</th><td class="field-body"><ul class="first simple">
 <li><cite>dbfile</cite> :    full path to the database file</li>
 <li><cite>FsKHz</cite>  :    sampling frequency in kHz.</li>
+<li><cite>nEvents</cite> :   (optional) limit the plot to the first <code class="docutils literal"><span class="pre">n</span></code> entries in the database</li>
 </ul>
 </td>
 </tr>
@@ -224,33 +276,33 @@
 </table>
 <p><strong>MosaicUtils Examples</strong></p>
 <p>Once installed as described above, <em>MosaicUtils</em> must be imported as shown below.</p>
-<div class="highlight-mathematica"><div class="highlight"><pre>In[1]= &lt;&lt;MosaicUtils`
+<div class="highlight-mathematica"><div class="highlight"><pre><span></span><span class="n">In</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">=</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="nn">MosaicUtils`</span><span class="w"></span>
 </pre></div>
 </div>
-<p><a class="reference external" href="http://en.wikipedia.org/wiki/SQL">SQL</a> queries require the exact column names when querying data from a table (see <a class="reference internal" href="DatabaseStructure.html#database-page"><em>Database Structure and Query Syntax</em></a>). Column names in the <em>metadata</em> table, which stores the main results from the analaysis can be retrieved using the <em>PrintMDKeys</em> function as shown below. In this example, the column names returned correspond to an analysis performed using the <em>stepResponseAnalysis</em> algorithm.</p>
-<div class="highlight-mathematica"><div class="highlight"><pre>In[2]= PrintMDKeys[&quot;&lt;mosaicroot&gt;/data/eventMD-PEG29-Reference.sqlite&quot;]
+<p><a class="reference external" href="http://en.wikipedia.org/wiki/SQL">SQL</a> queries require the exact column names when querying data from a table (see <a class="reference internal" href="DatabaseStructure.html#database-page"><span class="std std-ref">Database Structure and Query Syntax</span></a>). Column names in the <em>metadata</em> table, which stores the main results from the analaysis can be retrieved using the <em>PrintMDKeys</em> function as shown below. In this example, the column names returned correspond to an analysis performed using the <em>adept2State</em> algorithm.</p>
+<div class="highlight-mathematica"><div class="highlight"><pre><span></span><span class="n">In</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">=</span><span class="w"> </span><span class="n">PrintMDKeys</span><span class="p">[</span><span class="s">&quot;&lt;mosaicroot&gt;/data/eventMD-PEG29-Reference.sqlite&quot;</span><span class="p">]</span><span class="w"></span>
 
-Out[2]= {&quot;recIDX&quot;, &quot;ProcessingStatus&quot;, &quot;OpenChCurrent&quot;,
-        &quot;BlockedCurrent&quot;, &quot;EventStart&quot;, &quot;EventEnd&quot;,
-        &quot;BlockDepth&quot;, &quot;ResTime&quot;, &quot;RCConstant&quot;, &quot;AbsEventStart&quot;,
-        &quot;ReducedChiSquared&quot;, &quot;TimeSeries&quot;
-        }
+<span class="n">Out</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="s">&quot;recIDX&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;ProcessingStatus&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;OpenChCurrent&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">        </span><span class="s">&quot;BlockedCurrent&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;EventStart&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;EventEnd&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">        </span><span class="s">&quot;BlockDepth&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;ResTime&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;RCConstant&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;AbsEventStart&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">        </span><span class="s">&quot;ReducedChiSquared&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;TimeSeries&quot;</span><span class="w"></span>
+<span class="w">        </span><span class="p">}</span><span class="w"></span>
 </pre></div>
 </div>
-<p>The <em>MosaicUtils</em> package allows the output of <em>MOSAIC</em> to be queried just like from Python. This accomplished using the <em>QueryDB</em> function. In the example below, we retrieve a column that returns the start time of the first 10 entries in the <em>metadata</em> table that have their <em>ProcessingStatus</em> set to <em>normal</em>. The results are then returned in a standard list. Note that <em>QueryDB</em> accepts a standard <a class="reference external" href="http://en.wikipedia.org/wiki/SQL">SQL</a> query as described in more detail in the <a class="reference internal" href="DatabaseStructure.html#database-page"><em>Database Structure and Query Syntax</em></a> section.</p>
-<div class="highlight-mathematica"><div class="highlight"><pre>In[3]= QueryDB[
-        &quot;&lt;mosaicroot&gt;/data/eventMD-PEG29-Reference.sqlite&quot;,
-        &quot;select AbsEventStart from metadata where ProcessingStatus=&#39;normal&#39; limit 10&quot;
-        ]
+<p>The <em>MosaicUtils</em> package allows the output of <em>MOSAIC</em> to be queried just like from Python. This accomplished using the <em>QueryDB</em> function. In the example below, we retrieve a column that returns the start time of the first 10 entries in the <em>metadata</em> table that have their <em>ProcessingStatus</em> set to <em>normal</em>. The results are then returned in a standard list. Note that <em>QueryDB</em> accepts a standard <a class="reference external" href="http://en.wikipedia.org/wiki/SQL">SQL</a> query as described in more detail in the <a class="reference internal" href="DatabaseStructure.html#database-page"><span class="std std-ref">Database Structure and Query Syntax</span></a> section.</p>
+<div class="highlight-mathematica"><div class="highlight"><pre><span></span><span class="n">In</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span><span class="o">=</span><span class="w"> </span><span class="n">QueryDB</span><span class="p">[</span><span class="w"></span>
+<span class="w">        </span><span class="s">&quot;&lt;mosaicroot&gt;/data/eventMD-PEG29-Reference.sqlite&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">        </span><span class="s">&quot;select AbsEventStart from metadata where ProcessingStatus=&#39;normal&#39; limit 10&quot;</span><span class="w"></span>
+<span class="w">        </span><span class="p">]</span><span class="w"></span>
 
-Out[3]= {
-        {1.84376}, {4.54439}, {5.26933}, {6.01253}, {6.80369},
-        {8.48988}, {10.841}, {11.2246}, {13.2892}, {16.3983}
-        }
+<span class="n">Out</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="p">{</span><span class="mf">1.84376</span><span class="p">},</span><span class="w"> </span><span class="p">{</span><span class="mf">4.54439</span><span class="p">},</span><span class="w"> </span><span class="p">{</span><span class="mf">5.26933</span><span class="p">},</span><span class="w"> </span><span class="p">{</span><span class="mf">6.01253</span><span class="p">},</span><span class="w"> </span><span class="p">{</span><span class="mf">6.80369</span><span class="p">},</span><span class="w"></span>
+<span class="w">        </span><span class="p">{</span><span class="mf">8.48988</span><span class="p">},</span><span class="w"> </span><span class="p">{</span><span class="mf">10.841</span><span class="p">},</span><span class="w"> </span><span class="p">{</span><span class="mf">11.2246</span><span class="p">},</span><span class="w"> </span><span class="p">{</span><span class="mf">13.2892</span><span class="p">},</span><span class="w"> </span><span class="p">{</span><span class="mf">16.3983</span><span class="p">}</span><span class="w"></span>
+<span class="w">        </span><span class="p">}</span><span class="w"></span>
 </pre></div>
 </div>
 <p>Finally, the addon package allows us to plot individual events if time-series data was stored in the database. This is accomplished using the <em>PlotEvents</em> function, and provides a convenient tool to visually inspect the output of a <em>MOSAIC</em> analysis. In the example below, we inspect the events stored in the reference PEG28 data set included with <em>MOSAIC</em>. <em>PlotEvents</em> returns a dynamic object that allows the user to inspect all the events in a database. An event that was properly characterized by the code is plotted with <em>blue</em> markers (<em>left</em>). The plot is overlaid with the optimized fit function (<em>black</em>) and an idealized pulse (<em>red dashed</em>). Events that were not properly fit are plotted with <em>red</em> markers (<em>right</em>).</p>
-<div class="highlight-mathematica"><div class="highlight"><pre>In[4]= PlotEvents[&quot;&lt;mosaicroot&gt;/data/eventMD-PEG29-Reference.sqlite&quot;, 500]
+<div class="highlight-mathematica"><div class="highlight"><pre><span></span><span class="n">In</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span><span class="o">=</span><span class="w"> </span><span class="n">PlotEvents</span><span class="p">[</span><span class="s">&quot;&lt;mosaicroot&gt;/data/eventMD-PEG29-Reference.sqlite&quot;</span><span class="p">,</span><span class="w"> </span><span class="mi">500</span><span class="p">]</span><span class="w"></span>
 </pre></div>
 </div>
 <div class="figure align-left">
@@ -258,7 +310,7 @@ Out[3]= {
 </div>
 </div>
 <div class="section" id="mosaicanalysis">
-<span id="mathematica-mosaicanalysis-sec"></span><h3>9.1.3. MosaicAnalysis<a class="headerlink" href="#mosaicanalysis" title="Permalink to this headline">¶</a></h3>
+<span id="mathematica-mosaicanalysis-sec"></span><h3>11.1.3. MosaicAnalysis<a class="headerlink" href="#mosaicanalysis" title="Permalink to this headline">¶</a></h3>
 <p><em>MosaicAnalysis</em> builds on the <em>MosaicUtils</em> package and provides basic analysis functions such as estimating the capture rate of molecules partitioning into a channel, or the mean residence time. Additionally, new functionality can be created by combining the functions defined below.</p>
 <p><strong>ScaledSingleExponentialFit</strong>[<em>hist</em>, <em>lambda</em>, <em>lambda0</em>]</p>
 <p>Scale the histogram with the number of counts in the first bin. Fit a single exponential of the form <cite>a exp(-t/tau)</cite> to the scaled histogram.</p>
@@ -326,12 +378,12 @@ Out[3]= {
 </tbody>
 </table>
 <p><strong>MosaicAnalysis Examples</strong></p>
-<div class="highlight-mathematica"><div class="highlight"><pre>In[1]= &lt;&lt;MosaicUtils`
-In[2]= &lt;&lt;MosaicAnalysis`
+<div class="highlight-mathematica"><div class="highlight"><pre><span></span><span class="n">In</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">=</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="nn">MosaicUtils`</span><span class="w"></span>
+<span class="n">In</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">=</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="nn">MosaicAnalysis`</span><span class="w"></span>
 </pre></div>
 </div>
 <p>In the following example, we estimate the capture rate of PEG28 from the reference data set included with the <em>MOSAIC</em> source. The first argument fo <em>CaptureRate</em> is a list of the absolute start time of each event in the database. This data can be obtained using the query shown below. The remaining arguments to <em>CaptureRate</em> define the parameters of the arrival times distribution, the lower and upper limit of the arrival times and the number of bins. The function returns the mean capture rate and standard error, a plot that shows the underlying arrival times distribution, raw data used to generate the capture rate histogram, and a pure best-fit function.</p>
-<div class="highlight-mathematica"><div class="highlight"><pre>In[3]= CaptureRate[
+<div class="highlight-mathematica"><div class="highlight"><pre><span></span>In[3]= CaptureRate[
         QueryDB[
         &quot;&lt;mosaicroot&gt;/data/eventMD-PEG29-Reference.sqlite&quot;,
         &quot;select AbsEventStart from metadata where
@@ -344,7 +396,7 @@ In[2]= &lt;&lt;MosaicAnalysis`
 <a class="reference internal image-reference" href="../_images/mathematica-CaptureRate.png"><img alt="../_images/mathematica-CaptureRate.png" src="../_images/mathematica-CaptureRate.png" style="width: 50%;" /></a>
 </div>
 <p>The capture rate plot above can be formatted by supplying the optional <cite>plotopts</cite> argument, which uses standard <a class="reference external" href="http://www.wolfram.com/mathematica/">Mathematica</a> plot options, as seen in the example below.  This is particulary helpful to customize the output of the plot,, for example for publication ready graphics.</p>
-<div class="highlight-mathematica"><div class="highlight"><pre>       In[4]= CaptureRate[
+<div class="highlight-mathematica"><div class="highlight"><pre><span></span>       In[4]= CaptureRate[
                QueryDB[
                &quot;&lt;mosaicroot&gt;/data/eventMD-PEG29-Reference.sqlite&quot;,
                &quot;select AbsEventStart from metadata where
@@ -363,17 +415,17 @@ ImageSize -&gt; 400}
 </div>
 </div>
 <div class="section" id="matlab-addons-sec">
-<span id="id2"></span><h2>9.2. Matlab<a class="headerlink" href="#matlab-addons-sec" title="Permalink to this headline">¶</a></h2>
+<span id="id2"></span><h2>11.2. Matlab<a class="headerlink" href="#matlab-addons-sec" title="Permalink to this headline">¶</a></h2>
 <p>The SQLite database output by MOSAIC can be further processed using <a class="reference external" href="http://www.mathworks.com/products/matlab/">MATLAB</a>.  The data can then be stored in an array in the <a class="reference external" href="http://www.mathworks.com/products/matlab/">MATLAB</a> Workspace, and then manipulated as desired.</p>
 <p>The features, of opening, querying, and storing as an array, are made available in the <a class="reference external" href="http://www.mathworks.com/products/matlab/">MATLAB</a> script openandquery.m. The script does not use the <a class="reference external" href="http://www.mathworks.com/products/matlab/">MATLAB</a> Database Manager GUI, a part of the Database Toolbox, which requires a paid license.  Instead, an open-source alternative, <a class="reference external" href="http://sourceforge.net/projects/mksqlite/">mksqlite</a>, an interface between <a class="reference external" href="http://www.mathworks.com/products/matlab/">MATLAB</a> and <a class="reference external" href="http://www.sqlite.org/">SQLite</a> is used.</p>
 <p>This section of the manual provides information on how to set up the mksqlite- package for use with <a class="reference external" href="http://www.mathworks.com/products/matlab/">MATLAB</a>, and how to use the openandquery.m script.</p>
 <p>All code has been successfully tested with MATLAB 2013a, MATLAB 2014a, G++ 4.7 in Ubuntu 14.04 LTS, and Windows Visual C++ 2010.  Also, <a class="reference external" href="http://www.sqlite.org/">SQLite</a> must be installed prior to performing the following steps.</p>
 <div class="section" id="mksqlite-documentation">
-<h3>9.2.1. mksqlite Documentation<a class="headerlink" href="#mksqlite-documentation" title="Permalink to this headline">¶</a></h3>
+<h3>11.2.1. mksqlite Documentation<a class="headerlink" href="#mksqlite-documentation" title="Permalink to this headline">¶</a></h3>
 <p>Information about <a class="reference external" href="http://sourceforge.net/projects/mksqlite/">mksqlite</a>, such as function calls and examples, is available in the MKSQLITE: A <a class="reference external" href="http://www.mathworks.com/products/matlab/">MATLAB</a> Interface to SQLite documentation.</p>
 </div>
 <div class="section" id="installing-mksqlite-in-ubuntu-14-04-lts">
-<h3>9.2.2. Installing mksqlite in Ubuntu 14.04 LTS<a class="headerlink" href="#installing-mksqlite-in-ubuntu-14-04-lts" title="Permalink to this headline">¶</a></h3>
+<h3>11.2.2. Installing mksqlite in Ubuntu 14.04 LTS<a class="headerlink" href="#installing-mksqlite-in-ubuntu-14-04-lts" title="Permalink to this headline">¶</a></h3>
 <p>Download the latest <a class="reference external" href="http://sourceforge.net/projects/mksqlite/">mksqlite</a> source files from <a class="reference external" href="http://sourceforge.net/projects/mksqlite/files/">SourceForge</a>
 Unzip the files to a folder, and note the path to that folder (e.g., /home/mksqlitefolder)
 Open <a class="reference external" href="http://www.mathworks.com/products/matlab/">MATLAB</a>, and change the current path to that of the mksqlite folder
@@ -387,11 +439,11 @@ If the build proceeds without errors, you will first see the notification “com
 </div>
 </div>
 <div class="section" id="installing-mksqlite-in-windows-7">
-<h3>9.2.3. Installing mksqlite in Windows 7<a class="headerlink" href="#installing-mksqlite-in-windows-7" title="Permalink to this headline">¶</a></h3>
+<h3>11.2.3. Installing mksqlite in Windows 7<a class="headerlink" href="#installing-mksqlite-in-windows-7" title="Permalink to this headline">¶</a></h3>
 <p>The installation steps are essentially the same as for Ubuntu, except a different compiler (e.g, contained in Windows SDK 7) may instead have to be installed.  If the SDK installer say it cannot proceed, quit the installation, uninstall previous instances of Microsoft Visual C++ 2010, and then install Windows SDK 7 again.</p>
 </div>
 <div class="section" id="opening-querying-and-closing-the-mosaic-output-database">
-<h3>9.2.4. Opening, Querying, and Closing the MOSAIC Output Database<a class="headerlink" href="#opening-querying-and-closing-the-mosaic-output-database" title="Permalink to this headline">¶</a></h3>
+<h3>11.2.4. Opening, Querying, and Closing the MOSAIC Output Database<a class="headerlink" href="#opening-querying-and-closing-the-mosaic-output-database" title="Permalink to this headline">¶</a></h3>
 <p>The MATLAB script openandquery.m contains all of the commands to:
 Open a MOSAIC database (e.g., eventMD-PEG29-Reference.sqlite)
 Query the database
@@ -400,54 +452,54 @@ Close the database
 Convert the structure into a multi-dimensional array, that can be easily manipulated in <a class="reference external" href="http://www.mathworks.com/products/matlab/">MATLAB</a></p>
 <p>Two changes must be made to the openandquery m-file by the end-user:
 The path to the database file must be changed for each database you wish to access.  An example path in Linux would be /home/Data/eventMD-PEG29-Reference.sqlite, and in Windows C:\Data\eventMD-PEG29-Reference.sqlite.
-The query string can be changed as needed.  More information about queries in available in the <a class="reference internal" href="DatabaseStructure.html#database-page"><em>Database Structure and Query Syntax</em></a> section.</p>
+The query string can be changed as needed.  More information about queries in available in the <a class="reference internal" href="DatabaseStructure.html#database-page"><span class="std std-ref">Database Structure and Query Syntax</span></a> section.</p>
 </div>
 <div class="section" id="example">
-<h3>9.2.5. Example<a class="headerlink" href="#example" title="Permalink to this headline">¶</a></h3>
-<p>The reference database file provided with MOSAIC is <em>eventMD-PEG29-Reference.sqlite</em>, located in the data folder of the source code root directory.  This database contains the results of an analysis performed using the <em>stepResponseAnalysis</em> and consists of the data fields:</p>
-<div class="highlight-javascript"><div class="highlight"><pre><span class="p">{</span><span class="nx">recIDX</span><span class="p">,</span> <span class="nx">ProcessingStatus</span><span class="p">,</span> <span class="nx">OpenChCurrent</span><span class="p">,</span> <span class="nx">BlockedCurrent</span><span class="p">,</span> <span class="nx">EventStart</span><span class="p">,</span> <span class="nx">EventEnd</span><span class="p">,</span> <span class="nx">BlockDepth</span><span class="p">,</span> <span class="nx">ResTime</span><span class="p">,</span> <span class="nx">RCConstant</span><span class="p">,</span> <span class="nx">AbsEventStart</span><span class="p">,</span> <span class="nx">ReducedChiSquared</span><span class="p">,</span> <span class="nx">and</span> <span class="nx">TimeSeries</span><span class="p">}</span>
+<h3>11.2.5. Example<a class="headerlink" href="#example" title="Permalink to this headline">¶</a></h3>
+<p>The reference database file provided with MOSAIC is <em>eventMD-PEG29-Reference.sqlite</em>, located in the data folder of the source code root directory.  This database contains the results of an analysis performed using the <em>adept2State</em> and consists of the data fields:</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nx">recIDX</span><span class="p">,</span> <span class="nx">ProcessingStatus</span><span class="p">,</span> <span class="nx">OpenChCurrent</span><span class="p">,</span> <span class="nx">BlockedCurrent</span><span class="p">,</span> <span class="nx">EventStart</span><span class="p">,</span> <span class="nx">EventEnd</span><span class="p">,</span> <span class="nx">BlockDepth</span><span class="p">,</span> <span class="nx">ResTime</span><span class="p">,</span> <span class="nx">RCConstant</span><span class="p">,</span> <span class="nx">AbsEventStart</span><span class="p">,</span> <span class="nx">ReducedChiSquared</span><span class="p">,</span> <span class="nx">and</span> <span class="nx">TimeSeries</span><span class="p">}</span>
 </pre></div>
 </div>
 <p>In the openandquery script modify line 20 by typing in, within the quotes, the correct path to the database file.</p>
-<div class="highlight-matlab"><div class="highlight"><pre><span class="n">dbname</span> <span class="p">=</span> <span class="s">&#39;/home/Data/eventMD-PEG29-Reference.sqlite&#39;</span><span class="p">;</span>
+<div class="highlight-matlab"><div class="highlight"><pre><span></span><span class="n">dbname</span> <span class="p">=</span> <span class="s">&#39;/home/Data/eventMD-PEG29-Reference.sqlite&#39;</span><span class="p">;</span>
 </pre></div>
 </div>
 <p>The query in line 23 is to read the names of all fields in the database.  The names, along with column ID, and data type, are stored in the structure fieldnames.  You may double-click on the variable fieldnames in the Workspace, which will open the structure for you to read the field names in which you are interested.</p>
-<div class="highlight-matlab"><div class="highlight"><pre><span class="n">fieldnames</span> <span class="p">=</span> <span class="n">mksqlite</span><span class="p">(</span><span class="s">&#39;PRAGMA table_info(metadata)&#39;</span><span class="p">);</span>
+<div class="highlight-matlab"><div class="highlight"><pre><span></span><span class="n">fieldnames</span> <span class="p">=</span> <span class="n">mksqlite</span><span class="p">(</span><span class="s">&#39;PRAGMA table_info(metadata)&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>Next, modify line 24 to include the query.  In this example we want to select (and later manipulate) the data stored in the fields AbsEventStart and BlockDepth.  This is where mksqlite comes in: the query are arguments to the mksqlite() function.  For more information about using the mksqlite.m function check out the mksqlite documentation.</p>
-<div class="highlight-matlab"><div class="highlight"><pre><span class="n">querytemp</span> <span class="p">=</span> <span class="n">mksqlite</span><span class="p">(</span><span class="s">&#39;select AbsEventStart, BlockDepth from metadata&#39;</span><span class="p">);</span>
+<div class="highlight-matlab"><div class="highlight"><pre><span></span><span class="n">querytemp</span> <span class="p">=</span> <span class="n">mksqlite</span><span class="p">(</span><span class="s">&#39;select AbsEventStart, BlockDepth from metadata&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
-<p>No other changes are required.  Run the script.  The queried data are stored in the variable data, seen in the MATLAB Workspace (with value 418x2 double).  This variable is a 2-column matrix.  The first column contains all 418 data elements of the field AbsEventStart, and the second column contains all elements of the field BlockDepth. Note that the query above can be replaced with any standard SQL query as outlined in the <a class="reference internal" href="WorkingWithSQLite.html#working-with-sqlite-sec"><em>Work with SQLite</em></a> section.</p>
+<p>No other changes are required.  Run the script.  The queried data are stored in the variable data, seen in the MATLAB Workspace (with value 418x2 double).  This variable is a 2-column matrix.  The first column contains all 418 data elements of the field AbsEventStart, and the second column contains all elements of the field BlockDepth. Note that the query above can be replaced with any standard SQL query as outlined in the <a class="reference internal" href="WorkingWithSQLite.html#working-with-sqlite-sec"><span class="std std-ref">Work with SQLite</span></a> section.</p>
 </div>
 </div>
 <div class="section" id="igor-addons-sec">
-<span id="id26"></span><h2>9.3. IGOR<a class="headerlink" href="#igor-addons-sec" title="Permalink to this headline">¶</a></h2>
+<span id="id26"></span><h2>11.3. IGOR<a class="headerlink" href="#igor-addons-sec" title="Permalink to this headline">¶</a></h2>
 <p>Data extraction in <a class="reference external" href="http://www.wavemetrics.com/products/igorpro/igorpro.htm">IGOR</a> is a work in progress, but a number of users have found a successful route to querying the data and manipulating it in the <a class="reference external" href="http://www.wavemetrics.com/products/igorpro/igorpro.htm">IGOR</a> environment.  The installation and setup for these features requires an understanding of setup and use of ODBC drivers as well as rudimentary programming within the <a class="reference external" href="http://www.wavemetrics.com/products/igorpro/igorpro.htm">IGOR</a> environment.  To date, this has been tested on Mac OS X 10.9.  Details may vary for other systems.</p>
 <div class="section" id="activating-sql-database-access-in-igor">
-<h3>9.3.1. Activating SQL Database Access in IGOR<a class="headerlink" href="#activating-sql-database-access-in-igor" title="Permalink to this headline">¶</a></h3>
+<h3>11.3.1. Activating SQL Database Access in IGOR<a class="headerlink" href="#activating-sql-database-access-in-igor" title="Permalink to this headline">¶</a></h3>
 <p>Database functionality in IGOR is preloaded, but not activated for use in the standard installation of <a class="reference external" href="http://www.wavemetrics.com/products/igorpro/dataaccess/sql.htm">SQL.xop</a>.  To activate this feature follow the instructions detailed in the &#8220;Igor Pro Folder/More Extensions/utilities/SQL Help.ihf&#8221;.  The next few steps are reproduced from the <a class="reference external" href="http://www.wavemetrics.com/products/igorpro/igorpro.htm">IGOR</a> instructions.   First, activate the  step in the activation process is open the folder, &#8220;Igor Pro Folder/More Extensions/utilities&#8221; and create an alias for <a class="reference external" href="http://www.wavemetrics.com/products/igorpro/dataaccess/sql.htm">SQL.xop</a>.  Then move the alias to &#8220;Igor Pro/Igor Extensions&#8221; or a similar folder that is in the search path for <a class="reference external" href="http://www.wavemetrics.com/products/igorpro/igorpro.htm">IGOR</a>.  It may be necessary to delete the &#8220;alias&#8221; text from the file name for functionality.  Restart <a class="reference external" href="http://www.wavemetrics.com/products/igorpro/igorpro.htm">IGOR</a> to activate.</p>
 <p><a class="reference external" href="http://www.wavemetrics.com/products/igorpro/igorpro.htm">IGOR</a> relies on an external ODBC driver for database access.  Depending on the operating system, it may be necessary to install a stand alone ODBC driver administrator package. First check your machine for the <cite>ODBC administrator.app</cite> in the <cite>~/Applications/Utilities</cite> folder.  If not present <a class="reference external" href="http://support.apple.com/kb/DL895">ODBC administrator</a> can be downloaded directly from the Apple support pages.  To test the functionality, it is useful to follow the <em>Installing MySQL ODBC Driver...</em> instructions on the <a class="reference external" href="http://www.wavemetrics.com/products/igorpro/igorpro.htm">IGOR</a> help page.  The MySQL drivers are not necessary for functionally within <em>MOSAIC</em>.</p>
 <p>With the ODBC administrator program installed, the next step is to install the <a class="reference external" href="http://www.ch-werner.de/sqliteodbc/">SQLite driver for IGOR</a> necessary to interface with the database.  Once downloaded run the installation package in &#8220;sqlite3-odbc-0.93.dmg&#8221; and follow the setup instructions within the disk image.  The driver should be ready to use within <a class="reference external" href="http://www.wavemetrics.com/products/igorpro/igorpro.htm">IGOR</a>.</p>
 <div class="admonition hint">
 <p class="first admonition-title">Hint</p>
-<p class="last">The <a class="reference external" href="http://www.wavemetrics.com/products/igorpro/igorpro.htm">IGOR</a> addon installation (described above) can be activated automatically on <em>Mac OS X</em> by issuing the command <tt class="docutils literal"><span class="pre">python</span> <span class="pre">setup.py</span> <span class="pre">mosaic_addons</span> <span class="pre">--igor</span></tt> from the <em>MOSAIC</em> root directory. Note that administrator privileges are required.</p>
+<p class="last">The <a class="reference external" href="http://www.wavemetrics.com/products/igorpro/igorpro.htm">IGOR</a> addon installation (described above) can be activated automatically on <em>Mac OS X</em> by issuing the command <code class="docutils literal"><span class="pre">python</span> <span class="pre">setup.py</span> <span class="pre">mosaic_addons</span> <span class="pre">--igor</span></code> from the <em>MOSAIC</em> root directory. Note that administrator privileges are required.</p>
 </div>
 </div>
 <div class="section" id="simple-database-query-in-igor">
-<h3>9.3.2. Simple Database Query in IGOR<a class="headerlink" href="#simple-database-query-in-igor" title="Permalink to this headline">¶</a></h3>
+<h3>11.3.2. Simple Database Query in IGOR<a class="headerlink" href="#simple-database-query-in-igor" title="Permalink to this headline">¶</a></h3>
 <p><a class="reference external" href="http://www.wavemetrics.com/products/igorpro/igorpro.htm">IGOR</a> operates on databases with a single High Level operation command.  This one command handles the database connection, query, export of data and closing of the database in one simple function or macro.  To access this functionality, first open the procedure window and create the following function:</p>
-<div class="highlight-igor"><div class="highlight"><pre>#include &lt;SQLUtils&gt;
+<div class="highlight-igor"><div class="highlight"><pre><span></span><span class="nd">#include</span> &lt;SQLUtils&gt;
 
-Function QuerySQLData()
+<span class="kr">Function</span> QuerySQLData()
 
-        String connectionStr= &quot;DRIVER={SQLite3 Driver};DATABASE=&#39;database path&#39;;&quot;
-        String statement = &quot;select Blockdepth, ResTime from metadata where ProcessingStatus =&#39;normal&#39;&quot;
+        <span class="kt">String</span> connectionStr= <span class="s">&quot;DRIVER={SQLite3 Driver};DATABASE=&#39;database path&#39;;&quot;</span>
+        <span class="kt">String</span> statement = <span class="s">&quot;select Blockdepth, ResTime from metadata where ProcessingStatus =&#39;normal&#39;&quot;</span>
 
         SQLHighLevelOp/CSTR={connectionStr, SQL_Driver_COMPLETE}/O/E=1 statement
-End
+<span class="kr">End</span>
 </pre></div>
 </div>
 <p>Running this function will extract all normal events and create two waves containing the Blockade depth and Residence time of the events in sequence for further processing in <a class="reference external" href="http://www.wavemetrics.com/products/igorpro/igorpro.htm">IGOR</a>.  Two <a class="reference external" href="http://www.wavemetrics.com/products/igorpro/igorpro.htm">IGOR</a> functions are included in the <cite>/addon/IGOR/</cite> folder that import the data into <a class="reference external" href="http://www.wavemetrics.com/products/igorpro/igorpro.htm">IGOR</a> waves for further processing. To open these functions to run, simply double click the file and the procedures will be opened in a new <a class="reference external" href="http://www.wavemetrics.com/products/igorpro/igorpro.htm">IGOR</a> project.  Once open, the procedure file can be compiled within <a class="reference external" href="http://www.wavemetrics.com/products/igorpro/igorpro.htm">IGOR</a> to enable the code.  A new menu &#8220;Mosaic&#8221; should then appear in the title bar within <a class="reference external" href="http://www.wavemetrics.com/products/igorpro/igorpro.htm">IGOR</a>.  A function &#8220;Fetch SQL data&#8221; will bring up a dialog box to manually enter a search string.  After entering the string and clicking continue, you will be prompted to locate the database file you wish to access.  The data will be imported into waves with the name automatically imported from the database.  <em>Warning:</em> this will overwrite any existing data that is called by identical wave names.</p>
@@ -468,7 +520,7 @@ End
       
     </p>
     <p>
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.2.3.<br/>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.4.<br/>
     </p>
   </div>
 </footer> -->
@@ -478,9 +530,8 @@ End
 			<col width=40%>
 			<tr>
 				<td align="left">
-					<a href="mailingList.html"><em>Mailing List</em></a>&nbsp;&nbsp;&nbsp;
 					<a href="Developers.html"><em>MOSAIC Developers</em></a>&nbsp;&nbsp;&nbsp;
-					<a href="http://www.nist.gov/cgi-bin/wwwph/cso.nist.gov?Query=Arvind+Balijepalli"><em>Contact</em></a>&nbsp;&nbsp;&nbsp;
+					<a href="http://www.nist.gov/pml/div683/grp06/abalijepalli.cfm"><em>Contact</em></a>&nbsp;&nbsp;&nbsp;
 					<a href="Disclaimer.html"><em>Terms of Use</em></a>
 				</td>
 				<td align="right"><em>National Institute of Standards and Technology (NIST)</em></td>

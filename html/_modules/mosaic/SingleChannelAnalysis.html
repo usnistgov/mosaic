@@ -5,19 +5,18 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>mosaic.SingleChannelAnalysis &mdash; MOSAIC 1.2 documentation</title>
+    <title>mosaic.SingleChannelAnalysis &mdash; MOSAIC 1.3b3 documentation</title>
     
     <link rel="stylesheet" href="../../_static/basic.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="../../_static/bootstrap-3.2.0/css/bootstrap.min.css" type="text/css" />
-    <link rel="stylesheet" href="../../_static/bootstrap-3.2.0/css/bootstrap-theme.min.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/bootswatch-3.3.4/paper/bootstrap.min.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/bootstrap-sphinx.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/style.css" type="text/css" />
     
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
-        VERSION:     '1.2',
+        VERSION:     '1.3b3',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -26,13 +25,13 @@
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
-    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <script type="text/javascript" src="../../_static/js/jquery-1.11.0.min.js"></script>
     <script type="text/javascript" src="../../_static/js/jquery-fix.js"></script>
-    <script type="text/javascript" src="../../_static/bootstrap-3.2.0/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../../_static/bootstrap-3.3.4/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="../../_static/bootstrap-sphinx.js"></script>
     <link rel="shortcut icon" href="../../_static/favicon.ico"/>
-    <link rel="top" title="MOSAIC 1.2 documentation" href="../../index.html" />
+    <link rel="top" title="MOSAIC 1.3b3 documentation" href="../../index.html" />
     <link rel="up" title="Module code" href="../index.html" />
 
 <meta charset='utf-8'>
@@ -41,13 +40,13 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 
 	<script type="text/javascript"
-		src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+		src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
 	</script>
 	<script type="text/javascript" id="_fed_an_js_tag" src="//www.nist.gov/js/federated-analytics.all.min.js?agency=NIST&subagency=github&pua=UA-42404149-54&yt=true&exts=ppsx,pps,f90,sch,rtf,wrl,txz,m1v,xlsm,msi,xsd,f,tif,eps,mpg,xml,pl,xlt,c">
 	</script>	
 
   </head>
-  <body>
+  <body role="document">
 
   <div id="navbar" class="navbar navbar-default navbar-fixed-top">
     <div class="container">
@@ -58,16 +57,17 @@
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </button>
-        <a class="navbar-brand" href="../../index.html"><img src="../../_static/icon_24.png">
+        <a class="navbar-brand" href="../../index.html"><img src="../../_static/icon_36.png">
            </a>
-        <span class="navbar-text navbar-version pull-left"><b>1.2</b></span>
+        <span class="navbar-text navbar-version pull-left"><b>1.3b3</b></span>
       </div>
 
         <div class="collapse navbar-collapse nav-collapse">
           <ul class="nav navbar-nav">
             
+                <li><a href="../../../latex/MOSAIC.pdf">Download PDF</a></li>
                 <li><a href="../../doc/mailingList.html">Mailing List</a></li>
-                <li><a href="//github.com/usnistgov/mosaic">Develop MOSAIC</a></li>
+                <li><a href="//github.com/usnistgov/mosaic">Develop</a></li>
                 <li><a href="//github.com/usnistgov/mosaic/issues">Issue Tracker</a></li>
             
             
@@ -81,18 +81,20 @@
       role="menu"
       aria-labelledby="dLabelGlobalToc"><ul>
 <li class="toctree-l1"><a class="reference internal" href="../../doc/Introduction.html">1. Introduction</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../doc/GettingStarted.html">2. Getting Started</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../doc/Algorithms.html">3. Algorithms in <em>MOSAIC</em></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../doc/Algorithms.html">2. Data Processing Algorithms in <em>MOSAIC</em></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../doc/GettingStarted.html">3. Getting Started</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../doc/GraphicalInterface.html">4. <em>MOSAIC</em> GUI</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../doc/ScriptingandAdvancedFeatures.html">5. Scripting and Advanced Features</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../doc/settingsFile.html">6. Settings File</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../doc/DatabaseStructure.html">7. Database Structure and Query Syntax</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../doc/settingsFile.html">5. Settings File</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../doc/DatabaseStructure.html">6. Database Structure and Query Syntax</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../doc/ScriptingandAdvancedFeatures.html">7. Scripting and Advanced Features</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../doc/Extend.html">8. Extend <em>MOSAIC</em></a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../doc/Addons.html">9. Addons</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../doc/examples.html">10. Examples</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../doc/apidocs.html">11. API Documentation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../doc/ChangeLog.html">12. Change Log</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../doc/References.html">13. Bibliography</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../doc/PublicationFigures.html">9. Publication Quality Figures</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../doc/AdvancedAnalysis.html">10. Advanced Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../doc/Addons.html">11. Addons</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../doc/DeveloperTools.html">12. Developer Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../doc/apidocs.html">13. API Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../doc/ChangeLog.html">14. Change Log</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../doc/References.html">15. Bibliography</a></li>
 </ul>
 </ul>
 </li>
@@ -122,10 +124,10 @@
 
 <div class="container">
   <div class="row">
-    <div class="col-md-12">
+    <div class="col-md-12 content">
       
   <h1>Source code for mosaic.SingleChannelAnalysis</h1><div class="highlight"><pre>
-<span class="sd">&quot;&quot;&quot;</span>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">	Top level module to run a single channel analysis.</span>
 
 <span class="sd">	:Created:	05/15/2014</span>
@@ -135,13 +137,15 @@
 <span class="sd">	.. line-block::</span>
 <span class="sd">		5/15/14		AB	Initial version</span>
 <span class="sd">&quot;&quot;&quot;</span>
-<span class="n">__docformat__</span> <span class="o">=</span> <span class="s">&#39;restructuredtext&#39;</span>
+<span class="n">__docformat__</span> <span class="o">=</span> <span class="s1">&#39;restructuredtext&#39;</span>
 
 <span class="kn">import</span> <span class="nn">settings</span>
 <span class="kn">import</span> <span class="nn">multiprocessing</span>
 <span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">signal</span>
 <span class="kn">import</span> <span class="nn">json</span>
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;SingleChannelAnalysis&quot;</span><span class="p">,</span> <span class="s2">&quot;run_eventpartition&quot;</span><span class="p">]</span>
 
 <span class="k">def</span> <span class="nf">run_eventpartition</span><span class="p">(</span> <span class="n">trajdataObj</span><span class="p">,</span> <span class="n">eventPartHnd</span><span class="p">,</span> <span class="n">eventProcHnd</span><span class="p">,</span> <span class="n">settingsdict</span><span class="p">):</span>
 	<span class="k">try</span><span class="p">:</span>
@@ -170,10 +174,10 @@
 	<span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dataPath</span><span class="p">,</span> <span class="n">trajDataHnd</span><span class="p">,</span> <span class="n">dataFilterHnd</span><span class="p">,</span> <span class="n">eventPartitionHnd</span><span class="p">,</span> <span class="n">eventProcHnd</span><span class="p">):</span>
 		<span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">		&quot;&quot;&quot;</span>
-		<span class="c"># Read and parse the settings file</span>
+		<span class="c1"># Read and parse the settings file</span>
 		<span class="bp">self</span><span class="o">.</span><span class="n">settingsDict</span><span class="o">=</span><span class="n">settings</span><span class="o">.</span><span class="n">settings</span><span class="p">(</span> <span class="n">dataPath</span> <span class="p">)</span>
 
-		<span class="c"># Pull out trajectory settings to construct an IO object</span>
+		<span class="c1"># Pull out trajectory settings to construct an IO object</span>
 		<span class="n">trajSettings</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">settingsDict</span><span class="o">.</span><span class="n">getSettings</span><span class="p">(</span><span class="n">trajDataHnd</span><span class="o">.</span><span class="n">__name__</span><span class="p">)</span>
 		
 		<span class="k">if</span> <span class="n">dataFilterHnd</span><span class="p">:</span>
@@ -199,13 +203,13 @@
 						<span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">trajDataObj</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">eventPartitionHnd</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">eventProcHnd</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">settingsDict</span><span class="p">,)</span>
 					<span class="p">)</span>
 				<span class="bp">self</span><span class="o">.</span><span class="n">subProc</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
-				<span class="c"># self.proc.join()</span>
+				<span class="c1"># self.proc.join()</span>
 			<span class="k">except</span><span class="p">:</span>
 				<span class="bp">self</span><span class="o">.</span><span class="n">subProc</span><span class="o">.</span><span class="n">terminate</span><span class="p">()</span>
 				<span class="bp">self</span><span class="o">.</span><span class="n">subProc</span><span class="o">.</span><span class="n">join</span><span class="p">()</span>
 		<span class="k">else</span><span class="p">:</span>
-			<span class="n">run_eventpartition</span><span class="p">(</span> <span class="bp">self</span><span class="o">.</span><span class="n">trajDataObj</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">eventPartitionHnd</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">eventProcHnd</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">settingsDict</span> <span class="p">)</span>
-</div>
+			<span class="n">run_eventpartition</span><span class="p">(</span> <span class="bp">self</span><span class="o">.</span><span class="n">trajDataObj</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">eventPartitionHnd</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">eventProcHnd</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">settingsDict</span> <span class="p">)</span></div>
+
 <div class="viewcode-block" id="SingleChannelAnalysis.Stop"><a class="viewcode-back" href="../../api-doc/mosaic.html#mosaic.SingleChannelAnalysis.SingleChannelAnalysis.Stop">[docs]</a>	<span class="k">def</span> <span class="nf">Stop</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 		<span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">			Stop a running analysis.</span>
@@ -213,12 +217,13 @@
 		<span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">subProc</span><span class="p">:</span>
 			<span class="n">os</span><span class="o">.</span><span class="n">kill</span><span class="p">(</span> <span class="bp">self</span><span class="o">.</span><span class="n">subProc</span><span class="o">.</span><span class="n">pid</span><span class="p">,</span> <span class="n">signal</span><span class="o">.</span><span class="n">SIGINT</span> <span class="p">)</span>
 		<span class="k">else</span><span class="p">:</span>
-			<span class="n">os</span><span class="o">.</span><span class="n">kill</span><span class="p">(</span> <span class="n">os</span><span class="o">.</span><span class="n">getpid</span><span class="p">(),</span> <span class="n">signal</span><span class="o">.</span><span class="n">SIGINT</span> <span class="p">)</span>
-</div>
+			<span class="n">os</span><span class="o">.</span><span class="n">kill</span><span class="p">(</span> <span class="n">os</span><span class="o">.</span><span class="n">getpid</span><span class="p">(),</span> <span class="n">signal</span><span class="o">.</span><span class="n">SIGINT</span> <span class="p">)</span></div>
+
 	<span class="nd">@property</span> 
 	<span class="k">def</span> <span class="nf">DataPath</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-		<span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">trajDataObj</span><span class="o">.</span><span class="n">datPath</span>
-</pre></div></div>
+		<span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">trajDataObj</span><span class="o">.</span><span class="n">datPath</span></div>
+
+</pre></div>
 
     </div>
       
@@ -232,7 +237,7 @@
       
     </p>
     <p>
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.2.3.<br/>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.4.<br/>
     </p>
   </div>
 </footer> -->
@@ -242,9 +247,8 @@
 			<col width=40%>
 			<tr>
 				<td align="left">
-					<a href="../../doc/mailingList.html"><em>Mailing List</em></a>&nbsp;&nbsp;&nbsp;
 					<a href="../../doc/Developers.html"><em>MOSAIC Developers</em></a>&nbsp;&nbsp;&nbsp;
-					<a href="http://www.nist.gov/cgi-bin/wwwph/cso.nist.gov?Query=Arvind+Balijepalli"><em>Contact</em></a>&nbsp;&nbsp;&nbsp;
+					<a href="http://www.nist.gov/pml/div683/grp06/abalijepalli.cfm"><em>Contact</em></a>&nbsp;&nbsp;&nbsp;
 					<a href="../../doc/Disclaimer.html"><em>Terms of Use</em></a>
 				</td>
 				<td align="right"><em>National Institute of Standards and Technology (NIST)</em></td>

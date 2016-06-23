@@ -5,19 +5,18 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>11.1.4. Time-Series Filters &mdash; MOSAIC 1.2 documentation</title>
+    <title>13.1.4. Time-Series Filters &mdash; MOSAIC 1.3b3 documentation</title>
     
     <link rel="stylesheet" href="../_static/basic.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="../_static/bootstrap-3.2.0/css/bootstrap.min.css" type="text/css" />
-    <link rel="stylesheet" href="../_static/bootstrap-3.2.0/css/bootstrap-theme.min.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/bootswatch-3.3.4/paper/bootstrap.min.css" type="text/css" />
     <link rel="stylesheet" href="../_static/bootstrap-sphinx.css" type="text/css" />
     <link rel="stylesheet" href="../_static/style.css" type="text/css" />
     
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '1.2',
+        VERSION:     '1.3b3',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -26,16 +25,16 @@
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <script type="text/javascript" src="../_static/js/jquery-1.11.0.min.js"></script>
     <script type="text/javascript" src="../_static/js/jquery-fix.js"></script>
-    <script type="text/javascript" src="../_static/bootstrap-3.2.0/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../_static/bootstrap-3.3.4/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="../_static/bootstrap-sphinx.js"></script>
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
-    <link rel="top" title="MOSAIC 1.2 documentation" href="../index.html" />
-    <link rel="up" title="11. API Documentation" href="../doc/apidocs.html" />
-    <link rel="next" title="11.1.5. Event Partition and Segment" href="mosaic.partition.html" />
-    <link rel="prev" title="11.1.3. Time-Series IO" href="mosaic.traj.html" />
+    <link rel="top" title="MOSAIC 1.3b3 documentation" href="../index.html" />
+    <link rel="up" title="13. API Documentation" href="../doc/apidocs.html" />
+    <link rel="next" title="13.1.5. Event Partition and Segment" href="mosaic.partition.html" />
+    <link rel="prev" title="13.1.3. Time-Series IO" href="mosaic.traj.html" />
 
 <meta charset='utf-8'>
 <meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
@@ -43,13 +42,13 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 
 	<script type="text/javascript"
-		src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+		src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
 	</script>
 	<script type="text/javascript" id="_fed_an_js_tag" src="//www.nist.gov/js/federated-analytics.all.min.js?agency=NIST&subagency=github&pua=UA-42404149-54&yt=true&exts=ppsx,pps,f90,sch,rtf,wrl,txz,m1v,xlsm,msi,xsd,f,tif,eps,mpg,xml,pl,xlt,c">
 	</script>	
 
   </head>
-  <body>
+  <body role="document">
 
   <div id="navbar" class="navbar navbar-default navbar-fixed-top">
     <div class="container">
@@ -60,16 +59,17 @@
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </button>
-        <a class="navbar-brand" href="../index.html"><img src="../_static/icon_24.png">
+        <a class="navbar-brand" href="../index.html"><img src="../_static/icon_36.png">
            </a>
-        <span class="navbar-text navbar-version pull-left"><b>1.2</b></span>
+        <span class="navbar-text navbar-version pull-left"><b>1.3b3</b></span>
       </div>
 
         <div class="collapse navbar-collapse nav-collapse">
           <ul class="nav navbar-nav">
             
+                <li><a href="../../latex/MOSAIC.pdf">Download PDF</a></li>
                 <li><a href="../doc/mailingList.html">Mailing List</a></li>
-                <li><a href="//github.com/usnistgov/mosaic">Develop MOSAIC</a></li>
+                <li><a href="//github.com/usnistgov/mosaic">Develop</a></li>
                 <li><a href="//github.com/usnistgov/mosaic/issues">Issue Tracker</a></li>
             
             
@@ -83,18 +83,20 @@
       role="menu"
       aria-labelledby="dLabelGlobalToc"><ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../doc/Introduction.html">1. Introduction</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../doc/GettingStarted.html">2. Getting Started</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../doc/Algorithms.html">3. Algorithms in <em>MOSAIC</em></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../doc/Algorithms.html">2. Data Processing Algorithms in <em>MOSAIC</em></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../doc/GettingStarted.html">3. Getting Started</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../doc/GraphicalInterface.html">4. <em>MOSAIC</em> GUI</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../doc/ScriptingandAdvancedFeatures.html">5. Scripting and Advanced Features</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../doc/settingsFile.html">6. Settings File</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../doc/DatabaseStructure.html">7. Database Structure and Query Syntax</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../doc/settingsFile.html">5. Settings File</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../doc/DatabaseStructure.html">6. Database Structure and Query Syntax</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../doc/ScriptingandAdvancedFeatures.html">7. Scripting and Advanced Features</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../doc/Extend.html">8. Extend <em>MOSAIC</em></a></li>
-<li class="toctree-l1"><a class="reference internal" href="../doc/Addons.html">9. Addons</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../doc/examples.html">10. Examples</a></li>
-<li class="toctree-l1 current"><a class="reference internal" href="../doc/apidocs.html">11. API Documentation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../doc/ChangeLog.html">12. Change Log</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../doc/References.html">13. Bibliography</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../doc/PublicationFigures.html">9. Publication Quality Figures</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../doc/AdvancedAnalysis.html">10. Advanced Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../doc/Addons.html">11. Addons</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../doc/DeveloperTools.html">12. Developer Tools</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../doc/apidocs.html">13. API Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../doc/ChangeLog.html">14. Change Log</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../doc/References.html">15. Bibliography</a></li>
 </ul>
 </ul>
 </li>
@@ -124,19 +126,17 @@
 
 <div class="container">
   <div class="row">
-    <div class="col-md-12">
+    <div class="col-md-12 content">
       
   <div class="section" id="time-series-filters">
-<h1>11.1.4. Time-Series Filters<a class="headerlink" href="#time-series-filters" title="Permalink to this headline">¶</a></h1>
+<h1>13.1.4. Time-Series Filters<a class="headerlink" href="#time-series-filters" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="mosaic-waveletdenoisefilter-module">
-<h2>11.1.4.1. mosaic.waveletDenoiseFilter module<a class="headerlink" href="#mosaic-waveletdenoisefilter-module" title="Permalink to this headline">¶</a></h2>
-<p class="graphviz">
-<img src="../_images/inheritance-e054d6818a0c432e21d6468cbd80a1cac61192bb.png" alt="Inheritance diagram of mosaic.waveletDenoiseFilter" usemap="#inheritancef298b7fff7" class="inheritance"/>
+<h2>13.1.4.1. mosaic.waveletDenoiseFilter module<a class="headerlink" href="#mosaic-waveletdenoisefilter-module" title="Permalink to this headline">¶</a></h2>
+<img src="../_images/inheritance-b12739ba3d74e097bc5c7ebadab5c8947f0e3a68.png" alt="Inheritance diagram of mosaic.waveletDenoiseFilter" usemap="#inheritancef298b7fff7" class="inheritance"/>
 <map id="inheritancef298b7fff7" name="inheritancef298b7fff7">
-<area shape="rect" id="node1" href="mosaic.meta.html#mosaic.metaIOFilter.metaIOFilter" title=".. warning:: |metaclass|" alt="" coords="6,5,178,30"/>
-<area shape="rect" id="node2" href="#mosaic.waveletDenoiseFilter.waveletDenoiseFilter" title=":Keyword Args:" alt="" coords="227,5,501,30"/>
+<area shape="rect" id="node1" href="mosaic.meta.html#mosaic.metaIOFilter.metaIOFilter" target="_top" title=".. warning:: |metaclass|" alt="" coords="5,5,176,29"/>
+<area shape="rect" id="node2" href="#mosaic.waveletDenoiseFilter.waveletDenoiseFilter" target="_top" title=":Keyword Args:" alt="" coords="224,5,496,29"/>
 </map>
-</p>
 <span class="target" id="module-mosaic.waveletDenoiseFilter"></span><p>Implementation of a wavelet based denoising filter</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -155,12 +155,13 @@
 </tbody>
 </table>
 <div class="line-block">
+<div class="line">9/13/15         AB      Updated logging to use mosaicLogFormat class</div>
 <div class="line">8/31/14         AB      Initial version</div>
 </div>
 <dl class="class">
 <dt id="mosaic.waveletDenoiseFilter.waveletDenoiseFilter">
-<em class="property">class </em><tt class="descclassname">mosaic.waveletDenoiseFilter.</tt><tt class="descname">waveletDenoiseFilter</tt><big>(</big><em>**kwargs</em><big>)</big><a class="reference internal" href="../_modules/mosaic/waveletDenoiseFilter.html#waveletDenoiseFilter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mosaic.waveletDenoiseFilter.waveletDenoiseFilter" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="mosaic.meta.html#mosaic.metaIOFilter.metaIOFilter" title="mosaic.metaIOFilter.metaIOFilter"><tt class="xref py py-class docutils literal"><span class="pre">mosaic.metaIOFilter.metaIOFilter</span></tt></a></p>
+<em class="property">class </em><code class="descclassname">mosaic.waveletDenoiseFilter.</code><code class="descname">waveletDenoiseFilter</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/waveletDenoiseFilter.html#waveletDenoiseFilter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mosaic.waveletDenoiseFilter.waveletDenoiseFilter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="mosaic.meta.html#mosaic.metaIOFilter.metaIOFilter" title="mosaic.metaIOFilter.metaIOFilter"><code class="xref py py-class docutils literal"><span class="pre">mosaic.metaIOFilter.metaIOFilter</span></code></a></p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -180,7 +181,7 @@
 </table>
 <dl class="method">
 <dt id="mosaic.waveletDenoiseFilter.waveletDenoiseFilter.filterData">
-<tt class="descname">filterData</tt><big>(</big><em>icurr</em>, <em>Fs</em><big>)</big><a class="reference internal" href="../_modules/mosaic/waveletDenoiseFilter.html#waveletDenoiseFilter.filterData"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mosaic.waveletDenoiseFilter.waveletDenoiseFilter.filterData" title="Permalink to this definition">¶</a></dt>
+<code class="descname">filterData</code><span class="sig-paren">(</span><em>icurr</em>, <em>Fs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/waveletDenoiseFilter.html#waveletDenoiseFilter.filterData"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mosaic.waveletDenoiseFilter.waveletDenoiseFilter.filterData" title="Permalink to this definition">¶</a></dt>
 <dd><p>Denoise an ionic current time-series and store it in self.eventData</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -198,7 +199,7 @@
 
 <dl class="method">
 <dt id="mosaic.waveletDenoiseFilter.waveletDenoiseFilter.formatsettings">
-<tt class="descname">formatsettings</tt><big>(</big><big>)</big><a class="reference internal" href="../_modules/mosaic/waveletDenoiseFilter.html#waveletDenoiseFilter.formatsettings"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mosaic.waveletDenoiseFilter.waveletDenoiseFilter.formatsettings" title="Permalink to this definition">¶</a></dt>
+<code class="descname">formatsettings</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/waveletDenoiseFilter.html#waveletDenoiseFilter.formatsettings"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mosaic.waveletDenoiseFilter.waveletDenoiseFilter.formatsettings" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return a formatted string of filter settings</p>
 </dd></dl>
 
@@ -206,14 +207,12 @@
 
 </div>
 <div class="section" id="mosaic-bessellowpassfilter-module">
-<h2>11.1.4.2. mosaic.besselLowpassFilter module<a class="headerlink" href="#mosaic-bessellowpassfilter-module" title="Permalink to this headline">¶</a></h2>
-<p class="graphviz">
-<img src="../_images/inheritance-6f70943a9b3205f8e9fe657fbb5990f1084b0727.png" alt="Inheritance diagram of mosaic.besselLowpassFilter" usemap="#inheritance9bfeaecb0e" class="inheritance"/>
+<h2>13.1.4.2. mosaic.besselLowpassFilter module<a class="headerlink" href="#mosaic-bessellowpassfilter-module" title="Permalink to this headline">¶</a></h2>
+<img src="../_images/inheritance-e67856290aba448bc39f720bca6b72c59349fd6b.png" alt="Inheritance diagram of mosaic.besselLowpassFilter" usemap="#inheritance9bfeaecb0e" class="inheritance"/>
 <map id="inheritance9bfeaecb0e" name="inheritance9bfeaecb0e">
-<area shape="rect" id="node1" href="#mosaic.besselLowpassFilter.besselLowpassFilter" title=":Keyword Args:" alt="" coords="227,5,493,30"/>
-<area shape="rect" id="node2" href="mosaic.meta.html#mosaic.metaIOFilter.metaIOFilter" title=".. warning:: |metaclass|" alt="" coords="6,5,178,30"/>
+<area shape="rect" id="node1" href="#mosaic.besselLowpassFilter.besselLowpassFilter" target="_top" title=":Keyword Args:" alt="" coords="224,5,490,29"/>
+<area shape="rect" id="node2" href="mosaic.meta.html#mosaic.metaIOFilter.metaIOFilter" target="_top" title=".. warning:: |metaclass|" alt="" coords="5,5,176,29"/>
 </map>
-</p>
 <span class="target" id="module-mosaic.besselLowpassFilter"></span><p>Implementation of an &#8216;N&#8217; order Bessel filter</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -230,12 +229,13 @@
 </tbody>
 </table>
 <div class="line-block">
+<div class="line">9/13/15         AB      Updated logging to use mosaicLogFormat class</div>
 <div class="line">7/1/13          AB      Initial version</div>
 </div>
 <dl class="class">
 <dt id="mosaic.besselLowpassFilter.besselLowpassFilter">
-<em class="property">class </em><tt class="descclassname">mosaic.besselLowpassFilter.</tt><tt class="descname">besselLowpassFilter</tt><big>(</big><em>**kwargs</em><big>)</big><a class="reference internal" href="../_modules/mosaic/besselLowpassFilter.html#besselLowpassFilter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mosaic.besselLowpassFilter.besselLowpassFilter" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="mosaic.meta.html#mosaic.metaIOFilter.metaIOFilter" title="mosaic.metaIOFilter.metaIOFilter"><tt class="xref py py-class docutils literal"><span class="pre">mosaic.metaIOFilter.metaIOFilter</span></tt></a></p>
+<em class="property">class </em><code class="descclassname">mosaic.besselLowpassFilter.</code><code class="descname">besselLowpassFilter</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/besselLowpassFilter.html#besselLowpassFilter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mosaic.besselLowpassFilter.besselLowpassFilter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="mosaic.meta.html#mosaic.metaIOFilter.metaIOFilter" title="mosaic.metaIOFilter.metaIOFilter"><code class="xref py py-class docutils literal"><span class="pre">mosaic.metaIOFilter.metaIOFilter</span></code></a></p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -254,7 +254,7 @@
 </dl>
 <dl class="method">
 <dt id="mosaic.besselLowpassFilter.besselLowpassFilter.filterData">
-<tt class="descname">filterData</tt><big>(</big><em>icurr</em>, <em>Fs</em><big>)</big><a class="reference internal" href="../_modules/mosaic/besselLowpassFilter.html#besselLowpassFilter.filterData"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mosaic.besselLowpassFilter.besselLowpassFilter.filterData" title="Permalink to this definition">¶</a></dt>
+<code class="descname">filterData</code><span class="sig-paren">(</span><em>icurr</em>, <em>Fs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/besselLowpassFilter.html#besselLowpassFilter.filterData"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mosaic.besselLowpassFilter.besselLowpassFilter.filterData" title="Permalink to this definition">¶</a></dt>
 <dd><p>Denoise an ionic current time-series and store it in self.eventData</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -272,22 +272,20 @@
 
 <dl class="method">
 <dt id="mosaic.besselLowpassFilter.besselLowpassFilter.formatsettings">
-<tt class="descname">formatsettings</tt><big>(</big><big>)</big><a class="reference internal" href="../_modules/mosaic/besselLowpassFilter.html#besselLowpassFilter.formatsettings"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mosaic.besselLowpassFilter.besselLowpassFilter.formatsettings" title="Permalink to this definition">¶</a></dt>
-<dd><p>Return a formatted string of filter settings</p>
+<code class="descname">formatsettings</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/besselLowpassFilter.html#besselLowpassFilter.formatsettings"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mosaic.besselLowpassFilter.besselLowpassFilter.formatsettings" title="Permalink to this definition">¶</a></dt>
+<dd><p>Populate <cite>logObject</cite> with settings strings for display</p>
 </dd></dl>
 
 </dd></dl>
 
 </div>
 <div class="section" id="mosaic-convolutionfilter-module">
-<h2>11.1.4.3. mosaic.convolutionFilter module<a class="headerlink" href="#mosaic-convolutionfilter-module" title="Permalink to this headline">¶</a></h2>
-<p class="graphviz">
-<img src="../_images/inheritance-6e9ee57d399c08c6bda926089a32ab5bd5a75d81.png" alt="Inheritance diagram of mosaic.convolutionFilter" usemap="#inheritance31a37510d7" class="inheritance"/>
+<h2>13.1.4.3. mosaic.convolutionFilter module<a class="headerlink" href="#mosaic-convolutionfilter-module" title="Permalink to this headline">¶</a></h2>
+<img src="../_images/inheritance-bfc7bda332344ce19cec58702ea58fe5914cb7e2.png" alt="Inheritance diagram of mosaic.convolutionFilter" usemap="#inheritance31a37510d7" class="inheritance"/>
 <map id="inheritance31a37510d7" name="inheritance31a37510d7">
-<area shape="rect" id="node1" href="#mosaic.convolutionFilter.convolutionFilter" title=":Keyword Args:" alt="" coords="227,5,447,30"/>
-<area shape="rect" id="node2" href="mosaic.meta.html#mosaic.metaIOFilter.metaIOFilter" title=".. warning:: |metaclass|" alt="" coords="6,5,178,30"/>
+<area shape="rect" id="node1" href="#mosaic.convolutionFilter.convolutionFilter" target="_top" title=":Keyword Args:" alt="" coords="224,5,443,29"/>
+<area shape="rect" id="node2" href="mosaic.meta.html#mosaic.metaIOFilter.metaIOFilter" target="_top" title=".. warning:: |metaclass|" alt="" coords="5,5,176,29"/>
 </map>
-</p>
 <span class="target" id="module-mosaic.convolutionFilter"></span><p>Implementation of a weighted moving average (tap delay line) filter</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -304,12 +302,13 @@
 </tbody>
 </table>
 <div class="line-block">
+<div class="line">9/13/15         AB      Updated logging to use mosaicLogFormat class</div>
 <div class="line">8/16/13         AB      Initial version</div>
 </div>
 <dl class="class">
 <dt id="mosaic.convolutionFilter.convolutionFilter">
-<em class="property">class </em><tt class="descclassname">mosaic.convolutionFilter.</tt><tt class="descname">convolutionFilter</tt><big>(</big><em>**kwargs</em><big>)</big><a class="reference internal" href="../_modules/mosaic/convolutionFilter.html#convolutionFilter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mosaic.convolutionFilter.convolutionFilter" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="mosaic.meta.html#mosaic.metaIOFilter.metaIOFilter" title="mosaic.metaIOFilter.metaIOFilter"><tt class="xref py py-class docutils literal"><span class="pre">mosaic.metaIOFilter.metaIOFilter</span></tt></a></p>
+<em class="property">class </em><code class="descclassname">mosaic.convolutionFilter.</code><code class="descname">convolutionFilter</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/convolutionFilter.html#convolutionFilter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mosaic.convolutionFilter.convolutionFilter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="mosaic.meta.html#mosaic.metaIOFilter.metaIOFilter" title="mosaic.metaIOFilter.metaIOFilter"><code class="xref py py-class docutils literal"><span class="pre">mosaic.metaIOFilter.metaIOFilter</span></code></a></p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -327,7 +326,7 @@
 </dl>
 <dl class="method">
 <dt id="mosaic.convolutionFilter.convolutionFilter.filterData">
-<tt class="descname">filterData</tt><big>(</big><em>icurr</em>, <em>Fs</em><big>)</big><a class="reference internal" href="../_modules/mosaic/convolutionFilter.html#convolutionFilter.filterData"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mosaic.convolutionFilter.convolutionFilter.filterData" title="Permalink to this definition">¶</a></dt>
+<code class="descname">filterData</code><span class="sig-paren">(</span><em>icurr</em>, <em>Fs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/convolutionFilter.html#convolutionFilter.filterData"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mosaic.convolutionFilter.convolutionFilter.filterData" title="Permalink to this definition">¶</a></dt>
 <dd><p>Denoise an ionic current time-series and store it in self.eventData</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -345,7 +344,7 @@
 
 <dl class="method">
 <dt id="mosaic.convolutionFilter.convolutionFilter.formatsettings">
-<tt class="descname">formatsettings</tt><big>(</big><big>)</big><a class="reference internal" href="../_modules/mosaic/convolutionFilter.html#convolutionFilter.formatsettings"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mosaic.convolutionFilter.convolutionFilter.formatsettings" title="Permalink to this definition">¶</a></dt>
+<code class="descname">formatsettings</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/convolutionFilter.html#convolutionFilter.formatsettings"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mosaic.convolutionFilter.convolutionFilter.formatsettings" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return a formatted string of filter settings</p>
 </dd></dl>
 
@@ -367,7 +366,7 @@
       
     </p>
     <p>
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.2.3.<br/>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.4.<br/>
     </p>
   </div>
 </footer> -->
@@ -377,9 +376,8 @@
 			<col width=40%>
 			<tr>
 				<td align="left">
-					<a href="../doc/mailingList.html"><em>Mailing List</em></a>&nbsp;&nbsp;&nbsp;
 					<a href="../doc/Developers.html"><em>MOSAIC Developers</em></a>&nbsp;&nbsp;&nbsp;
-					<a href="http://www.nist.gov/cgi-bin/wwwph/cso.nist.gov?Query=Arvind+Balijepalli"><em>Contact</em></a>&nbsp;&nbsp;&nbsp;
+					<a href="http://www.nist.gov/pml/div683/grp06/abalijepalli.cfm"><em>Contact</em></a>&nbsp;&nbsp;&nbsp;
 					<a href="../doc/Disclaimer.html"><em>Terms of Use</em></a>
 				</td>
 				<td align="right"><em>National Institute of Standards and Technology (NIST)</em></td>

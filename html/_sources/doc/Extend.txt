@@ -77,7 +77,7 @@ The newly defined :class:`~mosaic.binTrajIO.binTrajIO` class can then be used as
                 bin.binTrajIO,
                 None, 
                 es.eventSegment,
-                sra.stepResponseAnalysis
+                mosaic.adept2State.adept2State
             ).Run()
 
 Similar to other `TrajIO` objects, parameters for :class:`~mosaic.binTrajIO.binTrajIO` are obtained from the settings file when used with :class:`~mosaic.SingleChannelAnalysis.SingleChannelAnalysis`. Example settings for :class:`~mosaic.binTrajIO.binTrajIO` that read 16-bit intgers from a binary data file, assuming 50 `kHz` sampling, are shown below.
@@ -146,7 +146,7 @@ The :py:class:`~mosaic.ConvertToCSV.ConvertToCSV` class can now be used with any
 				AmplifierOffset=0.0, SamplingFrequency=50000, HeaderOffset=0, 
 				PythonStructCode='h') ).Convert(blockSize=50000)
 
-Finally, since :py:class:`~mosaic.ConvertToCSV.ConvertToCSV` accepts a trajIO object, we can apply a lowpass filter to the data before converting it to the CSV format. This is accomplished by passing the *datafilter* option to the trajIO object as described in the :ref:`scripting-filter-sec` section. In the example below, we convert ABF files to the CSV format after applying a lowpass Bessel filter to the data.
+Since :py:class:`~mosaic.ConvertToCSV.ConvertToCSV` accepts a trajIO object, we can apply a lowpass filter to the data before converting it to the CSV format. This is accomplished by passing the *datafilter* option to the trajIO object as described in the :ref:`scripting-filter-sec` section. In the example below, we convert ABF files to the CSV format after applying a lowpass Bessel filter to the data.
 
 .. code-block:: python
 	:emphasize-lines: 2
@@ -156,3 +156,62 @@ Finally, since :py:class:`~mosaic.ConvertToCSV.ConvertToCSV` accepts a trajIO ob
 		) ).Convert(blockSize=50000)
 
 
+Finally, the :py:class:`~mosaic.ConvertToCSV.ConvertToCSV` class can be further extended to output arbitrary binary files in place of CSV by the simple extension shown below.
+
+.. only:: html
+
+	.. gist:: https://gist.github.com/abalijepalli/975148996058ee10d4d7
+
+.. only:: latex 
+
+	.. sourcecode:: python
+
+		"""
+			Extend the MOSAIC ConvertToCSV class to export arbitrary binary files.
+			
+			:Created:	02/25/2015
+		 	:Author: 	Arvind Balijepalli <arvind.balijepalli@nist.gov>
+			:ChangeLog:
+			.. line-block::
+				02/25/15	AB	Initial version
+		"""
+		import mosaic.ConvertToCSV as conv
+		import mosaic.binTrajIO as bin
+		import mosaic.settings as sett
+		import numpy as np
+
+		from mosaic.metaTrajIO import EmptyDataPipeError
+
+		class ConvertToBin(conv.ConvertToCSV):
+			def Convert(self, blockSize, binType):
+				"""
+					Start converting data
+
+					:Parameters:
+						- `blockSize` 	: number of data points to convert.
+						- `binType` 	: Numpy binary type.
+				"""
+				try:
+					while(True):
+						np.array( self.trajDataObj.popdata(blockSize), dtype=binType ).tofile(self._filename())
+				except EmptyDataPipeError:
+					pass
+
+
+		if __name__ == '__main__':
+			s={
+		        "AmplifierOffset": 0.0,
+		        "SamplingFrequency": 250000,
+		        "AmplifierScale": "1.0",
+		        "ColumnTypes": "[('curr_pA', '>f8'), ('volts', '>f8')]",
+		        "dcOffset": 0.0,
+		        "filter": "*.bin",
+		        "start": 0.0,
+		        "HeaderOffset": 0,
+		        "IonicCurrentColumn": "curr_pA"
+		    }
+			ConvertToBin( 
+					bin.binTrajIO(dirname=".", **s ), 
+					outdir="convert", 
+					extension="bin" 
+					).Convert(blockSize=10000000, binType='f4')

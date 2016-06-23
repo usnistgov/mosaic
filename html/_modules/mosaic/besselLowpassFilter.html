@@ -5,19 +5,18 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>mosaic.besselLowpassFilter &mdash; MOSAIC 1.2 documentation</title>
+    <title>mosaic.besselLowpassFilter &mdash; MOSAIC 1.3b3 documentation</title>
     
     <link rel="stylesheet" href="../../_static/basic.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="../../_static/bootstrap-3.2.0/css/bootstrap.min.css" type="text/css" />
-    <link rel="stylesheet" href="../../_static/bootstrap-3.2.0/css/bootstrap-theme.min.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/bootswatch-3.3.4/paper/bootstrap.min.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/bootstrap-sphinx.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/style.css" type="text/css" />
     
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
-        VERSION:     '1.2',
+        VERSION:     '1.3b3',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -26,13 +25,13 @@
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
-    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <script type="text/javascript" src="../../_static/js/jquery-1.11.0.min.js"></script>
     <script type="text/javascript" src="../../_static/js/jquery-fix.js"></script>
-    <script type="text/javascript" src="../../_static/bootstrap-3.2.0/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../../_static/bootstrap-3.3.4/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="../../_static/bootstrap-sphinx.js"></script>
     <link rel="shortcut icon" href="../../_static/favicon.ico"/>
-    <link rel="top" title="MOSAIC 1.2 documentation" href="../../index.html" />
+    <link rel="top" title="MOSAIC 1.3b3 documentation" href="../../index.html" />
     <link rel="up" title="Module code" href="../index.html" />
 
 <meta charset='utf-8'>
@@ -41,13 +40,13 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 
 	<script type="text/javascript"
-		src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+		src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
 	</script>
 	<script type="text/javascript" id="_fed_an_js_tag" src="//www.nist.gov/js/federated-analytics.all.min.js?agency=NIST&subagency=github&pua=UA-42404149-54&yt=true&exts=ppsx,pps,f90,sch,rtf,wrl,txz,m1v,xlsm,msi,xsd,f,tif,eps,mpg,xml,pl,xlt,c">
 	</script>	
 
   </head>
-  <body>
+  <body role="document">
 
   <div id="navbar" class="navbar navbar-default navbar-fixed-top">
     <div class="container">
@@ -58,16 +57,17 @@
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </button>
-        <a class="navbar-brand" href="../../index.html"><img src="../../_static/icon_24.png">
+        <a class="navbar-brand" href="../../index.html"><img src="../../_static/icon_36.png">
            </a>
-        <span class="navbar-text navbar-version pull-left"><b>1.2</b></span>
+        <span class="navbar-text navbar-version pull-left"><b>1.3b3</b></span>
       </div>
 
         <div class="collapse navbar-collapse nav-collapse">
           <ul class="nav navbar-nav">
             
+                <li><a href="../../../latex/MOSAIC.pdf">Download PDF</a></li>
                 <li><a href="../../doc/mailingList.html">Mailing List</a></li>
-                <li><a href="//github.com/usnistgov/mosaic">Develop MOSAIC</a></li>
+                <li><a href="//github.com/usnistgov/mosaic">Develop</a></li>
                 <li><a href="//github.com/usnistgov/mosaic/issues">Issue Tracker</a></li>
             
             
@@ -81,18 +81,20 @@
       role="menu"
       aria-labelledby="dLabelGlobalToc"><ul>
 <li class="toctree-l1"><a class="reference internal" href="../../doc/Introduction.html">1. Introduction</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../doc/GettingStarted.html">2. Getting Started</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../doc/Algorithms.html">3. Algorithms in <em>MOSAIC</em></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../doc/Algorithms.html">2. Data Processing Algorithms in <em>MOSAIC</em></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../doc/GettingStarted.html">3. Getting Started</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../doc/GraphicalInterface.html">4. <em>MOSAIC</em> GUI</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../doc/ScriptingandAdvancedFeatures.html">5. Scripting and Advanced Features</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../doc/settingsFile.html">6. Settings File</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../doc/DatabaseStructure.html">7. Database Structure and Query Syntax</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../doc/settingsFile.html">5. Settings File</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../doc/DatabaseStructure.html">6. Database Structure and Query Syntax</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../doc/ScriptingandAdvancedFeatures.html">7. Scripting and Advanced Features</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../doc/Extend.html">8. Extend <em>MOSAIC</em></a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../doc/Addons.html">9. Addons</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../doc/examples.html">10. Examples</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../doc/apidocs.html">11. API Documentation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../doc/ChangeLog.html">12. Change Log</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../doc/References.html">13. Bibliography</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../doc/PublicationFigures.html">9. Publication Quality Figures</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../doc/AdvancedAnalysis.html">10. Advanced Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../doc/Addons.html">11. Addons</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../doc/DeveloperTools.html">12. Developer Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../doc/apidocs.html">13. API Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../doc/ChangeLog.html">14. Change Log</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../doc/References.html">15. Bibliography</a></li>
 </ul>
 </ul>
 </li>
@@ -122,9 +124,10 @@
 
 <div class="container">
   <div class="row">
-    <div class="col-md-12">
+    <div class="col-md-12 content">
       
   <h1>Source code for mosaic.besselLowpassFilter</h1><div class="highlight"><pre>
+<span></span><span class="c1"># -*- coding: utf-8 -*-</span>
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">	Implementation of an &#39;N&#39; order Bessel filter</span>
 
@@ -133,14 +136,18 @@
 <span class="sd">	:License:	See LICENSE.TXT</span>
 <span class="sd">	:ChangeLog:</span>
 <span class="sd">	.. line-block::</span>
+<span class="sd">		9/13/15 	AB 	Updated logging to use mosaicLogFormat class</span>
 <span class="sd">		7/1/13		AB	Initial version</span>
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span> 
 <span class="kn">import</span> <span class="nn">scipy.signal</span> <span class="kn">as</span> <span class="nn">sig</span>
 
-<span class="kn">import</span> <span class="nn">metaIOFilter</span>
+<span class="kn">import</span> <span class="nn">mosaic.metaIOFilter</span>
+<span class="kn">import</span> <span class="nn">mosaic.utilities.mosaicLogging</span> <span class="kn">as</span> <span class="nn">mlog</span>
 
-<div class="viewcode-block" id="besselLowpassFilter"><a class="viewcode-back" href="../../api-doc/mosaic.filter.html#mosaic.besselLowpassFilter.besselLowpassFilter">[docs]</a><span class="k">class</span> <span class="nc">besselLowpassFilter</span><span class="p">(</span><span class="n">metaIOFilter</span><span class="o">.</span><span class="n">metaIOFilter</span><span class="p">):</span>
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;besselLowpassFilter&quot;</span><span class="p">]</span>
+
+<div class="viewcode-block" id="besselLowpassFilter"><a class="viewcode-back" href="../../api-doc/mosaic.filter.html#mosaic.besselLowpassFilter.besselLowpassFilter">[docs]</a><span class="k">class</span> <span class="nc">besselLowpassFilter</span><span class="p">(</span><span class="n">mosaic</span><span class="o">.</span><span class="n">metaIOFilter</span><span class="o">.</span><span class="n">metaIOFilter</span><span class="p">):</span>
 	<span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">		:Keyword Args:</span>
 <span class="sd">		In addition to metaIOFilter.__init__ args,</span>
@@ -152,10 +159,12 @@
 		<span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">		&quot;&quot;&quot;</span>
 		<span class="k">try</span><span class="p">:</span>
-			<span class="bp">self</span><span class="o">.</span><span class="n">filterOrder</span><span class="o">=</span><span class="nb">float</span><span class="p">(</span><span class="n">kwargs</span><span class="p">[</span><span class="s">&#39;filterOrder&#39;</span><span class="p">])</span>
-			<span class="bp">self</span><span class="o">.</span><span class="n">filterCutoff</span><span class="o">=</span><span class="nb">float</span><span class="p">(</span><span class="n">kwargs</span><span class="p">[</span><span class="s">&#39;filterCutoff&#39;</span><span class="p">])</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">filterOrder</span><span class="o">=</span><span class="nb">float</span><span class="p">(</span><span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;filterOrder&#39;</span><span class="p">])</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">filterCutoff</span><span class="o">=</span><span class="nb">float</span><span class="p">(</span><span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;filterCutoff&#39;</span><span class="p">])</span>
 		<span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
-			<span class="k">print</span> <span class="s">&quot;Missing mandatory arguments &#39;filterOrder&#39; or &#39;filterCutoff&#39;&quot;</span>
+			<span class="k">print</span> <span class="s2">&quot;Missing mandatory arguments &#39;filterOrder&#39; or &#39;filterCutoff&#39;&quot;</span>
+
+		<span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">=</span><span class="n">mlog</span><span class="o">.</span><span class="n">mosaicLogging</span><span class="p">()</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="n">__name__</span><span class="p">)</span>
 
 
 <div class="viewcode-block" id="besselLowpassFilter.filterData"><a class="viewcode-back" href="../../api-doc/mosaic.filter.html#mosaic.besselLowpassFilter.besselLowpassFilter.filterData">[docs]</a>	<span class="k">def</span> <span class="nf">filterData</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">icurr</span><span class="p">,</span> <span class="n">Fs</span><span class="p">):</span>
@@ -172,13 +181,13 @@
 		<span class="bp">self</span><span class="o">.</span><span class="n">filterModel</span><span class="o">=</span><span class="n">sig</span><span class="o">.</span><span class="n">filter_design</span><span class="o">.</span><span class="n">bessel</span><span class="p">(</span>
 							<span class="n">N</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">filterOrder</span><span class="p">,</span> 
 							<span class="n">Wn</span><span class="o">=</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">filterCutoff</span><span class="o">/</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">Fs</span><span class="o">/</span><span class="mi">2</span><span class="p">)),</span> 
-							<span class="n">btype</span><span class="o">=</span><span class="s">&#39;lowpass&#39;</span><span class="p">,</span> 
+							<span class="n">btype</span><span class="o">=</span><span class="s1">&#39;lowpass&#39;</span><span class="p">,</span> 
 							<span class="n">analog</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> 
-							<span class="n">output</span><span class="o">=</span><span class="s">&#39;ba&#39;</span>
+							<span class="n">output</span><span class="o">=</span><span class="s1">&#39;ba&#39;</span>
 						<span class="p">)</span>
 
-		<span class="c"># calculate the initial state of the filter and scale it with the first data point</span>
-		<span class="c"># so there is no sharp transient at the start of the data</span>
+		<span class="c1"># calculate the initial state of the filter and scale it with the first data point</span>
+		<span class="c1"># so there is no sharp transient at the start of the data</span>
 		<span class="n">zi</span><span class="o">=</span><span class="n">sig</span><span class="o">.</span><span class="n">lfilter_zi</span><span class="p">(</span><span class="n">b</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">filterModel</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">a</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">filterModel</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">eventData</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
 
 		<span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">eventData</span><span class="p">,</span> <span class="n">zf</span><span class="p">]</span><span class="o">=</span><span class="n">sig</span><span class="o">.</span><span class="n">lfilter</span><span class="p">(</span>
@@ -186,21 +195,19 @@
 								<span class="n">a</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">filterModel</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
 								<span class="n">x</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">eventData</span><span class="p">,</span>
 								<span class="n">zi</span><span class="o">=</span><span class="n">zi</span>
-							<span class="p">)</span>
-</div>
+							<span class="p">)</span></div>
+
 <div class="viewcode-block" id="besselLowpassFilter.formatsettings"><a class="viewcode-back" href="../../api-doc/mosaic.filter.html#mosaic.besselLowpassFilter.besselLowpassFilter.formatsettings">[docs]</a>	<span class="k">def</span> <span class="nf">formatsettings</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 		<span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">			Return a formatted string of filter settings</span>
+<span class="sd">			Populate `logObject` with settings strings for display</span>
 <span class="sd">		&quot;&quot;&quot;</span>
-		<span class="n">fmtstr</span><span class="o">=</span><span class="s">&quot;&quot;</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span> <span class="s1">&#39;</span><span class="se">\t</span><span class="s1">Filter settings:&#39;</span> <span class="p">)</span>
 
-		<span class="n">fmtstr</span><span class="o">+=</span><span class="s">&#39;</span><span class="se">\t</span><span class="s">Filter settings: </span><span class="se">\n</span><span class="s">&#39;</span>
-		<span class="n">fmtstr</span><span class="o">+=</span><span class="s">&#39;</span><span class="se">\t\t</span><span class="s">Filter type = {0}</span><span class="se">\n</span><span class="s">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__class__</span><span class="o">.</span><span class="n">__name__</span><span class="p">)</span>
-		<span class="n">fmtstr</span><span class="o">+=</span><span class="s">&#39;</span><span class="se">\t\t</span><span class="s">Filter order = {0}</span><span class="se">\n</span><span class="s">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">filterOrder</span><span class="p">)</span>
-		<span class="n">fmtstr</span><span class="o">+=</span><span class="s">&#39;</span><span class="se">\t\t</span><span class="s">Filter cutoff = {0} kHz</span><span class="se">\n</span><span class="s">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">filterCutoff</span><span class="o">*</span><span class="mf">1e-3</span><span class="p">)</span>
-		<span class="n">fmtstr</span><span class="o">+=</span><span class="s">&#39;</span><span class="se">\t\t</span><span class="s">Decimation = {0}</span><span class="se">\n</span><span class="s">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">decimate</span><span class="p">)</span>
-
-		<span class="k">return</span> <span class="n">fmtstr</span></div></div>
+		<span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span> <span class="s1">&#39;</span><span class="se">\t\t</span><span class="s1">Filter type = {0}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__class__</span><span class="o">.</span><span class="n">__name__</span><span class="p">)</span> <span class="p">)</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span> <span class="s1">&#39;</span><span class="se">\t\t</span><span class="s1">Filter order = {0}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">filterOrder</span><span class="p">)</span> <span class="p">)</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span> <span class="s1">&#39;</span><span class="se">\t\t</span><span class="s1">Filter cutoff = {0} kHz&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">filterCutoff</span><span class="o">*</span><span class="mf">1e-3</span><span class="p">)</span> <span class="p">)</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span> <span class="s1">&#39;</span><span class="se">\t\t</span><span class="s1">Decimation = {0}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">decimate</span><span class="p">)</span> <span class="p">)</span></div></div>
+		
 </pre></div>
 
     </div>
@@ -215,7 +222,7 @@
       
     </p>
     <p>
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.2.3.<br/>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.4.<br/>
     </p>
   </div>
 </footer> -->
@@ -225,9 +232,8 @@
 			<col width=40%>
 			<tr>
 				<td align="left">
-					<a href="../../doc/mailingList.html"><em>Mailing List</em></a>&nbsp;&nbsp;&nbsp;
 					<a href="../../doc/Developers.html"><em>MOSAIC Developers</em></a>&nbsp;&nbsp;&nbsp;
-					<a href="http://www.nist.gov/cgi-bin/wwwph/cso.nist.gov?Query=Arvind+Balijepalli"><em>Contact</em></a>&nbsp;&nbsp;&nbsp;
+					<a href="http://www.nist.gov/pml/div683/grp06/abalijepalli.cfm"><em>Contact</em></a>&nbsp;&nbsp;&nbsp;
 					<a href="../../doc/Disclaimer.html"><em>Terms of Use</em></a>
 				</td>
 				<td align="right"><em>National Institute of Standards and Technology (NIST)</em></td>

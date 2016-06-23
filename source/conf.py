@@ -313,10 +313,11 @@ latex_elements = {
     \\
     \small Subscribe to our mailing list: email \href{mailto:mosaic-request@nist.gov?subject=subscribe}{mosaic-request@nist.gov} with subject \textit{subscribe}\\
     Once subscribed, send messages by emailing \href{mailto:mosaic@nist.gov}{mosaic@nist.gov}.\\
+    The list archive can be found at: \href[pdfnewwindow=true]{http://news.gmane.org/gmane.comp.python.mosaic}{http://news.gmane.org/gmane.comp.python.mosaic}\\
     \\
     \\
     Report problems with MOSAIC using the issue tracker on GitHub\\
-    \url{https://github.com/usnistgov/mosaic/issues}\\
+    \href{https://github.com/usnistgov/mosaic/issues}{https://github.com/usnistgov/mosaic/issues}\\
     \\
     \\
     \\

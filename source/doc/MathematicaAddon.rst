@@ -113,7 +113,7 @@ Once installed as described above, *MosaicUtils* must be imported as shown below
 	In[1]= <<MosaicUtils`
 
 
-SQL_ queries require the exact column names when querying data from a table (see :ref:`database-page`). Column names in the *metadata* table, which stores the main results from the analaysis can be retrieved using the *PrintMDKeys* function as shown below. In this example, the column names returned correspond to an analysis performed using the *stepResponseAnalysis* algorithm.
+SQL_ queries require the exact column names when querying data from a table (see :ref:`database-page`). Column names in the *metadata* table, which stores the main results from the analaysis can be retrieved using the *PrintMDKeys* function as shown below. In this example, the column names returned correspond to an analysis performed using the *adept2State* algorithm.
 
 
 .. code-block:: mathematica

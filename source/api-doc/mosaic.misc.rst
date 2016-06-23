@@ -23,12 +23,37 @@ mosaic.utilities.util module
     :members:
     :show-inheritance:
 
+mosaic.utilities.mosaicLogFormat module
+---------------------------
+
+.. automodule:: mosaic.utilities.mosaicLogFormat
+    :members:
+    :private-members:
+    :show-inheritance:
+
+
+mosaic.utilities.mosaicLogging module
+---------------------------
+
+.. automodule:: mosaic.utilities.mosaicLogging
+    :members:
+    :show-inheritance:
+
+mosaic.utilities.mosaicTiming module
+---------------------------
+
+.. automodule:: mosaic.utilities.mosaicTiming
+    :members:
+    :show-inheritance:
+
+
 mosaic.utilities.fit_funcs module
 ---------------------------
 
 .. automodule:: mosaic.utilities.fit_funcs
     :members:
     :show-inheritance:
+
 
 .. mosaic.zmqIO module
 .. ----------------------------

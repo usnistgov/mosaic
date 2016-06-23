@@ -41,20 +41,13 @@ First we need to obtain the |projname| source code. For analyzing publication da
 	
 	You will notice that (|projname|) now appears in front of the $ prompt in your shell. This inidicates that the virtual environment is active. We have employed this notation to indicate commands that should be run from inside the virtual environment.
 
-6. |projname| and its dependencies are built using setuptools via a custom command as described below. However, we  must first install Cython manually. Run the following command:
-
-.. code-block:: console
- 
-   (MOSAIC)$ pip install cython
-
-
-7.  To install the needed dependencies, navigate to ~/projects/MOSAIC/ and run the following:
+6. |projname| and its dependencies are built using setuptools. Navigate to ~/projects/MOSAIC/ and run the following:
    
 .. code-block:: console
   
    (MOSAIC)$ python setup.py mosaic_deps
 
-8.  Finally, add the installation directory (~/projects/MOSAIC as set up previously) to your `PYTHONPATH` as shown below. This addition can be made permanent by adding the line below to your `.bash_profile` (OS X) or `.bashrc` (Ubuntu) script.
+7.  Finally, add the installation directory (~/projects/MOSAIC as set up previously) to your `PYTHONPATH` as shown below. This addition can be made permanent by adding the line below to your `.bash_profile` (OS X) or `.bashrc` (Ubuntu) script.
 
 .. code-block:: console
 

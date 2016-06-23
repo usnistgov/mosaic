@@ -1,11 +1,13 @@
 |projname| Developers
 ------------------------------------
 
-Arvind Balijepalli
+Arvind Balijepalli, |nist|
 
-Jacob Forstater
+Kyle Briggs, *Univeristy of Ottawa*
 
-Joseph Robertson
+Jacob Forstater, |nist|
+
+Joseph Robertson, |nist|
 
 Canute Vaz
 

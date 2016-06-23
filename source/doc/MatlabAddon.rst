@@ -52,7 +52,7 @@ The query string can be changed as needed.  More information about queries in av
 Example
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-The reference database file provided with MOSAIC is *eventMD-PEG29-Reference.sqlite*, located in the data folder of the source code root directory.  This database contains the results of an analysis performed using the *stepResponseAnalysis* and consists of the data fields:
+The reference database file provided with MOSAIC is *eventMD-PEG29-Reference.sqlite*, located in the data folder of the source code root directory.  This database contains the results of an analysis performed using the *adept2State* and consists of the data fields:
 
 	
 .. code-block:: javascript

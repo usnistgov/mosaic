@@ -1,7 +1,7 @@
 digraph "Graphical Class Hierarchy"
 {
-  graph [ dpi = 300 ];
-  size="2,1.75";
+  graph [ dpi = 600 ];
+  size="1,0.75";
   ratio="fill";
   edge [fontname="Helvetica",fontsize="20",labelfontname="Helvetica",labelfontsize="20"];
   node [fontname="Helvetica",fontsize="20",shape=record];
@@ -16,11 +16,11 @@ digraph "Graphical Class Hierarchy"
   Node1 -> Node5 [dir="back", width=1.0, penwidth=2.5,color="midnightblue",fontsize="20",style="solid",fontname="Helvetica"];
   Node5 [label="mosaic.metaEventProcessor.meta\lEventProcessor",height=0.2,width=0.4,color="black", fillcolor="aliceblue", style="filled"];
   Node5 -> Node6 [dir="back", width=1.0, penwidth=2.5,color="midnightblue",fontsize="20",style="solid",fontname="Helvetica"];
-  Node6 [label="mosaic.multiStateAnalysis.multi\lStateAnalysis",height=0.2,width=0.4,color="black", fillcolor="white", style="filled"];
+  Node6 [label="mosaic.adept.adept",height=0.2,width=0.4,color="black", fillcolor="white", style="filled"];
   Node5 -> Node7 [dir="back", width=1.0, penwidth=2.5,color="midnightblue",fontsize="20",style="solid",fontname="Helvetica"];
-  Node7 [label="mosaic.cusumLevelAnalysis.cusum\lLevelAnalysis",height=0.2,width=0.4,color="black", fillcolor="white", style="filled"];
+  Node7 [label="mosaic.cusumPlus.cusumPlus",height=0.2,width=0.4,color="black", fillcolor="white", style="filled"];
   Node5 -> Node8 [dir="back", width=1.0, penwidth=2.5,color="midnightblue",fontsize="20",style="solid",fontname="Helvetica"];
-  Node8 [label="mosaic.stepResponseAnalysis.step\lResponseAnalysis",height=0.2,width=0.4,color="black", fillcolor="white", style="filled"];
+  Node8 [label="mosaic.adept2State.adept2State",height=0.2,width=0.4,color="black", fillcolor="white", style="filled"];
   Node1 -> Node9 [dir="back", width=1.0, penwidth=2.5,color="midnightblue",fontsize="20",style="solid",fontname="Helvetica"];
   Node9 [label="mosaic.metaIOFilter.meta\lIOFilter",height=0.2,width=0.4,color="black", fillcolor="aliceblue", style="filled"];
   Node9 -> Node10 [dir="back", width=1.0, penwidth=2.5,color="midnightblue",fontsize="20",style="solid",fontname="Helvetica"];
