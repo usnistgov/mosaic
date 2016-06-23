@@ -41,6 +41,7 @@ extensions = [
     'sphinx.ext.viewcode',
     'sphinxcontrib.bibtex',
     'sphinxcontrib.gist',
+    'sphinx.ext.githubpages',
     'exec'
 ]
 
