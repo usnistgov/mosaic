@@ -63,6 +63,8 @@ class mosaicLogging(object):
 	# Rotating File Handler
 	try:
 		logdir=mosaic.LogLocation
+
+		defaultLogLocation=False
 	except AttributeError, err:
 		defaultLogLocation=True
 
