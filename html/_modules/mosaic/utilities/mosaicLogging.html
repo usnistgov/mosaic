@@ -177,6 +177,8 @@
 
 <div class="viewcode-block" id="mosaicLogging"><a class="viewcode-back" href="../../../api-doc/mosaic.misc.html#mosaic.utilities.mosaicLogging.mosaicLogging">[docs]</a><span class="k">class</span> <span class="nc">mosaicLogging</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
 	<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">		A custom logging class that uses the Python logging facility. Logs are automatically saved to a metaMDIO instance,</span>
+<span class="sd">		and to a file log when DeveloperMode is active.</span>
 <span class="sd">	&quot;&quot;&quot;</span>
 	<span class="n">__metaclass__</span> <span class="o">=</span> <span class="n">metaSingleton</span>
 
@@ -190,6 +192,8 @@
 	<span class="c1"># Rotating File Handler</span>
 	<span class="k">try</span><span class="p">:</span>
 		<span class="n">logdir</span><span class="o">=</span><span class="n">mosaic</span><span class="o">.</span><span class="n">LogLocation</span>
+
+		<span class="n">defaultLogLocation</span><span class="o">=</span><span class="bp">False</span>
 	<span class="k">except</span> <span class="ne">AttributeError</span><span class="p">,</span> <span class="n">err</span><span class="p">:</span>
 		<span class="n">defaultLogLocation</span><span class="o">=</span><span class="bp">True</span>
 
