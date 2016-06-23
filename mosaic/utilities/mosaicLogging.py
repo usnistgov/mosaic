@@ -12,7 +12,6 @@
 """
 import sys
 import os
-import warnings
 import logging
 import logging.handlers
 import mosaic
@@ -63,11 +62,8 @@ class mosaicLogging(object):
 	# Rotating File Handler
 	try:
 		logdir=mosaic.LogLocation
-
-		defaultLogLocation=False
+		log.info("Logs will be saved to: {0}".format(logdir))
 	except AttributeError, err:
-		defaultLogLocation=True
-
 		if sys.platform.startswith('darwin'):
 			logdir=format_path(os.path.expanduser('~')+"/Library/Logs/MOSAIC")
 			if not os.path.exists(logdir):
@@ -92,11 +88,6 @@ class mosaicLogging(object):
 		rfh.setLevel(logging.INFO)
 	
 	log.addHandler(rfh)
-
-	if defaultLogLocation:
-		warntext="WARNING: Global settings attribute 'LogLocation' was not defined. Logs will be saved to the default location: {0}".format(logname)
-		log.warning(warntext)
-		warnings.warn(warntext, RuntimeWarning)
 
 	sh=None
 
