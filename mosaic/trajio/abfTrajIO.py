@@ -13,7 +13,7 @@
 		5/23/13		AB	Initial version
 
 """
-import mosaic.metaTrajIO
+import mosaic.trajio.metaTrajIO as metaTrajIO
 import abf.abf as abf
 import mosaic.utilities.mosaicLogging as mlog
 
@@ -21,7 +21,7 @@ import numpy as np
 
 __all__ = ["abfTrajIO"]
 
-class abfTrajIO(mosaic.metaTrajIO.metaTrajIO):
+class abfTrajIO(metaTrajIO.metaTrajIO):
 	"""
 		Read ABF1 and ABF2 file formats. Currently, only 
 		gap-free mode and single channel recordings are supported.

@@ -12,7 +12,7 @@
 						by metaEventProcessor.
 		7/16/12		AB	Initial version
 """
-import commonExceptions
+import mosaic.commonExceptions
 import metaEventProcessor
 import mosaic.utilities.util as util
 import sys
@@ -75,7 +75,7 @@ class singleStepEvent(metaEventProcessor.metaEventProcessor):
 			# data conditioning settings
 			self.datPad=int(self.settingsDict.pop("minDataPad", 50))
 		except ValueError as err:
-			raise commonExceptions.SettingsTypeError( err )
+			raise mosaic.commonExceptions.SettingsTypeError( err )
 
 
 	###########################################################################

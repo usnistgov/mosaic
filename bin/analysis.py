@@ -8,20 +8,20 @@ import csv
 
 import mosaic.SingleChannelAnalysis
 
-import mosaic.eventSegment as es
+import mosaic.partition.eventSegment as es
 
-import mosaic.singleStepEvent as sse
-import mosaic.adept2State as adept2State
-import mosaic.adept as adept 
-import mosaic.cusumPlus as cusumPlus
+import mosaic.process.singleStepEvent as sse
+import mosaic.process.adept2State as adept2State
+import mosaic.process.adept as adept 
+import mosaic.process.cusumPlus as cusumPlus
 
-from mosaic.qdfTrajIO import *
-from mosaic.abfTrajIO import *
-from mosaic.tsvTrajIO import *
-from mosaic.binTrajIO import *
+from mosaic.trajio.qdfTrajIO import *
+from mosaic.trajio.abfTrajIO import *
+from mosaic.trajio.tsvTrajIO import *
+from mosaic.trajio.binTrajIO import *
 
-from mosaic.besselLowpassFilter import *
-from mosaic.waveletDenoiseFilter import *
+from mosaic.filters.besselLowpassFilter import *
+from mosaic.filters.waveletDenoiseFilter import *
 
 mosaic.SingleChannelAnalysis.SingleChannelAnalysis(
 			'data/',

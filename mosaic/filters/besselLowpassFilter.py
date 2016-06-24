@@ -13,12 +13,12 @@
 import numpy as np 
 import scipy.signal as sig
 
-import mosaic.metaIOFilter
+import mosaic.filters.metaIOFilter as metaIOFilter
 import mosaic.utilities.mosaicLogging as mlog
 
 __all__ = ["besselLowpassFilter"]
 
-class besselLowpassFilter(mosaic.metaIOFilter.metaIOFilter):
+class besselLowpassFilter(metaIOFilter.metaIOFilter):
 	"""
 		:Keyword Args:
 		In addition to metaIOFilter.__init__ args,

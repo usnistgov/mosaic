@@ -24,7 +24,7 @@ import pandas
 
 
 import numpy
-import mosaic.metaMDIO
+import mosaic.mdio.metaMDIO as metaMDIO
 import mosaic
 from mosaic.utilities.resource_path import resource_path, format_path
 import mosaic.utilities.mosaicLogging as mlog
@@ -67,7 +67,7 @@ class data_record(dict):
 		for k, v in dict(*args, **kwargs).iteritems():
 			self[k] = v
 		
-class sqlite3MDIO(mosaic.metaMDIO.metaMDIO):
+class sqlite3MDIO(metaMDIO.metaMDIO):
 	"""
 	"""
 	def _initdb(self, **kwargs):

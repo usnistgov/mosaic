@@ -8,7 +8,7 @@
 import itertools
 import string
 
-from mosaic.metaTrajIO import EmptyDataPipeError
+from mosaic.trajio.metaTrajIO import EmptyDataPipeError
 import numpy
 
 __all__ = ["ConvertToCSV"]

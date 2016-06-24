@@ -15,12 +15,12 @@ import numpy as np
 import scipy.signal as sig
 import pywt
 
-import mosaic.metaIOFilter
+import mosaic.filters.metaIOFilter as metaIOFilter
 import mosaic.utilities.mosaicLogging as mlog
 
 __all__ = ["waveletDenoiseFilter"]
 
-class waveletDenoiseFilter(mosaic.metaIOFilter.metaIOFilter):
+class waveletDenoiseFilter(metaIOFilter.metaIOFilter):
 	"""
 		:Keyword Args:
 			In addition to metaIOFilter args,

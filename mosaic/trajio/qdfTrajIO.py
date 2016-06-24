@@ -18,13 +18,13 @@ import types
 
 import numpy as np 
 
-import mosaic.metaTrajIO
+import mosaic.trajio.metaTrajIO as metaTrajIO
 import mosaic.utilities.mosaicLogging as mlog
 import qdf.readqdf as qdf
 
 __all__ = ["qdfTrajIO"]
 
-class qdfTrajIO(mosaic.metaTrajIO.metaTrajIO):
+class qdfTrajIO(metaTrajIO.metaTrajIO):
 	"""
 		Use the readqdf module from EBS to read individual QDF files.
 

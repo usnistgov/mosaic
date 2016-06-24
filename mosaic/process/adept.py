@@ -35,12 +35,12 @@
 		5/17/14		AB  Modified md interface functions for metaMDIO support
 		9/26/13		AB	Initial version
 """
-import commonExceptions
+import mosaic.commonExceptions
 import metaEventProcessor
 import mosaic.utilities.util as util
 import mosaic.utilities.mosaicLogging as mlog
 import mosaic.utilities.fit_funcs as fit_funcs
-import mosaic.cusumPlus as cusum
+import mosaic.process.cusumPlus as cusum
 import mosaic.settings
 
 import sys
@@ -128,7 +128,7 @@ class adept(metaEventProcessor.metaEventProcessor):
 			# 	self.StepSize=3.0*initThr
 
 		except ValueError as err:
-			raise commonExceptions.SettingsTypeError( err )
+			raise mosaic.commonExceptions.SettingsTypeError( err )
 		# except KeyError:
 		# 	pass
 

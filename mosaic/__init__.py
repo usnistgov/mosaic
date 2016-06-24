@@ -9,29 +9,29 @@ import mosaic.errors
 # import mosaic.zmqIO
 import mosaic.settings
 
-import mosaic.metaTrajIO 
-import mosaic.metaEventPartition
-import mosaic.metaEventProcessor
-import mosaic.metaIOFilter
-import mosaic.metaMDIO
+import mosaic.trajio.metaTrajIO 
+import mosaic.partition.metaEventPartition
+import mosaic.process.metaEventProcessor
+import mosaic.filters.metaIOFilter
+import mosaic.mdio.metaMDIO
 
-import mosaic.qdfTrajIO
-import mosaic.binTrajIO 
-import mosaic.abfTrajIO 
-import mosaic.tsvTrajIO 
+import mosaic.trajio.qdfTrajIO
+import mosaic.trajio.binTrajIO 
+import mosaic.trajio.abfTrajIO 
+import mosaic.trajio.tsvTrajIO 
 
-import mosaic.besselLowpassFilter
-import mosaic.convolutionFilter
-import mosaic.waveletDenoiseFilter
+import mosaic.filters.besselLowpassFilter
+import mosaic.filters.convolutionFilter
+import mosaic.filters.waveletDenoiseFilter
 
-import mosaic.eventSegment
+import mosaic.partition.eventSegment
 
-import mosaic.adept
-import mosaic.adept2State
-import mosaic.cusumPlus
-import mosaic.singleStepEvent
+import mosaic.process.adept
+import mosaic.process.adept2State
+import mosaic.process.cusumPlus
+import mosaic.process.singleStepEvent
 
-import mosaic.sqlite3MDIO
+import mosaic.mdio.sqlite3MDIO
 
 import mosaic.ConvertToCSV
 import mosaic.SingleChannelAnalysis
@@ -51,29 +51,29 @@ __all__.extend(mosaic.errors.__all__)
 # __all__.extend(mosaic.zmqIO.__all__)
 __all__.extend(mosaic.settings.__all__)
 
-__all__.extend(mosaic.metaTrajIO.__all__)
-__all__.extend(mosaic.metaEventPartition.__all__)
-__all__.extend(mosaic.metaEventProcessor.__all__)
-__all__.extend(mosaic.metaIOFilter.__all__)
-__all__.extend(mosaic.metaMDIO.__all__)
+__all__.extend(mosaic.trajio.metaTrajIO.__all__)
+__all__.extend(mosaic.partition.metaEventPartition.__all__)
+__all__.extend(mosaic.process.metaEventProcessor.__all__)
+__all__.extend(mosaic.filters.metaIOFilter.__all__)
+__all__.extend(mosaic.mdio.metaMDIO.__all__)
 
-__all__.extend(mosaic.qdfTrajIO.__all__)
-__all__.extend(mosaic.binTrajIO.__all__)
-__all__.extend(mosaic.abfTrajIO.__all__)
-__all__.extend(mosaic.tsvTrajIO.__all__)
+__all__.extend(mosaic.trajio.qdfTrajIO.__all__)
+__all__.extend(mosaic.trajio.binTrajIO.__all__)
+__all__.extend(mosaic.trajio.abfTrajIO.__all__)
+__all__.extend(mosaic.trajio.tsvTrajIO.__all__)
 
-__all__.extend(mosaic.besselLowpassFilter.__all__)
-__all__.extend(mosaic.convolutionFilter.__all__)
-__all__.extend(mosaic.waveletDenoiseFilter.__all__)
+__all__.extend(mosaic.filters.besselLowpassFilter.__all__)
+__all__.extend(mosaic.filters.convolutionFilter.__all__)
+__all__.extend(mosaic.filters.waveletDenoiseFilter.__all__)
 
-__all__.extend(mosaic.eventSegment.__all__)
+__all__.extend(mosaic.partition.eventSegment.__all__)
 
-__all__.extend(mosaic.adept.__all__)
-__all__.extend(mosaic.adept2State.__all__)
-__all__.extend(mosaic.cusumPlus.__all__)
-__all__.extend(mosaic.singleStepEvent.__all__)
+__all__.extend(mosaic.process.adept.__all__)
+__all__.extend(mosaic.process.adept2State.__all__)
+__all__.extend(mosaic.process.cusumPlus.__all__)
+__all__.extend(mosaic.process.singleStepEvent.__all__)
 
-__all__.extend(mosaic.sqlite3MDIO.__all__)
+__all__.extend(mosaic.mdio.sqlite3MDIO.__all__)
 
 __all__.extend(mosaic.ConvertToCSV.__all__)
 __all__.extend(mosaic.SingleChannelAnalysis.__all__)

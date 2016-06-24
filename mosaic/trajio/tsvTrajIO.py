@@ -17,7 +17,7 @@
 """
 import numpy as np 
 
-import metaTrajIO
+import mosaic.trajio.metaTrajIO as metaTrajIO
 import csv
 
 __all__ = ["tsvTrajIO"]

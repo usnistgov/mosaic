@@ -22,7 +22,7 @@
 						with blockade depths > BlockRejectRatio (default: 0.8)
 		4/18/13		AB	Initial version
 """
-import commonExceptions
+import mosaic.commonExceptions
 import metaEventProcessor
 import mosaic.utilities.util as util
 import mosaic.utilities.mosaicLogging as mlog
@@ -104,7 +104,7 @@ class adept2State(metaEventProcessor.metaEventProcessor):
 
 			self.LinkRCConst=int(self.settingsDict.pop("LinkRCConst", 1))
 		except ValueError as err:
-			raise commonExceptions.SettingsTypeError( err )
+			raise mosaic.commonExceptions.SettingsTypeError( err )
 
 
 	###########################################################################

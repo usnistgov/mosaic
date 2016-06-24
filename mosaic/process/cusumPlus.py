@@ -14,7 +14,7 @@
 				2/12/15		AB	Updated metadata representation to be consistent with stepResponseAnalysis and multiStateAnalysis
 				2/10/15		KB	Initial version
 """
-import commonExceptions
+import mosaic.commonExceptions
 import metaEventProcessor
 import mosaic.utilities.util as util
 import mosaic.utilities.mosaicLogging as mlog
@@ -112,7 +112,7 @@ class cusumPlus(metaEventProcessor.metaEventProcessor):
 			self.MaxThreshold=float(self.settingsDict.pop("MaxThreshold", 10.0))
 			self.MinLength=float(self.settingsDict.pop("MinLength", 10))
 		except ValueError as err:
-			raise commonExceptions.SettingsTypeError( err )
+			raise mosaic.commonExceptions.SettingsTypeError( err )
 
                 self.mdThreshold = self.MinThreshold
 

@@ -19,7 +19,7 @@ Binary file implementation of metaTrajIO. Read raw binary files with specified r
 """
 import struct
 
-import mosaic.metaTrajIO
+import mosaic.trajio.metaTrajIO as metaTrajIO
 import mosaic.utilities.mosaicLogging as mlog
 
 import numpy as np
@@ -29,7 +29,7 @@ __all__ = ["binTrajIO", "InvalidDataColumnError"]
 class InvalidDataColumnError(Exception):
 	pass
 
-class binTrajIO(mosaic.metaTrajIO.metaTrajIO):
+class binTrajIO(metaTrajIO.metaTrajIO):
 	"""
 		Read a file that contains interleaved binary data, ordered by column. Only a single 
 		column that holds ionic current data is read. The current in pA 

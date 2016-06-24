@@ -13,12 +13,12 @@
 import numpy as np 
 import scipy.signal as sig
 
-import mosaic.metaIOFilter
+import mosaic.filters.metaIOFilter as metaIOFilter
 import mosaic.utilities.mosaicLogging as mlog
 
 __all__ = ["convolutionFilter"]
 
-class convolutionFilter(mosaic.metaIOFilter.metaIOFilter):
+class convolutionFilter(metaIOFilter.metaIOFilter):
 	"""
 		:Keyword Args:
 		In addition to metaIOFilter.__init__ args,

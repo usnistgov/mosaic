@@ -34,9 +34,9 @@ import uncertainties
 from  collections import deque
 
 import metaEventPartition
-import commonExceptions
-import metaTrajIO
-import sqlite3MDIO
+import mosaic.commonExceptions
+import mosaic.trajio.metaTrajIO as metaTrajIO
+import mosaic.mdio.sqlite3MDIO as sqlite3MDIO
 from mosaic.utilities.resource_path import format_path
 from mosaic.utilities.ionic_current_stats import OpenCurrentDist
 import mosaic.utilities.mosaicTiming as mosaicTiming
@@ -105,7 +105,7 @@ class metaEventPartition(object):
 			self.parallelProc=int(self.settingsDict.pop("parallelProc",1))
 			self.reserveNCPU=int(self.settingsDict.pop("reserveNCPU",2))
 		except ValueError as err:
-			raise commonExceptions.SettingsTypeError( err )
+			raise mosaic.commonExceptions.SettingsTypeError( err )
 
 		sys.stdout.flush()
 
