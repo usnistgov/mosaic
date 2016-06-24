@@ -1,7 +1,7 @@
 """
 	Wrapper function for sqliteMDIO
 """
-import mosaic.sqlite3MDIO as sql
+import mosaic.mdio.sqlite3MDIO as sql
 
 __all__=["query"]
 
