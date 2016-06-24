@@ -7,11 +7,11 @@ import csv
 
 from PyQt4 import QtCore, QtGui, uic
 
-import mosaic.abfTrajIO as abf
-import mosaic.qdfTrajIO as qdf
-import mosaic.binTrajIO as bin
-import mosaic.tsvTrajIO as tsv
-from mosaic.metaTrajIO import FileNotFoundError, EmptyDataPipeError
+import mosaic.trajio.abfTrajIO as abf
+import mosaic.trajio.qdfTrajIO as qdf
+import mosaic.trajio.binTrajIO as bin
+import mosaic.trajio.tsvTrajIO as tsv
+from mosaic.trajio.metaTrajIO import FileNotFoundError, EmptyDataPipeError
 from mosaic.utilities.resource_path import resource_path
 from mosaic.utilities.ionic_current_stats import OpenCurrentDist
 

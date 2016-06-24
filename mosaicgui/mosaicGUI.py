@@ -21,7 +21,7 @@ from PyQt4 import QtGui
 import mosaicgui.settingsview
 import mosaicgui.analysisWorker as analysisworker
 
-from mosaic.metaTrajIO import FileNotFoundError
+from mosaic.trajio.metaTrajIO import FileNotFoundError
 
 class qtAnalysisGUI(mosaicgui.settingsview.settingsview):
 	def __init__(self, parent = None):
