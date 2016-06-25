@@ -9,17 +9,19 @@ import itertools
 import string
 
 from mosaic.trajio.metaTrajIO import EmptyDataPipeError
+from mosaic.utilities.resource_path import format_path
 import numpy
 
 __all__ = ["ConvertToCSV"]
 
-class ConvertToCSV(object):
+class ConvertTrajIO(object):
 	"""
-		Convert data read from a sub-class of metaTrajIO to a comma separated text file
+		Convert data from a sub-class of metaTrajIO to either a delimited text file or binary file format.
 
 		:Parameters:
 			- `trajDataObj` : a trajIO data object
 			- `outdir` : the output directory. Default is *None*, which causes the output to be saved in the same directory as the input data.
+			- `extension` : 'csv' for comma separated values (default), 'tsv' for tab separated values, or 'bin' for 64-bit double precision binary. 
 	"""
 	def __init__(self, trajDataObj, outdir=None, extension="csv"):
 		self.trajDataObj=trajDataObj
@@ -35,6 +37,13 @@ class ConvertToCSV(object):
 		
 		self.filePrefix=None
 		self._creategenerator()
+		
+		self._outputFormat={
+			"csv" : ',',
+			"tsv" :	'\t',
+			"bin" : ''
+		}
+
 
 	def Convert(self, blockSize):
 		"""
@@ -45,7 +54,7 @@ class ConvertToCSV(object):
 		"""
 		try:
 			while(True):
-				(self.trajDataObj.popdata(blockSize)).tofile(self._filename(), sep=',')
+				(self.trajDataObj.popdata(blockSize)).tofile(self._filename(), sep=self._outputFormat[self.extension])
 		except EmptyDataPipeError:
 			pass
 
@@ -73,6 +82,22 @@ class ConvertToCSV(object):
 		"""
 		self._creategenerator()
 
-		return self.outDir+'/'+next(self.fileGenerator)+'.'+self.extension
+		return format_path(self.outDir+'/'+next(self.fileGenerator)+'.'+self.extension)
 
-		
+
+if __name__ == '__main__':
+	import mosaic.trajio.qdfTrajIO as qdfTrajIO
+
+	q=qdfTrajIO.qdfTrajIO(dirname='data', filter='*qdf', Rfb=9.1e9, Cfb=1.07e-12)
+	print q.previewdata(5)
+
+	for ext in ['bin','csv','tsv']:
+		ConvertTrajIO(
+			q,
+			outdir='data',
+			extension=ext
+		).Convert(500000)
+
+	print numpy.fromfile('data/SingleChan-0001_1.bin')[:5]
+	print numpy.fromfile('data/SingleChan-0001_1.csv', sep=',')[:5]
+	print numpy.fromfile('data/SingleChan-0001_1.tsv', sep='\t')[:5]
