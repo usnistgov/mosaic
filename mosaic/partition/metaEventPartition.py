@@ -518,7 +518,7 @@ class metaEventPartition(object):
 		self.windowOpenCurrentSD=sd 
 		self.windowOpenCurrentSlope=sl
 
-	@metaEventPartition.partitionTimer.FunctionTiming
+	@partitionTimer.FunctionTiming
 	def _processEvent(self, eventobj):
 		startTime=self.timingObj.time()
 
