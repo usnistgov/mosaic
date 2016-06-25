@@ -199,7 +199,7 @@ class guiDataModel(dict):
 		# if a dbfile
 		if dbfile:
 			try:
-				db=mosaic.sqlite3MDIO.sqlite3MDIO()
+				db=mosaic.mdio.sqlite3MDIO.sqlite3MDIO()
 				db.openDB(dbfile)
 				self.jsonSettingsObj=mosaic.settings.settings(self["DataFilesPath"])
 				self.jsonSettingsObj.parseSettingsString( db.readSettings() )
