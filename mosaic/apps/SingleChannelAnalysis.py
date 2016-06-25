@@ -10,7 +10,7 @@
 """
 __docformat__ = 'restructuredtext'
 
-import settings
+import mosaic.settings as settings
 import multiprocessing
 import os
 import signal

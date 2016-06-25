@@ -6,7 +6,7 @@ import signal
 import resource
 import csv
 
-import mosaic.SingleChannelAnalysis
+import mosaic.apps.SingleChannelAnalysis
 
 import mosaic.partition.eventSegment as es
 
@@ -23,7 +23,7 @@ from mosaic.trajio.binTrajIO import *
 from mosaic.filters.besselLowpassFilter import *
 from mosaic.filters.waveletDenoiseFilter import *
 
-mosaic.SingleChannelAnalysis.SingleChannelAnalysis(
+mosaic.apps.SingleChannelAnalysis.SingleChannelAnalysis(
 			'data/',
 			qdfTrajIO, 
 			None,
@@ -31,7 +31,7 @@ mosaic.SingleChannelAnalysis.SingleChannelAnalysis(
 			adept.adept
 		).Run()
 
-mosaic.SingleChannelAnalysis.SingleChannelAnalysis(
+mosaic.apps.SingleChannelAnalysis.SingleChannelAnalysis(
 			'data/',
 			qdfTrajIO, 
 			None,
@@ -39,7 +39,7 @@ mosaic.SingleChannelAnalysis.SingleChannelAnalysis(
 			adept2State.adept2State
 		).Run()
 
-mosaic.SingleChannelAnalysis.SingleChannelAnalysis(
+mosaic.apps.SingleChannelAnalysis.SingleChannelAnalysis(
 			'data/',
 			qdfTrajIO, 
 			None,
