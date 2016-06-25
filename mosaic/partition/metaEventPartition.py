@@ -33,7 +33,6 @@ import numpy as np
 import uncertainties
 from  collections import deque
 
-import metaEventPartition
 import mosaic.commonExceptions
 import mosaic.trajio.metaTrajIO as metaTrajIO
 import mosaic.mdio.sqlite3MDIO as sqlite3MDIO
@@ -303,8 +302,8 @@ class metaEventPartition(object):
 		
 		# check if parallel is available
 		try:
-			import zmqWorker
-			import zmqIO
+			import mosaic.parallel.zmqWorker as zmqWorker
+			import mosaic.parallel.zmqIO as zmqIO
 		except ImportError:
 			self.logger.warning("WARNING: Parallel processing is not available.")
 			self.parallelProc=False
