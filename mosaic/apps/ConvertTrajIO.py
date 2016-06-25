@@ -12,7 +12,7 @@ from mosaic.trajio.metaTrajIO import EmptyDataPipeError
 from mosaic.utilities.resource_path import format_path
 import numpy
 
-__all__ = ["ConvertToCSV"]
+__all__ = ["ConvertTrajIO"]
 
 class ConvertTrajIO(object):
 	"""
