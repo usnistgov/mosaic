@@ -19,8 +19,8 @@ class ModuleImport_TestSuite(ModuleImportTest):
 		moduleList=[
 		'mosaic',
 		'mosaic._version', 
-		'mosaic.SingleChannelAnalysis',	
-		'mosaic.ConvertToCSV', 
+		'mosaic.apps.SingleChannelAnalysis',	
+		'mosaic.apps.ConvertToCSV', 
 		'mosaic.settings',
 		'mosaic.commonExceptions', 
 		'mosaic.errors', 
