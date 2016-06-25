@@ -20,7 +20,7 @@ class ModuleImport_TestSuite(ModuleImportTest):
 		'mosaic',
 		'mosaic._version', 
 		'mosaic.apps.SingleChannelAnalysis',	
-		'mosaic.apps.ConvertToCSV', 
+		'mosaic.apps.ConvertTrajIO', 
 		'mosaic.settings',
 		'mosaic.commonExceptions', 
 		'mosaic.errors', 
