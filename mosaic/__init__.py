@@ -33,7 +33,7 @@ import mosaic.process.singleStepEvent
 
 import mosaic.mdio.sqlite3MDIO
 
-import mosaic.apps.ConvertToCSV
+import mosaic.apps.ConvertTrajIO
 import mosaic.apps.SingleChannelAnalysis
 
 from mosaic.utilities.mosaicLogging import mosaicExceptionHandler
@@ -75,5 +75,5 @@ __all__.extend(mosaic.process.singleStepEvent.__all__)
 
 __all__.extend(mosaic.mdio.sqlite3MDIO.__all__)
 
-__all__.extend(mosaic.apps.ConvertToCSV.__all__)
+__all__.extend(mosaic.apps.ConvertTrajIO.__all__)
 __all__.extend(mosaic.apps.SingleChannelAnalysis.__all__)
