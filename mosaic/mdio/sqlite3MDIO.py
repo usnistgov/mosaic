@@ -31,7 +31,7 @@ import mosaic.utilities.mosaicLogging as mlog
 from mosaic.utilities.mosaicLogFormat import _d
 
 
-__all__ = ["sqlite3MDIO", "data_record", "sqliteHandler"]
+__all__ = ["sqlite3MDIO", "data_record"]
 
 class data_record(dict):
 	"""
