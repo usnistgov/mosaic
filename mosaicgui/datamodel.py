@@ -16,7 +16,7 @@ import json
 import os
 
 import mosaic.settings
-import mosaic.SingleChannelAnalysis
+import mosaic.apps.SingleChannelAnalysis
 
 import mosaic.mdio.sqlite3MDIO
 
@@ -400,7 +400,7 @@ class guiDataModel(dict):
 								"ABF" 					: mosaic.trajio.abfTrajIO.abfTrajIO,
 								"BIN" 					: mosaic.trajio.binTrajIO.binTrajIO,
 								"TSV" 					: mosaic.trajio.tsvTrajIO.tsvTrajIO,
-								"SingleChannelAnalysis" : mosaic.SingleChannelAnalysis.SingleChannelAnalysis,
+								"SingleChannelAnalysis" : mosaic.apps.SingleChannelAnalysis.SingleChannelAnalysis,
 								"CurrentThreshold" 		: mosaic.partition.eventSegment.eventSegment,
 								"adept2State" 			: mosaic.process.adept2State.adept2State,
 								"adept"					: mosaic.process.adept.adept,
