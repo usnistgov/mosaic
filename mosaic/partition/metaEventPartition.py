@@ -7,6 +7,8 @@
 	:License:	See LICENSE.TXT
 	:ChangeLog:
 	.. line-block::
+		6/29/16 	AB 	Fixed the open channel statistics routine (_openchanstats) to fix an 
+						incompatibility with numpy version 1.10 and above.
 		1/28/16		AB 	Fixed a bug in analysis timing.
 		12/6/15 	AB 	Add sampling frequency to analysis info table
 		8/18/14		AB 	Fixed parallel processing cleanup.
@@ -30,6 +32,7 @@ import cPickle
 import multiprocessing 
 
 import numpy as np 
+import scipy.stats
 import uncertainties
 from  collections import deque
 
@@ -345,12 +348,14 @@ class metaEventPartition(object):
 		# class attribute and the sampling frequency specified in trajDataObj
 		self.nPoints=int(self.blockSizeSec*self.FsHz)
 
+		self.logger.debug(_d("nPoints={0}", self.nPoints))
 		# a global counter that keeps track of the position in data pipe.
 		self.globalDataIndex=0
 		self.dataStart=0
 
 		if self.meanOpenCurr == -1. or self.sdOpenCurr == -1. or self.slopeOpenCurr == -1.:
 			[ self.meanOpenCurr, self.sdOpenCurr, self.slopeOpenCurr ] = self._openchanstats(self.trajDataObj.previewdata(self.nPoints))
+			self.logger.debug(_d("Automatic open channel stats: {0}, {1}, {2}", self.meanOpenCurr, self.sdOpenCurr, self.slopeOpenCurr))
 		else:
 			self.logger.warning("WARNING: Automatic open channel state estimation has been disabled.")
 
@@ -364,6 +369,8 @@ class metaEventPartition(object):
 		# self.eventQueue=[]
 
 		self.thrCurr=(abs(self.meanOpenCurr)-self.eventThreshold*abs(self.sdOpenCurr))
+
+		self.logger.debug(_d("Partition setup complete."))
 
 		#### Vars for event partition stats ####
 		self.minDrift=abs(self.meanOpenCurr)
@@ -473,12 +480,12 @@ class metaEventPartition(object):
 		mu, sig=OpenCurrentDist(curr, 0.5)
 
 		# Fit the data to a straight line to calculate the slope
-		# ft[0]: slope
-		# ft[1]: y-intercept (mean current)
-		ft = np.polyfit(tstamp, curr, 1)
+		slope, intercept, r_value, p_value, std_err=scipy.stats.linregress(tstamp, curr)
+
+		self.logger.debug(_d("mu={0}, sigma={1}, slope={2}", mu, sig, slope ))
 
 		# Return stats
-		return [ mu, sig, ft[0] ]
+		return [ mu, sig, slope ]
 	
 		
 	def _checkdrift(self, curr):
