@@ -7,6 +7,7 @@
 	:License:	See LICENSE.TXT
 	:ChangeLog:
 	.. line-block::
+		06/28/16 	AB 	Upgrade lmfit to > 0.9 (https://lmfit.github.io/lmfit-py/whatsnew.html#whatsnew-090-label)
 		05/27/16 	AB 	Added warnings when the reduced chi squared is not a number and if the fit parameters are unchanged from the initial guess values.
 		05/22/16    JF  Added new test to reject BD < 0 or BD > 1, improved readability of error tests.
 		03/30/16 	AB 	Change UnlinkRCConst to LinkRCConst to avoid double negatives.
@@ -274,14 +275,14 @@ class adept(metaEventProcessor.metaEventProcessor):
 
 			optfit=Minimizer(self._objfunc, params, fcn_args=(ts,edat,))
 			optfit.prepare_fit()
-			optfit.leastsq(xtol=self.FitTol,ftol=self.FitTol,maxfev=self.FitIters)
+			result=optfit.leastsq(xtol=self.FitTol,ftol=self.FitTol,maxfev=self.FitIters)
 
-			if optfit.success:
-				tt=[init[0] for init, final in zip(igdict.items(), (optfit.params.valuesdict()).items()) if init==final]
+			if result.success:
+				tt=[init[0] for init, final in zip(igdict.items(), (result.params.valuesdict()).items()) if init==final]
 				if len(tt) > 0:
 					self.flagEvent('wInitGuessUnchanged')
 
-				self._recordevent(optfit)
+				self._recordevent(result)
 			else:
 				#print optfit.message, optfit.lmdif_message
 				self.rejectEvent('eFitConvergence')

@@ -7,6 +7,7 @@
 	:License:	See LICENSE.TXT
 	:ChangeLog:
 	.. line-block::
+		06/28/16 	AB 	Upgrade lmfit to > 0.9 (https://lmfit.github.io/lmfit-py/whatsnew.html#whatsnew-090-label)
 		03/30/16 	AB 	Change UnlinkRCConst to LinkRCConst to avoid double negatives.
 		12/09/15 	KB 	Added Windows specific optimizations
 		8/24/15 	AB 	Rename algorithm to ADEPT 2 State.
@@ -116,10 +117,10 @@ class adept2State(metaEventProcessor.metaEventProcessor):
 		"""
 		try:
 			# Fit the system transfer function to the event data
-			if sys.platform.startswith('win'):
-                                self.__WinFitEvent()
-                        else:
-                                self.__FitEvent()
+			# if sys.platform.startswith('win'):
+            # 	self.__WinFitEvent()
+			# else:
+			self.__FitEvent()
 		except:
 			raise
 
@@ -200,79 +201,6 @@ class adept2State(metaEventProcessor.metaEventProcessor):
 	###########################################################################
 	# Local functions
 	###########################################################################
-        def __WinFitEvent(self):
-                try:
-                        i0=np.abs(self.baseMean)
-			i0sig=self.baseSD
-			dt = 1000./self.Fs 	# time-step in ms.
-			# edat=np.asarray( np.abs(self.eventData),  dtype='float64' )
-			edat=self.dataPolarity*np.asarray( self.eventData,  dtype='float64' )
-
-			blockedCurrent=min(edat)
-			tauVal=dt
-
-			estart 	= self.__eventStartIndex( self.__threadList( edat, range(0,len(edat)) ), i0, i0sig ) - 1
-			eend 	= self.__eventEndIndex( self.__threadList( edat, range(0,len(edat)) ), i0, i0sig ) - 2
-
-			# For long events, fix the blocked current to speed up the fit
-			if (eend-estart) > 1000:
-				blockedCurrent=np.mean(edat[estart+50:eend-50])
-
-			# control numpy error reporting
-			np.seterr(invalid='ignore', over='ignore', under='ignore')
-
-			ts = np.array([ t*dt for t in range(0,len(edat)) ], dtype='float64')
-
-                        #initial guesses
-			tau1 = tauVal
-			tau2 = tauVal
-			mu1 = estart*dt
-			mu2 = eend*dt
-			a = (i0-blockedCurrent)
-			b = i0
-			init_guess = [tau1, tau2, mu1, mu2, a, b]
-			popt, pcov = curve_fit(fit_funcs.stepResponseFunc, ts, edat, p0=init_guess)
-
-			tau1 = popt[0]
-			tau2 = popt[1]
-			mu1 = popt[2]
-			mu2 = popt[3]
-			a = popt[4]
-			b = popt[5]
-
-			if mu1 < 0 or mu2 < 0:
-                                self.rejectEvent('eInvalidResTime')
-                        if mu1 > ts[-1]:
-                                self.rejectEvent('eInvalidEventStart')
-                        else:
-                                self.mdOpenChCurrent 	= b 
-				self.mdBlockedCurrent	= b-a
-				self.mdEventStart	= mu1
-				self.mdEventEnd		= mu2
-				self.mdRCConst1		= tau1
-				self.mdRCConst2		= tau2
-				self.mdAbsEventStart	= self.mdEventStart + self.absDataStartIndex * dt
-
-				self.mdBlockDepth	= self.mdBlockedCurrent/self.mdOpenChCurrent
-				self.mdResTime		= self.mdEventEnd - self.mdEventStart
-					
-				self.mdRedChiSq		= 0 #for now, as a placeholder
-				if math.isnan(self.mdRedChiSq):
-					self.rejectEvent('eInvalidChiSq')
-				if self.mdBlockDepth < 0 or self.mdBlockDepth > 1:
-					self.rejectEvent('eInvalidBlockDepth')
-				if self.mdRCConst1 <= 0 or self.mdRCConst2 <= 0:
-					self.rejectEvent('eInvalidRCConstant')
-
-		except KeyboardInterrupt:
-			self.rejectEvent('eFitUserStop')
-			raise
-		except:
-			# print optfit.message, optfit.lmdif_message
-	 		self.rejectEvent('eFitFailure')
-
-			
-	
 	def __FitEvent(self):
 		try:
 			varyBlockedCurrent=True
@@ -317,30 +245,30 @@ class adept2State(metaEventProcessor.metaEventProcessor):
 			optfit=Minimizer(self.__objfunc, params, fcn_args=(ts,edat,))
 			optfit.prepare_fit()
 
-			optfit.leastsq(xtol=self.FitTol,ftol=self.FitTol,maxfev=self.FitIters)
+			result=optfit.leastsq(xtol=self.FitTol,ftol=self.FitTol,maxfev=self.FitIters)
 
 			# print optfit.params['b'].value, optfit.params['b'].value - optfit.params['a'].value, optfit.params['mu1'].value, optfit.params['mu2'].value
-			if optfit.success:
-				if optfit.params['mu1'].value < 0.0 or optfit.params['mu2'].value < 0.0:
+			if result.success:
+				if result.params['mu1'].value < 0.0 or result.params['mu2'].value < 0.0:
 					# print 'eInvalidFitParams1', optfit.params['b'].value, optfit.params['b'].value - optfit.params['a'].value, optfit.params['mu1'].value, optfit.params['mu2'].value
 					self.rejectEvent('eInvalidResTime')
 				# The start of the event is set past the length of the data
-				elif optfit.params['mu1'].value > ts[-1]:
+				elif result.params['mu1'].value > ts[-1]:
 					# print 'eInvalidFitParams2', optfit.params['b'].value, optfit.params['b'].value - optfit.params['a'].value, optfit.params['mu1'].value, optfit.params['mu2'].value
 					self.rejectEvent('eInvalidEventStart')
 				else:
-					self.mdOpenChCurrent 	= optfit.params['b'].value 
-					self.mdBlockedCurrent	= optfit.params['b'].value - optfit.params['a'].value
-					self.mdEventStart		= optfit.params['mu1'].value 
-					self.mdEventEnd			= optfit.params['mu2'].value
-					self.mdRCConst1			= optfit.params['tau1'].value
-					self.mdRCConst2			= optfit.params['tau2'].value
+					self.mdOpenChCurrent 	= result.params['b'].value 
+					self.mdBlockedCurrent	= result.params['b'].value - result.params['a'].value
+					self.mdEventStart		= result.params['mu1'].value 
+					self.mdEventEnd			= result.params['mu2'].value
+					self.mdRCConst1			= result.params['tau1'].value
+					self.mdRCConst2			= result.params['tau2'].value
 					self.mdAbsEventStart	= self.mdEventStart + self.absDataStartIndex * dt
 
 					self.mdBlockDepth		= self.mdBlockedCurrent/self.mdOpenChCurrent
 					self.mdResTime			= self.mdEventEnd - self.mdEventStart
 					
-					self.mdRedChiSq			= optfit.chisqr/( np.var(optfit.residual) * (len(self.eventData) - optfit.nvarys -1) )
+					self.mdRedChiSq			= result.chisqr/( np.var(result.residual) * (len(self.eventData) - result.nvarys -1) )
 
 					# if (eend-estart) > 1000:
 					# 	print blockedCurrent, self.mdBlockedCurrent, self.mdOpenChCurrent, self.mdResTime, self.mdRiseTime, self.mdRedChiSq, optfit.chisqr
