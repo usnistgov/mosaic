@@ -5,7 +5,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>mosaic.qdfTrajIO &mdash; MOSAIC 1.3b3 documentation</title>
+    <title>mosaic.qdfTrajIO &mdash; MOSAIC 1.2 documentation</title>
     
     <link rel="stylesheet" href="../../_static/basic.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
@@ -16,7 +16,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
-        VERSION:     '1.3b3',
+        VERSION:     '1.2',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -31,7 +31,7 @@
     <script type="text/javascript" src="../../_static/bootstrap-3.3.4/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="../../_static/bootstrap-sphinx.js"></script>
     <link rel="shortcut icon" href="../../_static/favicon.ico"/>
-    <link rel="top" title="MOSAIC 1.3b3 documentation" href="../../index.html" />
+    <link rel="top" title="MOSAIC 1.2 documentation" href="../../index.html" />
     <link rel="up" title="Module code" href="../index.html" />
 
 <meta charset='utf-8'>
@@ -44,6 +44,8 @@
 	</script>
 	<script type="text/javascript" id="_fed_an_js_tag" src="//www.nist.gov/js/federated-analytics.all.min.js?agency=NIST&subagency=github&pua=UA-42404149-54&yt=true&exts=ppsx,pps,f90,sch,rtf,wrl,txz,m1v,xlsm,msi,xsd,f,tif,eps,mpg,xml,pl,xlt,c">
 	</script>	
+
+	<meta name="theme-color" content="#283593">
 
   </head>
   <body role="document">
@@ -59,7 +61,7 @@
         </button>
         <a class="navbar-brand" href="../../index.html"><img src="../../_static/icon_36.png">
            </a>
-        <span class="navbar-text navbar-version pull-left"><b>1.3b3</b></span>
+        <span class="navbar-text navbar-version pull-left"><b>1.2</b></span>
       </div>
 
         <div class="collapse navbar-collapse nav-collapse">
@@ -127,8 +129,7 @@
     <div class="col-md-12 content">
       
   <h1>Source code for mosaic.qdfTrajIO</h1><div class="highlight"><pre>
-<span></span><span class="c1"># -*- coding: utf-8 -*-</span>
-<span class="sd">&quot;&quot;&quot;</span>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">	QDF implementation of metaTrajIO. Uses the readqdf module from EBS to </span>
 <span class="sd">	read individual qdf files.</span>
 
@@ -137,8 +138,6 @@
 <span class="sd">	:License:	See LICENSE.TXT</span>
 <span class="sd">	:ChangeLog:</span>
 <span class="sd">	.. line-block::</span>
-<span class="sd">		9/13/15 	AB 	Updated logging to use mosaicLogFormat class</span>
-<span class="sd">		3/28/15 	AB 	Updated file read code to match new metaTrajIO API.</span>
 <span class="sd">		7/18/12		AB	Initial version</span>
 <span class="sd">		2/11/14		AB 	Support qdf files that save the current in pA. This needs </span>
 <span class="sd">						format=&#39;pA&#39; argument.</span>
@@ -147,13 +146,10 @@
 
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span> 
 
-<span class="kn">import</span> <span class="nn">mosaic.metaTrajIO</span>
-<span class="kn">import</span> <span class="nn">mosaic.utilities.mosaicLogging</span> <span class="kn">as</span> <span class="nn">mlog</span>
+<span class="kn">import</span> <span class="nn">metaTrajIO</span>
 <span class="kn">import</span> <span class="nn">qdf.readqdf</span> <span class="kn">as</span> <span class="nn">qdf</span>
 
-<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;qdfTrajIO&quot;</span><span class="p">]</span>
-
-<div class="viewcode-block" id="qdfTrajIO"><a class="viewcode-back" href="../../api-doc/mosaic.traj.html#mosaic.qdfTrajIO.qdfTrajIO">[docs]</a><span class="k">class</span> <span class="nc">qdfTrajIO</span><span class="p">(</span><span class="n">mosaic</span><span class="o">.</span><span class="n">metaTrajIO</span><span class="o">.</span><span class="n">metaTrajIO</span><span class="p">):</span>
+<div class="viewcode-block" id="qdfTrajIO"><a class="viewcode-back" href="../../api-doc/mosaic.traj.html#mosaic.qdfTrajIO.qdfTrajIO">[docs]</a><span class="k">class</span> <span class="nc">qdfTrajIO</span><span class="p">(</span><span class="n">metaTrajIO</span><span class="o">.</span><span class="n">metaTrajIO</span><span class="p">):</span>
 	<span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">		Use the readqdf module from EBS to read individual QDF files.</span>
 
@@ -197,32 +193,27 @@
 		<span class="c1"># additional meta data</span>
 		<span class="bp">self</span><span class="o">.</span><span class="n">fileFormat</span><span class="o">=</span><span class="s1">&#39;qdf&#39;</span>
 
-		<span class="bp">self</span><span class="o">.</span><span class="n">qdfLogger</span><span class="o">=</span><span class="n">mlog</span><span class="o">.</span><span class="n">mosaicLogging</span><span class="p">()</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">__name__</span><span class="p">)</span>
-
 <div class="viewcode-block" id="qdfTrajIO.readdata"><a class="viewcode-back" href="../../api-doc/mosaic.traj.html#mosaic.qdfTrajIO.qdfTrajIO.readdata">[docs]</a>	<span class="k">def</span> <span class="nf">readdata</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fname</span><span class="p">):</span>
 		<span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">			Read one or more files and append their data to the data pipeline.</span>
 <span class="sd">			Set a class attribute Fs with the sampling frequency in Hz.</span>
 
 <span class="sd">			:Parameters:</span>
-
 <span class="sd">				- `fname` :  list of data files to read</span>
 <span class="sd">			</span>
 <span class="sd">			:Returns:</span>
-
 <span class="sd">				None</span>
 <span class="sd">			</span>
 <span class="sd">			:Errors:</span>
-
 <span class="sd">				- `SamplingRateChangedError` : if the sampling rate for any data file differs from previous</span>
 <span class="sd">		&quot;&quot;&quot;</span>
 		<span class="c1"># Read a single file or a list of files. By setting scale_data </span>
 		<span class="c1"># and time_scale to 0, we get back times in ms and current in pA.</span>
 		<span class="c1"># Check if the files have current of voltage.</span>
 		<span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">format</span><span class="o">==</span><span class="s1">&#39;V&#39;</span><span class="p">:</span>
-			<span class="n">q</span><span class="o">=</span><span class="n">qdf</span><span class="o">.</span><span class="n">qdf_V2I</span><span class="p">([</span><span class="n">fname</span><span class="p">],</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">Cfb</span><span class="p">),</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">Rfb</span><span class="p">),</span> <span class="n">scale_data</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">time_scale</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+			<span class="n">q</span><span class="o">=</span><span class="n">qdf</span><span class="o">.</span><span class="n">qdf_V2I</span><span class="p">(</span><span class="n">fname</span><span class="p">,</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">Cfb</span><span class="p">),</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">Rfb</span><span class="p">),</span> <span class="n">scale_data</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">time_scale</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
 		<span class="k">else</span><span class="p">:</span>
-			<span class="n">q</span><span class="o">=</span><span class="n">qdf</span><span class="o">.</span><span class="n">qdf_I</span><span class="p">([</span><span class="n">fname</span><span class="p">],</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">Cfb</span><span class="p">),</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">Rfb</span><span class="p">),</span> <span class="n">scale_data</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">time_scale</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+			<span class="n">q</span><span class="o">=</span><span class="n">qdf</span><span class="o">.</span><span class="n">qdf_I</span><span class="p">(</span><span class="n">fname</span><span class="p">,</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">Cfb</span><span class="p">),</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">Rfb</span><span class="p">),</span> <span class="n">scale_data</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">time_scale</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
 
 		<span class="c1"># set the sampling frequency in Hz. The times are in ms.</span>
 		<span class="c1"># If the Fs attribute doesn&#39;t exist set it</span>
@@ -236,34 +227,19 @@
 		<span class="c1"># Slice the data to remove the time-stamps to conserve memory		</span>
 		<span class="c1"># and add new data to the existing array</span>
 		<span class="c1">#print &quot;last raw current val in file &quot;, fname, &quot; = &quot;, q[-1]</span>
-		<span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">q</span><span class="p">[</span> <span class="p">:</span> <span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span></div>
+		<span class="k">return</span> <span class="n">q</span><span class="p">[</span> <span class="p">:</span> <span class="p">,</span> <span class="mi">1</span><span class="p">]</span></div>
 
 	<span class="k">def</span> <span class="nf">_formatsettings</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 		<span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">			Log settings strings</span>
+<span class="sd">			Return a formatted string of settings for display</span>
 <span class="sd">		&quot;&quot;&quot;</span>
+		<span class="n">fmtstr</span><span class="o">=</span><span class="s2">&quot;&quot;</span>
+		
 		<span class="c1"># for qdf files, add the values of the feedback resistance and capacitance</span>
-		<span class="bp">self</span><span class="o">.</span><span class="n">qdfLogger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span> <span class="s1">&#39;</span><span class="se">\t\t</span><span class="s1">Feedback resistance = {0} GOhm&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">Rfb</span><span class="o">*</span><span class="mf">1e-9</span><span class="p">)</span> <span class="p">)</span>
-		<span class="bp">self</span><span class="o">.</span><span class="n">qdfLogger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span> <span class="s1">&#39;</span><span class="se">\t\t</span><span class="s1">Feedback capacitance = {0} pF&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">Cfb</span><span class="o">*</span><span class="mf">1e12</span><span class="p">)</span> <span class="p">)</span></div>
+		<span class="n">fmtstr</span><span class="o">+=</span><span class="s1">&#39;</span><span class="se">\n\t\t</span><span class="s1">Feedback resistance = {0} GOhm</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">Rfb</span><span class="o">*</span><span class="mf">1e-9</span><span class="p">)</span>
+		<span class="n">fmtstr</span><span class="o">+=</span><span class="s1">&#39;</span><span class="se">\t\t</span><span class="s1">Feedback capacitance = {0} pF</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">Cfb</span><span class="o">*</span><span class="mf">1e12</span><span class="p">)</span>
 	
-
-<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
-	<span class="kn">from</span> <span class="nn">mosaic.utilities.resource_path</span> <span class="kn">import</span> <span class="n">resource_path</span>
-	<span class="kn">import</span> <span class="nn">os</span>
-
-	<span class="n">b</span><span class="o">=</span><span class="n">qdfTrajIO</span><span class="p">(</span>
-			<span class="n">dirname</span><span class="o">=</span><span class="s1">&#39;data&#39;</span><span class="p">,</span> 
-			<span class="nb">filter</span><span class="o">=</span><span class="s1">&#39;*qdf&#39;</span><span class="p">,</span>
-			<span class="n">Rfb</span><span class="o">=</span><span class="mf">9.16e9</span><span class="p">,</span>
-			<span class="n">Cfb</span><span class="o">=</span><span class="mf">1.07e-12</span>
-		<span class="p">)</span>
-
-	<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">100</span><span class="p">):</span>
-		<span class="n">d</span><span class="o">=</span><span class="n">b</span><span class="o">.</span><span class="n">popdata</span><span class="p">(</span><span class="mi">100000</span><span class="p">)</span>
-		<span class="k">print</span> <span class="n">i</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">d</span><span class="p">)</span><span class="o">/</span><span class="mf">100000.</span><span class="p">,</span> <span class="n">d</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">d</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">d</span><span class="p">),</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">b</span><span class="o">.</span><span class="n">LastFileProcessed</span><span class="p">)</span>
-
-
-
+		<span class="k">return</span> <span class="n">fmtstr</span></div>
 </pre></div>
 
     </div>

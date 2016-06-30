@@ -5,7 +5,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>5. Settings File &mdash; MOSAIC 1.3b3 documentation</title>
+    <title>5. Settings File &mdash; MOSAIC 1.2 documentation</title>
     
     <link rel="stylesheet" href="../_static/basic.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -16,7 +16,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '1.3b3',
+        VERSION:     '1.2',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -31,7 +31,7 @@
     <script type="text/javascript" src="../_static/bootstrap-3.3.4/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="../_static/bootstrap-sphinx.js"></script>
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
-    <link rel="top" title="MOSAIC 1.3b3 documentation" href="../index.html" />
+    <link rel="top" title="MOSAIC 1.2 documentation" href="../index.html" />
     <link rel="next" title="6. Database Structure and Query Syntax" href="DatabaseStructure.html" />
     <link rel="prev" title="4. MOSAIC GUI" href="GraphicalInterface.html" />
 
@@ -45,6 +45,8 @@
 	</script>
 	<script type="text/javascript" id="_fed_an_js_tag" src="//www.nist.gov/js/federated-analytics.all.min.js?agency=NIST&subagency=github&pua=UA-42404149-54&yt=true&exts=ppsx,pps,f90,sch,rtf,wrl,txz,m1v,xlsm,msi,xsd,f,tif,eps,mpg,xml,pl,xlt,c">
 	</script>	
+
+	<meta name="theme-color" content="#283593">
 
   </head>
   <body role="document">
@@ -60,7 +62,7 @@
         </button>
         <a class="navbar-brand" href="../index.html"><img src="../_static/icon_36.png">
            </a>
-        <span class="navbar-text navbar-version pull-left"><b>1.3b3</b></span>
+        <span class="navbar-text navbar-version pull-left"><b>1.2</b></span>
       </div>
 
         <div class="collapse navbar-collapse nav-collapse">
@@ -143,7 +145,7 @@
 <span class="p">}</span>
 </pre></div>
 </div>
-<p><em>MOSAIC</em> settings define a new section for each class, with key-value pairs corresponding to class attributes that are set upon initialization. This is illustrated below for the adept2State class. The <em>adept2State</em> section in the settings file holds parameters corresponding to the <a class="reference internal" href="../api-doc/mosaic.processing.html#module-mosaic.adept2State" title="mosaic.adept2State"><code class="xref py py-class docutils literal"><span class="pre">adept2State</span></code></a> class. Note that that the section name in the settings file is identical to the corresponding class name. Three parameters are then defined within the section that control the behavior of the class.</p>
+<p><em>MOSAIC</em> settings define a new section for each class, with key-value pairs corresponding to class attributes that are set upon initialization. This is illustrated below for the adept2State class. The <em>adept2State</em> section in the settings file holds parameters corresponding to the <code class="xref py py-class docutils literal"><span class="pre">adept2State</span></code> class. Note that that the section name in the settings file is identical to the corresponding class name. Three parameters are then defined within the section that control the behavior of the class.</p>
 <div class="highlight-javascript"><div class="highlight"><pre><span></span><span class="p">{</span>
         <span class="s2">&quot;adept2State&quot;</span> <span class="o">:</span> <span class="p">{</span>
                 <span class="s2">&quot;FitTol&quot;</span>                        <span class="o">:</span> <span class="s2">&quot;1.e-7&quot;</span><span class="p">,</span>
@@ -153,7 +155,7 @@
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>Finally, <a class="reference internal" href="../api-doc/mosaic.processing.html#module-mosaic.adept2State" title="mosaic.adept2State"><code class="xref py py-class docutils literal"><span class="pre">adept2State</span></code></a> is initialized by defining class attributes corresponding to the key-value pairs in the settings file.</p>
+<p>Finally, <code class="xref py py-class docutils literal"><span class="pre">adept2State</span></code> is initialized by defining class attributes corresponding to the key-value pairs in the settings file.</p>
 <div class="highlight-python"><div class="highlight"><pre><span></span><span class="k">try</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">FitTol</span><span class="o">=</span><span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">settingsDict</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;FitTol&quot;</span><span class="p">,</span> <span class="mf">1.e-7</span><span class="p">))</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">FitIters</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">settingsDict</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;FitIters&quot;</span><span class="p">,</span> <span class="mi">5000</span><span class="p">))</span>
@@ -184,30 +186,54 @@ the feedback resistance (Rfb) and feedback capacitance (Cfb) to be passed at ini
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><cite>dirname</cite> :           all files from a directory (&#8216;&lt;full path to data directory&gt;&#8217;)</li>
-<li><cite>nfiles</cite> :            if requesting N files (in addition to dirname) from a specified directory</li>
-<li><cite>fnames</cite> :            explicit list of filenames ([file1, file2,...]). This argument cannot be used in conjuction with dirname/nfiles. The filter argument is ignored when used in combination with fnames.</li>
-<li><cite>filter</cite> :            &#8216;&lt;wildcard filter&gt;&#8217; (optional, filter is &#8216;*&#8217; if not specified)</li>
-<li><cite>start</cite> :             Data start point in seconds.</li>
-<li><cite>end</cite> :                       Data end point in seconds.</li>
-<li><cite>datafilter</cite> :        Handle to the algorithm to use to filter the data. If no algorithm is specified, datafilter     is None and no filtering is performed.</li>
-<li><cite>dcOffset</cite> :          Subtract a DC offset from the ionic current data.</li>
+<tr class="field-odd field"><th class="field-name">Keyword Args:</th><td class="field-body"><ul class="first">
+<li><p class="first"><cite>dirname</cite> :           all files from a directory (&#8216;&lt;full path to data directory&gt;&#8217;)</p>
+</li>
+<li><p class="first"><cite>nfiles</cite> :            if requesting N files (in addition to dirname) from a specified directory</p>
+</li>
+<li><dl class="first docutils">
+<dt><cite>fnames</cite></dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">explicit list of filenames ([file1, file2,...]). This argument</span><dd><p class="first last">cannot be used in conjuction with dirname/nfiles. The filter
+argument is ignored when used in combination with fnames.</p>
+</dd>
+</dl>
+</li>
+<li><p class="first"><cite>filter</cite> :            &#8216;&lt;wildcard filter&gt;&#8217; (optional, filter is &#8216;*&#8217; if not specified)</p>
+</li>
+<li><p class="first"><cite>start</cite> :             Data start point in seconds.</p>
+</li>
+<li><p class="first"><cite>end</cite> :               Data end point in seconds.</p>
+</li>
+<li><dl class="first docutils">
+<dt><cite>datafilter</cite></dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">Handle to the algorithm to use to filter the data. If no algorithm is specified, datafilter</span><dd><p class="first last">is None and no filtering is performed.</p>
+</dd>
+</dl>
+</li>
+<li><p class="first"><cite>dcOffset</cite> :  Subtract a DC offset from the ionic current data.</p>
+</li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Properties:</th><td class="field-body"><ul class="first simple">
-<li><cite>FsHz</cite> :                                      sampling frequency in Hz. If the data was decimated, this property will hold the sampling frequency after decimation.</li>
-<li><cite>LastFileProcessed</cite> :         return the data file that was last processed.</li>
-<li><cite>ElapsedTimeSeconds</cite> :        return the analysis time in sec.</li>
+<tr class="field-even field"><th class="field-name">Properties:</th><td class="field-body"><ul class="first">
+<li><dl class="first docutils">
+<dt><cite>FsHz</cite></dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">sampling frequency in Hz. If the data was decimated, this</span><dd><p class="first last">property will hold the sampling frequency after decimation.</p>
+</dd>
+</dl>
+</li>
+<li><p class="first"><cite>LastFileProcessed</cite> : return the data file that was last processed.</p>
+</li>
+<li><p class="first"><cite>ElapsedTimeSeconds</cite> : return the analysis time in sec.</p>
+</li>
 </ul>
 </td>
 </tr>
 <tr class="field-odd field"><th class="field-name">Errors:</th><td class="field-body"><ul class="first last simple">
-<li><cite>IncompatibleArgumentsError</cite> :        when conflicting arguments are used.</li>
-<li><cite>EmptyDataPipeError</cite> :                        when out of data.</li>
-<li><cite>FileNotFoundError</cite> :                         when data files do not exist in the specified path.</li>
-<li><cite>InsufficientArgumentsError</cite> :        when incompatible arguments are passed</li>
+<li><cite>IncompatibleArgumentsError</cite> : when conflicting arguments are used.</li>
+<li><cite>EmptyDataPipeError</cite> : when out of data.</li>
+<li><cite>FileNotFoundError</cite> : when data files do not exist in the specified path.</li>
+<li><cite>InsufficientArgumentsError</cite> : when incompatible arguments are passed</li>
 </ul>
 </td>
 </tr>
@@ -461,7 +487,7 @@ defined above is:</p>
 </table>
 </div>
 <div class="section" id="two-state-identification-adept2state">
-<span id="stepresp-settings-sec"></span><h3>5.3.2. Two-State Identification  (<a class="reference internal" href="../api-doc/mosaic.processing.html#mosaic.adept2State.adept2State" title="mosaic.adept2State.adept2State"><code class="xref py py-class docutils literal"><span class="pre">adept2State</span></code></a>)<a class="headerlink" href="#two-state-identification-adept2state" title="Permalink to this headline">¶</a></h3>
+<span id="stepresp-settings-sec"></span><h3>5.3.2. Two-State Identification  (<code class="xref py py-class docutils literal"><span class="pre">adept2State</span></code>)<a class="headerlink" href="#two-state-identification-adept2state" title="Permalink to this headline">¶</a></h3>
 <p>Once the time-series is partitioned, individual events are processed by a processing algorithm. For simple event patterns (e.g. homopolymers of DNA, PEG, etc.), one can use the <a class="reference internal" href="stepResponse.html#stepresponse-page"><span class="std std-ref">ADEPT 2-State</span></a> algorithm. Settings that can be passed to this algorithm are below, followed by their descriptions. For a vast majority of cases, the settings below can be used without modification.</p>
 <div class="highlight-javascript"><div class="highlight"><pre><span></span><span class="s2">&quot;adept2State&quot;</span> <span class="o">:</span> <span class="p">{</span>
         <span class="s2">&quot;FitTol&quot;</span>                        <span class="o">:</span> <span class="s2">&quot;1.e-7&quot;</span><span class="p">,</span>
@@ -471,7 +497,7 @@ defined above is:</p>
 </div>
 </div>
 <div class="section" id="multi-state-identification-adept">
-<h3>5.3.3. Multi-State Identification  (<a class="reference internal" href="../api-doc/mosaic.processing.html#mosaic.adept.adept" title="mosaic.adept.adept"><code class="xref py py-class docutils literal"><span class="pre">adept</span></code></a>)<a class="headerlink" href="#multi-state-identification-adept" title="Permalink to this headline">¶</a></h3>
+<h3>5.3.3. Multi-State Identification  (<code class="xref py py-class docutils literal"><span class="pre">adept</span></code>)<a class="headerlink" href="#multi-state-identification-adept" title="Permalink to this headline">¶</a></h3>
 <p>For more complex signals with multiple states, the <a class="reference internal" href="multiState.html#multistate-page"><span class="std std-ref">ADEPT</span></a> algorithm yields better results. The settings passed to this algorithm (described below) are largely similar to <a class="reference internal" href="#stepresp-settings-sec"><span class="std std-ref">Two-State Identification  (adept2State)</span></a>.</p>
 <div class="highlight-javascript"><div class="highlight"><pre><span></span><span class="s2">&quot;adept&quot;</span> <span class="o">:</span> <span class="p">{</span>
         <span class="s2">&quot;FitTol&quot;</span>                        <span class="o">:</span> <span class="s2">&quot;1.e-7&quot;</span><span class="p">,</span>

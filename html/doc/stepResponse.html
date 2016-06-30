@@ -5,7 +5,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>ADEPT 2-State &mdash; MOSAIC 1.3b3 documentation</title>
+    <title>ADEPT 2-State &mdash; MOSAIC 1.2 documentation</title>
     
     <link rel="stylesheet" href="../_static/basic.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -16,7 +16,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '1.3b3',
+        VERSION:     '1.2',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -31,7 +31,7 @@
     <script type="text/javascript" src="../_static/bootstrap-3.3.4/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="../_static/bootstrap-sphinx.js"></script>
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
-    <link rel="top" title="MOSAIC 1.3b3 documentation" href="../index.html" />
+    <link rel="top" title="MOSAIC 1.2 documentation" href="../index.html" />
 
 <meta charset='utf-8'>
 <meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
@@ -43,6 +43,8 @@
 	</script>
 	<script type="text/javascript" id="_fed_an_js_tag" src="//www.nist.gov/js/federated-analytics.all.min.js?agency=NIST&subagency=github&pua=UA-42404149-54&yt=true&exts=ppsx,pps,f90,sch,rtf,wrl,txz,m1v,xlsm,msi,xsd,f,tif,eps,mpg,xml,pl,xlt,c">
 	</script>	
+
+	<meta name="theme-color" content="#283593">
 
   </head>
   <body role="document">
@@ -58,7 +60,7 @@
         </button>
         <a class="navbar-brand" href="../index.html"><img src="../_static/icon_36.png">
            </a>
-        <span class="navbar-text navbar-version pull-left"><b>1.3b3</b></span>
+        <span class="navbar-text navbar-version pull-left"><b>1.2</b></span>
       </div>
 
         <div class="collapse navbar-collapse nav-collapse">
@@ -127,7 +129,7 @@
       
   <div class="section" id="adept-2-state">
 <span id="stepresponse-page"></span><h1>ADEPT 2-State<a class="headerlink" href="#adept-2-state" title="Permalink to this headline">¶</a></h1>
-<p>This algorithm limits the generalized algorithm for state-detection <a class="reference internal" href="References.html#balijepalli-2014ft" id="id1">[BEC+14]</a> to cases with a single state as seen in the figure below. This simplified approach speeds up the analysis considerably and is appropriate to use for many applications, for example the detection of PEG, small molecules, DNA homopolymers, etc. The <a class="reference internal" href="../api-doc/mosaic.processing.html#mosaic.adept2State.adept2State" title="mosaic.adept2State.adept2State"><code class="xref py py-class docutils literal"><span class="pre">adept2State</span></code></a> class uses a simplified form of the expression for the ionic current across a nanopore as shown below. Settings that control the fit are defined through the settings file and are described in more detail in the <a class="reference internal" href="settingsFile.html#algorithm-settings-sec"><span class="std std-ref">Optimizing Settings</span></a> section. This functional form is fit to a time-series from a single event to recover optimal parameters for the mdoel.</p>
+<p>This algorithm limits the generalized algorithm for state-detection <a class="reference internal" href="References.html#balijepalli-2014ft" id="id1">[BEC+14]</a> to cases with a single state as seen in the figure below. This simplified approach speeds up the analysis considerably and is appropriate to use for many applications, for example the detection of PEG, small molecules, DNA homopolymers, etc. The <code class="xref py py-class docutils literal"><span class="pre">adept2State</span></code> class uses a simplified form of the expression for the ionic current across a nanopore as shown below. Settings that control the fit are defined through the settings file and are described in more detail in the <a class="reference internal" href="settingsFile.html#algorithm-settings-sec"><span class="std std-ref">Optimizing Settings</span></a> section. This functional form is fit to a time-series from a single event to recover optimal parameters for the mdoel.</p>
 <div class="math">
 \[i(t)=i_0 + a \left[ \left(e^{-(t+\mu_1)/\tau} -1\right) H\left(t-\mu_1\right)  + \left(1- e^{-(t+\mu_2)/\tau} \right)H\left(t-\mu_2\right) \right]\]</div>
 <p>This simplification speeds up the analysis for two state events like the PEG event in the figure below. The figure shows the results of the fit (or meta-data) superimposed on the time-series of a single event.</p>
@@ -136,43 +138,15 @@
 </div>
 <div class="section" id="algorithm-settings">
 <h2>Algorithm Settings<a class="headerlink" href="#algorithm-settings" title="Permalink to this headline">¶</a></h2>
-<blockquote>
-<div><p>Analyze an event that is characteristic of PEG blockades. This method includes system
-information in the analysis, specifically the filtering effects (throught the RC constant)
-of either amplifiers or the membrane/nanopore complex. The analysis generates several
-parameters that are stored as metadata including:</p>
-<blockquote>
-<div><ol class="arabic simple">
-<li>Blockade depth: the ratio of the open channel current to the blocked current</li>
-<li>Residence time: the time the molecule spends inside the pore</li>
-<li>Tau: the RC constant of the response to a step input (e.g. the entry or exit of the molecule into or out of the nanopore).</li>
-</ol>
-</div></blockquote>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Keyword Args:</th><td class="field-body"><dl class="first docutils">
-<dt>In addition to <a class="reference internal" href="../api-doc/mosaic.meta.html#mosaic.metaEventProcessor.metaEventProcessor" title="mosaic.metaEventProcessor.metaEventProcessor"><code class="xref py py-class docutils literal"><span class="pre">metaEventProcessor</span></code></a> args,</dt>
-<dd><ul class="first last simple">
-<li><cite>FitTol</cite> :            Tolerance value for the least squares algorithm that controls the convergence of the fit (Default: <cite>1e-7</cite>).</li>
-<li><cite>FitIters</cite> :          Maximum number of iterations before terminating the fit (Default: <cite>50000</cite>).</li>
-<li><cite>LinkRCConst</cite> :       When True, the RC constants associated with each state in the fit function are varied together. (Default: <cite>True</cite>)</li>
-</ul>
-</dd>
-</dl>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Errors:</th><td class="field-body"><p class="first last">When an event cannot be analyzed, the blockade depth, residence time and rise time are set to -1.</p>
-</td>
-</tr>
-</tbody>
-</table>
-</div></blockquote>
+<div class="admonition error">
+<p class="first admonition-title">Error</p>
+<p>Unable to execute python code at stepResponse.rst:30:</p>
+<p class="last">No module named adept2State</p>
+</div>
 </div>
 <div class="section" id="metadata-output">
 <h2>Metadata Output<a class="headerlink" href="#metadata-output" title="Permalink to this headline">¶</a></h2>
-<p>Meta-data for individual events generated by <a class="reference internal" href="../api-doc/mosaic.processing.html#mosaic.adept2State.adept2State" title="mosaic.adept2State.adept2State"><code class="xref py py-class docutils literal"><span class="pre">adept2State</span></code></a> can be queried using <a class="reference external" href="http://www.sqlite.org/">SQLite</a> as described in the <a class="reference internal" href="DatabaseStructure.html#database-page"><span class="std std-ref">Database Structure and Query Syntax</span></a> section. A list of meta-data stored by the step response algorithm is given below.</p>
+<p>Meta-data for individual events generated by <code class="xref py py-class docutils literal"><span class="pre">adept2State</span></code> can be queried using <a class="reference external" href="http://www.sqlite.org/">SQLite</a> as described in the <a class="reference internal" href="DatabaseStructure.html#database-page"><span class="std std-ref">Database Structure and Query Syntax</span></a> section. A list of meta-data stored by the step response algorithm is given below.</p>
 <table border="1" class="docutils">
 <colgroup>
 <col width="28%" />

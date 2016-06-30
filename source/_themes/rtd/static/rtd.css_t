@@ -67,6 +67,9 @@ div.documentwrapper {
     background-color: #e8ecef;
 }
 
+p {
+    color: black;
+}
 
 /* HEADINGS --------------------------------------------------------------- */
 

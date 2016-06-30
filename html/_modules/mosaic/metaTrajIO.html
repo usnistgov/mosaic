@@ -5,7 +5,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>mosaic.metaTrajIO &mdash; MOSAIC 1.3b3 documentation</title>
+    <title>mosaic.metaTrajIO &mdash; MOSAIC 1.2 documentation</title>
     
     <link rel="stylesheet" href="../../_static/basic.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
@@ -16,7 +16,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
-        VERSION:     '1.3b3',
+        VERSION:     '1.2',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -31,7 +31,7 @@
     <script type="text/javascript" src="../../_static/bootstrap-3.3.4/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="../../_static/bootstrap-sphinx.js"></script>
     <link rel="shortcut icon" href="../../_static/favicon.ico"/>
-    <link rel="top" title="MOSAIC 1.3b3 documentation" href="../../index.html" />
+    <link rel="top" title="MOSAIC 1.2 documentation" href="../../index.html" />
     <link rel="up" title="Module code" href="../index.html" />
 
 <meta charset='utf-8'>
@@ -44,6 +44,8 @@
 	</script>
 	<script type="text/javascript" id="_fed_an_js_tag" src="//www.nist.gov/js/federated-analytics.all.min.js?agency=NIST&subagency=github&pua=UA-42404149-54&yt=true&exts=ppsx,pps,f90,sch,rtf,wrl,txz,m1v,xlsm,msi,xsd,f,tif,eps,mpg,xml,pl,xlt,c">
 	</script>	
+
+	<meta name="theme-color" content="#283593">
 
   </head>
   <body role="document">
@@ -59,7 +61,7 @@
         </button>
         <a class="navbar-brand" href="../../index.html"><img src="../../_static/icon_36.png">
            </a>
-        <span class="navbar-text navbar-version pull-left"><b>1.3b3</b></span>
+        <span class="navbar-text navbar-version pull-left"><b>1.2</b></span>
       </div>
 
         <div class="collapse navbar-collapse nav-collapse">
@@ -127,8 +129,7 @@
     <div class="col-md-12 content">
       
   <h1>Source code for mosaic.metaTrajIO</h1><div class="highlight"><pre>
-<span></span><span class="c1"># -*- coding: utf-8 -*-</span>
-<span class="sd">&quot;&quot;&quot;</span>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">	Read binary ionic current data into numpy arrays</span>
 
 <span class="sd">	:Created:	7/17/2012</span>
@@ -136,9 +137,6 @@
 <span class="sd">	:License:	See LICENSE.TXT	</span>
 <span class="sd">	:ChangeLog:</span>
 <span class="sd">	.. line-block::</span>
-<span class="sd">		9/13/15 	AB 	Updated logging to use mosaicLogFormat class</span>
-<span class="sd">		4/1/15 		AB 	Added a new property (DataLengthSec) to estimate the length of a data set.</span>
-<span class="sd">		3/28/15 	AB 	Optimized file read interface for improved large file support.</span>
 <span class="sd">		8/22/14 	AB 	Setup a new property (&#39;LastDataFile&#39;) that tracks the current</span>
 <span class="sd">						data file being processed.</span>
 <span class="sd">		5/27/14		AB 	Added dcOffset kwarg to initialization to allow </span>
@@ -147,18 +145,12 @@
 <span class="sd">						initialization. </span>
 <span class="sd">		7/17/12		AB	Initial version</span>
 <span class="sd">&quot;&quot;&quot;</span>
-<span class="kn">import</span> <span class="nn">sys</span>
 <span class="kn">from</span> <span class="nn">abc</span> <span class="kn">import</span> <span class="n">ABCMeta</span><span class="p">,</span> <span class="n">abstractmethod</span>
 <span class="kn">import</span> <span class="nn">glob</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
 
 <span class="kn">import</span> <span class="nn">settings</span>
 <span class="kn">from</span> <span class="nn">mosaic.utilities.resource_path</span> <span class="kn">import</span> <span class="n">format_path</span><span class="p">,</span> <span class="n">path_separator</span>
-<span class="kn">import</span> <span class="nn">mosaic.utilities.mosaicLogging</span> <span class="kn">as</span> <span class="nn">mlog</span>
-<span class="kn">from</span> <span class="nn">mosaic.utilities.mosaicLogFormat</span> <span class="kn">import</span> <span class="n">_dprop</span><span class="p">,</span> <span class="n">mosaic_property</span>
-<span class="kn">import</span> <span class="nn">mosaic.utilities.mosaicTiming</span> <span class="kn">as</span> <span class="nn">mtime</span>
-
-<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;metaTrajIO&quot;</span><span class="p">,</span> <span class="s2">&quot;IncompatibleArgumentsError&quot;</span><span class="p">,</span> <span class="s2">&quot;IncorrectDataFormat&quot;</span><span class="p">,</span> <span class="s2">&quot;EndOfFileError&quot;</span><span class="p">,</span> <span class="s2">&quot;SamplingRateChangedError&quot;</span><span class="p">,</span> <span class="s2">&quot;EmptyDataPipeError&quot;</span><span class="p">,</span> <span class="s2">&quot;FileNotFoundError&quot;</span><span class="p">]</span>
 
 <span class="c1"># define custom exceptions</span>
 <span class="k">class</span> <span class="nc">IncompatibleArgumentsError</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
@@ -176,8 +168,6 @@
 <span class="k">class</span> <span class="nc">FileNotFoundError</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
 	<span class="k">pass</span>
 
-<span class="n">trajTimer</span><span class="o">=</span><span class="n">mtime</span><span class="o">.</span><span class="n">mosaicTiming</span><span class="p">()</span>
-
 <div class="viewcode-block" id="metaTrajIO"><a class="viewcode-back" href="../../api-doc/mosaic.meta.html#mosaic.metaTrajIO.metaTrajIO">[docs]</a><span class="k">class</span> <span class="nc">metaTrajIO</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
 	<span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">			.. warning:: |metaclass|</span>
@@ -189,40 +179,36 @@
 <span class="sd">			for what those may be. For example, the qdfTrajIO implementation of metaTrajIO also requires</span>
 <span class="sd">			the feedback resistance (Rfb) and feedback capacitance (Cfb) to be passed at initialization.</span>
 
-<span class="sd">			:Parameters:</span>
-
+<span class="sd">			:Keyword Args:</span>
 <span class="sd">				- `dirname` :		all files from a directory (&#39;&lt;full path to data directory&gt;&#39;)</span>
 <span class="sd">				- `nfiles` :		if requesting N files (in addition to dirname) from a specified directory</span>
-<span class="sd">				- `fnames` : 		explicit list of filenames ([file1, file2,...]). This argument cannot be used in conjuction with dirname/nfiles. The filter argument is ignored when used in combination with fnames. </span>
+<span class="sd">				</span>
+<span class="sd">				- `fnames` : 		explicit list of filenames ([file1, file2,...]). This argument </span>
+<span class="sd">							cannot be used in conjuction with dirname/nfiles. The filter </span>
+<span class="sd">							argument is ignored when used in combination with fnames. </span>
+
 <span class="sd">				- `filter` :		&#39;&lt;wildcard filter&gt;&#39; (optional, filter is &#39;*&#39; if not specified)</span>
 <span class="sd">				- `start` : 		Data start point in seconds.</span>
-<span class="sd">				- `end` : 			Data end point in seconds.</span>
-<span class="sd">				- `datafilter` :	Handle to the algorithm to use to filter the data. If no algorithm is specified, datafilter	is None and no filtering is performed.</span>
-<span class="sd">				- `dcOffset` :		Subtract a DC offset from the ionic current data.</span>
-<span class="sd">		</span>
-
+<span class="sd">				- `end` : 		Data end point in seconds.</span>
+<span class="sd">				- `datafilter` :	Handle to the algorithm to use to filter the data. If no algorithm is specified, datafilter</span>
+<span class="sd">							is None and no filtering is performed.</span>
+<span class="sd">				- `dcOffset` :	Subtract a DC offset from the ionic current data.</span>
 <span class="sd">			:Properties:</span>
-
-<span class="sd">				- `FsHz` :					sampling frequency in Hz. If the data was decimated, this property will hold the sampling frequency after decimation.</span>
-<span class="sd">				- `LastFileProcessed` :		return the data file that was last processed.</span>
-<span class="sd">				- `ElapsedTimeSeconds` : 	return the analysis time in sec.</span>
-<span class="sd">			</span>
-
+<span class="sd">				- `FsHz` :				sampling frequency in Hz. If the data was decimated, this </span>
+<span class="sd">									property will hold the sampling frequency after decimation.</span>
+<span class="sd">				- `LastFileProcessed` :	return the data file that was last processed.</span>
+<span class="sd">				- `ElapsedTimeSeconds` : return the analysis time in sec.</span>
 <span class="sd">			:Errors:</span>
-
-<span class="sd">				- `IncompatibleArgumentsError` : 	when conflicting arguments are used.</span>
-<span class="sd">				- `EmptyDataPipeError` : 			when out of data.</span>
-<span class="sd">				- `FileNotFoundError` : 			when data files do not exist in the specified path.</span>
-<span class="sd">				- `InsufficientArgumentsError` : 	when incompatible arguments are passed</span>
+<span class="sd">				- `IncompatibleArgumentsError` : when conflicting arguments are used.</span>
+<span class="sd">				- `EmptyDataPipeError` : when out of data.</span>
+<span class="sd">				- `FileNotFoundError` : when data files do not exist in the specified path.</span>
+<span class="sd">				- `InsufficientArgumentsError` : when incompatible arguments are passed</span>
 <span class="sd">	&quot;&quot;&quot;</span>
 	<span class="n">__metaclass__</span><span class="o">=</span><span class="n">ABCMeta</span>
 
 	<span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
 		<span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">		&quot;&quot;&quot;</span>
-		<span class="bp">self</span><span class="o">.</span><span class="n">CHUNKSIZE</span><span class="o">=</span><span class="mi">10000</span>
-		<span class="bp">self</span><span class="o">.</span><span class="n">dataGenerator</span><span class="o">=</span><span class="bp">None</span>
-
 		<span class="c1"># start by setting all passed keyword arguments as class attributes</span>
 		<span class="k">for</span> <span class="p">(</span><span class="n">k</span><span class="p">,</span><span class="n">v</span><span class="p">)</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
 			<span class="nb">setattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span>
@@ -276,10 +262,6 @@
 		<span class="k">else</span><span class="p">:</span>
 			<span class="bp">self</span><span class="o">.</span><span class="n">dcOffset</span><span class="o">=</span><span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dcOffset</span><span class="p">)</span>
 
-		<span class="c1"># set start to 0 if it doesn&#39;t exist</span>
-		<span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;start&#39;</span><span class="p">):</span>
-			<span class="bp">self</span><span class="o">.</span><span class="n">start</span><span class="o">=</span><span class="mf">0.</span>
-
 		<span class="c1"># Track current filename</span>
 		<span class="bp">self</span><span class="o">.</span><span class="n">currentFilename</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">dataFiles</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
 
@@ -291,24 +273,13 @@
 		<span class="c1"># exceeds 1 million data points.</span>
 		<span class="bp">self</span><span class="o">.</span><span class="n">currDataIdx</span><span class="o">=</span><span class="mi">0</span>
 
-		<span class="c1"># a var that determines if the end of the data stream is imminent.</span>
-		<span class="bp">self</span><span class="o">.</span><span class="n">nearEndOfData</span><span class="o">=</span><span class="mi">0</span>
-
 		<span class="c1"># A global index that tracks the number of data points retrieved.</span>
-		<span class="bp">self</span><span class="o">.</span><span class="n">globalDataIndex</span><span class="o">=</span><span class="mi">0</span>
-
-		<span class="bp">self</span><span class="o">.</span><span class="n">datLenSec</span><span class="o">=</span><span class="mi">0</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">gloabDataIndex</span><span class="o">=</span><span class="mi">0</span>
 
 		<span class="bp">self</span><span class="o">.</span><span class="n">initPipe</span><span class="o">=</span><span class="bp">False</span>
 
-		<span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">=</span><span class="n">mlog</span><span class="o">.</span><span class="n">mosaicLogging</span><span class="p">()</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">__name__</span><span class="p">)</span>
-
 		<span class="c1"># Call sub-class init</span>
 		<span class="bp">self</span><span class="o">.</span><span class="n">_init</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-
-	<span class="k">def</span> <span class="nf">Stop</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-		<span class="n">trajTimer</span><span class="o">.</span><span class="n">PrintStatistics</span><span class="p">()</span>
-		<span class="k">raise</span> <span class="n">EmptyDataPipeError</span><span class="p">(</span><span class="s2">&quot;End of data.&quot;</span><span class="p">)</span>
 
 	<span class="c1">#################################################################</span>
 	<span class="c1"># Public API: functions</span>
@@ -324,32 +295,20 @@
 			<span class="bp">self</span><span class="o">.</span><span class="n">_initPipe</span><span class="p">()</span>
 
 		<span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">dataFilter</span><span class="p">:</span>
-			<span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="n">_dprop</span><span class="p">(</span><span class="s2">&quot;Sampling frequency {0}&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">Fs</span><span class="p">))</span>
 			<span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">Fs</span>
 		<span class="k">else</span><span class="p">:</span>
-			<span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="n">_dprop</span><span class="p">(</span><span class="s2">&quot;Sampling frequency {0} ({1})&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">dataFilterObj</span><span class="o">.</span><span class="n">filterFs</span><span class="p">,</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dataFilterObj</span><span class="p">)</span><span class="o">.</span><span class="n">__name__</span><span class="p">))</span>
 			<span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">dataFilterObj</span><span class="o">.</span><span class="n">filterFs</span>
 
-	<span class="nd">@mosaic_property</span>
+	<span class="nd">@property</span>
 	<span class="k">def</span> <span class="nf">ElapsedTimeSeconds</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 		<span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">			.. important:: |property|</span>
 
 <span class="sd">			Return the elapsed time in the time-series in seconds.</span>
 <span class="sd">		&quot;&quot;&quot;</span>
-		<span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">initPipe</span><span class="p">:</span>
-			<span class="bp">self</span><span class="o">.</span><span class="n">_initPipe</span><span class="p">()</span>
+		<span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">gloabDataIndex</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">Fs</span>
 
-		<span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">dataFilter</span><span class="p">:</span>
-			<span class="n">Fs</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">Fs</span>
-		<span class="k">else</span><span class="p">:</span>
-			<span class="n">Fs</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">dataFilterObj</span><span class="o">.</span><span class="n">filterFs</span>
-
-		<span class="n">elapsedTime</span><span class="o">=</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">globalDataIndex</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">startIndex</span><span class="p">)</span><span class="o">/</span><span class="nb">float</span><span class="p">(</span><span class="n">Fs</span><span class="p">)</span> 
-
-		<span class="k">return</span> <span class="n">elapsedTime</span>
-
-	<span class="nd">@mosaic_property</span> 
+	<span class="nd">@property</span> 
 	<span class="k">def</span> <span class="nf">LastFileProcessed</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 		<span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">			.. important:: |property|</span>
@@ -358,21 +317,7 @@
 <span class="sd">		&quot;&quot;&quot;</span>
 		<span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">currentFilename</span>
 
-	<span class="nd">@mosaic_property</span> 
-	<span class="k">def</span> <span class="nf">DataLengthSec</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-		<span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">			.. important:: |property|</span>
-
-<span class="sd">			Return the approximate length of data that will be processed. If the data are in multiple files,</span>
-<span class="sd">			this property assumes that each file contains an equal amount of data.</span>
-<span class="sd">		&quot;&quot;&quot;</span>
-		<span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">initPipe</span><span class="p">:</span>
-			<span class="bp">self</span><span class="o">.</span><span class="n">_initPipe</span><span class="p">()</span>
-
-		<span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">datLenSec</span>
-
-	<span class="nd">@trajTimer.FunctionTiming</span>
-	<span class="k">def</span> <span class="nf">popdata</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
+<div class="viewcode-block" id="metaTrajIO.popdata"><a class="viewcode-back" href="../../api-doc/mosaic.meta.html#mosaic.metaTrajIO.metaTrajIO.popdata">[docs]</a>	<span class="k">def</span> <span class="nf">popdata</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
 		<span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">			Pop data points from self.currDataPipe. This function uses recursion </span>
 <span class="sd">			to automatically read data files when the queue length is shorter</span>
@@ -380,37 +325,29 @@
 <span class="sd">			EmptyDataPipeError is thrown.</span>
 
 <span class="sd">			:Parameters:</span>
-
 <span class="sd">				- `n` : number of requested data points</span>
-<span class="sd">			</span>
 <span class="sd">			:Returns:</span>
-<span class="sd">			</span>
-<span class="sd">				- Numpy array with requested data</span>
-
+<span class="sd">				numpy array with requested data</span>
 <span class="sd">			:Errors:</span>
-<span class="sd">				</span>
 <span class="sd">				- `EmptyDataPipeError` : if the queue has fewer data points than requested.</span>
 <span class="sd">		&quot;&quot;&quot;</span>
 		<span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">initPipe</span><span class="p">:</span>
 			<span class="bp">self</span><span class="o">.</span><span class="n">_initPipe</span><span class="p">()</span>
 
-		<span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">nearEndOfData</span><span class="o">&gt;</span><span class="mi">1</span><span class="p">:</span>
-			<span class="bp">self</span><span class="o">.</span><span class="n">Stop</span><span class="p">()</span>
-
 		<span class="c1"># If the global index exceeds the specied end point, raise an EmptyDataPipError</span>
 		<span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;end&quot;</span><span class="p">):</span>
-			<span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">globalDataIndex</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">endIndex</span><span class="p">:</span>
-				<span class="bp">self</span><span class="o">.</span><span class="n">Stop</span><span class="p">()</span>
+			<span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">gloabDataIndex</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">endIndex</span><span class="p">:</span>
+				<span class="k">raise</span> <span class="n">EmptyDataPipeError</span><span class="p">(</span><span class="s2">&quot;End of data.&quot;</span><span class="p">)</span>
 
 		<span class="k">try</span><span class="p">:</span>
 			<span class="c1"># Get the elements to return: index to (index+n)</span>
 			<span class="n">t</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">currDataPipe</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">currDataIdx</span><span class="p">:</span><span class="bp">self</span><span class="o">.</span><span class="n">currDataIdx</span><span class="o">+</span><span class="n">n</span><span class="p">]</span><span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">dcOffset</span>
-			
-			<span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">t</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">n</span><span class="p">:</span> <span class="k">raise</span> <span class="ne">IndexError</span>
+			<span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">t</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">n</span><span class="p">:</span>
+				<span class="k">raise</span> <span class="ne">IndexError</span>
 
 			<span class="c1"># If the required data points were obtained, update the queue and global indices</span>
 			<span class="bp">self</span><span class="o">.</span><span class="n">currDataIdx</span><span class="o">+=</span><span class="n">n</span>
-			<span class="bp">self</span><span class="o">.</span><span class="n">globalDataIndex</span><span class="o">+=</span><span class="n">n</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">gloabDataIndex</span><span class="o">+=</span><span class="n">n</span>
 			
 			<span class="c1"># delete them from the pipe if the index exceeds 1 million</span>
 			<span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">currDataIdx</span><span class="o">&gt;</span><span class="mi">1000000</span><span class="p">:</span>
@@ -421,17 +358,20 @@
 			<span class="c1"># return the popped data</span>
 			<span class="k">return</span> <span class="n">t</span>
 		<span class="k">except</span> <span class="ne">IndexError</span><span class="p">,</span> <span class="n">err</span><span class="p">:</span>
-			<span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">nearEndOfData</span><span class="o">&gt;</span><span class="mi">0</span><span class="p">:</span>
-				<span class="bp">self</span><span class="o">.</span><span class="n">currDataIdx</span><span class="o">+=</span><span class="n">n</span>
-				<span class="bp">self</span><span class="o">.</span><span class="n">globalDataIndex</span><span class="o">+=</span><span class="n">n</span>
-				
-				<span class="bp">self</span><span class="o">.</span><span class="n">nearEndOfData</span><span class="o">+=</span><span class="mi">1</span>
-
-				<span class="k">return</span> <span class="n">t</span>
-			<span class="k">else</span><span class="p">:</span>
-				<span class="bp">self</span><span class="o">.</span><span class="n">_appenddata</span><span class="p">()</span>
+			<span class="n">fnames</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">popfnames</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+			<span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">fnames</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+				<span class="bp">self</span><span class="o">.</span><span class="n">currentFilename</span><span class="o">=</span><span class="n">fnames</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>		<span class="c1">#update the last successfully read fname</span>
+				<span class="bp">self</span><span class="o">.</span><span class="n">_appenddata</span><span class="p">(</span><span class="n">fnames</span><span class="p">)</span>
 				<span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">popdata</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
-				
+			<span class="k">else</span><span class="p">:</span>
+				<span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">currDataPipe</span><span class="p">)</span><span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">currDataIdx</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+					<span class="n">t</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">currDataPipe</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">currDataIdx</span><span class="p">:</span><span class="bp">self</span><span class="o">.</span><span class="n">currDataIdx</span><span class="o">+</span><span class="n">n</span><span class="p">]</span>
+					<span class="bp">self</span><span class="o">.</span><span class="n">currDataIdx</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">currDataPipe</span><span class="p">)</span>
+
+					<span class="k">return</span> <span class="n">t</span>
+				<span class="k">else</span><span class="p">:</span>
+					<span class="k">raise</span> <span class="n">EmptyDataPipeError</span><span class="p">(</span><span class="s2">&quot;End of data.&quot;</span><span class="p">)</span></div>
+	
 <div class="viewcode-block" id="metaTrajIO.previewdata"><a class="viewcode-back" href="../../api-doc/mosaic.meta.html#mosaic.metaTrajIO.metaTrajIO.previewdata">[docs]</a>	<span class="k">def</span> <span class="nf">previewdata</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
 		<span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">			Preview data points in self.currDataPipe. This function is identical in </span>
@@ -441,15 +381,10 @@
 <span class="sd">			data files are read, an	EmptyDataPipeError is thrown.</span>
 
 <span class="sd">			:Parameters:</span>
-
 <span class="sd">				`n` : number of requested data points</span>
-
 <span class="sd">			:Returns:</span>
-
-<span class="sd">				- Numpy array with requested data</span>
-
+<span class="sd">				numpy array with requested data</span>
 <span class="sd">			:Errors:</span>
-
 <span class="sd">				- `EmptyDataPipeError` : if the queue has fewer data points than requested.</span>
 <span class="sd">		&quot;&quot;&quot;</span>
 		<span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">initPipe</span><span class="p">:</span>
@@ -458,101 +393,73 @@
 		<span class="k">try</span><span class="p">:</span>
 			<span class="c1"># Get the elements to return</span>
 			<span class="n">t</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">currDataPipe</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">currDataIdx</span><span class="p">:</span><span class="bp">self</span><span class="o">.</span><span class="n">currDataIdx</span><span class="o">+</span><span class="n">n</span><span class="p">]</span><span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">dcOffset</span>
-			<span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">t</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">n</span><span class="p">:</span> <span class="k">raise</span> <span class="ne">IndexError</span> 
-				
+			<span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">t</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">n</span><span class="p">:</span>
+				<span class="k">raise</span> <span class="ne">IndexError</span>
 			<span class="k">return</span> <span class="n">t</span>
 		<span class="k">except</span> <span class="ne">IndexError</span><span class="p">,</span> <span class="n">err</span><span class="p">:</span>
-			<span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">nearEndOfData</span><span class="o">&gt;</span><span class="mi">0</span><span class="p">:</span>
-				<span class="k">return</span> <span class="n">t</span>
+			<span class="n">fnames</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">popfnames</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+			<span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">fnames</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+				<span class="bp">self</span><span class="o">.</span><span class="n">currentFilename</span><span class="o">=</span><span class="n">fnames</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>		<span class="c1">#update the last successfully read fname</span>
+				<span class="bp">self</span><span class="o">.</span><span class="n">_appenddata</span><span class="p">(</span><span class="n">fnames</span><span class="p">)</span>
+				<span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">previewdata</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
 			<span class="k">else</span><span class="p">:</span>
-				<span class="bp">self</span><span class="o">.</span><span class="n">_appenddata</span><span class="p">()</span>
-				<span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">previewdata</span><span class="p">(</span><span class="n">n</span><span class="p">)</span></div>
+				<span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">currDataPipe</span><span class="p">)</span><span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">currDataIdx</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+					<span class="n">t</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">currDataPipe</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">currDataIdx</span><span class="p">:</span><span class="bp">self</span><span class="o">.</span><span class="n">currDataIdx</span><span class="o">+</span><span class="n">n</span><span class="p">]</span>
+					<span class="bp">self</span><span class="o">.</span><span class="n">currDataIdx</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">currDataPipe</span><span class="p">)</span>
 
+					<span class="k">return</span> <span class="n">t</span>
+				<span class="k">else</span><span class="p">:</span>
+					<span class="k">raise</span> <span class="n">EmptyDataPipeError</span><span class="p">(</span><span class="s2">&quot;End of data.&quot;</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="metaTrajIO.formatsettings"><a class="viewcode-back" href="../../api-doc/mosaic.meta.html#mosaic.metaTrajIO.metaTrajIO.formatsettings">[docs]</a>	<span class="k">def</span> <span class="nf">formatsettings</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 		<span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">			Return a formatted string of settings for display</span>
 <span class="sd">		&quot;&quot;&quot;</span>
-		<span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span> <span class="s1">&#39;</span><span class="se">\t</span><span class="s1">Trajectory I/O settings:&#39;</span> <span class="p">)</span>
-		
-		<span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span> <span class="s1">&#39;</span><span class="se">\t\t</span><span class="s1">Files processed = {0}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">nFiles</span><span class="o">-</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dataFiles</span><span class="p">))</span> <span class="p">)</span>
-		<span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span> <span class="s1">&#39;</span><span class="se">\t\t</span><span class="s1">Data path = {0}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">datPath</span><span class="p">)</span> <span class="p">)</span>
-		<span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span> <span class="s1">&#39;</span><span class="se">\t\t</span><span class="s1">File format = {0}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">fileFormat</span><span class="p">)</span> <span class="p">)</span>
-		<span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span> <span class="s1">&#39;</span><span class="se">\t\t</span><span class="s1">Sampling frequency = {0} kHz&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">FsHz</span><span class="o">*</span><span class="mf">1e-3</span><span class="p">)</span> <span class="p">)</span>
-
-		<span class="c1"># Sub-class formatted settings</span>
-		<span class="bp">self</span><span class="o">.</span><span class="n">_formatsettings</span><span class="p">()</span>
+		<span class="n">fmtstr</span><span class="o">=</span><span class="s2">&quot;&quot;</span>
 
 		<span class="c1"># add the filter settings</span>
 		<span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">dataFilter</span><span class="p">:</span>
-			<span class="bp">self</span><span class="o">.</span><span class="n">dataFilterObj</span><span class="o">.</span><span class="n">formatsettings</span><span class="p">()</span></div>
+			<span class="n">fmtstr</span><span class="o">+=</span><span class="bp">self</span><span class="o">.</span><span class="n">dataFilterObj</span><span class="o">.</span><span class="n">formatsettings</span><span class="p">()</span>
 
+		<span class="n">fmtstr</span><span class="o">+=</span><span class="s1">&#39;</span><span class="se">\n\t</span><span class="s1">Trajectory I/O settings: </span><span class="se">\n</span><span class="s1">&#39;</span>
+		<span class="n">fmtstr</span><span class="o">+=</span><span class="s1">&#39;</span><span class="se">\t\t</span><span class="s1">Files processed = {0}</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">nFiles</span><span class="o">-</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dataFiles</span><span class="p">))</span>
+		<span class="n">fmtstr</span><span class="o">+=</span><span class="s1">&#39;</span><span class="se">\t\t</span><span class="s1">Data path = {0}</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">datPath</span><span class="p">)</span>
+		<span class="n">fmtstr</span><span class="o">+=</span><span class="s1">&#39;</span><span class="se">\t\t</span><span class="s1">File format = {0}</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">fileFormat</span><span class="p">)</span>
+		<span class="n">fmtstr</span><span class="o">+=</span><span class="s1">&#39;</span><span class="se">\t\t</span><span class="s1">Sampling frequency = {0} kHz</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">FsHz</span><span class="o">*</span><span class="mf">1e-3</span><span class="p">)</span>
+
+		<span class="c1"># Sub-class formatted settings</span>
+		<span class="n">fmtstr</span><span class="o">+=</span><span class="bp">self</span><span class="o">.</span><span class="n">_formatsettings</span><span class="p">()</span>
+
+		<span class="k">return</span> <span class="n">fmtstr</span></div>
 
 	<span class="c1">#################################################################</span>
 	<span class="c1"># Private API: Interface functions, implemented by sub-classes.</span>
 	<span class="c1"># Should not be called from external classes</span>
 	<span class="c1">#################################################################</span>
-	<span class="k">def</span> <span class="nf">_appenddata</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+	<span class="k">def</span> <span class="nf">_appenddata</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fname</span><span class="p">):</span>
 		<span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">			Read the specified data file(s) and append its data to the data pipeline. Set </span>
 <span class="sd">			a class property FsHz with the sampling frequency in Hz.</span>
 
 <span class="sd">			:Parameters:</span>
+<span class="sd">				- `fname` :	list of filenames</span>
 
-<span class="sd">				- None</span>
 <span class="sd">			</span>
 <span class="sd">			.. seealso:: See implementations of metaTrajIO for specfic documentation.</span>
 <span class="sd">		&quot;&quot;&quot;</span>
-		<span class="k">try</span><span class="p">:</span>			
-			<span class="n">data</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">scaleData</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dataGenerator</span><span class="o">.</span><span class="n">next</span><span class="p">())</span>
-
-			<span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">dataFilter</span><span class="p">:</span>
-				<span class="bp">self</span><span class="o">.</span><span class="n">dataFilterObj</span><span class="o">.</span><span class="n">filterData</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">Fs</span><span class="p">)</span>
-				<span class="bp">self</span><span class="o">.</span><span class="n">currDataPipe</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">hstack</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">currDataPipe</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">dataFilterObj</span><span class="o">.</span><span class="n">filteredData</span> <span class="p">))</span>
-			<span class="k">else</span><span class="p">:</span>
-				<span class="bp">self</span><span class="o">.</span><span class="n">currDataPipe</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">hstack</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">currDataPipe</span><span class="p">,</span> <span class="n">data</span> <span class="p">))</span>
-
-		<span class="k">except</span> <span class="p">(</span><span class="ne">StopIteration</span><span class="p">,</span> <span class="ne">AttributeError</span><span class="p">):</span>
-			<span class="c1"># Read a new data file to get more data</span>
-			<span class="n">fname</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">popfnames</span><span class="p">()</span>
-			<span class="k">if</span> <span class="n">fname</span><span class="p">:</span>
-				<span class="bp">self</span><span class="o">.</span><span class="n">rawData</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">readdata</span><span class="p">(</span> <span class="n">fname</span> <span class="p">)</span>
-				<span class="bp">self</span><span class="o">.</span><span class="n">dataGenerator</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_createGenerator</span><span class="p">()</span>
-				<span class="bp">self</span><span class="o">.</span><span class="n">_appenddata</span><span class="p">()</span>
+		<span class="n">data</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">readdata</span><span class="p">(</span><span class="n">fname</span><span class="p">)</span>
+		<span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">dataFilter</span><span class="p">:</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">dataFilterObj</span><span class="o">.</span><span class="n">filterData</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">Fs</span><span class="p">)</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">currDataPipe</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">hstack</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">currDataPipe</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">dataFilterObj</span><span class="o">.</span><span class="n">filteredData</span> <span class="p">))</span>
+		<span class="k">else</span><span class="p">:</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">currDataPipe</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">hstack</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">currDataPipe</span><span class="p">,</span> <span class="n">data</span> <span class="p">))</span>
 		
-<div class="viewcode-block" id="metaTrajIO.scaleData"><a class="viewcode-back" href="../../api-doc/mosaic.meta.html#mosaic.metaTrajIO.metaTrajIO.scaleData">[docs]</a>	<span class="k">def</span> <span class="nf">scaleData</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
-		<span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">			.. important:: |interfacemethod|</span>
-
-<span class="sd">			Scale the raw data loaded with :func:`~mosaic.metaTrajIO.metaTrajIO.readdata`. Note this function will not necessarily receive the entire data array loaded with :func:`~mosaic.metaTrajIO.metaTrajIO.readdata`. Transformations must be able to process partial data chunks.</span>
-
-<span class="sd">			:Parameters:</span>
-<span class="sd">			</span>
-<span class="sd">				- `data` : partial chunk of raw data loaded using :func:`~mosaic.metaTrajIO.metaTrajIO.readdata`.</span>
-
-<span class="sd">			:Returns:</span>
-
-<span class="sd">				- Array containing scaled data.</span>
-
-<span class="sd">			:Default Behavior:</span>
-
-<span class="sd">				- If not implemented by a sub-class, the default behavior is to return ``data`` to the calling function without modifications.</span>
-
-<span class="sd">			:Example:</span>
-
-<span class="sd">				Assuming the amplifier scale and offset values are stored in the class variables ``AmplifierScale`` and ``AmplifierOffset``, the raw data read using :func:`~mosaic.metaTrajIO.metaTrajIO.readdata` can be transformed by :func:`~mosaic.metaTrajIO.metaTrajIO.scaleData`. We can also use this function to change the array data type.</span>
-
-<span class="sd">			.. code-block:: python</span>
-
-<span class="sd">				def scaleData(self, data):</span>
-<span class="sd">					return np.array(data*self.AmplifierScale-self.AmplifierOffset, dtype=&#39;f8&#39;)</span>
-<span class="sd">		&quot;&quot;&quot;</span>
-		<span class="k">return</span> <span class="n">data</span></div>
-
 	<span class="nd">@abstractmethod</span>
 <div class="viewcode-block" id="metaTrajIO._formatsettings"><a class="viewcode-back" href="../../api-doc/mosaic.meta.html#mosaic.metaTrajIO.metaTrajIO._formatsettings">[docs]</a>	<span class="k">def</span> <span class="nf">_formatsettings</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 		<span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">			Log settings strings</span>
+<span class="sd">			.. important:: |abstractmethod|</span>
+
+<span class="sd">			Return a formatted string of settings for display</span>
 <span class="sd">		&quot;&quot;&quot;</span>
 		<span class="k">pass</span></div>
 		
@@ -570,49 +477,30 @@
 		<span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">			.. important:: |abstractmethod|</span>
 
-<span class="sd">			Return raw data from a single data file. Set a class </span>
-<span class="sd">			attribute Fs with the sampling frequency in Hz.</span>
+<span class="sd">			Read the specified data file(s) and  return the data as an array. Set </span>
+<span class="sd">			a class property Fs with the sampling frequency in Hz.</span>
 
 <span class="sd">			:Parameters:</span>
-
-<span class="sd">				- `fname` :  fileame to read</span>
-<span class="sd">			</span>
-<span class="sd">			:Returns:</span>
-<span class="sd">			</span>
-<span class="sd">				An array object that holds raw (unscaled) data from `fname`</span>
-<span class="sd">			</span>
-<span class="sd">			:Errors:</span>
-<span class="sd">			</span>
-<span class="sd">				None</span>
+<span class="sd">				- `fname` :	list of filenames</span>
 <span class="sd">		&quot;&quot;&quot;</span>
 		<span class="k">pass</span></div>
 
-<div class="viewcode-block" id="metaTrajIO.popfnames"><a class="viewcode-back" href="../../api-doc/mosaic.meta.html#mosaic.metaTrajIO.metaTrajIO.popfnames">[docs]</a>	<span class="k">def</span> <span class="nf">popfnames</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="metaTrajIO.popfnames"><a class="viewcode-back" href="../../api-doc/mosaic.meta.html#mosaic.metaTrajIO.metaTrajIO.popfnames">[docs]</a>	<span class="k">def</span> <span class="nf">popfnames</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
 		<span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">			Pop a single filename from the start of ``self.dataFiles``. If ``self.dataFiles`` is empty,</span>
-<span class="sd">			raise an ``EmptyDataPipeError`` error. </span>
+<span class="sd">			Pop n filenames from the start of self.dataFiles. If filenames run out, </span>
+<span class="sd">			simply return the available names. </span>
 
 <span class="sd">			:Parameters:</span>
-<span class="sd">			</span>
-<span class="sd">				- None</span>
-<span class="sd">			</span>
+<span class="sd">				- `n` : 	number of requested filenames</span>
 <span class="sd">			:Returns:</span>
-<span class="sd">			</span>
-<span class="sd">				A single filename if successful.</span>
-
-<span class="sd">			:Errors:</span>
-
-<span class="sd">				- `EmptyDataPipeError` : when the filename list is empty.</span>
-
+<span class="sd">				List of filenames if successful, empty list if not files remain</span>
 <span class="sd">		&quot;&quot;&quot;</span>
+		<span class="n">poplist</span><span class="o">=</span><span class="p">[]</span>
 		<span class="k">try</span><span class="p">:</span>
-			<span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">dataFiles</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+			<span class="p">[</span> <span class="n">poplist</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dataFiles</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">)</span> <span class="p">]</span>
 		<span class="k">except</span> <span class="ne">IndexError</span><span class="p">:</span>
-			<span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">nearEndOfData</span><span class="p">:</span>
-				<span class="bp">self</span><span class="o">.</span><span class="n">Stop</span><span class="p">()</span>
-			<span class="k">else</span><span class="p">:</span>
-				<span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;End of data is approaching.&quot;</span><span class="p">)</span>
-				<span class="bp">self</span><span class="o">.</span><span class="n">nearEndOfData</span><span class="o">+=</span><span class="mi">1</span></div>
+			<span class="k">pass</span>
+		<span class="k">return</span> <span class="n">poplist</span></div>
 
 	<span class="c1">#################################################################</span>
 	<span class="c1"># Internal Functions</span>
@@ -620,42 +508,32 @@
 	<span class="k">def</span> <span class="nf">_initPipe</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 		<span class="c1"># Last, on startup load a single data file to force</span>
 		<span class="c1"># the sampling frequency FsHz to be set on startup</span>
-		<span class="bp">self</span><span class="o">.</span><span class="n">_appenddata</span><span class="p">()</span>
-		
+		<span class="n">fnames</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">popfnames</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+		<span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">fnames</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">_appenddata</span><span class="p">(</span><span class="n">fnames</span><span class="p">)</span>
+		<span class="k">else</span><span class="p">:</span>
+			<span class="k">raise</span> <span class="n">EmptyDataPipeError</span><span class="p">(</span><span class="s2">&quot;End of data.&quot;</span><span class="p">)</span>
+
 		<span class="bp">self</span><span class="o">.</span><span class="n">initPipe</span><span class="o">=</span><span class="bp">True</span>
 
 		<span class="c1"># Set the end point</span>
 		<span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;end&#39;</span><span class="p">):</span>
 			<span class="bp">self</span><span class="o">.</span><span class="n">endIndex</span><span class="o">=</span><span class="nb">int</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">end</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">Fs</span><span class="p">)</span>
-			<span class="bp">self</span><span class="o">.</span><span class="n">datLenSec</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">end</span><span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">start</span>
-		<span class="k">else</span><span class="p">:</span>
-			<span class="bp">self</span><span class="o">.</span><span class="n">datLenSec</span><span class="o">=</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">rawData</span><span class="p">)</span><span class="o">/</span><span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">Fs</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dataFiles</span><span class="p">)</span><span class="o">+</span><span class="mi">1</span><span class="p">))</span>
-			
+
 		<span class="c1"># Drop the first &#39;n&#39; points specified by the start keyword</span>
 		<span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;start&#39;</span><span class="p">):</span>
 			<span class="bp">self</span><span class="o">.</span><span class="n">startIndex</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">start</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">Fs</span><span class="p">)</span>
 			<span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">startIndex</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
-				<span class="n">nBlks</span><span class="o">=</span><span class="nb">int</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">startIndex</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">/</span><span class="bp">self</span><span class="o">.</span><span class="n">CHUNKSIZE</span><span class="p">)</span>
-				<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">nBlks</span><span class="p">):</span>
-					<span class="bp">self</span><span class="o">.</span><span class="n">popdata</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">CHUNKSIZE</span><span class="p">)</span>
-
-				<span class="bp">self</span><span class="o">.</span><span class="n">popdata</span><span class="p">(</span> <span class="nb">int</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">startIndex</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">%</span><span class="bp">self</span><span class="o">.</span><span class="n">CHUNKSIZE</span><span class="p">)</span> <span class="p">)</span>
+				<span class="bp">self</span><span class="o">.</span><span class="n">popdata</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">startIndex</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
 
 	<span class="k">def</span> <span class="nf">_setupDataFilter</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 		<span class="n">filtsettings</span><span class="o">=</span><span class="n">settings</span><span class="o">.</span><span class="n">settings</span><span class="p">(</span> <span class="bp">self</span><span class="o">.</span><span class="n">datPath</span> <span class="p">)</span><span class="o">.</span><span class="n">getSettings</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">datafilter</span><span class="o">.</span><span class="n">__name__</span><span class="p">)</span>
 		<span class="k">if</span> <span class="n">filtsettings</span><span class="o">==</span><span class="p">{}:</span>
-			<span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;WARNING: No settings found for &#39;{0}&#39;. Data filtering is disabled&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">datafilter</span><span class="o">.</span><span class="n">__name__</span><span class="p">)))</span>
+			<span class="k">print</span> <span class="s2">&quot;No settings found for &#39;{0}&#39;. Data filtering is disabled&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">datafilter</span><span class="o">.</span><span class="n">__name__</span><span class="p">))</span>
 			<span class="bp">self</span><span class="o">.</span><span class="n">dataFilter</span><span class="o">=</span><span class="bp">False</span>
 			<span class="k">return</span>
 
-		<span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">datafilter</span><span class="p">(</span><span class="o">**</span><span class="n">filtsettings</span><span class="p">)</span>
-
-	<span class="k">def</span> <span class="nf">_createGenerator</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-		<span class="n">i</span><span class="o">=</span><span class="mi">0</span>
-		<span class="k">while</span> <span class="n">i</span><span class="o">&lt;</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">rawData</span><span class="p">):</span>
-			<span class="k">yield</span> <span class="bp">self</span><span class="o">.</span><span class="n">rawData</span><span class="p">[</span><span class="n">i</span><span class="p">:</span><span class="n">i</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">CHUNKSIZE</span><span class="p">]</span>
-			<span class="n">i</span><span class="o">+=</span><span class="bp">self</span><span class="o">.</span><span class="n">CHUNKSIZE</span></div>
-
+		<span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">datafilter</span><span class="p">(</span><span class="o">**</span><span class="n">filtsettings</span><span class="p">)</span></div>
 </pre></div>
 
     </div>

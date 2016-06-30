@@ -118,8 +118,8 @@ def GenerateTableFromVersion(baseurl, title, version, showBinaries=True):
 if __name__ == '__main__':
   url="https://github.com/usnistgov/mosaic/releases/download/v"
   vers=[
-    ("Version "+str(mosaic.__version__), str(mosaic.__version__), True),
-    ("Version 1.2", "1.2",False),
+    # ("Version "+str(mosaic.__version__), str(mosaic.__version__), True),
+    ("Version 1.2", "1.2",True),
     ("Version 1.1", "1.1",False),
     ("Version 1.0", "1.0",False)
     ]

@@ -5,7 +5,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>mosaic.tsvTrajIO &mdash; MOSAIC 1.3b3 documentation</title>
+    <title>mosaic.tsvTrajIO &mdash; MOSAIC 1.2 documentation</title>
     
     <link rel="stylesheet" href="../../_static/basic.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
@@ -16,7 +16,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
-        VERSION:     '1.3b3',
+        VERSION:     '1.2',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -31,7 +31,7 @@
     <script type="text/javascript" src="../../_static/bootstrap-3.3.4/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="../../_static/bootstrap-sphinx.js"></script>
     <link rel="shortcut icon" href="../../_static/favicon.ico"/>
-    <link rel="top" title="MOSAIC 1.3b3 documentation" href="../../index.html" />
+    <link rel="top" title="MOSAIC 1.2 documentation" href="../../index.html" />
     <link rel="up" title="Module code" href="../index.html" />
 
 <meta charset='utf-8'>
@@ -44,6 +44,8 @@
 	</script>
 	<script type="text/javascript" id="_fed_an_js_tag" src="//www.nist.gov/js/federated-analytics.all.min.js?agency=NIST&subagency=github&pua=UA-42404149-54&yt=true&exts=ppsx,pps,f90,sch,rtf,wrl,txz,m1v,xlsm,msi,xsd,f,tif,eps,mpg,xml,pl,xlt,c">
 	</script>	
+
+	<meta name="theme-color" content="#283593">
 
   </head>
   <body role="document">
@@ -59,7 +61,7 @@
         </button>
         <a class="navbar-brand" href="../../index.html"><img src="../../_static/icon_36.png">
            </a>
-        <span class="navbar-text navbar-version pull-left"><b>1.3b3</b></span>
+        <span class="navbar-text navbar-version pull-left"><b>1.2</b></span>
       </div>
 
         <div class="collapse navbar-collapse nav-collapse">
@@ -127,8 +129,7 @@
     <div class="col-md-12 content">
       
   <h1>Source code for mosaic.tsvTrajIO</h1><div class="highlight"><pre>
-<span></span><span class="c1"># -*- coding: utf-8 -*-</span>
-<span class="sd">&quot;&quot;&quot;</span>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">	An implementation of metaTrajIO that reads tab separated valued (TSV) files</span>
 
 <span class="sd">	:Created: 	7/31/2012</span>
@@ -136,20 +137,14 @@
 <span class="sd">	:License:	See LICENSE.TXT</span>
 <span class="sd">	:ChangeLog:</span>
 <span class="sd">	.. line-block::</span>
-<span class="sd">		11/30/15 	AB 	Assumes ``timeCol`` is specified in seconds.</span>
-<span class="sd">		11/30/15 	AB 	Added a new keyword ``scale`` to allow scaling TSV data.</span>
-<span class="sd">		3/28/15 	AB 	Updated file read code to match new metaTrajIO API.</span>
+<span class="sd">		7/31/12		AB	Initial version</span>
 <span class="sd">		6/30/13		AB 	Added the &#39;seprator&#39; kwarg to the class initializer to allow any delimited </span>
 <span class="sd">						files to be read. e.g. &#39;&quot;\\&quot;t&#39; (default), &#39;,&#39;, etc.</span>
-<span class="sd">		7/31/12		AB	Initial version</span>
-
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span> 
 
 <span class="kn">import</span> <span class="nn">metaTrajIO</span>
 <span class="kn">import</span> <span class="nn">csv</span>
-
-<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;tsvTrajIO&quot;</span><span class="p">]</span>
 
 <div class="viewcode-block" id="tsvTrajIO"><a class="viewcode-back" href="../../api-doc/mosaic.traj.html#mosaic.tsvTrajIO.tsvTrajIO">[docs]</a><span class="k">class</span> <span class="nc">tsvTrajIO</span><span class="p">(</span><span class="n">metaTrajIO</span><span class="o">.</span><span class="n">metaTrajIO</span><span class="p">):</span>
 	<span class="sd">&quot;&quot;&quot;</span>
@@ -159,8 +154,7 @@
 <span class="sd">			In addition to :class:`~mosaic.metaTrajIO.metaTrajIO` args,</span>
 <span class="sd">				- `headers` : 		If True, the first row is ignored (default: True)</span>
 <span class="sd">				- `separator` :	set the data separator (defualt: &#39;&quot;\\&quot;t&#39;)</span>
-<span class="sd">				- `scale` : set the data scale (default: 1). For example to convert from  to pA set ``scale=1e12``.</span>
-
+<span class="sd">			</span>
 <span class="sd">				Either:</span>
 <span class="sd">					- `Fs` : 			Sampling frequency in Hz. If set, all other options are ignored and the first column in the file is assumed to be the current in pA.</span>
 <span class="sd">				Or:</span>
@@ -174,8 +168,6 @@
 	<span class="k">def</span> <span class="nf">_init</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
 		<span class="c1"># Check if headers are present</span>
 		<span class="bp">self</span><span class="o">.</span><span class="n">hasHeaders</span><span class="o">=</span><span class="nb">bool</span><span class="p">(</span><span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;headers&#39;</span><span class="p">,</span> <span class="bp">True</span><span class="p">))</span>
-		<span class="bp">self</span><span class="o">.</span><span class="n">scale</span><span class="o">=</span><span class="nb">float</span><span class="p">(</span><span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;scale&#39;</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">))</span>
-
 		<span class="k">try</span><span class="p">:</span>
 			<span class="c1"># if the sampling frequency is set explicitly, currents </span>
 			<span class="c1"># in pA will be in column 0.</span>
@@ -187,11 +179,11 @@
 			<span class="c1"># If Fs is not set explicitly assume by default two columns,</span>
 			<span class="c1"># with time in sec in col 0 and current in pA in column 1, unless</span>
 			<span class="c1"># specified otherwise by the user</span>
-			<span class="bp">self</span><span class="o">.</span><span class="n">nCols</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;nCols&#39;</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
-			<span class="bp">self</span><span class="o">.</span><span class="n">timeCol</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;timeCol&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
-			<span class="bp">self</span><span class="o">.</span><span class="n">currCol</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;currCol&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">nCols</span><span class="o">=</span><span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;nCols&#39;</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">timeCol</span><span class="o">=</span><span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;timeCol&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">currCol</span><span class="o">=</span><span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;currCol&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
 
-			<span class="bp">self</span><span class="o">.</span><span class="n">userSetFs</span><span class="o">=</span><span class="bp">False</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">userSetFs</span><span class="o">=</span><span class="bp">True</span>
 
 		<span class="c1"># The default data separator is a tab.</span>
 		<span class="bp">self</span><span class="o">.</span><span class="n">separator</span><span class="o">=</span><span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;separator&#39;</span><span class="p">,</span> <span class="s1">&#39;</span><span class="se">\t</span><span class="s1">&#39;</span><span class="p">)</span>
@@ -201,28 +193,27 @@
 
 <div class="viewcode-block" id="tsvTrajIO.readdata"><a class="viewcode-back" href="../../api-doc/mosaic.traj.html#mosaic.tsvTrajIO.tsvTrajIO.readdata">[docs]</a>	<span class="k">def</span> <span class="nf">readdata</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fname</span><span class="p">):</span>
 		<span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">			Read a single TSV file and return raw (unscaled) data contained within it.</span>
+<span class="sd">			Read a single TSV file and append its data to the data pipeline.</span>
 <span class="sd">			Set/update a class attribute Fs with the sampling frequency in Hz.</span>
 
 <span class="sd">			:Parameters:</span>
-
-<span class="sd">				- `fname` :  fileame to read</span>
+<span class="sd">				- `fname` :  list of data files to read</span>
 
 <span class="sd">			:Returns:</span>
-
-<span class="sd">				- An array object that holds raw (unscaled) data from `fname`</span>
+<span class="sd">				None</span>
 <span class="sd">				</span>
 <span class="sd">			:Errors:</span>
-<span class="sd">			</span>
 <span class="sd">				- `SamplingRateChangedError` : if the sampling rate for any data file differs from previous</span>
 <span class="sd">		&quot;&quot;&quot;</span>
-		<span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__readtsv</span><span class="p">(</span><span class="n">fname</span><span class="p">)</span></div>
+		<span class="n">data</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([])</span>
+		<span class="c1"># Add new data to the existing array</span>
+		<span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">fname</span><span class="p">:</span>
+			<span class="n">data</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">hstack</span><span class="p">((</span><span class="n">data</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">__readtsv</span><span class="p">(</span><span class="n">f</span><span class="p">)))</span>
+
+		<span class="k">return</span> <span class="n">data</span></div>
 
 	<span class="k">def</span> <span class="nf">_formatsettings</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-		<span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">			Log settings strings</span>
-<span class="sd">		&quot;&quot;&quot;</span>
-		<span class="k">pass</span>
+		<span class="k">return</span> <span class="s2">&quot;&quot;</span>
 
 	<span class="k">def</span> <span class="nf">__readtsv</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fname</span><span class="p">):</span>
 		<span class="sd">&quot;&quot;&quot;</span>
@@ -242,25 +233,17 @@
 			<span class="n">p1</span><span class="o">=</span><span class="n">r1</span><span class="o">.</span><span class="n">next</span><span class="p">()</span>
 			<span class="n">p2</span><span class="o">=</span><span class="n">r1</span><span class="o">.</span><span class="n">next</span><span class="p">()</span>
 
-			<span class="n">dt</span><span class="o">=</span><span class="nb">float</span><span class="p">(</span><span class="n">p2</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">timeCol</span><span class="p">])</span><span class="o">-</span><span class="nb">float</span><span class="p">(</span><span class="n">p1</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">timeCol</span><span class="p">])</span>
-
 			<span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;Fs&#39;</span><span class="p">):</span>
-				<span class="bp">self</span><span class="o">.</span><span class="n">Fs</span><span class="o">=</span><span class="mf">1.</span><span class="o">/</span><span class="n">dt</span>
+				<span class="bp">self</span><span class="o">.</span><span class="n">Fs</span><span class="o">=</span><span class="mf">1000.</span><span class="o">/</span><span class="p">(</span><span class="n">p2</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">timeCol</span><span class="p">]</span><span class="o">-</span><span class="n">p1</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">timeCol</span><span class="p">])</span>
 			<span class="c1"># else check if it s the same as before</span>
 			<span class="k">else</span><span class="p">:</span>
-				<span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">Fs</span><span class="o">!=</span><span class="mf">1.</span><span class="o">/</span><span class="n">dt</span><span class="p">:</span>
+				<span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">Fs</span><span class="o">!=</span><span class="mf">1000.</span><span class="o">/</span><span class="p">(</span><span class="n">p2</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">timeCol</span><span class="p">]</span><span class="o">-</span><span class="n">p1</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">timeCol</span><span class="p">]):</span>
 					<span class="k">raise</span> <span class="n">metaTrajIO</span><span class="o">.</span><span class="n">SamplingRateChangedError</span><span class="p">(</span><span class="s2">&quot;The sampling rate in the data file &#39;{0}&#39; has changed.&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">fname</span><span class="p">))</span>
 				
 			<span class="c1"># Store the ionic currents for the first two points</span>
-			<span class="n">dat</span><span class="o">=</span><span class="p">[</span><span class="nb">float</span><span class="p">(</span><span class="n">p1</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">currCol</span><span class="p">]),</span> <span class="nb">float</span><span class="p">(</span><span class="n">p2</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">currCol</span><span class="p">])]</span>
+			<span class="n">dat</span><span class="o">=</span><span class="p">[</span><span class="n">p1</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">currCol</span><span class="p">],</span> <span class="n">p2</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">currCol</span><span class="p">]]</span>
 
-			<span class="n">dat</span><span class="o">.</span><span class="n">extend</span><span class="p">([</span> <span class="nb">float</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">currCol</span><span class="p">])</span> <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">r1</span> <span class="p">])</span>
-			
-			<span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span> <span class="n">dat</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
-
-	<span class="k">def</span> <span class="nf">scaleData</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
-		<span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">scale</span><span class="o">*</span><span class="n">data</span></div>
-
+			<span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span> <span class="n">dat</span><span class="o">.</span><span class="n">extend</span><span class="p">([</span> <span class="nb">float</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">currCol</span><span class="p">])</span> <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">r1</span> <span class="p">]),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span></div>
 </pre></div>
 
     </div>

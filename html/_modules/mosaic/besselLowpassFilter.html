@@ -5,7 +5,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>mosaic.besselLowpassFilter &mdash; MOSAIC 1.3b3 documentation</title>
+    <title>mosaic.besselLowpassFilter &mdash; MOSAIC 1.2 documentation</title>
     
     <link rel="stylesheet" href="../../_static/basic.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
@@ -16,7 +16,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
-        VERSION:     '1.3b3',
+        VERSION:     '1.2',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -31,7 +31,7 @@
     <script type="text/javascript" src="../../_static/bootstrap-3.3.4/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="../../_static/bootstrap-sphinx.js"></script>
     <link rel="shortcut icon" href="../../_static/favicon.ico"/>
-    <link rel="top" title="MOSAIC 1.3b3 documentation" href="../../index.html" />
+    <link rel="top" title="MOSAIC 1.2 documentation" href="../../index.html" />
     <link rel="up" title="Module code" href="../index.html" />
 
 <meta charset='utf-8'>
@@ -44,6 +44,8 @@
 	</script>
 	<script type="text/javascript" id="_fed_an_js_tag" src="//www.nist.gov/js/federated-analytics.all.min.js?agency=NIST&subagency=github&pua=UA-42404149-54&yt=true&exts=ppsx,pps,f90,sch,rtf,wrl,txz,m1v,xlsm,msi,xsd,f,tif,eps,mpg,xml,pl,xlt,c">
 	</script>	
+
+	<meta name="theme-color" content="#283593">
 
   </head>
   <body role="document">
@@ -59,7 +61,7 @@
         </button>
         <a class="navbar-brand" href="../../index.html"><img src="../../_static/icon_36.png">
            </a>
-        <span class="navbar-text navbar-version pull-left"><b>1.3b3</b></span>
+        <span class="navbar-text navbar-version pull-left"><b>1.2</b></span>
       </div>
 
         <div class="collapse navbar-collapse nav-collapse">
@@ -127,8 +129,7 @@
     <div class="col-md-12 content">
       
   <h1>Source code for mosaic.besselLowpassFilter</h1><div class="highlight"><pre>
-<span></span><span class="c1"># -*- coding: utf-8 -*-</span>
-<span class="sd">&quot;&quot;&quot;</span>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">	Implementation of an &#39;N&#39; order Bessel filter</span>
 
 <span class="sd">	:Created: 7/1/2013</span>
@@ -136,18 +137,14 @@
 <span class="sd">	:License:	See LICENSE.TXT</span>
 <span class="sd">	:ChangeLog:</span>
 <span class="sd">	.. line-block::</span>
-<span class="sd">		9/13/15 	AB 	Updated logging to use mosaicLogFormat class</span>
 <span class="sd">		7/1/13		AB	Initial version</span>
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span> 
 <span class="kn">import</span> <span class="nn">scipy.signal</span> <span class="kn">as</span> <span class="nn">sig</span>
 
-<span class="kn">import</span> <span class="nn">mosaic.metaIOFilter</span>
-<span class="kn">import</span> <span class="nn">mosaic.utilities.mosaicLogging</span> <span class="kn">as</span> <span class="nn">mlog</span>
+<span class="kn">import</span> <span class="nn">metaIOFilter</span>
 
-<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;besselLowpassFilter&quot;</span><span class="p">]</span>
-
-<div class="viewcode-block" id="besselLowpassFilter"><a class="viewcode-back" href="../../api-doc/mosaic.filter.html#mosaic.besselLowpassFilter.besselLowpassFilter">[docs]</a><span class="k">class</span> <span class="nc">besselLowpassFilter</span><span class="p">(</span><span class="n">mosaic</span><span class="o">.</span><span class="n">metaIOFilter</span><span class="o">.</span><span class="n">metaIOFilter</span><span class="p">):</span>
+<div class="viewcode-block" id="besselLowpassFilter"><a class="viewcode-back" href="../../api-doc/mosaic.filter.html#mosaic.besselLowpassFilter.besselLowpassFilter">[docs]</a><span class="k">class</span> <span class="nc">besselLowpassFilter</span><span class="p">(</span><span class="n">metaIOFilter</span><span class="o">.</span><span class="n">metaIOFilter</span><span class="p">):</span>
 	<span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">		:Keyword Args:</span>
 <span class="sd">		In addition to metaIOFilter.__init__ args,</span>
@@ -163,8 +160,6 @@
 			<span class="bp">self</span><span class="o">.</span><span class="n">filterCutoff</span><span class="o">=</span><span class="nb">float</span><span class="p">(</span><span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;filterCutoff&#39;</span><span class="p">])</span>
 		<span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
 			<span class="k">print</span> <span class="s2">&quot;Missing mandatory arguments &#39;filterOrder&#39; or &#39;filterCutoff&#39;&quot;</span>
-
-		<span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">=</span><span class="n">mlog</span><span class="o">.</span><span class="n">mosaicLogging</span><span class="p">()</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="n">__name__</span><span class="p">)</span>
 
 
 <div class="viewcode-block" id="besselLowpassFilter.filterData"><a class="viewcode-back" href="../../api-doc/mosaic.filter.html#mosaic.besselLowpassFilter.besselLowpassFilter.filterData">[docs]</a>	<span class="k">def</span> <span class="nf">filterData</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">icurr</span><span class="p">,</span> <span class="n">Fs</span><span class="p">):</span>
@@ -199,15 +194,17 @@
 
 <div class="viewcode-block" id="besselLowpassFilter.formatsettings"><a class="viewcode-back" href="../../api-doc/mosaic.filter.html#mosaic.besselLowpassFilter.besselLowpassFilter.formatsettings">[docs]</a>	<span class="k">def</span> <span class="nf">formatsettings</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 		<span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">			Populate `logObject` with settings strings for display</span>
+<span class="sd">			Return a formatted string of filter settings</span>
 <span class="sd">		&quot;&quot;&quot;</span>
-		<span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span> <span class="s1">&#39;</span><span class="se">\t</span><span class="s1">Filter settings:&#39;</span> <span class="p">)</span>
+		<span class="n">fmtstr</span><span class="o">=</span><span class="s2">&quot;&quot;</span>
 
-		<span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span> <span class="s1">&#39;</span><span class="se">\t\t</span><span class="s1">Filter type = {0}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__class__</span><span class="o">.</span><span class="n">__name__</span><span class="p">)</span> <span class="p">)</span>
-		<span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span> <span class="s1">&#39;</span><span class="se">\t\t</span><span class="s1">Filter order = {0}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">filterOrder</span><span class="p">)</span> <span class="p">)</span>
-		<span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span> <span class="s1">&#39;</span><span class="se">\t\t</span><span class="s1">Filter cutoff = {0} kHz&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">filterCutoff</span><span class="o">*</span><span class="mf">1e-3</span><span class="p">)</span> <span class="p">)</span>
-		<span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span> <span class="s1">&#39;</span><span class="se">\t\t</span><span class="s1">Decimation = {0}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">decimate</span><span class="p">)</span> <span class="p">)</span></div></div>
-		
+		<span class="n">fmtstr</span><span class="o">+=</span><span class="s1">&#39;</span><span class="se">\t</span><span class="s1">Filter settings: </span><span class="se">\n</span><span class="s1">&#39;</span>
+		<span class="n">fmtstr</span><span class="o">+=</span><span class="s1">&#39;</span><span class="se">\t\t</span><span class="s1">Filter type = {0}</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__class__</span><span class="o">.</span><span class="n">__name__</span><span class="p">)</span>
+		<span class="n">fmtstr</span><span class="o">+=</span><span class="s1">&#39;</span><span class="se">\t\t</span><span class="s1">Filter order = {0}</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">filterOrder</span><span class="p">)</span>
+		<span class="n">fmtstr</span><span class="o">+=</span><span class="s1">&#39;</span><span class="se">\t\t</span><span class="s1">Filter cutoff = {0} kHz</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">filterCutoff</span><span class="o">*</span><span class="mf">1e-3</span><span class="p">)</span>
+		<span class="n">fmtstr</span><span class="o">+=</span><span class="s1">&#39;</span><span class="se">\t\t</span><span class="s1">Decimation = {0}</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">decimate</span><span class="p">)</span>
+
+		<span class="k">return</span> <span class="n">fmtstr</span></div></div>
 </pre></div>
 
     </div>

@@ -5,7 +5,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>mosaic.binTrajIO &mdash; MOSAIC 1.3b3 documentation</title>
+    <title>mosaic.binTrajIO &mdash; MOSAIC 1.2 documentation</title>
     
     <link rel="stylesheet" href="../../_static/basic.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
@@ -16,7 +16,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
-        VERSION:     '1.3b3',
+        VERSION:     '1.2',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -31,7 +31,7 @@
     <script type="text/javascript" src="../../_static/bootstrap-3.3.4/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="../../_static/bootstrap-sphinx.js"></script>
     <link rel="shortcut icon" href="../../_static/favicon.ico"/>
-    <link rel="top" title="MOSAIC 1.3b3 documentation" href="../../index.html" />
+    <link rel="top" title="MOSAIC 1.2 documentation" href="../../index.html" />
     <link rel="up" title="Module code" href="../index.html" />
 
 <meta charset='utf-8'>
@@ -44,6 +44,8 @@
 	</script>
 	<script type="text/javascript" id="_fed_an_js_tag" src="//www.nist.gov/js/federated-analytics.all.min.js?agency=NIST&subagency=github&pua=UA-42404149-54&yt=true&exts=ppsx,pps,f90,sch,rtf,wrl,txz,m1v,xlsm,msi,xsd,f,tif,eps,mpg,xml,pl,xlt,c">
 	</script>	
+
+	<meta name="theme-color" content="#283593">
 
   </head>
   <body role="document">
@@ -59,7 +61,7 @@
         </button>
         <a class="navbar-brand" href="../../index.html"><img src="../../_static/icon_36.png">
            </a>
-        <span class="navbar-text navbar-version pull-left"><b>1.3b3</b></span>
+        <span class="navbar-text navbar-version pull-left"><b>1.2</b></span>
       </div>
 
         <div class="collapse navbar-collapse nav-collapse">
@@ -127,8 +129,7 @@
     <div class="col-md-12 content">
       
   <h1>Source code for mosaic.binTrajIO</h1><div class="highlight"><pre>
-<span></span><span class="c1"># -*- coding: utf-8 -*-</span>
-<span class="sd">&quot;&quot;&quot;</span>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">Binary file implementation of metaTrajIO. Read raw binary files with specified record sizes</span>
 
 <span class="sd">	:Created: 4/22/2013</span>
@@ -136,8 +137,7 @@
 <span class="sd">	:License:	See LICENSE.TXT</span>
 <span class="sd">	:ChangeLog:</span>
 <span class="sd">	.. line-block::</span>
-<span class="sd">		9/13/15 	AB 	Updated logging to use mosaicLogFormat class</span>
-<span class="sd">		3/28/15 	AB 	Updated file read code to match new metaTrajIO API.</span>
+
 <span class="sd">		1/27/15 	AB 	Memory map files on read.</span>
 <span class="sd">		1/26/15 	AB 	Refactored code to read interleaved binary data. </span>
 <span class="sd">		7/27/14		AB 	Update interface to specify python PythonStructCode instead of </span>
@@ -149,11 +149,8 @@
 <span class="kn">import</span> <span class="nn">struct</span>
 
 <span class="kn">import</span> <span class="nn">mosaic.metaTrajIO</span>
-<span class="kn">import</span> <span class="nn">mosaic.utilities.mosaicLogging</span> <span class="kn">as</span> <span class="nn">mlog</span>
 
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
-
-<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;binTrajIO&quot;</span><span class="p">,</span> <span class="s2">&quot;InvalidDataColumnError&quot;</span><span class="p">]</span>
 
 <span class="k">class</span> <span class="nc">InvalidDataColumnError</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
 	<span class="k">pass</span>
@@ -275,7 +272,7 @@
 			<span class="bp">self</span><span class="o">.</span><span class="n">IonicCurrentColumn</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">ColumnTypes</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
 			<span class="bp">self</span><span class="o">.</span><span class="n">IonicCurrentType</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">ColumnTypes</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span>
 
-			<span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;WARNING: IonicCurrentColumn {0} not found. Defaulting to {1}.&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">err</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">IonicCurrentColumn</span><span class="p">))</span>
+			<span class="k">print</span> <span class="s2">&quot;IonicCurrentColumn {0} not found. Defaulting to {1}.&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">err</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">IonicCurrentColumn</span><span class="p">)</span>
 
 
 		<span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;AmplifierScale&#39;</span><span class="p">):</span>
@@ -295,50 +292,48 @@
 		<span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;Fs&#39;</span><span class="p">):</span>	
 			<span class="bp">self</span><span class="o">.</span><span class="n">Fs</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">SamplingFrequency</span>
 
-		<span class="bp">self</span><span class="o">.</span><span class="n">binLogger</span><span class="o">=</span><span class="n">mlog</span><span class="o">.</span><span class="n">mosaicLogging</span><span class="p">()</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">__name__</span><span class="p">)</span>
-
 <div class="viewcode-block" id="binTrajIO.readdata"><a class="viewcode-back" href="../../api-doc/mosaic.traj.html#mosaic.binTrajIO.binTrajIO.readdata">[docs]</a>	<span class="k">def</span> <span class="nf">readdata</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fname</span><span class="p">):</span>
 		<span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">			Return raw data from a single data file. Set a class </span>
-<span class="sd">			attribute Fs with the sampling frequency in Hz.</span>
+<span class="sd">			Read one or more files and append their data to the data pipeline.</span>
+<span class="sd">			Set a class attribute Fs with the sampling frequency in Hz.</span>
 
 <span class="sd">			:Parameters:</span>
-
-<span class="sd">				- `fname` :  fileame to read</span>
-<span class="sd">			</span>
+<span class="sd">				- `fname` :  list of data files to read</span>
 <span class="sd">			:Returns:</span>
-<span class="sd">			</span>
-<span class="sd">				- An array object that holds raw (unscaled) data from `fname`</span>
-<span class="sd">			</span>
+<span class="sd">				None</span>
 <span class="sd">			:Errors:</span>
-
 <span class="sd">				None</span>
 <span class="sd">		&quot;&quot;&quot;</span>
-		<span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">readBinaryFile</span><span class="p">(</span><span class="n">fname</span><span class="p">)</span></div>
+		<span class="n">tempdata</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([])</span>
+		<span class="c1"># Read binary data and add it to the data pipe</span>
+		<span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">fname</span><span class="p">:</span>
+			<span class="n">tempdata</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">hstack</span><span class="p">((</span> <span class="n">tempdata</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">readBinaryFile</span><span class="p">(</span><span class="n">f</span><span class="p">)</span> <span class="p">))</span>
+
+		<span class="k">return</span> <span class="n">tempdata</span></div>
 		
 	<span class="k">def</span> <span class="nf">_formatsettings</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 		<span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">			Log settings strings</span>
+<span class="sd">			Return a formatted string of settings for display</span>
 <span class="sd">		&quot;&quot;&quot;</span>
-		<span class="bp">self</span><span class="o">.</span><span class="n">binLogger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span> <span class="s1">&#39;</span><span class="se">\t\t</span><span class="s1">Amplifier scale = {0} pA&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">AmplifierScale</span><span class="p">)</span> <span class="p">)</span>
-		<span class="bp">self</span><span class="o">.</span><span class="n">binLogger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span> <span class="s1">&#39;</span><span class="se">\t\t</span><span class="s1">Amplifier offset = {0} pA&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">AmplifierOffset</span><span class="p">)</span> <span class="p">)</span>
-		<span class="bp">self</span><span class="o">.</span><span class="n">binLogger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span> <span class="s1">&#39;</span><span class="se">\t\t</span><span class="s1">Header offset = {0} bytes&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">HeaderOffset</span><span class="p">)</span> <span class="p">)</span>
-		<span class="bp">self</span><span class="o">.</span><span class="n">binLogger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span> <span class="s1">&#39;</span><span class="se">\t\t</span><span class="s1">Data type = </span><span class="se">\&#39;</span><span class="s1">{0}</span><span class="se">\&#39;</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">IonicCurrentType</span><span class="p">)</span> <span class="p">)</span>
+		<span class="n">fmtstr</span><span class="o">=</span><span class="s2">&quot;&quot;</span>
+		
+		<span class="n">fmtstr</span><span class="o">+=</span><span class="s1">&#39;</span><span class="se">\n\t\t</span><span class="s1">Amplifier scale = {0} pA</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">AmplifierScale</span><span class="p">)</span>
+		<span class="n">fmtstr</span><span class="o">+=</span><span class="s1">&#39;</span><span class="se">\t\t</span><span class="s1">Amplifier offset = {0} pA</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">AmplifierOffset</span><span class="p">)</span>
+		<span class="n">fmtstr</span><span class="o">+=</span><span class="s1">&#39;</span><span class="se">\t\t</span><span class="s1">Header offset = {0} bytes</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">HeaderOffset</span><span class="p">)</span>
+		<span class="n">fmtstr</span><span class="o">+=</span><span class="s1">&#39;</span><span class="se">\t\t</span><span class="s1">Data type = </span><span class="se">\&#39;</span><span class="s1">{0}</span><span class="se">\&#39;\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">IonicCurrentType</span><span class="p">)</span>
+	
+		<span class="k">return</span> <span class="n">fmtstr</span>
 
 	<span class="k">def</span> <span class="nf">readBinaryFile</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fname</span><span class="p">):</span>
-		<span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">memmap</span><span class="p">(</span><span class="n">fname</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">ColumnTypes</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="n">offset</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">HeaderOffset</span><span class="p">)[</span><span class="bp">self</span><span class="o">.</span><span class="n">IonicCurrentColumn</span><span class="p">]</span>
+		<span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">transformData</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">memmap</span><span class="p">(</span><span class="n">fname</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">ColumnTypes</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="n">offset</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">HeaderOffset</span><span class="p">)[</span><span class="bp">self</span><span class="o">.</span><span class="n">IonicCurrentColumn</span><span class="p">])</span>
 		
-<div class="viewcode-block" id="binTrajIO.scaleData"><a class="viewcode-back" href="../../api-doc/mosaic.traj.html#mosaic.binTrajIO.binTrajIO.scaleData">[docs]</a>	<span class="k">def</span> <span class="nf">scaleData</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
-		<span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">			See :func:`mosaic.metaTrajIO.metaTrajIO.scaleData`.</span>
-<span class="sd">		&quot;&quot;&quot;</span>
-		<span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">data</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">AmplifierScale</span><span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">AmplifierOffset</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span></div></div>
+	<span class="k">def</span> <span class="nf">transformData</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+		<span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">data</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">AmplifierScale</span><span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">AmplifierOffset</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span></div>
 
 <span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
 	<span class="kn">from</span> <span class="nn">mosaic.utilities.resource_path</span> <span class="kn">import</span> <span class="n">resource_path</span>
-	<span class="kn">import</span> <span class="nn">os</span>
 
-	<span class="n">b</span><span class="o">=</span><span class="n">binTrajIO</span><span class="p">(</span>
+	<span class="k">print</span> <span class="n">binTrajIO</span><span class="p">(</span>
 			<span class="n">fnames</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;data/SingleChan-0001_1.bin&#39;</span><span class="p">],</span> 
 			<span class="n">dcOffset</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> 
 			<span class="n">start</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> 
@@ -346,11 +341,7 @@
 			<span class="n">IonicCurrentColumn</span><span class="o">=</span><span class="s1">&#39;curr&#39;</span><span class="p">,</span> 
 			<span class="n">HeaderOffset</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> 
 			<span class="n">SamplingFrequency</span><span class="o">=</span><span class="mi">500000</span>
-		<span class="p">)</span>
-
-	<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">100</span><span class="p">):</span>
-		<span class="n">d</span><span class="o">=</span><span class="n">b</span><span class="o">.</span><span class="n">popdata</span><span class="p">(</span><span class="mi">100000</span><span class="p">)</span>
-		<span class="k">print</span> <span class="nb">len</span><span class="p">(</span><span class="n">d</span><span class="p">),</span> <span class="n">d</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">d</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">d</span><span class="p">),</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">b</span><span class="o">.</span><span class="n">LastFileProcessed</span><span class="p">),</span> <span class="n">b</span><span class="o">.</span><span class="n">ElapsedTimeSeconds</span>
+		<span class="p">)</span><span class="o">.</span><span class="n">popdata</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
 
 
 

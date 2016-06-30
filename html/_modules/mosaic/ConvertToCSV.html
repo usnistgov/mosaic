@@ -5,7 +5,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>mosaic.ConvertToCSV &mdash; MOSAIC 1.3b3 documentation</title>
+    <title>mosaic.ConvertToCSV &mdash; MOSAIC 1.2 documentation</title>
     
     <link rel="stylesheet" href="../../_static/basic.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
@@ -16,7 +16,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
-        VERSION:     '1.3b3',
+        VERSION:     '1.2',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -31,7 +31,7 @@
     <script type="text/javascript" src="../../_static/bootstrap-3.3.4/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="../../_static/bootstrap-sphinx.js"></script>
     <link rel="shortcut icon" href="../../_static/favicon.ico"/>
-    <link rel="top" title="MOSAIC 1.3b3 documentation" href="../../index.html" />
+    <link rel="top" title="MOSAIC 1.2 documentation" href="../../index.html" />
     <link rel="up" title="Module code" href="../index.html" />
 
 <meta charset='utf-8'>
@@ -44,6 +44,8 @@
 	</script>
 	<script type="text/javascript" id="_fed_an_js_tag" src="//www.nist.gov/js/federated-analytics.all.min.js?agency=NIST&subagency=github&pua=UA-42404149-54&yt=true&exts=ppsx,pps,f90,sch,rtf,wrl,txz,m1v,xlsm,msi,xsd,f,tif,eps,mpg,xml,pl,xlt,c">
 	</script>	
+
+	<meta name="theme-color" content="#283593">
 
   </head>
   <body role="document">
@@ -59,7 +61,7 @@
         </button>
         <a class="navbar-brand" href="../../index.html"><img src="../../_static/icon_36.png">
            </a>
-        <span class="navbar-text navbar-version pull-left"><b>1.3b3</b></span>
+        <span class="navbar-text navbar-version pull-left"><b>1.2</b></span>
       </div>
 
         <div class="collapse navbar-collapse nav-collapse">
@@ -134,13 +136,13 @@
 <span class="sd"> 	:Author: 	Arvind Balijepalli &lt;arvind.balijepalli@nist.gov&gt;</span>
 <span class="sd">	:License:	See LICENSE.TXT	</span>
 <span class="sd">&quot;&quot;&quot;</span>
+<span class="n">__docformat__</span> <span class="o">=</span> <span class="s1">&#39;restructuredtext&#39;</span>
+
 <span class="kn">import</span> <span class="nn">itertools</span>
 <span class="kn">import</span> <span class="nn">string</span>
 
 <span class="kn">from</span> <span class="nn">mosaic.metaTrajIO</span> <span class="kn">import</span> <span class="n">EmptyDataPipeError</span>
 <span class="kn">import</span> <span class="nn">numpy</span>
-
-<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;ConvertToCSV&quot;</span><span class="p">]</span>
 
 <div class="viewcode-block" id="ConvertToCSV"><a class="viewcode-back" href="../../api-doc/mosaic.html#mosaic.ConvertToCSV.ConvertToCSV">[docs]</a><span class="k">class</span> <span class="nc">ConvertToCSV</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
 	<span class="sd">&quot;&quot;&quot;</span>
@@ -150,7 +152,7 @@
 <span class="sd">			- `trajDataObj` : a trajIO data object</span>
 <span class="sd">			- `outdir` : the output directory. Default is *None*, which causes the output to be saved in the same directory as the input data.</span>
 <span class="sd">	&quot;&quot;&quot;</span>
-	<span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">trajDataObj</span><span class="p">,</span> <span class="n">outdir</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">extension</span><span class="o">=</span><span class="s2">&quot;csv&quot;</span><span class="p">):</span>
+	<span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">trajDataObj</span><span class="p">,</span> <span class="n">outdir</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
 		<span class="bp">self</span><span class="o">.</span><span class="n">trajDataObj</span><span class="o">=</span><span class="n">trajDataObj</span>
 		<span class="bp">self</span><span class="o">.</span><span class="n">datPath</span><span class="o">=</span><span class="n">trajDataObj</span><span class="o">.</span><span class="n">datPath</span>
 
@@ -159,8 +161,6 @@
 			<span class="bp">self</span><span class="o">.</span><span class="n">outDir</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">datPath</span>
 		<span class="k">else</span><span class="p">:</span>
 			<span class="bp">self</span><span class="o">.</span><span class="n">outDir</span><span class="o">=</span><span class="n">outdir</span>
-		
-		<span class="bp">self</span><span class="o">.</span><span class="n">extension</span><span class="o">=</span><span class="n">extension</span>
 		
 		<span class="bp">self</span><span class="o">.</span><span class="n">filePrefix</span><span class="o">=</span><span class="bp">None</span>
 		<span class="bp">self</span><span class="o">.</span><span class="n">_creategenerator</span><span class="p">()</span>
@@ -202,7 +202,7 @@
 <span class="sd">		&quot;&quot;&quot;</span>
 		<span class="bp">self</span><span class="o">.</span><span class="n">_creategenerator</span><span class="p">()</span>
 
-		<span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">outDir</span><span class="o">+</span><span class="s1">&#39;/&#39;</span><span class="o">+</span><span class="nb">next</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">fileGenerator</span><span class="p">)</span><span class="o">+</span><span class="s1">&#39;.&#39;</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">extension</span></div></div>
+		<span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">outDir</span><span class="o">+</span><span class="s1">&#39;/&#39;</span><span class="o">+</span><span class="nb">next</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">fileGenerator</span><span class="p">)</span><span class="o">+</span><span class="s1">&#39;.csv&#39;</span></div></div>
 
 		
 </pre></div>

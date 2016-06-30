@@ -5,7 +5,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>13.1.2. Meta-Classes &mdash; MOSAIC 1.3b3 documentation</title>
+    <title>13.1.2. Meta-Classes &mdash; MOSAIC 1.2 documentation</title>
     
     <link rel="stylesheet" href="../_static/basic.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -16,7 +16,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '1.3b3',
+        VERSION:     '1.2',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -31,7 +31,7 @@
     <script type="text/javascript" src="../_static/bootstrap-3.3.4/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="../_static/bootstrap-sphinx.js"></script>
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
-    <link rel="top" title="MOSAIC 1.3b3 documentation" href="../index.html" />
+    <link rel="top" title="MOSAIC 1.2 documentation" href="../index.html" />
     <link rel="up" title="13. API Documentation" href="../doc/apidocs.html" />
     <link rel="next" title="13.1.3. Time-Series IO" href="mosaic.traj.html" />
     <link rel="prev" title="13.1.1. Top-Level Interfaces" href="mosaic.html" />
@@ -47,6 +47,8 @@
 	<script type="text/javascript" id="_fed_an_js_tag" src="//www.nist.gov/js/federated-analytics.all.min.js?agency=NIST&subagency=github&pua=UA-42404149-54&yt=true&exts=ppsx,pps,f90,sch,rtf,wrl,txz,m1v,xlsm,msi,xsd,f,tif,eps,mpg,xml,pl,xlt,c">
 	</script>	
 
+	<meta name="theme-color" content="#283593">
+
   </head>
   <body role="document">
 
@@ -61,7 +63,7 @@
         </button>
         <a class="navbar-brand" href="../index.html"><img src="../_static/icon_36.png">
            </a>
-        <span class="navbar-text navbar-version pull-left"><b>1.3b3</b></span>
+        <span class="navbar-text navbar-version pull-left"><b>1.2</b></span>
       </div>
 
         <div class="collapse navbar-collapse nav-collapse">
@@ -178,7 +180,7 @@ current working directory)</p>
 <blockquote>
 <div><ul class="simple">
 <li><cite>writeEventTS</cite> :      Write event current data to file. (default: 1, write data to file)</li>
-<li><cite>parallelProc</cite> :      Process events in parallel. (default: 1, Yes)</li>
+<li><cite>parallelProc</cite> :      Process events in parallel using the pproc module. (default: 1, Yes)</li>
 <li><cite>reserveNCPU</cite> :               Reserve the specified number of CPUs and exclude them from the parallel pool</li>
 </ul>
 </div></blockquote>
@@ -315,36 +317,6 @@ For example, the blockade depth meta-data can be defined as &#8216;mdBlockadeDep
 </dd></dl>
 
 <dl class="method">
-<dt id="mosaic.metaEventProcessor.metaEventProcessor._mdHeadingDataType">
-<code class="descname">_mdHeadingDataType</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/metaEventProcessor.html#metaEventProcessor._mdHeadingDataType"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mosaic.metaEventProcessor.metaEventProcessor._mdHeadingDataType" title="Permalink to this definition">¶</a></dt>
-<dd><div class="admonition important">
-<p class="first admonition-title">Important</p>
-<p class="last"><strong>Abstract method:</strong> This method must be implemented by a sub-class.</p>
-</div>
-<p>Return a list of meta-data tags data types.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="mosaic.metaEventProcessor.metaEventProcessor._mdHeadings">
-<code class="descname">_mdHeadings</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/metaEventProcessor.html#metaEventProcessor._mdHeadings"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mosaic.metaEventProcessor.metaEventProcessor._mdHeadings" title="Permalink to this definition">¶</a></dt>
-<dd><div class="admonition important">
-<p class="first admonition-title">Important</p>
-<p class="last"><strong>Abstract method:</strong> This method must be implemented by a sub-class.</p>
-</div>
-<p>Return a list of meta-data tags for display purposes.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="mosaic.metaEventProcessor.metaEventProcessor._mdList">
-<code class="descname">_mdList</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/metaEventProcessor.html#metaEventProcessor._mdList"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mosaic.metaEventProcessor.metaEventProcessor._mdList" title="Permalink to this definition">¶</a></dt>
-<dd><div class="admonition important">
-<p class="first admonition-title">Important</p>
-<p class="last"><strong>Abstract method:</strong> This method must be implemented by a sub-class.</p>
-</div>
-<p>Return a list of meta-data set by event processing.</p>
-</dd></dl>
-
-<dl class="method">
 <dt id="mosaic.metaEventProcessor.metaEventProcessor._metaEventProcessor__mdformat">
 <code class="descname">_metaEventProcessor__mdformat</code><span class="sig-paren">(</span><em>dat</em><span class="sig-paren">)</span><a class="headerlink" href="#mosaic.metaEventProcessor.metaEventProcessor._metaEventProcessor__mdformat" title="Permalink to this definition">¶</a></dt>
 <dd><p>Round a float to 3 decimal places. Leave ints and strings unchanged</p>
@@ -357,13 +329,6 @@ For example, the blockade depth meta-data can be defined as &#8216;mdBlockadeDep
 <p class="first admonition-title">Important</p>
 <p class="last"><strong>Abstract method:</strong> This method must be implemented by a sub-class.</p>
 </div>
-</dd></dl>
-
-<dl class="method">
-<dt id="mosaic.metaEventProcessor.metaEventProcessor.flagEvent">
-<code class="descname">flagEvent</code><span class="sig-paren">(</span><em>status</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/metaEventProcessor.html#metaEventProcessor.flagEvent"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mosaic.metaEventProcessor.metaEventProcessor.flagEvent" title="Permalink to this definition">¶</a></dt>
-<dd><p>Set a warning status that starts with &#8216;w&#8217; for non-critical errors. 
-Metadata for these events is preserved and the user can be warned (e.g., in the GUI.)</p>
 </dd></dl>
 
 <dl class="method">
@@ -382,13 +347,31 @@ is returned.</p>
 <dl class="method">
 <dt id="mosaic.metaEventProcessor.metaEventProcessor.mdHeadingDataType">
 <code class="descname">mdHeadingDataType</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/metaEventProcessor.html#metaEventProcessor.mdHeadingDataType"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mosaic.metaEventProcessor.metaEventProcessor.mdHeadingDataType" title="Permalink to this definition">¶</a></dt>
-<dd><p>Return a list of meta-data tags data types.</p>
+<dd><div class="admonition important">
+<p class="first admonition-title">Important</p>
+<p class="last"><strong>Abstract method:</strong> This method must be implemented by a sub-class.</p>
+</div>
+<p>Return a list of meta-data tags data types.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="mosaic.metaEventProcessor.metaEventProcessor.mdHeadings">
 <code class="descname">mdHeadings</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/metaEventProcessor.html#metaEventProcessor.mdHeadings"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mosaic.metaEventProcessor.metaEventProcessor.mdHeadings" title="Permalink to this definition">¶</a></dt>
-<dd><p>Return a list of meta-data tags for display purposes.</p>
+<dd><div class="admonition important">
+<p class="first admonition-title">Important</p>
+<p class="last"><strong>Abstract method:</strong> This method must be implemented by a sub-class.</p>
+</div>
+<p>Return a list of meta-data tags for display purposes.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="mosaic.metaEventProcessor.metaEventProcessor.mdList">
+<code class="descname">mdList</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/metaEventProcessor.html#metaEventProcessor.mdList"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mosaic.metaEventProcessor.metaEventProcessor.mdList" title="Permalink to this definition">¶</a></dt>
+<dd><div class="admonition important">
+<p class="first admonition-title">Important</p>
+<p class="last"><strong>Abstract method:</strong> This method must be implemented by a sub-class.</p>
+</div>
+<p>Return a list of meta-data set by event processing.</p>
 </dd></dl>
 
 <dl class="method">
@@ -767,30 +750,54 @@ the feedback resistance (Rfb) and feedback capacitance (Cfb) to be passed at ini
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><cite>dirname</cite> :           all files from a directory (&#8216;&lt;full path to data directory&gt;&#8217;)</li>
-<li><cite>nfiles</cite> :            if requesting N files (in addition to dirname) from a specified directory</li>
-<li><cite>fnames</cite> :            explicit list of filenames ([file1, file2,...]). This argument cannot be used in conjuction with dirname/nfiles. The filter argument is ignored when used in combination with fnames.</li>
-<li><cite>filter</cite> :            &#8216;&lt;wildcard filter&gt;&#8217; (optional, filter is &#8216;*&#8217; if not specified)</li>
-<li><cite>start</cite> :             Data start point in seconds.</li>
-<li><cite>end</cite> :                       Data end point in seconds.</li>
-<li><cite>datafilter</cite> :        Handle to the algorithm to use to filter the data. If no algorithm is specified, datafilter     is None and no filtering is performed.</li>
-<li><cite>dcOffset</cite> :          Subtract a DC offset from the ionic current data.</li>
+<tr class="field-odd field"><th class="field-name">Keyword Args:</th><td class="field-body"><ul class="first">
+<li><p class="first"><cite>dirname</cite> :           all files from a directory (&#8216;&lt;full path to data directory&gt;&#8217;)</p>
+</li>
+<li><p class="first"><cite>nfiles</cite> :            if requesting N files (in addition to dirname) from a specified directory</p>
+</li>
+<li><dl class="first docutils">
+<dt><cite>fnames</cite></dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">explicit list of filenames ([file1, file2,...]). This argument </span><dd><p class="first last">cannot be used in conjuction with dirname/nfiles. The filter 
+argument is ignored when used in combination with fnames.</p>
+</dd>
+</dl>
+</li>
+<li><p class="first"><cite>filter</cite> :            &#8216;&lt;wildcard filter&gt;&#8217; (optional, filter is &#8216;*&#8217; if not specified)</p>
+</li>
+<li><p class="first"><cite>start</cite> :             Data start point in seconds.</p>
+</li>
+<li><p class="first"><cite>end</cite> :               Data end point in seconds.</p>
+</li>
+<li><dl class="first docutils">
+<dt><cite>datafilter</cite></dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">Handle to the algorithm to use to filter the data. If no algorithm is specified, datafilter</span><dd><p class="first last">is None and no filtering is performed.</p>
+</dd>
+</dl>
+</li>
+<li><p class="first"><cite>dcOffset</cite> :  Subtract a DC offset from the ionic current data.</p>
+</li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Properties:</th><td class="field-body"><ul class="first simple">
-<li><cite>FsHz</cite> :                                      sampling frequency in Hz. If the data was decimated, this property will hold the sampling frequency after decimation.</li>
-<li><cite>LastFileProcessed</cite> :         return the data file that was last processed.</li>
-<li><cite>ElapsedTimeSeconds</cite> :        return the analysis time in sec.</li>
+<tr class="field-even field"><th class="field-name">Properties:</th><td class="field-body"><ul class="first">
+<li><dl class="first docutils">
+<dt><cite>FsHz</cite></dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">sampling frequency in Hz. If the data was decimated, this </span><dd><p class="first last">property will hold the sampling frequency after decimation.</p>
+</dd>
+</dl>
+</li>
+<li><p class="first"><cite>LastFileProcessed</cite> : return the data file that was last processed.</p>
+</li>
+<li><p class="first"><cite>ElapsedTimeSeconds</cite> : return the analysis time in sec.</p>
+</li>
 </ul>
 </td>
 </tr>
 <tr class="field-odd field"><th class="field-name">Errors:</th><td class="field-body"><ul class="first last simple">
-<li><cite>IncompatibleArgumentsError</cite> :        when conflicting arguments are used.</li>
-<li><cite>EmptyDataPipeError</cite> :                        when out of data.</li>
-<li><cite>FileNotFoundError</cite> :                         when data files do not exist in the specified path.</li>
-<li><cite>InsufficientArgumentsError</cite> :        when incompatible arguments are passed</li>
+<li><cite>IncompatibleArgumentsError</cite> : when conflicting arguments are used.</li>
+<li><cite>EmptyDataPipeError</cite> : when out of data.</li>
+<li><cite>FileNotFoundError</cite> : when data files do not exist in the specified path.</li>
+<li><cite>InsufficientArgumentsError</cite> : when incompatible arguments are passed</li>
 </ul>
 </td>
 </tr>
@@ -809,18 +816,11 @@ the feedback resistance (Rfb) and feedback capacitance (Cfb) to be passed at ini
 <dl class="method">
 <dt id="mosaic.metaTrajIO.metaTrajIO._formatsettings">
 <code class="descname">_formatsettings</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/metaTrajIO.html#metaTrajIO._formatsettings"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mosaic.metaTrajIO.metaTrajIO._formatsettings" title="Permalink to this definition">¶</a></dt>
-<dd><p>Log settings strings</p>
-</dd></dl>
-
-<dl class="attribute">
-<dt id="mosaic.metaTrajIO.metaTrajIO.DataLengthSec">
-<code class="descname">DataLengthSec</code><a class="headerlink" href="#mosaic.metaTrajIO.metaTrajIO.DataLengthSec" title="Permalink to this definition">¶</a></dt>
 <dd><div class="admonition important">
 <p class="first admonition-title">Important</p>
-<p class="last"><strong>Property</strong></p>
+<p class="last"><strong>Abstract method:</strong> This method must be implemented by a sub-class.</p>
 </div>
-<p>Return the approximate length of data that will be processed. If the data are in multiple files,
-this property assumes that each file contains an equal amount of data.</p>
+<p>Return a formatted string of settings for display</p>
 </dd></dl>
 
 <dl class="attribute">
@@ -860,25 +860,48 @@ this property assumes that each file contains an equal amount of data.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="mosaic.metaTrajIO.metaTrajIO.popfnames">
-<code class="descname">popfnames</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/metaTrajIO.html#metaTrajIO.popfnames"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mosaic.metaTrajIO.metaTrajIO.popfnames" title="Permalink to this definition">¶</a></dt>
-<dd><p>Pop a single filename from the start of <code class="docutils literal"><span class="pre">self.dataFiles</span></code>. If <code class="docutils literal"><span class="pre">self.dataFiles</span></code> is empty,
-raise an <code class="docutils literal"><span class="pre">EmptyDataPipeError</span></code> error.</p>
+<dt id="mosaic.metaTrajIO.metaTrajIO.popdata">
+<code class="descname">popdata</code><span class="sig-paren">(</span><em>n</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/metaTrajIO.html#metaTrajIO.popdata"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mosaic.metaTrajIO.metaTrajIO.popdata" title="Permalink to this definition">¶</a></dt>
+<dd><p>Pop data points from self.currDataPipe. This function uses recursion 
+to automatically read data files when the queue length is shorter
+than the requested data points. When all data files are read, an
+EmptyDataPipeError is thrown.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li>None</li>
+<li><cite>n</cite> : number of requested data points</li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">A single filename if successful.</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">numpy array with requested data</p>
 </td>
 </tr>
 <tr class="field-odd field"><th class="field-name">Errors:</th><td class="field-body"><ul class="first last simple">
-<li><cite>EmptyDataPipeError</cite> : when the filename list is empty.</li>
+<li><cite>EmptyDataPipeError</cite> : if the queue has fewer data points than requested.</li>
 </ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="mosaic.metaTrajIO.metaTrajIO.popfnames">
+<code class="descname">popfnames</code><span class="sig-paren">(</span><em>n</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/metaTrajIO.html#metaTrajIO.popfnames"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mosaic.metaTrajIO.metaTrajIO.popfnames" title="Permalink to this definition">¶</a></dt>
+<dd><p>Pop n filenames from the start of self.dataFiles. If filenames run out, 
+simply return the available names.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><cite>n</cite> :         number of requested filenames</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">List of filenames if successful, empty list if not files remain</p>
 </td>
 </tr>
 </tbody>
@@ -900,9 +923,7 @@ data files are read, an EmptyDataPipeError is thrown.</p>
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><cite>n</cite> : number of requested data points</p>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><ul class="first simple">
-<li>Numpy array with requested data</li>
-</ul>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">numpy array with requested data</p>
 </td>
 </tr>
 <tr class="field-odd field"><th class="field-name">Errors:</th><td class="field-body"><ul class="first last simple">
@@ -921,64 +942,19 @@ data files are read, an EmptyDataPipeError is thrown.</p>
 <p class="first admonition-title">Important</p>
 <p class="last"><strong>Abstract method:</strong> This method must be implemented by a sub-class.</p>
 </div>
-<p>Return raw data from a single data file. Set a class 
-attribute Fs with the sampling frequency in Hz.</p>
+<p>Read the specified data file(s) and  return the data as an array. Set 
+a class property Fs with the sampling frequency in Hz.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><cite>fname</cite> :  fileame to read</li>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><cite>fname</cite> :     list of filenames</li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">An array object that holds raw (unscaled) data from <cite>fname</cite></p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Errors:</th><td class="field-body"><p class="first last">None</p>
 </td>
 </tr>
 </tbody>
 </table>
-</dd></dl>
-
-<dl class="method">
-<dt id="mosaic.metaTrajIO.metaTrajIO.scaleData">
-<code class="descname">scaleData</code><span class="sig-paren">(</span><em>data</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/metaTrajIO.html#metaTrajIO.scaleData"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mosaic.metaTrajIO.metaTrajIO.scaleData" title="Permalink to this definition">¶</a></dt>
-<dd><div class="admonition important">
-<p class="first admonition-title">Important</p>
-<p class="last"><strong>Abstract method:</strong> This optional interface method can be overridden by a sub-class to modify functionality.</p>
-</div>
-<p>Scale the raw data loaded with <a class="reference internal" href="#mosaic.metaTrajIO.metaTrajIO.readdata" title="mosaic.metaTrajIO.metaTrajIO.readdata"><code class="xref py py-func docutils literal"><span class="pre">readdata()</span></code></a>. Note this function will not necessarily receive the entire data array loaded with <a class="reference internal" href="#mosaic.metaTrajIO.metaTrajIO.readdata" title="mosaic.metaTrajIO.metaTrajIO.readdata"><code class="xref py py-func docutils literal"><span class="pre">readdata()</span></code></a>. Transformations must be able to process partial data chunks.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><cite>data</cite> : partial chunk of raw data loaded using <a class="reference internal" href="#mosaic.metaTrajIO.metaTrajIO.readdata" title="mosaic.metaTrajIO.metaTrajIO.readdata"><code class="xref py py-func docutils literal"><span class="pre">readdata()</span></code></a>.</li>
-</ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><ul class="first simple">
-<li>Array containing scaled data.</li>
-</ul>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name" colspan="2">Default Behavior:</th></tr>
-<tr class="field-odd field"><td>&nbsp;</td><td class="field-body"><ul class="first simple">
-<li>If not implemented by a sub-class, the default behavior is to return <code class="docutils literal"><span class="pre">data</span></code> to the calling function without modifications.</li>
-</ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Example:</th><td class="field-body"><p class="first last">Assuming the amplifier scale and offset values are stored in the class variables <code class="docutils literal"><span class="pre">AmplifierScale</span></code> and <code class="docutils literal"><span class="pre">AmplifierOffset</span></code>, the raw data read using <a class="reference internal" href="#mosaic.metaTrajIO.metaTrajIO.readdata" title="mosaic.metaTrajIO.metaTrajIO.readdata"><code class="xref py py-func docutils literal"><span class="pre">readdata()</span></code></a> can be transformed by <a class="reference internal" href="#mosaic.metaTrajIO.metaTrajIO.scaleData" title="mosaic.metaTrajIO.metaTrajIO.scaleData"><code class="xref py py-func docutils literal"><span class="pre">scaleData()</span></code></a>. We can also use this function to change the array data type.</p>
-</td>
-</tr>
-</tbody>
-</table>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">scaleData</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
-        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">data</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">AmplifierScale</span><span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">AmplifierOffset</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="s1">&#39;f8&#39;</span><span class="p">)</span>
-</pre></div>
-</div>
 </dd></dl>
 
 </dd></dl>

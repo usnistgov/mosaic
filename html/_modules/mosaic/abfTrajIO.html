@@ -5,7 +5,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>mosaic.abfTrajIO &mdash; MOSAIC 1.3b3 documentation</title>
+    <title>mosaic.abfTrajIO &mdash; MOSAIC 1.2 documentation</title>
     
     <link rel="stylesheet" href="../../_static/basic.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
@@ -16,7 +16,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
-        VERSION:     '1.3b3',
+        VERSION:     '1.2',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -31,7 +31,7 @@
     <script type="text/javascript" src="../../_static/bootstrap-3.3.4/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="../../_static/bootstrap-sphinx.js"></script>
     <link rel="shortcut icon" href="../../_static/favicon.ico"/>
-    <link rel="top" title="MOSAIC 1.3b3 documentation" href="../../index.html" />
+    <link rel="top" title="MOSAIC 1.2 documentation" href="../../index.html" />
     <link rel="up" title="Module code" href="../index.html" />
 
 <meta charset='utf-8'>
@@ -44,6 +44,8 @@
 	</script>
 	<script type="text/javascript" id="_fed_an_js_tag" src="//www.nist.gov/js/federated-analytics.all.min.js?agency=NIST&subagency=github&pua=UA-42404149-54&yt=true&exts=ppsx,pps,f90,sch,rtf,wrl,txz,m1v,xlsm,msi,xsd,f,tif,eps,mpg,xml,pl,xlt,c">
 	</script>	
+
+	<meta name="theme-color" content="#283593">
 
   </head>
   <body role="document">
@@ -59,7 +61,7 @@
         </button>
         <a class="navbar-brand" href="../../index.html"><img src="../../_static/icon_36.png">
            </a>
-        <span class="navbar-text navbar-version pull-left"><b>1.3b3</b></span>
+        <span class="navbar-text navbar-version pull-left"><b>1.2</b></span>
       </div>
 
         <div class="collapse navbar-collapse nav-collapse">
@@ -127,8 +129,7 @@
     <div class="col-md-12 content">
       
   <h1>Source code for mosaic.abfTrajIO</h1><div class="highlight"><pre>
-<span></span><span class="c1"># -*- coding: utf-8 -*-</span>
-<span class="sd">&quot;&quot;&quot;</span>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">	A TrajIO class that supports ABF1 and ABF2 file formats via abf/abf.py. Currently, only</span>
 <span class="sd">	gap-free mode and single channel recordings are supported.</span>
 
@@ -137,20 +138,16 @@
 <span class="sd">	:License:	See LICENSE.TXT</span>
 <span class="sd">	:ChangeLog:</span>
 <span class="sd">	.. line-block::</span>
-<span class="sd">		9/13/15 	AB 	Updated logging to use mosaicLogFormat class</span>
-<span class="sd">		3/28/15 	AB 	Updated file read code to match new metaTrajIO API.</span>
 <span class="sd">		5/23/13		AB	Initial version</span>
 
 <span class="sd">&quot;&quot;&quot;</span>
-<span class="kn">import</span> <span class="nn">mosaic.metaTrajIO</span>
+<span class="kn">import</span> <span class="nn">metaTrajIO</span>
 <span class="kn">import</span> <span class="nn">abf.abf</span> <span class="kn">as</span> <span class="nn">abf</span>
-<span class="kn">import</span> <span class="nn">mosaic.utilities.mosaicLogging</span> <span class="kn">as</span> <span class="nn">mlog</span>
 
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
 
-<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;abfTrajIO&quot;</span><span class="p">]</span>
 
-<div class="viewcode-block" id="abfTrajIO"><a class="viewcode-back" href="../../api-doc/mosaic.traj.html#mosaic.abfTrajIO.abfTrajIO">[docs]</a><span class="k">class</span> <span class="nc">abfTrajIO</span><span class="p">(</span><span class="n">mosaic</span><span class="o">.</span><span class="n">metaTrajIO</span><span class="o">.</span><span class="n">metaTrajIO</span><span class="p">):</span>
+<div class="viewcode-block" id="abfTrajIO"><a class="viewcode-back" href="../../api-doc/mosaic.traj.html#mosaic.abfTrajIO.abfTrajIO">[docs]</a><span class="k">class</span> <span class="nc">abfTrajIO</span><span class="p">(</span><span class="n">metaTrajIO</span><span class="o">.</span><span class="n">metaTrajIO</span><span class="p">):</span>
 	<span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">		Read ABF1 and ABF2 file formats. Currently, only </span>
 <span class="sd">		gap-free mode and single channel recordings are supported.</span>
@@ -171,7 +168,7 @@
 <span class="sd">				None</span>
 <span class="sd">		&quot;&quot;&quot;</span>
 	<span class="k">def</span> <span class="nf">_init</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-		<span class="bp">self</span><span class="o">.</span><span class="n">abfLogger</span><span class="o">=</span><span class="n">mlog</span><span class="o">.</span><span class="n">mosaicLogging</span><span class="p">()</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">__name__</span><span class="p">)</span>
+		<span class="k">pass</span>
 	
 <div class="viewcode-block" id="abfTrajIO.readdata"><a class="viewcode-back" href="../../api-doc/mosaic.traj.html#mosaic.abfTrajIO.abfTrajIO.readdata">[docs]</a>	<span class="k">def</span> <span class="nf">readdata</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fname</span><span class="p">):</span>
 		<span class="sd">&quot;&quot;&quot;</span>
@@ -179,37 +176,44 @@
 <span class="sd">			Set a class attribute Fs with the sampling frequency in Hz.</span>
 
 <span class="sd">			:Parameters:</span>
-<span class="sd">			</span>
-<span class="sd">				- `fname` :  fileame to read</span>
+<span class="sd">				- `fname` :  list of data files to read</span>
 <span class="sd">			</span>
 <span class="sd">			:Returns:</span>
-
-<span class="sd">				- An array object that holds raw (unscaled) data from `fname`</span>
+<span class="sd">				None</span>
 <span class="sd">			</span>
 <span class="sd">			:Errors:</span>
-
 <span class="sd">				- `SamplingRateChangedError` : if the sampling rate for any data file differs from previous</span>
 <span class="sd">		&quot;&quot;&quot;</span>
-		<span class="p">[</span><span class="n">freq</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">fileFormat</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">bandwidth</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">gain</span><span class="p">,</span> <span class="n">dat</span><span class="p">]</span> <span class="o">=</span> <span class="n">abf</span><span class="o">.</span><span class="n">abfload_gp</span><span class="p">(</span><span class="n">fname</span><span class="p">)</span>
+		<span class="n">tempdata</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([])</span>
+		
+		<span class="c1"># Read a single file or a list of files.		</span>
+		<span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">fname</span><span class="p">:</span>
+			<span class="p">[</span><span class="n">freq</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">fileFormat</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">bandwidth</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">gain</span><span class="p">,</span> <span class="n">dat</span><span class="p">]</span> <span class="o">=</span> <span class="n">abf</span><span class="o">.</span><span class="n">abfload_gp</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
 	
-		<span class="c1"># set the sampling frequency in Hz. The times are in ms.</span>
-		<span class="c1"># If the Fs attribute doesn&#39;t exist set it</span>
-		<span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;Fs&#39;</span><span class="p">):</span>	
-			<span class="bp">self</span><span class="o">.</span><span class="n">Fs</span><span class="o">=</span><span class="n">freq</span>
-		<span class="c1"># else check if it s the same as before</span>
-		<span class="k">else</span><span class="p">:</span>
-			<span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">Fs</span><span class="o">!=</span><span class="n">freq</span><span class="p">:</span>
-				<span class="k">raise</span> <span class="n">metaTrajIO</span><span class="o">.</span><span class="n">SamplingRateChangedError</span><span class="p">(</span><span class="s2">&quot;The sampling rate in the data file &#39;{0}&#39; has changed.&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">f</span><span class="p">))</span>
+			<span class="c1"># set the sampling frequency in Hz. The times are in ms.</span>
+			<span class="c1"># If the Fs attribute doesn&#39;t exist set it</span>
+			<span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;Fs&#39;</span><span class="p">):</span>	
+				<span class="bp">self</span><span class="o">.</span><span class="n">Fs</span><span class="o">=</span><span class="n">freq</span>
+			<span class="c1"># else check if it s the same as before</span>
+			<span class="k">else</span><span class="p">:</span>
+				<span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">Fs</span><span class="o">!=</span><span class="n">freq</span><span class="p">:</span>
+					<span class="k">raise</span> <span class="n">metaTrajIO</span><span class="o">.</span><span class="n">SamplingRateChangedError</span><span class="p">(</span><span class="s2">&quot;The sampling rate in the data file &#39;{0}&#39; has changed.&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">f</span><span class="p">))</span>
 
-		<span class="k">return</span> <span class="n">dat</span></div>
+			<span class="c1"># Add new data to the existing array</span>
+			<span class="n">tempdata</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">hstack</span><span class="p">((</span><span class="n">tempdata</span><span class="p">,</span> <span class="n">dat</span><span class="p">))</span>
+
+		<span class="k">return</span> <span class="n">tempdata</span></div>
 
 	<span class="k">def</span> <span class="nf">_formatsettings</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 		<span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">			Log settings strings</span>
+<span class="sd">			Return a formatted string of settings for display</span>
 <span class="sd">		&quot;&quot;&quot;</span>
-		<span class="bp">self</span><span class="o">.</span><span class="n">abfLogger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span> <span class="s1">&#39;Lowpass filter = {0} kHz&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">bandwidth</span><span class="o">*</span><span class="mf">0.001</span><span class="p">)</span> <span class="p">)</span>
-		<span class="bp">self</span><span class="o">.</span><span class="n">abfLogger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span> <span class="s1">&#39;Signal gain = {0}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">gain</span><span class="p">)</span> <span class="p">)</span></div>
+		<span class="n">fmtstr</span><span class="o">=</span><span class="s2">&quot;&quot;</span>
+		
+		<span class="n">fmtstr</span><span class="o">+=</span><span class="s1">&#39;</span><span class="se">\t\t</span><span class="s1">Lowpass filter = {0} kHz</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">bandwidth</span><span class="o">*</span><span class="mf">0.001</span><span class="p">)</span>
+		<span class="n">fmtstr</span><span class="o">+=</span><span class="s1">&#39;</span><span class="se">\t\t</span><span class="s1">Signal gain = {0}</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">gain</span><span class="p">)</span>
 
+		<span class="k">return</span> <span class="n">fmtstr</span></div>
 </pre></div>
 
     </div>

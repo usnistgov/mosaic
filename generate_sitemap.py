@@ -32,7 +32,7 @@ from glob import glob
 import string
 import time
 
-ROOTWEB = 'https://usnistgov.github.io/mosaic'
+ROOTWEB = 'https://pages.nist.gov/mosaic'
 WEBSITE = ROOTWEB + '/html'
 
 # Document extentions we are interested in generating data for.

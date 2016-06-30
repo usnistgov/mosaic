@@ -7,6 +7,9 @@ body {
 a {
 	color: #2F378F;
 }
+p {
+	color: black;
+}
 .navbar-default {
 	/*background-image: -webkit-linear-gradient(top, #D4D7D9 0%, #D4D7D9 100%);
 	background-image:      -o-linear-gradient(top, #D4D7D9 0%, #D4D7D9 100%);

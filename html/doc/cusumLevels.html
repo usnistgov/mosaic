@@ -5,7 +5,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>CUSUM+ &mdash; MOSAIC 1.3b3 documentation</title>
+    <title>CUSUM+ &mdash; MOSAIC 1.2 documentation</title>
     
     <link rel="stylesheet" href="../_static/basic.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -16,7 +16,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '1.3b3',
+        VERSION:     '1.2',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -31,7 +31,7 @@
     <script type="text/javascript" src="../_static/bootstrap-3.3.4/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="../_static/bootstrap-sphinx.js"></script>
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
-    <link rel="top" title="MOSAIC 1.3b3 documentation" href="../index.html" />
+    <link rel="top" title="MOSAIC 1.2 documentation" href="../index.html" />
 
 <meta charset='utf-8'>
 <meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
@@ -43,6 +43,8 @@
 	</script>
 	<script type="text/javascript" id="_fed_an_js_tag" src="//www.nist.gov/js/federated-analytics.all.min.js?agency=NIST&subagency=github&pua=UA-42404149-54&yt=true&exts=ppsx,pps,f90,sch,rtf,wrl,txz,m1v,xlsm,msi,xsd,f,tif,eps,mpg,xml,pl,xlt,c">
 	</script>	
+
+	<meta name="theme-color" content="#283593">
 
   </head>
   <body role="document">
@@ -58,7 +60,7 @@
         </button>
         <a class="navbar-brand" href="../index.html"><img src="../_static/icon_36.png">
            </a>
-        <span class="navbar-text navbar-version pull-left"><b>1.3b3</b></span>
+        <span class="navbar-text navbar-version pull-left"><b>1.2</b></span>
       </div>
 
         <div class="collapse navbar-collapse nav-collapse">
@@ -136,13 +138,13 @@
 <li>If an event is very long, CUSUM will detect a state transistion even if there is no real change, leading to an artificially high number of states. This is a consequence of false positives from using a statistical t-test. In some cases this can be mitigated by reducing the sensitivity.</li>
 </ol>
 </div></blockquote>
-<p>Settings that control the algorithm are defined through the settings file, as described the <a class="reference internal" href="settingsFile.html#algorithm-settings-sec"><span class="std std-ref">Optimizing Settings</span></a> section. Upon successfully analyzing an event, <a class="reference internal" href="../api-doc/mosaic.processing.html#mosaic.cusumPlus.cusumPlus" title="mosaic.cusumPlus.cusumPlus"><code class="xref py py-class docutils literal"><span class="pre">cusumPlus</span></code></a> generates meta-data the describes the individual states in the event. A representative example of one such event is shown in the figure below.</p>
+<p>Settings that control the algorithm are defined through the settings file, as described the <a class="reference internal" href="settingsFile.html#algorithm-settings-sec"><span class="std std-ref">Optimizing Settings</span></a> section. Upon successfully analyzing an event, <code class="xref py py-class docutils literal"><span class="pre">cusumPlus</span></code> generates meta-data the describes the individual states in the event. A representative example of one such event is shown in the figure below.</p>
 <div class="figure align-center">
 <a class="reference internal image-reference" href="../_images/CUSUM.png"><img alt="../_images/CUSUM.png" src="../_images/CUSUM.png" style="width: 50%;" /></a>
 </div>
 <div class="section" id="metadata-output">
 <h2>Metadata Output<a class="headerlink" href="#metadata-output" title="Permalink to this headline">¶</a></h2>
-<p>The <a class="reference internal" href="../api-doc/mosaic.processing.html#mosaic.cusumPlus.cusumPlus" title="mosaic.cusumPlus.cusumPlus"><code class="xref py py-class docutils literal"><span class="pre">cusumPlus</span></code></a> algorithm outputs meta-data that characterizes every processed event. Similar to the <a class="reference internal" href="multiState.html#multistate-page"><span class="std std-ref">ADEPT</span></a> algorithm, this information is stored in a <a href="#id2"><span class="problematic" id="id3">SQLite_</span></a> database and is available for further processing (see <a class="reference internal" href="DatabaseStructure.html#database-page"><span class="std std-ref">Database Structure and Query Syntax</span></a>).</p>
+<p>The <code class="xref py py-class docutils literal"><span class="pre">cusumPlus</span></code> algorithm outputs meta-data that characterizes every processed event. Similar to the <a class="reference internal" href="multiState.html#multistate-page"><span class="std std-ref">ADEPT</span></a> algorithm, this information is stored in a <a href="#id2"><span class="problematic" id="id3">SQLite_</span></a> database and is available for further processing (see <a class="reference internal" href="DatabaseStructure.html#database-page"><span class="std std-ref">Database Structure and Query Syntax</span></a>).</p>
 <table border="1" class="docutils">
 <colgroup>
 <col width="23%" />
