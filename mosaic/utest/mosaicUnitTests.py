@@ -10,7 +10,8 @@ def _mosaicUnitTests(base):
                         ('algorithms','a', 'run algorithmic tests'),
                         ('segment','s', 'run time-series segmentation tests'),
                         ('dependencies', 'd', 'test MOSAIC dependency versions'),
-                        ('modules', 'm', 'test MOSAIC modules')
+                        ('modules', 'm', 'test MOSAIC modules'),
+                        ('trajio', 't', 'test MOSAIC I/O')
                         ]
 
         def initialize_options(self):
@@ -18,6 +19,7 @@ def _mosaicUnitTests(base):
             self.segment=0
             self.dependencies=0
             self.modules=0
+            self.trajio=0
 
         def finalize_options(self):
             pass
@@ -38,6 +40,9 @@ def _mosaicUnitTests(base):
                 if self.modules:
                     mosaicUnitTests.log.debug("Running module import unit tests")
                     testList.extend(['import_Tests'])
+                if self.trajio:
+                    mosaicUnitTests.log.debug("Running module trajectory I/O unit tests")
+                    testList.extend(['trajio_Test'])
 
                 if self.verbose:
                     mosaicUnitTests.log.debug("Running verbose unit tests")
