@@ -11,6 +11,7 @@ import string
 from mosaic.trajio.metaTrajIO import EmptyDataPipeError
 from mosaic.utilities.resource_path import format_path
 import numpy
+import pandas as pd
 
 __all__ = ["ConvertTrajIO"]
 
@@ -39,9 +40,8 @@ class ConvertTrajIO(object):
 		self._creategenerator()
 		
 		self._outputFormat={
-			"csv" : ',',
-			"tsv" :	'\t',
-			"bin" : ''
+			"csv" : ('to_csv', {'sep': ',', 'header' : False}),
+			"tsv" :	('to_csv', {'sep': '\t', 'header' : False})
 		}
 
 
@@ -54,7 +54,15 @@ class ConvertTrajIO(object):
 		"""
 		try:
 			while(True):
-				(self.trajDataObj.popdata(blockSize)).tofile(self._filename(), sep=self._outputFormat[self.extension])
+				
+
+				if self.extension=="bin":
+					numpy.array(self.trajDataObj.popdata(blockSize), dtype=numpy.float64).tofile(self._filename(), sep="")
+				else:
+					dat=pd.DataFrame(self.trajDataObj.popdata(blockSize))
+					f=self._outputFormat[self.extension]
+
+					getattr(dat, f[0])(self._filename(), index=False, **f[1])
 		except EmptyDataPipeError:
 			pass
 
@@ -88,16 +96,14 @@ class ConvertTrajIO(object):
 if __name__ == '__main__':
 	import mosaic.trajio.qdfTrajIO as qdfTrajIO
 
-	q=qdfTrajIO.qdfTrajIO(dirname='data', filter='*qdf', Rfb=9.1e9, Cfb=1.07e-12)
-	print q.previewdata(5)
-
 	for ext in ['bin','csv','tsv']:
+		q=qdfTrajIO.qdfTrajIO(dirname='data', filter='*qdf', Rfb=9.1e9, Cfb=1.07e-12)
 		ConvertTrajIO(
 			q,
 			outdir='data',
 			extension=ext
-		).Convert(500000)
+		).Convert(100000)
 
 	print numpy.fromfile('data/SingleChan-0001_1.bin')[:5]
-	print numpy.fromfile('data/SingleChan-0001_1.csv', sep=',')[:5]
-	print numpy.fromfile('data/SingleChan-0001_1.tsv', sep='\t')[:5]
+	print numpy.hstack(numpy.fromfile('data/SingleChan-0001_1.csv', sep='\n'))[:5]
+	print numpy.hstack(numpy.fromfile('data/SingleChan-0001_1.tsv', sep='\t'))[:5]
