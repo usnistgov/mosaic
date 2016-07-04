@@ -45,18 +45,20 @@ Change Log
 
 **v1.3**
 
-- Added a brand new MOSAIC examples repository that contains plotting scripts and Jupyter notebooks (https://github.com/usnistgov/mosaic-examples)
+- Added a new MOSAIC examples repository that contains plotting scripts and Jupyter notebooks (https://github.com/usnistgov/mosaic-examples)
 
-- Added CUSUM+ algorithm (see pull requests #34, #43, #45, and #46)
+- Added the CUSUM+ algorithm (see pull requests #34, #43, #45, and #46)
+- Added the ability to read arbitrary binary files.
 - Renamed StepResponseAnalysis to ADEPT 2-state.
 - Renamed multiStateAnalysis to ADEPT.
 - CUSUM+ is now used to generate initial guesses for ADEPT
 - Streamlined unit test framework. Added new tests for CUSUM+.
 - Updated MOSAIC dependencies to include newer package versions and pandas. Run 'python setup.py mosaic_deps' to update.
 - Added a new metadata column (mdStateResTime) that saves the residence time of each state to the database. This affects ADEPT and CUSUM+.
+- Processing time per event is now saved to the database.
 - Added support for warning status codes that begin with 'w'. These codes preserve metadata in the SQLite output and are used to flag events that need closer inspection.
 - Removed mosaicgui from PyPi. 'pip install mosaic-nist' only installs command line modules. 
-- Top level ConvertToCSV supports arbitrary file extensions.
+- Top level ConvertTrajIO supports binary and ASCII files.
 - Added Travis continous integration support.
 - [GUI] Added a table that displays fit parameters in the event viewer window.
 - [GUI] Added more descriptive fit errors.
