@@ -57,3 +57,4 @@ latex
 _nistpages/
 data/SingleChan-*.*sv
 data/SingleChan-*.bin
+pyinstaller/icon.*

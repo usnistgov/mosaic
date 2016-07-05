@@ -7,16 +7,23 @@ from mosaic.utest.mosaicUnitTests import _mosaicUnitTests
 
 class mosaicBinaries(Command):
     description = "build MOSAIC binaries."
-    user_options = []
+    user_options = [
+                    ('inplace', 'i', "build binaries in the current branch"),
+                    ]
 
     def initialize_options(self):
-        pass
+        self.inplace=0
 
     def finalize_options(self):
         pass
 
     def run(self):
-        os.system('sh .scripts/pyinstaller-sh')
+        retval=0
+        if not self.inplace:
+            retval = os.system("git checkout master")
+
+        if retval==0:
+            os.system('sh .scripts/pyinstaller-sh')
 
 class mosaicDependencies(Command):
     description = "install MOSAIC dependencies."
