@@ -18,10 +18,22 @@ import json
 
 __all__ = ["SingleChannelAnalysis", "run_eventpartition"]
 
-def run_eventpartition( trajdataObj, eventPartHnd, eventProcHnd, settingsdict):
+def run_eventpartition( dataPath, trajDataHnd, dataFilterHnd, eventPartHnd, eventProcHnd):
+	# Read and parse the settings file
+	settingsdict=settings.settings( dataPath )	
+
+	# Pull out trajectory settings to construct an IO object
+	trajSettings=settingsdict.getSettings(trajDataHnd.__name__)
+	
+	if dataFilterHnd:
+		trajDataObj=trajDataHnd( datafilter=dataFilterHnd, dirname=dataPath, **trajSettings )
+	else:
+		trajDataObj=trajDataHnd( dirname=dataPath, **trajSettings )
+
+
 	try:
 		with eventPartHnd(
-							trajdataObj, 
+							trajDataObj, 
 							eventProcHnd, 
 							settingsdict.getSettings(eventPartHnd.__name__),
 							settingsdict.getSettings(eventProcHnd.__name__),
@@ -45,16 +57,14 @@ class SingleChannelAnalysis(object):
 	def __init__(self, dataPath, trajDataHnd, dataFilterHnd, eventPartitionHnd, eventProcHnd):
 		"""
 		"""
-		# Read and parse the settings file
-		self.settingsDict=settings.settings( dataPath )
+		self.dataPath=dataPath	
 
-		# Pull out trajectory settings to construct an IO object
-		trajSettings=self.settingsDict.getSettings(trajDataHnd.__name__)
-		
 		if dataFilterHnd:
-			self.trajDataObj=trajDataHnd( datafilter=dataFilterHnd, dirname=dataPath, **trajSettings )
+			self.dataFilterHnd=dataFilterHnd
 		else:
-			self.trajDataObj=trajDataHnd( dirname=dataPath, **trajSettings )
+			self.dataFilterHnd=None
+
+		self.trajDataHnd=trajDataHnd
 		self.eventPartitionHnd=eventPartitionHnd
 		self.eventProcHnd=eventProcHnd
 
@@ -71,7 +81,7 @@ class SingleChannelAnalysis(object):
 			try:
 				self.subProc = multiprocessing.Process( 
 						target=run_eventpartition,
-						args=(self.trajDataObj, self.eventPartitionHnd, self.eventProcHnd, self.settingsDict,)
+						args=(self.dataPath, self.trajDataHnd, self.dataFilterHnd, self.eventPartitionHnd, self.eventProcHnd,)
 					)
 				self.subProc.start()
 				# self.proc.join()
@@ -79,7 +89,7 @@ class SingleChannelAnalysis(object):
 				self.subProc.terminate()
 				self.subProc.join()
 		else:
-			run_eventpartition( self.trajDataObj, self.eventPartitionHnd, self.eventProcHnd, self.settingsDict )
+			run_eventpartition( self.dataPath, self.trajDataHnd, self.dataFilterHnd, self.eventPartitionHnd, self.eventProcHnd )
 
 	def Stop(self):
 		"""

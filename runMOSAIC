@@ -4,7 +4,7 @@ import mosaicgui.mosaicGUI as mosaicgui
 from PyQt4 import QtCore
 from mosaicgui.updateService import updateService
 from PyQt4 import QtGui
-
+import multiprocessing
 
 def main():
 	app = QtGui.QApplication(sys.argv)
