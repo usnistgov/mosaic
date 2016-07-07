@@ -23,7 +23,7 @@ from abc import ABCMeta, abstractmethod
 import glob
 import numpy as np
 
-import mosaic.settings
+import mosaic.settings as settings
 from mosaic.utilities.resource_path import format_path, path_separator
 import mosaic.utilities.mosaicLogging as mlog
 from mosaic.utilities.mosaicLogFormat import _dprop, mosaic_property
