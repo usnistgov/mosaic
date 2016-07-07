@@ -67,7 +67,7 @@ class qtAnalysisGUI(mosaicgui.settingsview.settingsview):
 					else:
 						fltr=None
 
-					with open(self.analysisDataModel["DataFilesPath"]+"/.settings", 'w') as f:
+					with open(format_path(self.analysisDataModel["DataFilesPath"]+"/.settings"), 'w') as f:
 						f.write(
 							self.analysisDataModel.GenerateSettingsView(
 								eventPartitionAlgo=str(self.partitionAlgorithmComboBox.currentText()), 
