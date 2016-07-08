@@ -23,7 +23,7 @@ def update_rcParams():
 			'figure.subplot.wspace'  : 0.0,
 			'figure.subplot.hspace'  : 0.0,
 			'lines.markersize' : 1.5, 
-			'axes.prop_cycle' : matplotlib.cycler(color=['#0072B2', '#DB5E00', 'k']),
+			'axes.prop_cycle' : matplotlib.cycler(color=['#3B3D91', '#DB5E00', 'k']),
 			'font.family': 'sans-serif',
 			'font.sans-serif': 'Helvetica',
 			'font.weight': 200,

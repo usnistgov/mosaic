@@ -228,22 +228,20 @@ class TrajectoryWindow(QtGui.QDialog):
 					self.mpl_hist.canvas.ax.plot( xdat, ydat, markersize='1.')
 
 					self.mpl_hist.canvas.ax2.cla()
-					self.mpl_hist.canvas.ax2.hist( 
+					
+					hist, bins=np.histogram(
 						ydat, 
 						bins=200, 
-						normed=1, 
-						histtype='step',
-						rwidth=0.1,
-						# color=c,
-						orientation='horizontal'
+						normed=1
 					)
+					self.mpl_hist.canvas.ax2.plot ( hist, bins[:-1]	)
 
 
-				self.mu_line = self.mpl_hist.canvas.ax.axhline(self.mu, color='0.25', linestyle='--', lw=1.5)
+				self.mu_line = self.mpl_hist.canvas.ax.axhline(self.mu, color='0.5', linestyle='--', lw=1.5)
 				cl='#%02x%02x%02x' % (182,69,71)
 				self.mpl_hist.canvas.ax.axhline(self.mu-self.thr*self.sd, color='#DB5E00', lw=1.5)
 
-				self.mu_line = self.mpl_hist.canvas.ax2.axhline(self.mu, color='0.25', linestyle='--', lw=1.5)
+				self.mu_line = self.mpl_hist.canvas.ax2.axhline(self.mu, color='0.5', linestyle='--', lw=1.5)
 				self.mpl_hist.canvas.ax2.axhline(self.mu-self.thr*self.sd, color='#DB5E00', lw=1.5)
 
 				plt.setp( self.mpl_hist.canvas.ax2.get_xticklabels(), visible=False)
@@ -315,6 +313,7 @@ class TrajectoryWindow(QtGui.QDialog):
 		denoiseWarnBox.setIcon(QtGui.QMessageBox.Warning)
 		denoiseWarnBox.addButton(QtGui.QPushButton('Yes'), QtGui.QMessageBox.YesRole)
 		denoiseWarnBox.addButton(QtGui.QPushButton('No'), QtGui.QMessageBox.RejectRole)
+		
 		return denoiseWarnBox.exec_()
 
 
