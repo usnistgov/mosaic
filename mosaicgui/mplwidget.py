@@ -1,13 +1,47 @@
+import sys
 from PyQt4.QtCore import *
 from PyQt4.QtGui import *
 from matplotlib.backends.backend_qt4agg import FigureCanvasQTAgg as FigureCanvas
-from matplotlib.backends.backend_qt4agg import NavigationToolbar2QT #Agg #as NavigationToolbar
+from matplotlib.backends.backend_qt4agg import NavigationToolbar2QT
 from matplotlib.figure import Figure
 import matplotlib.pyplot as plt
+import matplotlib
 from matplotlib import gridspec
 import warnings
 
 warnings.filterwarnings(action="ignore", category=UserWarning)
+
+def update_rcParams():
+	fontlabel_size=12
+	tick_size=12
+
+	matplotlib.rcParams.update(
+		{
+			'figure.facecolor' : 'white',	# #ECECEC
+			'figure.autolayout' : True,
+			'figure.dpi' : 100,
+			'figure.subplot.wspace'  : 0.0,
+			'figure.subplot.hspace'  : 0.0,
+			'lines.markersize' : 1.5, 
+			'axes.prop_cycle' : matplotlib.cycler(color=['#0072B2', '#DB5E00', 'k']),
+			'font.family': 'sans-serif',
+			'font.sans-serif': 'Helvetica',
+			'font.weight': 200,
+			'axes.labelsize': fontlabel_size,
+			'axes.facecolor' : 'white', 
+			'legend.fontsize': fontlabel_size, 
+			'xtick.labelsize': tick_size, 
+			'ytick.labelsize': tick_size, 
+			'text.usetex': False, 
+			'text.fontsize': fontlabel_size, 
+			'xtick.major.size': 7.5,
+			'ytick.major.size': 7.5,
+			'xtick.major.width': 1,
+			'ytick.major.width': 1,
+			'contour.negative_linestyle': 'solid',
+			'agg.path.chunksize' : 10000
+		}
+	)
 
 class NavigationToolbar( NavigationToolbar2QT ):
 	picked=pyqtSignal(int,name='picked')
@@ -25,71 +59,13 @@ class NavigationToolbar( NavigationToolbar2QT ):
 			if str(c.text()) in ('Subplots','Customize','Forward', 'Back'):
 				c.defaultAction().setVisible(False)
 				continue
-			# Need to keep track of pan and zoom buttons
-			# Also grab toggled event to clear checked status of picker button
-			# if str(c.text()) in ('Zoom', 'Pan'):
-			# 	c.toggled.connect(self.clearPicker)
-			# 	self.clearButtons.append(c)
-			# 	next=None
-
-	# 	# create custom button
-	# 	pm=QPixmap(64,64)
-	# 	# pm.fill(QApplication.palette().color(QPalette.Normal,QPalette.Button))
-	# 	c = QColor(0)
-	# 	c.setAlpha(0)
-	# 	pm.fill( c )
-	# 	painter=QPainter(pm)
-	# 	# painter.fillRect(6,6,20,20,Qt.red)
-	# 	painter.setBrush(Qt.black)
-	# 	painter.setPen(Qt.black)
-	# 	painter.drawPolygon( QPoint( 22, 22 ), QPoint( 22, 42 ),
- #                           QPoint( 42, 32 ), QPoint( 22, 22 ) )
-	# 	# painter.fillRect(3,23,5,23,Qt.blue)
-	# 	painter.end()
-	# 	icon=QIcon(pm)
-	# 	picker=QAction("Next",self)
-	# 	picker.setIcon(icon)
-	# 	picker.setCheckable(True)
-	# 	picker.setToolTip("Load more time-series data")
-	# 	self.picker = picker
-	# 	button=QToolButton(self)
-	# 	button.setDefaultAction(self.picker)
-
-	# 	# Add it to the toolbar, and connect up event
-	# 	self.insertWidget(next.defaultAction(),button)
-	# 	picker.toggled.connect(self.pickerToggled)
-
-	# 	# Grab the picked event from the canvas
-	# 	canvas.mpl_connect('pick_event',self.canvasPicked)
-	# 	canvas.mpl_connect('motion_notify_event',self.on_move)
-
-	# def clearPicker( self, checked ):
-	# 	if checked:
-	# 		self.picker.setChecked(False)
-
-	# def pickerToggled( self, checked ):
-	# 	if checked:
-	# 		for c in self.clearButtons:
-	# 			c.defaultAction().setChecked(False)
-	# 		self.set_message('Reject/use observation')
-
-	# def canvasPicked( self, event ):
-	# 	if self.picker.isChecked():
-	# 		self.picked.emit(event.ind)
-
-	# def on_move(self, event):
-	# 	# get the x and y pixel coords
-	# 	x, y = event.x, event.y
-
 
 class MplCanvas(FigureCanvas):
 	def __init__(self, nsubplots=1):
-		self.dpi=100
+		self.dpi=matplotlib.rcParams['figure.dpi']
 			
 		self.fig = Figure(dpi=self.dpi, tight_layout=True)
 		if nsubplots==2:
-			# self.fig, (self.ax, self.ax2) = plt.subplots(1,2, sharey=True)
-			# self.fig.set_tight_layout(True)
 			self.gs= gridspec.GridSpec(1, 2, width_ratios=[5, 1]) 
 			self.gs.update(left=0.15, right=0.97, bottom=0.22, top=0.94, wspace=0.07)
 			self.ax = self.fig.add_subplot(self.gs[0])
@@ -100,7 +76,7 @@ class MplCanvas(FigureCanvas):
 			self.ax = self.fig.add_subplot(1,1,1)
 			self.ax.hold(False)
 
-		FigureCanvas.__init__(self, self.fig)
+		super(MplCanvas, self).__init__(self.fig)
 
 		FigureCanvas.setSizePolicy(self, 
 				QSizePolicy.Expanding, 
@@ -120,7 +96,6 @@ class MplWidget(QWidget):
 		self.setLayout(self.vbl)
 
 	def addToolbar(self):
-		# self.vbl.addWidget( NavigationToolbar2QTAgg(self.canvas, self) )
 		self.vbl.addWidget( NavigationToolbar(self.canvas, self) )
 
 class MplWidget2(QWidget):
@@ -134,8 +109,4 @@ class MplWidget2(QWidget):
 		self.setLayout(self.vbl)
 
 	def addToolbar(self):
-		# self.vbl.addWidget( NavigationToolbar2QTAgg(self.canvas, self) )
 		self.vbl.addWidget( NavigationToolbar(self.canvas, self) )
-
-
-# warnings.resetwarnings()
