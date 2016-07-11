@@ -16,24 +16,25 @@ import json
 import os
 
 import mosaic.settings
+import mosaic.apps.SingleChannelAnalysis
 
-import mosaic.sqlite3MDIO
+import mosaic.mdio.sqlite3MDIO
 
-import mosaic.SingleChannelAnalysis
-import mosaic.eventSegment
+import mosaic.partition.eventSegment
 
-import mosaic.adept2State
-import mosaic.adept
-import mosaic.cusumPlus
+import mosaic.process.adept2State
+import mosaic.process.adept
+import mosaic.process.cusumPlus
 
-import mosaic.qdfTrajIO
-import mosaic.abfTrajIO
-import mosaic.binTrajIO
-import mosaic.tsvTrajIO
+import mosaic.trajio.qdfTrajIO
+import mosaic.trajio.abfTrajIO
+import mosaic.trajio.binTrajIO
+import mosaic.trajio.tsvTrajIO
 
-from mosaic.besselLowpassFilter import *
-import mosaic.waveletDenoiseFilter
-from mosaic.metaTrajIO import FileNotFoundError, EmptyDataPipeError
+import mosaic.filters.besselLowpassFilter
+import mosaic.filters.waveletDenoiseFilter
+
+from mosaic.trajio.metaTrajIO import FileNotFoundError, EmptyDataPipeError
 from mosaic.utilities.resource_path import resource_path
 from sqlite3 import OperationalError
 
@@ -198,7 +199,7 @@ class guiDataModel(dict):
 		# if a dbfile
 		if dbfile:
 			try:
-				db=mosaic.sqlite3MDIO.sqlite3MDIO()
+				db=mosaic.mdio.sqlite3MDIO.sqlite3MDIO()
 				db.openDB(dbfile)
 				self.jsonSettingsObj=mosaic.settings.settings(self["DataFilesPath"])
 				self.jsonSettingsObj.parseSettingsString( db.readSettings() )
@@ -395,16 +396,16 @@ class guiDataModel(dict):
 								"TSV"					: "tsvTrajIO"
 							}
 		self.analysisSetupKeys={
-								"QDF" 					: mosaic.qdfTrajIO.qdfTrajIO,
-								"ABF" 					: mosaic.abfTrajIO.abfTrajIO,
-								"BIN" 					: mosaic.binTrajIO.binTrajIO,
-								"TSV" 					: mosaic.tsvTrajIO.tsvTrajIO,
-								"SingleChannelAnalysis" : mosaic.SingleChannelAnalysis.SingleChannelAnalysis,
-								"CurrentThreshold" 		: mosaic.eventSegment.eventSegment,
-								"adept2State" 			: mosaic.adept2State.adept2State,
-								"adept"					: mosaic.adept.adept,
-								"cusumPlus"				: mosaic.cusumPlus.cusumPlus,
-								"waveletDenoiseFilter"	: mosaic.waveletDenoiseFilter.waveletDenoiseFilter
+								"QDF" 					: mosaic.trajio.qdfTrajIO.qdfTrajIO,
+								"ABF" 					: mosaic.trajio.abfTrajIO.abfTrajIO,
+								"BIN" 					: mosaic.trajio.binTrajIO.binTrajIO,
+								"TSV" 					: mosaic.trajio.tsvTrajIO.tsvTrajIO,
+								"SingleChannelAnalysis" : mosaic.apps.SingleChannelAnalysis.SingleChannelAnalysis,
+								"CurrentThreshold" 		: mosaic.partition.eventSegment.eventSegment,
+								"adept2State" 			: mosaic.process.adept2State.adept2State,
+								"adept"					: mosaic.process.adept.adept,
+								"cusumPlus"				: mosaic.process.cusumPlus.cusumPlus,
+								"waveletDenoiseFilter"	: mosaic.filters.waveletDenoiseFilter.waveletDenoiseFilter
 							}
 
 if __name__ == "__main__":

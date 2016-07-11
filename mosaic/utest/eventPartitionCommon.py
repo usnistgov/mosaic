@@ -2,9 +2,9 @@ import json
 import glob
 import os
 import mosaic.settings as settings
-from mosaic.tsvTrajIO import *
+from mosaic.trajio.tsvTrajIO import *
 import testutil
-import mosaic.adept2State as a2s 
+import mosaic.process.adept2State as a2s 
 
 class EventPartitionTest(object):
 	def setUp(self):

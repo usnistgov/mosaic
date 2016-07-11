@@ -1,4 +1,4 @@
-import mosaic.cusumPlus as cpl
+import mosaic.process.cusumPlus as cpl
 from mosaic.utest.algorithmCommon import BaseMultiStateTest
 
 class CUSUM_TestSuite(BaseMultiStateTest):

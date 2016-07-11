@@ -11,7 +11,10 @@ import numpy as np
 from scipy.optimize import curve_fit
 import pylab as pl
 
-def OpenCurrentDist(dat, limit, minBaseline, maxBaseline):
+
+__all__=["OpenCurrentDist"]
+
+def OpenCurrentDist(dat, limit):
 	"""
 		Calculate the mean and standard deviation of a time-series.
 		

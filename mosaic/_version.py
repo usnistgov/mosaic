@@ -1,7 +1,7 @@
 import subprocess
 from mosaic.utilities.resource_path import resource_path
 
-__version__="1.3b2"
+__version__="1.3b3"
 
 try:
 	__build__=subprocess.check_output(['git', 'rev-parse', '--short', 'HEAD'], stderr=subprocess.STDOUT).strip()

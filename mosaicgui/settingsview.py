@@ -220,15 +220,18 @@ class settingsview(QtGui.QMainWindow):
 		self.plotEventFitsCheckBox.setEnabled(int(model["writeEventTS"]))
 
 		# check if parallel is available
-		try:
-			import zmq
+		# try:
+		# 	import zmq
 			
-			self.parallelCheckBox.setChecked(int(model["parallelProc"]))				
-			self.parallelCoresSpinBox.setValue(multiprocessing.cpu_count()-int(model["reserveNCPU"]))
-		except ImportError:
-			self.parallelCheckBox.hide()
-			self.parallelCoresSpinBox.hide()
-			self.parallelCoresLabel.hide()	
+		# 	self.parallelCheckBox.setChecked(int(model["parallelProc"]))				
+		# 	self.parallelCoresSpinBox.setValue(multiprocessing.cpu_count()-int(model["reserveNCPU"]))
+		# except ImportError:
+		# 	self.parallelCheckBox.hide()
+		# 	self.parallelCoresSpinBox.hide()
+		# 	self.parallelCoresLabel.hide()
+		self.parallelCheckBox.hide()
+		self.parallelCoresSpinBox.hide()
+		self.parallelCoresLabel.hide()	
 
 		procidx= {}
 		for v in self.analysisDataModel.eventProcessingAlgoKeys.keys():
@@ -618,7 +621,7 @@ class settingsview(QtGui.QMainWindow):
 		self.consoleLog.show()
 
 	def OnShowHelp(self):
-		webbrowser.open('http://usnistgov.github.io/mosaic/html/index.html', new=0, autoraise=True)
+		webbrowser.open('http://pages.nist.gov/mosaic/html/index.html', new=0, autoraise=True)
 
 	# Dialog SLOTS
 	def OnShowTrajectoryViewer(self):

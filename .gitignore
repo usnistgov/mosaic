@@ -21,7 +21,7 @@ data/a_eventMD-tempMSA.sqlite
 data/eventMD-20150723-204414.csv
 data/eventMD-PEG28-cusumLevelAnalysis.csv
 data/eventMD-PEG28-stepResponseAnalysis.csv
-data/eventProcessing.log
+data/eventProcessing*.log
 dist/
 gists/
 icons/.DS_Store
@@ -30,7 +30,7 @@ mosaic/.DS_Store
 mosaic/utest/.DS_Store
 mosaic/utest/gentests/
 mosaic/utest/testdata/.DS_Store
-mosaic/utest/testdata/eventProcessing.log
+mosaic/utest/testdata/eventProcessing*.log
 mosaic_devel_image.sh
 mosaic_nist.egg-info/
 mosaicgui/csvexportview/.DS_Store
@@ -52,3 +52,9 @@ data/eventMD-P28-bin.sqlite
 commit-hash
 mosaic/utest/testdata/*.sqlite
 data/eventMD-PEG28-ADEPT2State.sqlite
+doctrees
+latex
+_nistpages/
+data/SingleChan-*.*sv
+data/SingleChan-*.bin
+pyinstaller/icon.*
