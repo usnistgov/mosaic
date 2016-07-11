@@ -6,6 +6,14 @@
         "dcOffset": 0.0, 
         "Rfb": 9100000000.0
     }, 
+    "adept" : {
+       "FitTol"	: "1.e-7",
+       "FitIters" : "50000",
+       "InitThreshold" : "2.5",
+       "MinStateLength" : "10",
+       "MaxEventLength" : "10000",
+       "UnlinkRCConst" 	: "1"
+    },
     "adept2State": {
         "FitTol": 1e-07, 
         "UnlinkRCConst": "1", 

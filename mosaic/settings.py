@@ -7,6 +7,7 @@
 	:License:	See LICENSE.TXT
 	:ChangeLog:
 	.. line-block::
+		3/16/16 	AB 	Replaced InitThreshold with StepSize in default settings for ADEPT and warn users when InitThreshold is used.
 		8/24/15 	AB 	Updated algorithm names.
 		6/24/15 	AB 	Added an option to unlink the RC constants in stepResponseAnalysis.
 		3/20/15 	AB 	Added MaxEventLength to multiStateAnalysis settings
@@ -51,7 +52,7 @@ class settings:
 		# 	self.settingsFile=os.getcwd()+"/settings"
 		else:
 			if defaultwarn:
-				print "Settings file not found in data directory. Default settings will be used."
+				print "WARNING: Settings file not found in data directory. Default settings will be used."
 			settingstr=__settings__
 
 
@@ -59,6 +60,22 @@ class settings:
 
 	def parseSettingsString(self, settingstring):
 		self.settingsDict=json.loads( self.migrateSettings(settingstring) )
+
+		try:
+			for s, d in __legacy_settings_heal__.iteritems():
+				for k, v in dict(d).iteritems():
+					tempval=self.settingsDict[s][k]
+					del self.settingsDict[s][k]
+
+					print "WARNING: The setting '{key}' in '{sec}' has been replaced by '{newkey}'.\n".format(
+								key=k, 
+								sec=s,
+								newkey=v
+							)
+
+					self.settingsDict[s][v]=tempval
+		except KeyError:
+			pass
 
 	def migrateSettings(self, settingstring):
 		s=settingstring
@@ -107,15 +124,15 @@ __settings__="""
 		"adept2State" : {
 			"FitTol"				: "1.e-7",
 			"FitIters"				: "50000",
-			"UnlinkRCConst" 		: "1"
+			"LinkRCConst" 			: "1"
 		},
 		"adept" : {
             "FitTol"				: "1.e-7",
-            "FitIters"				: "50000",
-            "InitThreshold"			: "2.5",
+            "FitIters"				: "1000",
+            "StepSize"				: "2.5",
             "MinStateLength"		: "10",
-            "MaxEventLength" 		: "10000",
-            "UnlinkRCConst" 		: "1"
+            "MaxEventLength" 		: "50000",
+            "LinkRCConst" 			: "1"
 	     },
 	     "cusumPlus": {
 			"StepSize"				: 3.0, 
@@ -144,7 +161,8 @@ __settings__="""
 			"Cfb": 1.07e-12, 
 			"dcOffset": 0.0, 
 			"filter": "*.qdf", 
-			"start": 0.0
+			"start": 0.0,
+			"format" : "V"
 		},
 		"binTrajIO": {
 			"AmplifierScale": "1.0", 
@@ -173,9 +191,14 @@ __legacy_settings__={
 	"cusumLevelAnalysis" 	: "cusumPlus"
 }
 
+__legacy_settings_heal__={
+	"adept" : {
+		"InitThreshold"			: "StepSize"
+	}
+}
 
 if __name__ == '__main__':
 	import pprint
 
-	s=settings("data/")
+	s=settings(".")
 	pprint.pprint( s.settingsDict )

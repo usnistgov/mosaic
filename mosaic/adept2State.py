@@ -7,6 +7,7 @@
 	:License:	See LICENSE.TXT
 	:ChangeLog:
 	.. line-block::
+		03/30/16 	AB 	Change UnlinkRCConst to LinkRCConst to avoid double negatives.
 		12/09/15 	KB 	Added Windows specific optimizations
 		8/24/15 	AB 	Rename algorithm to ADEPT 2 State.
 		7/23/15		JF  Added a new test to reject RC Constants <=0
@@ -60,7 +61,7 @@ class adept2State(metaEventProcessor.metaEventProcessor):
 			In addition to :class:`~mosaic.metaEventProcessor.metaEventProcessor` args,
 				- `FitTol` :		Tolerance value for the least squares algorithm that controls the convergence of the fit (Default: `1e-7`).
 				- `FitIters` : 		Maximum number of iterations before terminating the fit (Default: `50000`).
-				- `UnlinkRCConst` :		When True, unlinks the RC constants in the fit function to vary independently of each other. (Default: `False`)
+				- `LinkRCConst` :	When True, the RC constants associated with each state in the fit function are varied together. (Default: `True`)
 
 		:Errors:
 			
@@ -97,7 +98,7 @@ class adept2State(metaEventProcessor.metaEventProcessor):
 
 			self.BlockRejectRatio=float(self.settingsDict.pop("BlockRejectRatio", 0.8))
 
-			self.UnlinkRCConst=int(self.settingsDict.pop("UnlinkRCConst", 1))
+			self.LinkRCConst=int(self.settingsDict.pop("LinkRCConst", 1))
 		except ValueError as err:
 			raise commonExceptions.SettingsTypeError( err )
 
@@ -118,7 +119,7 @@ class adept2State(metaEventProcessor.metaEventProcessor):
 		except:
 			raise
 
-	def mdList(self):
+	def _mdList(self):
 		""" 
 			Return a list of meta-data from the analysis of single step events. We explicitly
 			control the order of the data to keep formatting consistent. 				
@@ -137,7 +138,7 @@ class adept2State(metaEventProcessor.metaEventProcessor):
 					self.mdRedChiSq
 				]
 
-	def mdHeadingDataType(self):
+	def _mdHeadingDataType(self):
 		""" 
 			Return a list of meta-data tags data types.
 		"""
@@ -155,7 +156,7 @@ class adept2State(metaEventProcessor.metaEventProcessor):
 					'REAL'
 				]
 
-	def mdHeadings(self):
+	def _mdHeadings(self):
 		""" 
 			Explicity set the metadata to print out.
 		"""
@@ -192,7 +193,7 @@ class adept2State(metaEventProcessor.metaEventProcessor):
 		
 		logObj.addLogText( 'Max. iterations  = {0}'.format(self.FitIters) )
 		logObj.addLogText( 'Fit tolerance (rel. err in leastsq)  = {0}'.format(self.FitTol) )
-		logObj.addLogText( 'Unlink RC constants = {0}'.format(bool(self.UnlinkRCConst)) )
+		logObj.addLogText( 'Link RC constants = {0}'.format(bool(self.LinkRCConst)) )
 
 		return str(logObj)
 
@@ -307,10 +308,11 @@ class adept2State(metaEventProcessor.metaEventProcessor):
 			params.add('b', value = i0)
 			params.add('tau1', value = tauVal)
 
-			if self.UnlinkRCConst:
-				params.add('tau2', value = tauVal)
-			else:
+			if self.LinkRCConst:
 				params.add('tau2', value = tauVal, expr='tau1')
+			else:
+				params.add('tau2', value = tauVal)
+
 
 			optfit=Minimizer(self.__objfunc, params, fcn_args=(ts,edat,))
 			optfit.prepare_fit()

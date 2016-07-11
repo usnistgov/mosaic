@@ -126,15 +126,15 @@ pyUnicode=First[StringSplit[ToString[#],"'"]]&;
 PlotEvents[dbname_,FsKHz_, nEvents_:All]:=Module[{q},
 q=QueryDB[dbname, "select ProcessingStatus, BlockedCurrent, OpenChCurrent, EventStart, EventEnd, RCConstant1,RCConstant1, TimeSeries from metadata"<>nEventLimit[nEvents]];
 Manipulate[plotsra[pyUnicode[q[[i]][[1]]], ts[q[[i]][[-1]],FsKHz],q[[i]][[2;;-2]] ,FsKHz],{i,1,Length[q],1,Appearance->"Open"}]
-]/;GetAnalysisAlgorithm[dbname]=="stepResponseAnalysis"
+]/;GetAnalysisAlgorithm[dbname]=="adept2State"
 PlotEvents[dbname_,FsKHz_, nEvents_:All]:=Module[{q},
 q=QueryDB[dbname,"select ProcessingStatus, OpenChCurrent, CurrentStep, EventDelay, RCConstant, TimeSeries from metadata"<>nEventLimit[nEvents]];
 Manipulate[plotmsa[pyUnicode[q[[i]][[1]]], ts[q[[i]][[-1]],FsKHz], {q[[i]][[2]],q[[i]][[3]],q[[i]][[4]],q[[i]][[5]]},FsKHz],{i,1,Length[q],1,Appearance->"Open"}]
-]/;GetAnalysisAlgorithm[dbname]=="multiStateAnalysis"
+]/;GetAnalysisAlgorithm[dbname]=="adept"
 PlotEvents[dbname_,FsKHz_, nEvents_:All]:=Module[{q},
 q=QueryDB[dbname,"select ProcessingStatus, OpenChCurrent, CurrentStep, EventDelay, TimeSeries from metadata"<>nEventLimit[nEvents]];
 Manipulate[plotcla[pyUnicode[q[[i]][[1]]], ts[q[[i]][[-1]],FsKHz], {q[[i]][[2]],q[[i]][[3]],q[[i]][[4]]},FsKHz],{i,1,Length[q],1,Appearance->"Open"}]
-]/;GetAnalysisAlgorithm[dbname]=="cusumLevelAnalysis"
+]/;GetAnalysisAlgorithm[dbname]=="cusumPlus"
 
 
 (* ::Input:: *)
@@ -155,10 +155,10 @@ StyleBox[\"t\",\nFontSlant->\"Italic\"]\) (ms)",20,FontFamily->"Helvectica"],Sty
 StyleBox[\"i\",\nFontSlant->\"Italic\"]\) (pA)",20,FontFamily->"Helvectica"]},FrameTicksStyle->Directive[20,FontFamily->"Helvectica"]],
 ListPlot[{
 Table[{t,Evaluate[Abs[md[[1]]]+\!\(
-\*UnderoverscriptBox[\(\[Sum]\), \(i = 1\), \(Length[md[[2]]]\)]\((\(md[[2]]\)[[i]] HeavisideTheta[t - \(md[[3]]\)[[i]]])\)\)]},{t,ts[[1]][[1]],ts[[-1]][[1]],(1/FsKHz)/10}],
+\*UnderoverscriptBox[\(\[Sum]\), \(i = 1\), \(Length[md[\([2]\)]]\)]\((\(md[\([2]\)]\)[\([i]\)] HeavisideTheta[t - \(md[\([3]\)]\)[\([i]\)]])\)\)]},{t,ts[[1]][[1]],ts[[-1]][[1]],(1/FsKHz)/10}],
 Table[{t,Evaluate[Abs[md[[1]]]+\!\(
-\*UnderoverscriptBox[\(\[Sum]\), \(i = 1\), \(Length[md[[2]]]\)]\((\(md[[2]]\)[[i]] \((1 - Exp[
-\*FractionBox[\(-\((t - \(md[[3]]\)[[i]])\)\), \(\(md[[4]]\)[[i]]\)]])\) HeavisideTheta[t - \(md[[3]]\)[[i]]])\)\)]},{t,ts[[1]][[1]],ts[[-1]][[1]],(1/FsKHz)/10}]
+\*UnderoverscriptBox[\(\[Sum]\), \(i = 1\), \(Length[md[\([2]\)]]\)]\((\(md[\([2]\)]\)[\([i]\)] \((1 - Exp[
+\*FractionBox[\(-\((t - \(md[\([3]\)]\)[\([i]\)])\)\), \(\(md[\([4]\)]\)[\([i]\)]\)]])\) HeavisideTheta[t - \(md[\([3]\)]\)[\([i]\)]])\)\)]},{t,ts[[1]][[1]],ts[[-1]][[1]],(1/FsKHz)/10}]
 },PlotStyle->{{ColorData["DarkRainbow"][0.95],Dashed,Thickness[0.005]},{Black,Dashing[{}],Thickness[0.005]},{Black,Thickness[0.005]}},Joined->True]
 },ImageSize->600]
 ]/;status=="normal"
@@ -178,7 +178,7 @@ StyleBox[\"t\",\nFontSlant->\"Italic\"]\) (ms)",20,FontFamily->"Helvectica"],Sty
 StyleBox[\"i\",\nFontSlant->\"Italic\"]\) (pA)",20,FontFamily->"Helvectica"]},FrameTicksStyle->Directive[20,FontFamily->"Helvectica"]],
 ListLinePlot[{
 Table[{t,Evaluate[Abs[md[[1]]]+\!\(
-\*UnderoverscriptBox[\(\[Sum]\), \(i = 1\), \(Length[md[[2]]]\)]\((\(md[[2]]\)[[i]] HeavisideTheta[t - \(md[[3]]\)[[i]]])\)\)]},{t,ts[[1]][[1]],ts[[-1]][[1]],(1/FsKHz)/500}]
+\*UnderoverscriptBox[\(\[Sum]\), \(i = 1\), \(Length[md[\([2]\)]]\)]\((\(md[\([2]\)]\)[\([i]\)] HeavisideTheta[t - \(md[\([3]\)]\)[\([i]\)]])\)\)]},{t,ts[[1]][[1]],ts[[-1]][[1]],(1/FsKHz)/500}]
 },PlotStyle->{{ColorData["DarkRainbow"][0.95],Dashed,Thickness[0.005]}},Joined->True]
 },ImageSize->600]
 ]/;status=="normal"
