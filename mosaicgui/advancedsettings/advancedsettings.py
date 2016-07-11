@@ -11,6 +11,7 @@ import mosaic.trajio.abfTrajIO as abf
 import mosaic.trajio.qdfTrajIO as qdf
 from mosaic.trajio.metaTrajIO import FileNotFoundError, EmptyDataPipeError
 from mosaic.utilities.resource_path import resource_path
+import mosaicgui.mosaicSyntaxHighlight as mosaicSyntaxHighlight
 
 # from advancedSettingsDialog import Ui_advancedSettingsDialog
 
@@ -19,10 +20,10 @@ class AdvancedSettingsDialog(QtGui.QDialog):
 	def __init__(self, parent = None):
 		super(AdvancedSettingsDialog, self).__init__(parent)
 
-		# uic.loadUi(os.path.join(os.path.dirname(os.path.abspath(__file__)),"advancedSettingsDialog.ui"), self)
 		uic.loadUi(resource_path("advancedSettingsDialog.ui"), self)
-		# self.setupUi(self)
 		self._positionWindow()
+
+		mosaicSyntaxHighlight.mosaicSyntaxHighlight( self.advancedSettingsTextEdit, resource_path("mosaicgui/highlight-spec/json.json") )
 
 		QtCore.QObject.connect(self.cancelPushButton, QtCore.SIGNAL("clicked()"), self.OnCancel)
 		QtCore.QObject.connect(self.savePushButton, QtCore.SIGNAL("clicked()"), self.OnSave)
@@ -35,7 +36,6 @@ class AdvancedSettingsDialog(QtGui.QDialog):
 			self.setGeometry(425, 475, 500, 300)
 		else:
 			self.setGeometry(405, 475, 500, 300)
-		# self.move( (-screen.width()/2)+200, -screen.height()/2 )
 
 	def updateSettingsString(self, str):
 		self.advancedSettingsTextEdit.setText(str)
@@ -43,7 +43,6 @@ class AdvancedSettingsDialog(QtGui.QDialog):
 	# SLOTS
 	def OnSave(self):
 		self.accept()
-		# pass
 
 	def OnCancel(self):
 		self.reject()

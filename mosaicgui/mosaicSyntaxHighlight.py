@@ -1,5 +1,11 @@
 """
-http://carsonfarmer.com/2009/07/syntax-highlighting-with-pyqt/
+Add support for syntax highlighting in QTextEdit controls. This code is heavily adapted from http://carsonfarmer.com/2009/07/syntax-highlighting-with-pyqt/
+	
+	:Created:	07/11/2016
+ 	:Author: 	Arvind Balijepalli <arvind.balijepalli@nist.gov>
+	:ChangeLog:
+	.. line-block::
+		07/11/16	AB	Initial version
 """
 import sys
 import json
