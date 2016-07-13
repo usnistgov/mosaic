@@ -59,6 +59,7 @@ class ModuleImport_TestSuite(ModuleImportTest):
 		'mosaicgui.sqlQueryWorker',
 		'mosaicgui.datamodel', 
 		'mosaicgui.mplwidget',
+		'mosaicgui.mosaicSyntaxHighlight',
 		'mosaicgui.updateService',
 		'mosaicgui.analysisWorker',
 		'mosaicgui.datapathedit',
