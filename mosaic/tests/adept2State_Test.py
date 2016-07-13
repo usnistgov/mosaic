@@ -1,5 +1,5 @@
 import mosaic.process.adept2State as a2s 
-from mosaic.utest.algorithmCommon import Base2StateTest
+from mosaic.tests.algorithmCommon import Base2StateTest
 
 class TwoState_TestSuite(Base2StateTest):
 	def test_adept2state(self):

@@ -1,5 +1,5 @@
 import mosaic.process.cusumPlus as cpl
-from mosaic.utest.algorithmCommon import BaseMultiStateTest
+from mosaic.tests.algorithmCommon import BaseMultiStateTest
 
 class CUSUM_TestSuite(BaseMultiStateTest):
 	def test_cusum(self):

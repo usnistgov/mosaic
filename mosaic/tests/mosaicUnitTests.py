@@ -46,9 +46,9 @@ def _mosaicUnitTests(base):
 
                 if self.verbose:
                     mosaicUnitTests.log.debug("Running verbose unit tests")
-                    testargs=['mosaic', '-v', '--where=mosaic/utest/']
+                    testargs=['mosaic', '-v', '--where=mosaic/tests/']
                 else:
-                    testargs=['mosaic', '--where=mosaic/utest/']
+                    testargs=['mosaic', '--where=mosaic/tests/']
                 
                 testargs.extend(testList)
 
