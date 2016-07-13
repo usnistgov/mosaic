@@ -482,7 +482,7 @@ class metaTrajIO(object):
 			if self.nearEndOfData:
 				self.Stop()
 			else:
-				self.logger.debug("End of data is approaching.")
+				self.logger.debug("Approaching the end of the data stream.")
 				self.nearEndOfData+=1
 
 	#################################################################
