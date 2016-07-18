@@ -122,7 +122,7 @@ setup(
 		'mosaic_addons'     : mosaicAddons
 		},
 	name='mosaic-nist',
-	version=mosaic.__version__,
+	version=mosaic.__version__+'-'+mosaic.__build__,
 	author='Arvind Balijepalli',
 	author_email='arvind.balijepalli@nist.gov',
 	packages=[
