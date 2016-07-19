@@ -36,7 +36,6 @@ class ModuleImport_TestSuite(ModuleImportTest):
 		'mosaic.trajio.abfTrajIO', 
 		'mosaic.trajio.binTrajIO', 
 		'mosaic.process.metaEventProcessor', 
-		'mosaic.process.singleStepEvent', 
 		'mosaic.process.cusumPlus', 
 		'mosaic.process.adept', 
 		'mosaic.process.adept2State',	
