@@ -187,10 +187,10 @@ class chimeraTrajIO(mosaic.metaTrajIO.metaTrajIO):
 		"""
 
                 gain = self.TIAgain * self.preADCgain
-                bitmask = (2**16 - 1) - (2**(16-ADCbits) - 1)
+                bitmask = (2**16 - 1) - (2**(16-self.ADCbits) - 1)
                 data = data & bitmask
                 data = self.ADCvref - 2*self.ADCvref*data.astype(float)/float(2**16)
-                data = -data/closedloop_gain + self.pAoffset
+                data = -data/gain + self.pAoffset
 		return np.array(data*1.0e12, dtype=np.float64)
 
 if __name__ == '__main__':
