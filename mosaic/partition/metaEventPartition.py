@@ -213,14 +213,9 @@ class metaEventPartition(object):
 				#print self.meanOpenCurr, self.minDrift, self.maxDrift, self.minDriftR, self.maxDriftR
 
 				# Process the data segment for events
-				datsign = np.sign(np.mean(d))
-				if datsign < 0:
-                                        mincurr = datsign * self.maxBaseline
-                                        maxcurr = datsign * self.minBaseline
-                                else:
-                                        mincurr = self.minBaseline
-                                        maxcurr = self.maxBaseline
-				if (self.meanOpenCurr > mincurr and self.meanOpenCurr < maxcurr) or self.minBaseline == -1.0 or self.maxBaseline == -1.0:
+                                print self.meanOpenCurr
+				if (self.meanOpenCurr > self.minBaseline and self.meanOpenCurr < self.maxBaseline) or self.minBaseline == -1.0 or self.maxBaseline == -1.0:
+                                        
 					self._eventsegment()
 				else: #skip over bad data, no need to abort
 					continue

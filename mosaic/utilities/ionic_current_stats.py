@@ -37,17 +37,14 @@ def OpenCurrentDist(dat, limit, minBaseline, maxBaseline):
                 y,x=np.histogram(uDat, range=hLimit, bins=100)
                 
         else:
-                if datsign < 0:
-                        hLimit = [maxBaseline*datsign, minBaseline*datsign]
-                else:
-                        hLimit = [minBaseline, maxBaseline]
+                hLimit = [minBaseline, maxBaseline]
                 y,x=np.histogram(uDat, range=hLimit, bins=100)
 	try:
 		popt, pcov = curve_fit(_fitfunc, x[:-1], y, p0=[np.max(y), dStd, np.mean(x)])
 		perr=np.sqrt(np.diag(pcov))
 	except:
 		return [0,0]
-	if np.any(perr/popt > 0.5): #0.5 is arbitrary for the moment, for testing. Could be added as a parameter or hard-coded pending testing. 
+	if np.any(perr/popt > 0.5) or ((minBaseline > -1 and maxBaseline > -1) and (popt[2] < minBaseline or popt[2] > maxBaseline)) : #0.5 is arbitrary for the moment, for testing. Could be added as a parameter or hard-coded pending testing. 
                 return [0,0]
         
 	return [popt[2], np.abs(popt[1])]
