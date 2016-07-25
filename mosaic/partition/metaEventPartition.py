@@ -33,7 +33,7 @@ import time
 import datetime
 import csv
 import cPickle
-import multiprocessing 
+import multiprocessing
 
 import numpy as np 
 import scipy.stats
@@ -196,7 +196,6 @@ class metaEventPartition(object):
 		
 		# Initialize segmentation
 		self._setuppartition()
-
 		try:
 			startTime=self.timingObj.time()
 			while(1):	
@@ -214,7 +213,14 @@ class metaEventPartition(object):
 				#print self.meanOpenCurr, self.minDrift, self.maxDrift, self.minDriftR, self.maxDriftR
 
 				# Process the data segment for events
-				if (self.meanOpenCurr > self.minBaseline and self.meanOpenCurr < self.maxBaseline) or self.minBaseline == -1.0 or self.maxBaseline == -1.0:
+				datsign = np.sign(np.mean(d))
+				if datsign < 0:
+                                        mincurr = datsign * self.maxBaseline
+                                        maxcurr = datsign * self.minBaseline
+                                else:
+                                        mincurr = self.minBaseline
+                                        maxcurr = self.maxBaseline
+				if (self.meanOpenCurr > mincurr and self.meanOpenCurr < maxcurr) or self.minBaseline == -1.0 or self.maxBaseline == -1.0:
 					self._eventsegment()
 				else: #skip over bad data, no need to abort
 					continue
@@ -535,6 +541,7 @@ class metaEventPartition(object):
 			#if self.meanOpenCurr == -1. or self.sdOpenCurr == -1. or self.slopeOpenCurr == -1.:
 			[ self.meanOpenCurr, self.sdOpenCurr, self.slopeOpenCurr ] = self._openchanstats(curr)
 			self.thrCurr=(abs(self.meanOpenCurr)-self.eventThreshold*abs(self.sdOpenCurr))
+			#print 'New Baseline: {0}\t{1}\t{2}\t{3}'.format(self.meanOpenCurr, self.sdOpenCurr, self.slopeOpenCurr,self.thrCurr)
 			return
 
 		# Update the threshold current from eventThreshold.

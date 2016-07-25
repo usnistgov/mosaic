@@ -25,7 +25,6 @@ def OpenCurrentDist(dat, limit, minBaseline, maxBaseline):
 	uDat = datsign*dat
 	dMin, dMax, dMean, dStd = np.floor( np.min(uDat) ), np.ceil( np.max(uDat) ), np.round( np.mean(uDat) ), np.std(uDat)
 
-        print 'Calculating new baseline stats'
 	try:
 		hLimit={0.5 : [dMean, dMax], -0.5 : [dMin, dMean], 0 : [dMin, dMax] }[limit]
 	except KeyError:

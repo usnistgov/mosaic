@@ -32,6 +32,7 @@ import sys
 import math
 
 import numpy as np
+#import pylab as pl
 import scipy.optimize
 from scipy.optimize import curve_fit
 
@@ -225,6 +226,9 @@ class adept2State(metaEventProcessor.metaEventProcessor):
 			np.seterr(invalid='ignore', over='ignore', under='ignore')
 
 			ts = np.array([ t*dt for t in range(0,len(edat)) ], dtype='float64')
+
+			#pl.plot(ts,edat)
+			#pl.show()
 
 			params=Parameters()
 
