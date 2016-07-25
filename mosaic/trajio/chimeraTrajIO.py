@@ -172,10 +172,10 @@ class chimeraTrajIO(metaTrajIO.metaTrajIO):
 		"""
 		logObject.addLogText( 'TIAgain = {0} Ohms'.format(self.TIAgain) )
 		logObject.addLogText( 'preADCgain = {0} '.format(self.preADCgain) )
-		logObject.addLogText( 'mVoffset = \'{0}\''.format(self.IonicCurrentType) )
-		logObject.addLogText( 'ADCvref = \'{0}\''.format(self.IonicCurrentType) )
-		logObject.addLogText( 'ADCbits = \'{0}\''.format(self.IonicCurrentType) )
-		logObject.addLogText( 'pAoffset = \'{0}\''.format(self.IonicCurrentType) )
+		logObject.addLogText( 'mVoffset = \'{0}\''.format(self.mVoffset) )
+		logObject.addLogText( 'ADCvref = \'{0}\''.format(self.ADCvref) )
+		logObject.addLogText( 'ADCbits = \'{0}\''.format(self.ADCbits) )
+		logObject.addLogText( 'pAoffset = \'{0}\''.format(self.pAoffset) )
 		logObject.addLogText( 'Header offset = {0} bytes'.format(self.HeaderOffset) )
 		logObject.addLogText( 'Data type = \'{0}\''.format(self.IonicCurrentType) )
 		
