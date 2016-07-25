@@ -9,7 +9,6 @@
 """
 import numpy as np 
 from scipy.optimize import curve_fit
-import pylab as pl
 
 
 __all__=["OpenCurrentDist"]
@@ -44,10 +43,6 @@ def OpenCurrentDist(dat, limit, minBaseline, maxBaseline):
                 else:
                         hLimit = [minBaseline, maxBaseline]
                 y,x=np.histogram(uDat, range=hLimit, bins=100)
-                print 'histo'
-                pl.plot(x[:-1],y)
-                pl.show()
-                print 'done'
 	try:
 		popt, pcov = curve_fit(_fitfunc, x[:-1], y, p0=[np.max(y), dStd, np.mean(x)])
 		perr=np.sqrt(np.diag(pcov))
