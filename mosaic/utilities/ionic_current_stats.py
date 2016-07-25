@@ -14,7 +14,7 @@ import pylab as pl
 
 __all__=["OpenCurrentDist"]
 
-def OpenCurrentDist(dat, limit):
+def OpenCurrentDist(dat, limit, minBaseline, maxBaseline):
 	"""
 		Calculate the mean and standard deviation of a time-series.
 		
@@ -22,9 +22,11 @@ def OpenCurrentDist(dat, limit):
 			- `dat` 	: time-series data
 			- `limit`	: limit the calculation to the top 50% (+0.5) of the range, bottom 50% (-0.5) or the entire range (0). Any other value of `limit` will cause it to be reset to 0 (i.e. full range).
 	"""
-	uDat = np.sign( np.mean(dat) )*dat
+	datsign = np.sign( np.mean(dat) )
+	uDat = datsign*dat
 	dMin, dMax, dMean, dStd = np.floor( np.min(uDat) ), np.ceil( np.max(uDat) ), np.round( np.mean(uDat) ), np.std(uDat)
 
+        print 'Calculating new baseline stats'
 	try:
 		hLimit={0.5 : [dMean, dMax], -0.5 : [dMin, dMean], 0 : [dMin, dMax] }[limit]
 	except KeyError:
@@ -37,7 +39,15 @@ def OpenCurrentDist(dat, limit):
                 y,x=np.histogram(uDat, range=hLimit, bins=100)
                 
         else:
-                y,x=np.histogram(uDat, range=[minBaseline, maxBaseline], bins=100)
+                if datsign < 0:
+                        hLimit = [maxBaseline*datsign, minBaseline*datsign]
+                else:
+                        hLimit = [minBaseline, maxBaseline]
+                y,x=np.histogram(uDat, range=hLimit, bins=100)
+                print 'histo'
+                pl.plot(x[:-1],y)
+                pl.show()
+                print 'done'
 	try:
 		popt, pcov = curve_fit(_fitfunc, x[:-1], y, p0=[np.max(y), dStd, np.mean(x)])
 		perr=np.sqrt(np.diag(pcov))
@@ -45,7 +55,7 @@ def OpenCurrentDist(dat, limit):
 		return [0,0]
 	if np.any(perr/popt > 0.5): #0.5 is arbitrary for the moment, for testing. Could be added as a parameter or hard-coded pending testing. 
                 return [0,0]
-
+        
 	return [popt[2], np.abs(popt[1])]
 
 
