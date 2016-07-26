@@ -68,6 +68,7 @@ class eventSegment(metaEventPartition.metaEventPartition):
 			self.blockSizeSec=float(self.settingsDict.pop("blockSizeSec", 1.0))
 			self.eventPad=int(self.settingsDict.pop("eventPad", 500))
 			self.minEventLength=int(self.settingsDict.pop("minEventLength",5))
+			self.maxEventLength=int(self.settingsDict.pop("maxEventLength",1000000))
 			self.eventThreshold=float(self.settingsDict.pop("eventThreshold",6.0))
 			self.meanOpenCurr=float(self.settingsDict.pop("meanOpenCurr",-1.))
 			self.sdOpenCurr=float(self.settingsDict.pop("sdOpenCurr",-1.))
@@ -149,7 +150,13 @@ class eventSegment(metaEventPartition.metaEventPartition):
 			the event by 'eventPad' points and hand off to the event processing algorithm.
 		"""
 		try:
+                        skipflag = False
 			while(1):
+                                while (skipflag == True): #if we are in a clogged state or a very long event, skip data until we reach good baseline again
+                                        t=self.currData.popleft()
+                                        self.globalDataIndex+=1
+                                        if abs(t) >= self.meanOpenCurr:
+                                                skipflag = False
 				t=self.currData.popleft()
 				self.globalDataIndex+=1
 
@@ -164,13 +171,16 @@ class eventSegment(metaEventPartition.metaEventPartition):
 					self.eventdat=[]
 					self.eventdat.append(t)
 					self.dataStart=self.globalDataIndex-len(self.preeventdat)-1
-
 				if self.eventstart:
-					mean=abs(util.avg(self.preeventdat))
+					#mean=abs(util.avg(self.preeventdat))
+                                        mean = self.meanOpenCurr
 					while(abs(t)<mean):
 						t=self.currData.popleft()
 						self.eventdat.append(t)
 						self.globalDataIndex+=1
+						if len(self.eventdat) > self.maxEventLength:
+                                                        skipflag = True
+                                                        break
 
 					# end of event. Reset the flag
 					self.eventstart=False
@@ -191,7 +201,7 @@ class eventSegment(metaEventPartition.metaEventPartition):
 						)
 					 
 					#print self.trajDataObj.FsHz, self.windowOpenCurrentMean, self.sdOpenCurr, self.slopeOpenCurr
-					if len(self.eventdat)>=self.minEventLength:
+					if len(self.eventdat)>=self.minEventLength and len(self.eventdat)<self.maxEventLength:
 						self.eventcount+=1
 						# print "i=", self.eventcount
 						#sys.stderr.write('event mean curr={0:0.2f}, len(preeventdat)={1}\n'.format(sum(self.eventdat)/len(self.eventdat),len(self.preeventdat)))
