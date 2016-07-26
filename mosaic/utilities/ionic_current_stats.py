@@ -13,7 +13,7 @@ from scipy.optimize import curve_fit
 
 __all__=["OpenCurrentDist"]
 
-def OpenCurrentDist(dat, limit, minBaseline, maxBaseline):
+def OpenCurrentDist(dat, limit, minBaseline=-1, maxBaseline=-1):
 	"""
 		Calculate the mean and standard deviation of a time-series.
 		
