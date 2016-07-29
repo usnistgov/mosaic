@@ -4,6 +4,9 @@
 	:Created:	4/22/2013
 	:Author: 	Arvind Balijepalli <arvind.balijepalli@nist.gov>
 	:License:	See LICENSE.TXT
+	:ChangeLog:
+		.. line-block::
+                        07/29/16        KB      Integrated chimeraTrajIO
 """	
 import sys
 import os
@@ -151,7 +154,8 @@ class settingsview(QtGui.QMainWindow):
 					"QDF" : self.datTypeComboBox.findText("QDF"), 
 					"ABF" : self.datTypeComboBox.findText("ABF"),
 					"BIN" : self.datTypeComboBox.findText("BIN"),
-					"TSV" : self.datTypeComboBox.findText("TSV")
+					"TSV" : self.datTypeComboBox.findText("TSV"),
+                                        "LOG" : self.datTypeComboBox.findText("LOG")
 				}
 		path=model["DataFilesPath"] 
 		if len(glob.glob(format_path( str(path)+'/*qdf') )) > 0:
@@ -169,9 +173,12 @@ class settingsview(QtGui.QMainWindow):
 		elif len(glob.glob( format_path(str(path)+'/*tsv') )) > 0:
 			self.datTypeComboBox.setCurrentIndex( datidx["TSV"] )
 			model["filter"]="*.tsv"
-		elif len(glob.glob( format_path(str(path)+'/*txt') )) > 0:
+		elif len(glob.glob( format_path(str(path)+'/*txt') )) > 0 and len(glob.glob( format_path(str(path)+'/*log') )) == 0:
 			self.datTypeComboBox.setCurrentIndex( datidx["TSV"] )
 			model["filter"]="*.txt"
+		elif len(glob.glob( format_path(str(path)+'/*log') )) > 0:
+			self.datTypeComboBox.setCurrentIndex( datidx["LOG"] )
+			model["filter"]="*.log"
 
 		# store the  data type in the trajviewer data struct
 		model["DataFilesType"] = str(self.datTypeComboBox.currentText())

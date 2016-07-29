@@ -5,6 +5,7 @@
 	:License:	See LICENSE.TXT
 	:ChangeLog:
 		.. line-block::
+                        07/29/16        KB      Integrated chimeraTrajIO
 			03/30/16 	AB 	Change UnlinkRCConst to LinkRCConst.
 			3/16/16 	AB 	Migrate InitThreshold setting to CUSUM StepSize.
 			8/24/15 	AB 	Updated algorithm names to ADEPT and CUSUM+
@@ -145,14 +146,17 @@ class guiDataModel(dict):
 			dargs.update({
 				"filter"	: self["filter"]
 				})
-		elif self["DataFilesType"]=="BIN":
-			keys.extend(["AmplifierScale", "AmplifierOffset", "SamplingFrequency", "HeaderOffset", "ColumnTypes", "IonicCurrentColumn"])
+		elif self["DataFilesType"]=="LOG":
+			keys.extend(["mVoffset", "ADCvref", "ADCbits","TIAgain","preADCgain","pAoffset","SamplingFrequency", "HeaderOffset", "ColumnTypes", "IonicCurrentColumn"])
 			dargs.update({"filter"	: self["filter"]})
 		elif self["DataFilesType"]=="TSV":
 			if self["nCols"]==-1:
 				keys.extend(["Fs", "scale"])
 			else:
 				keys.extend(["nCols", "timeCol", "currCol", "scale"])
+			dargs.update({"filter"	: self["filter"]})
+		elif self["DataFilesType"]=="BIN":
+			keys.extend(["AmplifierScale", "AmplifierOffset", "SamplingFrequency", "HeaderOffset", "ColumnTypes", "IonicCurrentColumn"])
 			dargs.update({"filter"	: self["filter"]})
 		else:
 			dargs.update({"filter"	: self["filter"]})
@@ -291,6 +295,12 @@ class guiDataModel(dict):
 								"AmplifierOffset"		: str,
 								"SamplingFrequency"		: int,
 								"HeaderOffset"			: int,
+                                                                "mVoffset"                      : float,
+                                                                "ADCvref"                       : float,
+                                                                "ADCbits"                       : int,
+                                                                "TIAgain"                       : float,
+                                                                "preADCgain"                    : float,
+                                                                "pAoffset"                      : float,
 								"ColumnTypes"			: str,
 								"IonicCurrentColumn"	: str,
 								"filter"				: str,
@@ -306,6 +316,7 @@ class guiDataModel(dict):
 								"blockSizeSec" 			: float,
 								"eventPad" 				: int,
 								"minEventLength" 		: int,
+                                                                "maxEventLength"                : int,
 								"eventThreshold" 		: float,
 								"driftThreshold" 		: float,
 								"maxDriftRate" 			: float,
@@ -374,7 +385,14 @@ class guiDataModel(dict):
 								"nCols"					: int,
 								"timeCol"				: int,
 								"currCol"				: int,
-								"scale"					: float
+								"scale"					: float,
+                                                                "HeaderOffset"			: int,
+                                                                "mVoffset"                      : float,
+                                                                "ADCvref"                       : float,
+                                                                "ADCbits"                       : int,
+                                                                "TIAgain"                       : float,
+                                                                "preADCgain"                    : float,
+                                                                "pAoffset"                      : float
 							}
 		self.eventPartitionAlgoKeys={
 								"CurrentThreshold" 		: "eventSegment"
@@ -393,13 +411,15 @@ class guiDataModel(dict):
 								"QDF" 					: "qdfTrajIO",
 								"ABF" 					: "abfTrajIO",
 								"BIN" 					: "binTrajIO",
-								"TSV"					: "tsvTrajIO"
+								"TSV"					: "tsvTrajIO",
+                                                                "LOG"                                   : "chimeraTrajIO"
 							}
 		self.analysisSetupKeys={
 								"QDF" 					: mosaic.trajio.qdfTrajIO.qdfTrajIO,
 								"ABF" 					: mosaic.trajio.abfTrajIO.abfTrajIO,
 								"BIN" 					: mosaic.trajio.binTrajIO.binTrajIO,
 								"TSV" 					: mosaic.trajio.tsvTrajIO.tsvTrajIO,
+                                                                "LOG"                                   : mosaic.trajio.chimeraTrajIO.chimeraTrajIO,
 								"SingleChannelAnalysis" : mosaic.apps.SingleChannelAnalysis.SingleChannelAnalysis,
 								"CurrentThreshold" 		: mosaic.partition.eventSegment.eventSegment,
 								"adept2State" 			: mosaic.process.adept2State.adept2State,
