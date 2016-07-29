@@ -24,6 +24,10 @@
 import json
 import os
 import os.path
+from mosaic.utilities.resource_path import format_path
+import mosaic.utilities.mosaicLogging as mlog
+
+__all__ = ["settings"]
 
 class settings:
 	"""
@@ -37,6 +41,8 @@ class settings:
 		"""
 		"""	
 		self.settingsFile=None
+
+		self.logger=mlog.mosaicLogging().getLogger(name=__name__)
 
 		if os.path.isfile(datpath+'/.settings'):
 			self.settingsFile=datpath+"/.settings"
@@ -52,7 +58,7 @@ class settings:
 		# 	self.settingsFile=os.getcwd()+"/settings"
 		else:
 			if defaultwarn:
-				print "WARNING: Settings file not found in data directory. Default settings will be used."
+				self.logger.warning( "WARNING: Settings file not found in data directory. Default settings will be used." )
 			settingstr=__settings__
 
 
@@ -67,11 +73,11 @@ class settings:
 					tempval=self.settingsDict[s][k]
 					del self.settingsDict[s][k]
 
-					print "WARNING: The setting '{key}' in '{sec}' has been replaced by '{newkey}'.\n".format(
+					self.logger.warning( "WARNING: The setting '{key}' in '{sec}' has been replaced by '{newkey}'.".format(
 								key=k, 
 								sec=s,
 								newkey=v
-							)
+							))
 
 					self.settingsDict[s][v]=tempval
 		except KeyError:

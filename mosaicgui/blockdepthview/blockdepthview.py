@@ -12,12 +12,11 @@ from scipy import signal
 from PyQt4 import QtCore, QtGui, uic
 from PyQt4.QtCore import Qt
 
-import mosaic.sqlite3MDIO as sqlite
+import mosaic.mdio.sqlite3MDIO as sqlite
 import mosaicgui.autocompleteedit as autocomplete
 import mosaicgui.sqlQueryWorker as sqlworker
 from mosaic.utilities.resource_path import resource_path, last_file_in_directory
 import matplotlib.ticker as ticker
-# from mosaicgui.trajview.trajviewui import Ui_Dialog
 
 css = """QLabel {
       color: red;
@@ -30,8 +29,6 @@ class BlockDepthWindow(QtGui.QDialog):
 
 		super(BlockDepthWindow, self).__init__(parent)
 
-
-		# uic.loadUi(os.path.join(os.path.dirname(os.path.abspath(__file__)),"blockdepthview.ui"), self)
 		uic.loadUi(resource_path("blockdepthview.ui"), self)
 
 		self._positionWindow()
@@ -42,10 +39,6 @@ class BlockDepthWindow(QtGui.QDialog):
 		self.idleTimer=QtCore.QTimer()
 		self.idleTimer.start(5000)
 
-		# self.processeEventsTimer=QtCore.QTimer()
-		# self.processeEventsTimer.start(500)
-
-		 # and BlockDepth between 0 and 1 
 		self.queryString="select BlockDepth from metadata where ProcessingStatus='normal'and ResTime > 0.025"
 		self.queryData=[]
 		self.queryError=False
@@ -82,8 +75,6 @@ class BlockDepthWindow(QtGui.QDialog):
 		QtCore.QObject.connect(self.binsSpinBox, QtCore.SIGNAL('valueChanged ( int )'), self.OnBinsChange)
 		QtCore.QObject.connect(self.levelHorizontalSlider, QtCore.SIGNAL('valueChanged ( int )'), self.OnlevelSliderChange)
 		QtCore.QObject.connect(self.peakDetectCheckBox, QtCore.SIGNAL('clicked(bool)'), self.OnPeakDetect)
-
-		# QtCore.QObject.connect(self.processeEventsTimer, QtCore.SIGNAL('timeout()'), self.OnProcessEvents)		
 
 	def openDB(self, dbpath, updateOnIdle=True):
 		"""
@@ -134,7 +125,6 @@ class BlockDepthWindow(QtGui.QDialog):
 			self.setGeometry(425, 30, 640, 400)
 		else:
 			self.setGeometry(405, 0, 640, 400)
-		# self.move( (-screen.width()/2)+200, -screen.height()/2 )
 
 	def _createDBIndex(self, dbfile):
 		db = sqlite3.connect(dbfile, detect_types=sqlite3.PARSE_DECLTYPES)
@@ -147,8 +137,6 @@ class BlockDepthWindow(QtGui.QDialog):
 	def refreshPlot(self):
 		try:
 			self.dataLoaded=True
-
-			# self.mpl_hist.canvas.ax.set_autoscale_on(True)
 			self.update_graph()
 		except AttributeError:
 			QtGui.QMessageBox.warning(self, "Path Error","Data path not set")
@@ -175,7 +163,7 @@ class BlockDepthWindow(QtGui.QDialog):
 				)
 			hist, bins=self.blockDepthHist
 
-			self.mpl_hist.canvas.ax.plot( bins[:-1], hist, color=c)
+			self.mpl_hist.canvas.ax.plot( bins[:-1], hist)
 			ylims=self.mpl_hist.canvas.ax.get_ylim()
 
 			# draw peak positions
@@ -185,7 +173,7 @@ class BlockDepthWindow(QtGui.QDialog):
 				
 				peakind=self.peakLocations
 
-				self.mpl_hist.canvas.ax.scatter(bins[peakind], hist[peakind], color='red')
+				self.mpl_hist.canvas.ax.scatter(bins[peakind], hist[peakind], edgecolor='none', color='#DB5E00', s=40, marker='o', linewidth='2')
 					
 			self.mpl_hist.canvas.ax.set_xlabel('<i>/<i0>', fontsize=10)
 			self.mpl_hist.canvas.ax.set_ylabel('counts', fontsize=10)

@@ -1,8 +1,10 @@
+from distutils.version import LooseVersion
+
 class DependencyVersionTest(object):
 	def runTestCase(self, dep, minver):
 		module=__import__(dep)
 
-		assert module.__version__ >= minver
+		assert LooseVersion(module.__version__) >= LooseVersion(minver)
 
 class DepencencyVersion_TestSuite(DependencyVersionTest):
 	def test_dependencyVersion(self):
