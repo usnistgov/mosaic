@@ -1,6 +1,8 @@
 """
 	Common exception types used across the system.
 """
+__all__ = ["SettingsTypeError"]
+
 class SettingsTypeError(Exception):
 	def __init__(self, value):
 		self.value="Setting {0} has an invalid type.".format(str(value).split()[-1])

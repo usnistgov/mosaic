@@ -8,7 +8,7 @@ import sqlite3
 
 from PyQt4 import QtCore, QtGui, uic
 
-import mosaic.sqlite3MDIO as sqlite
+import mosaic.mdio.sqlite3MDIO as sqlite
 import mosaicgui.autocompleteedit as autocomplete
 from mosaic.utilities.resource_path import resource_path, last_file_in_directory
 import mosaic.utilities.fit_funcs as fit_funcs

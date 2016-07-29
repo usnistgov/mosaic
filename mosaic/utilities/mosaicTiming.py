@@ -6,24 +6,66 @@
 	:License:	See LICENSE.TXT
 	:ChangeLog:
 	.. line-block::
+		6/17/16 	AB 	Only profile functions in DeveloperMode. Log timing output.
 		4/10/16		AB	Initial version
 """
 import time
 import sys
+import mosaic
+import mosaic.utilities.mosaicLogging as mlog
+from mosaic.utilities.mosaicLogFormat import _d
+
+__all__=["mosaicTiming"]
+
+class timingData(dict):
+	"""
+		Store timing information for each function being profiled
+	"""
+	def __init__(self, funcname):
+		self["funcname"]=funcname
+		self["last"]=0
+		self["total"]=0
+		self["maxtime"]=0
+		self["counter"]=0
+
+	def _currentTime(self):
+		return [
+			"Timing for \"{0}\": iterations={1}, last={2:0.3f} ms",
+			self["funcname"], 
+			self["counter"], 
+			self["last"]
+		] 
+
+	def _timingStatistics(self):
+		return [
+			"Summary timing for \"{0}\": iterations={1}, total={2:0.3f} ms, maximum={3:0.3f} ms, average={4:0.3f} ms",
+			self["funcname"], 
+			self["counter"], 
+			self["total"], 
+			self["maxtime"], 
+			self["total"]/float(self["counter"])
+		]
 
 class mosaicTiming:
 	"""
 		Profile code by attaching an instance of this class to any function. All the methods in this class are valid for the function being profiled.
 	"""
-	def __init__(self, logger=None):
+	def __init__(self):
 		"""
 			Initialize timing functions
 		"""
-		self.TotalTime		= 0		# total time - sum of times for each func call
-		self.Counter		= 0		# number of times the function was called
-		self.LastTime		= 0		# current execution time of function
-		self.MaxTime		= 0		# maximum execution time
-		self.FunctionName	= ""	# function name being profiled
+		self.timingDataDict={}
+
+		if mosaic.DeveloperMode and mosaic.CodeProfiling !='none':
+			self.TimingEnabled=True
+			if mosaic.CodeProfiling=='summary':
+				self.TimingSummary=True
+			else:
+				self.TimingSummary=False
+
+			self.logger=mlog.mosaicLogging().getLogger(__name__)
+		else:
+			self.TimingEnabled=False
 
 		# Setup platform-dependent timing function
 		if sys.platform.startswith('win'):
@@ -31,10 +73,23 @@ class mosaicTiming:
 		else:
 			self.timingFunc=time.time
 		
+	def __enter__(self):
+		return self
+
+	def __exit__(self, exc_type, exc_value, traceback):
+		self.PrintStatistics()
+
 	def FunctionTiming(self, func):
 		"""
-			Pass the function to be profiled as an argument. Alternatively with python 2.4+, attach a decorator to the function being profiled
-			For example:
+			Pass the function to be profiled as an argument. Alternatively with python 2.4+, attach a decorator to the function being profiled.
+
+			:Parameters:
+					- `func` :    function to be profiled
+
+			:Usage:
+			
+				.. code-block:: python
+				
 					funcTimer=mosaicTiming.mosaicTiming()
 
 					@funcTimer.FunctionTiming
@@ -43,64 +98,86 @@ class mosaicTiming:
 
 					# summarize the profiling results for someFunc
 					funcTimer.PrintStatistics()
-
-			:Parameters:
-					- `func` :    function to be profiled
 		"""
-		def wrapper(*arg):
-			t1 = self.time()
-			res = func(*arg)
-			t2 = self.time()
-			
-			self.FunctionName	=  func.func_name
-			self.LastTime		=  (t2-t1)*1000.0
-			self.TotalTime		+= self.LastTime
-			self.Counter		+= 1
-			if self.LastTime > self.MaxTime:
-				self.MaxTime=self.LastTime
+		def timing_wrapper(*args, **kwargs):
+			if self.TimingEnabled:
+				t1 = self.time()
+				res = func(*args, **kwargs)
+				t2 = self.time()
+				
+				try:
+					funcTimingObj=self.timingDataDict[func.__name__]
+				except KeyError:
+					funcname=func.__name__
+					funcTimingObj=timingData(funcname)
+					self.timingDataDict[funcname]=funcTimingObj
+
+				self._updateTiming(funcTimingObj, t1, t2)
+				
+				if not self.TimingSummary:
+					logger=mlog.mosaicLogging().getLogger(func.__name__)
+					logger.debug(_d(
+								"Timing: iterations={0}, total={1:0.3f} ms, last={2:0.3f} ms, maximum={3:0.3f} ms",
+								funcTimingObj["counter"],
+								funcTimingObj["total"],
+								funcTimingObj["last"],
+								funcTimingObj["maxtime"]
+							))
+			else:
+				res = func(*args, **kwargs)
+
 			return res
-		return wrapper
+		return timing_wrapper
 	
 	def time(self):
 		"""
-			Replace time.time() with a platform independent timing function
+			A platform independent timing function.
 		"""
 		return self.timingFunc()
 
-	def Reset(self):
+	def Reset(self, funcname=None):
 		"""
-			Reset all profiling data collected for a function
+			Reset all profiling data collected for a specified function or all stored functions.
 		"""
-		self.FunctionName	= ""
-		self.LastTime		= 0
-		self.TotalTime		= 0
-		self.Counter		= 0
-		self.MaxTime		= 0
+		if funcname:
+			del self.timingDataDict[funcname]
+		else:
+			self.timingDataDict={}
 		
 	def PrintCurrentTime(self):
 		"""
 			Print timing results of the most recent function call
 		"""
-		print("Timing results for function \"%s\": Iterations = %d, Current = %0.3f ms" % (self.FunctionName, self.Counter, self.LastTime) )
+		if self.TimingEnabled:
+			for k, v in self.timingDataDict.iteritems():
+				self.logger.debug( _d(*v._currentTime()) )
 		
 	def PrintStatistics(self):
 		"""
 			Print average timing results of the function call
 		"""
-		try:
-			print( "Timing results for function \"%s\":\n\tIterations = %d, Total = %0.3f ms, Maximum = %0.3f ms, Average = %0.3f ms" % (self.FunctionName, self.Counter, self.TotalTime, self.MaxTime, self.TotalTime/self.Counter) )
-		except ZeroDivisionError:
-			print( "ERROR: No timing data is available.")
+		if self.TimingEnabled:
+			for k, v in self.timingDataDict.iteritems():
+				try:
+					self.logger.debug( _d(*v._timingStatistics()) )
+				except ZeroDivisionError:
+					self.logger.error( "ERROR: No timing data is available.")
+
+	def _updateTiming(self, funcTimingObj, t1, t2):
+		last=(t2-t1)*1000.0
+
+		funcTimingObj["last"]		=  last
+		funcTimingObj["total"]		+= last
+		funcTimingObj["counter"]	+= 1
+		if last > funcTimingObj["maxtime"]:	funcTimingObj["maxtime"]=last
+
 
 if __name__ == '__main__':
-	funcTimer=mosaicTiming()
+	with mosaicTiming() as funcTimer:
+		@funcTimer.FunctionTiming
+		def someFunc():
+			time.sleep(0.01)
 
-	@funcTimer.FunctionTiming
-	def someFunc():
-		time.sleep(0.01)
+		for i in range(10):
+			someFunc()
 
-	for i in range(10):
-		someFunc()
-
-	# summarize the profiling results for someFunc
-	funcTimer.PrintStatistics()

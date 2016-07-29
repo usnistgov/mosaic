@@ -1,4 +1,4 @@
-import mosaic.adept as adept
+import mosaic.process.adept as adept
 from mosaic.utest.algorithmCommon import BaseMultiStateTest
 
 class ADEPT_TestSuite(BaseMultiStateTest):

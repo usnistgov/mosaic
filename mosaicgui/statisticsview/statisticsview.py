@@ -14,7 +14,7 @@ from scipy.optimize import curve_fit
 from PyQt4 import QtCore, QtGui, uic
 from PyQt4.QtCore import Qt
 
-import mosaic.sqlite3MDIO as sqlite
+import mosaic.mdio.sqlite3MDIO as sqlite
 from mosaic.utilities.resource_path import resource_path, last_file_in_directory
 from mosaic.utilities.analysis import caprate
 import mosaicgui.sqlQueryWorker as sqlworker

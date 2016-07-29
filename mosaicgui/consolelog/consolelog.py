@@ -5,7 +5,7 @@ import os
 import csv
 
 from PyQt4 import QtCore, QtGui, uic
-import mosaic.sqlite3MDIO as sqlite
+import mosaic.mdio.sqlite3MDIO as sqlite
 from mosaic.utilities.resource_path import resource_path, last_file_in_directory, format_path
 from sqlite3 import OperationalError
 

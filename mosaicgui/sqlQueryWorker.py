@@ -2,7 +2,7 @@
 import sys
 import sqlite3
 from os.path import expanduser
-import mosaic.sqlite3MDIO as sqlite
+import mosaic.mdio.sqlite3MDIO as sqlite
 from PyQt4 import QtCore, QtGui
 from PyQt4.QtCore import Qt
 

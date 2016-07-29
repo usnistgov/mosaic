@@ -3,6 +3,8 @@ import os
 import glob
 import string
 
+__all__=["path_separator", "resource_path", "last_file_in_directory", "format_path", "NotFoundError"]
+
 class NotFoundError(Exception):
 	pass
 
@@ -24,7 +26,7 @@ def resource_path(filename):
 			return str(sep.join( dirlist ))
 		elif os.path.isfile ( str(sep.join( dirlist[:-1] ))+sep+filename ):
 			return str(sep.join( dirlist[:-1] ))
-	elif filename in ["icon.png", "icons/icon_100px.png", "commit-hash"]:
+	elif filename in ["icon.png", "icons/icon_100px.png", "commit-hash", "icons/error-128.png", "icons/warning-128.png"]:
 		if os.path.isfile ( str(sep.join( dirlist ))+sep+filename ):
 			return str(sep.join( dirlist )+sep+filename)
 		elif os.path.isfile ( str(sep.join( dirlist[:-1] ))+sep+filename ):
