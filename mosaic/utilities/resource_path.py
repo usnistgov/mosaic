@@ -21,12 +21,23 @@ def resource_path(filename):
 	sep=path_separator()
 	dirlist=string.split( os.path.dirname( os.path.abspath(__file__) ), sep )[:-2]
 
+	resource_files=[
+				"icon.png", 
+				"icons/icon_100px.png", 
+				"commit-hash", 
+				"icons/error-128.png", 
+				"icons/warning-128.png", 
+				"mosaicgui/highlight-spec/python.json", 
+				"mosaicgui/highlight-spec/json.json",
+				"mosaicgui/highlight-spec/log.json"
+			]
+
 	if filename in [ ".settings", "settings"]:
 		if os.path.isfile ( str(sep.join( dirlist ))+sep+filename ):
 			return str(sep.join( dirlist ))
 		elif os.path.isfile ( str(sep.join( dirlist[:-1] ))+sep+filename ):
 			return str(sep.join( dirlist[:-1] ))
-	elif filename in ["icon.png", "icons/icon_100px.png", "commit-hash", "icons/error-128.png", "icons/warning-128.png"]:
+	elif filename in resource_files:
 		if os.path.isfile ( str(sep.join( dirlist ))+sep+filename ):
 			return str(sep.join( dirlist )+sep+filename)
 		elif os.path.isfile ( str(sep.join( dirlist[:-1] ))+sep+filename ):

@@ -32,6 +32,7 @@ class waveletDenoiseFilter(metaIOFilter.metaIOFilter):
 	def _init(self, **kwargs):
 		"""
 		"""	
+		self.logger=mlog.mosaicLogging().getLogger(__name__)
 		try:
 			self.waveletType=str(kwargs['wavelet'])
 			self.waveletLevel=int(kwargs['level'])
@@ -40,9 +41,7 @@ class waveletDenoiseFilter(metaIOFilter.metaIOFilter):
 
 			self.maxWaveletLevel=self.waveletLevel
 		except KeyError:
-			print "Missing mandatory arguments 'wavelet', 'level' or 'threshold'"
-
-		self.logger=mlog.mosaicLogging().getLogger(__name__)
+			self.logger.error( "ERROR: Missing mandatory arguments 'wavelet', 'level' or 'threshold'" )
 
 
 	def filterData(self, icurr, Fs):
@@ -119,7 +118,7 @@ class waveletDenoiseFilter(metaIOFilter.metaIOFilter):
 			 	}[thtype]
 			return thalgo(dat, len(dat))
 		except KeyError, err:
-			print "Thresholding algorithm '" + thtype + "' is not available. Using default threshold (sqtwolog).\n"
+			logger.warning( "WARNING: Thresholding algorithm '{0}' is not available. Using default threshold (sqtwolog).".format(thtype) )
 			# default
 			self.waveletThresholdSubType='sqtwolog'
 			return _sqtwolog(dat, len(dat))

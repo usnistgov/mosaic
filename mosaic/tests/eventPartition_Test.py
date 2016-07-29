@@ -1,4 +1,4 @@
-from mosaic.utest.eventPartitionCommon import EventPartitionTest
+from mosaic.tests.eventPartitionCommon import EventPartitionTest
 import mosaic.partition.eventSegment as es
 
 class EventPartitionSingle_TestSuite(EventPartitionTest):

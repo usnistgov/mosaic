@@ -15,13 +15,13 @@ Nanometer-scale pores have demonstrated potential use in biotechnology applicati
 Installation
 =================================
 
-Please refer to the `Installation <https://usnistgov.github.io/mosaic/html/doc/GettingStarted.html>`_ section of the MOSAIC documentation for details on installation.
+Please refer to the `Installation <https://pages.nist.gov/mosaic/html/doc/GettingStarted.html>`_ section of the MOSAIC documentation for details on installation.
 
 
 Getting Help
 =================================
 
-For questions and help, please join our `mailing list <https://usnistgov.github.io/mosaic/html/doc/mailingList.html>`_. 
+For questions and help, please join our `mailing list <https://pages.nist.gov/mosaic/html/doc/mailingList.html>`_. 
 
 To subscribe:
 

@@ -126,8 +126,8 @@ class eventSegment(metaEventPartition.metaEventPartition):
 
 	def formatoutputfiles(self):
 		self.esLogger.info('[Output]')
-		self.esLogger.info('\tOutput path = {0}'.format(self.trajDataObj.datPath))
-		self.esLogger.info('\tEvent characterization data = '+ self.mdioDBHnd.dbFilename )
+		# self.esLogger.info('\tOutput path = \'{0}\''.format(self.trajDataObj.datPath))
+		self.esLogger.info('\tEvent database = \'{0}\''.format(self.mdioDBHnd.dbFilename) )
 		if self.writeEventTS:
 			self.esLogger.info('\tEvent time-series = ***enabled***')
 		else:
