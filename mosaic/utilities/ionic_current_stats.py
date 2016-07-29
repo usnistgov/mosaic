@@ -4,6 +4,7 @@
 	:License:	See LICENSE.TXT	
 	:ChangeLog:
 	.. line-block::
+                7/29/16         KB      Added weights to histogram fitting
                 15/12/15        KB      Added error checking and limits to baseline calculations
 		10/30/14	AB	Initial version
 """
@@ -40,11 +41,12 @@ def OpenCurrentDist(dat, limit, minBaseline=-1, maxBaseline=-1):
                 hLimit = [minBaseline, maxBaseline]
                 y,x=np.histogram(uDat, range=hLimit, bins=100)
 	try:
-		popt, pcov = curve_fit(_fitfunc, x[:-1], y, p0=[np.max(y), dStd, np.mean(x)])
+                sigma = 1/np.sqrt(y+1e-10)
+		popt, pcov = curve_fit(_fitfunc, x[:-1], y, p0=[np.max(y), dStd, np.mean(x)],sigma=sigma)
 		perr=np.sqrt(np.diag(pcov))
 	except:
 		return [0,0]
-	if np.any(perr/popt > 0.5) or ((minBaseline > -1 and maxBaseline > -1) and (popt[2] < minBaseline or popt[2] > maxBaseline)) : #0.5 is arbitrary for the moment, for testing. Could be added as a parameter or hard-coded pending testing. 
+	if np.any(perr/popt > 0.5) or ((minBaseline > -1 and maxBaseline > -1) and (popt[2] < minBaseline or popt[2] > maxBaseline)): #0.5 is arbitrary for the moment, for testing. Could be added as a parameter or hard-coded pending testing. 
                 return [0,0]
         
 	return [popt[2], np.abs(popt[1])]

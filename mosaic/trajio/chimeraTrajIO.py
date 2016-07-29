@@ -1,12 +1,13 @@
 # -*- coding: utf-8 -*-
 """
-Binary file implementation of metaTrajIO. Read raw binary files with specified record sizes
+Chimera VC100 concatenated file format implementation of metaTrajIO. Read concatenated chimera files with specified amplifier settings. 
 
 	:Created: 7/11/2016
 	:Author: 	Kyle Briggs <kbrig035@uottawa.ca>
 	:License:	See LICENSE.TXT
 	:ChangeLog:
 	.. line-block::
+                7/29/16         KB      Miscelleneous bugfixes
 		7/11/16		KB	Initial version
 """
 import struct
@@ -143,6 +144,8 @@ class chimeraTrajIO(metaTrajIO.metaTrajIO):
 		if not hasattr(self, 'Fs'):	
 			self.Fs=self.SamplingFrequency
 
+                self.chimeraLogger=mlog.mosaicLogging().getLogger(name=__name__)
+
 	def readdata(self, fname):
 		"""
 			Return raw data from a single data file. Set a class 
@@ -162,7 +165,7 @@ class chimeraTrajIO(metaTrajIO.metaTrajIO):
 		"""
 		return self.readBinaryFile(fname)
 		
-	def _formatsettings(self, logObject):
+	def _formatsettings(self):
 		"""
 			Populate `logObject` with settings strings for display
 
@@ -170,14 +173,14 @@ class chimeraTrajIO(metaTrajIO.metaTrajIO):
 
 				- `logObject` : 	a object that holds logging text (see :class:`~mosaic.utilities.mosaicLog.mosaicLog`)				
 		"""
-		logObject.addLogText( 'TIAgain = {0} Ohms'.format(self.TIAgain) )
-		logObject.addLogText( 'preADCgain = {0} '.format(self.preADCgain) )
-		logObject.addLogText( 'mVoffset = \'{0}\''.format(self.mVoffset) )
-		logObject.addLogText( 'ADCvref = \'{0}\''.format(self.ADCvref) )
-		logObject.addLogText( 'ADCbits = \'{0}\''.format(self.ADCbits) )
-		logObject.addLogText( 'pAoffset = \'{0}\''.format(self.pAoffset) )
-		logObject.addLogText( 'Header offset = {0} bytes'.format(self.HeaderOffset) )
-		logObject.addLogText( 'Data type = \'{0}\''.format(self.IonicCurrentType) )
+		self.chimeraLogger.info( '\t\tTIAgain = {0} Ohms'.format(self.TIAgain) )
+		self.chimeraLogger.info( '\t\tpreADCgain = {0} '.format(self.preADCgain) )
+		self.chimeraLogger.info( '\t\tmVoffset = \'{0}\''.format(self.mVoffset) )
+		self.chimeraLogger.info( '\t\tADCvref = \'{0}\''.format(self.ADCvref) )
+		self.chimeraLogger.info( '\t\tADCbits = \'{0}\''.format(self.ADCbits) )
+		self.chimeraLogger.info( '\t\tpAoffset = \'{0}\''.format(self.pAoffset) )
+		self.chimeraLogger.info( '\t\tHeader offset = {0} bytes'.format(self.HeaderOffset) )
+		self.chimeraLogger.info( '\t\tData type = \'{0}\''.format(self.IonicCurrentType) )
 		
 
 	def readBinaryFile(self, fname):

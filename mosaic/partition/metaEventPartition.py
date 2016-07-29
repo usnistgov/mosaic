@@ -215,10 +215,8 @@ class metaEventPartition(object):
 				# Process the data segment for events
                                 
 				if (self.meanOpenCurr > self.minBaseline and self.meanOpenCurr < self.maxBaseline) or self.minBaseline == -1.0 or self.maxBaseline == -1.0:
-                                        print 'Baseline: {0} and {1}'.format(self.meanOpenCurr,self.sdOpenCurr)
 					self._eventsegment()
 				else: #skip over bad data, no need to abort
-                                        print 'skipping section with {0} and {1}'.format(self.meanOpenCurr, self.sdOpenCurr)
 					continue
 
 
