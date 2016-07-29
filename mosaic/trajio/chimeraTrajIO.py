@@ -13,7 +13,7 @@ Chimera VC100 concatenated file format implementation of metaTrajIO. Read concat
 import struct
 
 import mosaic.trajio.metaTrajIO as metaTrajIO
-import mosaic.utilities.mosaicLog as log
+import mosaic.utilities.mosaicLogging as mlog
 
 import numpy as np
 

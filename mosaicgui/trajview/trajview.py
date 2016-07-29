@@ -11,6 +11,7 @@ import mosaic.trajio.abfTrajIO as abf
 import mosaic.trajio.qdfTrajIO as qdf
 import mosaic.trajio.binTrajIO as bin
 import mosaic.trajio.tsvTrajIO as tsv
+import mosaic.trajio.chimeraTrajIO as chimera
 from mosaic.trajio.metaTrajIO import FileNotFoundError, EmptyDataPipeError
 from mosaic.utilities.resource_path import resource_path
 from mosaic.utilities.ionic_current_stats import OpenCurrentDist
@@ -122,7 +123,20 @@ class TrajectoryWindow(QtGui.QDialog):
 						self.IOArgs["scale"]=self.datadict["scale"]
 					except:
 						self.IOArgs["scale"]=1
+                                elif self.datadict["DataFilesType"] ==  "LOG":
+					self.iohnd=chimera.chimeraTrajIO
 
+                                        self.IOArgs["mVoffset"]=self.datadict["mVoffset"]
+                                        self.IOArgs["ADCvref"]=self.datadict["ADCvref"]
+                                        self.IOArgs["ADCbits"]=self.datadict["ADCbits"]
+                                        self.IOArgs["TIAgain"]=self.datadict["TIAgain"]
+                                        self.IOArgs["preADCgain"]=self.datadict["preADCgain"]
+                                        self.IOArgs["pAoffset"]=self.datadict["pAoffset"]
+					self.IOArgs["SamplingFrequency"]=self.datadict["SamplingFrequency"]
+					self.IOArgs["ColumnTypes"]=self.datadict["ColumnTypes"]
+					self.IOArgs["IonicCurrentColumn"]=self.datadict["IonicCurrentColumn"]
+					self.IOArgs["HeaderOffset"]=self.datadict["HeaderOffset"]
+					self.IOArgs["filter"]=self.datadict["filter"]
 				else:
 					self.iohnd=abf.abfTrajIO	
 					self.IOArgs["filter"]=self.datadict["filter"]
