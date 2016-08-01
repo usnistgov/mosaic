@@ -33,7 +33,7 @@ def _mosaicUnitTests(base):
                     testList.extend(['adept_Test', 'cusum_Test', 'adept2State_Test'])
                 if self.segment:
                     mosaicUnitTests.log.debug("Running event segmentation unit tests")
-                    testList.extend(['eventPartition_Test', 'eventPartitionParallel_Test'])
+                    testList.extend(['eventPartition_Test', 'eventPartitionParallel_Test', 'blockThreshold_Test'])
                 if self.dependencies:
                     mosaicUnitTests.log.debug("Running dependency unit tests")
                     testList.extend(['dependencyVersion_Test'])
