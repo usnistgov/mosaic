@@ -119,6 +119,20 @@ __settings__="""
 			"parallelProc"			: "0",
 			"reserveNCPU"			: "2"
 		},
+		"blockThreshold" : {
+			"blockSizeSec" 			: "0.5",
+			"eventPad" 				: "50",
+			"minEventLength" 		: "5",
+			"eventThreshold" 		: "6.0",
+			"driftThreshold" 		: "999.0",
+			"maxDriftRate" 			: "999.0",
+			"meanOpenCurr"			: "-1",
+			"sdOpenCurr"			: "-1",
+			"slopeOpenCurr"			: "-1",
+			"writeEventTS"			: "1",
+			"parallelProc"			: "0",
+			"reserveNCPU"			: "2"
+		},
 		"adept2State" : {
 			"FitTol"				: "1.e-7",
 			"FitIters"				: "50000",
