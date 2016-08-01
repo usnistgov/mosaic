@@ -29,7 +29,8 @@ def resource_path(filename):
 				"icons/warning-128.png", 
 				"mosaicgui/highlight-spec/python.json", 
 				"mosaicgui/highlight-spec/json.json",
-				"mosaicgui/highlight-spec/log.json"
+				"mosaicgui/highlight-spec/log.json",
+				"mosaic/utilities/.ga"
 			]
 
 	if filename in [ ".settings", "settings"]:
