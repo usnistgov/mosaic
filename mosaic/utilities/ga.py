@@ -4,10 +4,9 @@ import uuid
 import json
 from os.path import expanduser
 import mosaic
+import mosaic.utilities.mosaicLogging as mlog
+from mosaic.utilities.mosaicLogFormat import _d
 from mosaic.utilities.resource_path import resource_path, format_path
-
-# _debug="/debug"
-_debug=""
 
 def registerLaunch(func):
 	def funcWrapper(*args, **kwargs):
@@ -39,6 +38,8 @@ def _uuid():
         return uuidgen
 
 def _gaPost(eventType, content):
+	logger=mlog.mosaicLogging().getLogger(name=__name__)
+
 	try:
 		headers = {"Content-type": "application/x-www-form-urlencoded", "Accept": "text/plain"}
 		with open(resource_path("mosaic/utilities/.ga"), 'r') as ga:
@@ -54,6 +55,11 @@ def _gaPost(eventType, content):
 					content
 				)
 
+			if mosaic.DeveloperMode:
+				_debug="/debug"
+			else:
+				_debug=""
+
 			conn=httplib.HTTPSConnection(gac["gaurl"])
 			conn.request("POST", "{0}/{1}".format(_debug, gac["gamode"]), payload, headers)
 			response=conn.getresponse()
@@ -61,7 +67,7 @@ def _gaPost(eventType, content):
 
 			conn.close()
 			if _debug:
-				print data
+				logger.debug(_d("ga collect: {0}", data))
 	except:
 		pass
 
