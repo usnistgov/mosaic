@@ -949,6 +949,7 @@
      <string>Help</string>
     </property>
     <addaction name="actionAbout_MOSAIC"/>
+    <addaction name="actionAggregate_Usage"/>
     <addaction name="actionMOSAIC_Help"/>
    </widget>
    <widget class="QMenu" name="menuView">
@@ -1088,6 +1089,17 @@
    </property>
    <property name="shortcut">
     <string>Ctrl+Shift+E</string>
+   </property>
+  </action>
+  <action name="actionAggregate_Usage">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Aggregate Usage</string>
    </property>
   </action>
  </widget>

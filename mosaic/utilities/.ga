@@ -1,4 +1,6 @@
 {
-	"gaid" 	: "UA-42404149-54",
-	"gaurl"	: "www.google-analytics.com"
+    "gaenable": "True", 
+    "gaid": "UA-42404149-54", 
+    "gamode": "collect", 
+    "gaurl": "www.google-analytics.com"
 }

@@ -1,12 +1,13 @@
 import httplib
 import urllib
 import uuid
+import json
 from os.path import expanduser
 import mosaic
 from mosaic.utilities.resource_path import resource_path, format_path
 
-_debug="/debug"
-# _debug=""
+# _debug="/debug"
+_debug=""
 
 def registerLaunch(func):
 	def funcWrapper(*args, **kwargs):
@@ -41,27 +42,26 @@ def _gaPost(eventType, content):
 	try:
 		headers = {"Content-type": "application/x-www-form-urlencoded", "Accept": "text/plain"}
 		with open(resource_path("mosaic/utilities/.ga"), 'r') as ga:
-			gac=eval(ga.read())
-			gaid=gac["gaid"]
-			gaurl=gac["gaurl"]
+			gac=json.loads(ga.read())
 
-		payload="v=1&tid={0}&cid={1}&t=event&ec=mosaic-{2}-{3}&ea={4}&el={5}".format(
-				gaid, 
-				_uuid(),
-				mosaic.__version__, 
-				mosaic.__build__, 
-				eventType,
-				content
-			)
+		if eval(gac["gaenable"]):
+			payload="v=1&tid={0}&cid={1}&t=event&ec=mosaic-{2}-{3}&ea={4}&el={5}".format(
+					gac["gaid"], 
+					_uuid(),
+					mosaic.__version__, 
+					mosaic.__build__, 
+					eventType,
+					content
+				)
 
-		conn=httplib.HTTPSConnection(gaurl)
-		conn.request("POST", "{0}/collect".format(_debug), payload, headers)
-		response=conn.getresponse()
-		data=response.read()
+			conn=httplib.HTTPSConnection(gac["gaurl"])
+			conn.request("POST", "{0}/{1}".format(_debug, gac["gamode"]), payload, headers)
+			response=conn.getresponse()
+			data=response.read()
 
-		conn.close()
-		if _debug:
-			print data
+			conn.close()
+			if _debug:
+				print data
 	except:
 		pass
 
