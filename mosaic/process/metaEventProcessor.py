@@ -8,6 +8,7 @@
 	:License:	See LICENSE.TXT
 	:ChangeLog:
 	.. line-block::
+		8/3/16		JF	Fixed missing dependency (time)
 		5/27/16 	AB 	Add a flagEvent function that should be used to set a non-critical warning status.
 		5/26/16 	AB 	If developer mode is enabled (in mosaic/_global), metadata is not set to -1 when an error occurs.
 		3/30/16 	AB 	Fixed function timing resolution on Windows
@@ -20,6 +21,7 @@
 """
 from abc import ABCMeta, abstractmethod
 import types
+import time
 import mosaic.utilities.mosaicTiming as mosaicTiming
 import mosaic.utilities.mosaicLogging as mlog
 import sqlite3
