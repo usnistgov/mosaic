@@ -261,6 +261,9 @@ class settingsview(QtGui.QMainWindow):
 		# Hide Rfb and Cfb for QDF files
 		[control.hide() for control in [self.RfbLabel, self.qdfRfbLineEdit, self.RfbUnitsLabel, self.CfbLabel, self.qdfCfbLineEdit, self.CfbUnitsLabel]]
 
+		# Hide ga toggle.
+		self.actionAggregate_Usage.setVisible(False)
+
 		self.updateDialogs=True
 
 	def _loadEBSState(self):

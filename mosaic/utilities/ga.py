@@ -2,6 +2,7 @@ import httplib
 import urllib
 import uuid
 import json
+from base64 import b64decode as dec
 from os.path import expanduser
 import mosaic
 import mosaic.utilities.mosaicLogging as mlog
@@ -47,7 +48,7 @@ def _gaPost(eventType, content):
 
 		if eval(gac["gaenable"]):
 			payload="v=1&tid={0}&cid={1}&t=event&ec=mosaic-{2}-{3}&ea={4}&el={5}".format(
-					gac["gaid"], 
+					dec(gac["gaid"]), 
 					_uuid(),
 					mosaic.__version__, 
 					mosaic.__build__, 
@@ -60,8 +61,8 @@ def _gaPost(eventType, content):
 			else:
 				_debug=""
 
-			conn=httplib.HTTPSConnection(gac["gaurl"])
-			conn.request("POST", "{0}/{1}".format(_debug, gac["gamode"]), payload, headers)
+			conn=httplib.HTTPSConnection(dec(gac["gaurl"]))
+			conn.request("POST", "{0}/{1}".format(_debug, dec(gac["gamode"])), payload, headers)
 			response=conn.getresponse()
 			data=response.read()
 
