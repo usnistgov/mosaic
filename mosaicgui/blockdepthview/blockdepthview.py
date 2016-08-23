@@ -242,7 +242,6 @@ class BlockDepthWindow(QtGui.QDialog):
 		axes.yaxis.set_major_formatter(ticker.FormatStrFormatter('%d'))
 
 	def _updatequery(self):
-		print self.isHidden()
 		if self.isHidden():
 			return
 
