@@ -6,6 +6,7 @@
 	:License:	See LICENSE.TXT	
 	:ChangeLog:
 	.. line-block::
+		08/23/16 	AB 	Added a Gaussian filter function.
 		12/09/15 	KB 	Added a wrapper for multiStateFunc
 		6/24/15 	AB 	Relaxed stepResponseFunc to include different RC constants 
 						for up and down states.
@@ -14,6 +15,7 @@
 		11/19/14	AB	Initial version
 """
 import numpy as np
+from scipy.special import erf
 
 __all__=["heaviside", "singleExponential", "stepResponseFunc", "curve_fit_wrapper", "multiStateFunc", "multiStateStepFunc"]
 
@@ -33,6 +35,20 @@ def stepResponseFunc(t, tau1, tau2, mu1, mu2, a, b):
 	try:
 		t1=(np.exp((mu1-t)/tau1)-1)*heaviside(t-mu1)
 		t2=(1-np.exp((mu2-t)/tau2))*heaviside(t-mu2)
+
+		# Either t1, t2 or both could contain NaN due to fixed precision arithmetic errors.
+		# In this case, we can set those values to zero.
+		t1[np.isnan(t1)]=0
+		t2[np.isnan(t2)]=0
+
+		return a*( t1+t2 ) + b
+	except:
+		raise
+
+def gaussResponseFunc(t, fc, mu1, mu2, a, b):
+	try:
+		t1=-erf(5.336*fc*(t - mu1))
+		t2=erf(5.336*fc*(t - mu2))
 
 		# Either t1, t2 or both could contain NaN due to fixed precision arithmetic errors.
 		# In this case, we can set those values to zero.
