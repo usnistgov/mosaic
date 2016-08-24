@@ -24,6 +24,7 @@ import mosaic.partition.eventSegment
 
 import mosaic.process.adept2State
 import mosaic.process.adept
+import mosaic.process.gauss
 import mosaic.process.cusumPlus
 
 import mosaic.trajio.qdfTrajIO
@@ -103,6 +104,9 @@ class guiDataModel(dict):
 		elif procAlgo=="adept":
 			settingsdict[procAlgo]={}
 			procKeys=self.adeptKeys
+		elif procAlgo=="gauss":
+			settingsdict[procAlgo]={}
+			procKeys=self.gaussKeys
 		elif procAlgo=="cusumPlus":
 			settingsdict[procAlgo]={}
 			procKeys=self.cusumPlusKeys
@@ -322,6 +326,11 @@ class guiDataModel(dict):
 								"BlockRejectRatio" 		: float,
 								"LinkRCConst" 		: bool
 							}
+		self.gaussKeys={
+								"FitTol" 				: float,
+								"FitIters" 				: int,
+								"FilterCutoffKHZ" 		: float
+							}
 		self.adeptKeys={
 								"FitTol" 				: float,
 								"FitIters" 				: int,
@@ -383,7 +392,8 @@ class guiDataModel(dict):
 		self.eventProcessingAlgoKeys={
 								"ADEPT 2-state" 		: "adept2State",
 								"ADEPT"					: "adept",
-								"CUSUM+"				: "cusumPlus"
+								"CUSUM+"				: "cusumPlus",
+								"GAUSS"					: "gauss"
 							}
 
 		self.filterAlgoKeys={
@@ -404,6 +414,7 @@ class guiDataModel(dict):
 								"CurrentThreshold" 		: mosaic.partition.eventSegment.eventSegment,
 								"adept2State" 			: mosaic.process.adept2State.adept2State,
 								"adept"					: mosaic.process.adept.adept,
+								"gauss"					: mosaic.process.gauss.gauss,
 								"cusumPlus"				: mosaic.process.cusumPlus.cusumPlus,
 								"waveletDenoiseFilter"	: mosaic.filters.waveletDenoiseFilter.waveletDenoiseFilter
 							}

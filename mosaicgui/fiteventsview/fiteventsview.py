@@ -81,7 +81,6 @@ class FitEventWindow(QtGui.QDialog):
 			# default to adept2State
 			self.analysisAlgorithm="adept2State"
 
-		
 		try:
 			# Generate the query string based on the algorithm in the database
 			self.queryString=self.queryStringDict[self.analysisAlgorithm]
@@ -314,6 +313,7 @@ class FitEventWindow(QtGui.QDialog):
 
 		self.queryStringDict={
 			"adept2State" 	: "select ProcessingStatus, TimeSeries, RCConstant1, RCConstant2, EventStart, EventEnd, BlockedCurrent, OpenChCurrent from metadata limit " + str(self.viewerLimit),
+			"gauss" 		: "select ProcessingStatus, TimeSeries, FilterCutoff, EventStart, EventEnd, BlockedCurrent, OpenChCurrent from metadata limit " + str(self.viewerLimit),
 			"adept" 		: "select ProcessingStatus, TimeSeries, RCConstant, EventDelay, CurrentStep, OpenChCurrent from metadata limit " + str(self.viewerLimit),
 			"cusumPlus" 	: "select ProcessingStatus, TimeSeries, EventDelay, CurrentStep, OpenChCurrent from metadata limit " + str(self.viewerLimit)
 		}
@@ -321,11 +321,13 @@ class FitEventWindow(QtGui.QDialog):
 		self.fitFuncHndDict={
 			"adept2State" 	: fit_funcs.stepResponseFunc,
 			"adept" 		: fit_funcs.multiStateFunc,
+			"gauss" 		: fit_funcs.gaussResponseFunc,
 			"cusumPlus" 	: None
 		}
 
 		self.fitFuncArgsDict={
 			"adept2State" 	: "[xfit, q[2], q[3], q[4], q[5], abs(q[7]-q[6]), q[7]]",
+			"gauss" 		: "[xfit, q[2], q[3], q[4], 0.5*abs(q[6]-q[5]), q[6]]",
 			"adept" 		: "[xfit, q[2], q[3], q[4], q[5], len(q[3])]",
 			"cusumPlus" 	: "[]"
 		}
@@ -333,18 +335,21 @@ class FitEventWindow(QtGui.QDialog):
 		self.stepFuncHndDict={
 			"adept2State" 	: fit_funcs.multiStateStepFunc,
 			"adept" 		: fit_funcs.multiStateStepFunc,
+			"gauss" 		: fit_funcs.multiStateStepFunc,
 			"cusumPlus"		: fit_funcs.multiStateStepFunc
 		}
 
 		self.stepFuncArgsDict={
 			"adept2State" 	: "[xstep, [q[4], q[5]], [-abs(q[7]-q[6]), abs(q[7]-q[6])], q[7], 2]",
 			"adept" 		: "[xstep, q[3], q[4], q[5], len(q[3])]",
+			"gauss" 		: "[xstep, [q[3], q[4]], [-abs(q[6]-q[5]), abs(q[6]-q[5])], q[6], 2]",
 			"cusumPlus" 	: "[xstep, q[2], q[3], q[4], len(q[2])]"
 		}
 
 		self.blockDepthArgsDict={
 			"adept2State" 	: "[[-abs(q[7]-q[6])], q[7], [q[4],q[5]], 1]",
 			"adept" 		: "[q[4], q[5], q[3], len(q[3])-1]",
+			"gauss"		 	: "[[-abs(q[6]-q[5])], q[6], [q[3],q[4]], 1]",
 			"cusumPlus" 	: "[q[3], q[4], q[2], len(q[2])-1]"
 		}
 

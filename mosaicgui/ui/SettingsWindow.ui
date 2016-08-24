@@ -752,6 +752,11 @@
           <string>CUSUM+</string>
          </property>
         </item>
+        <item>
+         <property name="text">
+          <string>GAUSS</string>
+         </property>
+        </item>
        </widget>
       </item>
       <item>
