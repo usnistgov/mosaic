@@ -48,6 +48,8 @@ class StatisticsWindow(QtGui.QDialog):
 		self.qWorker=None
 		self.qThread=QtCore.QThread()
 
+		self.queryRunning=False
+
 		# Set QLabel properties
 		self.neventsLabel.setTextInteractionFlags(QtCore.Qt.TextSelectableByMouse)
 		self.errorrateLabel.setTextInteractionFlags(QtCore.Qt.TextSelectableByMouse)
@@ -127,6 +129,9 @@ class StatisticsWindow(QtGui.QDialog):
 		db.close()
 
 	def _updatequery(self):
+		if self.isHidden() and self.updateDataOnIdle:
+			return
+
 		self.qThread.start()
 		QtCore.QMetaObject.invokeMethod(self.qWorker, 'queryDB2', Qt.QueuedConnection, 
 				QtCore.Q_ARG(str, self.queryString),
@@ -250,6 +255,8 @@ class StatisticsWindow(QtGui.QDialog):
 
 	def OnAppIdle(self):
 		if not self.updateDataOnIdle:
+			return
+		if self.isHidden():
 			return
 
 		if not self.queryRunning:

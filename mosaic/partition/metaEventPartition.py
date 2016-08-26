@@ -482,7 +482,7 @@ class metaEventPartition(object):
 		# Fit the data to a straight line to calculate the slope
 		slope, intercept, r_value, p_value, std_err=scipy.stats.linregress(tstamp, curr)
 
-		self.logger.debug(_d("mu={0}, sigma={1}, slope={2}", mu, sig, slope ))
+		# self.logger.debug(_d("mu={0}, sigma={1}, slope={2}", mu, sig, slope ))
 
 		# Return stats
 		return [ mu, sig, slope ]
