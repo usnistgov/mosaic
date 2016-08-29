@@ -17,13 +17,6 @@ import mosaic.utilities.fit_funcs as fit_funcs
 import matplotlib.ticker as ticker
 # from mosaicgui.trajview.trajviewui import Ui_Dialog
 
-css = """QLabel {
-      color: FireBrick;
-}"""
-css_warning = """QLabel {
-      color: OrangeRed;
-}"""
-
 class FitEventWindow(QtGui.QDialog):
 	def __init__(self, parent = None):
 		self.v=[]
@@ -287,6 +280,9 @@ class FitEventWindow(QtGui.QDialog):
 		axes.yaxis.set_major_formatter(ticker.FormatStrFormatter('%d'))
 
 	def _updatequery(self):
+		if self.isHidden() and self.updateDataOnIdle:
+			return
+
 		try:
 			if not self.EndOfData:
 				self.queryData=self.queryDatabase.queryDB(self.queryString)

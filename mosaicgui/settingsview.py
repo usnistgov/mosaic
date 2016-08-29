@@ -123,6 +123,7 @@ class settingsview(QtGui.QMainWindow):
 
 		# Help Menu signals
 		QtCore.QObject.connect(self.actionMOSAIC_Help, QtCore.SIGNAL('triggered()'), self.OnShowHelp)
+		QtCore.QObject.connect(self.actionAggregate_Usage, QtCore.SIGNAL('triggered()'), self.OnAggregateUsage)
 
 		# Dialog signals and slots
 		QtCore.QObject.connect(self.trajViewerWindow.waveletLevelSpinBox, QtCore.SIGNAL('valueChanged ( int )'), self.OnWaveletLevelChange)
@@ -259,6 +260,9 @@ class settingsview(QtGui.QMainWindow):
 
 		# Hide Rfb and Cfb for QDF files
 		[control.hide() for control in [self.RfbLabel, self.qdfRfbLineEdit, self.RfbUnitsLabel, self.CfbLabel, self.qdfCfbLineEdit, self.CfbUnitsLabel]]
+
+		# Hide ga toggle.
+		self.actionAggregate_Usage.setVisible(False)
 
 		self.updateDialogs=True
 
@@ -622,6 +626,16 @@ class settingsview(QtGui.QMainWindow):
 
 	def OnShowHelp(self):
 		webbrowser.open('http://pages.nist.gov/mosaic/html/index.html', new=0, autoraise=True)
+
+	def OnAggregateUsage(self):
+		with open(resource_path("mosaic/utilities/.ga"), "r") as garead:
+			gac = json.load(garead)
+
+		gac["gaenable"] = str(self.actionAggregate_Usage.isChecked())
+
+		with open(resource_path("mosaic/utilities/.ga"), "w") as gawrite:
+			json.dump(gac, gawrite, indent=4, sort_keys=True)
+
 
 	# Dialog SLOTS
 	def OnShowTrajectoryViewer(self):
