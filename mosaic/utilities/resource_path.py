@@ -58,6 +58,8 @@ def resource_path(filename):
 			return format_path(str(sep.join( dirlist ))+'/ui/'+filename)
 		# elif hasattr(sys, "_MEIPASS"):
 
+	return filename
+
 
 def last_file_in_directory(path, filefilter):
 	"""

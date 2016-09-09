@@ -59,3 +59,4 @@ data/SingleChan-*.*sv
 data/SingleChan-*.bin
 pyinstaller/icon.*
 _testnotebooks/
+mosaic/utilities/.ga
