@@ -16,6 +16,7 @@ import mosaic
 
 from PyQt4 import QtCore, QtGui, uic
 from mosaic.utilities.resource_path import resource_path, format_path
+import mosaic.utilities.ga as ga
 import mosaicgui.EBSStateFileDict
 import mosaicgui.trajview.trajview
 import mosaicgui.advancedsettings.advancedsettings
@@ -260,19 +261,21 @@ class settingsview(QtGui.QMainWindow):
 		[control.hide() for control in [self.RfbLabel, self.qdfRfbLineEdit, self.RfbUnitsLabel, self.CfbLabel, self.qdfCfbLineEdit, self.CfbUnitsLabel]]
 
 		# Set ga toggle.
-		with open(resource_path("mosaic/utilities/.ga"), "r") as garead:
-			gac = json.load(garead)
+		try:
+			with open(resource_path("mosaic/utilities/.ga"), "r") as garead:
+				gac = json.load(garead)
+		
+			if eval(gac["gauimode"]):
+				self.actionAggregate_Usage.setVisible(True)
+			else:
+				self.actionAggregate_Usage.setVisible(False)
 
-		if eval(gac["gauimode"]):
-			self.actionAggregate_Usage.setVisible(True)
-		else:
+			if eval(gac["gaenable"]):
+				self.actionAggregate_Usage.setChecked(True)
+			else:
+				self.actionAggregate_Usage.setChecked(False)
+		except:
 			self.actionAggregate_Usage.setVisible(False)
-
-		if eval(gac["gaenable"]):
-			self.actionAggregate_Usage.setChecked(True)
-		else:
-			self.actionAggregate_Usage.setChecked(False)
-
 
 		self.updateDialogs=True
 

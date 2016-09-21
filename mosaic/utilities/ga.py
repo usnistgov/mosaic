@@ -119,6 +119,9 @@ def _getGASettings(ga_cache):
 	except:
 		logger.debug(_d("An error occured when trying to cache GA settings."))
 
+ga_cache=resource_path("mosaic/utilities/.ga")
+_getGASettings(ga_cache)
+
 @registerRun
 def foo():
 	print "foo"
