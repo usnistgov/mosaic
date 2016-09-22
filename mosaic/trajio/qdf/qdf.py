@@ -7,6 +7,7 @@
 	:License:	See LICENSE.TXT
 	:ChangeLog:
 	.. line-block::
+		9/22/16 	AB 	Cleanup variable names and header unpacking.
 		9/21/16		AB	Initial version	
 """
 import struct
@@ -26,12 +27,13 @@ class qnode(object):
 		self.fhnd=fhnd
 		self.offset=offset
 
-		self.dattype=0
-		self.datsize=0
-		self.datcount=0
-		self.nodepos=0
-		self.childoffset=0
-		self.siblingoffset=0
+		self.dataType=0
+		self.dataSize=0
+		self.dataCount=0
+		self.dataPos=0
+		self.childOffset=0
+		self.siblingOffset=0
+		self.nameLen=0
 
 		self._parsenode()
 
@@ -39,31 +41,27 @@ class qnode(object):
 		self.fhnd.seek(self.offset)
 
 		(
-			f0, 
-			f1, 
-			f2, 
-			self.dattype, 
-			self.datsize, 
-			self.datcount,
-			self.datpos,
-			self.childoffset,
-			self.siblingoffset,
-			r0,
-			r1,
-			r2,
-			self.namelen
-		)= struct.unpack('BBBBIIIIIIHBB', self.fhnd.read(32))
+			flags, 
+			self.dataType, 
+			self.dataSize, 
+			self.dataCount,
+			self.dataPos,
+			self.childOffset,
+			self.siblingOffset,
+			reserved,
+			self.nameLen
+		)= struct.unpack('3sBIIIII7sB', self.fhnd.read(32))
 
 	def _parsenode(self):
 
 		self._parsenodeheader()
 
-		self.nodename=self.fhnd.read(self.namelen)
+		self.nodeName=self.fhnd.read(self.nameLen)
 
-		if self.datcount:
-			self.fhnd.seek(self.datpos)
-			code=qubDataTypes[self.dattype<<self.datsize]
-			self.data=np.fromfile(self.fhnd, code, self.datcount)
+		if self.dataCount:
+			self.fhnd.seek(self.dataPos)
+			code=qubDataTypes[self.dataType<<self.dataSize]
+			self.data=np.fromfile(self.fhnd, code, self.dataCount)
 
 
 class qtree(dict):
@@ -77,20 +75,20 @@ class qtree(dict):
 	def parse(self):
 		qn=qnode(self.fhnd, self.hdrOffset)
 		
-		if qn.childoffset:
-			s=qnode(self.fhnd, qn.childoffset)
-			self[s.nodename]=s
+		if qn.childOffset:
+			s=qnode(self.fhnd, qn.childOffset)
+			self[s.nodeName]=s
 	
 			try:
-				while s.siblingoffset:
-					s=qnode(self.fhnd, s.siblingoffset)
-					self[s.nodename]=s
+				while s.siblingOffset:
+					s=qnode(self.fhnd, s.siblingOffset)
+					self[s.nodeName]=s
 			except AttributeError:
 				pass
 
 			for k,v in self.iteritems():
-				if v.childoffset:
-					t=qtree(self.fhnd, v.childoffset)
+				if v.childOffset:
+					t=qtree(self.fhnd, v.childOffset)
 					t.parse()
 					self[k]=t
 
