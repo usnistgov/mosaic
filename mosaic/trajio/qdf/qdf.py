@@ -7,6 +7,7 @@
 	:License:	See LICENSE.TXT
 	:ChangeLog:
 	.. line-block::
+		9/22/16		AB 	Fix scaling when the time-series is stored as current.
 		9/22/16 	AB 	Cleanup variable names and header unpacking.
 		9/21/16		AB	Initial version	
 """
@@ -120,6 +121,9 @@ class QDF(object):
 
 
 	def VoltageToCurrent(self, iscale=1e12):
+		"""
+			Convert voltage to current in pA (default iscale=1e12)
+		"""
 		self._parseQDFTree()
 
 		qt=self.qdftree
@@ -130,7 +134,10 @@ class QDF(object):
 
 		return (((-1.0 * dat[1:]/self.Rfb) - (self.Cfb * np.diff(dat)/dt)) * iscale)
 
-	def Current(self, iscale=1e12):
+	def Current(self, iscale=1):
+		"""
+			Return current in pA (default, iscale=1)
+		"""
 		self._parseQDFTree()
 
 		qt=self.qdftree
