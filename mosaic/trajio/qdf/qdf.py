@@ -61,7 +61,12 @@ class qnode(object):
 		if self.dataCount:
 			self.fhnd.seek(self.dataPos)
 			code=qubDataTypes[self.dataType<<self.dataSize]
-			self.data=np.fromfile(self.fhnd, code, self.dataCount)
+			
+			d=np.fromfile(self.fhnd, code, self.dataCount)
+			if len(d)==1:
+				self.data=d[0]
+			else:
+				self.data=d
 
 
 class qtree(dict):
@@ -119,8 +124,8 @@ class QDF(object):
 
 		qt=self.qdftree
 
-		dt=qt["Sampling"].data[0]
-		scale=qt["Scaling"].data[0]
+		dt=qt["Sampling"].data
+		scale=qt["Scaling"].data
 		dat=qt["Segments"]["Channels"].data/scale
 
 		return (((-1.0 * dat[1:]/self.Rfb) - (self.Cfb * np.diff(dat)/dt)) * iscale)
@@ -130,7 +135,7 @@ class QDF(object):
 
 		qt=self.qdftree
 		
-		scale=qt["Scaling"].data[0]
+		scale=qt["Scaling"].data
 		return (qt["Segments"]["Channels"].data/scale) * iscale
 
 
