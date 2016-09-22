@@ -87,9 +87,6 @@ class qdfTrajIO(metaTrajIO.metaTrajIO):
 
 				- `SamplingRateChangedError` : if the sampling rate for any data file differs from previous
 		"""
-		# Read a single file or a list of files. By setting scale_data 
-		# and time_scale to 0, we get back times in ms and current in pA.
-		# Check if the files have current of voltage.
 		qdfdat=qdf.QDF(fname, float(self.Rfb), float(self.Cfb))
 		if self.format=='V':
 			q=qdfdat.VoltageToCurrent()
