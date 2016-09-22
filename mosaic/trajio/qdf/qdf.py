@@ -125,10 +125,7 @@ class QDF(object):
 		scale=qt["Scaling"].data[0]
 		dat=qt["Segments"]["Channels"].data/scale
 
-		d1=dat[1:]
-		d0=dat[:-1]
-
-		return (((-1.0 * d1/self.Rfb) - (self.Cfb * (d1 - d0)/dt)) * iscale)
+		return (((-1.0 * dat[1:]/self.Rfb) - (self.Cfb * np.diff(dat)/dt)) * iscale)
 
 	def Current(self, iscale=1e12):
 		self._parseQDFTree()
