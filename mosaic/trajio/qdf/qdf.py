@@ -1,13 +1,15 @@
 # -*- coding: utf-8 -*-
 """
-	Load QDF files based on the QUB specification (http://www.qub.buffalo.edu/qubdoc/files/qdf.html).
+	Load QDF files based on the QUB specification (http://www.qub.buffalo.edu/qubdoc/files/qdf.html). The QUBTree
+	is returned as a Python dict.
 
 	:Created:	9/21/2016
  	:Author: 	Arvind Balijepalli <arvind.balijepalli@nist.gov>
 	:License:	See LICENSE.TXT
 	:ChangeLog:
 	.. line-block::
-		9/22/16		AB 	Fix scaling when the time-series is stored as current.
+		9/22/16 	AB 	Fixed a QUBTree parsing bug and added data integrity checks.
+		9/22/16		AB 	Update scaling when the time-series is stored as current.
 		9/22/16 	AB 	Cleanup variable names and header unpacking.
 		9/21/16		AB	Initial version	
 """
@@ -28,13 +30,14 @@ class qnode(object):
 		self.fhnd=fhnd
 		self.offset=offset
 
-		self.dataType=0
-		self.dataSize=0
-		self.dataCount=0
-		self.dataPos=0
-		self.childOffset=0
-		self.siblingOffset=0
-		self.nameLen=0
+		self.dataType=None
+		self.dataSize=None
+		self.dataCount=None
+		self.dataPos=None
+		self.childOffset=None
+		self.siblingOffset=None
+		self.nameLen=None
+		self.data=None
 
 		self._parsenode()
 
@@ -61,13 +64,32 @@ class qnode(object):
 
 		if self.dataCount:
 			self.fhnd.seek(self.dataPos)
-			code=qubDataTypes[self.dataType<<self.dataSize]
+
+			try:
+				code=qubDataTypes[self.dataType<<self.dataSize]
+			except KeyError:
+				QDFError("Found incompatible data type and size specification.")
 			
-			d=np.fromfile(self.fhnd, code, self.dataCount)
-			if len(d)==1:
-				self.data=d[0]
+			self.data=np.fromfile(self.fhnd, code, self.dataCount)
+
+class qdict(dict):
+	def __getitem__(self, key):
+		node=dict.__getitem__(self, key)
+		
+		if isinstance(node, qnode):
+			if len(node.data)==1:
+				return node.data[0]
 			else:
-				self.data=d
+				return node.data
+
+		return node
+
+	def __setitem__(self, key, val):
+		dict.__setitem__(self, key, val)
+
+	def update(self, *args, **kwargs):
+		for k, v in dict(*args, **kwargs).iteritems():
+			self[k] = v
 
 
 class qtree(dict):
@@ -81,22 +103,28 @@ class qtree(dict):
 	def parse(self):
 		qn=qnode(self.fhnd, self.hdrOffset)
 		
+		childDict=qdict()
 		if qn.childOffset:
 			s=qnode(self.fhnd, qn.childOffset)
-			self[s.nodeName]=s
+			childDict[s.nodeName]=s
 	
 			try:
 				while s.siblingOffset:
 					s=qnode(self.fhnd, s.siblingOffset)
-					self[s.nodeName]=s
+					if s.nodeName in childDict.keys():
+						raise QDFError("The node name {0} already exists.".format(s.nodeName))
+					else:
+						childDict[s.nodeName]=s
 			except AttributeError:
 				pass
 
-			for k,v in self.iteritems():
+			for k,v in childDict.iteritems():
 				if v.childOffset:
 					t=qtree(self.fhnd, v.childOffset)
 					t.parse()
-					self[k]=t
+					childDict[k]=t
+
+		self[qn.nodeName]=childDict
 
 class QDFError(Exception):
 	pass
@@ -113,10 +141,13 @@ class QDF(object):
 		self.qdftree=qtree(fhnd, 12)
 		self.qdftree.parse()
 
+		if self.qdftree["DataFile"]["ADChannelCount"] > 1:
+			raise QDFError("Multiple I/O channels are not supported.")
+
 
 	def _checkMagic(self, fhnd):
 		magic=fhnd.read(12)
-		if magic != 'QUB_(;-)_QFS':
+		if magic != "QUB_(;-)_QFS":
 			raise QDFError("Incorrect magic string found: {0}".format(magic))
 
 
@@ -128,9 +159,9 @@ class QDF(object):
 
 		qt=self.qdftree
 
-		dt=qt["Sampling"].data
-		scale=qt["Scaling"].data
-		dat=qt["Segments"]["Channels"].data/scale
+		dt=qt["DataFile"]["Sampling"]
+		scale=qt["DataFile"]["Scaling"]
+		dat=qt["DataFile"]["Segments"]["Segment"]["Channels"]/scale
 
 		return (((-1.0 * dat[1:]/self.Rfb) - (self.Cfb * np.diff(dat)/dt)) * iscale)
 
@@ -142,7 +173,22 @@ class QDF(object):
 
 		qt=self.qdftree
 		
-		scale=qt["Scaling"].data
-		return (qt["Segments"]["Channels"].data/scale) * iscale
+		scale=qt["DataFile"]["Scaling"]
+		return (qt["DataFile"]["Segments"]["Segment"]["Channels"]/scale) * iscale
 
 
+if __name__ == '__main__':
+	import pprint
+
+	q=QDF('data/SingleChan-0001.qdf', 9.1e9, 1.07e-12)
+	d=q.VoltageToCurrent()
+
+	# print "conversion complete"
+	# df=q.qdftree["DataFile"]
+	# print df
+	# print df["Segments"]
+	# print q.qdftree["DataFile"]["Segments"]["Segment"]
+	# print q.qdftree["DataFile"]["Segments"]["Segment"]["StartTime"]
+
+	pp = pprint.PrettyPrinter(indent=2)
+	pp.pprint(q.qdftree)

@@ -93,7 +93,7 @@ class qdfTrajIO(metaTrajIO.metaTrajIO):
 		else:
 			q=qdfdat.Current()
 
-		fs=qdfdat.qdftree["Sampling"].data
+		fs=qdfdat.qdftree["DataFile"]["Sampling"]
 		# set the sampling frequency in Hz.
 		# If the Fs attribute doesn't exist set it
 		if not hasattr(self, 'Fs'):	
