@@ -8,6 +8,7 @@
 	:License:	See LICENSE.TXT
 	:ChangeLog:
 	.. line-block::
+		9/25/16 	AB 	Code cleanup and bug fixes.
 		9/22/16 	AB 	Fixed a QUBTree parsing bug and added data integrity checks.
 		9/22/16		AB 	Update scaling when the time-series is stored as current.
 		9/22/16 	AB 	Cleanup variable names and header unpacking.
@@ -68,7 +69,7 @@ class qnode(object):
 			try:
 				code=qubDataTypes[self.dataType<<self.dataSize]
 			except KeyError:
-				QDFError("Found incompatible data type and size specification.")
+				QDFError("The specified data type ({0}) and size ({1}) are incompatible.".format(self.dataType, self.dataSize))
 			
 			self.data=np.fromfile(self.fhnd, code, self.dataCount)
 
@@ -135,14 +136,17 @@ class QDF(object):
 		self.Rfb=Rfb
 		self.Cfb=Cfb
 
+		self._parseQDFTree()
+
 	def _parseQDFTree(self):
 		fhnd=open(self.filename, 'r+b')
 		self._checkMagic(fhnd)
 		self.qdftree=qtree(fhnd, 12)
 		self.qdftree.parse()
 
-		if self.qdftree["DataFile"]["ADChannelCount"] > 1:
-			raise QDFError("Multiple I/O channels are not supported.")
+		nchans=self.qdftree["DataFile"]["ADChannelCount"]
+		if nchans > 1:
+			raise QDFError("Multiple I/O channels ({0}) are not supported.".format(nchans))
 
 
 	def _checkMagic(self, fhnd):
@@ -155,40 +159,45 @@ class QDF(object):
 		"""
 			Convert voltage to current in pA (default iscale=1e12)
 		"""
-		self._parseQDFTree()
-
 		qt=self.qdftree
 
 		dt=qt["DataFile"]["Sampling"]
 		scale=qt["DataFile"]["Scaling"]
-		dat=qt["DataFile"]["Segments"]["Segment"]["Channels"]/scale
+		data=qt["DataFile"]["Segments"]["Segment"]["Channels"]/scale
 
-		return (((-1.0 * dat[1:]/self.Rfb) - (self.Cfb * np.diff(dat)/dt)) * iscale)
+		return (((-1.0 * data[1:]/self.Rfb) - (self.Cfb * np.diff(data)/dt)) * iscale)
 
 	def Current(self, iscale=1):
 		"""
 			Return current in pA (default, iscale=1)
 		"""
-		self._parseQDFTree()
-
 		qt=self.qdftree
 		
 		scale=qt["DataFile"]["Scaling"]
-		return (qt["DataFile"]["Segments"]["Segment"]["Channels"]/scale) * iscale
+		data=qt["DataFile"]["Segments"]["Segment"]["Channels"]
+		
+		return (data/scale) * iscale
 
 
 if __name__ == '__main__':
 	import pprint
 
+	def kvprint(d, key):
+		print "{0} = {1}".format(key, d[key])
+
 	q=QDF('data/SingleChan-0001.qdf', 9.1e9, 1.07e-12)
 	d=q.VoltageToCurrent()
 
-	# print "conversion complete"
-	# df=q.qdftree["DataFile"]
-	# print df
-	# print df["Segments"]
-	# print q.qdftree["DataFile"]["Segments"]["Segment"]
-	# print q.qdftree["DataFile"]["Segments"]["Segment"]["StartTime"]
+	df=q.qdftree["DataFile"]
 
+	kvprint( df, "Segments" )
+	kvprint( df["Segments"], "Segment" )
+	kvprint( df, "ADChannelCount" )
+	kvprint( df, "ADDataSize" )
+	kvprint( df, "ADDataType" )
+	kvprint( df, "Sampling" )
+	kvprint( df, "Scaling" )
+	kvprint( df["Segments"]["Segment"], "StartTime" )
+	print
 	pp = pprint.PrettyPrinter(indent=2)
 	pp.pprint(q.qdftree)
