@@ -3,12 +3,14 @@ import sys
 import mosaicgui.mosaicGUI as mosaicgui
 from PyQt4 import QtCore
 from mosaicgui.updateService import updateService
+from mosaic.utilities.ga import registerRun
 from PyQt4 import QtGui
 import multiprocessing
 
 from mosaicgui.mplwidget import update_rcParams
 
-def main():
+# @registerRun
+def startMOSAIC():
 	update_rcParams()
 	
 	app = QtGui.QApplication(sys.argv)
@@ -27,4 +29,4 @@ def main():
 if __name__ == '__main__':
 	if sys.platform.startswith('win'):
 		multiprocessing.freeze_support()
-	main()
+	startMOSAIC()

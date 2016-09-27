@@ -11,6 +11,7 @@
 __docformat__ = 'restructuredtext'
 
 import mosaic.settings as settings
+from mosaic.utilities.ga import registerRun
 import multiprocessing
 import os
 import signal
@@ -18,6 +19,7 @@ import json
 
 __all__ = ["SingleChannelAnalysis", "run_eventpartition"]
 
+# @registerRun
 def run_eventpartition( dataPath, trajDataHnd, dataFilterHnd, eventPartHnd, eventProcHnd):
 	# Read and parse the settings file
 	settingsdict=settings.settings( dataPath )	
@@ -29,7 +31,6 @@ def run_eventpartition( dataPath, trajDataHnd, dataFilterHnd, eventPartHnd, even
 		trajDataObj=trajDataHnd( datafilter=dataFilterHnd, dirname=dataPath, **trajSettings )
 	else:
 		trajDataObj=trajDataHnd( dirname=dataPath, **trajSettings )
-
 
 	try:
 		with eventPartHnd(

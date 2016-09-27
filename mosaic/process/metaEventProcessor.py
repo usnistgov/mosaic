@@ -93,6 +93,7 @@ class metaEventProcessor(object):
 		# Setup function timing
 		self.timingObj=mosaicTiming.mosaicTiming()
 
+		self.mdEventProcessTime=0.0
 		# print self.settingsDict
 		# Call sub-class initialization
 		self._init(**kwargs)

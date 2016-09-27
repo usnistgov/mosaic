@@ -12,9 +12,11 @@ import json
 import types
 import multiprocessing
 import webbrowser
+import mosaic
 
 from PyQt4 import QtCore, QtGui, uic
 from mosaic.utilities.resource_path import resource_path, format_path
+import mosaic.utilities.ga as ga
 import mosaicgui.EBSStateFileDict
 import mosaicgui.trajview.trajview
 import mosaicgui.advancedsettings.advancedsettings
@@ -31,11 +33,8 @@ class settingsview(QtGui.QMainWindow):
 	def __init__(self, parent = None):
 		super(settingsview, self).__init__(parent)
 
-		# uic.loadUi(os.path.join(os.path.dirname(os.path.abspath(__file__)),"SettingsWindow.ui"), self)
 		uic.loadUi(resource_path("SettingsWindow.ui"), self)
-		
-		# self.setupUi(self)
-
+	
 		self.setMenuBar(self.menubar)
 		self._positionWindow()
 
@@ -123,6 +122,7 @@ class settingsview(QtGui.QMainWindow):
 
 		# Help Menu signals
 		QtCore.QObject.connect(self.actionMOSAIC_Help, QtCore.SIGNAL('triggered()'), self.OnShowHelp)
+		QtCore.QObject.connect(self.actionAggregate_Usage, QtCore.SIGNAL('triggered()'), self.OnAggregateUsage)
 
 		# Dialog signals and slots
 		QtCore.QObject.connect(self.trajViewerWindow.waveletLevelSpinBox, QtCore.SIGNAL('valueChanged ( int )'), self.OnWaveletLevelChange)
@@ -260,6 +260,23 @@ class settingsview(QtGui.QMainWindow):
 		# Hide Rfb and Cfb for QDF files
 		[control.hide() for control in [self.RfbLabel, self.qdfRfbLineEdit, self.RfbUnitsLabel, self.CfbLabel, self.qdfCfbLineEdit, self.CfbUnitsLabel]]
 
+		# Set ga toggle.
+		try:
+			with open(resource_path("mosaic/utilities/.ga"), "r") as garead:
+				gac = json.load(garead)
+		
+			if eval(gac["gauimode"]):
+				self.actionAggregate_Usage.setVisible(True)
+			else:
+				self.actionAggregate_Usage.setVisible(False)
+
+			if eval(gac["gaenable"]):
+				self.actionAggregate_Usage.setChecked(True)
+			else:
+				self.actionAggregate_Usage.setChecked(False)
+		except:
+			self.actionAggregate_Usage.setVisible(False)
+
 		self.updateDialogs=True
 
 	def _loadEBSState(self):
@@ -280,22 +297,6 @@ class settingsview(QtGui.QMainWindow):
 				# More Traj viewer settings
 				self.analysisDataModel["Rfb"]=rfb
 				self.analysisDataModel["Cfb"]=cfb
-
-				# Show QDF specific widgets
-				# self.qdfCfbLineEdit.show()				
-				# self.qdfRfbLineEdit.show()
-				# self.CfbLabel.show()
-				# self.RfbLabel.show()
-				# self.CfbUnitsLabel.show()
-				# self.RfbUnitsLabel.show()
-			# else:
-				# Hide QDF specific widgets
-				# self.qdfCfbLineEdit.hide()				
-				# self.qdfRfbLineEdit.hide()
-				# self.CfbLabel.hide()
-				# self.RfbLabel.hide()
-				# self.CfbUnitsLabel.hide()
-				# self.RfbUnitsLabel.hide()
 
 
 	def _setThreshold(self, mean, sd, threshold):
@@ -621,7 +622,19 @@ class settingsview(QtGui.QMainWindow):
 		self.consoleLog.show()
 
 	def OnShowHelp(self):
-		webbrowser.open('http://pages.nist.gov/mosaic/html/index.html', new=0, autoraise=True)
+		webbrowser.open(mosaic.DocumentationURL+'html/index.html', new=0, autoraise=True)
+
+	def OnAggregateUsage(self):
+		try:
+			with open(resource_path("mosaic/utilities/.ga"), "r") as garead:
+				gac = json.load(garead)
+
+			gac["gaenable"] = str(self.actionAggregate_Usage.isChecked())
+
+			with open(resource_path("mosaic/utilities/.ga"), "w") as gawrite:
+				json.dump(gac, gawrite, indent=4, sort_keys=True)
+		except:
+			pass
 
 	# Dialog SLOTS
 	def OnShowTrajectoryViewer(self):
