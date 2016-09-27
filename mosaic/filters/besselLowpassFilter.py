@@ -29,13 +29,13 @@ class besselLowpassFilter(metaIOFilter.metaIOFilter):
 	def _init(self, **kwargs):
 		"""
 		"""
+		self.logger=mlog.mosaicLogging().getLogger(__name__)
+
 		try:
 			self.filterOrder=float(kwargs['filterOrder'])
 			self.filterCutoff=float(kwargs['filterCutoff'])
 		except KeyError:
-			print "Missing mandatory arguments 'filterOrder' or 'filterCutoff'"
-
-		self.logger=mlog.mosaicLogging().getLogger(__name__)
+			self.logger.error( "ERROR: Missing mandatory arguments 'filterOrder' or 'filterCutoff'" )
 
 
 	def filterData(self, icurr, Fs):

@@ -1,0 +1,23 @@
+{
+	"colors" : {
+		"keyword" : "darkBlue",
+		"reservedClasses" : "darkBlue",
+		"assignmentOperator" : "green",
+		"delimiter" : "rgb(59, 61, 145)",
+		"specialConstant" : "green",
+		"boolean" : "green",
+		"number" : "rgb(219, 94, 0)",
+		"comment" : "blue",
+		"string" : "darkGray"
+	},
+	"rules" : {
+		"keyword" : "[]",
+		"reservedClasses" : "[]",
+		"assignmentOperator" : "",
+		"delimiter" : "[\\)\\(]+|[\\{\\}]+|[][]+",
+		"specialConstant" : "",
+		"boolean" : "'True', 'False'",
+		"number" : "[-+]?[0-9]*\\.?[0-9]+([eE][-+]?[0-9]+)?",
+		"comment" : ""
+	}
+}

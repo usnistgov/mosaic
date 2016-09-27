@@ -119,14 +119,6 @@ __settings__="""
 			"parallelProc"			: "0",
 			"reserveNCPU"			: "2"
 		},
-		"singleStepEvent" : {
-			"binSize" 				: "1.0",
-			"histPad" 				: "10",
-			"maxFitIters"			: "5000",
-			"a12Ratio" 				: "1.e4",
-			"minEvntTime" 			: "10.e-6",
-			"minDataPad" 			: "75"
-		},
 		"adept2State" : {
 			"FitTol"				: "1.e-7",
 			"FitIters"				: "50000",

@@ -1,5 +1,5 @@
 import mosaic.process.adept as adept
-from mosaic.utest.algorithmCommon import BaseMultiStateTest
+from mosaic.tests.algorithmCommon import BaseMultiStateTest
 
 class ADEPT_TestSuite(BaseMultiStateTest):
 	def test_adept(self):

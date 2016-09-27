@@ -203,8 +203,8 @@ class cusumPlus(metaEventProcessor.metaEventProcessor):
 		
 		self.cusumLogger.info( '\t\tJump Size  = {0}'.format(self.StepSize) )
 		self.cusumLogger.info( '\t\tMin. State Length  = {0}'.format(self.MinLength) )
-		self.cusumLogger.info( '\t\tCUSUM+ Min. Threshold  = {0}'.format(self.MinThreshold) )
-		self.cusumLogger.info( '\t\tCUSUM+ Max. Threshold  = {0}'.format(self.MaxThreshold) )
+		self.cusumLogger.info( '\t\tMin. Threshold  = {0}'.format(self.MinThreshold) )
+		self.cusumLogger.info( '\t\tMax. Threshold  = {0}'.format(self.MaxThreshold) )
 
 
 	###########################################################################

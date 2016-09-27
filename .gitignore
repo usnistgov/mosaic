@@ -27,10 +27,10 @@ gists/
 icons/.DS_Store
 mosaic.egg-info/
 mosaic/.DS_Store
-mosaic/utest/.DS_Store
-mosaic/utest/gentests/
-mosaic/utest/testdata/.DS_Store
-mosaic/utest/testdata/eventProcessing*.log
+mosaic/tests/.DS_Store
+mosaic/tests/gentests/
+mosaic/tests/testdata/.DS_Store
+mosaic/tests/testdata/eventProcessing*.log
 mosaic_devel_image.sh
 mosaic_nist.egg-info/
 mosaicgui/csvexportview/.DS_Store
@@ -50,7 +50,7 @@ stats_win_kyle_ssnp.txt
 temp/
 data/eventMD-P28-bin.sqlite
 commit-hash
-mosaic/utest/testdata/*.sqlite
+mosaic/tests/testdata/*.sqlite
 data/eventMD-PEG28-ADEPT2State.sqlite
 doctrees
 latex
@@ -58,3 +58,4 @@ _nistpages/
 data/SingleChan-*.*sv
 data/SingleChan-*.bin
 pyinstaller/icon.*
+_testnotebooks/

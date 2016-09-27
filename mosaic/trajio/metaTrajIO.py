@@ -347,7 +347,7 @@ class metaTrajIO(object):
 		self.logger.info( '\tTrajectory I/O settings:' )
 		
 		self.logger.info( '\t\tFiles processed = {0}'.format(self.nFiles-len(self.dataFiles)) )
-		self.logger.info( '\t\tData path = {0}'.format(self.datPath) )
+		self.logger.info( '\t\tData path = \'{0}\''.format(self.datPath) )
 		self.logger.info( '\t\tFile format = {0}'.format(self.fileFormat) )
 		self.logger.info( '\t\tSampling frequency = {0} kHz'.format(self.FsHz*1e-3) )
 
@@ -482,7 +482,7 @@ class metaTrajIO(object):
 			if self.nearEndOfData:
 				self.Stop()
 			else:
-				self.logger.debug("End of data is approaching.")
+				self.logger.debug("Approaching the end of the data stream.")
 				self.nearEndOfData+=1
 
 	#################################################################

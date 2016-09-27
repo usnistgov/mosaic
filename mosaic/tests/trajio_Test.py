@@ -57,4 +57,4 @@ class TrajIO_TestSuite(TrajIOTest):
 
 if __name__ == '__main__':
 	t=TrajIOTest()
-	t.runTestCase('bin', 'mosaic/utest/testdata/')
+	t.runTestCase('bin', 'mosaic/tests/testdata/')

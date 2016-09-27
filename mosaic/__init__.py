@@ -29,7 +29,6 @@ import mosaic.partition.eventSegment
 import mosaic.process.adept
 import mosaic.process.adept2State
 import mosaic.process.cusumPlus
-import mosaic.process.singleStepEvent
 
 import mosaic.mdio.sqlite3MDIO
 
@@ -71,7 +70,6 @@ __all__.extend(mosaic.partition.eventSegment.__all__)
 __all__.extend(mosaic.process.adept.__all__)
 __all__.extend(mosaic.process.adept2State.__all__)
 __all__.extend(mosaic.process.cusumPlus.__all__)
-__all__.extend(mosaic.process.singleStepEvent.__all__)
 
 __all__.extend(mosaic.mdio.sqlite3MDIO.__all__)
 
