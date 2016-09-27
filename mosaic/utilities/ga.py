@@ -1,9 +1,19 @@
+"""
+	A basic framework for GA support.
+
+
+	:Author: 	Arvind Balijepalli <arvind.balijepalli@nist.gov>
+	:License:	See LICENSE.TXT
+"""	
 import httplib
-import urllib
+import urllib2
 import uuid
 import json
 from base64 import b64decode as dec
-from os.path import expanduser
+from os.path import expanduser, isfile
+import os
+import traceback
+from datetime import datetime, timedelta
 import mosaic
 import mosaic.utilities.mosaicLogging as mlog
 from mosaic.utilities.mosaicLogFormat import _d
@@ -43,8 +53,7 @@ def _gaPost(eventType, content):
 
 	try:
 		headers = {"Content-type": "application/x-www-form-urlencoded", "Accept": "text/plain"}
-		with open(resource_path("mosaic/utilities/.ga"), 'r') as ga:
-			gac=json.loads(ga.read())
+		gac=_gaCredentialCache()
 
 		if eval(gac["gaenable"]):
 			payload="v=1&tid={0}&cid={1}&t=event&ec=mosaic-{2}-{3}&ea={4}&el={5}".format(
@@ -69,8 +78,49 @@ def _gaPost(eventType, content):
 			conn.close()
 			if _debug:
 				logger.debug(_d("ga collect: {0}", data))
-	except:
+	except BaseException as err:
+		logger.debug(_d("Exception ignored: {0}\n{1}", repr(err), traceback.format_exc()))
 		pass
+
+def _gaCredentialCache():
+	logger=mlog.mosaicLogging().getLogger(name=__name__)
+	ga_cache=resource_path("mosaic/utilities/.ga")
+
+	try:
+		gaModTime = datetime.fromtimestamp(os.stat(ga_cache).st_mtime)
+		gaExpireAge=timedelta(hours=24)
+		gaAge=datetime.today() - gaModTime
+
+		if gaAge > gaExpireAge:
+			logger.debug(_d("GA settings cache has expired."))
+			_getGASettings(ga_cache)
+		else:
+			logger.debug(_d("GA settings cache found. gaAge={0}", gaAge))
+
+	except:
+		logger.debug(_d("GA settings are not cached."))
+		_getGASettings(ga_cache)
+
+	with open(ga_cache, 'r') as ga:
+		return json.loads(ga.read())
+
+def _getGASettings(ga_cache):
+	logger=mlog.mosaicLogging().getLogger(name=__name__)
+
+	try:
+		req=urllib2.Request(mosaic.DocumentationURL+".ga")
+		streamHandler=urllib2.build_opener()
+		stream=streamHandler.open(req)
+
+		with open(ga_cache, 'w') as ga:
+			ga.write( stream.read() )
+
+		logger.debug(_d("Cached GA settings to {0}.", ga_cache))
+	except:
+		logger.debug(_d("An error occured when trying to cache GA settings."))
+
+ga_cache=resource_path("mosaic/utilities/.ga")
+_getGASettings(ga_cache)
 
 @registerRun
 def foo():

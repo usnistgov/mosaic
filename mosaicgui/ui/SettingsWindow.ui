@@ -1104,7 +1104,7 @@
     <bool>true</bool>
    </property>
    <property name="text">
-    <string>Aggregate Usage</string>
+    <string>Anonymous Usage Information</string>
    </property>
   </action>
  </widget>

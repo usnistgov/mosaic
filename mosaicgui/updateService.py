@@ -28,7 +28,7 @@ class updateService(object):
 		if sys.platform.startswith('linux'):
 			return False
 
-		self._getUpdateInfo("https://pages.nist.gov/mosaic/version.json")
+		self._getUpdateInfo(mosaic.DocumentationURL+"/version.json")
 		
 		
 		if self._checkUpdateAvailable():

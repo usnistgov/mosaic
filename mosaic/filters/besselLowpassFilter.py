@@ -7,6 +7,7 @@
 	:License:	See LICENSE.TXT
 	:ChangeLog:
 	.. line-block::
+		9/27/16 	AB 	Control phase delay
 		9/13/15 	AB 	Updated logging to use mosaicLogFormat class
 		7/1/13		AB	Initial version
 """
@@ -54,7 +55,8 @@ class besselLowpassFilter(metaIOFilter.metaIOFilter):
 							Wn=(self.filterCutoff/(self.Fs/2)), 
 							btype='lowpass', 
 							analog=False, 
-							output='ba'
+							output='ba',
+							norm='delay'
 						)
 
 		# calculate the initial state of the filter and scale it with the first data point

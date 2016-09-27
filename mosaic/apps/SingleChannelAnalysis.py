@@ -19,7 +19,7 @@ import json
 
 __all__ = ["SingleChannelAnalysis", "run_eventpartition"]
 
-@registerRun
+# @registerRun
 def run_eventpartition( dataPath, trajDataHnd, dataFilterHnd, eventPartHnd, eventProcHnd):
 	# Read and parse the settings file
 	settingsdict=settings.settings( dataPath )	
