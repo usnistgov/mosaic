@@ -1,47 +1,5 @@
-.. image:: https://travis-ci.org/usnistgov/mosaic.svg?branch=devel-1.0
-    :target: https://travis-ci.org/usnistgov/mosaic
-    
-MOSAIC: A modular single-molecule analysis interface
-=================================
-
-
-MOSAIC is a single molecule analysis toolbox that automatically decodes multi-state nanopore data. By modeling the nanopore system with an equivalent circuit, MOSAIC leverages the transient response of a molecule entering the channel to quantify pore-molecule interactions. In contrast to existing techniques such as ionic current thresholding or Viterbi decoding, this technique allows the estimation of short-lived transient events that are otherwise not analyzed.
-
-Nanometer-scale pores have demonstrated potential use in biotechnology applications, including DNA sequencing, single-molecule force spectroscopy, and single-molecule mass spectrometry. The data modeling and analysis methods implemented in MOSAIC allow for dramatic improvements in the quantification of molecular interactions with the channel in each of these applications.
-
-**If you use MOSAIC in your work, please cite:** `ACS Nano 2014, 8, 1547–1553.  <http://pubs.acs.org/doi/abs/10.1021/nn405761y>`_
-
-
-Installation
-=================================
-
-Please refer to the `Installation <https://pages.nist.gov/mosaic/html/doc/GettingStarted.html>`_ section of the MOSAIC documentation for details on installation.
-
-
-Getting Help
-=================================
-
-For questions and help, please join our `mailing list <https://pages.nist.gov/mosaic/html/doc/mailingList.html>`_. 
-
-To subscribe:
-
-	Email `mosaic-request@nist.gov <mailto:mosaic-request@nist.gov?subject=subscribe>`_ with subject 'subscribe'
-
-To unsubscribe:
-
-	Email `mosaic-request@nist.gov <mailto:mosaic-request@nist.gov?subject=unsubscribe>`_ with subject 'unsubscribe'
-
-Once subscribed, you can send messages by emailing `mosaic@nist.gov <mailto:mosaic@nist.gov>`_.
-
-
-Reporting Problems
-=================================
-
-Report problems using our `issue tracker <https://github.com/usnistgov/mosaic/issues>`_ on Github.
-
-
 Change Log
-=================================
+------------------------------------------
 
 **v1.3**
 
