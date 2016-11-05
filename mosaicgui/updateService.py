@@ -42,14 +42,6 @@ class MOSAICUpdateBox(QtGui.QMessageBox):
 	        self.setMaximumWidth(16777215)
 	        self.setSizePolicy(QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Expanding)
 
-	        # textEdit = self.findChild(QtGui.QTextEdit)
-	        # if textEdit != None :
-	        #     textEdit.setMinimumHeight(0)
-	        #     textEdit.setMaximumHeight(16777215)
-	        #     textEdit.setMinimumWidth(0)
-	        #     textEdit.setMaximumWidth(16777215)
-	        #     textEdit.setSizePolicy(QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Expanding)
-
 	        return result
 
 class updateService(object):
@@ -75,7 +67,6 @@ class updateService(object):
 				if self._downloadUpdateFile(url):
 					self._openUpdateImage(url)
 					return True
-
 		return False
 
 
@@ -141,15 +132,10 @@ class updateService(object):
 			os.system('hdiutil mount -autoopen {0}'.format(self.downloadFolder+os.path.basename(url)))
 		elif sys.platform.startswith('win'):
 			os.startfile(self.downloadFolder+os.path.basename(url))
-			# os.system('explorer /select,{0}'.format(self.downloadFolder+os.path.basename(url))) 
 		else:
 			os.system('xdg-open "%s"' % self.downloadFolder+os.path.basename(url))
-			# print "Downloaded to : ", self.downloadFolder+os.path.basename(url)
-
+			
 	def _getUpdateInfo(self, url):
-		import pprint
-		pp = pprint.PrettyPrinter(indent=4)
-
 		try:
 			req=urllib2.Request(url)
 			streamHandler=urllib2.build_opener()
@@ -167,14 +153,13 @@ class updateService(object):
 		build=self._d(self.updateInfoDict["build"])
 		changelog=self._d(self.updateInfoDict["changelog"])
 
-		# self.updateBox = QtGui.QMessageBox()
 		self.updateBox = MOSAICUpdateDialog()
 
 		self.updateBox.informativeText.setText("Update to version {0} ({1})".format(version, build))
+		self.updateBox.changelogTextEdit.setTextInteractionFlags( Qt.TextBrowserInteraction )
+		self.updateBox.changelogTextEdit.setOpenExternalLinks(True)
 		self.updateBox.changelogTextEdit.setText( publish_string(changelog, writer_name='html') )
 		
-		# self.updateBox.setStandardButtons(QtGui.QMessageBox.Ok | QtGui.QMessageBox.Cancel)
-		# self.updateBox.setButtonText(QtGui.QMessageBox.Ok, "Download");
 		self.updateBox.show()
 		self.updateBox.raise_()
 		retval = self.updateBox.exec_()
@@ -191,8 +176,3 @@ if __name__ == '__main__':
 	app = QtGui.QApplication(sys.argv)
 	u=updateService()	
 	u.CheckUpdate()
-
-	# dmw = MOSAICUpdateDialog()
-	# dmw.show()
-	# dmw.raise_()
-	# sys.exit(app.exec_())

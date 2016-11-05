@@ -16,6 +16,9 @@
   <layout class="QVBoxLayout" name="verticalLayout_4">
    <item>
     <layout class="QHBoxLayout" name="horizontalLayout_2">
+     <property name="sizeConstraint">
+      <enum>QLayout::SetFixedSize</enum>
+     </property>
      <item>
       <spacer name="horizontalSpacer">
        <property name="orientation">
@@ -88,7 +91,7 @@
       </layout>
      </item>
      <item>
-      <layout class="QVBoxLayout" name="verticalLayout_2">
+      <layout class="QVBoxLayout" name="verticalLayout_2" stretch="0,0">
        <item>
         <layout class="QVBoxLayout" name="verticalLayout">
          <item>
@@ -125,6 +128,9 @@
        </item>
        <item>
         <layout class="QHBoxLayout" name="horizontalLayout">
+         <property name="sizeConstraint">
+          <enum>QLayout::SetMinimumSize</enum>
+         </property>
          <item>
           <spacer name="horizontalSpacer_3">
            <property name="orientation">
@@ -144,7 +150,7 @@
             <enum>Qt::Horizontal</enum>
            </property>
            <property name="standardButtons">
-            <set>QDialogButtonBox::Cancel|QDialogButtonBox::Save</set>
+            <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
            </property>
            <property name="centerButtons">
             <bool>false</bool>
@@ -174,12 +180,12 @@
     </layout>
    </item>
    <item>
-    <widget class="QTextEdit" name="changelogTextEdit">
-     <property name="enabled">
-      <bool>true</bool>
-     </property>
-     <property name="readOnly">
-      <bool>true</bool>
+    <widget class="QTextBrowser" name="changelogTextEdit">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+       <horstretch>1</horstretch>
+       <verstretch>1</verstretch>
+      </sizepolicy>
      </property>
     </widget>
    </item>
@@ -187,7 +193,6 @@
  </widget>
  <tabstops>
   <tabstop>buttonBox</tabstop>
-  <tabstop>changelogTextEdit</tabstop>
  </tabstops>
  <resources/>
  <connections>
