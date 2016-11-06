@@ -21,6 +21,7 @@ addons:
     - python-qt4-dev 
     - pyqt4-dev-tools
     - python-qt4
+    - python-docutils
 before_install:
   - pip install -U pip
 install:
