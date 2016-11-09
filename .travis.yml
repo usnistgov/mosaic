@@ -1,5 +1,5 @@
 language: python
-sudo: false
+sudo: required
 python:
   - "2.7"
 notifications:
@@ -21,6 +21,7 @@ addons:
     - python-qt4-dev 
     - pyqt4-dev-tools
     - python-qt4
+    - python-docutils
 before_install:
   - pip install -U pip
 install:
