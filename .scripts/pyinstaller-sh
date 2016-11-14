@@ -51,10 +51,10 @@ if [ $plat == 'Darwin' ]; then
 	mv icon.icns dist/MOSAIC.app/Contents/Resources
 	echo ${infoplist}>dist/MOSAIC.app/Contents/Info.plist
 	pushd dist
-	hdiutil create -format UDRW  -volname MOSAIC -size 225m -o ../../dist/mosaic-${ver}-${build}_temp.dmg -srcfolder MOSAIC.app
+	hdiutil create -format UDRW  -volname MOSAIC -size 225m -o ../../dist/mosaic-${ver}+${build}_temp.dmg -srcfolder MOSAIC.app
 	
 	# mount it and save the device
-	DEVICE=$(hdiutil attach -readwrite -noverify "../../dist/mosaic-${ver}-${build}_temp.dmg" | egrep '^/dev/' | sed 1q | awk '{print $1}')
+	DEVICE=$(hdiutil attach -readwrite -noverify "../../dist/mosaic-${ver}+${build}_temp.dmg" | egrep '^/dev/' | sed 1q | awk '{print $1}')
 	sleep 2
 
 	pushd /Volumes/MOSAIC
@@ -88,14 +88,14 @@ if [ $plat == 'Darwin' ]; then
 
 	hdiutil detach "${DEVICE}"
 
-	hdiutil convert "../../dist/mosaic-${ver}-${build}_temp.dmg" -format UDZO -imagekey zlib-level=9 -o "../../dist/mosaic-${ver}-${build}.dmg"
+	hdiutil convert "../../dist/mosaic-${ver}+${build}_temp.dmg" -format UDZO -imagekey zlib-level=9 -o "../../dist/mosaic-${ver}+${build}.dmg"
 	
-	rm "../../dist/mosaic-${ver}-${build}_temp.dmg"
+	rm "../../dist/mosaic-${ver}+${build}_temp.dmg"
 	popd
 else
 	pushd dist
-	zip mosaic-x64-${ver}-${build}.zip MOSAIC.exe
-	mv ./mosaic-x64-${ver}-${build}.zip ../../dist/
+	zip mosaic-x64-${ver}+${build}.zip MOSAIC.exe
+	mv ./mosaic-x64-${ver}+${build}.zip ../../dist/
 	popd
 fi
 
