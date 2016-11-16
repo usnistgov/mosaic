@@ -1,6 +1,8 @@
 import mosaic
 import base64
 
+bld='f0e754c'
+
 def enc(func):
 	def f(s):
 		return base64.b64encode(func(s))
@@ -8,13 +10,13 @@ def enc(func):
 
 @enc
 def dl_osx(baseurl):
-	return "{0}{1}/mosaic-{1}.{2}.dmg".format(baseurl, mosaic.__version__, mosaic.__build__)
+	return "{0}{1}/mosaic-{1}.{2}.dmg".format(baseurl, mosaic.__version__, bld)
 	# return "{0}1.2/mosaic-1.2.dmg".format(baseurl)
 
 
 @enc
 def dl_win(baseurl):
-	return "{0}{1}/mosaic-x64-{1}.{2}.zip".format(baseurl, mosaic.__version__, mosaic.__build__)
+	return "{0}{1}/mosaic-x64-{1}.{2}.zip".format(baseurl, mosaic.__version__, bld)
 	# return "{0}1.2/mosaic-x64-1.2.zip".format(baseurl)
 
 @enc
@@ -27,7 +29,7 @@ def updateVers(verlist):
 
 updatejson="""{
 		"version" 			: '"""+base64.b64encode(str(mosaic.__version__))+"""',
-		"build"				: '"""+base64.b64encode('f0e754c')+"""',
+		"build"				: '"""+base64.b64encode(bld)+"""',
 		"update-versions"	: '"""+updateVers("""["1.0", "1.1", "1.2", "1.3b1", "1.3b2", "1.3b3"]""")+"""', 
 		"changelog"			: '"""+readfile('../CHANGELOG.rst')+"""',
 		"dl-w64"			: '"""+dl_win("https://github.com/usnistgov/mosaic/releases/download/v")+"""',	
