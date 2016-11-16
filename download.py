@@ -72,7 +72,7 @@ def GenerateHeader():
   
   <body ng-app="mosaicApp" layout="row" ng-controller="AppCtrl">
   """
-def GenerateTableFromVersion(baseurl, title, version, showBinaries=True):
+def GenerateTableFromVersion(baseurl, title, version, build, showBinaries=True):
   tabsrc="""
     <md-list>
             <md-subheader class="md-no-sticky"><h3>{0}</h3></md-subheader>
@@ -81,25 +81,25 @@ def GenerateTableFromVersion(baseurl, title, version, showBinaries=True):
     tabsrc+="""
       <md-list-item class="md-1-line">
               <div flex class="md-list-item-text download-links" layout="row">
-                <div flex><a href="{0}/mosaic-{1}.dmg"><h4>mosaic-v{1}.dmg</h4></a></div>
+                <div flex><a href="{0}/mosaic-{1}{2}.dmg"><h4>mosaic-v{1}{2}.dmg</h4></a></div>
                 <div flex><h4>Mac OS X, 10.8+</h4></div>
               </div>
             </md-list-item>
 
             <md-list-item class="md-1-line">
               <div flex class="md-list-item-text download-links" layout="row">
-                <div flex><a href="{0}/mosaic-x64-{1}.zip"><h4>mosaic-x64-{1}.zip</h4></a></div>
+                <div flex><a href="{0}/mosaic-x64-{1}{2}.zip"><h4>mosaic-x64-{1}{2}.zip</h4></a></div>
                 <div flex><h4>Windows, 64-bit</h4></div>
               </div>
             </md-list-item>
-    """.format(baseurl, version)
+    """.format(baseurl, version, build)
   tabsrc+="""
       <md-list-item class="md-1-line">
               <div flex class="md-list-item-text download-links" layout="row">
-                <div flex><a href="{0}/mosaic-nist-{1}.tar.gz"><h4>mosaic-nist-{1}.tar.gz</h4></a></div>
+                <div flex><a href="{0}/mosaic-nist-{1}{2}.tar.gz"><h4>mosaic-nist-{1}{2}.tar.gz</h4></a></div>
                 <div flex><h4>MOSAIC Source</h4></div>
               </div>
-            </md-list-item>""".format(baseurl, version)
+            </md-list-item>""".format(baseurl, version, build)
   if showBinaries:
     tabsrc+="""
             <md-list-item class="md-1-line">
@@ -118,7 +118,7 @@ def GenerateTableFromVersion(baseurl, title, version, showBinaries=True):
 if __name__ == '__main__':
   url="https://github.com/usnistgov/mosaic/releases/download/v"
   vers=[
-    ("Version "+str(mosaic.__version__), str(mosaic.__version__)+'.f0e754c', True),
+    ("Version "+str(mosaic.__version__), str(mosaic.__version__), '.f0e754c', True),
     ("Version 1.2", "1.2",False),
     ("Version 1.1", "1.1",False),
     ("Version 1.0", "1.0",False)
