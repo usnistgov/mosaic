@@ -31,7 +31,7 @@ Windows (64-bit) `|projname|-v1.0.0.zip <link>`_
 
 **Documentation**
 
-Download the documentation as a `PDF <link>`_. |projname| documentation is also available in `HTML <http://usnistgov.github.io/mosaic>`_ format.
+Download the documentation as a `PDF <link>`_. |projname| documentation is also available in `HTML <http://pages.nist.gov/mosaic>`_ format.
 
 **Source Code**
 

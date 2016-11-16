@@ -3,46 +3,46 @@
 Meta-Classes
 =======================
 
-mosaic.metaEventPartition module
+mosaic.partition.metaEventPartition module
 -----------------------------------------
 
-.. autoclass:: mosaic.metaEventPartition.metaEventPartition
+.. autoclass:: mosaic.partition.metaEventPartition.metaEventPartition
     :show-inheritance:
     :members:
 
-    .. automethod:: mosaic.metaEventPartition.metaEventPartition._init
-    .. automethod:: mosaic.metaEventPartition.metaEventPartition._stop
-    .. automethod:: mosaic.metaEventPartition.metaEventPartition._eventsegment
+    .. automethod:: mosaic.partition.metaEventPartition.metaEventPartition._init
+    .. automethod:: mosaic.partition.metaEventPartition.metaEventPartition._stop
+    .. automethod:: mosaic.partition.metaEventPartition.metaEventPartition._eventsegment
 
 
-mosaic.metaEventProcessor module
+mosaic.process.metaEventProcessor module
 -----------------------------------------
 
-.. autoclass:: mosaic.metaEventProcessor.metaEventProcessor
+.. autoclass:: mosaic.process.metaEventProcessor.metaEventProcessor
     :members:
     :private-members:
     :show-inheritance:
 
-mosaic.metaIOFilter module
+mosaic.filters.metaIOFilter module
 -----------------------------------
 
-.. autoclass:: mosaic.metaIOFilter.metaIOFilter
+.. autoclass:: mosaic.filters.metaIOFilter.metaIOFilter
     :show-inheritance:
     :members:
 
-    .. automethod:: mosaic.metaIOFilter.metaIOFilter._init
+    .. automethod:: mosaic.filters.metaIOFilter.metaIOFilter._init
 
 
-mosaic.metaMDIO module
+mosaic.mdio.metaMDIO module
 -------------------------------
 
-.. autoclass:: mosaic.metaMDIO.metaMDIO
+.. autoclass:: mosaic.mdio.metaMDIO.metaMDIO
     :show-inheritance:
     :members:
 
-    .. automethod:: mosaic.metaMDIO.metaMDIO._opendb
-    .. automethod:: mosaic.metaMDIO.metaMDIO._initdb
-    .. automethod:: mosaic.metaMDIO.metaMDIO._colnames
+    .. automethod:: mosaic.mdio.metaMDIO.metaMDIO._opendb
+    .. automethod:: mosaic.mdio.metaMDIO.metaMDIO._initdb
+    .. automethod:: mosaic.mdio.metaMDIO.metaMDIO._colnames
 
 
 mosaic.metaTrajIO module

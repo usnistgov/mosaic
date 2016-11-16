@@ -54,9 +54,13 @@ The :py:class:`~mosaic.cusumPlus.cusumPlus` algorithm outputs meta-data that cha
 |                   |                 |                                                |
 | EventDelay        | REAL_LIST       | Start time of each state in ms.                |
 |                   |                 |                                                |
+| StateResTime      | REAL_LIST       | Residence time of each state in ms.            |
+|                   |                 |                                                |
 | ResTime           | REAL            | EventEnd-EventStart in ms.                     |
 |                   |                 |                                                |
 | AbsEventStart     | REAL            | Global event start time in ms.                 |
+|                   |                 |                                                |
+| ProcessTime       | REAL            | Event processing time in ms.                   |
 |                   |                 |                                                |
 | TimeSeries        | REAL_LIST       | (OPTIONAL) Event time-series.                  |
 +-------------------+-----------------+------------------------------------------------+

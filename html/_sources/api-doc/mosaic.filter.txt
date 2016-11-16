@@ -2,32 +2,32 @@ Time-Series Filters
 =======================
 
 
-mosaic.waveletDenoiseFilter module
+mosaic.filters.waveletDenoiseFilter module
 -------------------------------------------
 
-.. inheritance-diagram:: mosaic.waveletDenoiseFilter
+.. inheritance-diagram:: mosaic.filters.waveletDenoiseFilter
    :parts: 2
 
-.. automodule:: mosaic.waveletDenoiseFilter
+.. automodule:: mosaic.filters.waveletDenoiseFilter
     :members:
     :show-inheritance:
 
-mosaic.besselLowpassFilter module
+mosaic.filters.besselLowpassFilter module
 ------------------------------------------
 
-.. inheritance-diagram:: mosaic.besselLowpassFilter
+.. inheritance-diagram:: mosaic.filters.besselLowpassFilter
    :parts: 2
 
-.. automodule:: mosaic.besselLowpassFilter
+.. automodule:: mosaic.filters.besselLowpassFilter
     :members:
     :show-inheritance:
 
-mosaic.convolutionFilter module
+mosaic.filters.convolutionFilter module
 ----------------------------------------
 
-.. inheritance-diagram:: mosaic.convolutionFilter
+.. inheritance-diagram:: mosaic.filters.convolutionFilter
    :parts: 2
    
-.. automodule:: mosaic.convolutionFilter
+.. automodule:: mosaic.filters.convolutionFilter
     :members:
     :show-inheritance:

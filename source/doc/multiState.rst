@@ -19,9 +19,9 @@ Settings that control the fit are defined through the settings file and are desc
 Algorithm Settings
 ##########################################
 .. exec::
-	import mosaic.adept
+	import mosaic.process.adept
 
-	print mosaic.adept.adept.__doc__
+	print mosaic.process.adept.adept.__doc__
 
 
 Metadata Output
@@ -51,13 +51,17 @@ The :py:class:`~mosaic.adept.adept` algorithm outputs meta-data that characteriz
 |                   |                 |                                                |
 | EventDelay        | REAL_LIST       | Start time of each state in ms.                |
 |                   |                 |                                                |
+| StateResTime      | REAL_LIST       | Residence time of each state in ms.            |
+|                   |                 |                                                |
 | ResTime           | REAL            | EventEnd-EventStart in ms.                     |
 |                   |                 |                                                |
-| RCConstant        | REAL            | System RC constant in ms.                      |
+| RCConstant        | REAL_LIST       | System RC constant in ms.                      |
 |                   |                 |                                                |
 | AbsEventStart     | REAL            | Global event start time in ms.                 |
 |                   |                 |                                                |
 | ReducedChiSquared | REAL            | Reduced Chi-squared of fit.                    |
+|                   |                 |                                                |
+| ProcessTime       | REAL            | Event processing time in ms.                   |
 |                   |                 |                                                |
 | TimeSeries        | REAL_LIST       | (OPTIONAL) Event time-series.                  |
 +-------------------+-----------------+------------------------------------------------+

@@ -28,8 +28,8 @@ def updateVers(verlist):
 updatejson="""{
 		"version" 			: '"""+base64.b64encode(str(mosaic.__version__))+"""',
 		"build"				: '"""+base64.b64encode(str(mosaic.__build__))+"""',
-		"update-versions"	: '"""+updateVers("""["1.0", "1.1", "1.2", "1.3b1", "1.3b2"]""")+"""', 
-		"changelog"			: '"""+readfile('../README.rst')+"""',
+		"update-versions"	: '"""+updateVers("""["1.0", "1.1", "1.2", "1.3b1", "1.3b2", "1.3b3"]""")+"""', 
+		"changelog"			: '"""+readfile('../CHANGELOG.rst')+"""',
 		"dl-w64"			: '"""+dl_win("https://github.com/usnistgov/mosaic/releases/download/v")+"""',	
 		"dl-osx"			: '"""+dl_osx("https://github.com/usnistgov/mosaic/releases/download/v")+"""'
 	}"""

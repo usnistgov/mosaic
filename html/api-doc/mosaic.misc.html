@@ -5,18 +5,18 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>13.1.8. Miscellaneous &mdash; MOSAIC 1.2 documentation</title>
+    <title>13.1.8. Miscellaneous &#8212; MOSAIC 1.3 documentation</title>
     
     <link rel="stylesheet" href="../_static/basic.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="../_static/bootswatch-3.3.4/paper/bootstrap.min.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/bootswatch-3.3.6/paper/bootstrap.min.css" type="text/css" />
     <link rel="stylesheet" href="../_static/bootstrap-sphinx.css" type="text/css" />
     <link rel="stylesheet" href="../_static/style.css" type="text/css" />
     
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '1.2',
+        VERSION:     '1.3',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -28,10 +28,12 @@
     <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <script type="text/javascript" src="../_static/js/jquery-1.11.0.min.js"></script>
     <script type="text/javascript" src="../_static/js/jquery-fix.js"></script>
-    <script type="text/javascript" src="../_static/bootstrap-3.3.4/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../_static/bootstrap-3.3.6/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="../_static/bootstrap-sphinx.js"></script>
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
-    <link rel="top" title="MOSAIC 1.2 documentation" href="../index.html" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="top" title="MOSAIC 1.3 documentation" href="../index.html" />
     <link rel="up" title="13. API Documentation" href="../doc/apidocs.html" />
     <link rel="next" title="13.1.9. MOSAIC Script Repository" href="mosaicscripts.html" />
     <link rel="prev" title="13.1.7. Data Output" href="mosaic.output.html" />
@@ -44,7 +46,7 @@
 	<script type="text/javascript"
 		src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
 	</script>
-	<script type="text/javascript" id="_fed_an_js_tag" src="//www.nist.gov/js/federated-analytics.all.min.js?agency=NIST&subagency=github&pua=UA-42404149-54&yt=true&exts=ppsx,pps,f90,sch,rtf,wrl,txz,m1v,xlsm,msi,xsd,f,tif,eps,mpg,xml,pl,xlt,c">
+	<script type="text/javascript" id="_fed_an_js_tag" src="https://www.nist.gov/sites/default/files/js/federated-analytics.all.min.js?agency=NIST&subagency=github&pua=UA-42404149-54&yt=true&exts=ppsx,pps,f90,sch,rtf,wrl,txz,m1v,xlsm,msi,xsd,f,tif,eps,mpg,xml,pl,xlt,c">
     </script>	
 
 	<meta name="theme-color" content="#283593">
@@ -61,9 +63,9 @@
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </button>
-        <a class="navbar-brand" href="../index.html"><img src="../_static/icon_36.png">
+        <a class="navbar-brand" href="../index.html"><span><img src="../_static/icon_36.png"></span>
            </a>
-        <span class="navbar-text navbar-version pull-left"><b>1.2</b></span>
+        <span class="navbar-text navbar-version pull-left"><b>1.3</b></span>
       </div>
 
         <div class="collapse navbar-collapse nav-collapse">
@@ -150,6 +152,13 @@
 </tbody>
 </table>
 <div class="line-block">
+<div class="line">3/16/16         AB      Replaced InitThreshold with StepSize in default settings for ADEPT and warn users when InitThreshold is used.</div>
+<div class="line">8/24/15         AB      Updated algorithm names.</div>
+<div class="line">6/24/15         AB      Added an option to unlink the RC constants in stepResponseAnalysis.</div>
+<div class="line">3/20/15         AB      Added MaxEventLength to multiStateAnalysis settings</div>
+<div class="line">3/6/15          JF      Corrected formatting on cusumLevelAnalysis and multiStateAnalysis dictionary file</div>
+<div class="line">3/6/15          AB      Added MinStateLength parameter for multiStateAnalysis to dictionary</div>
+<div class="line">2/14/15         AB      Added default settings for cusumLevelAnalysis.</div>
 <div class="line">8/20/14         AB      Changed precedence of settings file search to datpath/.settings,</div>
 <div class="line-block">
 <div class="line">datpath/settings, coderoot/.settings and coderoot/settings</div>
@@ -245,15 +254,9 @@
 </dd></dl>
 
 <dl class="function">
-<dt id="mosaic.utilities.util.commonest">
-<code class="descclassname">mosaic.utilities.util.</code><code class="descname">commonest</code><span class="sig-paren">(</span><em>dat</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/utilities/util.html#commonest"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mosaic.utilities.util.commonest" title="Permalink to this definition">¶</a></dt>
-<dd><p>Return the most common element in a list.</p>
-</dd></dl>
-
-<dl class="function">
-<dt id="mosaic.utilities.util.decimate">
-<code class="descclassname">mosaic.utilities.util.</code><code class="descname">decimate</code><span class="sig-paren">(</span><em>dat</em>, <em>size</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/utilities/util.html#decimate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mosaic.utilities.util.decimate" title="Permalink to this definition">¶</a></dt>
-<dd><p>Decimate dat for a specified window size.</p>
+<dt id="mosaic.utilities.util.sd">
+<code class="descclassname">mosaic.utilities.util.</code><code class="descname">sd</code><span class="sig-paren">(</span><em>dat</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/utilities/util.html#sd"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mosaic.utilities.util.sd" title="Permalink to this definition">¶</a></dt>
+<dd><p>Wrapper for numpy std</p>
 </dd></dl>
 
 <dl class="function">
@@ -265,12 +268,6 @@ windowSz. If len(dat) &lt; windowSz, raise WindowSizeError</p>
 </dd></dl>
 
 <dl class="function">
-<dt id="mosaic.utilities.util.flat2">
-<code class="descclassname">mosaic.utilities.util.</code><code class="descname">flat2</code><span class="sig-paren">(</span><em>dat</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/utilities/util.html#flat2"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mosaic.utilities.util.flat2" title="Permalink to this definition">¶</a></dt>
-<dd><p>Flatten a 2D array to a list</p>
-</dd></dl>
-
-<dl class="function">
 <dt id="mosaic.utilities.util.partition">
 <code class="descclassname">mosaic.utilities.util.</code><code class="descname">partition</code><span class="sig-paren">(</span><em>dat</em>, <em>size</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/utilities/util.html#partition"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mosaic.utilities.util.partition" title="Permalink to this definition">¶</a></dt>
 <dd><p>Partition a list into sub-lists, each of length size. If the number of elements
@@ -278,9 +275,15 @@ in dat does not partition evenly, the last sub-list will have fewer elements.</p
 </dd></dl>
 
 <dl class="function">
-<dt id="mosaic.utilities.util.sd">
-<code class="descclassname">mosaic.utilities.util.</code><code class="descname">sd</code><span class="sig-paren">(</span><em>dat</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/utilities/util.html#sd"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mosaic.utilities.util.sd" title="Permalink to this definition">¶</a></dt>
-<dd><p>Wrapper for numpy std</p>
+<dt id="mosaic.utilities.util.decimate">
+<code class="descclassname">mosaic.utilities.util.</code><code class="descname">decimate</code><span class="sig-paren">(</span><em>dat</em>, <em>size</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/utilities/util.html#decimate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mosaic.utilities.util.decimate" title="Permalink to this definition">¶</a></dt>
+<dd><p>Decimate dat for a specified window size.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="mosaic.utilities.util.commonest">
+<code class="descclassname">mosaic.utilities.util.</code><code class="descname">commonest</code><span class="sig-paren">(</span><em>dat</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/utilities/util.html#commonest"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mosaic.utilities.util.commonest" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the most common element in a list.</p>
 </dd></dl>
 
 <dl class="function">
@@ -290,15 +293,248 @@ in dat does not partition evenly, the last sub-list will have fewer elements.</p
 nSigma * SD of the mean.</p>
 </dd></dl>
 
+<dl class="function">
+<dt id="mosaic.utilities.util.flat2">
+<code class="descclassname">mosaic.utilities.util.</code><code class="descname">flat2</code><span class="sig-paren">(</span><em>dat</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/utilities/util.html#flat2"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mosaic.utilities.util.flat2" title="Permalink to this definition">¶</a></dt>
+<dd><p>Flatten a 2D array to a list</p>
+</dd></dl>
+
 </div>
 <div class="section" id="mosaic-utilities-mosaiclogformat-module">
 <h2>13.1.8.4. mosaic.utilities.mosaicLogFormat module<a class="headerlink" href="#mosaic-utilities-mosaiclogformat-module" title="Permalink to this headline">¶</a></h2>
+<span class="target" id="module-mosaic.utilities.mosaicLogFormat"></span><p>An object that allows arbitrary formatting of log text.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Created:</th><td class="field-body">09/12/2015</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Author:</th><td class="field-body">Arvind Balijepalli &lt;<a class="reference external" href="mailto:arvind&#46;balijepalli&#37;&#52;&#48;nist&#46;gov">arvind<span>&#46;</span>balijepalli<span>&#64;</span>nist<span>&#46;</span>gov</a>&gt;</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">License:</th><td class="field-body">See LICENSE.TXT</td>
+</tr>
+<tr class="field-even field"><th class="field-name">ChangeLog:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+<div class="line-block">
+<div class="line">06/14/16        AB      Added a new Python property class mimic to add log property set, get and del.</div>
+<div class="line">06/13/16        AB      Remove mosaicLogFormat class</div>
+<div class="line">09/12/15        AB      Initial version</div>
+</div>
+<dl class="class">
+<dt id="mosaic.utilities.mosaicLogFormat.mosaic_property">
+<em class="property">class </em><code class="descclassname">mosaic.utilities.mosaicLogFormat.</code><code class="descname">mosaic_property</code><span class="sig-paren">(</span><em>fget=None</em>, <em>fset=None</em>, <em>fdel=None</em>, <em>doc=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/utilities/mosaicLogFormat.html#mosaic_property"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mosaic.utilities.mosaicLogFormat.mosaic_property" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/2/library/functions.html#object" title="(in Python v2.7)"><code class="xref py py-class docutils literal"><span class="pre">object</span></code></a></p>
+<p>Emulate Python property. Add support to the getter and setter methods to automatically log properties in debug mode.
+The new class can be used exactly as the built-in Python property class, for example as a decorator</p>
+<blockquote>
+<div><div class="highlight-python"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">foo</span><span class="p">:</span>
+        <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="o">=</span><span class="mi">100</span>
+
+        <span class="nd">@mosaic_property</span>
+        <span class="k">def</span> <span class="nf">x</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+                <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">x</span>
+
+        <span class="nd">@x.setter</span>
+        <span class="k">def</span> <span class="nf">x</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">val</span><span class="p">):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="o">=</span><span class="n">val</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p>Adapted from: <a class="reference external" href="https://docs.python.org/2/howto/descriptor.html#properties">https://docs.python.org/2/howto/descriptor.html#properties</a>.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="mosaic.utilities.mosaicLogFormat._d">
+<code class="descclassname">mosaic.utilities.mosaicLogFormat.</code><code class="descname">_d</code><span class="sig-paren">(</span><em>msg</em>, <em>*args</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/utilities/mosaicLogFormat.html#_d"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mosaic.utilities.mosaicLogFormat._d" title="Permalink to this definition">¶</a></dt>
+<dd><p>Format a debug log message. This function will automatically append calling function name and file/line number.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><cite>msg</cite>  : Log message formatted using the Python <a class="reference external" href="https://docs.python.org/2/library/string.html#custom-string-formatting">formatter class</a>.</li>
+<li><cite>args</cite> : Message arguments.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Usage:</th><td class="field-body"><p class="first">Log an integer or a float variable.</p>
+<div class="last highlight-python"><div class="highlight"><pre><span></span><span class="n">_d</span><span class="p">(</span><span class="s2">&quot;Var x has value {0}&quot;</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
+
+<span class="n">_d</span><span class="p">(</span><span class="s2">&quot;Var y is a float with value {0:0.2f} to 2 decimal places.&quot;</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+</pre></div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="mosaic.utilities.mosaicLogFormat._dprop">
+<code class="descclassname">mosaic.utilities.mosaicLogFormat.</code><code class="descname">_dprop</code><span class="sig-paren">(</span><em>msg</em>, <em>*args</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/utilities/mosaicLogFormat.html#_dprop"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mosaic.utilities.mosaicLogFormat._dprop" title="Permalink to this definition">¶</a></dt>
+<dd><p>Format a debug log message for a class property. This function will automatically append calling function name and file/line number.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><cite>msg</cite>  : Log message formatted using the Python <a class="reference external" href="https://docs.python.org/2/library/string.html#custom-string-formatting">formatter class</a>.</li>
+<li><cite>args</cite> : Message arguments.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Usage:</th><td class="field-body"><p class="first">Log a property that returns an integer or a float.</p>
+<div class="last highlight-python"><div class="highlight"><pre><span></span><span class="n">_dprop</span><span class="p">(</span><span class="s2">&quot;Var x has value {0}&quot;</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
+
+<span class="n">_dprop</span><span class="p">(</span><span class="s2">&quot;Var y is a float with value {0:0.2f} to 2 decimal places.&quot;</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+</pre></div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
 </div>
 <div class="section" id="mosaic-utilities-mosaiclogging-module">
 <h2>13.1.8.5. mosaic.utilities.mosaicLogging module<a class="headerlink" href="#mosaic-utilities-mosaiclogging-module" title="Permalink to this headline">¶</a></h2>
+<span class="target" id="module-mosaic.utilities.mosaicLogging"></span><p>An implementation of Python logging heavily adapted from <a class="reference external" href="http://stackoverflow.com/questions/15727420/using-python-logging-in-multiple-modules">http://stackoverflow.com/questions/15727420/using-python-logging-in-multiple-modules</a>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Created:</th><td class="field-body">5/29/2016</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Author:</th><td class="field-body">Arvind Balijepalli &lt;<a class="reference external" href="mailto:arvind&#46;balijepalli&#37;&#52;&#48;nist&#46;gov">arvind<span>&#46;</span>balijepalli<span>&#64;</span>nist<span>&#46;</span>gov</a>&gt;</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">License:</th><td class="field-body">See LICENSE.TXT</td>
+</tr>
+<tr class="field-even field"><th class="field-name">ChangeLog:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+<div class="line-block">
+<div class="line">5/30/16         AB      Strip whitespace from rotating file handler messages.</div>
+<div class="line">5/29/16         AB      Initial version</div>
+</div>
+<dl class="class">
+<dt id="mosaic.utilities.mosaicLogging.mosaicLogging">
+<em class="property">class </em><code class="descclassname">mosaic.utilities.mosaicLogging.</code><code class="descname">mosaicLogging</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/utilities/mosaicLogging.html#mosaicLogging"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mosaic.utilities.mosaicLogging.mosaicLogging" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/2/library/functions.html#object" title="(in Python v2.7)"><code class="xref py py-class docutils literal"><span class="pre">object</span></code></a></p>
+<p>A custom logging class that uses the Python logging facility. Logs are automatically saved to a metaMDIO instance,
+and to a file log when DeveloperMode is active.</p>
+<dl class="staticmethod">
+<dt id="mosaic.utilities.mosaicLogging.mosaicLogging.getLogger">
+<em class="property">static </em><code class="descname">getLogger</code><span class="sig-paren">(</span><em>name=None</em>, <em>dbHnd=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/utilities/mosaicLogging.html#mosaicLogging.getLogger"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mosaic.utilities.mosaicLogging.mosaicLogging.getLogger" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get a logger instance.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><cite>name</cite>  : Logger name</li>
+<li><cite>dbHnd</cite> : MetaMDIO handle to allow logs to be saved to the database.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Usage:</th><td class="field-body"><p class="first">In this example, we get an instance of a logger with the module name and log a debug message.</p>
+<div class="last highlight-python"><div class="highlight"><pre><span></span><span class="n">logger</span><span class="o">=</span><span class="n">mosaicLogging</span><span class="p">()</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="n">__name__</span><span class="p">)</span>
+
+<span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Test debug message&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
 </div>
 <div class="section" id="mosaic-utilities-mosaictiming-module">
 <h2>13.1.8.6. mosaic.utilities.mosaicTiming module<a class="headerlink" href="#mosaic-utilities-mosaictiming-module" title="Permalink to this headline">¶</a></h2>
+<span class="target" id="module-mosaic.utilities.mosaicTiming"></span><p>A class that provides platform independent timing and function profiling utilities.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Created:</th><td class="field-body">4/10/2016</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Author:</th><td class="field-body">Arvind Balijepalli &lt;<a class="reference external" href="mailto:arvind&#46;balijepalli&#37;&#52;&#48;nist&#46;gov">arvind<span>&#46;</span>balijepalli<span>&#64;</span>nist<span>&#46;</span>gov</a>&gt;</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">License:</th><td class="field-body">See LICENSE.TXT</td>
+</tr>
+<tr class="field-even field"><th class="field-name">ChangeLog:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+<div class="line-block">
+<div class="line">6/17/16         AB      Only profile functions in DeveloperMode. Log timing output.</div>
+<div class="line">4/10/16         AB      Initial version</div>
+</div>
+<dl class="class">
+<dt id="mosaic.utilities.mosaicTiming.mosaicTiming">
+<em class="property">class </em><code class="descclassname">mosaic.utilities.mosaicTiming.</code><code class="descname">mosaicTiming</code><a class="reference internal" href="../_modules/mosaic/utilities/mosaicTiming.html#mosaicTiming"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mosaic.utilities.mosaicTiming.mosaicTiming" title="Permalink to this definition">¶</a></dt>
+<dd><p>Profile code by attaching an instance of this class to any function. All the methods in this class are valid for the function being profiled.</p>
+<dl class="method">
+<dt id="mosaic.utilities.mosaicTiming.mosaicTiming.FunctionTiming">
+<code class="descname">FunctionTiming</code><span class="sig-paren">(</span><em>func</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/utilities/mosaicTiming.html#mosaicTiming.FunctionTiming"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mosaic.utilities.mosaicTiming.mosaicTiming.FunctionTiming" title="Permalink to this definition">¶</a></dt>
+<dd><p>Pass the function to be profiled as an argument. Alternatively with python 2.4+, attach a decorator to the function being profiled.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><cite>func</cite> :    function to be profiled</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Usage:</th><td class="field-body"><div class="first last highlight-python"><div class="highlight"><pre><span></span><span class="n">funcTimer</span><span class="o">=</span><span class="n">mosaicTiming</span><span class="o">.</span><span class="n">mosaicTiming</span><span class="p">()</span>
+
+<span class="nd">@funcTimer.FunctionTiming</span>
+<span class="k">def</span> <span class="nf">someFunc</span><span class="p">():</span>
+                <span class="k">print</span> <span class="s1">&#39;doing something&#39;</span>
+
+<span class="c1"># summarize the profiling results for someFunc</span>
+<span class="n">funcTimer</span><span class="o">.</span><span class="n">PrintStatistics</span><span class="p">()</span>
+</pre></div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="mosaic.utilities.mosaicTiming.mosaicTiming.PrintCurrentTime">
+<code class="descname">PrintCurrentTime</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/utilities/mosaicTiming.html#mosaicTiming.PrintCurrentTime"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mosaic.utilities.mosaicTiming.mosaicTiming.PrintCurrentTime" title="Permalink to this definition">¶</a></dt>
+<dd><p>Print timing results of the most recent function call</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="mosaic.utilities.mosaicTiming.mosaicTiming.PrintStatistics">
+<code class="descname">PrintStatistics</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/utilities/mosaicTiming.html#mosaicTiming.PrintStatistics"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mosaic.utilities.mosaicTiming.mosaicTiming.PrintStatistics" title="Permalink to this definition">¶</a></dt>
+<dd><p>Print average timing results of the function call</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="mosaic.utilities.mosaicTiming.mosaicTiming.Reset">
+<code class="descname">Reset</code><span class="sig-paren">(</span><em>funcname=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/utilities/mosaicTiming.html#mosaicTiming.Reset"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mosaic.utilities.mosaicTiming.mosaicTiming.Reset" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reset all profiling data collected for a specified function or all stored functions.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="mosaic.utilities.mosaicTiming.mosaicTiming.time">
+<code class="descname">time</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/utilities/mosaicTiming.html#mosaicTiming.time"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mosaic.utilities.mosaicTiming.mosaicTiming.time" title="Permalink to this definition">¶</a></dt>
+<dd><p>A platform independent timing function.</p>
+</dd></dl>
+
+</dd></dl>
+
 </div>
 <div class="section" id="mosaic-utilities-fit-funcs-module">
 <h2>13.1.8.7. mosaic.utilities.fit_funcs module<a class="headerlink" href="#mosaic-utilities-fit-funcs-module" title="Permalink to this headline">¶</a></h2>
@@ -318,6 +554,11 @@ nSigma * SD of the mean.</p>
 </tbody>
 </table>
 <div class="line-block">
+<div class="line">12/09/15        KB      Added a wrapper for multiStateFunc</div>
+<div class="line">6/24/15         AB      Relaxed stepResponseFunc to include different RC constants</div>
+<div class="line-block">
+<div class="line">for up and down states.</div>
+</div>
 <div class="line">12/31/14        AB      Changed multi-state function to include a separate tau for</div>
 <div class="line-block">
 <div class="line">each state following Balijepalli et al, ACS Nano 2014.</div>
@@ -340,7 +581,7 @@ nSigma * SD of the mean.</p>
       
     </p>
     <p>
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.4.<br/>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.8.<br/>
     </p>
   </div>
 </footer> -->

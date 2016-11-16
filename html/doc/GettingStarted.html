@@ -5,18 +5,18 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>3. Getting Started &mdash; MOSAIC 1.2 documentation</title>
+    <title>3. Getting Started &#8212; MOSAIC 1.3 documentation</title>
     
     <link rel="stylesheet" href="../_static/basic.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="../_static/bootswatch-3.3.4/paper/bootstrap.min.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/bootswatch-3.3.6/paper/bootstrap.min.css" type="text/css" />
     <link rel="stylesheet" href="../_static/bootstrap-sphinx.css" type="text/css" />
     <link rel="stylesheet" href="../_static/style.css" type="text/css" />
     
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '1.2',
+        VERSION:     '1.3',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -28,10 +28,12 @@
     <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <script type="text/javascript" src="../_static/js/jquery-1.11.0.min.js"></script>
     <script type="text/javascript" src="../_static/js/jquery-fix.js"></script>
-    <script type="text/javascript" src="../_static/bootstrap-3.3.4/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../_static/bootstrap-3.3.6/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="../_static/bootstrap-sphinx.js"></script>
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
-    <link rel="top" title="MOSAIC 1.2 documentation" href="../index.html" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="top" title="MOSAIC 1.3 documentation" href="../index.html" />
     <link rel="next" title="4. MOSAIC GUI" href="GraphicalInterface.html" />
     <link rel="prev" title="2. Data Processing Algorithms in MOSAIC" href="Algorithms.html" />
 
@@ -43,7 +45,7 @@
 	<script type="text/javascript"
 		src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
 	</script>
-	<script type="text/javascript" id="_fed_an_js_tag" src="//www.nist.gov/js/federated-analytics.all.min.js?agency=NIST&subagency=github&pua=UA-42404149-54&yt=true&exts=ppsx,pps,f90,sch,rtf,wrl,txz,m1v,xlsm,msi,xsd,f,tif,eps,mpg,xml,pl,xlt,c">
+	<script type="text/javascript" id="_fed_an_js_tag" src="https://www.nist.gov/sites/default/files/js/federated-analytics.all.min.js?agency=NIST&subagency=github&pua=UA-42404149-54&yt=true&exts=ppsx,pps,f90,sch,rtf,wrl,txz,m1v,xlsm,msi,xsd,f,tif,eps,mpg,xml,pl,xlt,c">
     </script>	
 
 	<meta name="theme-color" content="#283593">
@@ -60,9 +62,9 @@
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </button>
-        <a class="navbar-brand" href="../index.html"><img src="../_static/icon_36.png">
+        <a class="navbar-brand" href="../index.html"><span><img src="../_static/icon_36.png"></span>
            </a>
-        <span class="navbar-text navbar-version pull-left"><b>1.2</b></span>
+        <span class="navbar-text navbar-version pull-left"><b>1.3</b></span>
       </div>
 
         <div class="collapse navbar-collapse nav-collapse">
@@ -133,7 +135,7 @@
 <span id="gettingstarted"></span><h1>3. Getting Started<a class="headerlink" href="#getting-started" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="binary-installation">
 <h2>3.1. Binary Installation<a class="headerlink" href="#binary-installation" title="Permalink to this headline">¶</a></h2>
-<p><em>MOSAIC</em> is available as a pre-compiled binary for Windows and Mac OS X (<a class="reference external" href="http://usnistgov.github.io/mosaic/platforms.html">download binaries</a>). <em>MOSAIC</em> binaries do not need special installation. Under <strong>Mac OS X</strong> open the the downloaded disk image and drag the <em>MOSAIC</em> executable to the Applications folder. Under <strong>Windows</strong>, unzip downloaded zip file and move the <em>MOSAIC</em> executable to your hard disk.</p>
+<p><em>MOSAIC</em> is available as a pre-compiled binary for Windows and Mac OS X (<a class="reference external" href="http://pages.nist.gov/mosaic/platforms.html">download binaries</a>). <em>MOSAIC</em> binaries do not need special installation. Under <strong>Mac OS X</strong> open the the downloaded disk image and drag the <em>MOSAIC</em> executable to the Applications folder. Under <strong>Windows</strong>, unzip downloaded zip file and move the <em>MOSAIC</em> executable to your hard disk.</p>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p class="last"><em>MOSAIC</em> binaries are 64-bit. If you need 32-bit support, please build <em>MOSAIC</em> from source as described in the <a class="reference internal" href="#sourceinstall"><span class="std std-ref">Source Installation</span></a> section.</p>
@@ -211,9 +213,9 @@ requires Apple command line tools, but will directly prompt you to install it on
 <p class="last">Installing the graphical interface requires one to install <em>MOSAIC</em> from the source distribution as outlined below.</p>
 </div>
 <p><strong>Install from a Downloaded Source Distribution</strong></p>
-<p>First we need to obtain the <em>MOSAIC</em> source code. For analyzing publication data, we recommend downloading the latest stable version of the source code (<a class="reference external" href="http://usnistgov.github.io/mosaic/platforms.html">download source</a>). Alternatively, the latest development version can be downloaded from the <a class="reference external" href="https://github.com/usnistgov/mosaic">MOSAIC page on Github</a>. Here we will show you how to set up <em>MOSAIC</em> from the latest stable release:</p>
+<p>First we need to obtain the <em>MOSAIC</em> source code. For analyzing publication data, we recommend downloading the latest stable version of the source code (<a class="reference external" href="http://pages.nist.gov/mosaic/platforms.html">download source</a>). Alternatively, the latest development version can be downloaded from the <a class="reference external" href="https://github.com/usnistgov/mosaic">MOSAIC page on Github</a>. Here we will show you how to set up <em>MOSAIC</em> from the latest stable release:</p>
 <ol class="arabic simple">
-<li>Download the latest release (<a class="reference external" href="http://usnistgov.github.io/mosaic/platforms.html">download source</a>)</li>
+<li>Download the latest release (<a class="reference external" href="http://pages.nist.gov/mosaic/platforms.html">download source</a>)</li>
 <li>Create a directory for the project source. In this case we will create a directory called MOSAIC, located in <code class="docutils literal"><span class="pre">~/projects/</span></code>, where &#8216;~&#8217; is your home directory.</li>
 </ol>
 <div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">$</span> mkdir ~/projects/MOSAIC
@@ -304,9 +306,9 @@ requires Apple command line tools, but will directly prompt you to install it on
 <p class="last">Installing the graphical interface requires one to install <em>MOSAIC</em> from the source distribution as outlined below.</p>
 </div>
 <p><strong>Install from a Downloaded Source Distribution</strong></p>
-<p>First we need to obtain the <em>MOSAIC</em> source code. For analyzing publication data, we recommend downloading the latest stable version of the source code (<a class="reference external" href="http://usnistgov.github.io/mosaic/platforms.html">download source</a>). Alternatively, the latest development version can be downloaded from the <a class="reference external" href="https://github.com/usnistgov/mosaic">MOSAIC page on Github</a>. Here we will show you how to set up <em>MOSAIC</em> from the latest stable release:</p>
+<p>First we need to obtain the <em>MOSAIC</em> source code. For analyzing publication data, we recommend downloading the latest stable version of the source code (<a class="reference external" href="http://pages.nist.gov/mosaic/platforms.html">download source</a>). Alternatively, the latest development version can be downloaded from the <a class="reference external" href="https://github.com/usnistgov/mosaic">MOSAIC page on Github</a>. Here we will show you how to set up <em>MOSAIC</em> from the latest stable release:</p>
 <ol class="arabic simple">
-<li>Download the latest release (<a class="reference external" href="http://usnistgov.github.io/mosaic/platforms.html">download source</a>)</li>
+<li>Download the latest release (<a class="reference external" href="http://pages.nist.gov/mosaic/platforms.html">download source</a>)</li>
 <li>Create a directory for the project source. In this case we will create a directory called MOSAIC, located in <code class="docutils literal"><span class="pre">~/projects/</span></code>, where &#8216;~&#8217; is your home directory.</li>
 </ol>
 <div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">$</span> mkdir ~/projects/MOSAIC
@@ -358,7 +360,7 @@ requires Apple command line tools, but will directly prompt you to install it on
       
     </p>
     <p>
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.4.<br/>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.8.<br/>
     </p>
   </div>
 </footer> -->

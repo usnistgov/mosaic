@@ -1,34 +1,34 @@
 Event Processing
 =======================
 
-mosaic.adept2State module
+mosaic.process.adept2State module
 -------------------------------------------
 
-.. inheritance-diagram:: mosaic.adept2State
+.. inheritance-diagram:: mosaic.process.adept2State
    :parts: 2
 
-.. automodule:: mosaic.adept2State
+.. automodule:: mosaic.process.adept2State
     :members:
     :show-inheritance:
 
-mosaic.adept module
+mosaic.process.adept module
 -----------------------------------------
 
-.. inheritance-diagram:: mosaic.adept
+.. inheritance-diagram:: mosaic.process.adept
    :parts: 2
 
    
-.. automodule:: mosaic.adept
+.. automodule:: mosaic.process.adept
     :members:
     :show-inheritance:
 
-mosaic.cusumPlus module
+mosaic.process.cusumPlus module
 -----------------------------------------
 
-.. inheritance-diagram:: mosaic.cusumPlus
+.. inheritance-diagram:: mosaic.process.cusumPlus
    :parts: 2
 
    
-.. automodule:: mosaic.cusumPlus
+.. automodule:: mosaic.process.cusumPlus
     :members:
     :show-inheritance:

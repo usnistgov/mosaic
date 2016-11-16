@@ -5,18 +5,18 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>2. Data Processing Algorithms in MOSAIC &mdash; MOSAIC 1.2 documentation</title>
+    <title>2. Data Processing Algorithms in MOSAIC &#8212; MOSAIC 1.3 documentation</title>
     
     <link rel="stylesheet" href="../_static/basic.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="../_static/bootswatch-3.3.4/paper/bootstrap.min.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/bootswatch-3.3.6/paper/bootstrap.min.css" type="text/css" />
     <link rel="stylesheet" href="../_static/bootstrap-sphinx.css" type="text/css" />
     <link rel="stylesheet" href="../_static/style.css" type="text/css" />
     
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '1.2',
+        VERSION:     '1.3',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -28,10 +28,12 @@
     <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <script type="text/javascript" src="../_static/js/jquery-1.11.0.min.js"></script>
     <script type="text/javascript" src="../_static/js/jquery-fix.js"></script>
-    <script type="text/javascript" src="../_static/bootstrap-3.3.4/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../_static/bootstrap-3.3.6/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="../_static/bootstrap-sphinx.js"></script>
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
-    <link rel="top" title="MOSAIC 1.2 documentation" href="../index.html" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="top" title="MOSAIC 1.3 documentation" href="../index.html" />
     <link rel="next" title="3. Getting Started" href="GettingStarted.html" />
     <link rel="prev" title="1. Introduction" href="Introduction.html" />
 
@@ -43,7 +45,7 @@
 	<script type="text/javascript"
 		src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
 	</script>
-	<script type="text/javascript" id="_fed_an_js_tag" src="//www.nist.gov/js/federated-analytics.all.min.js?agency=NIST&subagency=github&pua=UA-42404149-54&yt=true&exts=ppsx,pps,f90,sch,rtf,wrl,txz,m1v,xlsm,msi,xsd,f,tif,eps,mpg,xml,pl,xlt,c">
+	<script type="text/javascript" id="_fed_an_js_tag" src="https://www.nist.gov/sites/default/files/js/federated-analytics.all.min.js?agency=NIST&subagency=github&pua=UA-42404149-54&yt=true&exts=ppsx,pps,f90,sch,rtf,wrl,txz,m1v,xlsm,msi,xsd,f,tif,eps,mpg,xml,pl,xlt,c">
     </script>	
 
 	<meta name="theme-color" content="#283593">
@@ -60,9 +62,9 @@
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </button>
-        <a class="navbar-brand" href="../index.html"><img src="../_static/icon_36.png">
+        <a class="navbar-brand" href="../index.html"><span><img src="../_static/icon_36.png"></span>
            </a>
-        <span class="navbar-text navbar-version pull-left"><b>1.2</b></span>
+        <span class="navbar-text navbar-version pull-left"><b>1.3</b></span>
       </div>
 
         <div class="collapse navbar-collapse nav-collapse">
@@ -143,11 +145,39 @@
 </div>
 <div class="section" id="algorithm-settings">
 <h3>2.1.1. Algorithm Settings<a class="headerlink" href="#algorithm-settings" title="Permalink to this headline">¶</a></h3>
-<div class="admonition error">
-<p class="first admonition-title">Error</p>
-<p>Unable to execute python code at stepResponse.rst:40:</p>
-<p class="last">No module named adept2State</p>
-</div>
+<blockquote>
+<div><p>Analyze an event that is characteristic of PEG blockades. This method includes system
+information in the analysis, specifically the filtering effects (throught the RC constant)
+of either amplifiers or the membrane/nanopore complex. The analysis generates several
+parameters that are stored as metadata including:</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li>Blockade depth: the ratio of the open channel current to the blocked current</li>
+<li>Residence time: the time the molecule spends inside the pore</li>
+<li>Tau: the RC constant of the response to a step input (e.g. the entry or exit of the molecule into or out of the nanopore).</li>
+</ol>
+</div></blockquote>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Keyword Args:</th><td class="field-body"><dl class="first docutils">
+<dt>In addition to <code class="xref py py-class docutils literal"><span class="pre">metaEventProcessor</span></code> args,</dt>
+<dd><ul class="first last simple">
+<li><cite>FitTol</cite> :            Tolerance value for the least squares algorithm that controls the convergence of the fit (Default: <cite>1e-7</cite>).</li>
+<li><cite>FitIters</cite> :          Maximum number of iterations before terminating the fit (Default: <cite>50000</cite>).</li>
+<li><cite>LinkRCConst</cite> :       When True, the RC constants associated with each state in the fit function are varied together. (Default: <cite>True</cite>)</li>
+</ul>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Errors:</th><td class="field-body"><p class="first last">When an event cannot be analyzed, the blockade depth, residence time and rise time are set to -1.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
 </div>
 <div class="section" id="metadata-output">
 <h3>2.1.2. Metadata Output<a class="headerlink" href="#metadata-output" title="Permalink to this headline">¶</a></h3>
@@ -173,13 +203,17 @@
 <p>EventEnd</p>
 <p>BlockDepth</p>
 <p>ResTime</p>
-<p>RCConstant</p>
+<p>RCConstant1</p>
+<p>RCConstant2</p>
 <p>AbsEventStart</p>
 <p>ReducedChiSquared</p>
+<p>ProcessTime</p>
 <p class="last">TimeSeries</p>
 </td>
 <td><p class="first">INTEGER</p>
 <p>TEXT</p>
+<p>REAL</p>
+<p>REAL</p>
 <p>REAL</p>
 <p>REAL</p>
 <p>REAL</p>
@@ -199,9 +233,11 @@
 <p>Event end in ms.</p>
 <p>BlockedCurrent/OpenChCurrent.</p>
 <p>EventEnd-EventStart in ms.</p>
-<p>System RC constant in ms.</p>
+<p>Downstroke RC constant in ms.</p>
+<p>Upstroke RC constant in ms.</p>
 <p>Global event start time in ms.</p>
 <p>Reduced Chi-squared of fit.</p>
+<p>Event processing time in ms.</p>
 <p class="last">(OPTIONAL) Event time-series.</p>
 </td>
 </tr>
@@ -220,11 +256,40 @@
 </div>
 <div class="section" id="id3">
 <h3>2.2.1. Algorithm Settings<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
-<div class="admonition error">
-<p class="first admonition-title">Error</p>
-<p>Unable to execute python code at multiState.rst:132:</p>
-<p class="last">No module named adept</p>
-</div>
+<blockquote>
+<div><p>Analyze a multi-step event that contains two or more states. This method includes system
+information in the analysis, specifically the filtering effects (through the RC constant)
+of either amplifiers or the membrane/nanopore complex. The analysis generates several
+parameters that are stored as metadata including:</p>
+<ol class="arabic simple">
+<li>Blockade depth: the ratio of the open channel current to the blocked current</li>
+<li>Residence time: the time the molecule spends inside the pore</li>
+<li>Tau: the RC constant  of the response to a step input (e.g. the entry or exit of the molecule into or out of the nanopore).</li>
+</ol>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Keyword Args:</th><td class="field-body"><dl class="first docutils">
+<dt>In addition to <code class="xref py py-class docutils literal"><span class="pre">metaEventProcessor</span></code> args,</dt>
+<dd><ul class="first last simple">
+<li><cite>StepSize</cite> :                  The multiple of the standard deviations considered significant to dtecting an event (default: 3.0).</li>
+<li><cite>MinStateLength</cite> :    minimum number of data points required to assign a state within an event (default: 4)</li>
+<li><cite>MaxEventLength</cite> :    maximum length (in data points) of events that will be processed (default: 10000)</li>
+<li><cite>FitTol</cite> :                    fit tolerance for convergence (default: 1.e-7)</li>
+<li><cite>FitIters</cite> :                  maximum fit iterations (default: 5000)</li>
+<li><cite>LinkRCConst</cite> :       When True, the RC constants associated with each state in the fit function are varied together. (Default: <cite>True</cite>)</li>
+</ul>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Errors:</th><td class="field-body"><p class="first last">When an event cannot be analyzed, all metadata are set to -1.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
 </div>
 <div class="section" id="id4">
 <h3>2.2.2. Metadata Output<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
@@ -251,10 +316,12 @@
 <p>EventStart</p>
 <p>EventEnd</p>
 <p>EventDelay</p>
+<p>StateResTime</p>
 <p>ResTime</p>
 <p>RCConstant</p>
 <p>AbsEventStart</p>
 <p>ReducedChiSquared</p>
+<p>ProcessTime</p>
 <p class="last">TimeSeries</p>
 </td>
 <td><p class="first">INTEGER</p>
@@ -266,7 +333,9 @@
 <p>REAL</p>
 <p>REAL</p>
 <p>REAL_LIST</p>
+<p>REAL_LIST</p>
 <p>REAL</p>
+<p>REAL_LIST</p>
 <p>REAL</p>
 <p>REAL</p>
 <p>REAL</p>
@@ -281,10 +350,12 @@
 <p>Event start in ms.</p>
 <p>Event end in ms.</p>
 <p>Start time of each state in ms.</p>
+<p>Residence time of each state in ms.</p>
 <p>EventEnd-EventStart in ms.</p>
 <p>System RC constant in ms.</p>
 <p>Global event start time in ms.</p>
 <p>Reduced Chi-squared of fit.</p>
+<p>Event processing time in ms.</p>
 <p class="last">(OPTIONAL) Event time-series.</p>
 </td>
 </tr>
@@ -332,8 +403,10 @@
 <p>EventStart</p>
 <p>EventEnd</p>
 <p>EventDelay</p>
+<p>StateResTime</p>
 <p>ResTime</p>
 <p>AbsEventStart</p>
+<p>ProcessTime</p>
 <p class="last">TimeSeries</p>
 </td>
 <td><p class="first">INTEGER</p>
@@ -345,6 +418,8 @@
 <p>REAL</p>
 <p>REAL</p>
 <p>REAL_LIST</p>
+<p>REAL_LIST</p>
+<p>REAL</p>
 <p>REAL</p>
 <p>REAL</p>
 <p class="last">REAL_LIST</p>
@@ -358,8 +433,10 @@
 <p>Event start in ms.</p>
 <p>Event end in ms.</p>
 <p>Start time of each state in ms.</p>
+<p>Residence time of each state in ms.</p>
 <p>EventEnd-EventStart in ms.</p>
 <p>Global event start time in ms.</p>
+<p>Event processing time in ms.</p>
 <p class="last">(OPTIONAL) Event time-series.</p>
 </td>
 </tr>
@@ -382,7 +459,7 @@
       
     </p>
     <p>
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.4.<br/>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.8.<br/>
     </p>
   </div>
 </footer> -->

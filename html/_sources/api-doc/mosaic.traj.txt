@@ -1,42 +1,42 @@
 Time-Series IO
 =======================
 
-mosaic.abfTrajIO module
+mosaic.trajio.abfTrajIO module
 --------------------------------
 
-.. inheritance-diagram:: mosaic.abfTrajIO
+.. inheritance-diagram:: mosaic.trajio.abfTrajIO
    :parts: 2
 
-.. automodule:: mosaic.abfTrajIO
+.. automodule:: mosaic.trajio.abfTrajIO
     :members:
     :show-inheritance:
 
 mosaic.qdfTrajIO module
 --------------------------------
 
-.. inheritance-diagram:: mosaic.qdfTrajIO
+.. inheritance-diagram:: mosaic.trajio.qdfTrajIO
    :parts: 2
 
-.. automodule:: mosaic.qdfTrajIO
+.. automodule:: mosaic.trajio.qdfTrajIO
     :members:
     :show-inheritance:
 
-mosaic.binTrajIO module
+mosaic.trajio.binTrajIO module
 --------------------------------
 
-.. inheritance-diagram:: mosaic.binTrajIO
+.. inheritance-diagram:: mosaic.trajio.binTrajIO
    :parts: 2
 
-.. automodule:: mosaic.binTrajIO
+.. automodule:: mosaic.trajio.binTrajIO
     :members:
     :show-inheritance:
 
 mosaic.tsvTrajIO module
 --------------------------------
 
-.. inheritance-diagram:: mosaic.tsvTrajIO
+.. inheritance-diagram:: mosaic.trajio.tsvTrajIO
    :parts: 2
    
-.. automodule:: mosaic.tsvTrajIO
+.. automodule:: mosaic.trajio.tsvTrajIO
     :members:
     :show-inheritance:

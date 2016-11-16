@@ -1,21 +1,21 @@
 Top-Level Interfaces
 =======================
 
-mosaic.SingleChannelAnalysis module
+mosaic.apps.SingleChannelAnalysis module
 --------------------------------------------
 
-.. automodule:: mosaic.SingleChannelAnalysis
+.. automodule:: mosaic.apps.SingleChannelAnalysis
     :members:
     :show-inheritance:
 
-mosaic.ConvertToCSV module
+mosaic.apps.ConvertTrajIO module
 --------------------------------------------
 
-.. automodule:: mosaic.ConvertToCSV
+.. automodule:: mosaic.apps.ConverTrajIO
     :members:
     :show-inheritance:
 
-    .. automethod:: mosaic.ConvertToCSV.ConvertToCSV._filename
-    .. automethod:: mosaic.ConvertToCSV.ConvertToCSV._creategenerator
+    .. automethod:: mosaic.apps.ConverTrajIO.ConverTrajIO._filename
+    .. automethod:: mosaic.apps.ConverTrajIO.ConverTrajIO._creategenerator
 
 

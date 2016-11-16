@@ -19,6 +19,6 @@
 .. _Homebrew: http://brew.sh/
 .. _mksqlite: http://sourceforge.net/projects/mksqlite/
 
-.. _download binaries: http://usnistgov.github.io/mosaic/platforms.html
-.. _download source: http://usnistgov.github.io/mosaic/platforms.html
+.. _download binaries: http://pages.nist.gov/mosaic/platforms.html
+.. _download source: http://pages.nist.gov/mosaic/platforms.html
 .. _MOSAIC page on Github: https://github.com/usnistgov/mosaic

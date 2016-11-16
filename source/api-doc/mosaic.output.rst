@@ -1,12 +1,12 @@
 Data Output
 =======================
 
-mosaic.sqlite3MDIO module
+mosaic.mdio.sqlite3MDIO module
 ----------------------------------
 
-.. inheritance-diagram:: mosaic.sqlite3MDIO
+.. inheritance-diagram:: mosaic.mdio.sqlite3MDIO
    :parts: 2
    
-.. automodule:: mosaic.sqlite3MDIO
+.. automodule:: mosaic.mdio.sqlite3MDIO
     :members:
     :show-inheritance:

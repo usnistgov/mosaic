@@ -1,12 +1,12 @@
 Event Partition and Segment
 =======================
 
-mosaic.eventSegment module
+mosaic.partition.eventSegment module
 -----------------------------------
 
-.. inheritance-diagram:: mosaic.eventSegment
+.. inheritance-diagram:: mosaic.partition.eventSegment
    :parts: 2
    
-.. automodule:: mosaic.eventSegment
+.. automodule:: mosaic.partition.eventSegment
 	:show-inheritance:
 	:members:
