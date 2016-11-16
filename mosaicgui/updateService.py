@@ -176,3 +176,5 @@ if __name__ == '__main__':
 	app = QtGui.QApplication(sys.argv)
 	u=updateService()	
 	u.CheckUpdate()
+	for k,v in u.updateInfoDict.iteritems():
+		print k, u._d(v)
