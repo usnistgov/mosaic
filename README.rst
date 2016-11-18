@@ -9,7 +9,7 @@ MOSAIC is a single molecule analysis toolbox that automatically decodes multi-st
 
 Nanometer-scale pores have demonstrated potential use in biotechnology applications, including DNA sequencing, single-molecule force spectroscopy, and single-molecule mass spectrometry. The data modeling and analysis methods implemented in MOSAIC allow for dramatic improvements in the quantification of molecular interactions with the channel in each of these applications.
 
-**If you use MOSAIC in your work, please cite:** `ACS Nano 2014, 8, 1547–1553.  <http://pubs.acs.org/doi/abs/10.1021/nn405761y>`_
+**If you use MOSAIC in your work, please cite:** `Analytical Chemistry 2016.  <http://pubs.acs.org/doi/abs/10.1021/acs.analchem.6b03725>`_ and `ACS Nano 2014, 8, 1547–1553.  <http://pubs.acs.org/doi/abs/10.1021/nn405761y>`_
 
 
 Installation
@@ -47,6 +47,7 @@ Change Log
 
 - Added a new MOSAIC examples repository that contains plotting scripts and Jupyter notebooks (https://github.com/usnistgov/mosaic-examples)
 
+- Updated Bessel fiter implementation to allow causal and non-causal filters.
 - Added the CUSUM+ algorithm (see pull requests #34, #43, #45, and #46)
 - Added the ability to read arbitrary binary files.
 - Renamed StepResponseAnalysis to ADEPT 2-state.
@@ -60,6 +61,7 @@ Change Log
 - Removed mosaicgui from PyPi. 'pip install mosaic-nist' only installs command line modules. 
 - Top level ConvertTrajIO supports binary and ASCII files.
 - Added Travis continous integration support.
+- [GUI] Added a binary update service for Windows and OS X.
 - [GUI] Added a table that displays fit parameters in the event viewer window.
 - [GUI] Added more descriptive fit errors.
 - [GUI] Added CUSUM+ support to MOSAIC GUI.

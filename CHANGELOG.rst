@@ -5,6 +5,7 @@ Change Log
 
 - Added a new MOSAIC examples repository that contains plotting scripts and Jupyter notebooks (https://github.com/usnistgov/mosaic-examples)
 
+- Updated Bessel fiter implementation to allow causal and non-causal filters.
 - Added the CUSUM+ algorithm (see pull requests #34, #43, #45, and #46)
 - Added the ability to read arbitrary binary files.
 - Renamed StepResponseAnalysis to ADEPT 2-state.
@@ -18,6 +19,7 @@ Change Log
 - Removed mosaicgui from PyPi. 'pip install mosaic-nist' only installs command line modules. 
 - Top level ConvertTrajIO supports binary and ASCII files.
 - Added Travis continous integration support.
+- [GUI] Added a binary update service for Windows and OS X.
 - [GUI] Added a table that displays fit parameters in the event viewer window.
 - [GUI] Added more descriptive fit errors.
 - [GUI] Added CUSUM+ support to MOSAIC GUI.
