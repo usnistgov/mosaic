@@ -160,7 +160,7 @@ setup(
 			'LICENSE.TXT'
 			],
 	install_requires=open('requirements.txt').read().splitlines(),
-	url='https://usnistgov.github.io/mosaic/',
+	url=mosaic.DocumentationURL,
 	license='LICENSE.txt',
 	description='A Modular Single-Molecule Analysis Interface.',
 	long_description=open('README.rst').read(),
