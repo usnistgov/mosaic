@@ -81,7 +81,7 @@ class updateService(object):
 				self.logger.info("No updates available.")
 				return False
 		except BaseException, err:
-			logger.exception(err)
+			self.logger.exception(err)
 			return False
 
 	def _downloadLink(self):
@@ -143,7 +143,7 @@ class updateService(object):
 
 			self.updateInfoDict=json.loads( self._d(stream.read()) )
 		except BaseException, err:
-			logger.exception(err)
+			self.logger.exception(err)
 
 	def _showUpdateAvailableDialog(self):
 		"""
