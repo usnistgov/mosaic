@@ -8,169 +8,169 @@
 </url>
 <url>
   <loc>https://pages.nist.gov/mosaic/download.html</loc>
-  <lastmod>2016-11-16</lastmod>
+  <lastmod>2016-11-29</lastmod>
   <changefreq>weekly</changefreq>
   <priority>1.0</priority>
 </url>
 <url>
   <loc>https://pages.nist.gov/mosaic/html/_modules/index.html</loc>
-  <lastmod>2016-11-16</lastmod>
+  <lastmod>2016-11-29</lastmod>
   <changefreq>weekly</changefreq>
   <priority>0.5</priority>
 </url>
 <url>
   <loc>https://pages.nist.gov/mosaic/html/_modules/mosaic/apps/SingleChannelAnalysis.html</loc>
-  <lastmod>2016-11-16</lastmod>
+  <lastmod>2016-11-29</lastmod>
   <changefreq>weekly</changefreq>
   <priority>0.5</priority>
 </url>
 <url>
   <loc>https://pages.nist.gov/mosaic/html/_modules/mosaic/filters/besselLowpassFilter.html</loc>
-  <lastmod>2016-11-16</lastmod>
+  <lastmod>2016-11-29</lastmod>
   <changefreq>weekly</changefreq>
   <priority>0.5</priority>
 </url>
 <url>
   <loc>https://pages.nist.gov/mosaic/html/_modules/mosaic/filters/convolutionFilter.html</loc>
-  <lastmod>2016-11-16</lastmod>
+  <lastmod>2016-11-29</lastmod>
   <changefreq>weekly</changefreq>
   <priority>0.5</priority>
 </url>
 <url>
   <loc>https://pages.nist.gov/mosaic/html/_modules/mosaic/filters/metaIOFilter.html</loc>
-  <lastmod>2016-11-16</lastmod>
+  <lastmod>2016-11-29</lastmod>
   <changefreq>weekly</changefreq>
   <priority>0.5</priority>
 </url>
 <url>
   <loc>https://pages.nist.gov/mosaic/html/_modules/mosaic/filters/waveletDenoiseFilter.html</loc>
-  <lastmod>2016-11-16</lastmod>
+  <lastmod>2016-11-29</lastmod>
   <changefreq>weekly</changefreq>
   <priority>0.5</priority>
 </url>
 <url>
   <loc>https://pages.nist.gov/mosaic/html/_modules/mosaic/mdio/metaMDIO.html</loc>
-  <lastmod>2016-11-16</lastmod>
+  <lastmod>2016-11-29</lastmod>
   <changefreq>weekly</changefreq>
   <priority>0.5</priority>
 </url>
 <url>
   <loc>https://pages.nist.gov/mosaic/html/_modules/mosaic/mdio/sqlite3MDIO.html</loc>
-  <lastmod>2016-11-16</lastmod>
+  <lastmod>2016-11-29</lastmod>
   <changefreq>weekly</changefreq>
   <priority>0.5</priority>
 </url>
 <url>
   <loc>https://pages.nist.gov/mosaic/html/_modules/mosaic/partition/eventSegment.html</loc>
-  <lastmod>2016-11-16</lastmod>
+  <lastmod>2016-11-29</lastmod>
   <changefreq>weekly</changefreq>
   <priority>0.5</priority>
 </url>
 <url>
   <loc>https://pages.nist.gov/mosaic/html/_modules/mosaic/partition/metaEventPartition.html</loc>
-  <lastmod>2016-11-16</lastmod>
+  <lastmod>2016-11-29</lastmod>
   <changefreq>weekly</changefreq>
   <priority>0.5</priority>
 </url>
 <url>
   <loc>https://pages.nist.gov/mosaic/html/_modules/mosaic/process/adept.html</loc>
-  <lastmod>2016-11-16</lastmod>
+  <lastmod>2016-11-29</lastmod>
   <changefreq>weekly</changefreq>
   <priority>0.5</priority>
 </url>
 <url>
   <loc>https://pages.nist.gov/mosaic/html/_modules/mosaic/process/adept2State.html</loc>
-  <lastmod>2016-11-16</lastmod>
+  <lastmod>2016-11-29</lastmod>
   <changefreq>weekly</changefreq>
   <priority>0.5</priority>
 </url>
 <url>
   <loc>https://pages.nist.gov/mosaic/html/_modules/mosaic/process/cusumPlus.html</loc>
-  <lastmod>2016-11-16</lastmod>
+  <lastmod>2016-11-29</lastmod>
   <changefreq>weekly</changefreq>
   <priority>0.5</priority>
 </url>
 <url>
   <loc>https://pages.nist.gov/mosaic/html/_modules/mosaic/process/metaEventProcessor.html</loc>
-  <lastmod>2016-11-16</lastmod>
+  <lastmod>2016-11-29</lastmod>
   <changefreq>weekly</changefreq>
   <priority>0.5</priority>
 </url>
 <url>
   <loc>https://pages.nist.gov/mosaic/html/_modules/mosaic/settings.html</loc>
-  <lastmod>2016-11-16</lastmod>
+  <lastmod>2016-11-29</lastmod>
   <changefreq>weekly</changefreq>
   <priority>0.5</priority>
 </url>
 <url>
   <loc>https://pages.nist.gov/mosaic/html/_modules/mosaic/trajio/abfTrajIO.html</loc>
-  <lastmod>2016-11-16</lastmod>
+  <lastmod>2016-11-29</lastmod>
   <changefreq>weekly</changefreq>
   <priority>0.5</priority>
 </url>
 <url>
   <loc>https://pages.nist.gov/mosaic/html/_modules/mosaic/trajio/binTrajIO.html</loc>
-  <lastmod>2016-11-16</lastmod>
+  <lastmod>2016-11-29</lastmod>
   <changefreq>weekly</changefreq>
   <priority>0.5</priority>
 </url>
 <url>
   <loc>https://pages.nist.gov/mosaic/html/_modules/mosaic/trajio/qdfTrajIO.html</loc>
-  <lastmod>2016-11-16</lastmod>
+  <lastmod>2016-11-29</lastmod>
   <changefreq>weekly</changefreq>
   <priority>0.5</priority>
 </url>
 <url>
   <loc>https://pages.nist.gov/mosaic/html/_modules/mosaic/trajio/tsvTrajIO.html</loc>
-  <lastmod>2016-11-16</lastmod>
+  <lastmod>2016-11-29</lastmod>
   <changefreq>weekly</changefreq>
   <priority>0.5</priority>
 </url>
 <url>
   <loc>https://pages.nist.gov/mosaic/html/_modules/mosaic/utilities/ionic_current_stats.html</loc>
-  <lastmod>2016-11-16</lastmod>
+  <lastmod>2016-11-29</lastmod>
   <changefreq>weekly</changefreq>
   <priority>0.5</priority>
 </url>
 <url>
   <loc>https://pages.nist.gov/mosaic/html/_modules/mosaic/utilities/mosaicLogFormat.html</loc>
-  <lastmod>2016-11-16</lastmod>
+  <lastmod>2016-11-29</lastmod>
   <changefreq>weekly</changefreq>
   <priority>0.5</priority>
 </url>
 <url>
   <loc>https://pages.nist.gov/mosaic/html/_modules/mosaic/utilities/mosaicLogging.html</loc>
-  <lastmod>2016-11-16</lastmod>
+  <lastmod>2016-11-29</lastmod>
   <changefreq>weekly</changefreq>
   <priority>0.5</priority>
 </url>
 <url>
   <loc>https://pages.nist.gov/mosaic/html/_modules/mosaic/utilities/mosaicTiming.html</loc>
-  <lastmod>2016-11-16</lastmod>
+  <lastmod>2016-11-29</lastmod>
   <changefreq>weekly</changefreq>
   <priority>0.5</priority>
 </url>
 <url>
   <loc>https://pages.nist.gov/mosaic/html/_modules/mosaic/utilities/util.html</loc>
-  <lastmod>2016-11-16</lastmod>
+  <lastmod>2016-11-29</lastmod>
   <changefreq>weekly</changefreq>
   <priority>0.5</priority>
 </url>
 <url>
   <loc>https://pages.nist.gov/mosaic/html/_modules/mosaicscripts/plots/contour.html</loc>
-  <lastmod>2016-11-16</lastmod>
+  <lastmod>2016-11-29</lastmod>
   <changefreq>weekly</changefreq>
   <priority>0.5</priority>
 </url>
 <url>
   <loc>https://pages.nist.gov/mosaic/html/_modules/mosaicscripts/plots/histogram.html</loc>
-  <lastmod>2016-11-16</lastmod>
+  <lastmod>2016-11-29</lastmod>
   <changefreq>weekly</changefreq>
   <priority>0.5</priority>
 </url>
 <url>
   <loc>https://pages.nist.gov/mosaic/html/_modules/mosaicscripts/plots/timeseries.html</loc>
-  <lastmod>2016-11-16</lastmod>
+  <lastmod>2016-11-29</lastmod>
   <changefreq>weekly</changefreq>
   <priority>0.5</priority>
 </url>
@@ -182,307 +182,307 @@
 </url>
 <url>
   <loc>https://pages.nist.gov/mosaic/html/api-doc/mosaic.filter.html</loc>
-  <lastmod>2016-11-16</lastmod>
+  <lastmod>2016-11-29</lastmod>
   <changefreq>weekly</changefreq>
   <priority>0.5</priority>
 </url>
 <url>
   <loc>https://pages.nist.gov/mosaic/html/api-doc/mosaic.html</loc>
-  <lastmod>2016-11-16</lastmod>
+  <lastmod>2016-11-29</lastmod>
   <changefreq>weekly</changefreq>
   <priority>0.5</priority>
 </url>
 <url>
   <loc>https://pages.nist.gov/mosaic/html/api-doc/mosaic.meta.html</loc>
-  <lastmod>2016-11-16</lastmod>
+  <lastmod>2016-11-29</lastmod>
   <changefreq>weekly</changefreq>
   <priority>0.5</priority>
 </url>
 <url>
   <loc>https://pages.nist.gov/mosaic/html/api-doc/mosaic.misc.html</loc>
-  <lastmod>2016-11-16</lastmod>
+  <lastmod>2016-11-29</lastmod>
   <changefreq>weekly</changefreq>
   <priority>0.5</priority>
 </url>
 <url>
   <loc>https://pages.nist.gov/mosaic/html/api-doc/mosaic.output.html</loc>
-  <lastmod>2016-11-16</lastmod>
+  <lastmod>2016-11-29</lastmod>
   <changefreq>weekly</changefreq>
   <priority>0.5</priority>
 </url>
 <url>
   <loc>https://pages.nist.gov/mosaic/html/api-doc/mosaic.partition.html</loc>
-  <lastmod>2016-11-16</lastmod>
+  <lastmod>2016-11-29</lastmod>
   <changefreq>weekly</changefreq>
   <priority>0.5</priority>
 </url>
 <url>
   <loc>https://pages.nist.gov/mosaic/html/api-doc/mosaic.processing.html</loc>
-  <lastmod>2016-11-16</lastmod>
+  <lastmod>2016-11-29</lastmod>
   <changefreq>weekly</changefreq>
   <priority>0.5</priority>
 </url>
 <url>
   <loc>https://pages.nist.gov/mosaic/html/api-doc/mosaic.traj.html</loc>
-  <lastmod>2016-11-16</lastmod>
+  <lastmod>2016-11-29</lastmod>
   <changefreq>weekly</changefreq>
   <priority>0.5</priority>
 </url>
 <url>
   <loc>https://pages.nist.gov/mosaic/html/api-doc/mosaicscripts.html</loc>
-  <lastmod>2016-11-16</lastmod>
+  <lastmod>2016-11-29</lastmod>
   <changefreq>weekly</changefreq>
   <priority>0.5</priority>
 </url>
 <url>
   <loc>https://pages.nist.gov/mosaic/html/doc/Addons.html</loc>
-  <lastmod>2016-11-16</lastmod>
+  <lastmod>2016-11-29</lastmod>
   <changefreq>weekly</changefreq>
   <priority>0.5</priority>
 </url>
 <url>
   <loc>https://pages.nist.gov/mosaic/html/doc/AdvancedAnalysis.html</loc>
-  <lastmod>2016-11-16</lastmod>
+  <lastmod>2016-11-29</lastmod>
   <changefreq>weekly</changefreq>
   <priority>0.5</priority>
 </url>
 <url>
   <loc>https://pages.nist.gov/mosaic/html/doc/Algorithms.html</loc>
-  <lastmod>2016-11-16</lastmod>
+  <lastmod>2016-11-29</lastmod>
   <changefreq>weekly</changefreq>
   <priority>0.5</priority>
 </url>
 <url>
   <loc>https://pages.nist.gov/mosaic/html/doc/aliases.html</loc>
-  <lastmod>2016-11-16</lastmod>
+  <lastmod>2016-11-29</lastmod>
   <changefreq>weekly</changefreq>
   <priority>0.5</priority>
 </url>
 <url>
   <loc>https://pages.nist.gov/mosaic/html/doc/apidocs.html</loc>
-  <lastmod>2016-11-16</lastmod>
+  <lastmod>2016-11-29</lastmod>
   <changefreq>weekly</changefreq>
   <priority>0.5</priority>
 </url>
 <url>
   <loc>https://pages.nist.gov/mosaic/html/doc/CaptureRate.html</loc>
-  <lastmod>2016-11-16</lastmod>
+  <lastmod>2016-11-29</lastmod>
   <changefreq>weekly</changefreq>
   <priority>0.5</priority>
 </url>
 <url>
   <loc>https://pages.nist.gov/mosaic/html/doc/ChangeLog.html</loc>
-  <lastmod>2016-11-16</lastmod>
+  <lastmod>2016-11-29</lastmod>
   <changefreq>weekly</changefreq>
   <priority>0.5</priority>
 </url>
 <url>
   <loc>https://pages.nist.gov/mosaic/html/doc/ContourPlots.html</loc>
-  <lastmod>2016-11-16</lastmod>
+  <lastmod>2016-11-29</lastmod>
   <changefreq>weekly</changefreq>
   <priority>0.5</priority>
 </url>
 <url>
   <loc>https://pages.nist.gov/mosaic/html/doc/cusumLevels.html</loc>
-  <lastmod>2016-11-16</lastmod>
+  <lastmod>2016-11-29</lastmod>
   <changefreq>weekly</changefreq>
   <priority>0.5</priority>
 </url>
 <url>
   <loc>https://pages.nist.gov/mosaic/html/doc/DatabaseStructure.html</loc>
-  <lastmod>2016-11-16</lastmod>
+  <lastmod>2016-11-29</lastmod>
   <changefreq>weekly</changefreq>
   <priority>0.5</priority>
 </url>
 <url>
   <loc>https://pages.nist.gov/mosaic/html/doc/Developers.html</loc>
-  <lastmod>2016-11-16</lastmod>
+  <lastmod>2016-11-29</lastmod>
   <changefreq>weekly</changefreq>
   <priority>0.5</priority>
 </url>
 <url>
   <loc>https://pages.nist.gov/mosaic/html/doc/DeveloperTools.html</loc>
-  <lastmod>2016-11-16</lastmod>
+  <lastmod>2016-11-29</lastmod>
   <changefreq>weekly</changefreq>
   <priority>0.5</priority>
 </url>
 <url>
   <loc>https://pages.nist.gov/mosaic/html/doc/Disclaimer.html</loc>
-  <lastmod>2016-11-16</lastmod>
+  <lastmod>2016-11-29</lastmod>
   <changefreq>weekly</changefreq>
   <priority>0.5</priority>
 </url>
 <url>
   <loc>https://pages.nist.gov/mosaic/html/doc/eventSegment.html</loc>
-  <lastmod>2016-11-16</lastmod>
+  <lastmod>2016-11-29</lastmod>
   <changefreq>weekly</changefreq>
   <priority>0.5</priority>
 </url>
 <url>
   <loc>https://pages.nist.gov/mosaic/html/doc/examples.html</loc>
-  <lastmod>2016-11-16</lastmod>
+  <lastmod>2016-11-29</lastmod>
   <changefreq>weekly</changefreq>
   <priority>0.5</priority>
 </url>
 <url>
   <loc>https://pages.nist.gov/mosaic/html/doc/Extend.html</loc>
-  <lastmod>2016-11-16</lastmod>
+  <lastmod>2016-11-29</lastmod>
   <changefreq>weekly</changefreq>
   <priority>0.5</priority>
 </url>
 <url>
   <loc>https://pages.nist.gov/mosaic/html/doc/GettingStarted.html</loc>
-  <lastmod>2016-11-16</lastmod>
+  <lastmod>2016-11-29</lastmod>
   <changefreq>weekly</changefreq>
   <priority>0.5</priority>
 </url>
 <url>
   <loc>https://pages.nist.gov/mosaic/html/doc/GraphicalInterface.html</loc>
-  <lastmod>2016-11-16</lastmod>
+  <lastmod>2016-11-29</lastmod>
   <changefreq>weekly</changefreq>
   <priority>0.5</priority>
 </url>
 <url>
   <loc>https://pages.nist.gov/mosaic/html/doc/HistogramPlots.html</loc>
-  <lastmod>2016-11-16</lastmod>
+  <lastmod>2016-11-29</lastmod>
   <changefreq>weekly</changefreq>
   <priority>0.5</priority>
 </url>
 <url>
   <loc>https://pages.nist.gov/mosaic/html/doc/Home.html</loc>
-  <lastmod>2016-11-16</lastmod>
+  <lastmod>2016-11-29</lastmod>
   <changefreq>weekly</changefreq>
   <priority>0.5</priority>
 </url>
 <url>
   <loc>https://pages.nist.gov/mosaic/html/doc/IgorAddon.html</loc>
-  <lastmod>2016-11-16</lastmod>
+  <lastmod>2016-11-29</lastmod>
   <changefreq>weekly</changefreq>
   <priority>0.5</priority>
 </url>
 <url>
   <loc>https://pages.nist.gov/mosaic/html/doc/InstallMosaicSource.html</loc>
-  <lastmod>2016-11-16</lastmod>
+  <lastmod>2016-11-29</lastmod>
   <changefreq>weekly</changefreq>
   <priority>0.5</priority>
 </url>
 <url>
   <loc>https://pages.nist.gov/mosaic/html/doc/InstallOSX.html</loc>
-  <lastmod>2016-11-16</lastmod>
+  <lastmod>2016-11-29</lastmod>
   <changefreq>weekly</changefreq>
   <priority>0.5</priority>
 </url>
 <url>
   <loc>https://pages.nist.gov/mosaic/html/doc/InstallUbuntu.html</loc>
-  <lastmod>2016-11-16</lastmod>
+  <lastmod>2016-11-29</lastmod>
   <changefreq>weekly</changefreq>
   <priority>0.5</priority>
 </url>
 <url>
   <loc>https://pages.nist.gov/mosaic/html/doc/InstallVirtualenv.html</loc>
-  <lastmod>2016-11-16</lastmod>
+  <lastmod>2016-11-29</lastmod>
   <changefreq>weekly</changefreq>
   <priority>0.5</priority>
 </url>
 <url>
   <loc>https://pages.nist.gov/mosaic/html/doc/Introduction.html</loc>
-  <lastmod>2016-11-16</lastmod>
+  <lastmod>2016-11-29</lastmod>
   <changefreq>weekly</changefreq>
   <priority>0.5</priority>
 </url>
 <url>
   <loc>https://pages.nist.gov/mosaic/html/doc/mailingList.html</loc>
-  <lastmod>2016-11-16</lastmod>
+  <lastmod>2016-11-29</lastmod>
   <changefreq>weekly</changefreq>
   <priority>0.5</priority>
 </url>
 <url>
   <loc>https://pages.nist.gov/mosaic/html/doc/MathematicaAddon.html</loc>
-  <lastmod>2016-11-16</lastmod>
+  <lastmod>2016-11-29</lastmod>
   <changefreq>weekly</changefreq>
   <priority>0.5</priority>
 </url>
 <url>
   <loc>https://pages.nist.gov/mosaic/html/doc/MatlabAddon.html</loc>
-  <lastmod>2016-11-16</lastmod>
+  <lastmod>2016-11-29</lastmod>
   <changefreq>weekly</changefreq>
   <priority>0.5</priority>
 </url>
 <url>
   <loc>https://pages.nist.gov/mosaic/html/doc/multiState.html</loc>
-  <lastmod>2016-11-16</lastmod>
+  <lastmod>2016-11-29</lastmod>
   <changefreq>weekly</changefreq>
   <priority>0.5</priority>
 </url>
 <url>
   <loc>https://pages.nist.gov/mosaic/html/doc/PublicationFigures.html</loc>
-  <lastmod>2016-11-16</lastmod>
+  <lastmod>2016-11-29</lastmod>
   <changefreq>weekly</changefreq>
   <priority>0.5</priority>
 </url>
 <url>
   <loc>https://pages.nist.gov/mosaic/html/doc/References.html</loc>
-  <lastmod>2016-11-16</lastmod>
+  <lastmod>2016-11-29</lastmod>
   <changefreq>weekly</changefreq>
   <priority>0.5</priority>
 </url>
 <url>
   <loc>https://pages.nist.gov/mosaic/html/doc/ScriptingandAdvancedFeatures.html</loc>
-  <lastmod>2016-11-16</lastmod>
+  <lastmod>2016-11-29</lastmod>
   <changefreq>weekly</changefreq>
   <priority>0.5</priority>
 </url>
 <url>
   <loc>https://pages.nist.gov/mosaic/html/doc/settingsFile.html</loc>
-  <lastmod>2016-11-16</lastmod>
+  <lastmod>2016-11-29</lastmod>
   <changefreq>weekly</changefreq>
   <priority>0.5</priority>
 </url>
 <url>
   <loc>https://pages.nist.gov/mosaic/html/doc/SMMSExample.html</loc>
-  <lastmod>2016-11-16</lastmod>
+  <lastmod>2016-11-29</lastmod>
   <changefreq>weekly</changefreq>
   <priority>0.5</priority>
 </url>
 <url>
   <loc>https://pages.nist.gov/mosaic/html/doc/stepResponse.html</loc>
-  <lastmod>2016-11-16</lastmod>
+  <lastmod>2016-11-29</lastmod>
   <changefreq>weekly</changefreq>
   <priority>0.5</priority>
 </url>
 <url>
   <loc>https://pages.nist.gov/mosaic/html/doc/TimeseriesPlots.html</loc>
-  <lastmod>2016-11-16</lastmod>
+  <lastmod>2016-11-29</lastmod>
   <changefreq>weekly</changefreq>
   <priority>0.5</priority>
 </url>
 <url>
   <loc>https://pages.nist.gov/mosaic/html/doc/WorkingWithSQLite.html</loc>
-  <lastmod>2016-11-16</lastmod>
+  <lastmod>2016-11-29</lastmod>
   <changefreq>weekly</changefreq>
   <priority>0.5</priority>
 </url>
 <url>
   <loc>https://pages.nist.gov/mosaic/html/genindex.html</loc>
-  <lastmod>2016-11-16</lastmod>
+  <lastmod>2016-11-29</lastmod>
   <changefreq>weekly</changefreq>
   <priority>0.5</priority>
 </url>
 <url>
   <loc>https://pages.nist.gov/mosaic/html/index.html</loc>
-  <lastmod>2016-11-16</lastmod>
+  <lastmod>2016-11-29</lastmod>
   <changefreq>weekly</changefreq>
   <priority>0.5</priority>
 </url>
 <url>
   <loc>https://pages.nist.gov/mosaic/html/py-modindex.html</loc>
-  <lastmod>2016-11-16</lastmod>
+  <lastmod>2016-11-29</lastmod>
   <changefreq>weekly</changefreq>
   <priority>0.5</priority>
 </url>
 <url>
   <loc>https://pages.nist.gov/mosaic/html/search.html</loc>
-  <lastmod>2016-11-16</lastmod>
+  <lastmod>2016-11-29</lastmod>
   <changefreq>weekly</changefreq>
   <priority>0.5</priority>
 </url>

@@ -278,8 +278,6 @@ latex_elements = {
           {\rm\Huge\py@HeaderFamily \@title \par}%
           {\em\LARGE\py@HeaderFamily \py@release\releaseinfo \par}
           \vfill
-          {\large\py@HeaderFamily \@author \par}
-          \vfill
           \includegraphics[scale=0.75]{nistlogo}\par
           %{\py@authoraddress \par}
           %\vfill

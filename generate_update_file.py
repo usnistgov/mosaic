@@ -1,7 +1,7 @@
 import mosaic
 import base64
 
-bld='f0e754c'
+bld='9977009'
 
 def enc(func):
 	def f(s):
@@ -30,7 +30,7 @@ def updateVers(verlist):
 updatejson="""{
 		"version" 			: '"""+base64.b64encode(str(mosaic.__version__))+"""',
 		"build"				: '"""+base64.b64encode(bld)+"""',
-		"update-versions"	: '"""+updateVers("""["1.0", "1.1", "1.2", "1.3b1", "1.3b2", "1.3b3"]""")+"""', 
+		"update-versions"	: '"""+updateVers("""["1.0", "1.1", "1.2", "1.3b1", "1.3b2", "1.3b3", "1.3"]""")+"""', 
 		"changelog"			: '"""+readfile('../CHANGELOG.rst')+"""',
 		"dl-w64"			: '"""+dl_win("https://github.com/usnistgov/mosaic/releases/download/v")+"""',	
 		"dl-osx"			: '"""+dl_osx("https://github.com/usnistgov/mosaic/releases/download/v")+"""'
