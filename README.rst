@@ -43,6 +43,10 @@ Report problems using our `issue tracker <https://github.com/usnistgov/mosaic/is
 Change Log
 =================================
 
+**v1.3.1**
+
+ - Bug fix release.
+ 
 **v1.3**
 
 - Added a new MOSAIC examples repository that contains plotting scripts and Jupyter notebooks (https://github.com/usnistgov/mosaic-examples)
