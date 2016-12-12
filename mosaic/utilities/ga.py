@@ -9,6 +9,7 @@ import httplib
 import urllib2
 import uuid
 import json
+import tempfile
 from base64 import b64decode as dec
 from os.path import expanduser, isfile
 import os
@@ -84,7 +85,9 @@ def _gaPost(eventType, content):
 
 def _gaCredentialCache():
 	logger=mlog.mosaicLogging().getLogger(name=__name__)
-	ga_cache=resource_path("mosaic/utilities/.ga")
+	# ga_cache=resource_path("mosaic/utilities/.ga")
+	ga_cache=format_path(tempfile.gettempdir()+'/.ga')
+	logger.debug(_d("Looking for GA cache {0}", ga_cache))
 
 	try:
 		gaModTime = datetime.fromtimestamp(os.stat(ga_cache).st_mtime)
@@ -117,10 +120,9 @@ def _getGASettings(ga_cache):
 
 		logger.debug(_d("Cached GA settings to {0}.", ga_cache))
 	except:
-		logger.debug(_d("An error occured when trying to cache GA settings."))
+		logger.exception(_d("An error occured when trying to cache GA settings."))
 
-ga_cache=resource_path("mosaic/utilities/.ga")
-_getGASettings(ga_cache)
+_gaCredentialCache()
 
 @registerRun
 def foo():

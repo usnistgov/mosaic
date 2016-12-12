@@ -949,6 +949,7 @@
      <string>Help</string>
     </property>
     <addaction name="actionAbout_MOSAIC"/>
+    <addaction name="actionCheck_for_Updates"/>
     <addaction name="actionAggregate_Usage"/>
     <addaction name="actionMOSAIC_Help"/>
    </widget>
@@ -1100,6 +1101,11 @@
    </property>
    <property name="text">
     <string>Anonymous Usage Information</string>
+   </property>
+  </action>
+  <action name="actionCheck_for_Updates">
+   <property name="text">
+    <string>Check for Updates</string>
    </property>
   </action>
  </widget>

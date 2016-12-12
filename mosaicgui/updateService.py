@@ -53,7 +53,7 @@ class updateService(object):
 		self.downloadFolder=tempfile.gettempdir()+path_separator()
 		self.CHUNKSIZE=8192
 
-	def CheckUpdate(self):
+	def CheckUpdate(self, parent=None, noUpdateDialog=False):
 		if sys.platform.startswith('linux'):
 			self.logger.info("Update service not supported on Linux.")
 			return False
@@ -67,7 +67,16 @@ class updateService(object):
 				if self._downloadUpdateFile(url):
 					self._openUpdateImage(url)
 					return True
-		return False
+		else:
+			if noUpdateDialog:
+				msgBox = QtGui.QMessageBox(parent=parent)
+				msgBox.setIconPixmap( QtGui.QPixmap(resource_path("icons/icon_100px.png")).scaled(50,50) )
+				msgBox.setText("You are up to date.")
+				msgBox.setInformativeText("v{0} ({1}) is the latest MOSAIC version.".format(mosaic.__version__, mosaic.__build__))
+				msgBox.addButton(QtGui.QMessageBox.Ok)
+				msgBox.exec_()
+
+			return False
 
 
 	def _checkUpdateAvailable(self):
