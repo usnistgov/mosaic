@@ -101,7 +101,7 @@ class settingsview(QtGui.QMainWindow):
 		QtCore.QObject.connect(self.partitionThresholdHorizontalSlider, QtCore.SIGNAL('valueChanged ( int )'), self.OnThresholdChange)
 
 		# Misc signals
-		QtCore.QObject.connect(self.advancedModeCheckBox, QtCore.SIGNAL('clicked(bool)'), self.OnAdvancedMode)
+		QtCore.QObject.connect(self.advancedModeButton, QtCore.SIGNAL('clicked()'), self.OnAdvancedMode)
 		QtCore.QObject.connect(self.writeEventsCheckBox, QtCore.SIGNAL('clicked(bool)'), self.OnWriteEvents)
 		QtCore.QObject.connect(self.parallelCheckBox, QtCore.SIGNAL('clicked(bool)'), self.OnParallelProcessing)
 		QtCore.QObject.connect(self.parallelCoresSpinBox, QtCore.SIGNAL('valueChanged ( int )'), self.OnParallelProcessing)
@@ -326,7 +326,7 @@ class settingsview(QtGui.QMainWindow):
 		self.parallelCheckBox.setEnabled(state)
 		self.parallelCoresSpinBox.setEnabled(state)
 		self.processingAlgorithmComboBox.setEnabled(state)
-		self.advancedModeCheckBox.setEnabled(state)
+		self.advancedModeButton.setEnabled(state)
 
 	def _setEnableDataSettingsWidgets(self, state):
 		self.processingAlgorithmComboBox.setEnabled(state)
@@ -570,25 +570,25 @@ class settingsview(QtGui.QMainWindow):
 
 		self.analysisDataModel["reserveNCPU"]=multiprocessing.cpu_count()-int(self.parallelCoresSpinBox.value())
 
-	def OnAdvancedMode(self, value):
-		if value:
-			if self.dataFilterDenoise:
-				fltr=self.analysisDataModel["FilterAlgorithm"]
-			else:
-				fltr=None
-
-			self.advancedSettingsDialog.updateSettingsString(
-					self.analysisDataModel.GenerateSettingsView(
-						eventPartitionAlgo=str(self.partitionAlgorithmComboBox.currentText()), 
-						eventProcessingAlgo=str(self.processingAlgorithmComboBox.currentText()),
-						dataFilterAlgo=fltr
-					)
-				)
-			self.advancedSettingsDialog.show()
-			self._setEnableSettingsWidgets(False)
+	def OnAdvancedMode(self):
+		# if value:
+		if self.dataFilterDenoise:
+			fltr=self.analysisDataModel["FilterAlgorithm"]
 		else:
-			self.advancedSettingsDialog.hide()
-			self._setEnableSettingsWidgets(True)
+			fltr=None
+
+		self.advancedSettingsDialog.updateSettingsString(
+				self.analysisDataModel.GenerateSettingsView(
+					eventPartitionAlgo=str(self.partitionAlgorithmComboBox.currentText()), 
+					eventProcessingAlgo=str(self.processingAlgorithmComboBox.currentText()),
+					dataFilterAlgo=fltr
+				)
+			)
+		self.advancedSettingsDialog.show()
+		self._setEnableSettingsWidgets(False)
+		# else:
+		# 	self.advancedSettingsDialog.hide()
+		# 	self._setEnableSettingsWidgets(True)
 
 	def OnProcessingAlgoChange(self, value):
 		self.analysisDataModel["ProcessingAlgorithm"]=value
@@ -612,8 +612,7 @@ class settingsview(QtGui.QMainWindow):
 
 	# Menu SLOTs
 	def OnAdvancedModeMenuAction(self):
-		self.advancedModeCheckBox.setChecked(True)
-		self.OnAdvancedMode(True)
+		self.OnAdvancedMode()
 
 	def OnShowStatisticsWindow(self):
 		self.statisticsView.show()
@@ -650,7 +649,6 @@ class settingsview(QtGui.QMainWindow):
 
 	def OnAdvancedModeCancel(self):
 		if not self.analysisRunning:
-			self.advancedModeCheckBox.setChecked(False)
 			self._setEnableSettingsWidgets(True)
 
 	def OnTrajDenoise(self, value):
@@ -717,7 +715,6 @@ class settingsview(QtGui.QMainWindow):
 			self._trajviewerdata()
 			self.trajViewerWindow.refreshPlot()
 
-			self.advancedModeCheckBox.setChecked(False)
 			self._setEnableSettingsWidgets(True)
 
 
