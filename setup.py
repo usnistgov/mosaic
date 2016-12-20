@@ -155,6 +155,7 @@ setup(
 			'data/SingleChan-0001.qdf',
 			'data/SingleChan-0001_state.txt',
 			'commit-hash',
+			'version-hash',
 			'requirements.txt',
 			'DISCLAIMER.TXT',
 			'LICENSE.TXT'
