@@ -1,7 +1,6 @@
 import subprocess
 from mosaic.utilities.resource_path import resource_path
 
-__version__="1.3.1"
 try:
 	__version__=subprocess.check_output(['git', 'describe', '--abbrev=0', '--tags'], stderr=subprocess.STDOUT).strip().lstrip('v')
 except:
