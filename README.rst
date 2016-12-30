@@ -1,6 +1,8 @@
 .. image:: https://travis-ci.org/usnistgov/mosaic.svg?branch=devel-1.0
     :target: https://travis-ci.org/usnistgov/mosaic
-    
+.. image:: https://badge.fury.io/gh/usnistgov%2Fmosaic.svg
+    :target: https://badge.fury.io/gh/usnistgov%2Fmosaic
+        
 MOSAIC: A modular single-molecule analysis interface
 =================================
 
