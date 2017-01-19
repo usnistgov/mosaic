@@ -25,6 +25,7 @@ def resource_path(filename):
 				"icon.png", 
 				"icons/icon_100px.png", 
 				"commit-hash", 
+				"version-hash", 
 				"icons/error-128.png", 
 				"icons/warning-128.png", 
 				"mosaicgui/highlight-spec/python.json", 

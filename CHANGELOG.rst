@@ -1,6 +1,12 @@
 Change Log
 ++++++++++++++++++++++++++++++++++++++++++
 
+
+**v1.3.2**
+
+ - Fixed event partiioning bugs.
+ - [GUI] UI tweaks.
+
 **v1.3.1**
 
  - Bug fix release.
