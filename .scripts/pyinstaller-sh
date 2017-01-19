@@ -4,9 +4,13 @@ plat=`uname`
 
 
 
-v1=$(<mosaic/_version.py)
-ver=`echo $v1 | cut -d= -f2 | cut -d\" -f2`
-build=`git rev-parse --short HEAD`
+# v1=$(<mosaic/_version.py)
+# ver=`echo $v1 | cut -d= -f2 | cut -d\" -f2`
+# ver=`git describe --abbrev=0 --tags | sed 's/v//g' | sed 's/\ //g'`
+# build=`git rev-parse --short HEAD`
+ver=`python -c 'import mosaic; print mosaic.__version__'`
+build=`python -c 'import mosaic; print mosaic.__build__'`
+
 read -d '' info1 <<-"EOF"
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
