@@ -1,4 +1,5 @@
 import mosaic
+from mosaic.utilities.resource_path import resource_path
 
 def GenerateTitle():
   return """
@@ -116,10 +117,14 @@ def GenerateTableFromVersion(baseurl, title, version, build, showBinaries=True):
   return tabsrc
 
 if __name__ == '__main__':
+  with open( resource_path('version-hash'), 'r' ) as f:
+      version=f.read().strip()
+
   url="https://github.com/usnistgov/mosaic/releases/download/v"
   vers=[
-    ("Version "+str(mosaic.__version__), str(mosaic.__version__), '.9977009', True),
-    ("Version 1.2", "1.3", ".f0e754c", False),
+    ("Version "+str(version), str(version), '.d88866c', True),
+    ("Version 1.3.1", "1.3.1", ".9977009", False),
+    ("Version 1.3", "1.3", ".f0e754c", False),
     ("Version 1.2", "1.2", "", False),
     ("Version 1.1", "1.1", "", False),
     ("Version 1.0", "1.0", "", False)
