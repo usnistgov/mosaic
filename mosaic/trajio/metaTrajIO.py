@@ -7,6 +7,7 @@
 	:License:	See LICENSE.TXT	
 	:ChangeLog:
 	.. line-block::
+		1/27/17 	AB 	Perform a lexical sort of input data files
 		9/13/15 	AB 	Updated logging to use mosaicLogFormat class
 		4/1/15 		AB 	Added a new property (DataLengthSec) to estimate the length of a data set.
 		3/28/15 	AB 	Optimized file read interface for improved large file support.
@@ -114,12 +115,12 @@ class metaTrajIO(object):
 			try:
 				if hasattr(self, 'dirname') and hasattr(self,'nfiles'):
 					# N files from a directory
-					self.dataFiles=glob.glob(format_path(str(self.dirname)+"/"+str(self.filter)))[:int(self.nfiles)]
+					self.dataFiles=sorted(glob.glob(format_path(str(self.dirname)+"/"+str(self.filter)))[:int(self.nfiles)])
 					delattr(self, 'dirname')
 					delattr(self, 'nfiles')
 				elif hasattr(self, 'dirname'):
 					# all files from a directory
-					self.dataFiles=glob.glob(format_path(str(self.dirname)+"/"+str(self.filter)))
+					self.dataFiles=sorted(glob.glob(format_path(str(self.dirname)+"/"+str(self.filter))))
 					delattr(self, 'dirname')
 				else:
 					raise IncompatibleArgumentsError("Missing arguments: 'dirname' or 'fnames' must be supplied to initialize {0}".format(type(self).__name__))
