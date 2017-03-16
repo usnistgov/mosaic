@@ -1,0 +1,21 @@
+<div layout="column" layout-align="center center">
+	<br>
+	<br>
+
+	<img height="100" width="100" src="static/img/icon.png" layout-padding>   
+
+	<h3>MOSAIC</h3>        
+
+	<p>Version: {{aboutFactory.about.ver}} ({{aboutFactory.about.build}})</p>
+	
+	<br>
+	<p>National Institute of Standards and Technology</p>
+
+	<table>
+		<tr>
+			<td><md-button class="md-primary" ng-click="showDevelopers()"><small>Developers<small></md-button></td>
+			<td><md-button class="md-primary" ng-click="showTermsOfUse()"><small>Terms of Use</small></md-button></td>
+		</tr>
+	</table>
+	<div layout="column" ng-if="AnalysisRunning" flex ng-include="'/static/partials/BackToAnalysisFAB.tmpl.html'"></div>
+</div>

@@ -1,0 +1,35 @@
+<!-- ng-controller="AppCtrl" -->
+<md-dialog aria-label="New Analysis" flex>
+	<form layout="column" ng-submit="answer('Update')" name="advancedSettingsForm">
+		<md-toolbar class="md-primary">
+			<div class="md-toolbar-tools">
+				<md-button class="md-icon-button" ng-click="cancel()">
+					<md-icon md-font-set="material-icons md-24">close</md-icon>
+				</md-button>
+				<h3><em>Advanced Analysis Settings</em></h3>
+				<span flex></span>
+			</div>
+		</md-toolbar>
+
+		<!-- <md-dialog-content style="max-width:800px;max-height:510px;"> -->
+		<md-dialog-content>
+			<md-content class="md-whiteframe" style="margin: 16px; padding: 16px">
+				<md-input-container class="md-block">
+					<!-- <label>Settings</label> -->
+					<!-- <div class="line-numbers">
+						<div ng-repeat="i in getNumber(number)">{{$index+1}}</div>
+					</div> -->
+					<!-- <div class="text-area"> -->
+						<textarea ng-model="model.analysisSettings" tabindex="0" style="color: #696969; font-size: 14px;" aria-label="Advanced Settings"></textarea>
+					<!-- </div> -->
+				</md-input-container>
+			</md-content>
+	</form>
+	</md-dialog-content>
+	<md-dialog-actions layout="row">
+		<p md-colors="{color:'warn'}" style="font-size: 12px;">{{model.errorString}}</p>
+		<span flex></span>
+		<md-progress-circular md-mode="indeterminate" class="md-primary" md-diameter="24" ng-if="model.validatingSettings"></md-progress-circular>
+		<md-button class="md-primary" type="submit" ng-click="submitSettings()">Update</md-button>
+	</md-dialog-actions>
+</md-dialog>

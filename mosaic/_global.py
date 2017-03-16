@@ -7,3 +7,7 @@ CodeProfiling='summary'	# Either 'summary' to print a summary at the end of a ru
 LogProperties=False		# Log all class properties defined with mosaic_property.
 LogSizeBytes=int(2<<20) # 2 MB
 DocumentationURL='https://pages.nist.gov/mosaic/'
+
+WebServerPort=5000
+WebServerDataLocation='/Users/arvind/Research/Experiments/AnalysisTools/ReferenceData/'
+# WebServerDataLocation='/Users/arvind/Research/Experiments/Nanoclusters/NewAnalysis/Calibration/' #PW9O34-Acetylcholine/'

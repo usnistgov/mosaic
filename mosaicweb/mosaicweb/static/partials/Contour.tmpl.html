@@ -1,0 +1,36 @@
+<br>
+<div layout="row" layout-align="space-around center" layout-wrap>
+	<div flex="80" class="md-whiteframe" ng-bind-html="contourPlot.contour"></div>
+
+	<div flex>
+		<h4>X-scale</h4>
+		<md-radio-group ng-model="bdXScale"class="md-primary">
+
+			<md-radio-button value="Linear" >Linear</md-radio-button>
+			<md-radio-button value="Log">Log</md-radio-button>
+
+		</md-radio-group>
+
+		<h4>Y-scale</h4>
+		<md-radio-group ng-model="bdYScale" class="md-primary">
+
+			<md-radio-button value="Linear">Linear</md-radio-button>
+			<md-radio-button value="Log">Log</md-radio-button>
+
+		</md-radio-group>
+	</div>					
+</div>
+
+<div flex class="md-whiteframe" layout-align="space-between center">
+	<div layout="row">
+		<md-input-container class="md-block" flex="80">
+			<label>Query</label>
+			<input type="text" ng-model="bdQuery">
+		</md-input-container>
+		<span flex="5"></span>
+		<md-input-container class="md-block" flex="10">
+			<label>Bins</label>
+			<input type="number"  ng-model="bdBins">
+		</md-input-container>
+	</div>	
+</div>

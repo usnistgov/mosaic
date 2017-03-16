@@ -1,0 +1,27 @@
+<md-dialog aria-label="Developers" flex="30">
+	<form>
+		<md-toolbar class="md-primary">
+			<div class="md-toolbar-tools">
+				<md-button class="md-icon-button" ng-click="cancel()">
+					<md-icon md-font-set="material-icons md-24">close</md-icon>
+				</md-button>
+				<h3 class="md-primary"><em>MOSAIC Developers</em></h3>
+				<span flex></span>
+			</div>
+		</md-toolbar>
+		<md-dialog-content style="max-width:800px;max-height:810px;">
+			<md-list-item ng-repeat="developer in developers" class="md-2-line">
+				<span flex='5'></span>
+				<img ng-src="{{developer.face}}?20" class="md-avatar" alt="{{developer.name}}" />
+				<div class="md-list-item-text">
+					<h3>{{ developer.name }}</h3>
+					<p><em>{{ developer.institution }}</em></p>
+				</div>
+				<span flex='30'></span>
+				<md-button class="md-icon-button" ng-hide="developer.email===''" ng-model="developer.email">
+					<md-icon md-font-set="material-icons md-24">email</md-icon>
+				</md-button>
+			</md-list-item>		
+		</md-dialog-content>
+	</form>
+</md-dialog>

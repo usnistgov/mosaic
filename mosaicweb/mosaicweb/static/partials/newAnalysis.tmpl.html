@@ -1,0 +1,225 @@
+<!-- ng-controller="AppCtrl" -->
+<md-dialog aria-label="New Analysis" flex-gt-md="40" flex="50">
+<!-- ng-submit="startAnalysis()"  -->
+	<form layout="column" name="newAnalysisForm">
+		<md-toolbar class="md-primary">
+			<div class="md-toolbar-tools">
+				<md-button class="md-icon-button" ng-click="cancel()">
+					<md-icon md-font-set="material-icons md-24">close</md-icon>
+				</md-button>
+				<h3><em>Setup a New Analysis</em></h3>
+				<span flex></span>
+			</div>
+		</md-toolbar>
+		<md-button class="md-fab md-warn md-fab-top-right" style="position:fixed !important; padding:16px;" ng-click="updateControls()" ng-if="model.requireControlUpdate">
+			<md-tooltip md-direction="left">Apply Settings</md-tooltip>
+			<md-icon md-font-set="material-icons md-24">check</md-icon>
+		</md-button>
+
+		<div class="md-whiteframe" layout="column" layout-align="center center" style="padding:56px" ng-if="!model.modelInit">
+			<md-progress-circular md-mode="indeterminate" class="md-primary" md-diameter="48"></md-progress-circular>
+		</div>
+		<!-- <md-dialog-content style="max-width:800px;max-height:510px;"> -->
+		<md-dialog-content>
+			<md-content layout="column" layout-align="center center" style="margin: 4px; padding:4px; background: transparent" ng-if="model.modelInit">
+				<plotly plotly-data="model.trajPlot.data" plotly-layout="model.trajPlot.layout" plotly-options="model.trajPlot.options"></plotly>
+			</md-content>
+
+			<md-content class="md-whiteframe" style="margin: 16px; padding:16px">
+				<div layout="row">
+					<md-input-container style="width:45%;">
+						<label>Partition Algorithm</label>
+						<md-select ng-model="model.selectedPartAlgoType" md-selected-text="getPartAlgoType()">
+							<md-optgroup label="Partition Algorithms">
+								<md-option ng-value="partAlgoType" ng-repeat="partAlgoType in model.partAlgoTypes">{{partAlgoType}}</md-option>
+							</md-optgroup>
+						</md-select>
+					</md-input-container>
+					
+					<span flex="5"></span>
+
+					<md-input-container style="width:35%;">
+						<label>Block Size</label>
+						<!-- ng-model-options="{ updateOn: 'blur', allowInvalid: false}"  -->
+						<input required type="number" max="3"  min="0.0" step="0.01" ng-model="model.analysisSettings.eventSegment.blockSizeSec" 
+							name="blockSize" ng-disabled="model.controlsUpdating"
+							ng-model-options="{ updateOn: 'blur', allowInvalid: false}">
+						<div ng-messages="newAnalysisForm.blockSize.$error" multiple md-auto-hide="false">
+							<div ng-message="required">
+								Block Size is not valid.
+							</div>
+
+							<div ng-message="min">
+								Block Size must be positive.
+							</div>
+
+							<div ng-message="max">
+								Block Size cannot exceed 3<em>s</em>.
+							</div>
+						</div>
+					</md-input-container>
+					<md-icon md-font-set="regular-font">s</md-icon>
+					<span flex="35"></span>
+				</div>
+
+				<md-slider-container>
+					<span flex>Threshold</span>
+					<span flex="5"></span>
+					<md-slider required ng-model="model.currThresholdpA" ng-model-options="{ debounce: 100 }" min="0" max="{{model.currMeanDisplay}}" step="0.01" aria-label="threshold" value="100" id="thr-slider" class="md-primary" flex>
+					</md-slider>
+					
+					<span flex="5"></span>
+
+					<md-input-container flex="20">
+						<input required type="number" min="0.0" step="0.01" max="{{model.currMeanDisplay}}" ng-model="model.currThresholdpA" ng-model-options="{ debounce: 100 }" aria-label="threshold" aria-controls="thr-slider" id="thr-slider" name="currThreshold">
+						<div ng-messages="newAnalysisForm.currThreshold.$error" multiple md-auto-hide="false">
+							<div ng-message="required">
+								A current threshold is required.
+							</div>
+							<div ng-message="min">
+								Threshold must be positive.
+							</div>
+							<div ng-message="max">
+								Threshold cannot exceed the mean current.
+							</div>
+						</div>
+					</md-input-container>
+					<md-icon md-font-set="regular-font">pA</md-icon>
+				</md-slider-container>
+
+				<div layout="row">
+					<md-input-container>
+						<label>&#x2329;i<sub>0</sub>&#x232A;</label>
+						 <!-- ng-model-options="{ updateOn: 'blur', allowInvalid: false}" -->
+						<input required type="number" min="0.0" step="0.01" ng-model="model.currMeanDisplay" name="currMean" ng-disabled="model.currAuto">
+						<div ng-messages="newAnalysisForm.currMean.$error" multiple md-auto-hide="false">
+							<div ng-message="required">
+								You must enter a valid mean current.
+							</div>
+
+							<div ng-message="min">
+								The mean current must be positive.
+							</div>
+						</div>
+					</md-input-container>
+					<md-icon md-font-set="regular-font">pA</md-icon>
+
+					<span flex="5"></span>
+
+					<md-input-container>
+						<label>&#x3C3;<sub>i<sub>0</sub></sub></label>
+						<!-- ng-model-options="{ updateOn: 'blur', allowInvalid: false}"  -->
+						<input required type="number" min="0.0" step="0.01" ng-model="model.currSigmaDisplay" name="currSigma" ng-disabled="model.currAuto">
+						<div ng-messages="newAnalysisForm.currSigma.$error" multiple md-auto-hide="false">
+							<div ng-message="required">
+								You must enter a valid standard deviation.
+							</div>
+
+							<div ng-message="min">
+								The standard deviation must be positive.
+							</div>
+						</div>
+					</md-input-container>
+					<md-icon md-font-set="regular-font">pA</md-icon>
+
+					<md-switch class="md-primary" md-no-ink aria-label="Automatically estimate baseline current" ng-model="model.currAuto" ng-change="model.toggleCurrAuto()">
+						Auto
+					</md-switch>
+
+				</div>
+			</md-content>
+
+			<md-content class="md-whiteframe" style="margin: 16px; padding:16px">
+				<div layout="row">
+					<md-input-container style="width:25%;">
+						<label>File Type</label>
+						<md-select ng-model="model.selectedFileType" md-selected-text="getFileType()">
+							<md-optgroup label="File Types">
+								<md-option ng-value="ftype" ng-repeat="ftype in model.ftypes">{{ftype}}</md-option>
+							</md-optgroup>
+						</md-select>
+					</md-input-container>
+					<span flex="5"></span>
+					<md-input-container style="width:20%;">
+						<label>DC Offset</label>
+						<!-- ng-model-options="{ updateOn: 'blur', allowInvalid: false}"  -->
+						<input type="number" step="0.1" ng-model="model.dcOffset" ng-disabled="model.controlsUpdating">
+					</md-input-container>
+					<md-icon md-font-set="regular-font">pA</md-icon>
+					<span flex="40"></span>
+				</div>
+
+				<div layout="row">
+					<md-input-container>
+						<label>Start</label>
+						<!-- ng-model-options="{ updateOn: 'blur', allowInvalid: false}"  -->
+						<input type="number" min="0" step="0.01" ng-model="model.start" name="start" ng-disabled="model.controlsUpdating">
+						<div ng-messages="newAnalysisForm.start.$error" multiple md-auto-hide="false">
+							<div ng-message="min">
+								Start time cannot be negative.
+							</div>
+							<div ng-message="max">
+								Start time exceeds the time-series length.
+							</div>
+						</div>
+					</md-input-container>
+					<md-icon md-font-set="regular-font">s</md-icon>
+					<span flex="5"></span>
+					<md-input-container>
+						<label>End</label>
+						<!-- ng-model-options="{ updateOn: 'blur', allowInvalid: false}"  -->
+						<input type="number" step="0.01" min="{{model.start}}" ng-model="model.end" name="end" ng-disabled="model.controlsUpdating">
+						<div ng-messages="newAnalysisForm.end.$error" multiple md-auto-hide="false">
+							<div ng-message="min">
+								The end time cannot preceed the start time of {{model.analysisSettings.start}} s.
+							</div>
+						</div>
+					</md-input-container>
+					<md-icon md-font-set="regular-font">s</md-icon>
+				</div>
+
+			</md-content>
+
+			<md-content class="md-whiteframe" style="margin: 16px; padding:16px">
+				<div layout="row">
+					<md-input-container style="width:40%;">
+						<label>Processing Algorithm</label>
+						<md-select ng-model="model.selectedProcAlgoType" md-selected-text="getProcAlgoType()">
+							<md-optgroup label="Processing Algorithms">
+								<md-option ng-value="procAlgoType" ng-repeat="procAlgoType in model.procAlgoTypes">{{procAlgoType}}</md-option>
+							</md-optgroup>
+						</md-select>
+					</md-input-container>
+					
+					<span flex="5"></span>
+					
+					<md-input-container ng-if="(model.selectedProcAlgoType=='ADEPT' || model.selectedProcAlgoType=='ADEPT 2-State') && model.controlEnabled" flex>
+						<label>Fit Tolerance</label>
+						<input type="text" ng-model="model.analysisSettings.fitTolerance" name="fitTolerance">
+					</md-input-container>
+
+					<span flex="5"></span>
+
+					<md-checkbox class="md-primary md-align-top-left" ng-model="model.analysisSettings.linkRCConstants" aria-label="Link RC Constants" ng-if="(model.selectedProcAlgoType=='ADEPT' || model.selectedProcAlgoType=='ADEPT 2-State') && model.controlEnabled" flex>
+						Link RC Constants
+					</md-checkbox>
+				</div>
+
+				<md-switch class="md-primary" md-no-ink aria-label="Save Events to Database" ng-model="model.writeEventTS">
+					Save Events to Database
+				</md-switch>
+			</md-content>
+		</form>
+	</md-dialog-content>
+	<md-dialog-actions layout="row">
+		<md-button type="button" id="advancedButton" ng-click="showAdvancedSettings()" ng-disabled="formDisabled()">
+			Advanced
+		</md-button>
+		<span flex></span>
+		<md-progress-circular md-mode="indeterminate" class="md-primary" md-diameter="24" ng-if="model.controlsUpdating"></md-progress-circular>
+		<!-- <md-button ng-click="cancel()">
+			Cancel
+		</md-button> -->
+		<md-button class="md-primary" type="submit" ng-click="answer('StartAnalysis')" ng-disabled="formDisabled()">Start Analysis</md-button>
+	</md-dialog-actions>
+</md-dialog>

@@ -1,0 +1,84 @@
+<md-content layout="column" class="md-padding md-whiteframe" ng-if="model.pageError"
+	layout-align="center center" flex ng-cloak>
+		<span flex>
+			<md-icon md-font-set="material-icons md-48" style="font-size: 128px; padding: 10%" flex>
+				error
+			</md-icon>
+		</span>
+		<span flex>An error occured</span>
+		<md-button class="md-primary" type="button"
+			ng-click="" style="padding:20px;">
+			Retry
+		</md-button>
+</md-content>
+
+<md-content layout="column" class="md-padding" ng-if="!model.pageError"
+	flex-gt-sm="80" flex-offset-gt-sm="10" flex-gt-md="60" flex-offset-gt-md="20" ng-cloak>
+	<md-button class="md-fab md-warn md-fab-bottom-right" style="position:fixed !important; padding:16px;" ng-click="updateControls()" ng-if="model.requireControlUpdate">
+		<md-tooltip md-direction="left">Apply Changes</md-tooltip>
+		<md-icon md-font-set="material-icons md-24">check</md-icon>
+	</md-button>
+
+	<div layout="column" class="md-whiteframe-z2 content-wrapper md-padding" flex="100">
+		<div layout="row" flex layout-align="start center">
+			<span flex="40" style="color:#696969;">Analysis Control</span>
+			<span flex-gt-sm="grow" flex> </span>
+			<p flex="40" style="color: #696969;"><small><em>Events Processed:</em> {{model.analysisPlot.stats.eventsProcessed}}</small></p>
+			<md-progress-circular md-mode="indeterminate" class="md-primary" md-diameter="20" ng-if="model.AnalysisRunning" ></md-progress-circular>
+			<md-button class="md-icon-button" aria-label="Analysis Control" ng-hide="model.showAnalysisControl" ng-click="model.toggleAnalysisControlFlag()">
+				<md-icon md-font-set="material-icons md-24">expand_more</md-icon>
+			</md-button>
+			<md-button class="md-icon-button" aria-label="Analysis Control" ng-show="model.showAnalysisControl" ng-click="model.toggleAnalysisControlFlag()">
+				<md-icon md-font-set="material-icons md-24">expand_less</md-icon>
+			</md-button>
+		</div>
+		<div layout="row" layout-align="start start">
+			<div layout="row" flex-gt-sm="30" layout-align="start center" flex="40">
+				<md-button class="md-icon-button" aria-label="Analysis Log" ng-click="showEventViewer($event)" ng-if="model.showAnalysisControl">
+					<md-tooltip md-direction="top">Explore Event Fits</md-tooltip>
+					<md-icon md-font-set="material-icons md-24">explore</md-icon>
+				</md-button>
+				<md-button class="md-icon-button" aria-label="Analysis Log" ng-click="showAnalysisLog($event)" ng-if="model.showAnalysisControl">
+					<md-tooltip md-direction="top">Analysis Log</md-tooltip>
+					<md-icon md-font-set="material-icons md-24">description</md-icon>
+				</md-button>
+				<!-- ng-click="showNewAnalysisSettings($event)" -->
+				<md-button ng-disabled="true" class="md-icon-button" aria-label="Analysis Settings" ng-if="model.showAnalysisControl">
+					<md-tooltip md-direction="top">Analysis Settings</md-tooltip>
+					<md-icon md-font-set="material-icons md-24">settings</md-icon>
+				</md-button>
+			</div>
+			<span flex></span>
+			<!-- flex="40" flex-gt-xs="35" flex-gt-sm="30" flex-gt-md="25" -->
+			<md-button class="md-warn" type="button"
+				ng-click="model.stopAnalysis()" ng-if="model.showAnalysisControl && model.AnalysisRunning">
+				Stop Analysis
+			</md-button>
+		</div>
+		<section ng-if="model.showAnalysisControl">
+			<md-subheader class="md-primary">Statistics</md-subheader>
+			<div layout="row" layout-align="start center">
+				<p flex style="color: #696969;" class="md-padding"><small><em>Capture Rate:</em> {{model.analysisPlot.stats.captureRate}} s<sup>-1</sup></small></p>
+				<!-- <span flex-gt-sm="5"></span> -->
+				<p flex style="color: #696969;" class="md-padding"><small><em>Error Rate:</em> {{model.analysisPlot.stats.errorRate}} %</small></p>
+				<!-- <span flex-gt-sm="5"></span> -->
+				<md-button class="md-mini md-primary" type="button"
+					ng-click="" ng-if="model.showAnalysisControl" ng-disabled="true">
+					<md-tooltip md-direction="right">Show additional analysis statistics</md-tooltip>
+					<small>More</small>
+				</md-button>
+				<span flex></span>
+			</div>
+		</section>
+	</div>
+	<br/>
+	<md-tabs md-dynamic-height class="histTabs md-whiteframe-z2 md-padding">
+		<md-tab label="Histogram">
+			<div class="md-padding" layout="column" flex ng-include="'/static/partials/Histogram.tmpl.html'"></div>
+		</md-tab>
+		<md-tab label="Contour" ng-disabled="true">
+			<div class="md-padding" layout="column" flex ng-include="'/static/partials/Contour.tmpl.html'"></div>
+		</md-tab>
+	</md-tabs>
+	<br>
+</md-content>

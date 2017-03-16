@@ -1,0 +1,30 @@
+<md-dialog aria-label="Analysis Log" flex="30">
+	<form>
+		<md-toolbar class="md-primary">
+			<div class="md-toolbar-tools">
+				<md-button class="md-icon-button" ng-click="cancel()">
+					<md-icon md-font-set="material-icons md-24">close</md-icon>
+				</md-button>
+				<h3><em>Event Viewer ({{eventNumber}}/10000)</em></h3>
+				<span flex></span>
+			</div>
+		</md-toolbar>
+		<md-dialog-content style="max-width:800px;max-height:810px;">
+			<div flex layout="column" layout-align="center center">
+				<img width='100%' src='/static/img/contour.png'>
+				<div flex="50" layout="row">
+					<md-button class="md-icon-button" ng-click="eventBack()">
+						<md-icon md-font-set="material-icons md-24">arrow_back</md-icon>
+					</md-button>
+					<md-input-container md-block style="max-width: 50px; align: center">
+						<label>Event</label>
+						<input type="number" id="" name="" ng-model="eventNumber">
+					</md-input-container>
+					<md-button class="md-icon-button" ng-click="eventForward()">
+						<md-icon md-font-set="material-icons md-24">arrow_forward</md-icon>
+					</md-button>
+				</div>
+			</div>
+		</md-dialog-content>
+	</form>
+</md-dialog>

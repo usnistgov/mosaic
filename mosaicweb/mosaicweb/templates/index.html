@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+    	<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta name="description" content="MOSAIC">
+		<meta name="author" content="Arvind Balijepalli">
+
+		<link rel="icon" href="static/img/favicon.ico">
+
+		<title>MOSAIC</title>
+
+		<!-- <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.1/angular-material.min.css"> -->
+		<link rel="stylesheet" href="/static/css/angular-material.min.css">
+
+		<link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Roboto:200,300,400,400italic'>
+		<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+
+		<link rel="stylesheet" href="static/css/style.css">
+    </head>
+
+    <body ng-app="mosaicApp" ng-controller="AppCtrl">
+		<md-toolbar md-scroll-shrink ng-if="true" class="md-whiteframe-z4" layout-align="center center" ng-cloak>
+			<div class="md-toolbar-tools">
+				<!-- <md-button 
+					class="md-icon-button" aria-label="Back" 
+					ng-click="pageBack()" 
+					ng-hide="location.path() ==== '/'">
+					
+					<md-icon md-font-set="material-icons md-24">arrow_back</md-icon>
+				</md-button> -->
+
+				<!-- <a href="/#/"><h1 flex md-truncate><em>MOSAIC</em></h1></a> -->
+				<md-button md-no-ink ng-href="/#/" class="md-accent">MOSAIC</md-button>
+				<h2 flex md-truncate><em> </em></h2>
+				
+				<md-button class="md-icon-button" href="https://pages.nist.gov/mosaic/html/" target="_blank">
+					<md-tooltip md-direction="left">MOSAIC Documentation</md-tooltip>
+					<md-icon md-font-set="material-icons md-24">help_outline</md-icon>
+				</md-button>
+
+				<!-- <md-button class="md-icon-button" ng-if="AnalysisRunning" aria-label="Stop Analysis" ng-click="stopAnalysis()">
+					<md-tooltip md-direction="left">Stop Analysis</md-tooltip>
+					<md-icon md-font-set="material-icons md-24">stop</md-icon>
+				</md-button> -->
+				<!-- <md-progress-circular md-mode="indeterminate" class="md-accent" md-diameter="20" ng-if="AnalysisRunning" ></md-progress-circular> -->
+			
+				<md-menu>
+					<md-button ng-click="$mdOpenMenu()" class="md-icon-button" aria-label="Overflow">
+						<md-icon md-font-set="material-icons md-24">more_vert</md-icon>
+					</md-button>
+					<md-menu-content width="4">
+						<md-menu-item ng-click="$mdMenu.hide()">
+							<md-button aria-label="SQuestions" ng-href="mailto:mosaic@nist.gov">
+								<md-icon md-font-set="material-icons md-24">email</md-icon>
+								<p class="md-primary">Ask a Question</p>
+							</md-button>
+						</md-menu-item>
+						<md-menu-item ng-click="$mdMenu.hide()">
+							<md-button href="https://github.com/usnistgov/mosaic/issues" target="_blank">
+								<md-icon md-font-set="material-icons md-24">bug_report</md-icon>
+								<p class="md-primary">Report a Bug</p>
+							</md-button>
+						</md-menu-item>
+						<md-menu-item ng-click="$mdMenu.hide()">
+							<md-button ng-click="aboutMosaic()">
+								<md-icon md-font-set="material-icons md-24">info</md-icon>
+						    	<p class="md-primary">About</p>
+							</md-button>
+						</md-menu-item>
+					</md-menu-content>
+				</md-menu>
+			</div>
+		</md-toolbar>
+		<!-- <md-progress-linear ng-if="AnalysisRunning" class="md-accent" md-mode="indeterminate"></md-progress-linear> -->
+		<br>
+
+		<div flex class='md-padding'>
+			<div ng-view ng-cloak></div>
+		</div>
+
+		<!-- // <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script> -->
+		<!-- <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.1/angular-sanitize.min.js"></script> -->
+
+
+		<script src="/static/js/libs/angular.min.js"></script>
+		<script src="/static/js/libs/angular-animate.min.js"></script>
+
+		<script src="/static/js/libs/angular-route.min.js"></script>
+		<script src="/static/js/libs/angular-aria.min.js"></script>
+		<script src="/static/js/libs/angular-messages.min.js"></script>
+		
+		<!-- <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.1/angular.min.js"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.1/angular-animate.min.js"></script>
+
+		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.1/angular-route.min.js"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.1/angular-aria.min.js"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.1/angular-messages.min.js"></script> -->
+
+		<!-- Angular Material Library -->
+		<!-- <script src="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.1/angular-material.min.js"></script>
+		<script src="https://cdn.plot.ly/plotly-latest.min.js"></script> -->
+
+		<script src="/static/js/libs/angular-material.min.js"></script>
+		<script src="/static/js/libs/plotly-latest.min.js"></script>
+		
+		<script src="/static/js/angular-plotly.js"></script>
+		
+		<script src="/static/js/app.js"></script>
+		<script src="/static/js/aboutCtrl.js"></script>
+		<script src="/static/js/analysisCtrl.js"></script>
+		<script src="/static/js/analysisSetupCtrl.js"></script>
+		<script src="/static/js/advancedSettingsCtrl.js"></script>
+		<script src="/static/js/fileListingCtrl.js"></script>
+    </body>
+</html>
