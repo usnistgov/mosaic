@@ -121,6 +121,7 @@ class mosaicAnalysis:
 			if float(self.analysisSettingsDict["eventSegment"]["meanOpenCurr"])==-1. or float(self.analysisSettingsDict["eventSegment"]["sdOpenCurr"])==-1.:
 				mu=self.returnMessageJSON["currMeanAuto"]
 				sigma=self.returnMessageJSON["currSigmaAuto"]
+
 			else:
 				mu=round(float(self.analysisSettingsDict["eventSegment"]["meanOpenCurr"]),3)
 				sigma=round(float(self.analysisSettingsDict["eventSegment"]["sdOpenCurr"]),3)
@@ -147,7 +148,6 @@ class mosaicAnalysis:
 						]
 			dat['layout']=plotlyWrapper.plotlyLayout("TimeSeriesLayout")
 			dat['options']=plotlyWrapper.plotlyOptions()
-
 
 			self.returnMessageJSON['trajPlot']=dat
 		except:
@@ -191,8 +191,8 @@ class mosaicAnalysis:
 		for k in ["start", "dcOffset"]:
 			newSettings[fileType][k]=float(newSettings[fileType][k])
 
-		pp=pprint.PrettyPrinter(indent=4)
-		pp.pprint(newSettings)
+		# pp=pprint.PrettyPrinter(indent=4)
+		# pp.pprint(newSettings)
 
 		self.analysisSettingsDict=newSettings
 
@@ -213,112 +213,3 @@ class mosaicAnalysis:
 			"abfTrajIO":	abf.abfTrajIO,
 			"binTrajIO":	bin.binTrajIO	
 		}
-
-if __name__ == '__main__':
-	ma=mosaicAnalysis(s, "/Users/arvind/Research/Experiments/AnalysisTools/ReferenceData/m40_0916_RbClPEG/")
-
-	ma.setupAnalysis()
-
-	print ma.returnMessageJSON
-
-def _trajPlot(settingsDict, datPath):
-	s=settingsDict
-
-	retMsg={'warning': ''}
-	dat={}
-
-	try:
-		ebsSettings=EBSStateFileDict.EBSStateFileDict(glob.glob(datPath+'/*.txt')[0])
-
-		Rfb=float(ebsSettings['FB Resistance'])
-		Cfb=float(ebsSettings['FB Capacitance'])
-	except:
-		retMsg['warning']="Rfb and Cfb values were not found for QDF data."
-		Rfb=0.
-		Cfb=0.
-
-	q=qdf.qdfTrajIO(dirname=datPath, filter='*.qdf', Rfb=Rfb, Cfb=Cfb)
-	Fs=q.FsHz
-
-	blkSize=float(s['eventSegment']['blockSizeSec'])
-	currThreshold=float(s['eventSegment']['eventThreshold'])
-	dcOffset=float(s['qdfTrajIO']['dcOffset'])
-	start=float(s['qdfTrajIO']['start'])
-	saveToDisk=bool(s['eventSegment']['writeEventTS'])
-
-	for n in range(0, int( float(start)/float(blkSize) )):
-		q.popdata(int(blkSize*Fs))
-	q.popdata(int( float(start)%float(blkSize)*Fs ))
-
-	ydat=(-1.*q.popdata(int(blkSize*Fs))) - dcOffset
-	xdat=np.arange(start, start+blkSize, 1/float(Fs))
-
-	mu, sigma = OpenCurrentDist(ydat, 0.5)
-	currThr=abs(mu)-currThreshold*sigma
-
-	
-	#time-series
-	trace1={};
-	trace1['x']=list(xdat)
-	trace1['y']=list(ydat)
-	trace1['mode']='scatter'
-	trace1['line']= { 'color': 'rgb(40, 53, 147)', 'width': '1' }
-	trace1['name']='ionic current'
-
-	trace2={};
-	trace2['x']=[start, start+blkSize]
-	trace2['y']=[currThr, currThr]
-	trace2['mode']='scatter'
-	trace2['line']= { 'color': 'rgb(255, 80, 77)', 'width': '2' }
-	trace2['name']='ionic current threshold'
-
-	trace3={};
-	trace3['x']=[start, start+blkSize]
-	trace3['y']=[mu, mu]
-	trace3['mode']='scatter'
-	trace3['line']= { 'color': 'rgb(120, 120, 120)', 'width': '2', 'dash': 'dash' }
-	trace3['name']='mean current'
-
-	#hist
-	# trace4={};
-	# trace4['x']=list([ random.gauss(mu, sigma) for i in range(len(np.arange(0, mu, 0.1))) ])
-	# trace4['y']=list(np.arange(0, mu, 0.1))
-	# trace4['mode']='scatter'
-	# trace4['line']= { 'color': 'rgb(40, 53, 147)', 'width': '1' }
-	# trace4['xaxis']='x2'
- #  	trace4['yaxis']='y'
-
-	layout={}
-	# layout['title']='Blockade Depth Histogram'
-	layout['xaxis']= { 'title': 't (s)', 'domain': '[0, 0.75]' }
-	layout['yaxis']= { 'title': 'i (pA)'} # , 'domain': '[0, 1]'
-	# layout['xaxis4']= { 'title': 'counts', 'domain': '[0.85, 1]'}
-	# layout['yaxis2']= { 'domain': '[0, 1]'}
-	layout['paper_bgcolor']='rgba(0,0,0,0)'
-	layout['plot_bgcolor']='rgba(0,0,0,0)'
-	layout['margin']={'l':'50', 'r':'50', 't':'0', 'b':'50'}
-	layout['showlegend']=False
-	layout['autosize']=True
-	layout['height']=300
-	layout['side']='right'
-
-
-	dat['data']=[trace1, trace2, trace3]
-	# dat['data']=[trace1, trace4]
-	dat['layout']=layout
-	dat['options']={'displayLogo': False}
-	
-	retMsg['trajPlot']=dat
-	retMsg['blockSize']=blkSize
-	retMsg['currMeanAuto']=round(mu, 3)
-	retMsg['currSigmaAuto']=round(sigma, 3)
-	retMsg['currThreshold']=round(currThr, 2)
-	retMsg['start']=start
-	retMsg['saveToDisk']=saveToDisk
-
-	retMsg['fileType']='QDF'
-
-	retMsg['settingsString']=s
-
-	return retMsg
-

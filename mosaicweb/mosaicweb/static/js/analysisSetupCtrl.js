@@ -13,8 +13,21 @@ angular.module('mosaicApp')
 		factory.ftypes = ["BIN", "ABF", "QDF"];
 		factory.selectedFileType = "BIN";
 
-		factory.procAlgoTypes = ["ADEPT", "ADEPT 2-State", "CUSUM+"];
-		factory.selectedProcAlgoType = "ADEPT";
+		factory.procAlgoTypes = [
+			{
+				name: "ADEPT",
+				algorithm: "adept"
+			}, 
+			{
+				name: "ADEPT 2-State",
+				algorithm: "adept2State"
+			}, 
+			{
+				name: "CUSUM+",
+				algorithm: "cusumPlus"
+			}
+		];
+		factory.selectedProcAlgoType = factory.procAlgoTypes[0];
 
 		factory.partAlgoTypes = ["Current Threshold"];
 		factory.selectedPartAlgoType = "Current Threshold";
@@ -46,31 +59,46 @@ angular.module('mosaicApp')
 		factory.serverError = false;
 		factory.requireControlUpdate = false;
 
-		factory.post = function(params) {
+		factory.post = function(url, params) {
 			var deferred = $q.defer();
 
 			var results = $http({
 				method  : 'POST',
-				url     : '/new-analysis',
+				url     : String(url),
 				data    : JSON.stringify(params), 
 				headers : { 'Content-Type': 'application/json; charset=utf-8' }
 			})
 			.then(function (response, status) {	// success
-				factory.trajPlot=response.data.trajPlot;
-				factory.trajPlotOriginalCurrent = factory.trajPlot.data[0].y;
+				console.log(response.data);
 
-				factory.currMeanAuto=response.data.currMeanAuto;
-				factory.currSigmaAuto=response.data.currSigmaAuto;
-				factory.selectedFileType=response.data.fileType;
+				if (response.data.respondingURL=='new-analysis') {
+					factory.trajPlot=response.data.trajPlot;
+					factory.trajPlotOriginalCurrent = factory.trajPlot.data[0].y;
 
-				factory.analysisSettings=angular.fromJson(response.data.settingsString);
+					factory.currMeanAuto=response.data.currMeanAuto;
+					factory.currSigmaAuto=response.data.currSigmaAuto;
+					factory.selectedFileType=response.data.fileType;
 
-				factory.updateLocals();
+					factory.analysisSettings=angular.fromJson(response.data.settingsString);
 
-				if (response.data.warning != '') {
-					factory.showErrorToast("WARNING: "+response.data.warning);
+					factory.procAlgorithmFromSettings()
+
+					factory.updateLocals();
+
+					if (response.data.warning != '') {
+						factory.showErrorToast("WARNING: "+response.data.warning);
+					};
+					// factory.settingsString=response.data.settingsString;
+				} else if (response.data.respondingURL=='processing-algorithm') {
+					var data = response.data;
+
+					for (var section in factory.analysisSettings) {
+						if ((['adept', 'adept2State', 'cusumPlus'].indexOf(section) != -1)) {
+							delete factory.analysisSettings[section];
+							factory.analysisSettings[data.procAlgorithmSectionName]=data.procAlgorithm;
+						}
+					}
 				};
-				// factory.settingsString=response.data.settingsString;
 
 				factory.controlsUpdating = false;
 				factory.serverError = false;
@@ -83,9 +111,9 @@ angular.module('mosaicApp')
 
 				factory.errorString = error.data.errType+": "+error.data.errSummary;
 
-				if (error.data.errType == 'EmptyDataPipeError') {
+				if (error.data.errType=='EmptyDataPipeError') {
 					factory.showErrorToast("ERROR: Decrease the value of the Start field.");
-				} else if (error.data.errType == 'FileNotFoundError') {
+				} else if (error.data.errType=='FileNotFoundError') {
 					factory.showErrorToast("ERROR: No files found in '"+factory.dataPath+"'");
 				};
 				
@@ -101,7 +129,17 @@ angular.module('mosaicApp')
 		};
 
 		factory.init = function() {
-			factory.post({});
+			factory.post("/new-analysis", {});
+		};
+
+		factory.procAlgorithmFromSettings = function() {
+			if (factory.analysisSettings.hasOwnProperty('adept')) {
+				factory.selectedProcAlgoType=factory.procAlgoTypes[0]
+			} else if (factory.analysisSettings.hasOwnProperty('adept2State')) {
+				factory.selectedProcAlgoType=factory.procAlgoTypes[1]
+			} else if (factory.analysisSettings.hasOwnProperty('cusumPlus')) {
+				factory.selectedProcAlgoType=factory.procAlgoTypes[2]
+			};
 		};
 
 		factory.arrayOffset = function(arr, offset) {
@@ -137,6 +175,7 @@ angular.module('mosaicApp')
 			factory.updateCurrAuto();
 			factory.updateCurrThresholdpA();
 			factory.updateTrajIO();
+			factory.procAlgorithmFromSettings();
 
 			factory.writeEventTS=factory.analysisSettings.eventSegment.writeEventTS ? true : false;
 		};
@@ -243,7 +282,14 @@ angular.module('mosaicApp')
 				$scope.model.requireControlUpdate=true;
 			};
 		});
-		
+		$scope.$watch('newAnalysisForm.selectedProcAlgoType.$pristine', function() {
+				$scope.model.post('processing-algorithm',
+					{
+						procAlgorithm: $scope.model.selectedProcAlgoType.algorithm
+					}
+				);
+				$scope.newAnalysisForm.$setPristine();
+		});		
 		$scope.$watch('model.currThresholdpA', function() {
 			if ($scope.newAnalysisForm.blockSize.$valid && !$scope.model.controlsUpdating) {
 				$scope.model.trajPlot.data[1].y=[$scope.model.currThresholdpA, $scope.model.currThresholdpA];
@@ -287,7 +333,7 @@ angular.module('mosaicApp')
 
 		$scope.getProcAlgoType = function() {
 			if ($scope.model.selectedProcAlgoType !== undefined) {
-				return $scope.model.selectedProcAlgoType;
+				return $scope.model.selectedProcAlgoType.name;
 			} else {
 				return "Select a processing algorithm";
 			}
@@ -324,18 +370,13 @@ angular.module('mosaicApp')
 		};
 
 		$scope.updateControls = function() {
-			// $scope.model.post({
-			// 	'blockSize': $scope.model.analysisSettings.blockSize,
-			// 	'currThreshold': $scope.model.analysisSettings.currThreshold,
-			// 	'dcOffset': $scope.model.analysisSettings.dcOffset,
-			// 	'start': $scope.model.analysisSettings.start
-			// });
-
 			$scope.model.reconcileSettings();
-			$scope.model.post({
-				'settingsString': JSON.stringify($scope.model.analysisSettings),
-				'dataPath': $scope.model.dataPath
-			}).then(function(response) {
+			$scope.model.post("/new-analysis",
+				{
+					'settingsString': JSON.stringify($scope.model.analysisSettings),
+					'dataPath': $scope.model.dataPath
+				}
+			).then(function(response) {
 				$scope.newAnalysisForm.start.$setValidity("max", true);
 			}, function(error) {
 				if (error.data.errType = 'EmptyDataPipeError') {

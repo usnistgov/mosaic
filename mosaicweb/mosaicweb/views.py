@@ -5,6 +5,7 @@ from mosaic.utilities.sqlQuery import query
 from mosaic.utilities.analysis import caprate
 from mosaicweb.mosaicAnalysis import mosaicAnalysis
 from mosaic.trajio.metaTrajIO import EmptyDataPipeError, FileNotFoundError
+import mosaic.settings as settings
 
 import pprint
 import time
@@ -12,7 +13,10 @@ import random
 import json
 import glob
 import os
+import logging
 import numpy as np
+
+logger=logging.getLogger()
 
 @app.route("/")
 def index():
@@ -20,7 +24,7 @@ def index():
 
 @app.route('/about', methods=['POST'])
 def about():
-	return jsonify(ver=mosaic.__version__, build=mosaic.__build__), 200
+	return jsonify(ver=mosaic.__version__, build=mosaic.__build__, uiver='1.0.0', uibuild='58cbed0'), 200
 
 @app.route('/histogram', methods=['POST'])
 def histogram():
@@ -29,7 +33,7 @@ def histogram():
 	params = dict(request.get_json())
 
 	# time.sleep(3)
-	return jsonify( **_histPlot() ), 200
+	return jsonify( respondingURL="histogram", **_histPlot() ), 200
 
 @app.route('/validate-settings', methods=['POST'])
 def validateSettings():
@@ -40,9 +44,25 @@ def validateSettings():
 
 		jsonSettings = json.loads(analysisSettings)
 
-		return jsonify( status="OK" ), 200
+		return jsonify( respondingURL="validate-settings", status="OK" ), 200
 	except ValueError, err:
-		return jsonify( errType='ValueError', errSummary="Parse error", errText=str(err) ), 500
+		return jsonify( respondingURL="validate-settings", errType='ValueError', errSummary="Parse error", errText=str(err) ), 500
+
+@app.route('/processing-algorithm', methods=['POST'])
+def processingAlgorithm():
+	try:
+			defaultSettings=eval(settings.__settings__)
+			params = dict(request.get_json())
+
+			procAlgorithmSectionName=params["procAlgorithm"]
+
+			return jsonify(
+					respondingURL='processing-algorithm',
+					procAlgorithmSectionName=procAlgorithmSectionName,
+					procAlgorithm=defaultSettings[procAlgorithmSectionName]
+				), 200
+	except:
+		return jsonify( respondingURL='processing-algorithm', errType='UnknownAlgorithmError', errSummary="Data Processing Algorithm not found.", errText="Data Processing Algorithm not found." ), 500
 
 @app.route('/new-analysis', methods=['POST'])
 def newAnalysis():
@@ -62,19 +82,16 @@ def newAnalysis():
 		# pp = pprint.PrettyPrinter(indent=4)
 		# pp.pprint(s)
 		blkSize=float(params.get('blockSize', -1))
-		if blkSize!=-1: s['eventSegment']['blockSizeSec']=blkSize
-
 		start=float(params.get('start', -1))
-		if start!=-1: s['qdfTrajIO']['start']=start
-
-		# return jsonify( **_trajPlot(s, dataPath) ), 200
-
+	
 		ma=mosaicAnalysis.mosaicAnalysis(s, dataPath, defaultSettings)
-		return jsonify( **ma.setupAnalysis() ), 200
+		temp=ma.setupAnalysis() 
+
+		return jsonify(respondingURL='new-analysis', **temp), 200
 	except EmptyDataPipeError, err:
-		return jsonify( errType='EmptyDataPipeError', errSummary="End of data.", errText=str(err) ), 500
+		return jsonify( respondingURL='new-analysis', errType='EmptyDataPipeError', errSummary="End of data.", errText=str(err) ), 500
 	except FileNotFoundError, err:
-		return jsonify( errType='FileNotFoundError', errSummary="Files not found.", errText=str(err) ), 500
+		return jsonify( respondingURL='new-analysis', errType='FileNotFoundError', errSummary="Files not found.", errText=str(err) ), 500
 
 @app.route('/list-data-folders', methods=['POST'])
 def listDataFolders():
@@ -98,7 +115,7 @@ def listDataFolders():
 
 			folderList.append(itemAttr)
 
-	return jsonify( level=level+'/', dataFolders=folderList )
+	return jsonify( respondingURL='list-data-folders', level=level+'/', dataFolders=folderList )
 
 def _folderDesc(item):
 	nqdf = len(glob.glob(item+'/*.qdf'))

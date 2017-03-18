@@ -103,8 +103,8 @@ angular.module('mosaicApp', ['ngRoute', 'ngMaterial', 'ngMessages', 'ngAnimate',
 			dlg
 			.then(function(response) {
 				analysisSetupFactory.dataPath=response.filename.relpath;
-				
-				var setupInit = analysisSetupFactory.post({
+
+				var setupInit = analysisSetupFactory.post("/new-analysis", {
 									dataPath: analysisSetupFactory.dataPath
 								});
 

@@ -25,7 +25,7 @@ angular.module('mosaicApp')
 			factory.developers = [
 					{ 'name': 'Arvind Balijepalli', 'institution': 'NIST', 'email': '', 'face': '/static/img/face.gif' },
 					{ 'name': 'Kyle Briggs', 'institution': 'Univeristy of Ottawa', 'email': '', 'face': '/static/img/face.gif' },
-					{ 'name': 'Jacob Forstater', 'institution': 'NIST','email': '', 'face': '/static/img/face.gif' },
+					{ 'name': 'Jacob Forstater', 'institution': '','email': '', 'face': '/static/img/face.gif' },
 					{ 'name': 'Canute Vaz', 'institution': '', 'email': '', 'face': '/static/img/face.gif' }
 				];
 

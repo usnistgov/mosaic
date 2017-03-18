@@ -133,7 +133,7 @@
 				<div layout="row">
 					<md-input-container style="width:25%;">
 						<label>File Type</label>
-						<md-select ng-model="model.selectedFileType" md-selected-text="getFileType()">
+						<md-select ng-model="model.selectedFileType" md-selected-text="getFileType()" ng-disabled="true">
 							<md-optgroup label="File Types">
 								<md-option ng-value="ftype" ng-repeat="ftype in model.ftypes">{{ftype}}</md-option>
 							</md-optgroup>
@@ -152,8 +152,7 @@
 				<div layout="row">
 					<md-input-container>
 						<label>Start</label>
-						<!-- ng-model-options="{ updateOn: 'blur', allowInvalid: false}"  -->
-						<input type="number" min="0" step="0.01" ng-model="model.start" name="start" ng-disabled="model.controlsUpdating">
+						<input type="number" min="0" step="0.01" ng-model="model.start" name="start" ng-disabled="model.controlsUpdating" ng-model-options="{ updateOn: 'blur', allowInvalid: false}">
 						<div ng-messages="newAnalysisForm.start.$error" multiple md-auto-hide="false">
 							<div ng-message="min">
 								Start time cannot be negative.
@@ -167,8 +166,7 @@
 					<span flex="5"></span>
 					<md-input-container>
 						<label>End</label>
-						<!-- ng-model-options="{ updateOn: 'blur', allowInvalid: false}"  -->
-						<input type="number" step="0.01" min="{{model.start}}" ng-model="model.end" name="end" ng-disabled="model.controlsUpdating">
+						<input type="number" step="0.01" min="{{model.start}}" ng-model="model.end" name="end" ng-disabled="model.controlsUpdating" ng-model-options="{ updateOn: 'blur', allowInvalid: false}">
 						<div ng-messages="newAnalysisForm.end.$error" multiple md-auto-hide="false">
 							<div ng-message="min">
 								The end time cannot preceed the start time of {{model.analysisSettings.start}} s.
@@ -184,9 +182,9 @@
 				<div layout="row">
 					<md-input-container style="width:40%;">
 						<label>Processing Algorithm</label>
-						<md-select ng-model="model.selectedProcAlgoType" md-selected-text="getProcAlgoType()">
+						<md-select ng-model="model.selectedProcAlgoType" name="selectedProcAlgoType" md-selected-text="getProcAlgoType()">
 							<md-optgroup label="Processing Algorithms">
-								<md-option ng-value="procAlgoType" ng-repeat="procAlgoType in model.procAlgoTypes">{{procAlgoType}}</md-option>
+								<md-option ng-value="procAlgoType" ng-repeat="procAlgoType in model.procAlgoTypes">{{procAlgoType.name}}</md-option>
 							</md-optgroup>
 						</md-select>
 					</md-input-container>

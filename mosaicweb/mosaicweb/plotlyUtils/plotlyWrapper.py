@@ -10,7 +10,6 @@ class plotlyTrace(dict):
 			self['x']=xdat
 			self['y']=ydat
 			self.update(plotlyTrace.traceConfig[traceType])
-
 		except KeyError, err:
 			raise InvalidTraceTypeError("Trace type '{0}' is not valid.".format(traceType))
 
@@ -51,10 +50,30 @@ class plotlyLayout(dict):
 		"TimeSeriesLayout" : {
 								"xaxis" : {
 											"title": "t (s)", 
-											"domain": "[0, 0.75]"
+											"domain": "[0, 0.75]",
+											"titlefont": {
+												"family": 'Roboto, Helvetica',
+												"size": 14,
+												"color": '#7f7f7f'
+											},
+											"tickfont": {
+												"family": 'Roboto, Helvetica',
+												"size": 14,
+												"color": '#7f7f7f'
+											}
 										},
 								"yaxis" : {
-											"title": "i (pA)"
+											"title": "i (pA)",
+											"titlefont": {
+												"family": 'Roboto, Helvetica',
+												"size": 14,
+												"color": '#7f7f7f'
+											},
+											"tickfont": {
+												"family": 'Roboto, Helvetica',
+												"size": 14,
+												"color": '#7f7f7f'
+											}										
 										}
 
 							}
