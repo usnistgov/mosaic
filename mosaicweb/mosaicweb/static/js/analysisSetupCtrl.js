@@ -69,7 +69,7 @@ angular.module('mosaicApp')
 				headers : { 'Content-Type': 'application/json; charset=utf-8' }
 			})
 			.then(function (response, status) {	// success
-				console.log(response.data);
+				// console.log(response.data);
 
 				if (response.data.respondingURL=='new-analysis') {
 					factory.trajPlot=response.data.trajPlot;
@@ -100,6 +100,7 @@ angular.module('mosaicApp')
 					}
 				};
 
+				factory.loadingToast = null;
 				factory.controlsUpdating = false;
 				factory.serverError = false;
 				factory.modelInit = true;
@@ -119,11 +120,13 @@ angular.module('mosaicApp')
 				
 				factory.serverError=true;
 				factory.controlsUpdating = false;
+				// factory.loadingToast.hide();
 
 				deferred.reject(error);
 			});
 
 			factory.controlsUpdating = true;
+			// factory.loadingToast = factory.showLoadingToast();
 
 			return deferred.promise;
 		};
@@ -149,7 +152,7 @@ angular.module('mosaicApp')
 			return res;
 		};
 
-		factory.showErrorToast = function(error) {
+		factory.showErrorToast = function() {
 			var toast = $mdToast.simple()
 				.textContent(error)
 				.action('DISMISS')
@@ -161,6 +164,15 @@ angular.module('mosaicApp')
 				if ( response == 'ok' ) {
 						factory.serverError = false;
 				}
+			});
+		};
+
+		factory.showLoadingToast = function() {
+			var toast = $mdToast.show({
+				hideDelay   : 0,
+				// position    : 'bottom right',
+				controller  : 'LoadingToastCtrl',
+				templateUrl : 'static/partials/loading-toast-template.tmpl.html'
 			});
 		};
 
@@ -268,8 +280,15 @@ angular.module('mosaicApp')
 		return factory;
 
 	})
-	.controller('analysisSetupCtrl', function($scope, $mdDialog, analysisSetupFactory) {
+	.controller('LoadingToastCtrl', function($scope, $mdToast) {
+		$scope.hide = function() {
+			$mdToast.hide();
+		};
+	})
+	.controller('analysisSetupCtrl', function($scope, $mdDialog, $q, $location, analysisSetupFactory, AdvancedSettingsFactory, AnalysisFactory) {
 		$scope.model = analysisSetupFactory;
+		$scope.advancedSettingsModel = AdvancedSettingsFactory;
+		$scope.analysisModel = AnalysisFactory;
 
 		// watch
 		$scope.$watch('newAnalysisForm.blockSize.$pristine', function() {
@@ -283,12 +302,44 @@ angular.module('mosaicApp')
 			};
 		});
 		$scope.$watch('newAnalysisForm.selectedProcAlgoType.$pristine', function() {
+			if ($scope.advancedSettingsModel.procAlgoLocalChanges) {
+				$scope.showConfirmDialog(
+					'Discard Processing Algorithm Changes?',
+					"Changes to '"+ $scope.advancedSettingsModel.procAlgo+ "' will be lost if you proceed.",
+					'Proceed',
+					'Cancel'
+				).then(function(response) {
+					// console.log(response);
+					$scope.model.post('processing-algorithm',
+							{
+								procAlgorithm: $scope.model.selectedProcAlgoType.algorithm
+							}
+						);
+						$scope.advancedSettingsModel.procAlgoLocalChanges=false;
+						$scope.newAnalysisForm.$setPristine();
+					}, function(error) {
+						switch ($scope.advancedSettingsModel.procAlgo) {
+							case 'adept':
+								$scope.model.selectedProcAlgoType=$scope.model.procAlgoTypes[0];
+								break;
+							case 'adept2State':
+								$scope.model.selectedProcAlgoType=$scope.model.procAlgoTypes[1];
+								break;
+							case 'cusumPlus':
+								$scope.model.selectedProcAlgoType=$scope.model.procAlgoTypes[2];
+								break;		
+						};
+						$scope.newAnalysisForm.$setPristine();
+					}
+				);
+			} else {
 				$scope.model.post('processing-algorithm',
 					{
 						procAlgorithm: $scope.model.selectedProcAlgoType.algorithm
 					}
 				);
 				$scope.newAnalysisForm.$setPristine();
+			};
 		});		
 		$scope.$watch('model.currThresholdpA', function() {
 			if ($scope.newAnalysisForm.blockSize.$valid && !$scope.model.controlsUpdating) {
@@ -297,6 +348,24 @@ angular.module('mosaicApp')
 			}
 		});
 		
+		$scope.showConfirmDialog = function(title, content, okText, cancelText ) {
+			var deferred = $q.defer();
+
+			var confirm = $mdDialog.confirm()
+							.title(title)
+							.textContent(content)
+							.ariaLabel(title)
+							.ok(okText)
+							.cancel(cancelText);
+
+			$mdDialog.show(confirm).then(function() {
+				deferred.resolve('OKAY');
+			}, function() {
+				deferred.reject('CANCEL');
+			});
+			return deferred.promise;
+		};
+
 		//dialog functions
 		$scope.cancel = function() {
 			$mdDialog.cancel();
@@ -340,10 +409,12 @@ angular.module('mosaicApp')
 		};
 
 		$scope.formDisabled = function() {
-			return (   $scope.model.controlsUpdating 
-				|| $scope.newAnalysisForm.start.$invalid
-				|| $scope.newAnalysisForm.end.$invalid
-				|| $scope.newAnalysisForm.blockSize.$invalid
+			return (
+					$scope.model.controlsUpdating 
+					|| $scope.newAnalysisForm.start.$invalid
+					|| $scope.newAnalysisForm.end.$invalid
+					|| $scope.newAnalysisForm.blockSize.$invalid
+					|| $scope.analysisModel.AnalysisRunning
 				) ? true : false;
 		};
 
@@ -385,5 +456,18 @@ angular.module('mosaicApp')
 			});
 			$scope.model.requireControlUpdate=false;
 			$scope.newAnalysisForm.$setPristine();
+		};
+
+		$scope.startAnalysis = function() {
+			$scope.analysisModel.post(
+				{
+					analysisSettings: $scope.model.analysisSettings
+				}
+			)
+			.then(function (response, status) {	// success
+				$location.path('/analysis/');
+			}, function (error) {	// error
+				console.log(error);
+			});
 		};
 	});

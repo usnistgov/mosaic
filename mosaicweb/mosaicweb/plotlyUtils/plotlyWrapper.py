@@ -39,7 +39,7 @@ class plotlyLayout(dict):
 			self['margin']={'l':'50', 'r':'50', 't':'0', 'b':'50'}
 			self['showlegend']=False
 			self['autosize']=True
-			self['height']=300
+			self['height']=350
 			self['side']='right'
 			
 			self.update(plotlyLayout.layoutConfig[layoutType])

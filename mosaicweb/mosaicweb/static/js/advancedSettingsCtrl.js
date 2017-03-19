@@ -8,7 +8,13 @@ angular.module('mosaicApp')
 			factory.originalSettings={};
 			factory.analysisSettings={};
 			factory.validatingSettings = false;
+
+			factory.origProcAlgo='';
+			factory.procAlgo='';
+
 			factory.controlsUpdateFlag = false;
+			factory.procAlgoLocalChanges = false;
+			
 			factory.errorString = "";
 
 			factory.post = function() {
@@ -45,7 +51,7 @@ angular.module('mosaicApp')
 				} else if (factory.selectedFileType=='ABF') {
 					origTrajIO=orig.abfTrajIO;
 					trajIO=sett.abfTrajIO;
-				} if (factory.selectedFileType=='BIN') {
+				} else if (factory.selectedFileType=='BIN') {
 					origTrajIO=orig.binTrajIO;
 					trajIO=sett.binTrajIO;
 				};
@@ -57,6 +63,31 @@ angular.module('mosaicApp')
 				} else {
 					factory.controlsUpdateFlag = false;
 				};
+
+				factory.procAlgoLocalChanges = factory.procAlgoChanged(orig, sett);
+			};
+
+			factory.procAlgoChanged = function(orig, sett) {
+				factory.origProcAlgo=factory.procAlgorithm(orig);
+				factory.procAlgo=factory.procAlgorithm(sett);
+
+				if ( factory.origProcAlgo != factory.procAlgo ) {
+					return true;
+				} else if (factory.originalSettings[factory.origProcAlgo] != factory.analysisSettings[factory.procAlgo]) {
+					return true;
+				} else {
+					return false;	
+				}
+			};
+
+			factory.procAlgorithm = function(settingsObject) {
+				// console.log(settingsObject);
+				for (var section in settingsObject) {
+					if ((['adept', 'adept2State', 'cusumPlus'].indexOf(section) != -1)) {
+						return section
+					}
+				}
+				return null;
 			};
 
 			return factory;

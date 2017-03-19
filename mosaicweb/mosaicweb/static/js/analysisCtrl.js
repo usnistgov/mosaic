@@ -59,7 +59,7 @@ angular.module('mosaicApp')
 
 				factory.analysisSettings = params;
 
-				console.log(factory.analysisSettings);
+				// console.log(factory.analysisSettings);
 
 				var results = $http({
 					method  : 'POST',

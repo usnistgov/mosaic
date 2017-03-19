@@ -62,6 +62,10 @@ angular.module('mosaicApp', ['ngRoute', 'ngMaterial', 'ngMessages', 'ngAnimate',
 				 templateUrl: '/static/partials/about.html',
 				 controller: 'AboutCtrl'
 			 })
+			 .when('/setup-analysis/', {
+				 templateUrl: '/static/partials/setupAnalysis.html',
+				 controller: 'analysisSetupCtrl'
+			 })
 			 .when('/analysis/', {
 				 templateUrl: '/static/partials/analysis.html',
 				 controller: 'AnalysisCtrl'
@@ -120,25 +124,8 @@ angular.module('mosaicApp', ['ngRoute', 'ngMaterial', 'ngMessages', 'ngAnimate',
 		};
 
 		$scope.showNewAnalysisSettings = function() {
-			var dlg = $mdDialog.show({
-				controller: 'analysisSetupCtrl',
-				templateUrl: 'static/partials/newAnalysis.tmpl.html',
-				parent: angular.element(document.body),
-				// targetEvent: ev,
-				clickOutsideToClose:false,
-				fullscreen: $scope.customFullscreen // Only for -xs, -sm breakpoints.
-			});
-
-			dlg
-			.then(function(response) {
-				console.log(response);
-
-				if (response.answer = 'startAnalysis') {
-					$scope.startAnalysis({analysisSettings: response.analysisSettings});
-				};
-			}, function() {
-				$scope.AnalysisLoading = false;
-			});
+			$scope.AnalysisLoading = false;	
+			$location.path('/setup-analysis/');
 		};
 		
 		$scope.startAnalysis = function(params) {
@@ -146,7 +133,7 @@ angular.module('mosaicApp', ['ngRoute', 'ngMaterial', 'ngMessages', 'ngAnimate',
 				.then(function (response, status) {	// success
 					$mdDialog.hide();
 
-					$location.path('/analysis/');				
+					$location.path('/analysis/');
 
 					$scope.AnalysisLoading = false;
 

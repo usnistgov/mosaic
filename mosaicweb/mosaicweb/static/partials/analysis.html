@@ -35,16 +35,16 @@
 		<div layout="row" layout-align="start start">
 			<div layout="row" flex-gt-sm="30" layout-align="start center" flex="40">
 				<md-button class="md-icon-button" aria-label="Analysis Log" ng-click="showEventViewer($event)" ng-if="model.showAnalysisControl">
-					<md-tooltip md-direction="top">Explore Event Fits</md-tooltip>
+					<md-tooltip md-direction="bottom">Explore Event Fits</md-tooltip>
 					<md-icon md-font-set="material-icons md-24">explore</md-icon>
 				</md-button>
 				<md-button class="md-icon-button" aria-label="Analysis Log" ng-click="showAnalysisLog($event)" ng-if="model.showAnalysisControl">
-					<md-tooltip md-direction="top">Analysis Log</md-tooltip>
+					<md-tooltip md-direction="bottom">Analysis Log</md-tooltip>
 					<md-icon md-font-set="material-icons md-24">description</md-icon>
 				</md-button>
 				<!-- ng-click="showNewAnalysisSettings($event)" -->
-				<md-button ng-disabled="true" class="md-icon-button" aria-label="Analysis Settings" ng-if="model.showAnalysisControl">
-					<md-tooltip md-direction="top">Analysis Settings</md-tooltip>
+				<md-button class="md-icon-button" aria-label="Analysis Settings" ng-if="model.showAnalysisControl" ng-href="/#/setup-analysis">
+					<md-tooltip md-direction="bottom">Analysis Settings</md-tooltip>
 					<md-icon md-font-set="material-icons md-24">settings</md-icon>
 				</md-button>
 			</div>
