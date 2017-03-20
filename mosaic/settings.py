@@ -3,7 +3,7 @@
 	Load analysis settings from a JSON file. 
 
 	:Created:	8/24/2012
- 	:Author: 	Arvind Balijepalli <arvind.balijepalli@nist.gov>
+	:Author: 	Arvind Balijepalli <arvind.balijepalli@nist.gov>
 	:License:	See LICENSE.TXT
 	:ChangeLog:
 	.. line-block::
@@ -110,83 +110,83 @@ class settings:
 		return self.defaultSettings
 
 __settings__="""
-	{
-		"eventSegment" : {
-			"blockSizeSec" 			: "0.5",
-			"eventPad" 				: "50",
-			"minEventLength" 		: "5",
-			"eventThreshold" 		: "6.0",
-			"driftThreshold" 		: "999.0",
-			"maxDriftRate" 			: "999.0",
-			"meanOpenCurr"			: "-1",
-			"sdOpenCurr"			: "-1",
-			"slopeOpenCurr"			: "-1",
-			"writeEventTS"			: "1",
-			"parallelProc"			: "0",
-			"reserveNCPU"			: "2"
-		},
-		"adept2State" : {
-			"FitTol"				: "1.e-7",
-			"FitIters"				: "50000",
-			"LinkRCConst" 			: "1"
-		},
-		"adept" : {
-            "FitTol"				: "1.e-7",
-            "FitIters"				: "1000",
-            "StepSize"				: "2.5",
-            "MinStateLength"		: "10",
-            "MaxEventLength" 		: "50000",
-            "LinkRCConst" 			: "1"
-	     },
-	     "cusumPlus": {
-			"StepSize"				: 3.0, 
-			"MinThreshold"			: 3.0,
-			"MaxThreshold"			: 10.0,
-			"MinLength" 			: 10
-    	}, 
-		"besselLowpassFilter" : {
-			"filterOrder"			: "6",
-			"filterCutoff"			: "10000",
-			"decimate"				: "1"	
-		},
-		"waveletDenoiseFilter" : {
-			"wavelet"				: "sym5",
-			"level"					: "5",
-			"thresholdType"			: "soft",
-			"thresholdSubType"		: "sqtwolog"
-		},
-		"abfTrajIO" : {
-			"filter"				: "*.abf", 
-			"start"					: 0.0, 
-			"dcOffset"				: 0.0
-		},
-		"qdfTrajIO": {
-			"Rfb": 9.1e+12, 
-			"Cfb": 1.07e-12, 
-			"dcOffset": 0.0, 
-			"filter": "*.qdf", 
-			"start": 0.0,
-			"format" : "V"
-		},
-		"binTrajIO": {
-			"AmplifierScale": "1.0", 
-			"AmplifierOffset": "0.0", 
-			"SamplingFrequency": "50000",
-			"HeaderOffset": "0",
-			"ColumnTypes": "[('curr_pA', 'float64')]",
-			"IonicCurrentColumn" : "curr_pA",
-			"dcOffset": "0.0", 
-			"filter": "*.bin", 
-			"start": "0.0"
-		},
-		"tsvTrajIO": {
-	        "filter" :  "*.tsv", 
-	        "headers" : "False", 
-	        "Fs" :	"500000",
-	        "dcOffset" : 0.0, 
-	        "start" : 0.0 
-    	}
+{
+	"eventSegment" : {
+		"blockSizeSec" 			: "0.5",
+		"eventPad" 				: "50",
+		"minEventLength" 		: "5",
+		"eventThreshold" 		: "6.0",
+		"driftThreshold" 		: "999.0",
+		"maxDriftRate" 			: "999.0",
+		"meanOpenCurr"			: "-1",
+		"sdOpenCurr"			: "-1",
+		"slopeOpenCurr"			: "-1",
+		"writeEventTS"			: "1",
+		"parallelProc"			: "0",
+		"reserveNCPU"			: "2"
+	},
+	"adept2State" : {
+		"FitTol"				: "1.e-7",
+		"FitIters"				: "50000",
+		"LinkRCConst" 			: "1"
+	},
+	"adept" : {
+		"FitTol"				: "1.e-7",
+		"FitIters"				: "1000",
+		"StepSize"				: "2.5",
+		"MinStateLength"		: "10",
+		"MaxEventLength" 		: "50000",
+		"LinkRCConst" 			: "1"
+	 },
+	 "cusumPlus": {
+		"StepSize"				: 3.0, 
+		"MinThreshold"			: 3.0,
+		"MaxThreshold"			: 10.0,
+		"MinLength" 			: 10
+	}, 
+	"besselLowpassFilter" : {
+		"filterOrder"			: "6",
+		"filterCutoff"			: "10000",
+		"decimate"				: "1"	
+	},
+	"waveletDenoiseFilter" : {
+		"wavelet"				: "sym5",
+		"level"					: "5",
+		"thresholdType"			: "soft",
+		"thresholdSubType"		: "sqtwolog"
+	},
+	"abfTrajIO" : {
+		"filter"				: "*.abf", 
+		"start"					: 0.0, 
+		"dcOffset"				: 0.0
+	},
+	"qdfTrajIO": {
+		"Rfb": 9.1e+12, 
+		"Cfb": 1.07e-12, 
+		"dcOffset": 0.0, 
+		"filter": "*.qdf", 
+		"start": 0.0,
+		"format" : "V"
+	},
+	"binTrajIO": {
+		"AmplifierScale": "1.0", 
+		"AmplifierOffset": "0.0", 
+		"SamplingFrequency": "50000",
+		"HeaderOffset": "0",
+		"ColumnTypes": "[('curr_pA', 'float64')]",
+		"IonicCurrentColumn" : "curr_pA",
+		"dcOffset": "0.0", 
+		"filter": "*.bin", 
+		"start": "0.0"
+	},
+	"tsvTrajIO": {
+		"filter" :  "*.tsv", 
+		"headers" : "False", 
+		"Fs" :	"500000",
+		"dcOffset" : 0.0, 
+		"start" : 0.0 
 	}
+}
 """
 
 __legacy_settings__={
