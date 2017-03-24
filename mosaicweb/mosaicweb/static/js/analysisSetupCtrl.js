@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('mosaicApp')
-	.factory('analysisSetupFactory', function($http, $mdDialog, $mdToast, $q, $document, mosaicUtilsFactory) {
+	.factory('analysisSetupFactory', function($http, $mdDialog, $mdToast, $q, $document, mosaicUtilsFactory, mosaicConfigFactory) {
 		var factory = {};
 
 		factory.dataPath = '';
@@ -129,9 +129,9 @@ angular.module('mosaicApp')
 			return deferred.promise;
 		};
 
-		factory.init = function() {
-			factory.getSetupData("/new-analysis", {});
-		};
+		// factory.init = function() {
+		// 	factory.getSetupData("/new-analysis", {});
+		// };
 
 		factory.procAlgorithmFromSettings = function() {
 			if (factory.analysisSettings.hasOwnProperty('adept')) {
@@ -451,6 +451,7 @@ angular.module('mosaicApp')
 				{
 					'settingsString': JSON.stringify($scope.model.analysisSettings),
 					'dataPath': $scope.model.dataPath
+					// 'sessionID': $scope.mosaicConfigModel.sessionID
 				}
 			).then(function(response) {
 				$scope.newAnalysisForm.start.$setValidity("max", true);
@@ -464,7 +465,7 @@ angular.module('mosaicApp')
 		};
 
 		$scope.startAnalysis = function() {
-			$location.path('/analysis/').search({s:$scope.mosaicConfigModel.sessionID});
+			$location.path('/analysis/').search({sid:$scope.mosaicConfigModel.sessionID});
 			$scope.model.controlsUpdating=false;
 			// $scope.analysisModel.updateAnalysisData(
 			// 	{

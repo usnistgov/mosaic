@@ -65,7 +65,6 @@ angular.module('mosaicApp')
 						factory.analysisPlot=response.data;
 						mosaicConfigFactory.AnalysisRunning = true;
 
-						console.log(mosaicConfigFactory.AnalysisRunning);
 						deferred.resolve(response);
 					}, function (error) {	// error
 						deferred.reject(error);

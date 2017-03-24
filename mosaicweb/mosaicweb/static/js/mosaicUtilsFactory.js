@@ -7,13 +7,21 @@ angular.module('mosaicApp')
 			factory.post = function(url, params) {
 				var deferred = $q.defer();
 
+				var p=params;
+				if (mosaicConfigFactory.sessionID != null) {
+					p.sessionID = mosaicConfigFactory.sessionID;
+				};
+				
 				var results = $http({
 					method  : 'POST',
 					url     : url,
-					data    : params, //$.param($scope.startAnalysisFormData),  
+					data    : p,
 					headers : { 'Content-Type': 'application/json; charset=utf-8' }
 				})
 				.then(function (response, status) {	// success
+					if ('sessionID' in response.data) {
+						mosaicConfigFactory.sessionID=response.data.sessionID;
+					};
 					deferred.resolve(response);
 				}, function (error) {	// error
 					deferred.reject(error);

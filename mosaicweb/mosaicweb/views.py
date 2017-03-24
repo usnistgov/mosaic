@@ -15,6 +15,7 @@ import glob
 import os
 import logging
 import numpy as np
+import uuid
 
 logger=logging.getLogger()
 
@@ -79,6 +80,12 @@ def newAnalysis():
 			s=sObj.settingsDict
 			defaultSettings=sObj.defaultSettingsLoaded
 
+
+		try:
+			sessionID=params['sessionID']
+		except KeyError:
+			sessionID=uuid.uuid4().hex
+
 		# pp = pprint.PrettyPrinter(indent=4)
 		# pp.pprint(s)
 		blkSize=float(params.get('blockSize', -1))
@@ -87,7 +94,7 @@ def newAnalysis():
 		ma=mosaicAnalysis.mosaicAnalysis(s, dataPath, defaultSettings)
 		temp=ma.setupAnalysis() 
 
-		return jsonify(respondingURL='new-analysis', **temp), 200
+		return jsonify(respondingURL='new-analysis', sessionID=sessionID, **temp), 200
 	except EmptyDataPipeError, err:
 		return jsonify( respondingURL='new-analysis', errType='EmptyDataPipeError', errSummary="End of data.", errText=str(err) ), 500
 	except FileNotFoundError, err:
