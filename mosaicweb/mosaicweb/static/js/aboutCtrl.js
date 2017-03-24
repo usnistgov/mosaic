@@ -34,10 +34,11 @@ angular.module('mosaicApp')
 			return factory;
 		}
 	)
-	.controller('AboutCtrl', function($scope, $mdDialog, AboutFactory, AnalysisFactory) {
+	.controller('AboutCtrl', function($scope, $mdDialog, AboutFactory, mosaicConfigFactory, mosaicUtilsFactory) {
 			$scope.aboutFactory = AboutFactory;
 
-			$scope.AnalysisRunning = AnalysisFactory.AnalysisRunning;
+			$scope.mosaicConfigModel = mosaicConfigFactory;
+			$scope.mosaicUtilsModel = mosaicUtilsFactory;
 
 			$scope.showDevelopers = function(ev) {
 				$mdDialog.show({

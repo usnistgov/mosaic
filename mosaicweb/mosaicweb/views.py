@@ -3,7 +3,7 @@ from flask import send_file, make_response, jsonify, request
 import mosaic
 from mosaic.utilities.sqlQuery import query
 from mosaic.utilities.analysis import caprate
-from mosaicweb.mosaicAnalysis import mosaicAnalysis
+from mosaicweb.mosaicAnalysis import mosaicAnalysis, analysisStatistics
 from mosaic.trajio.metaTrajIO import EmptyDataPipeError, FileNotFoundError
 import mosaic.settings as settings
 
@@ -92,6 +92,13 @@ def newAnalysis():
 		return jsonify( respondingURL='new-analysis', errType='EmptyDataPipeError', errSummary="End of data.", errText=str(err) ), 500
 	except FileNotFoundError, err:
 		return jsonify( respondingURL='new-analysis', errType='FileNotFoundError', errSummary="Files not found.", errText=str(err) ), 500
+
+@app.route('/analysis-statistics', methods=['POST'])
+def analysisStats():
+	a=analysisStatistics.analysisStatistics(mosaic.WebServerDataLocation+"/m40_0916_RbClPEG/eventMD-20161208-130302.sqlite")
+
+	return jsonify(respondingURL='analysis-statistics', **a.analysisStatistics()), 200
+
 
 @app.route('/list-data-folders', methods=['POST'])
 def listDataFolders():

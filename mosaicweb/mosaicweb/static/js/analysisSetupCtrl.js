@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('mosaicApp')
-	.factory('analysisSetupFactory', function($http, $mdDialog, $mdToast, $q) {
+	.factory('analysisSetupFactory', function($http, $mdDialog, $mdToast, $q, $document, mosaicUtilsFactory) {
 		var factory = {};
 
 		factory.dataPath = '';
@@ -52,6 +52,7 @@ angular.module('mosaicApp')
 		factory.start = 0;
 		factory.end = '';
 		factory.writeEventTS = false;
+		factory.FsKHz = 0;
 
 		factory.controlsUpdating = false;
 		factory.controlEnabled = false;
@@ -59,46 +60,43 @@ angular.module('mosaicApp')
 		factory.serverError = false;
 		factory.requireControlUpdate = false;
 
-		factory.post = function(url, params) {
+		factory.getSetupData = function(url, params) {
 			var deferred = $q.defer();
 
-			var results = $http({
-				method  : 'POST',
-				url     : String(url),
-				data    : JSON.stringify(params), 
-				headers : { 'Content-Type': 'application/json; charset=utf-8' }
-			})
-			.then(function (response, status) {	// success
-				// console.log(response.data);
+			mosaicUtilsFactory.post(url, params)
+				.then(function (response, status) {	// success
+					// console.log(response.data);
 
-				if (response.data.respondingURL=='new-analysis') {
-					factory.trajPlot=response.data.trajPlot;
-					factory.trajPlotOriginalCurrent = factory.trajPlot.data[0].y;
+					if (response.data.respondingURL=='new-analysis') {
+						factory.trajPlot=response.data.trajPlot;
+						factory.trajPlotOriginalCurrent = factory.trajPlot.data[0].y;
 
-					factory.currMeanAuto=response.data.currMeanAuto;
-					factory.currSigmaAuto=response.data.currSigmaAuto;
-					factory.selectedFileType=response.data.fileType;
+						factory.currMeanAuto=response.data.currMeanAuto;
+						factory.currSigmaAuto=response.data.currSigmaAuto;
+						factory.selectedFileType=response.data.fileType;
 
-					factory.analysisSettings=angular.fromJson(response.data.settingsString);
+						factory.FsKHz=response.data.FsHz/1000.;
 
-					factory.procAlgorithmFromSettings()
+						factory.analysisSettings=angular.fromJson(response.data.settingsString);
 
-					factory.updateLocals();
+						factory.procAlgorithmFromSettings()
 
-					if (response.data.warning != '') {
-						factory.showErrorToast("WARNING: "+response.data.warning);
-					};
-					// factory.settingsString=response.data.settingsString;
-				} else if (response.data.respondingURL=='processing-algorithm') {
-					var data = response.data;
+						factory.updateLocals();
 
-					for (var section in factory.analysisSettings) {
-						if ((['adept', 'adept2State', 'cusumPlus'].indexOf(section) != -1)) {
-							delete factory.analysisSettings[section];
-							factory.analysisSettings[data.procAlgorithmSectionName]=data.procAlgorithm;
+						if (response.data.warning != '') {
+							factory.showErrorToast("WARNING: "+response.data.warning);
+						};
+						// factory.settingsString=response.data.settingsString;
+					} else if (response.data.respondingURL=='processing-algorithm') {
+						var data = response.data;
+
+						for (var section in factory.analysisSettings) {
+							if ((['adept', 'adept2State', 'cusumPlus'].indexOf(section) != -1)) {
+								delete factory.analysisSettings[section];
+								factory.analysisSettings[data.procAlgorithmSectionName]=data.procAlgorithm;
+							}
 						}
-					}
-				};
+					};
 
 				factory.loadingToast = null;
 				factory.controlsUpdating = false;
@@ -132,7 +130,7 @@ angular.module('mosaicApp')
 		};
 
 		factory.init = function() {
-			factory.post("/new-analysis", {});
+			factory.getSetupData("/new-analysis", {});
 		};
 
 		factory.procAlgorithmFromSettings = function() {
@@ -152,8 +150,10 @@ angular.module('mosaicApp')
 			return res;
 		};
 
-		factory.showErrorToast = function() {
+		factory.showErrorToast = function(error) {
 			var toast = $mdToast.simple()
+				.position('bottom left')
+				// .parent($document[0])
 				.textContent(error)
 				.action('DISMISS')
 				.highlightAction(true)
@@ -285,10 +285,11 @@ angular.module('mosaicApp')
 			$mdToast.hide();
 		};
 	})
-	.controller('analysisSetupCtrl', function($scope, $mdDialog, $q, $location, analysisSetupFactory, AdvancedSettingsFactory, AnalysisFactory) {
+	.controller('analysisSetupCtrl', function($scope, $mdDialog, $q, $location, analysisSetupFactory, AdvancedSettingsFactory, mosaicConfigFactory) {
 		$scope.model = analysisSetupFactory;
 		$scope.advancedSettingsModel = AdvancedSettingsFactory;
-		$scope.analysisModel = AnalysisFactory;
+		// $scope.analysisModel = AnalysisFactory;
+		$scope.mosaicConfigModel = mosaicConfigFactory;
 
 		// watch
 		$scope.$watch('newAnalysisForm.blockSize.$pristine', function() {
@@ -310,7 +311,7 @@ angular.module('mosaicApp')
 					'Cancel'
 				).then(function(response) {
 					// console.log(response);
-					$scope.model.post('processing-algorithm',
+					$scope.model.getSetupData('processing-algorithm',
 							{
 								procAlgorithm: $scope.model.selectedProcAlgoType.algorithm
 							}
@@ -333,7 +334,7 @@ angular.module('mosaicApp')
 					}
 				);
 			} else {
-				$scope.model.post('processing-algorithm',
+				$scope.model.getSetupData('processing-algorithm',
 					{
 						procAlgorithm: $scope.model.selectedProcAlgoType.algorithm
 					}
@@ -348,6 +349,10 @@ angular.module('mosaicApp')
 			}
 		});
 		
+		$scope.selectProcAlgo = function() {
+			console.log($scope.model.selectedProcAlgoType);
+		};
+
 		$scope.showConfirmDialog = function(title, content, okText, cancelText ) {
 			var deferred = $q.defer();
 
@@ -414,7 +419,7 @@ angular.module('mosaicApp')
 					|| $scope.newAnalysisForm.start.$invalid
 					|| $scope.newAnalysisForm.end.$invalid
 					|| $scope.newAnalysisForm.blockSize.$invalid
-					|| $scope.analysisModel.AnalysisRunning
+					|| $scope.mosaicConfigModel.AnalysisRunning
 				) ? true : false;
 		};
 
@@ -442,7 +447,7 @@ angular.module('mosaicApp')
 
 		$scope.updateControls = function() {
 			$scope.model.reconcileSettings();
-			$scope.model.post("/new-analysis",
+			$scope.model.getSetupData("/new-analysis",
 				{
 					'settingsString': JSON.stringify($scope.model.analysisSettings),
 					'dataPath': $scope.model.dataPath
@@ -459,15 +464,20 @@ angular.module('mosaicApp')
 		};
 
 		$scope.startAnalysis = function() {
-			$scope.analysisModel.post(
-				{
-					analysisSettings: $scope.model.analysisSettings
-				}
-			)
-			.then(function (response, status) {	// success
-				$location.path('/analysis/');
-			}, function (error) {	// error
-				console.log(error);
-			});
+			$location.path('/analysis/').search({s:$scope.mosaicConfigModel.sessionID});
+			$scope.model.controlsUpdating=false;
+			// $scope.analysisModel.updateAnalysisData(
+			// 	{
+			// 		analysisSettings: $scope.model.analysisSettings
+			// 	}
+			// )
+			// .then(function (response, status) {	// success
+			// 	$scope.model.controlsUpdating=false;
+			// 	// $location.path('/analysis/?s=adfjdskafa');
+			// }, function (error) {	// error
+			// 	console.log(error);
+			// });
+			// $scope.model.controlsUpdating=true;
+
 		};
 	});

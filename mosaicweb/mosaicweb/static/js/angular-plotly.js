@@ -41,7 +41,7 @@
                         graph.layout = scope.plotlyLayout;
                         graph.data = scope.plotlyData;
                         Plotly.redraw(graph);
-                        Plotly.Plots.resize(graph);
+                        // Plotly.Plots.resize(graph);
                     }
 
                     function onResize() {

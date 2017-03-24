@@ -1,16 +1,16 @@
 'use strict';
 
 angular.module('mosaicApp')
-	.factory('AnalysisFactory', function($http, $q) {
+	.factory('AnalysisFactory', function($http, $q, $routeParams, mosaicUtilsFactory, mosaicConfigFactory) {
 			var factory = {};
 
-			factory.AnalysisRunning = false;
+			mosaicConfigFactory.AnalysisRunning = false;
 
 			factory.bdQuery = "select BlockDepth from metadata where ProcessingStatus='normal' and ResTime > 0.02";
 			factory.bdBins = 500;
 			factory.histDensity = false;
 
-			factory.showAnalysisControl=false;
+			factory.showAnalysisControl=true;
 			factory.analysisSettings = {};
 
 			factory.eventNumber=1;
@@ -51,43 +51,42 @@ angular.module('mosaicApp')
 			};
 
 			factory.stopAnalysis = function() {
-				factory.AnalysisRunning = false;
+				mosaicConfigFactory.AnalysisRunning = false;
 			};
 
-			factory.post = function(params) {
+			factory.updateAnalysisData = function(params) {
 				var deferred = $q.defer();
 
 				factory.analysisSettings = params;
 
-				// console.log(factory.analysisSettings);
+				mosaicUtilsFactory.post('/histogram', params)
+					.then(function (response, status) {	// success
+						// $scope.analysisPlot=response.data;
+						factory.analysisPlot=response.data;
+						mosaicConfigFactory.AnalysisRunning = true;
 
-				var results = $http({
-					method  : 'POST',
-					url     : '/histogram',
-					data    : params, //$.param($scope.startAnalysisFormData),  
-					headers : { 'Content-Type': 'application/json; charset=utf-8' }
-				})
-				.then(function (response, status) {	// success
-					// $scope.analysisPlot=response.data;
-					factory.analysisPlot=response.data;
-					factory.AnalysisRunning = true;
-
-					deferred.resolve(response);
-				}, function (error) {	// error
-					deferred.reject(error);
-				});
+						console.log(mosaicConfigFactory.AnalysisRunning);
+						deferred.resolve(response);
+					}, function (error) {	// error
+						deferred.reject(error);
+					});
 
 				return deferred.promise;
 			};
 			return factory;
 		}
 	)
-	.controller('AnalysisCtrl', function($scope, $mdDialog, AnalysisFactory) {
+	.controller('AnalysisCtrl', function($scope, $mdDialog, AnalysisFactory, AnalysisStatisticsFactory, mosaicConfigFactory) {
 		$scope.formContainer = {};
 
 		$scope.model = AnalysisFactory;
+		$scope.mosaicConfigModel = mosaicConfigFactory;
+
+		$scope.statsModel = AnalysisStatisticsFactory;
 
 		$scope.customFullscreen = true;
+
+		$scope.model.updateAnalysisData({});
 
 		// watch
 		$scope.$watch('formContainer.analysisHistogramForm.bdQuery.$pristine', function() {
@@ -106,6 +105,22 @@ angular.module('mosaicApp')
 			$mdDialog.show({
 				controller: DialogController,
 				templateUrl: 'static/partials/analysislog.tmpl.html',
+				parent: angular.element(document.body),
+				targetEvent: ev,
+				clickOutsideToClose:true,
+				fullscreen: $scope.customFullscreen // Only for -xs, -sm breakpoints.
+			})
+			.then(function(answer) {
+				$scope.status = 'You said the information was "' + answer + '".';
+			}, function() {
+				$scope.status = 'You cancelled the dialog.';
+			});
+		};
+
+		$scope.showAnalysisStatistics = function(ev) {
+			$mdDialog.show({
+				controller: 'AnalysisStatisticsCtrl',
+				templateUrl: 'static/partials/analysisstats.tmpl.html',
 				parent: angular.element(document.body),
 				targetEvent: ev,
 				clickOutsideToClose:true,

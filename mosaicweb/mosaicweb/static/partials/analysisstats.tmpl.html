@@ -1,0 +1,47 @@
+<md-dialog aria-label="Analysis Statistics" flex="50">
+	<md-toolbar class="md-primary md-whiteframe-z4">
+		<div class="md-toolbar-tools">
+			<h3><em>Analysis Statistics</em></h3>
+			<span flex></span>
+			<md-button class="md-icon-button" ng-click="cancel()">
+				<md-icon md-font-set="material-icons md-24">close</md-icon>
+			</md-button>
+		</div>
+	</md-toolbar>
+	<md-dialog-content layout="column">
+		<md-content class="md-padding" layout="column" style="background-color: transparent" flex>
+			<div>
+				<plotly plotly-data="model.errorStats.data" plotly-layout="model.errorStats.layout" plotly-options="model.errorStats.options"></plotly>
+			</div>
+		</md-content>
+		
+		<md-content class="md-padding" layout="row" layout-align="center center" style="background-color: transparent" flex="100">
+			<section class="md-whiteframe-z2 md-padding" layout="column" style="margin: 8px; padding:8px; background: transparent" flex>
+				<md-subheader class="md-primary" style="margin: 0; padding:0; background-color: transparent">
+					<p flex="70">Metrics</p>
+				</md-subheader>
+				
+				<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+			</section>
+
+			<section class="md-whiteframe-z2" layout="column" style="margin: 8px; padding:8px; background: transparent" flex>
+				<md-subheader class="md-primary" style="margin: 0; padding:0; background-color: transparent">
+					<p>Errors & Warnings</p>
+				</md-subheader>
+			
+				<div layout="row" flex>
+					<div flex="70"><p style="color: #696969; padding:0; margin:0; padding-left: 8px;"><small><em>Events Processed:</em></small></p></div>
+					<div flex><p style="color: #696969; padding:0; margin:0;"><small>{{model.analysisStats.nTotal}}</small></p></div>
+				</div>
+				<div layout="row" flex>
+					<div flex="70"><p style="color: #696969; padding:0; margin:0; padding-left: 8px;"><small><em>Errors:</em></small></p></div>
+					<div flex><p style="color: #696969; padding:0; margin:0;"><small>{{model.errorPercent}}%</small></p></div>
+				</div>
+				<div layout="row" flex>
+					<div flex="70"><p style="color: #696969; padding:0; margin:0; padding-left: 8px;"><small><em>Warnings:</em></small></p></div>
+					<div flex><p style="color: #696969; padding:0; margin:0;"><small>{{model.warnPercent}}%</small></p></div>
+				</div>
+			</section>
+		</md-content>
+	</md-dialog-content>
+</md-dialog>

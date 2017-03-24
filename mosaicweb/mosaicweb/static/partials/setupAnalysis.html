@@ -1,8 +1,8 @@
 <md-content aria-label="New Analysis" flex-gt-sm="70" flex="90" flex-offset-gt-sm="15" flex-offset="5">
 <!-- ng-submit="startAnalysis()"  -->
-	<form layout="column" name="newAnalysisForm" ng-disabled="analysisModel.AnalysisRunning">
+	<form layout="column" name="newAnalysisForm" ng-disabled="mosaicConfigModel.AnalysisRunning">
 		<div layout="row" layout-align="end center">
-			<h3 style="color: #696969;"><em>Setup a New Analysis</em></h3>
+			<h3 style="color: #696969;"><em>New Analysis Setup</em></h3>
 			<span flex></span>
 			<md-progress-circular md-mode="indeterminate" class="md-primary" md-diameter="24" ng-if="model.controlsUpdating"></md-progress-circular>
 			<md-button class="md-primary" type="button" id="advancedButton" ng-click="showAdvancedSettings()" ng-disabled="formDisabled()" style="padding:10px; margin:10px;">
@@ -10,32 +10,50 @@
 			</md-button>
 		</div>
 		
-		<md-button class="md-fab md-warn md-fab-bottom-right" style="position:fixed !important; padding:16px;" ng-click="updateControls()" ng-if="model.requireControlUpdate && !analysisModel.AnalysisRunning">
+		<md-button class="md-fab md-warn md-fab-bottom-right" style="position:fixed !important; padding:16px;" ng-click="updateControls()" ng-if="model.requireControlUpdate && !mosaicConfigModel.AnalysisRunning">
 			<md-tooltip md-direction="left">Apply Settings</md-tooltip>
 			<md-icon md-font-set="material-icons md-24">check</md-icon>
 		</md-button>
-		<md-button class="md-fab md-primary md-fab-bottom-right" style="position:fixed !important; padding:16px;" ng-click="startAnalysis()" ng-if="( !model.requireControlUpdate && !formDisabled() ) && !analysisModel.AnalysisRunning">
+		<md-button class="md-fab md-primary md-fab-bottom-right" style="position:fixed !important; padding:16px;" ng-click="startAnalysis()" ng-if="( !model.requireControlUpdate && !formDisabled() ) && !mosaicConfigModel.AnalysisRunning">
 			<md-tooltip md-direction="left">Start Analysis</md-tooltip>
 			<md-icon md-font-set="material-icons md-24">play_arrow</md-icon>
 		</md-button>
-		<div layout="column" ng-if="analysisModel.AnalysisRunning" flex ng-include="'/static/partials/BackToAnalysisFAB.tmpl.html'"></div>
+		<div layout="column" ng-if="mosaicConfigModel.AnalysisRunning" flex ng-include="'/static/partials/BackToAnalysisFAB.tmpl.html'"></div>
 		
-		<md-content class="md-whiteframe-z2" layout="column" style="margin: 16px; padding:16px; background: transparent">
-			<!-- <div layout="row" layout-align="end end"> -->
-				<!-- <md-button ng-click="cancel()">
-					Cancel
-				</md-button> -->
-				<!-- <md-button class="md-primary" type="submit" ng-click="answer('StartAnalysis')" ng-disabled="formDisabled()">Start Analysis</md-button> -->
-			<!-- </md-dialog-actions> -->
-			<!-- </div> -->
-			<div layout-align="center center" ng-if="model.modelInit">
+		<md-content class="md-whiteframe-z2" layout="column" style="margin: 8px; padding:8px; background: transparent">
+			<md-subheader class="md-primary" style="margin: 0; padding:0">
+				<div layout="row" flex>
+					<p flex="70">Time-Series</p>
+					<!-- <span flex="20"></span>
+					<md-button class="md-icon-button" href="https://pages.nist.gov/mosaic/html/doc/GraphicalInterface.html#panels-a-b-analysis-setup-and-trajectory-viewer" target="_blank">
+						<md-tooltip md-direction="left">MOSAIC Documentation</md-tooltip>
+						<md-icon md-font-set="material-icons md-24">help</md-icon>
+					</md-button> -->
+				</div>
+			</md-subheader>
+			<div layout-align="center center" ng-if="model.modelInit" style="margin: 6px; padding:6px; margin-bottom:2px;">
 				<plotly plotly-data="model.trajPlot.data" plotly-layout="model.trajPlot.layout" plotly-options="model.trajPlot.options"></plotly>
+			</div>
+			<div style="margin: 0px; padding:0px; padding-left:4px; padding-right: 4px;" flex layout="column">
+				<p style="color: #696969; margin:0; padding:0;"><em><small>Data Path: /{{model.dataPath}}/</small></em></p>
+				<!-- <span flex></span> -->
+				<p style="color: #696969; margin:0; padding:0;"><em><small>F<sub>s</sub>={{model.FsKHz}} kHz</small></em></p>
 			</div>
 		</md-content>
 
 		<div layout-gt-sm="row" layout="column">
-			<md-content class="md-whiteframe-z2" style="margin: 16px; padding:16px" flex-gt-sm=40>
-				<div layout="row">
+			<md-content class="md-whiteframe-z2" style="margin: 8px; padding:8px;" flex-gt-sm=40>
+				<md-subheader class="md-primary" style="margin: 0; padding:0">
+					<div layout="row" flex>
+						<p flex="70">Data File Settings</p>
+						<!-- <span flex="20"></span>
+						<md-button class="md-icon-button" href="https://pages.nist.gov/mosaic/html/doc/GraphicalInterface.html#panels-a-b-analysis-setup-and-trajectory-viewer" target="_blank">
+							<md-tooltip md-direction="left">MOSAIC Documentation</md-tooltip>
+							<md-icon md-font-set="material-icons md-24">help</md-icon>
+						</md-button> -->
+					</div>
+				</md-subheader>
+				<div layout="row" style="margin: 6px; padding:6px">
 					<md-input-container flex="40">
 						<label>File Type</label>
 						<md-select ng-model="model.selectedFileType" md-selected-text="getFileType()" ng-disabled="true">
@@ -54,7 +72,7 @@
 					<!-- <span flex="40"></span> -->
 				</div>
 
-				<div layout="row">
+				<div layout="row" style="margin: 6px; padding:6px">
 					<md-input-container>
 						<label>Start</label>
 						<input type="number" min="0" step="0.01" ng-model="model.start" name="start" ng-disabled="model.controlsUpdating" ng-model-options="{ updateOn: 'blur', allowInvalid: false}">
@@ -81,11 +99,22 @@
 					<md-icon md-font-set="regular-font">s</md-icon>
 				</div>
 			</md-content>
-			<md-content class="md-whiteframe-z2" style="margin: 16px; padding:16px" flex-gt-sm>
-				<div layout="row">
+
+			<md-content class="md-whiteframe-z2" flex-gt-sm style="margin: 8px; padding:8px;">
+				<md-subheader class="md-primary" style="margin: 0; padding:0">
+					<div layout="row" flex>
+						<p flex="70">Event Partition Settings</p>
+						<!-- <span flex="20"></span>
+						<md-button class="md-icon-button" href="https://pages.nist.gov/mosaic/html/doc/GraphicalInterface.html#panels-a-b-analysis-setup-and-trajectory-viewer" target="_blank">
+							<md-tooltip md-direction="left">MOSAIC Documentation</md-tooltip>
+							<md-icon md-font-set="material-icons md-24">help</md-icon> -->
+						</md-button>
+					</div>
+				</md-subheader>
+				<div layout="row" style="margin: 6px; padding:6px">
 					<md-input-container flex="55">
 						<label>Partition Algorithm</label>
-						<md-select ng-model="model.selectedPartAlgoType" md-selected-text="getPartAlgoType()" ng-disabled="analysisModel.AnalysisRunning">
+						<md-select ng-model="model.selectedPartAlgoType" md-selected-text="getPartAlgoType()" ng-disabled="mosaicConfigModel.AnalysisRunning">
 							<md-optgroup label="Partition Algorithms">
 								<md-option ng-value="partAlgoType" ng-repeat="partAlgoType in ::model.partAlgoTypes">{{partAlgoType}}</md-option>
 							</md-optgroup>
@@ -117,7 +146,7 @@
 					</md-input-container>
 				</div>
 
-				<md-slider-container ng-disabled="analysisModel.AnalysisRunning">
+				<md-slider-container ng-disabled="mosaicConfigModel.AnalysisRunning" style="margin: 6px; padding:6px padding-right: 8px;">
 					<span flex>Threshold</span>
 					<span flex="5"></span>
 					<md-slider flex required ng-model="model.currThresholdpA" ng-model-options="{ debounce: 100 }" min="0" max="{{model.currMeanDisplay}}" step="0.01" aria-label="threshold" value="100" id="thr-slider" class="md-primary" flex>
@@ -140,7 +169,7 @@
 					</md-input-container>
 				</md-slider-container>
 
-				<div layout="row">
+				<div layout="row" style="margin: 6px; padding:6px">
 					<md-input-container>
 						<label>&#x2329;i<sub>0</sub>&#x232A;</label>
 						 <!-- ng-model-options="{ updateOn: 'blur', allowInvalid: false}" -->
@@ -177,7 +206,7 @@
 
 					<span flex="5"></span>
 
-					<md-switch class="md-primary" md-no-ink aria-label="Automatically estimate baseline current" ng-model="model.currAuto" ng-change="model.toggleCurrAuto()" ng-disabled="analysisModel.AnalysisRunning">
+					<md-switch class="md-primary" md-no-ink aria-label="Automatically estimate baseline current" ng-model="model.currAuto" ng-change="model.toggleCurrAuto()" ng-disabled="mosaicConfigModel.AnalysisRunning">
 						Auto
 					</md-switch>
 
@@ -185,11 +214,21 @@
 			</md-content>
 		</div>
 
-		<md-content class="md-whiteframe-z2"  layout="row" style="margin: 16px; padding:16px" ng-disabled="analysisModel.AnalysisRunning">
-			<!--<div layout="row" -->
-				<md-input-container style="width:40%;">
+		<md-content class="md-whiteframe-z2" layout="column" style="margin: 8px; padding:8px;" flex-gt-sm ng-disabled="mosaicConfigModel.AnalysisRunning">
+			<md-subheader class="md-primary" style="margin: 0; padding:0">
+				<div layout="row" flex>
+						<p flex="70">Event Processing Settings</p>
+						<!-- <span flex="20"></span>
+						<md-button class="md-icon-button" href="https://pages.nist.gov/mosaic/html/doc/GraphicalInterface.html#panels-a-b-analysis-setup-and-trajectory-viewer" target="_blank">
+							<md-tooltip md-direction="left">MOSAIC Documentation</md-tooltip>
+							<md-icon md-font-set="material-icons md-24">help</md-icon>
+						</md-button> -->
+					</div>
+			</md-subheader>
+			<div layout="row" style="margin: 6px; padding:6px">
+				<md-input-container flex="35">
 					<label>Processing Algorithm</label>
-					<md-select ng-model="model.selectedProcAlgoType" name="selectedProcAlgoType" md-selected-text="getProcAlgoType()" ng-disabled="analysisModel.AnalysisRunning">
+					<md-select ng-model="model.selectedProcAlgoType" name="selectedProcAlgoType" md-selected-text="getProcAlgoType()" ng-disabled="mosaicConfigModel.AnalysisRunning">
 						<md-optgroup label="Processing Algorithms">
 							<md-option ng-value="procAlgoType" ng-repeat="procAlgoType in ::model.procAlgoTypes">{{procAlgoType.name}}</md-option>
 						</md-optgroup>
@@ -210,11 +249,12 @@
 				</md-checkbox> -->
 			<!-- </div> -->
 			
-			<span flex></span>
+				<span flex></span>
 
-			<md-switch class="md-primary" md-no-ink aria-label="Save Events to Database" ng-model="model.writeEventTS">
-				Save Events to Database
-			</md-switch>
+				<md-switch class="md-primary" md-no-ink aria-label="Save Events to Database" ng-model="model.writeEventTS">
+					Save Events to Database
+				</md-switch>
+			</div>
 		</md-content>
 	</form>
 </md-content>

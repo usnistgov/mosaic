@@ -46,6 +46,9 @@ class mosaicAnalysis:
 	def runAnalysis(self):
 		pass
 
+	def analysisStatistics(self):
+		pass
+		
 	def _configTrajIOObject(self):
 		""" 
 			Configure a trajIO object from the contents of analysisSettingsDict
@@ -138,6 +141,9 @@ class mosaicAnalysis:
 			self.returnMessageJSON['saveToDisk']=self.analysisSettingsDict["eventSegment"]["writeEventTS"]
 
 			self.returnMessageJSON['fileType']=self.fileType
+
+			self.returnMessageJSON['dataPath']=self.dataPath
+			self.returnMessageJSON['FsHz']=FsHz
 
 			# add plots
 			dat={}

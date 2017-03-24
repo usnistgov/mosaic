@@ -1,42 +1,5 @@
-.analysisGrid md-grid-list {
-	margin: 8px; }
-
-.analysisGrid .gray {
-	background: #f6f6f6; }
-
-.analysisGrid .green {
-	background: #b9f6ca; }
-
-.analysisGrid .yellow {
-	background: #ffff8d; }
-
-.analysisGrid .blue {
-	background: #84ffff; }
-
-.analysisGrid .purple {
-	background: #b388ff; }
-
-.analysisGrid .red {
-	background: #ff8a80; }
-
-.analysisGrid md-grid-tile {
-	transition: all 400ms ease-in 2000ms ease-out 50ms; }
-
-.analysisGrid md-grid-tile-header {
-	background: transparent; }
-
-.analysisGrid md-grid-tile-footer {
-	background: transparent;
-	height: 100px; }
- 
 .histTabs md-tabs.md-default-theme md-ink-bar, md-tabs md-ink-bar {
 		background-color:#283593 !important; }
-
-/*#analysisSpeedDial {
-	position: fixed;
-	bottom: 56dp;
-	right: 56dp;
-}*/
 
 .animate-enter {
 		-webkit-transition: 1s linear all; /* Chrome */

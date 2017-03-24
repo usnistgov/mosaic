@@ -79,14 +79,15 @@ angular.module('mosaicApp', ['ngRoute', 'ngMaterial', 'ngMessages', 'ngAnimate',
 	}
 )
 .controller('AppCtrl', 
-	function($scope, $mdDialog, $http, $location, $window, $timeout, $document, AnalysisFactory, analysisSetupFactory) {
+	function($scope, $mdDialog, $http, $location, $window, $timeout, $document, mosaicConfigFactory, mosaicUtilsFactory, analysisSetupFactory) {
 		$scope.location = $location;
 
 		$scope.customFullscreen = true;
 
 		$scope.AnalysisLoading = false;
 
-		$scope.analysisModel=AnalysisFactory;
+		$scope.mosaicConfigModel=mosaicConfigFactory;
+		$scope.mosaicUtilsModel = mosaicUtilsFactory;
 
 		// funcs
 		$scope.setupNewAnalysis = function(ev) {
@@ -108,7 +109,7 @@ angular.module('mosaicApp', ['ngRoute', 'ngMaterial', 'ngMessages', 'ngAnimate',
 			.then(function(response) {
 				analysisSetupFactory.dataPath=response.filename.relpath;
 
-				var setupInit = analysisSetupFactory.post("/new-analysis", {
+				var setupInit = analysisSetupFactory.getSetupData("/new-analysis", {
 									dataPath: analysisSetupFactory.dataPath
 								});
 
@@ -129,7 +130,7 @@ angular.module('mosaicApp', ['ngRoute', 'ngMaterial', 'ngMessages', 'ngAnimate',
 		};
 		
 		$scope.startAnalysis = function(params) {
-			$scope.analysisModel.post(params)
+			$scope.analysisModel.updateAnalysisData(params)
 				.then(function (response, status) {	// success
 					$mdDialog.hide();
 
