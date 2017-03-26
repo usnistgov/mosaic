@@ -5,7 +5,8 @@ angular.module('mosaicApp')
 			var factory = {};
 
 			factory.sessionID = null;
-			factory.analysisrunning = false;
+			factory.analysisRunning = false;
+			factory.newDataAvailable = false;
 			
 			return factory;
 		}

@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('mosaicApp')
-	.factory('mosaicUtilsFactory', function($http, $q, $location, mosaicConfigFactory) {
+	.factory('mosaicUtilsFactory', function($http, $q, $location, $mdToast, mosaicConfigFactory) {
 			var factory = {};
 
 			factory.post = function(url, params) {
@@ -10,8 +10,7 @@ angular.module('mosaicApp')
 				var p=params;
 				if (mosaicConfigFactory.sessionID != null) {
 					p.sessionID = mosaicConfigFactory.sessionID;
-				};
-				
+				};				
 				var results = $http({
 					method  : 'POST',
 					url     : url,
@@ -22,8 +21,15 @@ angular.module('mosaicApp')
 					if ('sessionID' in response.data) {
 						mosaicConfigFactory.sessionID=response.data.sessionID;
 					};
+					if ('analysisRunning' in response.data) {
+						mosaicConfigFactory.analysisRunning=response.data.analysisRunning;
+					};
+					if ('newDataAvailable' in response.data) {
+						mosaicConfigFactory.newDataAvailable=response.data.newDataAvailable;
+					};
 					deferred.resolve(response);
 				}, function (error) {	// error
+					factory.showErrorToast(error.data.errSummary);
 					deferred.reject(error);
 				});
 
@@ -31,9 +37,26 @@ angular.module('mosaicApp')
 			};
 
 			factory.returnToAnalysis = function() {
-				$location.path('/analysis/').search({s: mosaicConfigFactory.sessionID});
+				$location.path('/analysis/').search({sid: mosaicConfigFactory.sessionID});
 			};
 			
+			factory.showErrorToast = function(error) {
+			var toast = $mdToast.simple()
+				.position('bottom left')
+				// .parent($document[0])
+				.textContent(error)
+				.action('DISMISS')
+				.highlightAction(true)
+				.highlightClass('md-warn')
+				.hideDelay(7000);
+
+				$mdToast.show(toast).then(function(response) {
+					if ( response == 'ok' ) {
+							factory.serverError = false;
+					}
+				});
+			};
+
 			return factory;
 		}
 	);

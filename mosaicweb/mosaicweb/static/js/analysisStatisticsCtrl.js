@@ -55,7 +55,8 @@ angular.module('mosaicApp')
 						orientation: 'h',
 						type: 'bar',
 						marker: {
-							color: 'rgb(255, 82, 82)'
+							// color: 'rgb(255, 82, 82)'
+							color: 'rgb(255, 41, 41)'
 						},
 						width: 0.5
 					}

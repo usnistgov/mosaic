@@ -84,7 +84,7 @@ angular.module('mosaicApp')
 						factory.updateLocals();
 
 						if (response.data.warning != '') {
-							factory.showErrorToast("WARNING: "+response.data.warning);
+							mosaicUtilsFactory.showErrorToast("WARNING: "+response.data.warning);
 						};
 						// factory.settingsString=response.data.settingsString;
 					} else if (response.data.respondingURL=='processing-algorithm') {
@@ -110,11 +110,11 @@ angular.module('mosaicApp')
 
 				factory.errorString = error.data.errType+": "+error.data.errSummary;
 
-				if (error.data.errType=='EmptyDataPipeError') {
-					factory.showErrorToast("ERROR: Decrease the value of the Start field.");
-				} else if (error.data.errType=='FileNotFoundError') {
-					factory.showErrorToast("ERROR: No files found in '"+factory.dataPath+"'");
-				};
+				// if (error.data.errType=='EmptyDataPipeError') {
+				// 	factory.showErrorToast("ERROR: Decrease the value of the Start field.");
+				// } else if (error.data.errType=='FileNotFoundError') {
+				// 	factory.showErrorToast("ERROR: No files found in '"+factory.dataPath+"'");
+				// };
 				
 				factory.serverError=true;
 				factory.controlsUpdating = false;
@@ -150,22 +150,6 @@ angular.module('mosaicApp')
 			return res;
 		};
 
-		factory.showErrorToast = function(error) {
-			var toast = $mdToast.simple()
-				.position('bottom left')
-				// .parent($document[0])
-				.textContent(error)
-				.action('DISMISS')
-				.highlightAction(true)
-				.highlightClass('md-warn')
-				.hideDelay(7000);
-
-			$mdToast.show(toast).then(function(response) {
-				if ( response == 'ok' ) {
-						factory.serverError = false;
-				}
-			});
-		};
 
 		factory.showLoadingToast = function() {
 			var toast = $mdToast.show({
@@ -344,7 +328,7 @@ angular.module('mosaicApp')
 		});		
 		$scope.$watch('model.currThresholdpA', function() {
 			if ($scope.newAnalysisForm.blockSize.$valid && !$scope.model.controlsUpdating) {
-				$scope.model.trajPlot.data[1].y=[$scope.model.currThresholdpA, $scope.model.currThresholdpA];
+				$scope.model.trajPlot.data[2].y=[$scope.model.currThresholdpA, $scope.model.currThresholdpA];
 				$scope.model.analysisSettings.eventSegment.eventThreshold=($scope.model.currMeanDisplay-$scope.model.currThresholdpA)/$scope.model.currSigmaDisplay;
 			}
 		});
@@ -419,7 +403,7 @@ angular.module('mosaicApp')
 					|| $scope.newAnalysisForm.start.$invalid
 					|| $scope.newAnalysisForm.end.$invalid
 					|| $scope.newAnalysisForm.blockSize.$invalid
-					|| $scope.mosaicConfigModel.AnalysisRunning
+					|| $scope.mosaicConfigModel.analysisRunning
 				) ? true : false;
 		};
 

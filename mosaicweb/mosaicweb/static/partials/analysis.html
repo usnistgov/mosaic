@@ -24,7 +24,7 @@
 			<span flex="40" style="color:#696969;">Analysis Control</span>
 			<span flex-gt-sm="grow" flex> </span>
 			<!-- <p flex="40" style="color: #696969;"><small><em>Events Processed:</em> {{model.analysisPlot.stats.eventsProcessed}}</small></p> -->
-			<md-progress-circular md-mode="indeterminate" class="md-primary" md-diameter="20" ng-if="mosaicConfigModel.AnalysisRunning" ></md-progress-circular>
+			<md-progress-circular md-mode="indeterminate" class="md-primary" md-diameter="20" ng-if="mosaicConfigModel.analysisRunning" ></md-progress-circular>
 			<md-button class="md-icon-button" aria-label="Analysis Control" ng-hide="model.showAnalysisControl" ng-click="model.toggleAnalysisControlFlag()">
 				<md-icon md-font-set="material-icons md-24">expand_more</md-icon>
 			</md-button>
@@ -43,7 +43,7 @@
 					<md-icon md-font-set="material-icons md-24">description</md-icon>
 				</md-button>
 				<!-- ng-click="showNewAnalysisSettings($event)" -->
-				<md-button class="md-icon-button" aria-label="Analysis Settings" ng-if="model.showAnalysisControl" ng-href="/#/setup-analysis">
+				<md-button class="md-icon-button" aria-label="Analysis Settings" ng-if="model.showAnalysisControl" ng-click="showAnalysisSettings()">
 					<md-tooltip md-direction="bottom">Analysis Settings</md-tooltip>
 					<md-icon md-font-set="material-icons md-24">settings</md-icon>
 				</md-button>
@@ -51,12 +51,12 @@
 			<span flex></span>
 			<!-- flex="40" flex-gt-xs="35" flex-gt-sm="30" flex-gt-md="25" -->
 			<md-button class="md-warn" type="button"
-				ng-click="model.stopAnalysis()" ng-if="model.showAnalysisControl && mosaicConfigModel.AnalysisRunning">
+				ng-click="model.stopAnalysis()" ng-if="model.showAnalysisControl && mosaicConfigModel.analysisRunning">
 				Stop Analysis
 			</md-button>
 		</div>
 		<section ng-if="model.showAnalysisControl" layout="column">
-			<md-subheader class="md-primary" style="padding:0; margin:0;">Statistics</md-subheader>
+			<md-subheader class="md-primary">Statistics</md-subheader>
 			<div layout="row" layout-align="start center" style="padding:0; margin:0;">
 				<p style="color: #696969; padding:0; margin:0; padding-right: 16px; padding-left: 16px;"><small><em>Capture Rate:</em> {{statsModel.analysisStats.captureRateMean}}&#177;{{statsModel.analysisStats.captureRateSigma}} s<sup>-1</sup></small></p>
 				<p style="color: #696969; padding:0; margin:0; padding-right: 16px; padding-left: 16px; padding-bottom: 4px;"><small><em>Events Processed:</em> {{statsModel.analysisStats.nTotal}}</small></p>

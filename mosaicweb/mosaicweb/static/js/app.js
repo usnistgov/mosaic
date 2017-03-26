@@ -126,7 +126,7 @@ angular.module('mosaicApp', ['ngRoute', 'ngMaterial', 'ngMessages', 'ngAnimate',
 
 		$scope.showNewAnalysisSettings = function() {
 			$scope.AnalysisLoading = false;	
-			$location.path('/setup-analysis/');
+			$location.path('/setup-analysis/').search({sid: $scope.mosaicConfigModel.sessionID});
 		};
 		
 		$scope.startAnalysis = function(params) {

@@ -4,7 +4,7 @@ angular.module('mosaicApp')
 	.factory('AnalysisFactory', function($http, $q, $routeParams, mosaicUtilsFactory, mosaicConfigFactory) {
 			var factory = {};
 
-			mosaicConfigFactory.AnalysisRunning = false;
+			mosaicConfigFactory.analysisRunning = false;
 
 			factory.bdQuery = "select BlockDepth from metadata where ProcessingStatus='normal' and ResTime > 0.02";
 			factory.bdBins = 500;
@@ -51,7 +51,7 @@ angular.module('mosaicApp')
 			};
 
 			factory.stopAnalysis = function() {
-				mosaicConfigFactory.AnalysisRunning = false;
+				mosaicConfigFactory.analysisRunning = false;
 			};
 
 			factory.updateAnalysisData = function(params) {
@@ -59,11 +59,18 @@ angular.module('mosaicApp')
 
 				factory.analysisSettings = params;
 
-				mosaicUtilsFactory.post('/histogram', params)
+				// Switch session ID when explicitly set in route.
+				console.log('updateAnalysisData', $routeParams.sid, mosaicConfigFactory.sessionID);
+				
+				if ($routeParams.sid != mosaicConfigFactory.sessionID) {
+					mosaicConfigFactory.sessionID=$routeParams.sid;
+				}
+
+				mosaicUtilsFactory.post('/analysis-results', params)
 					.then(function (response, status) {	// success
 						// $scope.analysisPlot=response.data;
 						factory.analysisPlot=response.data;
-						mosaicConfigFactory.AnalysisRunning = true;
+						// mosaicConfigFactory.analysisRunning = true;
 
 						deferred.resolve(response);
 					}, function (error) {	// error
@@ -75,7 +82,7 @@ angular.module('mosaicApp')
 			return factory;
 		}
 	)
-	.controller('AnalysisCtrl', function($scope, $mdDialog, AnalysisFactory, AnalysisStatisticsFactory, mosaicConfigFactory) {
+	.controller('AnalysisCtrl', function($scope, $mdDialog, $location, AnalysisFactory, AnalysisStatisticsFactory, mosaicConfigFactory) {
 		$scope.formContainer = {};
 
 		$scope.model = AnalysisFactory;
@@ -114,6 +121,10 @@ angular.module('mosaicApp')
 			}, function() {
 				$scope.status = 'You cancelled the dialog.';
 			});
+		};
+
+		$scope.showAnalysisSettings = function() {
+			$location.path('/setup-analysis/').search({sid: $scope.mosaicConfigModel.sessionID});
 		};
 
 		$scope.showAnalysisStatistics = function(ev) {

@@ -7,11 +7,11 @@
 			<div layout="column" layout-align="center center">
 				<md-button class="md-primary md-raised" type="button" id="setupAnalysisButton" 
 					ng-click="setupNewAnalysis($event)"
-					ng-disabled="analysisModel.AnalysisRunning || AnalysisLoading">
+					ng-disabled="analysisModel.analysisRunning || AnalysisLoading">
 					New Analysis
 				</md-button>
 				<md-button class="md-primary" type="button" id="setupAnalysisButton"
-					 ng-disabled="analysisModel.AnalysisRunning || AnalysisLoading">
+					 ng-disabled="analysisModel.analysisRunning || AnalysisLoading">
 					Load Previous Analysis
 				</md-button>
 				<br>
@@ -20,5 +20,5 @@
 			</div>
 		</form>
 	</div>
-	<div layout="column" ng-if="mosaicConfigModel.AnalysisRunning" flex ng-include="'/static/partials/BackToAnalysisFAB.tmpl.html'"></div>
+	<div layout="column" ng-if="mosaicConfigModel.analysisRunning" flex ng-include="'/static/partials/BackToAnalysisFAB.tmpl.html'"></div>
 </div>
