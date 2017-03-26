@@ -1,11 +1,14 @@
 from mosaicweb import app
 from flask import send_file, make_response, jsonify, request
+
 import mosaic
 from mosaic.utilities.sqlQuery import query
 from mosaic.utilities.analysis import caprate
-from mosaicweb.mosaicAnalysis import mosaicAnalysis, analysisStatistics
 from mosaic.trajio.metaTrajIO import EmptyDataPipeError, FileNotFoundError
 import mosaic.settings as settings
+
+from mosaicweb.mosaicAnalysis import mosaicAnalysis, analysisStatistics
+from mosaicweb.sessionManager import sessionManager
 
 import pprint
 import time
@@ -15,9 +18,10 @@ import glob
 import os
 import logging
 import numpy as np
-import uuid
 
 logger=logging.getLogger()
+
+gAnalysisSessions=sessionManager.sessionManager()
 
 @app.route("/")
 def index():
@@ -27,14 +31,18 @@ def index():
 def about():
 	return jsonify(ver=mosaic.__version__, build=mosaic.__build__, uiver='1.0.0', uibuild='58cbed0'), 200
 
-@app.route('/histogram', methods=['POST'])
-def histogram():
-	_id=""
-	_histscript=""
-	params = dict(request.get_json())
+@app.route('/analysis-results', methods=['POST'])
+def analysisResults():
+	global gAnalysisSessions
 
-	# time.sleep(3)
-	return jsonify( respondingURL="histogram", **_histPlot() ), 200
+	try:
+		params = dict(request.get_json())
+		sessionID=params['sessionID']
+		dbfile=gAnalysisSessions.getSessionAttribute(sessionID, 'databaseFile')
+
+		return jsonify( respondingURL="analysis-results", **_histPlot(dbfile) ), 200
+	except (sessionManager.SessionNotFoundError, KeyError):
+		return jsonify( respondingURL='analysis-results', errType='MissingSIDError', errSummary="A valid session ID was not found.", errText="A valid session ID was not found." ), 500
 
 @app.route('/validate-settings', methods=['POST'])
 def validateSettings():
@@ -67,11 +75,18 @@ def processingAlgorithm():
 
 @app.route('/new-analysis', methods=['POST'])
 def newAnalysis():
+	global gAnalysisSessions
+
 	try:
 		defaultSettings=False
 		params = dict(request.get_json())
 
 		dataPath = mosaic.WebServerDataLocation+'/'+params.get('dataPath', '')
+
+		try:
+			sessionID=params['sessionID']
+		except KeyError:
+			sessionID=gAnalysisSessions.newSession()
 
 		try:
 			s=json.loads(params['settingsString'])
@@ -80,21 +95,14 @@ def newAnalysis():
 			s=sObj.settingsDict
 			defaultSettings=sObj.defaultSettingsLoaded
 
+		ma=mosaicAnalysis.mosaicAnalysis(s, dataPath, defaultSettings, sessionID) 
 
-		try:
-			sessionID=params['sessionID']
-		except KeyError:
-			sessionID=uuid.uuid4().hex
+		gAnalysisSessions.addSettingsString(sessionID, s)
+		gAnalysisSessions.addDataPath(sessionID, dataPath)
+		gAnalysisSessions.addMOSAICAnalysisObject(sessionID, ma)
+		gAnalysisSessions.addDatabaseFile(sessionID, mosaic.WebServerDataLocation+"/m40_0916_RbClPEG/eventMD-20161208-130302.sqlite")
 
-		# pp = pprint.PrettyPrinter(indent=4)
-		# pp.pprint(s)
-		blkSize=float(params.get('blockSize', -1))
-		start=float(params.get('start', -1))
-	
-		ma=mosaicAnalysis.mosaicAnalysis(s, dataPath, defaultSettings)
-		temp=ma.setupAnalysis() 
-
-		return jsonify(respondingURL='new-analysis', sessionID=sessionID, **temp), 200
+		return jsonify(respondingURL='new-analysis', sessionID=sessionID, **ma.setupAnalysis() ), 200
 	except EmptyDataPipeError, err:
 		return jsonify( respondingURL='new-analysis', errType='EmptyDataPipeError', errSummary="End of data.", errText=str(err) ), 500
 	except FileNotFoundError, err:
@@ -102,9 +110,19 @@ def newAnalysis():
 
 @app.route('/analysis-statistics', methods=['POST'])
 def analysisStats():
-	a=analysisStatistics.analysisStatistics(mosaic.WebServerDataLocation+"/m40_0916_RbClPEG/eventMD-20161208-130302.sqlite")
+	global gAnalysisSessions
 
-	return jsonify(respondingURL='analysis-statistics', **a.analysisStatistics()), 200
+	try:
+		params = dict(request.get_json())
+		
+		sessionID=params['sessionID']
+		dbfile=gAnalysisSessions.getSessionAttribute(sessionID, 'databaseFile')
+
+		a=analysisStatistics.analysisStatistics(dbfile)
+
+		return jsonify(respondingURL='analysis-statistics', **a.analysisStatistics()), 200
+	except (sessionManager.SessionNotFoundError, KeyError):
+		return jsonify( respondingURL='analysis-statistics', errType='MissingSIDError', errSummary="A valid session ID was not found.", errText="A valid session ID was not found." ), 500
 
 
 @app.route('/list-data-folders', methods=['POST'])
@@ -148,9 +166,9 @@ def _folderDesc(item):
 	else:
 		return "{0} sub-folders".format(nfolders) 
 
-def _histPlot():
+def _histPlot(dbFile):
 	q=query(
-		mosaic.WebServerDataLocation+"/m40_0916_RbClPEG/eventMD-20161208-130302.sqlite",
+		dbFile,
 		"select BlockDepth from metadata where ProcessingStatus='normal' and ResTime > 0.02 and BlockDepth between 0.05 and 0.5"
 	)
 	x=np.hstack(np.array(q))
@@ -186,6 +204,8 @@ def _histPlot():
 	dat['layout']=layout
 	dat['options']={'displayLogo': False}
 	dat['stats']=stats
+
+	dat['analysisRunning']=True
 
 	return dat
 

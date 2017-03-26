@@ -60,7 +60,8 @@ class plotlyLayout(dict):
 												"family": 'Roboto, Helvetica',
 												"size": 14,
 												"color": '#7f7f7f'
-											}
+											},
+											"zerolinecolor": "rgba(0,0,0,0)"
 										},
 								"yaxis" : {
 											"title": "i (pA)",
@@ -73,7 +74,7 @@ class plotlyLayout(dict):
 												"family": 'Roboto, Helvetica',
 												"size": 14,
 												"color": '#7f7f7f'
-											}										
+											}
 										}
 
 							}

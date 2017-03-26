@@ -4,7 +4,7 @@
     	<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<meta name="description" content="MOSAIC">
+		<meta name="description" content="MOSAIC Web">
 		<meta name="author" content="Arvind Balijepalli">
 
 		<link rel="icon" href="static/img/favicon.ico">
@@ -20,52 +20,50 @@
 		<link rel="stylesheet" href="static/css/style.css">
     </head>
 
-    <body ng-app="mosaicApp" ng-controller="AppCtrl">
-		<md-toolbar md-scroll-shrink ng-if="true" class="md-whiteframe-z4" layout-align="center center" ng-cloak>
-			<div class="md-toolbar-tools" flex>
-				<md-button 
-					style="padding: 0; margin: 0;"
-					class="md-icon-button" aria-label="Back" 
-					ng-click="pageBack()" 
-					ng-hide="location.url() === '/'">
-						<md-icon md-font-set="material-icons md-24">arrow_back</md-icon>
-				</md-button>
+    <body ng-app="mosaicApp" layout="column" ng-controller="AppCtrl" ng-cloak>
+		<md-toolbar class="md-toolbar-tools md-toolbar-tools-center md-whiteframe-z4" layout="row">
+			<md-button 
+				style="padding: 0; margin: 0;"
+				class="md-icon-button" aria-label="Back" 
+				ng-click="pageBack()" 
+				ng-hide="location.url() === '/'">
+					<md-icon md-font-set="material-icons md-24">arrow_back</md-icon>
+			</md-button>
 
-				<!-- <a href="/#/"><h1 flex md-truncate><em>MOSAIC</em></h1></a> -->
-				<md-button md-no-ink ng-href="/#/" class="md-accent" style="padding: 0; margin: 0;">MOSAIC</md-button>
-				<h2 flex md-truncate><em> </em></h2>
-				
-				<md-button class="md-icon-button" href="https://pages.nist.gov/mosaic/html/" target="_blank">
-					<md-tooltip md-direction="left">MOSAIC Documentation</md-tooltip>
-					<md-icon md-font-set="material-icons md-24">help_outline</md-icon>
-				</md-button>
+			<!-- <a href="/#/"><h1 flex md-truncate><em>MOSAIC</em></h1></a> -->
+			<md-button md-no-ink ng-href="/#/" class="md-accent" style="padding: 0; margin: 0;">MOSAIC</md-button>
+			<h2 flex md-truncate><em> </em></h2>
 			
-				<md-menu>
-					<md-button ng-click="$mdOpenMenu()" class="md-icon-button" aria-label="Overflow">
-						<md-icon md-font-set="material-icons md-24">more_vert</md-icon>
-					</md-button>
-					<md-menu-content width="4">
-						<md-menu-item ng-click="$mdMenu.hide()">
-							<md-button aria-label="SQuestions" ng-href="mailto:mosaic@nist.gov">
-								<md-icon md-font-set="material-icons md-24">email</md-icon>
-								<p class="md-primary">Ask a Question</p>
-							</md-button>
-						</md-menu-item>
-						<md-menu-item ng-click="$mdMenu.hide()">
-							<md-button href="https://github.com/usnistgov/mosaic/issues" target="_blank">
-								<md-icon md-font-set="material-icons md-24">bug_report</md-icon>
-								<p class="md-primary">Report a Bug</p>
-							</md-button>
-						</md-menu-item>
-						<md-menu-item ng-click="$mdMenu.hide()">
-							<md-button ng-click="aboutMosaic()">
-								<md-icon md-font-set="material-icons md-24">info</md-icon>
-						    	<p class="md-primary">About</p>
-							</md-button>
-						</md-menu-item>
-					</md-menu-content>
-				</md-menu>
-			</div>
+			<md-button class="md-icon-button" href="https://pages.nist.gov/mosaic/html/" target="_blank">
+				<md-tooltip md-direction="left">MOSAIC Documentation</md-tooltip>
+				<md-icon md-font-set="material-icons md-24">help_outline</md-icon>
+			</md-button>
+		
+			<md-menu>
+				<md-button ng-click="$mdOpenMenu()" class="md-icon-button" aria-label="Overflow">
+					<md-icon md-font-set="material-icons md-24">more_vert</md-icon>
+				</md-button>
+				<md-menu-content width="4">
+					<md-menu-item ng-click="$mdMenu.hide()">
+						<md-button aria-label="SQuestions" ng-href="mailto:mosaic@nist.gov">
+							<md-icon md-font-set="material-icons md-24">email</md-icon>
+							<p class="md-primary">Ask a Question</p>
+						</md-button>
+					</md-menu-item>
+					<md-menu-item ng-click="$mdMenu.hide()">
+						<md-button href="https://github.com/usnistgov/mosaic/issues" target="_blank">
+							<md-icon md-font-set="material-icons md-24">bug_report</md-icon>
+							<p class="md-primary">Report a Bug</p>
+						</md-button>
+					</md-menu-item>
+					<md-menu-item ng-click="$mdMenu.hide()">
+						<md-button ng-click="aboutMosaic()">
+							<md-icon md-font-set="material-icons md-24">info</md-icon>
+					    	<p class="md-primary">About</p>
+						</md-button>
+					</md-menu-item>
+				</md-menu-content>
+			</md-menu>
 		</md-toolbar>
 
 		<br>

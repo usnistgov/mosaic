@@ -1,3 +1,13 @@
+"""
+	A class that manages MOSAIC analyses.
+
+	:Created:	3/19/2017
+	:Author: 	Arvind Balijepalli <arvind.balijepalli@nist.gov>
+	:License:	See LICENSE.TXT
+	:ChangeLog:
+	.. line-block::
+		3/19/17		AB 	Initial version
+"""
 from mosaicgui import EBSStateFileDict
 import mosaic.trajio.qdfTrajIO as qdf
 import mosaic.trajio.abfTrajIO as abf
@@ -16,10 +26,11 @@ class mosaicAnalysis:
 	"""
 		A class that can setup and run a MOSAIC analysis.
 	"""
-	def __init__(self, settingsDict, dataPath, defaultSettings):
+	def __init__(self, settingsDict, dataPath, defaultSettings, sessionID):
 		self.analysisSettingsDict = settingsDict #eval(settingsString)
 		self.dataPath = dataPath
 		self.defaultSettings=defaultSettings
+		self.sessionID=sessionID
 
 		self.returnMessageJSON={
 			"warning": ""
@@ -48,7 +59,7 @@ class mosaicAnalysis:
 
 	def analysisStatistics(self):
 		pass
-		
+
 	def _configTrajIOObject(self):
 		""" 
 			Configure a trajIO object from the contents of analysisSettingsDict

@@ -1,3 +1,13 @@
+"""
+	A module that compiles MOSAIC statistics.
+
+	:Created:	3/19/2017
+	:Author: 	Arvind Balijepalli <arvind.balijepalli@nist.gov>
+	:License:	See LICENSE.TXT
+	:ChangeLog:
+	.. line-block::
+		3/19/17		AB 	Initial version
+"""
 import mosaic.mdio.sqlite3MDIO as sqlite
 from mosaic.utilities.sqlQuery import query
 from mosaic.utilities.analysis import caprate
