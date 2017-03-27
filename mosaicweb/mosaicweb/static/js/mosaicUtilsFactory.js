@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('mosaicApp')
-	.factory('mosaicUtilsFactory', function($http, $q, $location, $mdToast, mosaicConfigFactory) {
+	.factory('mosaicUtilsFactory', function($http, $q, $location, $interval, $mdToast, mosaicConfigFactory) {
 			var factory = {};
 
 			factory.post = function(url, params) {
@@ -41,21 +41,31 @@ angular.module('mosaicApp')
 			};
 			
 			factory.showErrorToast = function(error) {
-			var toast = $mdToast.simple()
-				.position('bottom left')
-				// .parent($document[0])
-				.textContent(error)
-				.action('DISMISS')
-				.highlightAction(true)
-				.highlightClass('md-warn')
-				.hideDelay(7000);
+				var toast = $mdToast.simple()
+					.position('bottom left')
+					// .parent($document[0])
+					.textContent(error)
+					.action('DISMISS')
+					.highlightAction(true)
+					.highlightClass('md-warn')
+					.hideDelay(7000);
 
-				$mdToast.show(toast).then(function(response) {
-					if ( response == 'ok' ) {
-							factory.serverError = false;
-					}
-				});
+					$mdToast.show(toast).then(function(response) {
+						if ( response == 'ok' ) {
+								factory.serverError = false;
+						}
+					});
 			};
+
+			factory.pollAnalysisStatus = function() {
+				$interval(function() {
+					if (mosaicConfigFactory.analysisRunning) {
+						factory.post('/poll-analysis-status', {});
+					};
+				}, 5000);
+			};
+
+			factory.pollAnalysisStatus();
 
 			return factory;
 		}

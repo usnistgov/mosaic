@@ -79,13 +79,14 @@ angular.module('mosaicApp', ['ngRoute', 'ngMaterial', 'ngMessages', 'ngAnimate',
 	}
 )
 .controller('AppCtrl', 
-	function($scope, $mdDialog, $http, $location, $window, $timeout, $document, mosaicConfigFactory, mosaicUtilsFactory, analysisSetupFactory) {
+	function($scope, $mdDialog, $http, $location, $window, $timeout, $document, mosaicConfigFactory, mosaicUtilsFactory, analysisSetupFactory, AnalysisFactory) {
 		$scope.location = $location;
 
 		$scope.customFullscreen = true;
 
 		$scope.AnalysisLoading = false;
 
+		$scope.analysisModel=AnalysisFactory;
 		$scope.mosaicConfigModel=mosaicConfigFactory;
 		$scope.mosaicUtilsModel = mosaicUtilsFactory;
 
@@ -127,21 +128,6 @@ angular.module('mosaicApp', ['ngRoute', 'ngMaterial', 'ngMessages', 'ngAnimate',
 		$scope.showNewAnalysisSettings = function() {
 			$scope.AnalysisLoading = false;	
 			$location.path('/setup-analysis/').search({sid: $scope.mosaicConfigModel.sessionID});
-		};
-		
-		$scope.startAnalysis = function(params) {
-			$scope.analysisModel.updateAnalysisData(params)
-				.then(function (response, status) {	// success
-					$mdDialog.hide();
-
-					$location.path('/analysis/');
-
-					$scope.AnalysisLoading = false;
-
-				}, function (error) {	// error
-					console.log(error);
-				});
-			$scope.AnalysisLoading = true;
 		};
 
 		$scope.returnToAnalysis = function() {

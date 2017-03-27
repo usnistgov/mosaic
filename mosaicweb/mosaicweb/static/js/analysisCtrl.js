@@ -1,10 +1,8 @@
 'use strict';
 
 angular.module('mosaicApp')
-	.factory('AnalysisFactory', function($http, $q, $routeParams, mosaicUtilsFactory, mosaicConfigFactory) {
+	.factory('AnalysisFactory', function($http, $q, $routeParams, mosaicUtilsFactory, mosaicConfigFactory, analysisSetupFactory, AnalysisStatisticsFactory) {
 			var factory = {};
-
-			mosaicConfigFactory.analysisRunning = false;
 
 			factory.bdQuery = "select BlockDepth from metadata where ProcessingStatus='normal' and ResTime > 0.02";
 			factory.bdBins = 500;
@@ -50,8 +48,28 @@ angular.module('mosaicApp')
 				factory.showAnalysisControl = !factory.showAnalysisControl;
 			};
 
+			factory.startAnalysis = function() {
+				var deferred = $q.defer();
+
+
+				mosaicUtilsFactory.post('/start-analysis', {
+					'settingsString': analysisSetupFactory.getSettingsString()
+				})
+				.then(function(response, status) {
+					deferred.resolve(response, status);
+				}, function(error) {
+					deferred.reject(error);
+				});
+
+				return deferred.promise;
+			};
+
 			factory.stopAnalysis = function() {
-				mosaicConfigFactory.analysisRunning = false;
+				mosaicUtilsFactory.post('/stop-analysis', {})
+				.then(function(response, status) {
+				}, function(error) {
+					console.log(error);
+				});
 			};
 
 			factory.updateAnalysisData = function(params) {
@@ -60,17 +78,16 @@ angular.module('mosaicApp')
 				factory.analysisSettings = params;
 
 				// Switch session ID when explicitly set in route.
-				console.log('updateAnalysisData', $routeParams.sid, mosaicConfigFactory.sessionID);
-				
 				if ($routeParams.sid != mosaicConfigFactory.sessionID) {
 					mosaicConfigFactory.sessionID=$routeParams.sid;
 				}
 
 				mosaicUtilsFactory.post('/analysis-results', params)
 					.then(function (response, status) {	// success
-						// $scope.analysisPlot=response.data;
 						factory.analysisPlot=response.data;
-						// mosaicConfigFactory.analysisRunning = true;
+
+						// Update stats during data update
+						AnalysisStatisticsFactory.updateErrorStats();
 
 						deferred.resolve(response);
 					}, function (error) {	// error
@@ -100,6 +117,11 @@ angular.module('mosaicApp')
 		});
 		$scope.$watch('formContainer.analysisHistogramForm.bdBins.$pristine', function() {
 			$scope.model.requireControlUpdate=true;
+		});
+		$scope.$watch('mosaicConfigModel.newDataAvailable', function() {
+			if ($scope.mosaicConfigModel.newDataAvailable) {
+				$scope.model.updateAnalysisData({});
+			};
 		});
 
 		$scope.updateControls = function() {

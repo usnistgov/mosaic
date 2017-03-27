@@ -258,6 +258,11 @@ angular.module('mosaicApp')
 			
 		};
 
+		factory.getSettingsString = function() {
+			factory.reconcileSettings();
+			return JSON.stringify(factory.analysisSettings);
+		};
+
 		// Init on start
 		// factory.init();
 
@@ -269,10 +274,10 @@ angular.module('mosaicApp')
 			$mdToast.hide();
 		};
 	})
-	.controller('analysisSetupCtrl', function($scope, $mdDialog, $q, $location, analysisSetupFactory, AdvancedSettingsFactory, mosaicConfigFactory) {
+	.controller('analysisSetupCtrl', function($scope, $mdDialog, $q, $location, analysisSetupFactory, AnalysisFactory, AdvancedSettingsFactory, mosaicConfigFactory) {
 		$scope.model = analysisSetupFactory;
 		$scope.advancedSettingsModel = AdvancedSettingsFactory;
-		// $scope.analysisModel = AnalysisFactory;
+		$scope.analysisModel = AnalysisFactory;
 		$scope.mosaicConfigModel = mosaicConfigFactory;
 
 		// watch
@@ -449,20 +454,12 @@ angular.module('mosaicApp')
 		};
 
 		$scope.startAnalysis = function() {
-			$location.path('/analysis/').search({sid:$scope.mosaicConfigModel.sessionID});
+			AnalysisFactory.startAnalysis()
+			.then(function (response, status) {	// success
+				$location.path('/analysis/').search({sid:$scope.mosaicConfigModel.sessionID});
+			}, function (error) {	// error
+				console.log(error);
+			});
 			$scope.model.controlsUpdating=false;
-			// $scope.analysisModel.updateAnalysisData(
-			// 	{
-			// 		analysisSettings: $scope.model.analysisSettings
-			// 	}
-			// )
-			// .then(function (response, status) {	// success
-			// 	$scope.model.controlsUpdating=false;
-			// 	// $location.path('/analysis/?s=adfjdskafa');
-			// }, function (error) {	// error
-			// 	console.log(error);
-			// });
-			// $scope.model.controlsUpdating=true;
-
 		};
 	});

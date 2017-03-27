@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('mosaicApp')
-	.factory('AnalysisStatisticsFactory', function($http, $q, mosaicUtilsFactory) {
+	.factory('AnalysisStatisticsFactory', function($http, $q, mosaicUtilsFactory, mosaicConfigFactory) {
 			var factory = {};
 
 			factory.analysisStats = {};
@@ -9,7 +9,8 @@ angular.module('mosaicApp')
 			factory.warnPercent = 0;
 
 			factory.updateErrorStats = function() {
-				mosaicUtilsFactory.post('/analysis-statistics', {})
+				if (mosaicConfigFactory.sessionID != null) {
+					mosaicUtilsFactory.post('/analysis-statistics', {})
 					.then(function(response, status) {
 						factory.analysisStats=response.data;
 
@@ -22,6 +23,7 @@ angular.module('mosaicApp')
 					}, function(error) {
 						console.log(error);
 					});
+				}
 			};
 
 			factory.errorStats = {
@@ -135,5 +137,5 @@ angular.module('mosaicApp')
 			$mdDialog.hide(answer);
 		};
 
-		$scope.updateStats();
+		// $scope.updateStats();
 	});
