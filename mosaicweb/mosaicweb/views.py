@@ -19,6 +19,10 @@ import os
 import logging
 import numpy as np
 
+class InvalidPOSTRequest(Exception):
+	pass
+
+
 logger=logging.getLogger()
 
 gAnalysisSessions=sessionManager.sessionManager()
@@ -70,29 +74,33 @@ def newAnalysis():
 		params = dict(request.get_json())
 
 		dataPath = mosaic.WebServerDataLocation+'/'+params.get('dataPath', '')
+		settingsString = params.get('settingsString', '')
+		sessionID=params.get('sessionID', '')
 
-		try:
-			sessionID=params['sessionID']
-		except KeyError:
+		if dataPath and not sessionID:		# brand new session
 			sessionID=gAnalysisSessions.newSession()
+			ma=mosaicAnalysis.mosaicAnalysis(dataPath, sessionID) 
 
-		margs={}
-		try:
-			margs['settingsString']=params['settingsString']
-		except KeyError:
-			pass
+			gAnalysisSessions.addDataPath(sessionID, dataPath)
+			gAnalysisSessions.addMOSAICAnalysisObject(sessionID, ma)
+		elif sessionID and settingsString:	# update settings
+			ma=gAnalysisSessions.getSessionAttribute(sessionID, 'mosaicAnalysisObject')
+			ma.updateSettings(settingsString)
 
-		ma=mosaicAnalysis.mosaicAnalysis(dataPath, sessionID, **margs) 
-
-		gAnalysisSessions.addSettingsString(sessionID, ma.analysisSettingsDict)
-		gAnalysisSessions.addDataPath(sessionID, dataPath)
-		gAnalysisSessions.addMOSAICAnalysisObject(sessionID, ma)
+			gAnalysisSessions.addSettingsString(sessionID, ma.analysisSettingsDict)
+		elif sessionID and not settingsString:  # a session ID loaded from a route
+			ma=gAnalysisSessions.getSessionAttribute(sessionID, 'mosaicAnalysisObject')
+		else:
+			raise InvalidPOSTRequest('An invalid POST request was received.')
+		
 
 		return jsonify(respondingURL='new-analysis', sessionID=sessionID, **ma.setupAnalysis() ), 200
 	except EmptyDataPipeError, err:
 		return jsonify( respondingURL='new-analysis', errType='EmptyDataPipeError', errSummary="End of data.", errText=str(err) ), 500
 	except FileNotFoundError, err:
 		return jsonify( respondingURL='new-analysis', errType='FileNotFoundError', errSummary="Files not found.", errText=str(err) ), 500
+	except InvalidPOSTRequest, err:
+		return jsonify( respondingURL='new-analysis', errType='InvalidPOSTRequest', errSummary="An invalid POST request was received.", errText=str(err) ), 500
 
 @app.route('/start-analysis', methods=['POST'])
 def startAnalysis():

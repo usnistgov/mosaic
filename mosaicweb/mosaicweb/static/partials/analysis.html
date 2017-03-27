@@ -34,7 +34,7 @@
 		</div>
 		<div layout="row" layout-align="start start">
 			<div layout="row" flex-gt-sm="30" layout-align="start center" flex="40">
-				<md-button class="md-icon-button" aria-label="Analysis Log" ng-click="showEventViewer($event)" ng-if="model.showAnalysisControl">
+				<md-button class="md-icon-button" aria-label="Analysis Log" ng-click="showEventViewer($event)" ng-if="model.showAnalysisControl" ng-disabled="!setupModel.analysisSettings.eventSegment.writeEventTS">
 					<md-tooltip md-direction="bottom">Explore Event Fits</md-tooltip>
 					<md-icon md-font-set="material-icons md-24">explore</md-icon>
 				</md-button>

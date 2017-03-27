@@ -99,12 +99,13 @@ angular.module('mosaicApp')
 			return factory;
 		}
 	)
-	.controller('AnalysisCtrl', function($scope, $mdDialog, $location, AnalysisFactory, AnalysisStatisticsFactory, mosaicConfigFactory) {
+	.controller('AnalysisCtrl', function($scope, $mdDialog, $location, AnalysisFactory, AnalysisStatisticsFactory, analysisSetupFactory, mosaicConfigFactory) {
 		$scope.formContainer = {};
 
 		$scope.model = AnalysisFactory;
 		$scope.mosaicConfigModel = mosaicConfigFactory;
 
+		$scope.setupModel = analysisSetupFactory;
 		$scope.statsModel = AnalysisStatisticsFactory;
 
 		$scope.customFullscreen = true;

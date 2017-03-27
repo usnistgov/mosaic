@@ -129,10 +129,6 @@ angular.module('mosaicApp')
 			return deferred.promise;
 		};
 
-		// factory.init = function() {
-		// 	factory.getSetupData("/new-analysis", {});
-		// };
-
 		factory.procAlgorithmFromSettings = function() {
 			if (factory.analysisSettings.hasOwnProperty('adept')) {
 				factory.selectedProcAlgoType=factory.procAlgoTypes[0]
@@ -263,9 +259,6 @@ angular.module('mosaicApp')
 			return JSON.stringify(factory.analysisSettings);
 		};
 
-		// Init on start
-		// factory.init();
-
 		return factory;
 
 	})
@@ -274,7 +267,7 @@ angular.module('mosaicApp')
 			$mdToast.hide();
 		};
 	})
-	.controller('analysisSetupCtrl', function($scope, $mdDialog, $q, $location, analysisSetupFactory, AnalysisFactory, AdvancedSettingsFactory, mosaicConfigFactory) {
+	.controller('analysisSetupCtrl', function($scope, $mdDialog, $q, $location, $routeParams, analysisSetupFactory, AnalysisFactory, AdvancedSettingsFactory, mosaicConfigFactory) {
 		$scope.model = analysisSetupFactory;
 		$scope.advancedSettingsModel = AdvancedSettingsFactory;
 		$scope.analysisModel = AnalysisFactory;
@@ -338,6 +331,15 @@ angular.module('mosaicApp')
 			}
 		});
 		
+		$scope.init = function() {
+			if ($routeParams.sid != $scope.mosaicConfigModel.sessionID) {
+				mosaicConfigFactory.sessionID=$routeParams.sid;
+			}
+
+			// If a session ID was provided try to initialize settings with it.
+			$scope.model.getSetupData("/new-analysis", {});
+		};
+
 		$scope.selectProcAlgo = function() {
 			console.log($scope.model.selectedProcAlgoType);
 		};
@@ -462,4 +464,7 @@ angular.module('mosaicApp')
 			});
 			$scope.model.controlsUpdating=false;
 		};
+
+		//init on launch
+		$scope.init();
 	});
