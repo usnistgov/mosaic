@@ -59,19 +59,19 @@ class analysisStatistics:
 		normalEvents=len(query(
 			self.analysisDB,
 			"select AbsEventStart from metadata where ProcessingStatus='normal' order by AbsEventStart ASC"
-		))+round(random.normalvariate(0,500))
+		))
 		warnEvents=len(query(
 			self.analysisDB,
 			"select AbsEventStart from metadata where ProcessingStatus like 'w%' order by AbsEventStart ASC"
-		))+round(random.normalvariate(0,500))
+		))
 		errorEvents=len(query(
 			self.analysisDB,
 			"select AbsEventStart from metadata where ProcessingStatus like 'e%' order by AbsEventStart ASC"
-		))+round(random.normalvariate(0,500))
+		))
 		totalEvents=len(query(
 			self.analysisDB,
 			"select ProcessingStatus from metadata"
-		))+round(random.normalvariate(0,500))
+		))
 
 		return round(normalEvents/float(totalEvents), 3), round(warnEvents/float(totalEvents), 3), round(errorEvents/float(totalEvents), 3), totalEvents
 

@@ -9,13 +9,29 @@
 		3/19/17		AB 	Initial version
 """
 from mosaicgui import EBSStateFileDict
+
+import mosaic.settings as settings
+from mosaic.utilities.resource_path import resource_path, format_path
+
+import mosaic.apps.SingleChannelAnalysis as sca
+
 import mosaic.trajio.qdfTrajIO as qdf
 import mosaic.trajio.abfTrajIO as abf
 import mosaic.trajio.binTrajIO as bin
+
+import mosaic.partition.eventSegment as es
+
+import mosaic.process.adept as adept
+import mosaic.process.adept2State as a2s
+import mosaic.process.cusumPlus as cusum
+
 from mosaic.utilities.ionic_current_stats import OpenCurrentDist
 from mosaicweb.plotlyUtils import plotlyWrapper
 
+import datetime
+import time
 import glob
+import json
 import numpy as np
 import pprint
 
@@ -26,17 +42,27 @@ class mosaicAnalysis:
 	"""
 		A class that can setup and run a MOSAIC analysis.
 	"""
-	def __init__(self, settingsDict, dataPath, defaultSettings, sessionID):
-		self.analysisSettingsDict = settingsDict #eval(settingsString)
+	def __init__(self, dataPath, sessionID, **kwargs):
 		self.dataPath = dataPath
-		self.defaultSettings=defaultSettings
 		self.sessionID=sessionID
 
 		self.returnMessageJSON={
 			"warning": ""
 		}
 
+		self._loadSettings(**kwargs)
+
+		self.trajIOHandle=None
+		self.partitionHandle=es.eventSegment
+		self.processHandle=None
+
 		self.trajIOObject=None
+
+		self.dbFile=''
+
+		self.analysisObject=None
+
+		self.analysisRunning=False
 
 	def setupAnalysis(self):
 		try:
@@ -55,21 +81,70 @@ class mosaicAnalysis:
 			raise
 
 	def runAnalysis(self):
-		pass
+		try:
+			fname='eventMD-'+str(datetime.datetime.now().strftime('%Y%m%d-%H%M%S'))+'.sqlite'
 
-	def analysisStatistics(self):
-		pass
+			self.dbFile=format_path(self.dataPath+"/"+fname)
+			# self.dbFile=self.dataPath+"/eventMD-20161208-130302.sqlite"
+
+			self.processHandle=self._processHnd()
+
+			self._writeSettings()
+
+			self.analysisObject=sca.SingleChannelAnalysis(
+				self.dataPath,
+				self.trajIOHandle,
+				None,
+				self.partitionHandle,
+				self.processHandle,
+				dbFilename=fname
+			)
+			self.analysisObject.Run(forkProcess=True)
+
+			time.sleep(3)
+
+			self.analysisRunning=True
+		except:
+			raise
+
+	def stopAnalysis(self):
+		self.analysisObject.Stop()
+
+		time.sleep(3)
+
+		self.analysisRunning=False
+
+	def updateSettings(self, settingsString):
+		self._loadSettings(settingsString=settingsString)
+
+	def _writeSettings(self):
+		with open(self.dataPath+"/.settings", 'w') as f:
+			f.write( json.dumps(self.analysisSettingsDict, indent=4) )
+
+	def _processHnd(self):
+		for k in self.analysisSettingsDict.keys():
+			if k in mosaicAnalysis.processHandleLookup.keys():
+				return mosaicAnalysis.processHandleLookup[k]
+
+	def _loadSettings(self, **kwargs):
+		try:
+			self.analysisSettingsDict=json.loads(kwargs['settingsString'])
+			self.defaultSettings=False
+		except KeyError:
+			sObj=settings.settings(self.dataPath)
+			
+			self.analysisSettingsDict=sObj.settingsDict
+			self.defaultSettings=sObj.defaultSettingsLoaded
 
 	def _configTrajIOObject(self):
 		""" 
 			Configure a trajIO object from the contents of analysisSettingsDict
 		"""		
-		trajIOHandle = None
 		trajIOSettings = {}
 
 		try:
 			if "qdfTrajIO" in self.analysisSettingsDict.keys():
-				trajIOHandle = mosaicAnalysis.trajIOHandleLookup["qdfTrajIO"]
+				self.trajIOHandle = mosaicAnalysis.trajIOHandleLookup["qdfTrajIO"]
 				trajIOSettings = self.analysisSettingsDict["qdfTrajIO"]
 
 				try:
@@ -86,7 +161,7 @@ class mosaicAnalysis:
 
 				self.fileType='QDF'
 			elif "abfTrajIO" in self.analysisSettingsDict.keys():
-				trajIOHandle = mosaicAnalysis.trajIOHandleLookup["abfTrajIO"]
+				self.trajIOHandle = mosaicAnalysis.trajIOHandleLookup["abfTrajIO"]
 				trajIOSettings = self.analysisSettingsDict["abfTrajIO"]
 
 				self.dcOffset=float(self.analysisSettingsDict['abfTrajIO']['dcOffset'])
@@ -94,7 +169,7 @@ class mosaicAnalysis:
 				self._dataEnd("abfTrajIO")
 				self.fileType='ABF'
 			elif "binTrajIO" in self.analysisSettingsDict.keys():
-				trajIOHandle = mosaicAnalysis.trajIOHandleLookup["binTrajIO"]
+				self.trajIOHandle = mosaicAnalysis.trajIOHandleLookup["binTrajIO"]
 				trajIOSettings = self.analysisSettingsDict["binTrajIO"]
 
 				self.dcOffset=float(self.analysisSettingsDict['binTrajIO']['dcOffset'])
@@ -106,7 +181,7 @@ class mosaicAnalysis:
 
 			self.blockSize=float(self.analysisSettingsDict['eventSegment']['blockSizeSec'])
 
-			self.trajIOObject=trajIOHandle(dirname=self.dataPath, **trajIOSettings)
+			self.trajIOObject=self.trajIOHandle(dirname=self.dataPath, **trajIOSettings)
 		except:
 			raise
 
@@ -226,7 +301,15 @@ class mosaicAnalysis:
 			return "binTrajIO"
 
 	trajIOHandleLookup={
-			"qdfTrajIO":	qdf.qdfTrajIO,
-			"abfTrajIO":	abf.abfTrajIO,
-			"binTrajIO":	bin.binTrajIO	
-		}
+		"qdfTrajIO":	qdf.qdfTrajIO,
+		"abfTrajIO":	abf.abfTrajIO,
+		"binTrajIO":	bin.binTrajIO	
+	}
+	processHandleLookup={
+		"adept":		adept.adept,
+		"adept2State":	a2s.adept2State,
+		"cusumPlus":	cusum.cusumPlus
+	}
+
+if __name__ == '__main__':
+	ma=mosaicAnalysis.mosaicAnalysis(s, dataPath, defaultSettings, sessionID) 
