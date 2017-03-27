@@ -75,6 +75,9 @@ class sessionManager(dict):
 	def addDatabaseFile(self, sid, dbFile):
 		self._addAttribute(sid, 'databaseFile', dbFile)
 
+	def addAnalysisRunningFlag(self, sid, analysisRunningFlag):
+		self._addAttribute(sid, 'analysisRunning', analysisRunningFlag)
+
 	def addMOSAICAnalysisObject(self, sid, mosaicAnalysisObj):
 		self._addAttribute(sid, 'mosaicAnalysisObject', mosaicAnalysisObj)
 
