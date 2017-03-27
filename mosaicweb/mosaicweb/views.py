@@ -22,6 +22,7 @@ import numpy as np
 logger=logging.getLogger()
 
 gAnalysisSessions=sessionManager.sessionManager()
+gStartTime=time.time()
 
 @app.route("/")
 def index():
@@ -30,19 +31,6 @@ def index():
 @app.route('/about', methods=['POST'])
 def about():
 	return jsonify(ver=mosaic.__version__, build=mosaic.__build__, uiver='1.0.0', uibuild='58cbed0'), 200
-
-@app.route('/analysis-results', methods=['POST'])
-def analysisResults():
-	global gAnalysisSessions
-
-	try:
-		params = dict(request.get_json())
-		sessionID=params['sessionID']
-		dbfile=gAnalysisSessions.getSessionAttribute(sessionID, 'databaseFile')
-
-		return jsonify( respondingURL="analysis-results", **_histPlot(dbfile) ), 200
-	except (sessionManager.SessionNotFoundError, KeyError):
-		return jsonify( respondingURL='analysis-results', errType='MissingSIDError', errSummary="A valid session ID was not found.", errText="A valid session ID was not found." ), 500
 
 @app.route('/validate-settings', methods=['POST'])
 def validateSettings():
@@ -88,25 +76,85 @@ def newAnalysis():
 		except KeyError:
 			sessionID=gAnalysisSessions.newSession()
 
+		margs={}
 		try:
-			s=json.loads(params['settingsString'])
-		except KeyError, err:
-			sObj=mosaic.settings.settings(dataPath)
-			s=sObj.settingsDict
-			defaultSettings=sObj.defaultSettingsLoaded
+			margs['settingsString']=params['settingsString']
+		except KeyError:
+			pass
 
-		ma=mosaicAnalysis.mosaicAnalysis(s, dataPath, defaultSettings, sessionID) 
+		ma=mosaicAnalysis.mosaicAnalysis(dataPath, sessionID, **margs) 
 
-		gAnalysisSessions.addSettingsString(sessionID, s)
+		gAnalysisSessions.addSettingsString(sessionID, ma.analysisSettingsDict)
 		gAnalysisSessions.addDataPath(sessionID, dataPath)
 		gAnalysisSessions.addMOSAICAnalysisObject(sessionID, ma)
-		gAnalysisSessions.addDatabaseFile(sessionID, mosaic.WebServerDataLocation+"/m40_0916_RbClPEG/eventMD-20161208-130302.sqlite")
 
 		return jsonify(respondingURL='new-analysis', sessionID=sessionID, **ma.setupAnalysis() ), 200
 	except EmptyDataPipeError, err:
 		return jsonify( respondingURL='new-analysis', errType='EmptyDataPipeError', errSummary="End of data.", errText=str(err) ), 500
 	except FileNotFoundError, err:
 		return jsonify( respondingURL='new-analysis', errType='FileNotFoundError', errSummary="Files not found.", errText=str(err) ), 500
+
+@app.route('/start-analysis', methods=['POST'])
+def startAnalysis():
+	global gAnalysisSessions
+
+	try:
+		params = dict(request.get_json())
+		sessionID=params['sessionID']
+		session=gAnalysisSessions[sessionID]
+
+		try:
+			settingsString=params['settingsString'] 
+			gAnalysisSessions.addSettingsString(sessionID, settingsString)
+		except KeyError:
+			pass
+
+		ma=gAnalysisSessions.getSessionAttribute(sessionID, 'mosaicAnalysisObject')
+		ma.updateSettings(settingsString)
+		ma.runAnalysis()
+
+		gAnalysisSessions.addDatabaseFile(sessionID, ma.dbFile)
+		gAnalysisSessions.addAnalysisRunningFlag(sessionID, ma.analysisRunning)
+		
+
+		return jsonify( respondingURL="start-analysis", analysisRunning=ma.analysisRunning), 200
+	except (sessionManager.SessionNotFoundError, KeyError):
+		return jsonify( respondingURL='start-analysis', errType='MissingSIDError', errSummary="A valid session ID was not found.", errText="A valid session ID was not found." ), 500
+
+@app.route('/stop-analysis', methods=['POST'])
+def stopAnalysis():
+	global gAnalysisSessions
+
+	try:
+		params = dict(request.get_json())
+		sessionID=params['sessionID']
+		session=gAnalysisSessions[sessionID]
+
+		ma=gAnalysisSessions.getSessionAttribute(sessionID, 'mosaicAnalysisObject')
+		ma.stopAnalysis()
+
+		gAnalysisSessions.addAnalysisRunningFlag(sessionID, ma.analysisRunning)
+
+		return jsonify( respondingURL="stop-analysis", analysisRunning=ma.analysisRunning, newDataAvailable=True ), 200
+	except (sessionManager.SessionNotFoundError, KeyError):
+		return jsonify( respondingURL='stop-analysis', errType='MissingSIDError', errSummary="A valid session ID was not found.", errText="A valid session ID was not found." ), 500
+
+@app.route('/analysis-results', methods=['POST'])
+def analysisResults():
+	global gAnalysisSessions
+
+	try:
+		params = dict(request.get_json())
+		sessionID=params['sessionID']
+		dbfile=gAnalysisSessions.getSessionAttribute(sessionID, 'databaseFile')
+
+		ma=gAnalysisSessions.getSessionAttribute(sessionID, 'mosaicAnalysisObject')
+		gAnalysisSessions.addAnalysisRunningFlag(sessionID, ma.analysisRunning)
+
+		return jsonify( respondingURL="analysis-results", analysisRunning=ma.analysisRunning, **_histPlot(dbfile) ), 200
+	except (sessionManager.SessionNotFoundError, KeyError):
+		return jsonify( respondingURL='analysis-results', errType='MissingSIDError', errSummary="A valid session ID was not found.", errText="A valid session ID was not found." ), 500
+
 
 @app.route('/analysis-statistics', methods=['POST'])
 def analysisStats():
@@ -124,6 +172,14 @@ def analysisStats():
 	except (sessionManager.SessionNotFoundError, KeyError):
 		return jsonify( respondingURL='analysis-statistics', errType='MissingSIDError', errSummary="A valid session ID was not found.", errText="A valid session ID was not found." ), 500
 
+@app.route('/poll-analysis-status', methods=['POST'])
+def pollAnalysisStatus():
+	global gStartTime
+
+	if (time.time()-gStartTime)%10 < 5.0:
+		return jsonify( respondingURL="poll-analysis-status", newDataAvailable=True ), 200
+	else:
+		return jsonify( respondingURL="poll-analysis-status", newDataAvailable=False ), 200
 
 @app.route('/list-data-folders', methods=['POST'])
 def listDataFolders():
@@ -185,7 +241,7 @@ def _histPlot(dbFile):
 
 	layout={}
 	# layout['title']='Blockade Depth Histogram'
-	layout['xaxis']= { 'title': '<i>/<i_0>', 'type': 'linear' }
+	layout['xaxis']= { 'title': 'i/i<sub>0</sub>', 'type': 'linear' }
 	layout['yaxis']= { 'title': 'counts', 'type': 'linear' }
 	layout['paper_bgcolor']='rgba(0,0,0,0)'
 	layout['plot_bgcolor']='rgba(0,0,0,0)'
@@ -204,8 +260,6 @@ def _histPlot(dbFile):
 	dat['layout']=layout
 	dat['options']={'displayLogo': False}
 	dat['stats']=stats
-
-	dat['analysisRunning']=True
 
 	return dat
 
