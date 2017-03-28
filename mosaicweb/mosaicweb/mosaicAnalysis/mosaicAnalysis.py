@@ -52,6 +52,10 @@ class mosaicAnalysis:
 
 		self._loadSettings(**kwargs)
 
+		self.trajIO=''
+		self.partitionAlgorithm='eventSegment'
+		self.processingAlgorithm=''
+
 		self.trajIOHandle=None
 		self.partitionHandle=es.eventSegment
 		self.processHandle=None
@@ -124,6 +128,8 @@ class mosaicAnalysis:
 	def _processHnd(self):
 		for k in self.analysisSettingsDict.keys():
 			if k in mosaicAnalysis.processHandleLookup.keys():
+				self.processingAlgorithm=k
+
 				return mosaicAnalysis.processHandleLookup[k]
 
 	def _loadSettings(self, **kwargs):
@@ -144,8 +150,8 @@ class mosaicAnalysis:
 
 		try:
 			if "qdfTrajIO" in self.analysisSettingsDict.keys():
-				self.trajIOHandle = mosaicAnalysis.trajIOHandleLookup["qdfTrajIO"]
-				trajIOSettings = self.analysisSettingsDict["qdfTrajIO"]
+				self.trajIO="qdfTrajIO"
+				self.fileType='QDF'
 
 				try:
 					ebsSettings=EBSStateFileDict.EBSStateFileDict(glob.glob(self.dataPath+'/*.txt')[0])
@@ -154,30 +160,21 @@ class mosaicAnalysis:
 					self.analysisSettingsDict["qdfTrajIO"]["Cfb"]=float(ebsSettings['FB Capacitance'])
 				except:
 					self.returnMessageJSON['warning']="Using manually defined Rfb and Cfb values for QDF data."
-
-				self.dcOffset=float(self.analysisSettingsDict['qdfTrajIO']['dcOffset'])
-				self.start=float(self.analysisSettingsDict['qdfTrajIO']['start'])
-				self._dataEnd("qdfTrajIO")
-
-				self.fileType='QDF'
 			elif "abfTrajIO" in self.analysisSettingsDict.keys():
-				self.trajIOHandle = mosaicAnalysis.trajIOHandleLookup["abfTrajIO"]
-				trajIOSettings = self.analysisSettingsDict["abfTrajIO"]
-
-				self.dcOffset=float(self.analysisSettingsDict['abfTrajIO']['dcOffset'])
-				self.start=float(self.analysisSettingsDict['abfTrajIO']['start'])
-				self._dataEnd("abfTrajIO")
+				self.trajIO="abfTrajIO"
 				self.fileType='ABF'
 			elif "binTrajIO" in self.analysisSettingsDict.keys():
-				self.trajIOHandle = mosaicAnalysis.trajIOHandleLookup["binTrajIO"]
-				trajIOSettings = self.analysisSettingsDict["binTrajIO"]
-
-				self.dcOffset=float(self.analysisSettingsDict['binTrajIO']['dcOffset'])
-				self.start=float(self.analysisSettingsDict['binTrajIO']['start'])
-				self._dataEnd("binTrajIO")
+				self.trajIO="binTrajIO"
 				self.fileType='BIN'
 			else:
 				raise DataTypeNotSupportedError("The supplied data type is not supported.")
+
+			self.trajIOHandle = mosaicAnalysis.trajIOHandleLookup[self.trajIO]
+			trajIOSettings = self.analysisSettingsDict[self.trajIO]
+
+			self.dcOffset=float(self.analysisSettingsDict[self.trajIO]['dcOffset'])
+			self.start=float(self.analysisSettingsDict[self.trajIO]['start'])
+			self._dataEnd(self.trajIO)
 
 			self.blockSize=float(self.analysisSettingsDict['eventSegment']['blockSizeSec'])
 

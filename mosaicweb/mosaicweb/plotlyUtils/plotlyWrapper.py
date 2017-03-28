@@ -19,6 +19,18 @@ class plotlyTrace(dict):
 										'line': { 'color': 'rgb(40, 53, 147)', 'width': '1' }, 
 										'name': 'ionic current'
 									},
+		"NormalEvent" : {
+										'mode': 'markers',
+										'type': 'scatter', 
+										'marker': { 'color': 'rgb(40, 53, 147)', 'size': '8' }, 
+										'name': 'ionic current'
+									},
+		"ErrorEvent" : {
+										'mode': 'markers',
+										'type': 'scatter', 
+										'marker': { 'color': 'rgb(255, 87, 34)', 'size': '8' }, 
+										'name': 'ionic current'
+									},
 		"MeanIonicCurrent" : {
 										'mode': 'scatter', 
 										'line': { 'color': 'rgb(120, 120, 120)', 'width': '2', 'dash': 'dash' }, 
@@ -39,7 +51,6 @@ class plotlyLayout(dict):
 			self['margin']={'l':'50', 'r':'50', 't':'0', 'b':'50'}
 			self['showlegend']=False
 			self['autosize']=True
-			self['height']=350
 			self['side']='right'
 			
 			self.update(plotlyLayout.layoutConfig[layoutType])
@@ -64,7 +75,7 @@ class plotlyLayout(dict):
 											"zerolinecolor": "rgba(0,0,0,0)"
 										},
 								"yaxis" : {
-											"title": "i (pA)",
+											"title": "|i| (pA)",
 											"titlefont": {
 												"family": 'Roboto, Helvetica',
 												"size": 14,
@@ -75,8 +86,40 @@ class plotlyLayout(dict):
 												"size": 14,
 												"color": '#7f7f7f'
 											}
-										}
+										},
+								"height" : 350
 
+							},
+		"EventViewLayout" : {
+								"xaxis" : {
+											"title": "t (s)", 
+											"titlefont": {
+												"family": 'Roboto, Helvetica',
+												"size": 14,
+												"color": '#7f7f7f'
+											},
+											"tickfont": {
+												"family": 'Roboto, Helvetica',
+												"size": 14,
+												"color": '#7f7f7f'
+											},
+											"zerolinecolor": "rgba(0,0,0,0)"
+										},
+								"yaxis" : {
+											"title": "|i| (pA)",
+											"titlefont": {
+												"family": 'Roboto, Helvetica',
+												"size": 14,
+												"color": '#7f7f7f'
+											},
+											"tickfont": {
+												"family": 'Roboto, Helvetica',
+												"size": 14,
+												"color": '#7f7f7f'
+											}
+										},
+								"height" : 180,
+								"width" : 320
 							}
 	}
 	

@@ -1,9 +1,10 @@
 <md-dialog aria-label="Analysis Log" flex="30">
-	<form>
+	<form name="eventViewerForm">
 		<md-toolbar class="md-primary">
 			<div class="md-toolbar-tools">
-				<h3><em>Event Viewer ({{eventNumber}}/10000)</em></h3>
+				<h3><em>Event Viewer ({{model.eventNumber}}/{{model.recordCount}})</em></h3>
 				<span flex></span>
+				<md-progress-circular md-mode="indeterminate" class="md-accent" md-diameter="24" ng-if="model.plotUpdating"></md-progress-circular>
 				<md-button class="md-icon-button" ng-click="cancel()">
 					<md-icon md-font-set="material-icons md-24">close</md-icon>
 				</md-button>
@@ -11,18 +12,37 @@
 		</md-toolbar>
 		<md-dialog-content style="max-width:800px;max-height:810px;">
 			<div flex layout="column" layout-align="center center">
-				<img width='100%' src='/static/img/contour.png'>
-				<div flex="50" layout="row">
-					<md-button class="md-icon-button" ng-click="eventBack()">
-						<md-icon md-font-set="material-icons md-24">arrow_back</md-icon>
-					</md-button>
+				<div layout-align="center center" style="margin: 6px; padding:6px; margin-bottom:2px;">
+					<plotly plotly-data="model.eventViewPlot.data" plotly-layout="model.eventViewPlot.layout" plotly-options="model.eventViewPlot.options"></plotly>
+				</div>
+				<div flex="60" layout="row">
+					<md-input-container layout-align="start end">
+						<md-button class="md-icon-button" ng-click="model.eventBack()">
+							<md-icon md-font-set="material-icons md-24">arrow_back</md-icon>
+						</md-button>
+					</md-input-container>
 					<md-input-container md-block style="max-width: 50px; align: center">
 						<label>Event</label>
-						<input type="number" id="" name="" ng-model="eventNumber">
+						<input type="number" name="eventNumber" min="1" max="{{model.recordCount}}" ng-model="model.eventNumber" ng-model-options="{ updateOn: 'blur', allowInvalid: false}">
+						<div ng-messages="eventViewerForm.eventNumber.$error" multiple md-auto-hide="false">
+							<div ng-message="required">
+								A valid event number is required.
+							</div>
+
+							<div ng-message="min">
+								Event number must be greater than 1.
+							</div>
+
+							<div ng-message="max">
+								Event number must be less than {{model.recordCount}}.
+							</div>
+						</div>
 					</md-input-container>
-					<md-button class="md-icon-button" ng-click="eventForward()">
-						<md-icon md-font-set="material-icons md-24">arrow_forward</md-icon>
-					</md-button>
+					<md-input-container layout-align="end end">
+						<md-button class="md-icon-button" ng-click="model.eventForward()">
+							<md-icon md-font-set="material-icons md-24">arrow_forward</md-icon>
+						</md-button>
+					</md-input-container>
 				</div>
 			</div>
 		</md-dialog-content>

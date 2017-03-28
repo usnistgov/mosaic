@@ -7,7 +7,7 @@ from mosaic.utilities.analysis import caprate
 from mosaic.trajio.metaTrajIO import EmptyDataPipeError, FileNotFoundError
 import mosaic.settings as settings
 
-from mosaicweb.mosaicAnalysis import mosaicAnalysis, analysisStatistics
+from mosaicweb.mosaicAnalysis import mosaicAnalysis, analysisStatistics, analysisTimeSeries
 from mosaicweb.sessionManager import sessionManager
 
 import pprint
@@ -73,26 +73,33 @@ def newAnalysis():
 		defaultSettings=False
 		params = dict(request.get_json())
 
-		dataPath = mosaic.WebServerDataLocation+'/'+params.get('dataPath', '')
+		dataPath = params.get('dataPath', '')
 		settingsString = params.get('settingsString', '')
 		sessionID=params.get('sessionID', '')
 
-		if dataPath and not sessionID:		# brand new session
+		if dataPath != "":		# brand new session
+			# print "brand new session: ", dataPath, settingsString, sessionID	
 			sessionID=gAnalysisSessions.newSession()
-			ma=mosaicAnalysis.mosaicAnalysis(dataPath, sessionID) 
+			ma=mosaicAnalysis.mosaicAnalysis(mosaic.WebServerDataLocation+'/'+dataPath, sessionID) 
 
-			gAnalysisSessions.addDataPath(sessionID, dataPath)
+			gAnalysisSessions.addDataPath(sessionID, mosaic.WebServerDataLocation+'/'+dataPath)
 			gAnalysisSessions.addMOSAICAnalysisObject(sessionID, ma)
-		elif sessionID and settingsString:	# update settings
+		elif sessionID != "" and settingsString != "":	# update settings
+			# print "update settings: ", dataPath, settingsString, sessionID
 			ma=gAnalysisSessions.getSessionAttribute(sessionID, 'mosaicAnalysisObject')
 			ma.updateSettings(settingsString)
 
 			gAnalysisSessions.addSettingsString(sessionID, ma.analysisSettingsDict)
-		elif sessionID and not settingsString:  # a session ID loaded from a route
+		elif sessionID != "" and settingsString == "":  # a session ID loaded from a route
+			# print "session id from route: ", dataPath, settingsString, sessionID
 			ma=gAnalysisSessions.getSessionAttribute(sessionID, 'mosaicAnalysisObject')
 		else:
 			raise InvalidPOSTRequest('An invalid POST request was received.')
 		
+		# print params
+		# print 
+		# print 
+
 
 		return jsonify(respondingURL='new-analysis', sessionID=sessionID, **ma.setupAnalysis() ), 200
 	except EmptyDataPipeError, err:
@@ -179,6 +186,25 @@ def analysisStats():
 		return jsonify(respondingURL='analysis-statistics', **a.analysisStatistics()), 200
 	except (sessionManager.SessionNotFoundError, KeyError):
 		return jsonify( respondingURL='analysis-statistics', errType='MissingSIDError', errSummary="A valid session ID was not found.", errText="A valid session ID was not found." ), 500
+
+@app.route('/event-view', methods=['POST'])
+def eventView():
+	global gAnalysisSessions
+
+	try:
+		params = dict(request.get_json())
+
+		sessionID=params['sessionID']
+		eventNumber=params['eventNumber']
+		dbfile=gAnalysisSessions.getSessionAttribute(sessionID, 'databaseFile')
+
+		a=analysisTimeSeries.analysisTimeSeries(dbfile, eventNumber)
+
+		return jsonify(respondingURL='event-view', **a.timeSeries()), 200
+	except (sessionManager.SessionNotFoundError, KeyError), err:
+		print err
+		return jsonify( respondingURL='event-view', errType='MissingSIDError', errSummary="A valid session ID was not found.", errText="A valid session ID was not found." ), 500
+
 
 @app.route('/poll-analysis-status', methods=['POST'])
 def pollAnalysisStatus():

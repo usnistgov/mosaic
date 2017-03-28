@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('mosaicApp')
-	.factory('AnalysisFactory', function($http, $q, $routeParams, mosaicUtilsFactory, mosaicConfigFactory, analysisSetupFactory, AnalysisStatisticsFactory) {
+	.factory('AnalysisFactory', function($http, $q,mosaicUtilsFactory, mosaicConfigFactory, analysisSetupFactory, AnalysisStatisticsFactory) {
 			var factory = {};
 
 			factory.bdQuery = "select BlockDepth from metadata where ProcessingStatus='normal' and ResTime > 0.02";
@@ -77,11 +77,6 @@ angular.module('mosaicApp')
 
 				factory.analysisSettings = params;
 
-				// Switch session ID when explicitly set in route.
-				if ($routeParams.sid != mosaicConfigFactory.sessionID) {
-					mosaicConfigFactory.sessionID=$routeParams.sid;
-				}
-
 				mosaicUtilsFactory.post('/analysis-results', params)
 					.then(function (response, status) {	// success
 						factory.analysisPlot=response.data;
@@ -99,7 +94,7 @@ angular.module('mosaicApp')
 			return factory;
 		}
 	)
-	.controller('AnalysisCtrl', function($scope, $mdDialog, $location, AnalysisFactory, AnalysisStatisticsFactory, analysisSetupFactory, mosaicConfigFactory) {
+	.controller('AnalysisCtrl', function($scope, $mdDialog, $location,  $routeParams, AnalysisFactory, AnalysisStatisticsFactory, analysisSetupFactory, mosaicConfigFactory) {
 		$scope.formContainer = {};
 
 		$scope.model = AnalysisFactory;
@@ -110,7 +105,14 @@ angular.module('mosaicApp')
 
 		$scope.customFullscreen = true;
 
-		$scope.model.updateAnalysisData({});
+		$scope.init = function() {
+			// Switch session ID when explicitly set in route.
+			if ($routeParams.sid != mosaicConfigFactory.sessionID) {
+				mosaicConfigFactory.sessionID=$routeParams.sid;
+				$scope.model.updateAnalysisData({});
+			}
+		};
+		$scope.init();
 
 		// watch
 		$scope.$watch('formContainer.analysisHistogramForm.bdQuery.$pristine', function() {
@@ -169,7 +171,7 @@ angular.module('mosaicApp')
 		$scope.showEventViewer = function(ev) {
 			$mdDialog.show({
 				locals:{eventNumber: $scope.model.eventNumber},
-				controller: EventViewController,
+				controller: 'eventViewerCtrl',
 				templateUrl: 'static/partials/eventviewer.tmpl.html',
 				parent: angular.element(document.body),
 				targetEvent: ev,
@@ -190,20 +192,4 @@ angular.module('mosaicApp')
 			};
 		}
 
-		function EventViewController($scope, $mdDialog, eventNumber) { 
-			$scope.eventNumber = eventNumber;
-			
-			$scope.cancel = function() {
-				$mdDialog.cancel();
-			};
-
-			$scope.eventForward = function() {
-				$scope.eventNumber++;
-			};
-			$scope.eventBack = function() {
-				$scope.eventNumber--;
-				$scope.eventNumber=Math.max(0, $scope.eventNumber);
-				
-			};
-		};
 	});
