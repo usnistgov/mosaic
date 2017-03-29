@@ -30,8 +30,8 @@ class errors(dict):
 	error_dict={
 		"eInvalidEvent" 		: "A valid event was not found in the data.",
 		"eInvalidStates" 		: "Fewer than two states were identified in the event.",
-		"eNegativeEventDelay" 	: "The residence times of one ore more states are negative.",
-		"eInvalidResTime" 		: "The residence times of one ore more states are negative.",
+		"eNegativeEventDelay" 	: "The residence times of one or more states are negative.",
+		"eInvalidResTime" 		: "The residence times of one or more states are negative.",
 		"eInvalidStartTime" 	: "The start time estimate of the event is past the end of the event data.",
 		"eMaxLength" 			: "The event length exceeds the 'MaxEventLength' setting.",
 		"eFitUserStop" 			: "Analysis was stopped by the user.",
