@@ -11,6 +11,7 @@
 	opacity: 1;
 }
 
-/*.selectedIndex {
-	background: #dddddd;
-}*/
+._md-center {
+	left: 50%;
+	transform: translate3d(-50%, 0, 0);
+}

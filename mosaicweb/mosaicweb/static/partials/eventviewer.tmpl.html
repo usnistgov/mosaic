@@ -1,4 +1,4 @@
-<md-dialog aria-label="Analysis Log" flex="30">
+<md-dialog aria-label="Analysis Log" flex="40" ng-keyup="key($event)">
 	<form name="eventViewerForm">
 		<md-toolbar class="md-primary">
 			<div class="md-toolbar-tools">
@@ -11,11 +11,11 @@
 			</div>
 		</md-toolbar>
 		<md-dialog-content style="max-width:800px;max-height:810px;">
-			<div flex layout="column" layout-align="center center">
+			<div flex layout="column" layout-align="center center" id="toastAnchor">
 				<div layout-align="center center" style="margin: 6px; padding:6px; margin-bottom:2px;">
 					<plotly plotly-data="model.eventViewPlot.data" plotly-layout="model.eventViewPlot.layout" plotly-options="model.eventViewPlot.options"></plotly>
 				</div>
-				<div flex="60" layout="row">
+				<div flex="60" layout="row" ng-disabled="model.plotUpdating">
 					<md-input-container layout-align="start end">
 						<md-button class="md-icon-button" ng-click="model.eventBack()">
 							<md-icon md-font-set="material-icons md-24">arrow_back</md-icon>
@@ -43,6 +43,9 @@
 							<md-icon md-font-set="material-icons md-24">arrow_forward</md-icon>
 						</md-button>
 					</md-input-container>
+				</div>
+				<div ng-if="model.errorText!=''">
+					<br>
 				</div>
 			</div>
 		</md-dialog-content>

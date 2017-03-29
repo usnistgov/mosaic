@@ -1,12 +1,13 @@
 'use strict';
 
 angular.module('mosaicApp')
-	.factory('EventViewerFactory', function($http, $q, mosaicUtilsFactory, mosaicConfigFactory) {
+	.factory('EventViewerFactory', function($http, $q, $mdToast, mosaicUtilsFactory, mosaicConfigFactory) {
 			var factory = {};
 
 			factory.eventNumber=1;
 			factory.recordCount=10;
 			factory.eventViewPlot='';
+			factory.errorText='';
 
 			factory.plotUpdating=false;
 
@@ -18,7 +19,13 @@ angular.module('mosaicApp')
 					factory.eventViewPlot=response.data.eventViewPlot;
 					factory.eventNumber=response.data.eventNumber;
 					factory.recordCount=response.data.recordCount;
-					
+					factory.errorText=response.data.errorText;
+
+					if (factory.errorText != '') {
+						factory.showErrorToast();
+					} else {
+						$mdToast.hide();
+					};
 					factory.plotUpdating=false;
 				}, function(error) {
 					console.log(error);
@@ -35,6 +42,23 @@ angular.module('mosaicApp')
 				factory.eventNumber=Math.max(1, factory.eventNumber);
 			};
 
+			factory.showErrorToast = function() {
+				var toast = $mdToast.simple()
+					.position('bottom center')
+					.parent("#toastAnchor")
+					.textContent(factory.errorText)
+					.action('DISMISS')
+					.highlightAction(true)
+					.highlightClass('md-warn')
+					.hideDelay(0);
+
+					$mdToast.show(toast).then(function(response) {
+						if ( response == 'ok' ) {
+								factory.errorText='';
+						}
+					}, function() {});
+			};
+
 			return factory;
 		}
 	)
@@ -49,6 +73,13 @@ angular.module('mosaicApp')
 		$scope.$watch('model.eventNumber', function() {
 			$scope.model.updateEvientView();
 		});
+
+		$scope.key=function($event) {
+			if ($event.keyCode == 39) 
+				$scope.model.eventForward();
+			else if ($event.keyCode == 37)
+				$scope.model.eventBack();
+		};
 
 		$scope.cancel = function() {
 			$mdDialog.cancel();

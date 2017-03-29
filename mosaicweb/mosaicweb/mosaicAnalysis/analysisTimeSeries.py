@@ -10,6 +10,8 @@
 """
 import mosaic.mdio.sqlite3MDIO as sqlite
 from mosaic.utilities.sqlQuery import query, rawQuery
+import mosaic.errors as errors
+import mosaic.utilities.fit_funcs as fit_funcs
 
 from mosaicweb.plotlyUtils import plotlyWrapper
 
@@ -28,13 +30,22 @@ class analysisTimeSeries(dict):
 		self.analysisDB = analysisDB
 
 		self.FsHz, self.procAlgorithm = rawQuery(self.analysisDB, "select FsHz, ProcessingAlgorithm from analysisinfo")[0]
-		self.qstr="select ProcessingStatus, TimeSeries from metadata where RecIdx is {0}".format(index)
+		self.qstr=""
+
+		self.errTextObject=errors.errors()
 
 		self.returnMessageJSON={
 			"warning": "",
 			"recordCount": rawQuery(self.analysisDB, "select COUNT(recIDX) from metadata")[0][0],
-			"eventNumber": index
+			"eventNumber": index,
+			"errorText": ""
 		}
+
+		# setup hash tables and funcs used in this class
+		self._setupDict(index)
+		self._setupFitFuncs()
+
+
 
 	def timeSeries(self):
 		q=query(self.analysisDB, self.qstr)[0]
@@ -50,9 +61,24 @@ class analysisTimeSeries(dict):
 
 		dat={}
 		if q[0]=='normal':
-			dat['data'] = [ plotlyWrapper.plotlyTrace(list(xdat), list(ydat), "NormalEvent") ]
+			if self.fitFuncHnd:
+				# xfit=np.arange(0,float((len(q[1]))/self.FsHz), float(1/(100*self.FsHz)))
+				xfit=np.arange(0, dt*len(ydat), dt)
+				yfit=self.fitFuncHnd( *eval(self.fitFuncArgs) )
+
+			if self.stepFuncHnd:
+				# xstep=np.arange(0,float((len(q[1]))/self.FsHz), float(1/(100*self.FsHz)))
+				xstep=np.arange(0, dt*len(ydat), dt)
+				ystep=self.stepFuncHnd( *eval(self.stepFuncArgs) )
+
+			dat['data'] = [ 
+						plotlyWrapper.plotlyTrace(list(xdat), list(ydat), "NormalEvent"),
+						plotlyWrapper.plotlyTrace(list(xfit), list(yfit), "NormalEventFit"),
+						plotlyWrapper.plotlyTrace(list(xstep), list(ystep), "NormalEventStep")
+					]
 		else:
 			dat['data'] = [ plotlyWrapper.plotlyTrace(list(xdat), list(ydat), "ErrorEvent") ]
+			self.returnMessageJSON['errorText']=self.errTextObject[q[0]]
 
 		dat['layout']=plotlyWrapper.plotlyLayout("EventViewLayout")
 		dat['options']=plotlyWrapper.plotlyOptions()
@@ -68,12 +94,68 @@ class analysisTimeSeries(dict):
 		else:
 			return int(round(dataLen/500.))
 
+	def _setupFitFuncs(self):	
+		# Generate the query string based on the algorithm in the database
+		self.qstr=self.queryStringDict[self.procAlgorithm]
+
+		# Setup the fit function based on the algorithm
+		self.fitFuncHnd=self.fitFuncHndDict[self.procAlgorithm]
+		self.fitFuncArgs=self.fitFuncArgsDict[self.procAlgorithm]
+
+		self.stepFuncHnd=self.stepFuncHndDict[self.procAlgorithm]
+		self.stepFuncArgs=self.stepFuncArgsDict[self.procAlgorithm]
+
+		self.bdFuncArgs=self.blockDepthArgsDict[self.procAlgorithm]
+
+	def _setupDict(self, eventNumber):
+		self.queryStringDict={
+			"adept2State" 	: "select ProcessingStatus, TimeSeries, RCConstant1, RCConstant2, EventStart, EventEnd, BlockedCurrent, OpenChCurrent from metadata  where RecIdx is {0}".format(eventNumber),
+			"adept" 		: "select ProcessingStatus, TimeSeries, RCConstant, EventDelay, CurrentStep, OpenChCurrent from metadata  where RecIdx is {0}".format(eventNumber),
+			"cusumPlus" 	: "select ProcessingStatus, TimeSeries, EventDelay, CurrentStep, OpenChCurrent from metadata  where RecIdx is {0}".format(eventNumber)
+		}
+
+		self.fitFuncHndDict={
+			"adept2State" 	: fit_funcs.stepResponseFunc,
+			"adept" 		: fit_funcs.multiStateFunc,
+			"cusumPlus" 	: None
+		}
+
+		self.fitFuncArgsDict={
+			"adept2State" 	: "[xfit*1000, q[2], q[3], q[4], q[5], abs(q[7]-q[6]), q[7]]",
+			"adept" 		: "[xfit*1000, q[2], q[3], q[4], q[5], len(q[3])]",
+			"cusumPlus" 	: "[]"
+		}
+
+		self.stepFuncHndDict={
+			"adept2State" 	: fit_funcs.multiStateStepFunc,
+			"adept" 		: fit_funcs.multiStateStepFunc,
+			"cusumPlus"		: fit_funcs.multiStateStepFunc
+		}
+
+		self.stepFuncArgsDict={
+			"adept2State" 	: "[xstep*1000, [q[4], q[5]], [-abs(q[7]-q[6]), abs(q[7]-q[6])], q[7], 2]",
+			"adept" 		: "[xstep*1000, q[3], q[4], q[5], len(q[3])]",
+			"cusumPlus" 	: "[xstep*1000, q[2], q[3], q[4], len(q[2])]"
+		}
+
+		self.blockDepthArgsDict={
+			"adept2State" 	: "[[-abs(q[7]-q[6])], q[7], [q[4],q[5]], 1]",
+			"adept" 		: "[q[4], q[5], q[3], len(q[3])-1]",
+			"cusumPlus" 	: "[q[3], q[4], q[2], len(q[2])-1]"
+		}
+
 if __name__ == '__main__':
 	import mosaic
 	import time
 
+	for i in range(1,1000):
+		a=analysisTimeSeries(mosaic.WebServerDataLocation+"/m40_0916_RbClPEG/eventMD-20161208-130302.sqlite", i)
+		t=a.timeSeries()
+		if t["errorText"] != "":
+			print i, t["errorText"]
+
 	times=np.array([], dtype=np.float)
-	for i in range(1,5000):
+	for i in range(1,1000):
 		t1=time.time()
 		a=analysisTimeSeries(mosaic.WebServerDataLocation+"/m40_0916_RbClPEG/eventMD-20161208-130302.sqlite",i)
 		t=a.timeSeries()

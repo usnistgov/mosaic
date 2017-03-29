@@ -25,10 +25,20 @@ class plotlyTrace(dict):
 										'marker': { 'color': 'rgb(40, 53, 147)', 'size': '8' }, 
 										'name': 'ionic current'
 									},
+		"NormalEventFit" : {
+										'mode': 'scatter', 
+										# 'line': { 'color': 'rgb(255, 80, 77)', 'width': '2'}
+										'line': { 'color': 'rgb(255, 41, 41)', 'width': '2'}
+										
+									},
+		"NormalEventStep" : {
+										'mode': 'scatter',
+										'line': { 'color': 'rgb(120, 120, 120)', 'width': '2', 'dash': 'dash' }
+									},
 		"ErrorEvent" : {
 										'mode': 'markers',
 										'type': 'scatter', 
-										'marker': { 'color': 'rgb(255, 87, 34)', 'size': '8' }, 
+										'marker': { 'color': 'rgb(255, 41, 41)', 'size': '8' }, 
 										'name': 'ionic current'
 									},
 		"MeanIonicCurrent" : {
@@ -118,8 +128,9 @@ class plotlyLayout(dict):
 												"color": '#7f7f7f'
 											}
 										},
-								"height" : 180,
-								"width" : 320
+								"height" : 225,
+								"width" : 400,
+								"hovermode": "false"
 							}
 	}
 	
