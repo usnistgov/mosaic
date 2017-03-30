@@ -2,13 +2,14 @@ from mosaicweb import app
 from flask import send_file, make_response, jsonify, request
 
 import mosaic
-from mosaic.utilities.sqlQuery import query
+from mosaic.utilities.sqlQuery import query, rawQuery
 from mosaic.utilities.analysis import caprate
 from mosaic.trajio.metaTrajIO import EmptyDataPipeError, FileNotFoundError
 import mosaic.settings as settings
 
 from mosaicweb.mosaicAnalysis import mosaicAnalysis, analysisStatistics, analysisTimeSeries
 from mosaicweb.sessionManager import sessionManager
+from mosaicweb.utils.utils import gzipped
 
 import pprint
 import time
@@ -66,6 +67,7 @@ def processingAlgorithm():
 		return jsonify( respondingURL='processing-algorithm', errType='UnknownAlgorithmError', errSummary="Data Processing Algorithm not found.", errText="Data Processing Algorithm not found." ), 500
 
 @app.route('/new-analysis', methods=['POST'])
+@gzipped
 def newAnalysis():
 	global gAnalysisSessions
 
@@ -155,6 +157,7 @@ def stopAnalysis():
 		return jsonify( respondingURL='stop-analysis', errType='MissingSIDError', errSummary="A valid session ID was not found.", errText="A valid session ID was not found." ), 500
 
 @app.route('/analysis-results', methods=['POST'])
+@gzipped
 def analysisResults():
 	global gAnalysisSessions
 
@@ -187,7 +190,24 @@ def analysisStats():
 	except (sessionManager.SessionNotFoundError, KeyError):
 		return jsonify( respondingURL='analysis-statistics', errType='MissingSIDError', errSummary="A valid session ID was not found.", errText="A valid session ID was not found." ), 500
 
+@app.route('/analysis-log', methods=['POST'])
+def analysisLog():
+	global gAnalysisSessions
+
+	try:
+		params = dict(request.get_json())
+		
+		sessionID=params['sessionID']
+		dbfile=gAnalysisSessions.getSessionAttribute(sessionID, 'databaseFile')
+
+		logstr=(rawQuery(dbfile, "select logstring from analysislog")[0][0]).replace(str(mosaic.WebServerDataLocation), "<Data Root>")
+
+		return jsonify(respondingURL='analysis-log', logText=logstr), 200
+	except (sessionManager.SessionNotFoundError, KeyError):
+		return jsonify( respondingURL='analysis-statistics', errType='MissingSIDError', errSummary="A valid session ID was not found.", errText="A valid session ID was not found." ), 500
+
 @app.route('/event-view', methods=['POST'])
+# @gzipped
 def eventView():
 	global gAnalysisSessions
 

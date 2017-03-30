@@ -197,10 +197,13 @@ class mosaicAnalysis:
 			FsHz=self.trajIOObject.FsHz
 			
 			tdat = self.trajIOObject.popdata(int(self.blockSize*FsHz))
+			decimate=self._calculateDecimation(len(tdat))
+			
+			dt=(1/float(FsHz))*decimate
 			dataPolarity=float(np.sign(np.mean(tdat)))
 
-			ydat=(dataPolarity*tdat) - self.dcOffset
-			xdat=np.arange(self.start, self.start+self.blockSize, 1/float(FsHz))
+			ydat=((dataPolarity*tdat) - self.dcOffset)[::decimate]
+			xdat=np.arange(self.start, self.start+self.blockSize, dt)
 
 			self._openChanStats(ydat)
 
@@ -242,6 +245,13 @@ class mosaicAnalysis:
 		except:
 			raise
 
+	def _calculateDecimation(self, dataLen):
+		d=(self.trajIOObject.FsHz)/10
+
+		if dataLen < d:
+			return 1
+		else:
+			return int(round(dataLen/d))
 
 	def _openChanStats(self, ydat):
 		try:

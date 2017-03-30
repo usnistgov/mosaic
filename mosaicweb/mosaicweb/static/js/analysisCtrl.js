@@ -94,7 +94,7 @@ angular.module('mosaicApp')
 			return factory;
 		}
 	)
-	.controller('AnalysisCtrl', function($scope, $mdDialog, $location,  $routeParams, AnalysisFactory, AnalysisStatisticsFactory, analysisSetupFactory, mosaicConfigFactory) {
+	.controller('AnalysisCtrl', function($scope, $mdDialog, $location,  $routeParams, AnalysisFactory, AnalysisStatisticsFactory, analysisSetupFactory, mosaicConfigFactory, mosaicUtilsFactory) {
 		$scope.formContainer = {};
 
 		$scope.model = AnalysisFactory;
@@ -134,7 +134,7 @@ angular.module('mosaicApp')
 
 		$scope.showAnalysisLog = function(ev) {
 			$mdDialog.show({
-				controller: DialogController,
+				controller: LogController,
 				templateUrl: 'static/partials/analysislog.tmpl.html',
 				parent: angular.element(document.body),
 				targetEvent: ev,
@@ -154,6 +154,7 @@ angular.module('mosaicApp')
 
 		$scope.showAnalysisStatistics = function(ev) {
 			$mdDialog.show({
+				locals:{mosaicUtilsFactory: mosaicUtilsFactory},
 				controller: 'AnalysisStatisticsCtrl',
 				templateUrl: 'static/partials/analysisstats.tmpl.html',
 				parent: angular.element(document.body),
@@ -170,7 +171,6 @@ angular.module('mosaicApp')
 
 		$scope.showEventViewer = function(ev) {
 			$mdDialog.show({
-				locals:{eventNumber: $scope.model.eventNumber},
 				controller: 'eventViewerCtrl',
 				templateUrl: 'static/partials/eventviewer.tmpl.html',
 				parent: angular.element(document.body),
@@ -180,16 +180,28 @@ angular.module('mosaicApp')
 			})
 		};
 
-		function DialogController($scope, $mdDialog) {
+		function LogController($scope, $mdDialog) {
+			$scope.utils=mosaicUtilsFactory;
+			$scope.logText='';
+
 			$scope.hide = function() {
 				$mdDialog.hide();
 			};
+			
 			$scope.cancel = function() {
 				$mdDialog.cancel();
 			};
-			$scope.answer = function(answer) {
-				$mdDialog.hide(answer);
+			
+			$scope.updateAnalysisLog = function() {
+				$scope.utils.post('/analysis-log', {})
+				.then(function(response, status) {
+					$scope.logText=response.data.logText;
+				}, function(error){
+					console.log(error);
+				});
 			};
+
+			$scope.updateAnalysisLog();
 		}
 
 	});
