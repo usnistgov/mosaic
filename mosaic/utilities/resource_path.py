@@ -25,11 +25,13 @@ def resource_path(filename):
 				"icon.png", 
 				"icons/icon_100px.png", 
 				"commit-hash", 
+				"version-hash", 
 				"icons/error-128.png", 
 				"icons/warning-128.png", 
 				"mosaicgui/highlight-spec/python.json", 
 				"mosaicgui/highlight-spec/json.json",
-				"mosaicgui/highlight-spec/log.json"
+				"mosaicgui/highlight-spec/log.json",
+				"mosaic/utilities/.ga"
 			]
 
 	if filename in [ ".settings", "settings"]:
@@ -56,6 +58,8 @@ def resource_path(filename):
 			# print format_path(str(sep.join( dirlist ))+'/ui/'+filename)
 			return format_path(str(sep.join( dirlist ))+'/ui/'+filename)
 		# elif hasattr(sys, "_MEIPASS"):
+
+	return filename
 
 
 def last_file_in_directory(path, filefilter):

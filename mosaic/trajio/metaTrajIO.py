@@ -8,6 +8,7 @@
 	:ChangeLog:
 	.. line-block::
 		7/29/16 	AB 	Add additional filtering when constructing a list of data files to process.
+		1/27/17 	AB 	Perform a lexical sort of input data files
 		9/13/15 	AB 	Updated logging to use mosaicLogFormat class
 		4/1/15 		AB 	Added a new property (DataLengthSec) to estimate the length of a data set.
 		3/28/15 	AB 	Optimized file read interface for improved large file support.
@@ -521,7 +522,7 @@ class metaTrajIO(object):
 	def _setupDataFilter(self):
 		filtsettings=settings.settings( self.datPath ).getSettings(self.datafilter.__name__)
 		if filtsettings=={}:
-			logging.warning("WARNING: No settings found for '{0}'. Data filtering is disabled".format(str(self.datafilter.__name__)))
+			self.logger.warning("WARNING: No settings found for '{0}'. Data filtering is disabled".format(str(self.datafilter.__name__)))
 			self.dataFilter=False
 			return
 

@@ -51,6 +51,7 @@ stats_win_kyle_ssnp.txt
 temp/
 data/eventMD-P28-bin.sqlite
 commit-hash
+version-hash
 mosaic/tests/testdata/*.sqlite
 data/eventMD-PEG28-ADEPT2State.sqlite
 doctrees
@@ -60,3 +61,5 @@ data/SingleChan-*.*sv
 data/SingleChan-*.bin
 pyinstaller/icon.*
 _testnotebooks/
+mosaic/utilities/.ga
+conda-build/

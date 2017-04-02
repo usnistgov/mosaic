@@ -24,6 +24,7 @@ a.datas += [
 				('icons/error-128.png', '../icons/error-128.png',  'DATA'),
 				('icons/warning-128.png', '../icons/warning-128.png',  'DATA'),
 				('commit-hash', '../commit-hash', 'DATA'),
+				('version-hash', '../version-hash', 'DATA'),
 				('mosaicgui/highlight-spec/python.json', '../mosaicgui/highlight-spec/python.json', 'DATA'),
 				('mosaicgui/highlight-spec/json.json', '../mosaicgui/highlight-spec/json.json', 'DATA'),
 				('mosaicgui/highlight-spec/log.json', '../mosaicgui/highlight-spec/log.json', 'DATA')

@@ -6,6 +6,7 @@
 	:License:	See LICENSE.TXT
 	:ChangeLog:
 	.. line-block::
+		3/25/17 	AB 	Allow an optional argument to pass a database name.
 		12/6/15 	AB 	Add sampling frequency to analysis info table
 		8/5/15 		AB 	Added a function to export database tables to CSV
 		8/5/15 		AB 	Misc bug fixes
@@ -91,7 +92,12 @@ class sqlite3MDIO(metaMDIO.metaMDIO):
 		dbTimeout=kwargs.pop('timeout', 11.0)
 		self.logger.debug(_d("DB Timeout = {0}", dbTimeout))
 
-		self.dbFilename=format_path(self.dbPath+'/'+'eventMD-' +str(datetime.datetime.now().strftime('%Y%m%d-%H%M%S'))+'.sqlite')
+		dbfile=kwargs.get('dbFilename', '')
+		if dbfile=='':
+			self.dbFilename=format_path(self.dbPath+'/'+'eventMD-' +str(datetime.datetime.now().strftime('%Y%m%d-%H%M%S'))+'.sqlite')
+		else:
+			self.dbFilename=dbfile
+
 		self.logger.debug(_d("dbFilename {0}", self.dbFilename))
 		self.db = sqlite3.connect(self.dbFilename, detect_types=sqlite3.PARSE_DECLTYPES, timeout=dbTimeout)
 

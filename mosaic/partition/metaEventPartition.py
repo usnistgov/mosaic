@@ -7,6 +7,7 @@
 	:License:	See LICENSE.TXT
 	:ChangeLog:
 	.. line-block::
+		3/25/17 	AB 	Allow an optional argument to pass a database name.
 		6/29/16 	AB 	Fixed the open channel statistics routine (_openchanstats) to fix an 
 						incompatibility with numpy version 1.10 and above.
 		1/28/16		AB 	Fixed a bug in analysis timing.
@@ -94,7 +95,7 @@ class metaEventPartition(object):
 	"""
 	__metaclass__=ABCMeta
 
-	def __init__(self, trajDataObj, eventProcHnd, eventPartitionSettings, eventProcSettings, settingsString):
+	def __init__(self, trajDataObj, eventProcHnd, eventPartitionSettings, eventProcSettings, settingsString, **kwargs):
 		"""
 			Initialize a new event segment object
 		"""
@@ -132,7 +133,8 @@ class metaEventPartition(object):
 								dbPath=self.trajDataObj.datPath, 
 								tableName='metadata',
 								colNames=(self.tEventProcObj.mdHeadings()),
-								colNames_t=(self.tEventProcObj.mdHeadingDataType())
+								colNames_t=(self.tEventProcObj.mdHeadingDataType()),
+								dbFilename=kwargs.get('dbFilename', '')
 							)
 		self.mdioDBHnd.writeSettings(settingsString)
 
@@ -506,7 +508,7 @@ class metaEventPartition(object):
 		# Fit the data to a straight line to calculate the slope
 		slope, intercept, r_value, p_value, std_err=scipy.stats.linregress(tstamp, curr)
 
-		self.logger.debug(_d("mu={0}, sigma={1}, slope={2}", mu, sig, slope ))
+		# self.logger.debug(_d("mu={0}, sigma={1}, slope={2}", mu, sig, slope ))
 
 		# Return stats
 

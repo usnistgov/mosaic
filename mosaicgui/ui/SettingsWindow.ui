@@ -39,7 +39,7 @@
    <bool>false</bool>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <layout class="QVBoxLayout" name="verticalLayout_5">
+   <layout class="QVBoxLayout" name="verticalLayout_6">
     <item>
      <widget class="QGroupBox" name="dataSettingsGroupBox">
       <property name="title">
@@ -554,7 +554,7 @@
     <item>
      <widget class="QGroupBox" name="eventPartitionGroupBox">
       <property name="title">
-       <string>Event Partition Control</string>
+       <string>Event Partition</string>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout_2">
        <item>
@@ -720,146 +720,154 @@
      </widget>
     </item>
     <item>
-     <layout class="QHBoxLayout" name="horizontalLayout_16">
-      <item>
-       <widget class="QLabel" name="label_11">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="minimumSize">
-         <size>
-          <width>0</width>
-          <height>26</height>
-         </size>
-        </property>
-        <property name="text">
-         <string>Event Processing Algorithm</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QComboBox" name="processingAlgorithmComboBox">
-        <item>
-         <property name="text">
-          <string>ADEPT</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>ADEPT 2-state</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>CUSUM+</string>
-         </property>
-        </item>
-       </widget>
-      </item>
-      <item>
-       <spacer name="horizontalSpacer_6">
-        <property name="orientation">
-         <enum>Qt::Horizontal</enum>
-        </property>
-        <property name="sizeHint" stdset="0">
-         <size>
-          <width>40</width>
-          <height>20</height>
-         </size>
-        </property>
-       </spacer>
-      </item>
-     </layout>
-    </item>
-    <item>
-     <layout class="QVBoxLayout" name="verticalLayout_11">
-      <item>
-       <widget class="QCheckBox" name="writeEventsCheckBox">
-        <property name="toolTip">
-         <string>Write event time-series to disk</string>
-        </property>
-        <property name="text">
-         <string>Write Events to Disk</string>
-        </property>
-        <property name="checked">
-         <bool>true</bool>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <layout class="QHBoxLayout" name="horizontalLayout_6">
-        <item>
-         <widget class="QCheckBox" name="parallelCheckBox">
-          <property name="toolTip">
-           <string>Use multiple processors</string>
-          </property>
-          <property name="text">
-           <string>Parallel Processing</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <spacer name="horizontalSpacer_2">
-          <property name="orientation">
-           <enum>Qt::Horizontal</enum>
-          </property>
-          <property name="sizeType">
-           <enum>QSizePolicy::Fixed</enum>
-          </property>
-          <property name="sizeHint" stdset="0">
-           <size>
-            <width>40</width>
-            <height>20</height>
-           </size>
-          </property>
-         </spacer>
-        </item>
-        <item>
-         <layout class="QHBoxLayout" name="horizontalLayout_8">
-          <item>
-           <widget class="QLabel" name="parallelCoresLabel">
+     <widget class="QGroupBox" name="groupBox">
+      <property name="title">
+       <string>Event Processing</string>
+      </property>
+      <layout class="QVBoxLayout" name="verticalLayout_5">
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayout_16">
+         <item>
+          <widget class="QLabel" name="label_11">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="minimumSize">
+            <size>
+             <width>0</width>
+             <height>26</height>
+            </size>
+           </property>
+           <property name="text">
+            <string>Event Processing Algorithm</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QComboBox" name="processingAlgorithmComboBox">
+           <item>
             <property name="text">
-             <string>Processors</string>
+             <string>ADEPT</string>
             </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QSpinBox" name="parallelCoresSpinBox">
-            <property name="enabled">
-             <bool>true</bool>
+           </item>
+           <item>
+            <property name="text">
+             <string>ADEPT 2-state</string>
             </property>
-            <property name="keyboardTracking">
-             <bool>false</bool>
+           </item>
+           <item>
+            <property name="text">
+             <string>CUSUM+</string>
             </property>
-            <property name="minimum">
-             <number>1</number>
-            </property>
-            <property name="value">
-             <number>2</number>
-            </property>
-           </widget>
-          </item>
-         </layout>
-        </item>
-        <item>
-         <spacer name="horizontalSpacer_5">
-          <property name="orientation">
-           <enum>Qt::Horizontal</enum>
-          </property>
-          <property name="sizeHint" stdset="0">
-           <size>
-            <width>40</width>
-            <height>20</height>
-           </size>
-          </property>
-         </spacer>
-        </item>
-       </layout>
-      </item>
-     </layout>
+           </item>
+          </widget>
+         </item>
+         <item>
+          <spacer name="horizontalSpacer_6">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayout_6">
+         <item>
+          <widget class="QCheckBox" name="parallelCheckBox">
+           <property name="toolTip">
+            <string>Use multiple processors</string>
+           </property>
+           <property name="text">
+            <string>Parallel Processing</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <spacer name="horizontalSpacer_2">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeType">
+            <enum>QSizePolicy::Fixed</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item>
+          <layout class="QHBoxLayout" name="horizontalLayout_8">
+           <item>
+            <widget class="QLabel" name="parallelCoresLabel">
+             <property name="text">
+              <string>Processors</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QSpinBox" name="parallelCoresSpinBox">
+             <property name="enabled">
+              <bool>true</bool>
+             </property>
+             <property name="keyboardTracking">
+              <bool>false</bool>
+             </property>
+             <property name="minimum">
+              <number>1</number>
+             </property>
+             <property name="value">
+              <number>2</number>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+         <item>
+          <spacer name="horizontalSpacer_5">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <widget class="QCheckBox" name="writeEventsCheckBox">
+         <property name="toolTip">
+          <string>Write event time-series to disk</string>
+         </property>
+         <property name="text">
+          <string>Write Event Time-Series to Database</string>
+         </property>
+         <property name="checked">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+      </layout>
+      <zorder></zorder>
+      <zorder>writeEventsCheckBox</zorder>
+      <zorder></zorder>
+     </widget>
     </item>
     <item>
      <widget class="QGroupBox" name="groupBox_2">
@@ -893,7 +901,7 @@
     <item>
      <layout class="QHBoxLayout" name="horizontalLayout_10">
       <item>
-       <widget class="QCheckBox" name="advancedModeCheckBox">
+       <widget class="QPushButton" name="advancedModeButton">
         <property name="text">
          <string>Advanced Settings</string>
         </property>
@@ -926,8 +934,7 @@
    <zorder>groupBox_2</zorder>
    <zorder>eventPartitionGroupBox</zorder>
    <zorder>baselineGroupBox</zorder>
-   <zorder></zorder>
-   <zorder></zorder>
+   <zorder>groupBox</zorder>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
@@ -954,6 +961,8 @@
      <string>Help</string>
     </property>
     <addaction name="actionAbout_MOSAIC"/>
+    <addaction name="actionCheck_for_Updates"/>
+    <addaction name="actionAggregate_Usage"/>
     <addaction name="actionMOSAIC_Help"/>
    </widget>
    <widget class="QMenu" name="menuView">
@@ -1093,6 +1102,22 @@
    </property>
    <property name="shortcut">
     <string>Ctrl+Shift+E</string>
+   </property>
+  </action>
+  <action name="actionAggregate_Usage">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Anonymous Usage Information</string>
+   </property>
+  </action>
+  <action name="actionCheck_for_Updates">
+   <property name="text">
+    <string>Check for Updates</string>
    </property>
   </action>
  </widget>

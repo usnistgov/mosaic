@@ -12,23 +12,53 @@ import base64
 import urllib2
 import mosaic
 import tempfile
-from PyQt4 import QtCore
+from PyQt4 import QtCore, uic
 from PyQt4.QtCore import Qt
 from PyQt4 import QtGui
+from docutils.core import publish_string
+import mosaic.utilities.mosaicLogging as mlog
 from  mosaic.utilities.resource_path import path_separator, resource_path
+
+
+class MOSAICUpdateDialog(QtGui.QDialog):
+	def __init__(self, parent = None):
+		super(MOSAICUpdateDialog, self).__init__(parent)
+
+		uic.loadUi(resource_path("MOSAICUpdate.ui"), self)
+		
+		self.mosaicIcon.setPixmap( QtGui.QPixmap(resource_path("icons/icon_100px.png")).scaled(75, 75) )
+
+class MOSAICUpdateBox(QtGui.QMessageBox):
+	    def __init__(self):
+	        QtGui.QMessageBox.__init__(self)
+	        self.setSizeGripEnabled(True)
+
+	    def event(self, e):
+	        result = QtGui.QMessageBox.event(self, e)
+
+	        self.setMinimumHeight(0)
+	        self.setMaximumHeight(16777215)
+	        self.setMinimumWidth(0)
+	        self.setMaximumWidth(16777215)
+	        self.setSizePolicy(QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Expanding)
+
+	        return result
 
 class updateService(object):
 	def __init__(self):
 		self.currentVersion=mosaic.__version__
 
+		self.logger=mlog.mosaicLogging().getLogger(__name__)
+
 		self.downloadFolder=tempfile.gettempdir()+path_separator()
 		self.CHUNKSIZE=8192
 
-	def CheckUpdate(self):
+	def CheckUpdate(self, parent=None, noUpdateDialog=False):
 		if sys.platform.startswith('linux'):
+			self.logger.info("Update service not supported on Linux.")
 			return False
 
-		self._getUpdateInfo("https://pages.nist.gov/mosaic/version.json")
+		self._getUpdateInfo(mosaic.DocumentationURL+"/version.json")
 		
 		
 		if self._checkUpdateAvailable():
@@ -37,8 +67,16 @@ class updateService(object):
 				if self._downloadUpdateFile(url):
 					self._openUpdateImage(url)
 					return True
+		else:
+			if noUpdateDialog:
+				msgBox = QtGui.QMessageBox(parent=parent)
+				msgBox.setIconPixmap( QtGui.QPixmap(resource_path("icons/icon_100px.png")).scaled(50,50) )
+				msgBox.setText("You are up to date.")
+				msgBox.setInformativeText("v{0} ({1}) is the latest MOSAIC version.".format(mosaic.__version__, mosaic.__build__))
+				msgBox.addButton(QtGui.QMessageBox.Ok)
+				msgBox.exec_()
 
-		return False
+			return False
 
 
 	def _checkUpdateAvailable(self):
@@ -49,15 +87,16 @@ class updateService(object):
 			if self.currentVersion in eval(self._d(self.updateInfoDict["update-versions"])):
 				return True
 			else:
+				self.logger.info("No updates available.")
 				return False
-		except:
+		except BaseException, err:
+			self.logger.exception(err)
 			return False
 
 	def _downloadLink(self):
 		if sys.platform.startswith('win'):
 			return self._d(self.updateInfoDict["dl-w64"])
 		elif sys.platform.startswith('darwin'):
-			print self._d(self.updateInfoDict["dl-osx"])
 			return self._d(self.updateInfoDict["dl-osx"])
 		else:
 			return self._d(self.updateInfoDict["dl-source"])
@@ -75,7 +114,7 @@ class updateService(object):
 			with open(self.downloadFolder+os.path.basename(url), "wb") as updateFile:
 				while True:
 					if progressDialog.wasCanceled():
-						# print ""
+						self.logger.info("The user canceled the MOSAIC update.")
 						return False
 
 					buf=fHandle.read(self.CHUNKSIZE)
@@ -90,9 +129,11 @@ class updateService(object):
 
 			return True
 		except urllib2.HTTPError, e:
+			self.logger.error("There was an error downloading the MOSAIC update ({0}).".format(str(e)))
 			QtGui.QMessageBox.warning(None, "MOSAIC Download Error", "There was an error downloading the MOSAIC update.\n\n"+str(e), QtGui.QMessageBox.Ok)
 			return False
-		except:
+		except BaseException, e:
+			self.logger.exception(e)
 			return False
 
 	def _openUpdateImage(self, url):
@@ -100,23 +141,18 @@ class updateService(object):
 			os.system('hdiutil mount -autoopen {0}'.format(self.downloadFolder+os.path.basename(url)))
 		elif sys.platform.startswith('win'):
 			os.startfile(self.downloadFolder+os.path.basename(url))
-			# os.system('explorer /select,{0}'.format(self.downloadFolder+os.path.basename(url))) 
 		else:
 			os.system('xdg-open "%s"' % self.downloadFolder+os.path.basename(url))
-			# print "Downloaded to : ", self.downloadFolder+os.path.basename(url)
-
+			
 	def _getUpdateInfo(self, url):
-		import pprint
-		pp = pprint.PrettyPrinter(indent=4)
-
 		try:
 			req=urllib2.Request(url)
 			streamHandler=urllib2.build_opener()
 			stream=streamHandler.open(req)
 
 			self.updateInfoDict=json.loads( self._d(stream.read()) )
-		except:
-			pass
+		except BaseException, err:
+			self.logger.exception(err)
 
 	def _showUpdateAvailableDialog(self):
 		"""
@@ -126,25 +162,28 @@ class updateService(object):
 		build=self._d(self.updateInfoDict["build"])
 		changelog=self._d(self.updateInfoDict["changelog"])
 
-		self.updateBox = QtGui.QMessageBox()
-		self.updateBox.setIconPixmap( QtGui.QPixmap(resource_path("icons/icon_100px.png")).scaled(50,50) )
+		self.updateBox = MOSAICUpdateDialog()
 
-		self.updateBox.setText("A new version of MOSAIC is available.")
-		self.updateBox.setInformativeText("Update to version {0} ({1})".format(version, build))
-		self.updateBox.setWindowTitle("MOSAIC Update")
-		self.updateBox.setWindowFlags(Qt.WindowStaysOnTopHint)
-		self.updateBox.setDetailedText(changelog)
-		self.updateBox.setStandardButtons(QtGui.QMessageBox.Ok | QtGui.QMessageBox.Cancel)
-		self.updateBox.setButtonText(QtGui.QMessageBox.Ok, "Download");
+		self.updateBox.informativeText.setText("Update to version {0} ({1})".format(version, build))
+		self.updateBox.changelogTextEdit.setTextInteractionFlags( Qt.TextBrowserInteraction )
+		self.updateBox.changelogTextEdit.setOpenExternalLinks(True)
+		self.updateBox.changelogTextEdit.setText( publish_string(changelog, writer_name='html') )
+		
+		self.updateBox.show()
 		self.updateBox.raise_()
 		retval = self.updateBox.exec_()
 
-		return retval==QtGui.QMessageBox.Ok
+		if not retval: self.logger.info("The user canceled the MOSAIC update.")
+
+		return retval
 		
 	def _d(self, enctxt):
 		return base64.b64decode(enctxt)
+
 
 if __name__ == '__main__':
 	app = QtGui.QApplication(sys.argv)
 	u=updateService()	
 	u.CheckUpdate()
+	for k,v in u.updateInfoDict.iteritems():
+		print k, u._d(v)

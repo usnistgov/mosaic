@@ -8,6 +8,7 @@
 	:License:	See LICENSE.TXT
 	:ChangeLog:
 	.. line-block::
+		1/18/17 	AB 	Fix pre event baseline.
 		6/17/16 	AB 	Log function timing in developer mode.
 		5/17/14		AB  Delete plotting support
 		5/17/14		AB  Add metaMDIO support for meta-data and time-series storage
@@ -210,7 +211,7 @@ class eventSegment(metaEventPartition.metaEventPartition):
 						# print "eventProcSettings", self.eventProcSettingsDict
 						self._processEvent(
 							 self.eventProcHnd(
-								list(self.preeventdat) + self.eventdat + eventpaddat, 
+								list(self.preeventdat)[:-1] + self.eventdat + eventpaddat, 
 								self.FsHz,
 								eventstart=len(self.preeventdat)+1,						# event start point
 								eventend=len(self.preeventdat)+len(self.eventdat)+1,	# event end point

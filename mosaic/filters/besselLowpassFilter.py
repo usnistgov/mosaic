@@ -7,11 +7,15 @@
 	:License:	See LICENSE.TXT
 	:ChangeLog:
 	.. line-block::
+                11/2/16         KB      changed Bessel filter implementation to match expected rise time
+		9/27/16 	AB 	Control phase delay
 		9/13/15 	AB 	Updated logging to use mosaicLogFormat class
 		7/1/13		AB	Initial version
 """
 import numpy as np 
 import scipy.signal as sig
+import sys
+import pylab as pl
 
 import mosaic.filters.metaIOFilter as metaIOFilter
 import mosaic.utilities.mosaicLogging as mlog
@@ -36,7 +40,13 @@ class besselLowpassFilter(metaIOFilter.metaIOFilter):
 			self.filterCutoff=float(kwargs['filterCutoff'])
 		except KeyError:
 			self.logger.error( "ERROR: Missing mandatory arguments 'filterOrder' or 'filterCutoff'" )
+		try:	
+                        self.causal = kwargs['causal'] == "True"
+                except KeyError:
+                        self.causal = False
 
+                if self.causal:
+                        raise NotImplementedError('Causal filter has not been implemented yet')
 
 	def filterData(self, icurr, Fs):
 		"""
@@ -49,24 +59,23 @@ class besselLowpassFilter(metaIOFilter.metaIOFilter):
 		self.eventData=icurr
 		self.Fs=Fs
 
-		self.filterModel=sig.filter_design.bessel(
+		#pad the data with 10x the transient time at both ends to manually eliminate edge effects of the filter
+		#for some reason I can't get good results using the pad method in filtfilt so manual it is
+		#this means there may be some numerical artefacts but they should be well below the level of noise
+		
+		padding = int(10 * self.Fs/float(self.filterCutoff))
+		paddedsignal = np.pad(self.eventData,pad_width=padding,mode='edge')
+		
+		b, a=sig.bessel(
 							N=self.filterOrder, 
-							Wn=(self.filterCutoff/(self.Fs/2)), 
+							Wn=(self.filterCutoff/(float(self.Fs)/2.0)), 
 							btype='lowpass', 
 							analog=False, 
-							output='ba'
+							output='ba',
+							norm='mag'
 						)
 
-		# calculate the initial state of the filter and scale it with the first data point
-		# so there is no sharp transient at the start of the data
-		zi=sig.lfilter_zi(b=self.filterModel[0], a=self.filterModel[1])*self.eventData[0]
-
-		[self.eventData, zf]=sig.lfilter(
-								b=self.filterModel[0],
-								a=self.filterModel[1],
-								x=self.eventData,
-								zi=zi
-							)
+		self.eventData=sig.filtfilt(b, a, paddedsignal, padtype=None, method='pad')[padding:-padding]
 
 	def formatsettings(self):
 		"""

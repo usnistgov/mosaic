@@ -20,7 +20,7 @@ import numpy as np
 
 import mosaic.trajio.metaTrajIO as metaTrajIO
 import mosaic.utilities.mosaicLogging as mlog
-import qdf.readqdf as qdf
+import qdf.qdf as qdf
 
 __all__ = ["qdfTrajIO"]
 
@@ -87,27 +87,23 @@ class qdfTrajIO(metaTrajIO.metaTrajIO):
 
 				- `SamplingRateChangedError` : if the sampling rate for any data file differs from previous
 		"""
-		# Read a single file or a list of files. By setting scale_data 
-		# and time_scale to 0, we get back times in ms and current in pA.
-		# Check if the files have current of voltage.
+		qdfdat=qdf.QDF(fname, float(self.Rfb), float(self.Cfb))
 		if self.format=='V':
-			q=qdf.qdf_V2I([fname], float(self.Cfb), float(self.Rfb), scale_data=0, time_scale=0)
+			q=qdfdat.VoltageToCurrent()
 		else:
-			q=qdf.qdf_I([fname], float(self.Cfb), float(self.Rfb), scale_data=0, time_scale=0)
+			q=qdfdat.Current()
 
-		# set the sampling frequency in Hz. The times are in ms.
+		fs=qdfdat.qdftree["DataFile"]["Sampling"]
+		# set the sampling frequency in Hz.
 		# If the Fs attribute doesn't exist set it
 		if not hasattr(self, 'Fs'):	
-			self.Fs=1000./(q[1][0]-q[0][0])
+			self.Fs=int(1./fs)
 		# else check if it s the same as before
 		else:
-			if self.Fs!=1000./(q[1][0]-q[0][0]):
+			if self.Fs!=int(1./fs):
 				raise metaTrajIO.SamplingRateChangedError("The sampling rate in the data file '{0}' has changed.".format(fname))
 
-		# Slice the data to remove the time-stamps to conserve memory		
-		# and add new data to the existing array
-		#print "last raw current val in file ", fname, " = ", q[-1]
-		return np.array(q[ : , 1], dtype=np.float64)
+		return np.array(q, dtype=np.float64)
 
 	def _formatsettings(self):
 		"""
@@ -125,7 +121,7 @@ if __name__ == '__main__':
 	b=qdfTrajIO(
 			dirname='data', 
 			filter='*qdf',
-			Rfb=9.16e9,
+			Rfb=9.1e9,
 			Cfb=1.07e-12
 		)
 
