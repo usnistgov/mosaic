@@ -45,6 +45,10 @@ Report problems using our `issue tracker <https://github.com/usnistgov/mosaic/is
 Change Log
 =================================
 
+**v1.3.3**
+
+ - Added support for Chimera files.
+
 **v1.3.2**
 
  - Fixed event partiioning bugs.
