@@ -47,7 +47,7 @@ Change Log
 
 **v1.3.3**
 
- - Added support for Chimera files.
+ - Added support for Chimera data files.
 
 **v1.3.2**
 
