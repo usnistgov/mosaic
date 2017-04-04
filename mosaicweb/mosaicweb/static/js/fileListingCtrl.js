@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('mosaicApp')
-	.factory('FileListingFactory', function($http, $q) {
+	.factory('FileListingFactory', function($http, $q, mosaicUtilsFactory) {
 			var factory = {};
 
 			factory.toolbarTitle = "Load Data";
@@ -10,15 +10,10 @@ angular.module('mosaicApp')
 
 			factory.fileList = [];
 
-			factory.post = function(params) {
+			factory.getDirectoryListing = function(params) {
 				var deferred = $q.defer();
 
-				var results = $http({
-					method  : 'POST',
-					url     : '/list-data-folders',
-					data    : params, 
-					headers : { 'Content-Type': 'application/json; charset=utf-8' }
-				})
+				var results = mosaicUtilsFactory.post('/list-data-folders', params)
 				.then(function (response, status) {	// success
 						var flist = response.data.dataFolders;
 						if (Object.keys(flist).length > 0) {	
@@ -35,7 +30,7 @@ angular.module('mosaicApp')
 			};
 
 			factory.init = function() {
-				factory.post({
+				factory.getDirectoryListing({
 					level: factory.subheading
 				});
 			};
@@ -43,11 +38,11 @@ angular.module('mosaicApp')
 			factory.upOneLevel = function() {
 				var path = factory.subheading.split('/');
 				if (path.length == 2) {
-					factory.post({
+					factory.getDirectoryListing({
 						level: 'Data Root'
 					});
 				} else {
-					factory.post({
+					factory.getDirectoryListing({
 						level: path.slice(0, -2).join()
 					});
 				};
@@ -60,18 +55,6 @@ angular.module('mosaicApp')
 	)
 	.controller('fileListingCtrl', function($scope, $mdDialog, FileListingFactory) {
 			$scope.model = FileListingFactory;
-
-			$scope.loadData = function() {
-				var post = $scope.model.post();
-
-				post.then(
-						function(response) {		
-							$scope.hide();
-						}, function(error) {
-							console.log(error);
-						}
-					)
-			};
 
 			$scope.hide = function() {
 				$mdDialog.hide({

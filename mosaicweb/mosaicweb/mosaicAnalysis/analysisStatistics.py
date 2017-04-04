@@ -39,6 +39,14 @@ class analysisStatistics:
 		statsDict['captureRateMean']=c[0]
 		statsDict['captureRateSigma']=c[1]
 
+		t=self._timePerEvent()
+		statsDict['processTimePerEventMean']=t[0]
+		statsDict['processTimePerEventSigma']=t[1]
+
+		o=self._openChanCurrent()
+		statsDict['openChannelCurrentMean']=o[0]
+		statsDict['openChannelCurrentSigma']=o[1]
+
 		return statsDict
 		
 
@@ -48,7 +56,24 @@ class analysisStatistics:
 			"select AbsEventStart from metadata where ProcessingStatus='normal' order by AbsEventStart ASC"
 		)
 		c=caprate(np.hstack(q))
+
 		return round(c[0], 1), round(c[1], 1)
+
+	def _openChanCurrent(self):
+		q=query(
+			self.analysisDB,
+			"select OpenChCurrent from metadata where ProcessingStatus='normal'"
+		)
+
+		return round(np.mean(np.hstack(q)),1), round(np.std(np.hstack(q)), 1)
+
+	def _timePerEvent(self):
+		q=query(
+			self.analysisDB,
+			"select ProcessTime from metadata where ProcessingStatus='normal'"
+		)
+
+		return round(np.mean(np.hstack(q)),1), round(np.std(np.hstack(q)), 1)
 
 	def _eventStats(self):
 		"""

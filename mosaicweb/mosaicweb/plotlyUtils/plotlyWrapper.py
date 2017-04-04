@@ -35,6 +35,12 @@ class plotlyTrace(dict):
 										'mode': 'scatter',
 										'line': { 'color': 'rgb(120, 120, 120)', 'width': '2', 'dash': 'dash' }
 									},
+		"WarnEvent" : {
+										'mode': 'markers',
+										'type': 'scatter', 
+										'marker': { 'color': 'rgb(255, 153, 51)', 'size': '8' }, 
+										'name': 'ionic current'
+									},
 		"ErrorEvent" : {
 										'mode': 'markers',
 										'type': 'scatter', 

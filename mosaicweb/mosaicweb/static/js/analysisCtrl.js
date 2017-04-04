@@ -79,7 +79,14 @@ angular.module('mosaicApp')
 
 				mosaicUtilsFactory.post('/analysis-results', params)
 					.then(function (response, status) {	// success
+						//save axes types
+						var xaxistype=factory.analysisPlot.layout.xaxis.type;
+						var yaxistype=factory.analysisPlot.layout.yaxis.type;
+
 						factory.analysisPlot=response.data;
+
+						factory.analysisPlot.layout.xaxis.type=xaxistype;
+						factory.analysisPlot.layout.yaxis.type=yaxistype;
 
 						// Update stats during data update
 						AnalysisStatisticsFactory.updateErrorStats();
@@ -109,21 +116,39 @@ angular.module('mosaicApp')
 			// Switch session ID when explicitly set in route.
 			if ($routeParams.sid != mosaicConfigFactory.sessionID) {
 				mosaicConfigFactory.sessionID=$routeParams.sid;
-				$scope.model.updateAnalysisData({});
+				$scope.model.updateAnalysisData({
+					query: $scope.model.bdQuery,
+					nBins: $scope.model.bdBins
+				});
 			}
 		};
 		$scope.init();
 
 		// watch
-		$scope.$watch('formContainer.analysisHistogramForm.bdQuery.$pristine', function() {
-			$scope.model.requireControlUpdate=true;
+		$scope.$watch('model.bdQuery', function() {
+			if ($scope.model.bdQuery != '' && $scope.model.bdBins > 0) {
+				$scope.model.updateAnalysisData({
+						query: $scope.model.bdQuery,
+						nBins: $scope.model.bdBins
+					});
+			};
 		});
-		$scope.$watch('formContainer.analysisHistogramForm.bdBins.$pristine', function() {
-			$scope.model.requireControlUpdate=true;
+		$scope.$watch('model.bdBins', function() {
+			if ($scope.model.bdQuery != '' && $scope.model.bdBins > 0) {
+				$scope.model.updateAnalysisData({
+						query: $scope.model.bdQuery,
+						nBins: $scope.model.bdBins
+					});
+			};
 		});
 		$scope.$watch('mosaicConfigModel.newDataAvailable', function() {
 			if ($scope.mosaicConfigModel.newDataAvailable) {
-				$scope.model.updateAnalysisData({});
+				if ($scope.model.bdQuery != '' && $scope.model.bdBins > 0) {
+					$scope.model.updateAnalysisData({
+							query: $scope.model.bdQuery,
+							nBins: $scope.model.bdBins
+						});
+				};
 			};
 		});
 

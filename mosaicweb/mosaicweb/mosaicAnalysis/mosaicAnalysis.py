@@ -114,9 +114,16 @@ class mosaicAnalysis:
 	def stopAnalysis(self):
 		self.analysisObject.Stop()
 
-		time.sleep(3)
+		time.sleep(0.3)
 
 		self.analysisRunning=False
+
+	@property
+	def analysisStatus(self):
+		if self.analysisRunning:
+			return self.analysisObject.subProc.is_alive()
+		else:
+			return self.analysisRunning
 
 	def updateSettings(self, settingsString):
 		self._loadSettings(settingsString=settingsString)

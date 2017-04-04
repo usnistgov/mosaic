@@ -15,3 +15,11 @@
 	left: 50%;
 	transform: translate3d(-50%, 0, 0);
 }
+
+#globalToastAnchor
+{
+  position: fixed;
+  bottom: 0;
+  z-index: 999;
+  overflow: visible !important;
+}

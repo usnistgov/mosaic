@@ -164,14 +164,18 @@ def analysisResults():
 	try:
 		params = dict(request.get_json())
 		sessionID=params['sessionID']
+		qstr=params['query']
+		bins=params['nBins']
 		dbfile=gAnalysisSessions.getSessionAttribute(sessionID, 'databaseFile')
 
 		ma=gAnalysisSessions.getSessionAttribute(sessionID, 'mosaicAnalysisObject')
 		gAnalysisSessions.addAnalysisRunningFlag(sessionID, ma.analysisRunning)
 
-		return jsonify( respondingURL="analysis-results", analysisRunning=ma.analysisRunning, **_histPlot(dbfile) ), 200
-	except (sessionManager.SessionNotFoundError, KeyError):
+		return jsonify( respondingURL="analysis-results", analysisRunning=ma.analysisRunning, **_histPlot(dbfile, qstr, bins) ), 200
+	except sessionManager.SessionNotFoundError:
 		return jsonify( respondingURL='analysis-results', errType='MissingSIDError', errSummary="A valid session ID was not found.", errText="A valid session ID was not found." ), 500
+	except KeyError, err:
+		return jsonify( respondingURL='analysis-results', errType='KeyError', errSummary="The key {0} was not found.".format(str(err)), errText="The key {0} was not found.".format(str(err)) ), 500
 
 
 @app.route('/analysis-statistics', methods=['POST'])
@@ -276,13 +280,18 @@ def _folderDesc(item):
 	else:
 		return "{0} sub-folders".format(nfolders) 
 
-def _histPlot(dbFile):
+def _histPlot(dbFile, qstr, bins):
+	xlabel={
+		"BlockDepth"	: "i/i<sub>0</sub>",
+		"ResTime"		: "t (ms)"
+	}[qstr.split('from')[0].split('select')[1].split()[0]]
+
 	q=query(
 		dbFile,
-		"select BlockDepth from metadata where ProcessingStatus='normal' and ResTime > 0.02 and BlockDepth between 0.05 and 0.5"
+		qstr
 	)
-	x=np.hstack(np.array(q))
-	c,b=np.array(np.histogram(x, bins=500))
+	x=np.hstack( np.hstack( np.array( q ) ) )
+	c,b=np.array(np.histogram(x, bins=bins))
 
 	dat={}
 
@@ -295,7 +304,7 @@ def _histPlot(dbFile):
 
 	layout={}
 	# layout['title']='Blockade Depth Histogram'
-	layout['xaxis']= { 'title': 'i/i<sub>0</sub>', 'type': 'linear' }
+	layout['xaxis']= { 'title': xlabel, 'type': 'linear' }
 	layout['yaxis']= { 'title': 'counts', 'type': 'linear' }
 	layout['paper_bgcolor']='rgba(0,0,0,0)'
 	layout['plot_bgcolor']='rgba(0,0,0,0)'

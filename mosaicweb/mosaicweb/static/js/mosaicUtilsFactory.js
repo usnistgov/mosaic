@@ -43,7 +43,7 @@ angular.module('mosaicApp')
 			factory.showErrorToast = function(error) {
 				var toast = $mdToast.simple()
 					.position('bottom left')
-					// .parent($document[0])
+					.parent("#globalToastAnchor")
 					.textContent(error)
 					.action('DISMISS')
 					.highlightAction(true)

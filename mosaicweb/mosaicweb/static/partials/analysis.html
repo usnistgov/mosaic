@@ -24,6 +24,13 @@
 			<span flex="40" style="color:#696969;">Analysis Control</span>
 			<span flex-gt-sm="grow" flex> </span>
 			<!-- <p flex="40" style="color: #696969;"><small><em>Events Processed:</em> {{model.analysisPlot.stats.eventsProcessed}}</small></p> -->
+			<span flex="10">
+				<md-button class="md-warn" type="button"
+					ng-click="model.stopAnalysis()" ng-if="!model.showAnalysisControl && mosaicConfigModel.analysisRunning">
+					Stop Analysis
+				</md-button>
+			</span>
+			<span flex-gt-sm="15" flex="25"></span>
 			<md-progress-circular md-mode="indeterminate" class="md-primary" md-diameter="20" ng-if="mosaicConfigModel.analysisRunning" ></md-progress-circular>
 			<md-button class="md-icon-button" aria-label="Analysis Control" ng-hide="model.showAnalysisControl" ng-click="model.toggleAnalysisControlFlag()">
 				<md-icon md-font-set="material-icons md-24">expand_more</md-icon>
@@ -59,7 +66,7 @@
 		<section ng-if="model.showAnalysisControl" layout="column">
 			<md-subheader class="md-primary">Statistics</md-subheader>
 			<div layout="row" layout-align="start center" style="padding:0; margin:0;">
-				<p style="color: #696969; padding:0; margin:0; padding-right: 16px; padding-left: 16px;"><small><em>Capture Rate:</em> {{statsModel.analysisStats.captureRateMean}}&#177;{{statsModel.analysisStats.captureRateSigma}} s<sup>-1</sup></small></p>
+				<!-- <p style="color: #696969; padding:0; margin:0; padding-right: 16px; padding-left: 16px;"><small><em>Capture Rate:</em> {{statsModel.analysisStats.captureRateMean}}&#177;{{statsModel.analysisStats.captureRateSigma}} s<sup>-1</sup></small></p> -->
 				<p style="color: #696969; padding:0; margin:0; padding-right: 16px; padding-left: 16px; padding-bottom: 4px;"><small><em>Events Processed:</em> {{statsModel.analysisStats.nTotal}}</small></p>
 				<p style="color: #696969; padding:0; margin:0; padding-right: 16px; padding-bottom: 4px;"><small><em>Error:</em> {{statsModel.errorPercent}} %</small></p>
 				<md-button class="md-mini md-primary" type="button"

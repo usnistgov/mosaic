@@ -23,7 +23,7 @@
 	</div>
 </div>
 
-<form name="formContainer.analysisHistogramForm" ng-submit="updateControls()">
+<form name="analysisHistogramForm" ng-submit="updateControls()">
 	<div flex class="md-whiteframe" layout-align="space-between center">
 		<div layout="row">
 			<md-input-container class="md-block" flex="80">
@@ -36,8 +36,12 @@
 				<label>Bins</label>
 				<input 	type="number" name="bdBins"
 						ng-model="model.bdBins" ng-model-options="{ updateOn: 'blur', allowInvalid: false}">
+				<div ng-messages="analysisHistogramForm.bdBins.$error" multiple md-auto-hide="false">
+					<div ng-message="required">The number of bins must be specified.</div>
+					<div ng-message="min">Bin Size must be positive.</div>
+				</div>
 			</md-input-container>
-		</div>	
+		</div>
 		<md-button class="md-primary" type="button"
 			ng-click="" ng-disabled="true">
 			<md-tooltip md-direction="right">Export histogram data in CSV format</md-tooltip>

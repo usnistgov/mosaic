@@ -60,7 +60,7 @@ class analysisTimeSeries(dict):
 		xdat=np.arange(0, dt*len(ydat), dt)
 
 		dat={}
-		if q[0]=='normal':
+		if q[0]=='normal': 
 			if self.fitFuncHnd:
 				# xfit=np.arange(0,float((len(q[1]))/self.FsHz), float(1/(100*self.FsHz)))
 				xfit=np.arange(0, dt*len(ydat), dt)
@@ -76,9 +76,12 @@ class analysisTimeSeries(dict):
 						plotlyWrapper.plotlyTrace(list(xfit), list(yfit), "NormalEventFit"),
 						plotlyWrapper.plotlyTrace(list(xstep), list(ystep), "NormalEventStep")
 					]
+		elif q[0].startswith('w'):
+			dat['data'] = [ plotlyWrapper.plotlyTrace(list(xdat), list(ydat), "WarnEvent") ]
+			self.returnMessageJSON['errorText']="WARNING: "+self.errTextObject[q[0]]
 		else:
 			dat['data'] = [ plotlyWrapper.plotlyTrace(list(xdat), list(ydat), "ErrorEvent") ]
-			self.returnMessageJSON['errorText']=self.errTextObject[q[0]]
+			self.returnMessageJSON['errorText']="ERROR: "+self.errTextObject[q[0]]
 
 		dat['layout']=plotlyWrapper.plotlyLayout("EventViewLayout")
 		dat['options']=plotlyWrapper.plotlyOptions()
