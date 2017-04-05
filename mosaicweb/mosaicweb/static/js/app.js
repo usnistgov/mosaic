@@ -74,12 +74,12 @@ angular.module('mosaicApp', ['ngRoute', 'ngMaterial', 'ngMessages', 'ngAnimate',
 				 templateUrl: '/static/partials/wait.html'
 			 })
 			 .otherwise({
-				 redirectTo: '/'
+				 templateUrl: '/static/partials/404.html'
 			 });
 	}
 )
 .controller('AppCtrl', 
-	function($scope, $mdDialog, $http, $location, $window, $timeout, $document, mosaicConfigFactory, mosaicUtilsFactory, analysisSetupFactory, AnalysisFactory) {
+	function($scope, $mdDialog, $http, $location, $window, $timeout, $document, mosaicConfigFactory, mosaicUtilsFactory, analysisSetupFactory, AnalysisFactory, FileListingFactory) {
 		$scope.location = $location;
 
 		$scope.customFullscreen = true;
@@ -92,11 +92,18 @@ angular.module('mosaicApp', ['ngRoute', 'ngMaterial', 'ngMessages', 'ngAnimate',
 
 		// funcs
 		$scope.setupNewAnalysis = function(ev) {
-			$scope.newAnalysisFileListing(ev);
+			FileListingFactory.setDialogMode("directory");
+			$scope.fileListing(ev);
 			$scope.AnalysisLoading = true;
 		};
 
-		$scope.newAnalysisFileListing = function(ev) {
+		$scope.loadPreviousAnalysis = function(ev) {
+			FileListingFactory.setDialogMode("sqlite");
+			$scope.fileListing(ev);
+			$scope.AnalysisLoading = true;
+		};
+
+		$scope.fileListing = function(ev) {
 			var dlg = $mdDialog.show({
 				controller: 'fileListingCtrl',
 				templateUrl: 'static/partials/filelisting.tmpl.html',

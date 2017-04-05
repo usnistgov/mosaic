@@ -23,3 +23,13 @@
   z-index: 999;
   overflow: visible !important;
 }
+
+#gsimage {
+    opacity: 0.3;
+    filter: alpha(opacity=30); /* For IE8 and earlier */
+}
+
+#gsimage {
+    -webkit-filter: grayscale(100%); /* Safari 6.0 - 9.0 */
+    filter: grayscale(100%);
+}

@@ -4,6 +4,8 @@ angular.module('mosaicApp')
 	.factory('FileListingFactory', function($http, $q, mosaicUtilsFactory) {
 			var factory = {};
 
+			factory.dialogMode="directory";
+
 			factory.toolbarTitle = "Load Data";
 			factory.subheading = "Data Root";
 			factory.selectedIndex = null;
@@ -29,10 +31,18 @@ angular.module('mosaicApp')
 				return deferred.promise;
 			};
 
+			factory.setDialogMode = function(mode) {
+				factory.dialogMode=mode;
+			};
+
 			factory.init = function() {
-				factory.getDirectoryListing({
-					level: factory.subheading
-				});
+				if (factory.dialogMode=="directory") {
+					factory.getDirectoryListing({
+						level: factory.subheading
+					});
+				} else{
+					console.log("not implemented");
+				};
 			};
 
 			factory.upOneLevel = function() {
@@ -81,7 +91,7 @@ angular.module('mosaicApp')
 					path = $scope.model.subheading+$scope.model.fileList[index].name
 				}
 
-				$scope.model.post({
+				$scope.model.getDirectoryListing({
 					level: path
 				});
 			};
