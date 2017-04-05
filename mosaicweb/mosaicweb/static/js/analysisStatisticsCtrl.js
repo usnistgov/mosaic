@@ -17,9 +17,12 @@ angular.module('mosaicApp')
 						factory.errorPercent=Math.round(factory.analysisStats.fractionError*10000)/100.;
 						factory.warnPercent=Math.round(factory.analysisStats.fractionWarn*10000)/100.;				
 
-						factory.errorStats.data[0].x=[response.data.fractionNormal*response.data.nTotal];
-						factory.errorStats.data[1].x=[response.data.fractionWarn*response.data.nTotal];
-						factory.errorStats.data[2].x=[response.data.fractionError*response.data.nTotal];
+						factory.errors=Math.round(response.data.fractionError*response.data.nTotal);
+						factory.warnings=Math.round(response.data.fractionWarn*response.data.nTotal);
+
+						factory.errorStats.data[0].x=[Math.round(response.data.fractionNormal*response.data.nTotal)];
+						factory.errorStats.data[1].x=[Math.round(response.data.fractionWarn*response.data.nTotal)];
+						factory.errorStats.data[2].x=[Math.round(response.data.fractionError*response.data.nTotal)];
 					}, function(error) {
 						console.log(error);
 					});
@@ -103,10 +106,12 @@ angular.module('mosaicApp')
 					},
 					paper_bgcolor: 'rgba(0,0,0,0)',
 					plot_bgcolor: 'rgba(0,0,0,0)',
-					hovermode: 'x',
+					hovermode: 'closest',
 					height: 75
 				},
-				options: {}
+				options: {
+					displayModeBar: false
+				}
 			};
 
 			factory.updateErrorStats();
