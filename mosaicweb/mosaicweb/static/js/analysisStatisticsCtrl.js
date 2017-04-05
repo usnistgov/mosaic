@@ -107,6 +107,7 @@ angular.module('mosaicApp')
 					paper_bgcolor: 'rgba(0,0,0,0)',
 					plot_bgcolor: 'rgba(0,0,0,0)',
 					hovermode: 'closest',
+					hoverinfo: 'x+name',
 					height: 75
 				},
 				options: {
