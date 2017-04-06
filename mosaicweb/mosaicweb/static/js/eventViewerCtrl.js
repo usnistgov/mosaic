@@ -8,8 +8,11 @@ angular.module('mosaicApp')
 			factory.recordCount=10;
 			factory.eventViewPlot='';
 			factory.errorText='';
+			factory.parameterTable={};
 
 			factory.plotUpdating=false;
+
+			factory.cellStyle="margin: 6px; padding:6px; margin-bottom:0; padding-top:0; padding-bottom:0;";
 
 			factory.updateEvientView = function() {
 				mosaicUtilsFactory.post('/event-view', {
@@ -20,6 +23,7 @@ angular.module('mosaicApp')
 					factory.eventNumber=response.data.eventNumber;
 					factory.recordCount=response.data.recordCount;
 					factory.errorText=response.data.errorText;
+					factory.parameterTable=response.data.parameterTable;
 
 					if (factory.errorText != '') {
 						factory.showErrorToast();

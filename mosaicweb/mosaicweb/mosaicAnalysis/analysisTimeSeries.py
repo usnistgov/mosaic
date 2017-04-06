@@ -86,8 +86,9 @@ class analysisTimeSeries(dict):
 		dat['layout']=plotlyWrapper.plotlyLayout("EventViewLayout")
 		dat['options']=plotlyWrapper.plotlyOptions()
 
-
 		self.returnMessageJSON['eventViewPlot']=dat
+
+		self.returnMessageJSON['parameterTable']=self._paramTable(*eval(self.paramTableFuncArgs))
 
 		return self.returnMessageJSON
 
@@ -108,7 +109,25 @@ class analysisTimeSeries(dict):
 		self.stepFuncHnd=self.stepFuncHndDict[self.procAlgorithm]
 		self.stepFuncArgs=self.stepFuncArgsDict[self.procAlgorithm]
 
-		self.bdFuncArgs=self.blockDepthArgsDict[self.procAlgorithm]
+		self.paramTableFuncArgs=self.paramTableArgsDict[self.procAlgorithm]
+
+	def _paramTable(self, currentStep, openChCurr, eventDelay, nStates):
+		paramList=[]
+
+		# nStates=[ str(i) for i in range(1, nStates+1)]
+		blockDepth=[ str(round(bd, 4)) for bd in (np.cumsum(np.array([openChCurr]+currentStep))[1:])/openChCurr][:nStates]
+		resTimes=[ str(round(rt, 2)) for rt in np.diff(eventDelay)*1000. ]
+
+		for i in range(nStates):
+			paramList.append(
+				{
+					"index" : i+1,
+					"blockDepth" : blockDepth[i],
+					"resTime" : resTimes[i]
+				}
+			)
+
+		return paramList
 
 	def _setupDict(self, eventNumber):
 		self.queryStringDict={
@@ -141,7 +160,7 @@ class analysisTimeSeries(dict):
 			"cusumPlus" 	: "[xstep*1000, q[2], q[3], q[4], len(q[2])]"
 		}
 
-		self.blockDepthArgsDict={
+		self.paramTableArgsDict={
 			"adept2State" 	: "[[-abs(q[7]-q[6])], q[7], [q[4],q[5]], 1]",
 			"adept" 		: "[q[4], q[5], q[3], len(q[3])-1]",
 			"cusumPlus" 	: "[q[3], q[4], q[2], len(q[2])-1]"

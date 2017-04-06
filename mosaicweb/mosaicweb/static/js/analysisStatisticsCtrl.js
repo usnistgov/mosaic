@@ -88,12 +88,15 @@ angular.module('mosaicApp')
 					barmode: 'stack',
 					showlegend: true,
 					legend: {
-						x: 1,
-						y: 0,
+						xanchor:"left",
+						yanchor:"bottom",
+						x:0,
+						y:-0.6,
+						orientation: "h",
 						traceorder: 'normal',
 						font: {
 							family: 'Roboto, Helvetica',
-							size: 12,
+							size: 14,
 							color: '#000'
 						}
 					},
@@ -108,7 +111,7 @@ angular.module('mosaicApp')
 					plot_bgcolor: 'rgba(0,0,0,0)',
 					hovermode: 'closest',
 					hoverinfo: 'x+name',
-					height: 75
+					height: 125
 				},
 				options: {
 					displayModeBar: false
