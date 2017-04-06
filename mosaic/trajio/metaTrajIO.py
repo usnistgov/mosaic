@@ -7,6 +7,7 @@
 	:License:	See LICENSE.TXT	
 	:ChangeLog:
 	.. line-block::
+		7/29/16 	AB 	Add additional filtering when constructing a list of data files to process.
 		1/27/17 	AB 	Perform a lexical sort of input data files
 		9/13/15 	AB 	Updated logging to use mosaicLogFormat class
 		4/1/15 		AB 	Added a new property (DataLengthSec) to estimate the length of a data set.
@@ -49,6 +50,11 @@ class FileNotFoundError(Exception):
 	pass
 
 trajTimer=mtime.mosaicTiming()
+
+ignorelist=[
+		"eventProcessing*.log", 
+		"*.sqlite"
+	]
 
 class metaTrajIO(object):
 	"""
@@ -115,12 +121,12 @@ class metaTrajIO(object):
 			try:
 				if hasattr(self, 'dirname') and hasattr(self,'nfiles'):
 					# N files from a directory
-					self.dataFiles=sorted(glob.glob(format_path(str(self.dirname)+"/"+str(self.filter)))[:int(self.nfiles)])
+					self.dataFiles=self._buildFileList(self.dirname, self.filter)[:int(self.nfiles)]
 					delattr(self, 'dirname')
 					delattr(self, 'nfiles')
 				elif hasattr(self, 'dirname'):
 					# all files from a directory
-					self.dataFiles=sorted(glob.glob(format_path(str(self.dirname)+"/"+str(self.filter))))
+					self.dataFiles=self._buildFileList(self.dirname, self.filter)
 					delattr(self, 'dirname')
 				else:
 					raise IncompatibleArgumentsError("Missing arguments: 'dirname' or 'fnames' must be supplied to initialize {0}".format(type(self).__name__))
@@ -527,4 +533,10 @@ class metaTrajIO(object):
 		while i<len(self.rawData):
 			yield self.rawData[i:i+self.CHUNKSIZE]
 			i+=self.CHUNKSIZE
+
+	def _buildFileList(self, dirname, filter):
+		flist=set(glob.glob(format_path(dirname+"/"+filter)))
+		for ignorefilter in ignorelist:
+			flist=flist-set(glob.glob(format_path(dirname+"/"+ignorefilter)))
+		return list(flist)
 

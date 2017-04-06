@@ -53,10 +53,6 @@ class eventSegment(metaEventPartition.metaEventPartition):
 			- `minEventLength` :	Minimum number points in the blocked state to qualify as an event (default: 5)
 			- `eventThreshold` :	Threshold, number of SD away from the open channel mean. If the abs(curr) is less
 							than 'abs(mean)-(eventThreshold*SD)' a new event is registered (default: 6)
-			- `driftThreshold` :	Trigger a drift warning when the mean open channel current deviates by 'driftThreshold'*
-							SD from the baseline open channel current (default: 2)
-			- `maxDriftRate` :	Trigger a warning when the open channel conductance changes at a rate faster 
-							than that specified. (default: 2 pA/s)
 			- `meanOpenCurr` :	Explicitly set mean open channel current. (pA) (default: -1, to 
 							calculate automatically)
 			- `sdOpenCurr` :		Explicitly set open channel current SD. (pA) (default: -1, to 
@@ -73,14 +69,22 @@ class eventSegment(metaEventPartition.metaEventPartition):
 			self.blockSizeSec=float(self.settingsDict.pop("blockSizeSec", 1.0))
 			self.eventPad=int(self.settingsDict.pop("eventPad", 500))
 			self.minEventLength=int(self.settingsDict.pop("minEventLength",5))
+			self.maxEventLength=int(self.settingsDict.pop("maxEventLength",1000000))
 			self.eventThreshold=float(self.settingsDict.pop("eventThreshold",6.0))
-			self.driftThreshold=float(self.settingsDict.pop("driftThreshold",2.0))
-			self.maxDriftRate=float(self.settingsDict.pop("maxDriftRate",2.0))
 			self.meanOpenCurr=float(self.settingsDict.pop("meanOpenCurr",-1.))
 			self.sdOpenCurr=float(self.settingsDict.pop("sdOpenCurr",-1.))
 			self.slopeOpenCurr=float(self.settingsDict.pop("slopeOpenCurr",-1.))
 		except ValueError as err:
 			raise commonExceptions.SettingsTypeError( err )
+
+		# Calculate the threshold current from eventThreshold.
+		self.thrCurr=(abs(self.meanOpenCurr)-self.eventThreshold*abs(self.sdOpenCurr))
+
+		if self.driftThreshold < 0 or self.maxDriftRate < 0:
+			self.enableCheckDrift=False
+		else:
+			self.enableCheckDrift=True
+
 
 		#### Vars for event partition ####
 		self.esLogger=mlog.mosaicLogging().getLogger(name=__name__, dbHnd=self.mdioDBHnd)
@@ -105,6 +109,7 @@ class eventSegment(metaEventPartition.metaEventPartition):
 		self.esLogger.info( '\t\tDrift error threshold = {0} * SD'.format(self.driftThreshold) )
 		self.esLogger.info( '\t\tDrift rate error threshold = {0} pA/s'.format(self.maxDriftRate) )
 
+
 	def formatstats(self):
 		"""
 			Return a formatted string of statistics for display in the output log.
@@ -115,6 +120,7 @@ class eventSegment(metaEventPartition.metaEventPartition):
 		self.esLogger.info('\t\tSlope 	= {0} pA/s'.format( round(self.slopeOpenCurr,2) ) )
 		
 		self.esLogger.info('\tEvent segment stats:')
+
 
 		self.esLogger.info('\t\tOpen channel drift (max) = {0} * SD'.format(abs(round((abs(self.meanOpenCurr)-abs(self.maxDrift))/self.sdOpenCurr,2))))
 		self.esLogger.info('\t\tOpen channel drift rate (min/max) = ({0}/{1}) pA/s'.format(round(self.minDriftR,2), round(self.maxDriftR)))
@@ -127,6 +133,7 @@ class eventSegment(metaEventPartition.metaEventPartition):
 			self.esLogger.info('\tEvent time-series = ***enabled***')
 		else:
 			self.esLogger.info('\tEvent time-series = ***disabled***')
+
 
 	#################################################################
 	# Interface functions
@@ -144,7 +151,13 @@ class eventSegment(metaEventPartition.metaEventPartition):
 			the event by 'eventPad' points and hand off to the event processing algorithm.
 		"""
 		try:
+                        skipflag = False
 			while(1):
+                                while (skipflag == True): #if we are in a clogged state or a very long event, skip data until we reach good baseline again
+                                        t=self.currData.popleft()
+                                        self.globalDataIndex+=1
+                                        if abs(t) >= self.meanOpenCurr:
+                                                skipflag = False
 				t=self.currData.popleft()
 				self.globalDataIndex+=1
 
@@ -153,19 +166,22 @@ class eventSegment(metaEventPartition.metaEventPartition):
 					self.preeventdat.append(t)
 				
 				# Mark the start of the event
-				if abs(t) < self.thrCurr: 
+				if abs(t) < self.thrCurr:
 					#print "event",
 					self.eventstart=True
 					self.eventdat=[]
 					self.eventdat.append(t)
 					self.dataStart=self.globalDataIndex-len(self.preeventdat)-1
-
 				if self.eventstart:
-					mean=abs(util.avg(self.preeventdat))
+					#mean=abs(util.avg(self.preeventdat))
+                                        mean = self.meanOpenCurr
 					while(abs(t)<mean):
 						t=self.currData.popleft()
 						self.eventdat.append(t)
 						self.globalDataIndex+=1
+						if len(self.eventdat) > self.maxEventLength:
+                                                        skipflag = True
+                                                        break
 
 					# end of event. Reset the flag
 					self.eventstart=False
@@ -186,7 +202,7 @@ class eventSegment(metaEventPartition.metaEventPartition):
 						)
 					 
 					#print self.trajDataObj.FsHz, self.windowOpenCurrentMean, self.sdOpenCurr, self.slopeOpenCurr
-					if len(self.eventdat)>=self.minEventLength:
+					if len(self.eventdat)>=self.minEventLength and len(self.eventdat)<self.maxEventLength:
 						self.eventcount+=1
 						# print "i=", self.eventcount
 						#sys.stderr.write('event mean curr={0:0.2f}, len(preeventdat)={1}\n'.format(sum(self.eventdat)/len(self.eventdat),len(self.preeventdat)))
@@ -209,8 +225,6 @@ class eventSegment(metaEventPartition.metaEventPartition):
 					self.preeventdat.clear()
 		except IndexError:
 			return
-
-
 
 	# def __roundufloat(self, uf):
 	# 	u=uncertainties

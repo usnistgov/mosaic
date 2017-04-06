@@ -11,6 +11,10 @@
 		6/29/16 	AB 	Fixed the open channel statistics routine (_openchanstats) to fix an 
 						incompatibility with numpy version 1.10 and above.
 		1/28/16		AB 	Fixed a bug in analysis timing.
+		12/16/15 	AB 	Moved drift checks from eventSegment.
+		12/16/15 	AB 	Moved baseline settings (minBaseline and maxBaseline) from eventSegment. Updated class docstring.
+		15/12/15	KB 	Program steps over bad data blocks without aborting
+		12/11/15 	AB 	Refactor code
 		12/6/15 	AB 	Add sampling frequency to analysis info table
 		8/18/14		AB 	Fixed parallel processing cleanup.
 		5/17/14		AB 	Delete Plotting support
@@ -30,7 +34,7 @@ import time
 import datetime
 import csv
 import cPickle
-import multiprocessing 
+import multiprocessing
 
 import numpy as np 
 import scipy.stats
@@ -80,8 +84,14 @@ class metaEventPartition(object):
 		current working directory)
 
 			- `writeEventTS` :	Write event current data to file. (default: 1, write data to file)
-			- `parallelProc` :	Process events in parallel. (default: 1, Yes)
-			- `reserveNCPU` :		Reserve the specified number of CPUs and exclude them from the parallel pool
+			- `parallelProc` :	Process events in parallel using the pproc module. (default: 1, Yes)
+			- `reserveNCPU` :	Reserve the specified number of CPUs and exclude them from the parallel pool.
+			- `driftThreshold` :	Trigger a drift warning when the mean open channel current deviates by 'driftThreshold'*
+							SD from the baseline open channel current (default: 2)
+			- `maxDriftRate` :	Trigger a warning when the open channel conductance changes at a rate faster 
+							than that specified. (default: 2 pA/s)
+			- `minBaseline` : 	Minimum value for the ionic current baseline.
+			- `maxBaseline` : 	Maximum value for the ionic current baseline.
 	"""
 	__metaclass__=ABCMeta
 
@@ -107,6 +117,10 @@ class metaEventPartition(object):
 			self.writeEventTS=int(self.settingsDict.pop("writeEventTS",1))
 			self.parallelProc=int(self.settingsDict.pop("parallelProc",1))
 			self.reserveNCPU=int(self.settingsDict.pop("reserveNCPU",2))
+			self.driftThreshold=float(self.settingsDict.pop("driftThreshold",2.0))
+			self.maxDriftRate=float(self.settingsDict.pop("maxDriftRate",2.0))
+			self.minBaseline=float(self.settingsDict.pop("minBaseline",-1.))
+			self.maxBaseline=float(self.settingsDict.pop("maxBaseline",-1.))
 		except ValueError as err:
 			raise mosaic.commonExceptions.SettingsTypeError( err )
 
@@ -184,7 +198,6 @@ class metaEventPartition(object):
 		
 		# Initialize segmentation
 		self._setuppartition()
-
 		try:
 			startTime=self.timingObj.time()
 			while(1):	
@@ -202,7 +215,11 @@ class metaEventPartition(object):
 				#print self.meanOpenCurr, self.minDrift, self.maxDrift, self.minDriftR, self.maxDriftR
 
 				# Process the data segment for events
-				self._eventsegment()
+                                
+				if (self.meanOpenCurr > self.minBaseline and self.meanOpenCurr < self.maxBaseline) or self.minBaseline == -1.0 or self.maxBaseline == -1.0:
+					self._eventsegment()
+				else: #skip over bad data, no need to abort
+					continue
 
 
 		except metaTrajIO.EmptyDataPipeError, err:
@@ -283,6 +300,7 @@ class metaEventPartition(object):
 			An implementation of this function should separate individual events of interest from a time-series of ionic current recordings. The data pertaining to each event is then passed 		to an instance of metaEventProcessor for detailed analysis. The function will collect the results of this analysis.
 		"""
 		pass
+
 	#################################################################
 	# Internal functions
 	#################################################################
@@ -370,9 +388,11 @@ class metaEventPartition(object):
 		#### Event Queue ####
 		# self.eventQueue=[]
 
+
 		self.thrCurr=(abs(self.meanOpenCurr)-self.eventThreshold*abs(self.sdOpenCurr))
 
 		self.logger.debug(_d("Partition setup complete."))
+
 
 		#### Vars for event partition stats ####
 		self.minDrift=abs(self.meanOpenCurr)
@@ -414,6 +434,7 @@ class metaEventPartition(object):
 		self.logger.info('[Summary]')
 
 		# write out event segment stats
+
 		self.formatstats()
 
 		# print event processing stats. Stats are limited to how many events were rejected
@@ -429,6 +450,7 @@ class metaEventPartition(object):
 
 		self.logger.info("[Settings]")
 
+
 		# write out trajectory IO settings
 		self.trajDataObj.formatsettings()
 		
@@ -436,10 +458,12 @@ class metaEventPartition(object):
 		self.formatsettings()
 
 		# event processing settings
+
 		self.tEventProcObj.formatsettings()
 
 		# Output files
 		self.formatoutputfiles()
+
 
 		# Finally, timing information
 		self.logger.info('[Timing]')
@@ -479,7 +503,7 @@ class metaEventPartition(object):
 		#print "nPoints=", n, "len(tstamp)=", len(tstamp), "type(curr)", type(curr)
 		
 		# Calculate the mean and standard deviation of the open state
-		mu, sig=OpenCurrentDist(curr, 0.5)
+		mu, sig=OpenCurrentDist(curr, 0.5, self.minBaseline, self.maxBaseline)
 
 		# Fit the data to a straight line to calculate the slope
 		slope, intercept, r_value, p_value, std_err=scipy.stats.linregress(tstamp, curr)
@@ -487,9 +511,11 @@ class metaEventPartition(object):
 		# self.logger.debug(_d("mu={0}, sigma={1}, slope={2}", mu, sig, slope ))
 
 		# Return stats
+
 		return [ mu, sig, slope ]
 	
 		
+
 	def _checkdrift(self, curr):
 		"""
 			Check the open channel current for drift. This function triggers
@@ -505,6 +531,18 @@ class metaEventPartition(object):
 				DriftRateError			raised when the slope of the open channel current
 										exceeds maxDriftRate
 		"""
+		
+
+		if not self.enableCheckDrift:
+			#if self.meanOpenCurr == -1. or self.sdOpenCurr == -1. or self.slopeOpenCurr == -1.:
+			[ self.meanOpenCurr, self.sdOpenCurr, self.slopeOpenCurr ] = self._openchanstats(curr)
+			self.thrCurr=(abs(self.meanOpenCurr)-self.eventThreshold*abs(self.sdOpenCurr))
+			#print 'New Baseline: {0}\t{1}\t{2}\t{3}'.format(self.meanOpenCurr, self.sdOpenCurr, self.slopeOpenCurr,self.thrCurr)
+			return
+
+		# Update the threshold current from eventThreshold.
+		self.thrCurr=(abs(self.meanOpenCurr)-self.eventThreshold*abs(self.sdOpenCurr))
+
 		[mu,sd,sl]=self._openchanstats(curr)
 		
 		# store stats
@@ -525,7 +563,7 @@ class metaEventPartition(object):
 		# Save the open channel conductance stats for the current window
 		self.windowOpenCurrentMean=mu
 		self.windowOpenCurrentSD=sd 
-		self.windowOpenCurrentSlope=sl
+		self.windowOpenCurrentSlope=sl		
 
 	@partitionTimer.FunctionTiming
 	def _processEvent(self, eventobj):

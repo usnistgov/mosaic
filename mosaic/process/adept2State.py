@@ -32,6 +32,7 @@ import sys
 import math
 
 import numpy as np
+#import pylab as pl
 import scipy.optimize
 from scipy.optimize import curve_fit
 
@@ -218,13 +219,16 @@ class adept2State(metaEventProcessor.metaEventProcessor):
 			eend 	= self.__eventEndIndex( self.__threadList( edat, range(0,len(edat)) ), i0, i0sig ) - 2
 
 			# For long events, fix the blocked current to speed up the fit
-			if (eend-estart) > 1000:
-				blockedCurrent=np.mean(edat[estart+50:eend-50])
+			#if (eend-estart) > 1000:
+			#	blockedCurrent=np.mean(edat[estart+50:eend-50])
 
 			# control numpy error reporting
 			np.seterr(invalid='ignore', over='ignore', under='ignore')
 
 			ts = np.array([ t*dt for t in range(0,len(edat)) ], dtype='float64')
+
+			#pl.plot(ts,edat)
+			#pl.show()
 
 			params=Parameters()
 

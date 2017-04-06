@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
  <author>Arvind Balijepalli</author>
  <class>SettingsWindow</class>
@@ -105,6 +105,11 @@
              <item>
               <property name="text">
                <string>TSV</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>LOG</string>
               </property>
              </item>
             </widget>
