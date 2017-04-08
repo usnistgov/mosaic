@@ -29,6 +29,7 @@ angular.module('mosaicApp')
 					};
 					deferred.resolve(response);
 				}, function (error) {	// error
+					console.log(error);
 					factory.showErrorToast(error.data.errSummary);
 					deferred.reject(error);
 				});

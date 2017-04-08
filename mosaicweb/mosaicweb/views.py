@@ -75,24 +75,24 @@ def newAnalysis():
 		defaultSettings=False
 		params = dict(request.get_json())
 
-		dataPath = params.get('dataPath', '')
-		settingsString = params.get('settingsString', '')
-		sessionID=params.get('sessionID', '')
+		dataPath = params.get('dataPath', None)
+		settingsString = params.get('settingsString', None)
+		sessionID=params.get('sessionID', None)
 
-		if dataPath != "":		# brand new session
+		if dataPath and not settingsString:		# brand new session
 			# print "brand new session: ", dataPath, settingsString, sessionID	
 			sessionID=gAnalysisSessions.newSession()
 			ma=mosaicAnalysis.mosaicAnalysis(mosaic.WebServerDataLocation+'/'+dataPath, sessionID) 
 
 			gAnalysisSessions.addDataPath(sessionID, mosaic.WebServerDataLocation+'/'+dataPath)
 			gAnalysisSessions.addMOSAICAnalysisObject(sessionID, ma)
-		elif sessionID != "" and settingsString != "":	# update settings
+		elif sessionID and settingsString:	# update settings
 			# print "update settings: ", dataPath, settingsString, sessionID
 			ma=gAnalysisSessions.getSessionAttribute(sessionID, 'mosaicAnalysisObject')
 			ma.updateSettings(settingsString)
 
 			gAnalysisSessions.addSettingsString(sessionID, ma.analysisSettingsDict)
-		elif sessionID != "" and settingsString == "":  # a session ID loaded from a route
+		elif sessionID and not settingsString:  # a session ID loaded from a route
 			# print "session id from route: ", dataPath, settingsString, sessionID
 			ma=gAnalysisSessions.getSessionAttribute(sessionID, 'mosaicAnalysisObject')
 		else:

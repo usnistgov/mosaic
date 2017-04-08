@@ -46,11 +46,11 @@
 					</md-input-container>
 				</div>
 				
-				<div layout-align="start center" style="margin: 6px; padding:6px; margin-bottom:0; padding-top:0;" ng-if="model.errorText==''">
+				<div layout-align="start center" style="{{model.cellStyle}}" ng-if="model.errorText==''">
 					<md-subheader class="md-primary" style="background: transparent;">Fit Parameters</md-subheader>
 					<md-list-item>
 						<p style="{{model.cellStyle}}"><small><em>j</em></small></p>
-						<p style="{{model.cellStyle}}"><small>&#x3008;<em>i<sub>j</sub></em>&#x3009;/&#x3008;<em>i<sub>0</sub></em>&#x3009;</small></p>
+						<p style="{{model.cellStyle}}"><small>&#x3008;<em>i<sub>j</sub></em>&#x3009;&#x2215;&#x3008;<em>i<sub>0</sub></em>&#x3009;</small></p>
 						<p style="{{model.cellStyle}}"><small><em>t<sub>j</sub></em> (&mu;s)</small></p>
 					</md-list-item>
 					<md-divider></md-divider>

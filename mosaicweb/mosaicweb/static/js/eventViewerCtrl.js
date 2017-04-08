@@ -27,6 +27,7 @@ angular.module('mosaicApp')
 
 					if (factory.errorText != '') {
 						factory.showErrorToast();
+						factory.parameterTable=[];
 					} else {
 						$mdToast.hide();
 					};
@@ -56,11 +57,9 @@ angular.module('mosaicApp')
 					.highlightClass('md-warn')
 					.hideDelay(0);
 
-					$mdToast.show(toast).then(function(response) {
-						if ( response == 'ok' ) {
-								factory.errorText='';
-						}
-					}, function() {});
+					$mdToast.show(toast).then(function(response) {}, function() {
+						console.log(factory.errorText);
+					});
 			};
 
 			return factory;
