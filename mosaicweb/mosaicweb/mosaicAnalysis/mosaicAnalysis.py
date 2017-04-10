@@ -12,6 +12,7 @@ from mosaicgui import EBSStateFileDict
 
 import mosaic.settings as settings
 from mosaic.utilities.resource_path import resource_path, format_path
+import mosaic
 
 import mosaic.apps.SingleChannelAnalysis as sca
 
@@ -235,7 +236,7 @@ class mosaicAnalysis:
 
 			self.returnMessageJSON['fileType']=self.fileType
 
-			self.returnMessageJSON['dataPath']=self.dataPath
+			self.returnMessageJSON['dataPath']=(self.dataPath).replace(str(mosaic.WebServerDataLocation), "<Data Root>")
 			self.returnMessageJSON['FsHz']=FsHz
 
 			# add plots
