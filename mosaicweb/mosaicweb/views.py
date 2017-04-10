@@ -4,6 +4,7 @@ from flask import send_file, make_response, jsonify, request
 import mosaic
 from mosaic.utilities.sqlQuery import query, rawQuery
 from mosaic.utilities.analysis import caprate
+from mosaic.utilities.resource_path import resource_path
 from mosaic.trajio.metaTrajIO import EmptyDataPipeError, FileNotFoundError
 import mosaic.settings as settings
 
@@ -82,9 +83,9 @@ def newAnalysis():
 		if dataPath and not settingsString:		# brand new session
 			# print "brand new session: ", dataPath, settingsString, sessionID	
 			sessionID=gAnalysisSessions.newSession()
-			ma=mosaicAnalysis.mosaicAnalysis(mosaic.WebServerDataLocation+'/'+dataPath, sessionID) 
+			ma=mosaicAnalysis.mosaicAnalysis( resource_path(mosaic.WebServerDataLocation+'/'+dataPath), sessionID) 
 
-			gAnalysisSessions.addDataPath(sessionID, mosaic.WebServerDataLocation+'/'+dataPath)
+			gAnalysisSessions.addDataPath(sessionID, resource_path(mosaic.WebServerDataLocation+'/'+dataPath) )
 			gAnalysisSessions.addMOSAICAnalysisObject(sessionID, ma)
 		elif sessionID and settingsString:	# update settings
 			# print "update settings: ", dataPath, settingsString, sessionID
@@ -247,7 +248,7 @@ def listDataFolders():
 	if level == 'Data Root':
 		folder=mosaic.WebServerDataLocation
 	else:
-		folder=mosaic.WebServerDataLocation+'/'+level+'/'
+		folder=resource_path(mosaic.WebServerDataLocation+'/'+level+'/')
 
 	folderList=[]
 
@@ -255,7 +256,7 @@ def listDataFolders():
 		itemAttr={}
 		if os.path.isdir(item):
 			itemAttr['name']=os.path.relpath(item, folder)
-			itemAttr['relpath']=os.path.relpath(item, mosaic.WebServerDataLocation)
+			itemAttr['relpath']=os.path.relpath(item, resource_path(mosaic.WebServerDataLocation) )
 			itemAttr['desc']=_folderDesc(item)
 			itemAttr['modified']=time.strftime('%Y-%m-%d', time.localtime(os.path.getmtime(item)))
 
@@ -313,35 +314,29 @@ def _histPlot(dbFile, qstr, bins):
 	layout['autosize']=True
 	# layout['height']=250
 
-	normalEvents, totalEvents=_eventStats()
-	stats={}
-	stats['eventsProcessed']=totalEvents
-	stats['errorRate']=round(100.*(1-(normalEvents/float(totalEvents))), 1)
-	stats['captureRate']=_caprate()
+	# normalEvents, totalEvents=_eventStats()
+	# stats={}
+	# stats['eventsProcessed']=totalEvents
+	# stats['errorRate']=round(100.*(1-(normalEvents/float(totalEvents))), 1)
+	# stats['captureRate']=_caprate()
 
 	dat['data']=[trace1]
 	dat['layout']=layout
 	dat['options']={'displayLogo': False}
-	dat['stats']=stats
+	# dat['stats']=stats
 
 	return dat
 
-def _caprate():
-	q=query(
-		mosaic.WebServerDataLocation+"/m40_0916_RbClPEG/eventMD-20161208-130302.sqlite",
-		"select AbsEventStart from metadata where ProcessingStatus='normal' order by AbsEventStart ASC"
-	)
-	return round(caprate(np.hstack(q))[0], 1)
 
-def _eventStats():
-	normalEvents=len(query(
-		mosaic.WebServerDataLocation+"/m40_0916_RbClPEG/eventMD-20161208-130302.sqlite",
-		"select AbsEventStart from metadata where ProcessingStatus='normal' order by AbsEventStart ASC"
-	))
-	totalEvents=len(query(
-		mosaic.WebServerDataLocation+"/m40_0916_RbClPEG/eventMD-20161208-130302.sqlite",
-		"select ProcessingStatus from metadata"
-	))
+# def _eventStats():
+# 	normalEvents=len(query(
+# 		mosaic.WebServerDataLocation+"/m40_0916_RbClPEG/eventMD-20161208-130302.sqlite",
+# 		"select AbsEventStart from metadata where ProcessingStatus='normal' order by AbsEventStart ASC"
+# 	))
+# 	totalEvents=len(query(
+# 		mosaic.WebServerDataLocation+"/m40_0916_RbClPEG/eventMD-20161208-130302.sqlite",
+# 		"select ProcessingStatus from metadata"
+# 	))
 
-	return normalEvents, totalEvents
+# 	return normalEvents, totalEvents
 	
