@@ -75,6 +75,8 @@ angular.module('mosaicApp')
 						factory.currSigmaAuto=response.data.currSigmaAuto;
 						factory.selectedFileType=response.data.fileType;
 
+						factory.dataPath=response.data.dataPath;
+						
 						factory.FsKHz=response.data.FsHz/1000.;
 
 						factory.analysisSettings=angular.fromJson(response.data.settingsString);
