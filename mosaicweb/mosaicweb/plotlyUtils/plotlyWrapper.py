@@ -54,7 +54,7 @@ class plotlyTrace(dict):
 							},
 		"IonicCurrentThreshold" : {
 										'mode': 'scatter', 
-										'line': { 'color': 'rgb(255, 80, 77)', 'width': '2' }, 
+										'line': { 'color': 'rgb(216, 27, 96)', 'width': '2' }, 
 										'name': 'ionic current threshold'
 								}
 	}
