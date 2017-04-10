@@ -14,9 +14,9 @@
 			<md-tooltip md-direction="left">Apply Settings</md-tooltip>
 			<md-icon md-font-set="material-icons md-24">check</md-icon>
 		</md-button>
-		<md-button class="md-fab md-primary md-fab-bottom-right" style="position:fixed !important; padding:16px;" ng-click="startAnalysis()" ng-if="( !model.requireControlUpdate && !formDisabled() ) && !mosaicConfigModel.analysisRunning">
+		<md-button class="md-fab  md-accent md-fab-bottom-right" style="position:fixed !important; padding:16px;" ng-click="startAnalysis()" ng-if="( !model.requireControlUpdate && !formDisabled() ) && !mosaicConfigModel.analysisRunning">
 			<md-tooltip md-direction="left">Start Analysis</md-tooltip>
-			<md-icon md-font-set="material-icons md-24">play_arrow</md-icon>
+			<md-icon md-font-set="material-icons md-24" style="color: white;">play_arrow</md-icon>
 		</md-button>
 		<div layout="column" ng-if="mosaicConfigModel.analysisRunning" flex ng-include="'/static/partials/BackToAnalysisFAB.tmpl.html'"></div>
 		
@@ -28,7 +28,7 @@
 				<plotly plotly-data="model.trajPlot.data" plotly-layout="model.trajPlot.layout" plotly-options="model.trajPlot.options"></plotly>
 			</div>
 			<div style="margin: 0px; padding:0px; padding-left:4px; padding-right: 4px;" flex layout="column">
-				<p style="color: #696969; margin:0; padding:0;"><em><small>Data Path: /{{model.dataPath}}/</small></em></p>
+				<p style="color: #696969; margin:0; padding:0;"><em><small>Data Path: {{model.dataPath}}/</small></em></p>
 				<!-- <span flex></span> -->
 				<p style="color: #696969; margin:0; padding:0;"><em><small>F<sub>s</sub>={{model.FsKHz}} kHz</small></em></p>
 			</div>
@@ -142,10 +142,10 @@
 				<md-slider-container ng-disabled="mosaicConfigModel.analysisRunning" style="margin: 6px; padding:6px padding-right: 8px;">
 					<span flex>Threshold</span>
 					<span flex="5"></span>
-					<md-slider flex required ng-model="model.currThresholdpA" ng-model-options="{ debounce: 100 }" min="0" max="{{model.currMeanDisplay}}" step="0.01" aria-label="threshold" value="100" id="thr-slider" class="md-primary" flex>
+					<md-slider required ng-model="model.currThresholdpA" ng-model-options="{ debounce: 100 }" min="0" max="{{model.currMeanDisplay}}" step="0.01" aria-label="threshold" value="100" id="thr-slider" class="md-primary">
 					</md-slider>
-
-					<md-input-container flex="25">
+					<!-- <span flex="5"></span> -->
+					<md-input-container>
 						<input required type="number" min="0.0" step="0.01" max="{{model.currMeanDisplay}}" ng-model="model.currThresholdpA" ng-model-options="{ debounce: 100 }" aria-label="threshold" aria-controls="thr-slider" id="thr-slider" name="currThreshold">
 						<div ng-messages="newAnalysisForm.currThreshold.$error" multiple md-auto-hide="false">
 							<div ng-message="required">
