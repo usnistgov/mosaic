@@ -75,7 +75,7 @@ class FitEventWindow(QtGui.QDialog):
 
 		# Store the analysis algorithm
 		try:
-			self.analysisAlgorithm=str(self.queryDatabase.readAnalysisInfo()[3])
+			self.analysisAlgorithm=str(self.queryDatabase.readAnalysisInfo()['processingAlgorithm'])
 		except:
 			# If the database doesn't have information on the alogirthm type, 
 			# default to adept2State
