@@ -7,6 +7,7 @@
 	:License:	See LICENSE.TXT	
 	:ChangeLog:
 	.. line-block::
+		4/13/17 	AB 	Negative end values enable runnning an analysis on all available data.
 		7/29/16 	AB 	Add additional filtering when constructing a list of data files to process.
 		1/27/17 	AB 	Perform a lexical sort of input data files
 		9/13/15 	AB 	Updated logging to use mosaicLogFormat class
@@ -502,12 +503,14 @@ class metaTrajIO(object):
 		
 		self.initPipe=True
 
+		self.datLenSec=(len(self.rawData)/float(self.Fs)*(len(self.dataFiles)+1))
+
 		# Set the end point
 		if hasattr(self, 'end'):
-			self.endIndex=int((self.end-1)*self.Fs)
-			self.datLenSec=self.end-self.start
-		else:
-			self.datLenSec=(len(self.rawData)/float(self.Fs)*(len(self.dataFiles)+1))
+			if self.end < 0:			# treat a negative end value the same as not setting end.
+				self.endIndex=int((self.end-1)*self.Fs)
+				self.datLenSec=self.end-self.start
+			
 			
 		# Drop the first 'n' points specified by the start keyword
 		if hasattr(self, 'start'):
