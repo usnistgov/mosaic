@@ -277,7 +277,7 @@ class metaTrajIO(object):
 			self.Stop()
 
 		# If the global index exceeds the specied end point, raise an EmptyDataPipError
-		if hasattr(self, "end"):
+		if hasattr(self, "end") and self.end>0:
 			if self.globalDataIndex > self.endIndex:
 				self.Stop()
 
