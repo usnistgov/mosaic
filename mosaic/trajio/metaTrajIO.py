@@ -507,7 +507,7 @@ class metaTrajIO(object):
 
 		# Set the end point
 		if hasattr(self, 'end'):
-			if self.end < 0:			# treat a negative end value the same as not setting end.
+			if self.end > 0:			# treat a negative end value the same as not setting end.
 				self.endIndex=int((self.end-1)*self.Fs)
 				self.datLenSec=self.end-self.start
 			
