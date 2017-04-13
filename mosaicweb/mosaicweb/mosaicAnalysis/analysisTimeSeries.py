@@ -93,7 +93,7 @@ class analysisTimeSeries(dict):
 		return self.returnMessageJSON
 
 	def _calculateDecimation(self, dataLen):
-		if dataLen < 500:
+		if dataLen < 1000:
 			return 1
 		else:
 			return int(round(dataLen/500.))
