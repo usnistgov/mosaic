@@ -15,8 +15,8 @@
 			</div>
 		</md-content>
 
-		<md-content class="md-padding" layout="row" layout-align="center center" style="padding-top: 2px; background-color: transparent" flex="100">
-			<md-content class="md-whiteframe-z2 md-padding" layout="column" style="margin: 8px; padding:8px; background: transparent" flex>
+		<md-content class="md-padding" layout="column" layout-gt-sm="row" layout-align="center center" style="padding-top: 2px; background-color: transparent" flex="100">
+			<md-content class="md-whiteframe-z2 md-padding" layout="column" style="margin: 8px; padding:8px; background: transparent" flex="100" flex-gt-sm>
 				<md-subheader class="md-primary" style="margin: 0; padding:0; background-color: transparent">
 					<p>Metrics</p>
 				</md-subheader>
@@ -36,13 +36,13 @@
 				<div layout="row" layout-align="center center" flex>
 					<div flex="60"><p style="color: #696969; padding:0; margin:0; padding-left: 8px; padding-bottom: 12px;"><small><em>Analysis Progress</em></small></p></div>
 					<div flex layout="row" layout-align="center center">
-						<md-progress-linear md-mode="{{model.analysisProgressMode}}" value="{{model.analysisStats.analysisProgressPercent}}" flex="60"></md-progress-linear>
-						<p style="color: #696969; padding:0; margin:0; padding-left: 8px;" flex layout-align="start start">{{model.analysisStats.analysisProgressPercent}} %</p>
+						<md-progress-linear md-mode="{{model.analysisProgressMode}}" value="{{model.analysisStats.analysisProgressPercent}}" flex="65"></md-progress-linear>
+						<p style="color: #696969; padding:0; margin:0; padding-left: 8px;" flex layout-align="start start"><small>{{model.analysisStats.analysisProgressPercent}} %</small></p>
 					</div>
 				</div>
 			</md-content>
 
-			<md-content class="md-whiteframe-z2" layout="column" style="margin: 8px; padding:8px; background: transparent" flex>
+			<md-content class="md-whiteframe-z2" layout="column" style="margin: 8px; padding:8px; background: transparent" flex="100" flex-gt-sm>
 				<md-subheader class="md-primary" style="margin: 0; padding:0; background-color: transparent">
 					<p>Errors & Warnings</p>
 				</md-subheader>
