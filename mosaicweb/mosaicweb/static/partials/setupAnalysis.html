@@ -2,7 +2,7 @@
 <!-- ng-submit="startAnalysis()"  -->
 	<form layout="column" name="newAnalysisForm" ng-disabled="mosaicConfigModel.analysisRunning">
 		<div layout="row" layout-align="end center">
-			<h3 style="color: #696969;"><em>New Analysis Setup</em></h3>
+			<h4 style="color: #696969;"><em>New Analysis Setup</em></h4>
 			<span flex></span>
 			<md-progress-circular md-mode="indeterminate" class="md-primary" md-diameter="24" ng-if="model.controlsUpdating"></md-progress-circular>
 			<md-button class="md-primary" type="button" id="advancedButton" ng-click="showAdvancedSettings()" ng-disabled="formDisabled()" style="padding:10px; margin:10px;">
@@ -35,7 +35,7 @@
 		</md-content>
 
 		<div layout-gt-sm="row" layout="column">
-			<md-content class="md-whiteframe-z2" style="margin: 8px; padding:8px;" flex-gt-sm=40>
+			<md-content class="md-whiteframe-z2" style="margin: 8px; padding:8px;" flex-gt-sm="40">
 				<md-subheader class="md-primary" style="margin: 0; padding:0">
 					<div layout="row" flex>
 						<p flex="70">Data File Settings</p>
@@ -199,7 +199,7 @@
 
 					<span flex="5"></span>
 
-					<md-switch class="md-primary" md-no-ink aria-label="Automatically estimate baseline current" ng-model="model.currAuto" ng-change="model.toggleCurrAuto()" ng-disabled="mosaicConfigModel.analysisRunning">
+					<md-switch class="md-primary" md-no-ink aria-label="Automatically estimate baseline current" ng-model="model.currAuto" name="currAuto" ng-change="model.toggleCurrAuto()" ng-disabled="mosaicConfigModel.analysisRunning">
 						Auto
 					</md-switch>
 

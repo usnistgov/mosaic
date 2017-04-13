@@ -27,13 +27,14 @@ class plotlyTrace(dict):
 									},
 		"NormalEventFit" : {
 										'mode': 'scatter', 
-										# 'line': { 'color': 'rgb(255, 80, 77)', 'width': '2'}
-										'line': { 'color': 'rgb(255, 41, 41)', 'width': '2'}
+										'line': { 'color': 'rgb(216, 27, 96)', 'width': '2'},
+										'name': 'fit'
 										
 									},
 		"NormalEventStep" : {
 										'mode': 'scatter',
-										'line': { 'color': 'rgb(120, 120, 120)', 'width': '2', 'dash': 'dash' }
+										'line': { 'color': 'rgb(120, 120, 120)', 'width': '2', 'dash': 'dash' },
+										'name': 'level'
 									},
 		"WarnEvent" : {
 										'mode': 'markers',
