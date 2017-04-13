@@ -216,6 +216,10 @@ angular.module('mosaicApp')
 					factory.end='';
 					factory.dcOffset=0.0;
 			};
+
+			if (factory.end==-1) {
+				factory.end=null;
+			};
 		};
 
 		// update analysisSettings with display values
@@ -233,6 +237,9 @@ angular.module('mosaicApp')
 			settings.eventSegment.eventThreshold=(factory.currMeanDisplay-factory.currThresholdpA)/factory.currSigmaDisplay;
 			settings.eventSegment.writeEventTS=factory.writeEventTS ? 1 : 0;
 
+			if (factory.end==null) {
+				factory.end=-1;
+			};
 			switch(factory.selectedFileType) {
 				case 'QDF':
 					settings.qdfTrajIO.start=factory.start;
@@ -276,12 +283,22 @@ angular.module('mosaicApp')
 		$scope.mosaicConfigModel = mosaicConfigFactory;
 
 		// watch
-		$scope.$watch('newAnalysisForm.blockSize.$pristine', function() {
-			if ($scope.newAnalysisForm.blockSize.$valid && !$scope.model.controlsUpdating) {
-				$scope.model.requireControlUpdate=true;
-			};
-		});
-		$scope.$watch('newAnalysisForm.start.$pristine', function() {
+		// $scope.$watch('newAnalysisForm.blockSize.$pristine', function() {
+		// 	if ($scope.newAnalysisForm.blockSize.$valid && !$scope.model.controlsUpdating) {
+		// 		$scope.model.requireControlUpdate=true;
+		// 	};
+		// });
+		// $scope.$watch('newAnalysisForm.blockSize.$pristine', function() {
+		// 	if ($scope.newAnalysisForm.blockSize.$valid && !$scope.model.controlsUpdating) {
+		// 		$scope.model.requireControlUpdate=true;
+		// 	};
+		// });
+		// $scope.$watch('newAnalysisForm.start.$pristine', function() {
+		// 	if ($scope.newAnalysisForm.blockSize.$valid && !$scope.model.controlsUpdating) {
+		// 		$scope.model.requireControlUpdate=true;
+		// 	};
+		// });
+		$scope.$watch('newAnalysisForm.$pristine', function() {
 			if ($scope.newAnalysisForm.blockSize.$valid && !$scope.model.controlsUpdating) {
 				$scope.model.requireControlUpdate=true;
 			};
