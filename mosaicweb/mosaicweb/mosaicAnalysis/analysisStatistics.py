@@ -9,7 +9,7 @@
 		3/19/17		AB 	Initial version
 """
 import mosaic.mdio.sqlite3MDIO as sqlite
-from mosaic.utilities.sqlQuery import query
+from mosaic.utilities.sqlQuery import query, rawQuery
 from mosaic.utilities.analysis import caprate
 
 import glob
@@ -25,6 +25,8 @@ class analysisStatistics:
 	"""
 	def __init__(self, analysisDB):
 		self.analysisDB = analysisDB
+		self.trajLength=self._trajLength(analysisDB)
+		self.lastEventStartTimeSec=0
 
 	def analysisStatistics(self):
 		statsDict={}
@@ -47,15 +49,22 @@ class analysisStatistics:
 		statsDict['openChannelCurrentMean']=o[0]
 		statsDict['openChannelCurrentSigma']=o[1]
 
+		statsDict['analysisProgressPercent']=self._analysisProgress()
 		return statsDict
 		
 
 	def _caprate(self):
-		q=query(
-			self.analysisDB,
-			"select AbsEventStart from metadata where ProcessingStatus='normal' order by AbsEventStart ASC"
+		q=np.hstack(
+			query(
+				self.analysisDB,
+				"select AbsEventStart from metadata where ProcessingStatus='normal' order by AbsEventStart ASC"
+			)
 		)
-		c=caprate(np.hstack(q))
+
+		# save the start time of the latest event
+		self.lastEventStartTimeSec=q[-1]/1000;
+		
+		c=caprate(q)
 
 		return round(c[0], 1), round(c[1], 1)
 
@@ -99,6 +108,32 @@ class analysisStatistics:
 		))
 
 		return round(normalEvents/float(totalEvents), 3), round(warnEvents/float(totalEvents), 3), round(errorEvents/float(totalEvents), 3), totalEvents
+
+	def _trajLength(self, analysisDB):
+		dbHnd=sqlite.sqlite3MDIO()
+		dbHnd.openDB(analysisDB)
+	
+		return dbHnd.readAnalysisInfo()['dataLengthSec']
+	
+	def _analysisProgress(self):
+		try:
+			self.analysisTime=list(rawQuery(self.analysisDB, "select analysisTimeSec from analysisinfo")[0])[0]
+		except:
+			if self.lastEventStartTimeSec > self.analysisTime:
+				self.analysisTime=self.lastEventStartTimeSec
+
+		try:
+			pctcomplete=100.*self.analysisTime/float(self.trajLength)
+
+			if pctcomplete<0.05:
+				return round(pctcomplete, 1)
+			elif pctcomplete>90:
+				return int(round(pctcomplete/10.0)*10.0)
+			else:
+				return int(round(pctcomplete))
+		except:
+			return "n/a"
+
 
 if __name__ == '__main__':
 	import mosaic

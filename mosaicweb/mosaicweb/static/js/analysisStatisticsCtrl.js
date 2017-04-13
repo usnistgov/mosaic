@@ -7,6 +7,9 @@ angular.module('mosaicApp')
 			factory.analysisStats = {};
 			factory.errorPercent = 0;
 			factory.warnPercent = 0;
+			factory.normalPercent = 0;
+
+			factory.analysisProgressMode='indeterminate';
 
 			factory.updateErrorStats = function() {
 				if (mosaicConfigFactory.sessionID != null) {
@@ -15,11 +18,19 @@ angular.module('mosaicApp')
 						factory.analysisStats=response.data;
 
 						factory.errorPercent=Math.round(factory.analysisStats.fractionError*10000)/100.;
-						factory.warnPercent=Math.round(factory.analysisStats.fractionWarn*10000)/100.;				
+						factory.warnPercent=Math.round(factory.analysisStats.fractionWarn*10000)/100.;	
+						factory.normalPercent=Math.round(factory.analysisStats.fractionNormal*10000)/100.;				
 
 						factory.errors=Math.round(response.data.fractionError*response.data.nTotal);
 						factory.warnings=Math.round(response.data.fractionWarn*response.data.nTotal);
+						factory.normal=Math.round(response.data.fractionNormal*response.data.nTotal);
 
+						if (factory.analysisStats.analysisProgressPercent == 'n/a') {
+							factory.analysisProgressMode='indeterminate';	
+						} else {
+							factory.analysisProgressMode='determinate';
+						};
+						
 						factory.errorStats.data[0].x=[Math.round(response.data.fractionNormal*response.data.nTotal)];
 						factory.errorStats.data[1].x=[Math.round(response.data.fractionWarn*response.data.nTotal)];
 						factory.errorStats.data[2].x=[Math.round(response.data.fractionError*response.data.nTotal)];
