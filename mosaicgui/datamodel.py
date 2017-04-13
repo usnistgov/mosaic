@@ -211,7 +211,7 @@ class guiDataModel(dict):
 				print "Settings not found in ", dbfile, "\n"
 
 			try:
-				self["dbInfoFsHz"]=db.readAnalysisInfo()[7]
+				self["dbInfoFsHz"]=db.readAnalysisInfo()['FsHz']
 			except:
 				pass
 

@@ -217,11 +217,17 @@ class sqlite3MDIO(metaMDIO.metaMDIO):
 			self.db.commit()
 			c = self.db.cursor()
 
+			c.execute('PRAGMA table_info(analysisinfo);')
+			infoheadings=[ idx[1] for idx in c.fetchall() ]
+
 			c.execute( 'select * from analysisinfo' )
-			infolist=c.fetchall()
-			
-			return list(infolist[0])[:-1]
-			# return base64.b64decode(list(settstr[0])[0])
+			infolist=c.fetchall()[0]
+
+			infodict={}
+			for k,v in zip(infoheadings, infolist)[:-1]:
+				infodict[k]=v
+
+			return infodict
 		except sqlite3.OperationalError, err:
 			raise
 
@@ -378,8 +384,6 @@ class sqlite3MDIO(metaMDIO.metaMDIO):
 		return [ d[col] for col in colnames ]
 
 if __name__=="__main__":
-	dbname=resource_path('eventMD-PEG28-stepResponseAnalysis.sqlite')
-
 	try:
 		c=sqlite3MDIO()
 		c.openDB(dbname)
@@ -391,8 +395,7 @@ if __name__=="__main__":
 		print c.readSettings()
 		print c.readAnalysisLog()
 		print c.readAnalysisInfo()
-
-		print zip( c.mdColumnNames, c.mdColumnTypes )
+		# print zip( c.mdColumnNames, c.mdColumnTypes )
 		print
 		# print [ c for c in zip( c.mdColumnNames, c.mdColumnTypes ) if c[1] != 'REAL_LIST' ]
 

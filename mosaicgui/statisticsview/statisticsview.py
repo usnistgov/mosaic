@@ -77,7 +77,7 @@ class StatisticsWindow(QtGui.QDialog):
 		self.dbHnd.openDB(self.dbFile)
 
 		# set the length of the trajectory in sec.
-		self.trajLength=self.dbHnd.readAnalysisInfo()[-1]
+		self.trajLength=self.dbHnd.readAnalysisInfo()['dataLengthSec']
 
 		# Connect signals and slots
 		self.qWorker.resultsReady2.connect(self.OnDataReady)
