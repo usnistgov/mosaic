@@ -1,4 +1,4 @@
 from mosaicweb import app
 import mosaic
 
-app.run(port=mosaic.WebServerPort, debug=True)
+app.run(port=mosaic.WebServerPort, debug=mosaic.DeveloperMode)
