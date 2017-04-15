@@ -8,7 +8,7 @@ from mosaic.utilities.resource_path import resource_path
 from mosaic.trajio.metaTrajIO import EmptyDataPipeError, FileNotFoundError
 import mosaic.settings as settings
 
-from mosaicweb.mosaicAnalysis import mosaicAnalysis, analysisStatistics, analysisTimeSeries
+from mosaicweb.mosaicAnalysis import mosaicAnalysis, analysisStatistics, analysisTimeSeries, analysisHistogram
 from mosaicweb.sessionManager import sessionManager
 from mosaicweb.utils.utils import gzipped
 
@@ -172,7 +172,9 @@ def analysisResults():
 		ma=gAnalysisSessions.getSessionAttribute(sessionID, 'mosaicAnalysisObject')
 		gAnalysisSessions.addAnalysisRunningFlag(sessionID, ma.analysisRunning)
 
-		return jsonify( respondingURL="analysis-results", analysisRunning=ma.analysisRunning, **_histPlot(dbfile, qstr, bins) ), 200
+		a=analysisHistogram.analysisHistogram(dbfile, qstr, bins)
+
+		return jsonify( respondingURL="analysis-results", analysisRunning=ma.analysisRunning, **a.analysisHistogram() ), 200
 	except sessionManager.SessionNotFoundError:
 		return jsonify( respondingURL='analysis-results', errType='MissingSIDError', errSummary="A valid session ID was not found.", errText="A valid session ID was not found." ), 500
 	except KeyError, err:
@@ -281,62 +283,4 @@ def _folderDesc(item):
 	else:
 		return "{0} sub-folders".format(nfolders) 
 
-def _histPlot(dbFile, qstr, bins):
-	xlabel={
-		"BlockDepth"	: "i/i<sub>0</sub>",
-		"ResTime"		: "t (ms)"
-	}[qstr.split('from')[0].split('select')[1].split()[0]]
-
-	q=query(
-		dbFile,
-		qstr
-	)
-	x=np.hstack( np.hstack( np.array( q ) ) )
-	c,b=np.array(np.histogram(x, bins=bins))
-
-	dat={}
-
-	trace1={};
-	trace1['x']=list(b)
-	trace1['y']=list(c)
-	trace1['mode']='lines'
-	trace1['line']= { 'color': 'rgb(40, 53, 147)', 'width': '1.5' }
-	trace1['name']= 'blockade depth'
-
-	layout={}
-	# layout['title']='Blockade Depth Histogram'
-	layout['xaxis']= { 'title': xlabel, 'type': 'linear' }
-	layout['yaxis']= { 'title': 'counts', 'type': 'linear' }
-	layout['paper_bgcolor']='rgba(0,0,0,0)'
-	layout['plot_bgcolor']='rgba(0,0,0,0)'
-	layout['margin']={'l':'50', 'r':'50', 't':'0', 'b':'50'}
-	layout['showlegend']=False
-	layout['autosize']=True
-	# layout['height']=250
-
-	# normalEvents, totalEvents=_eventStats()
-	# stats={}
-	# stats['eventsProcessed']=totalEvents
-	# stats['errorRate']=round(100.*(1-(normalEvents/float(totalEvents))), 1)
-	# stats['captureRate']=_caprate()
-
-	dat['data']=[trace1]
-	dat['layout']=layout
-	dat['options']={'displayLogo': False}
-	# dat['stats']=stats
-
-	return dat
-
-
-# def _eventStats():
-# 	normalEvents=len(query(
-# 		mosaic.WebServerDataLocation+"/m40_0916_RbClPEG/eventMD-20161208-130302.sqlite",
-# 		"select AbsEventStart from metadata where ProcessingStatus='normal' order by AbsEventStart ASC"
-# 	))
-# 	totalEvents=len(query(
-# 		mosaic.WebServerDataLocation+"/m40_0916_RbClPEG/eventMD-20161208-130302.sqlite",
-# 		"select ProcessingStatus from metadata"
-# 	))
-
-# 	return normalEvents, totalEvents
 	

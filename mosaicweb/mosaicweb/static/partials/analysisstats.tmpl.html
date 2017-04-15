@@ -1,4 +1,4 @@
-<md-dialog aria-label="Analysis Statistics" flex="65">
+<md-dialog aria-label="Analysis Statistics" flex="55">
 	<md-toolbar>
 		<div class="md-toolbar-tools">
 			<h3><em>Analysis Statistics</em></h3>
@@ -16,28 +16,28 @@
 		</md-content>
 
 		<md-content class="md-padding" layout="column" layout-gt-sm="row" layout-align="center center" style="padding-top: 2px; background-color: transparent" flex="100">
-			<md-content class="md-whiteframe-z2 md-padding" layout="column" style="margin: 8px; padding:8px; background: transparent" flex="100" flex-gt-sm>
+			<md-content class="md-whiteframe-z2" layout="column" style="margin: 8px; padding:8px; background: transparent" flex="100" flex-gt-sm>
 				<md-subheader class="md-primary" style="margin: 0; padding:0; background-color: transparent">
 					<p>Metrics</p>
 				</md-subheader>
 				
 				<div layout="row" layout-align="center center" flex>
-					<div flex="60"><p style="color: #696969; padding:0; margin:0; padding-left: 0px; padding-bottom: 12px;"><small>&#x3008;<em>i<sub>0</sub></em>&#x3009;</small></p></div>
-					<div flex><p style="color: #696969; padding:0; margin:0;"><small>{{model.analysisStats.openChannelCurrentMean}}&#177;{{model.analysisStats.openChannelCurrentSigma}} pA</small></p></div>
+					<div flex="55"><p style="color: #696969; padding:0; margin:0; padding-left: 0px; padding-bottom: 12px;"><small>&#x3008;<em>i<sub>0</sub></em>&#x3009;</small></p></div>
+					<div flex><p style="color: #696969; padding:0; margin:0; padding-bottom: 12px;"><small>{{model.analysisStats.openChannelCurrentMean}}&#177;{{model.analysisStats.openChannelCurrentSigma}} pA</small></p></div>
 				</div>
 				<div layout="row" layout-align="center center" flex>
-					<div flex="60"><p style="color: #696969; padding:0; margin:0; padding-left: 8px; padding-bottom: 12px;"><small><em>Capture Rate</em></small></p></div>					
-					<div flex><p style="color: #696969; padding:0; margin:0;"><small>{{model.analysisStats.captureRateMean}}&#177;{{model.analysisStats.captureRateSigma}} s<sup>-1</sup></small></p></div>
+					<div flex="55"><p style="color: #696969; padding:0; margin:0; padding-left: 8px; padding-bottom: 12px;"><small><em>Capture Rate</em></small></p></div>					
+					<div flex><p style="color: #696969; padding:0; margin:0; padding-bottom: 12px;"><small>{{model.analysisStats.captureRateMean}}&#177;{{model.analysisStats.captureRateSigma}} s<sup>-1</sup></small></p></div>
 				</div>
 				<div layout="row" layout-align="center center" flex>
-					<div flex="60"><p style="color: #696969; padding:0; margin:0; padding-left: 8px; padding-bottom: 12px;"><small><em>Processing Time</em></small></p></div>
-					<div flex><p style="color: #696969; padding:0; margin:0;"><small>{{model.analysisStats.processTimePerEventMean}}&#177;{{model.analysisStats.processTimePerEventSigma}} ms/event</small></p></div>
+					<div flex="55"><p style="color: #696969; padding:0; margin:0; padding-left: 8px; padding-bottom: 12px;"><small><em>Processing Time</em></small></p></div>
+					<div flex><p style="color: #696969; padding:0; margin:0; padding-bottom: 12px;"><small>{{model.analysisStats.processTimePerEventMean}}&#177;{{model.analysisStats.processTimePerEventSigma}} ms/event</small></p></div>
 				</div>
 				<div layout="row" layout-align="center center" flex>
-					<div flex="60"><p style="color: #696969; padding:0; margin:0; padding-left: 8px; padding-bottom: 12px;"><small><em>Analysis Progress</em></small></p></div>
+					<div flex="55"><p style="color: #696969; padding:0; margin:0; padding-left: 8px; padding-bottom: 12px;"><small><em>Analysis Progress</em></small></p></div>
 					<div flex layout="row" layout-align="center center">
-						<md-progress-linear md-mode="{{model.analysisProgressMode}}" value="{{model.analysisStats.analysisProgressPercent}}" flex="65"></md-progress-linear>
-						<p style="color: #696969; padding:0; margin:0; padding-left: 8px;" flex layout-align="start start"><small>{{model.analysisStats.analysisProgressPercent}} %</small></p>
+						<md-progress-linear class="md-primary md-hue-1" style="padding:0; margin:0; padding-left: 8px; padding-bottom: 12px;"md-mode="{{model.analysisProgressMode}}" value="{{model.analysisStats.analysisProgressPercent}}" flex="65"></md-progress-linear>
+						<p style="color: #696969; padding:0; margin:0; padding-left: 8px; padding-bottom: 12px;" flex layout-align="start start"><small>{{model.analysisStats.analysisProgressPercent}} %</small></p>
 					</div>
 				</div>
 			</md-content>
@@ -48,20 +48,20 @@
 				</md-subheader>
 			
 				<div layout="row" flex>
-					<div flex="60"><p style="color: #696969; padding:0; margin:0; padding-left: 8px; padding-bottom: 12px;"><small><em>Events Processed</em></small></p></div>
-					<div flex><p style="color: #696969; padding:0; margin:0;"><small>{{model.analysisStats.nTotal}}</small></p></div>
+					<div flex="55"><p style="color: #696969; padding:0; margin:0; padding-left: 8px; padding-bottom: 12px;"><small><em>Events Processed</em></small></p></div>
+					<div flex><p style="color: #696969; padding:0; margin:0; padding-bottom: 12px;"><small>{{model.analysisStats.nTotal}}</small></p></div>
 				</div>
 				<div layout="row" flex>
-					<div flex="60"><p style="color: #696969; padding:0; margin:0; padding-left: 8px; padding-bottom: 12px;"><small><em>Normal</em></small></p></div>
-					<div flex><p style="color: #696969; padding:0; margin:0;"><small>{{model.normal}} ({{model.normalPercent}}%)</small></p></div>
+					<div flex="55"><p style="color: #696969; padding:0; margin:0; padding-left: 8px; padding-bottom: 12px;"><small><em>Normal</em></small></p></div>
+					<div flex><p style="color: #696969; padding:0; margin:0; padding-bottom: 12px;"><small>{{model.normal}} ({{model.normalPercent}}%)</small></p></div>
 				</div>
 				<div layout="row" flex>
-					<div flex="60"><p style="color: #696969; padding:0; margin:0; padding-left: 8px; padding-bottom: 12px;"><small><em>Errors</em></small></p></div>
-					<div flex><p style="color: #696969; padding:0; margin:0;"><small>{{model.errors}} ({{model.errorPercent}}%)</small></p></div>
+					<div flex="55"><p style="color: #696969; padding:0; margin:0; padding-left: 8px; padding-bottom: 12px;"><small><em>Errors</em></small></p></div>
+					<div flex><p style="color: #696969; padding:0; margin:0; padding-bottom: 12px;"><small>{{model.errors}} ({{model.errorPercent}}%)</small></p></div>
 				</div>
 				<div layout="row" flex>
-					<div flex="60"><p style="color: #696969; padding:0; margin:0; padding-left: 8px; padding-bottom: 12px;"><small><em>Warnings</em></small></p></div>
-					<div flex><p style="color: #696969; padding:0; margin:0;"><small>{{model.warnings}} ({{model.warnPercent}}%)</small></p></div>
+					<div flex="55"><p style="color: #696969; padding:0; margin:0; padding-left: 8px; padding-bottom: 12px;"><small><em>Warnings</em></small></p></div>
+					<div flex><p style="color: #696969; padding:0; margin:0; padding-bottom: 12px;"><small>{{model.warnings}} ({{model.warnPercent}}%)</small></p></div>
 				</div>
 			</md-content>
 		</md-content>

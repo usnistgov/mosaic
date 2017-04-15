@@ -57,6 +57,11 @@ class plotlyTrace(dict):
 										'mode': 'scatter', 
 										'line': { 'color': 'rgb(216, 27, 96)', 'width': '2' }, 
 										'name': 'ionic current threshold'
+								},
+		"Histogram" : {
+										'mode': 'lines', 
+										'line': { 'color': 'rgb(40, 53, 147)', 'width': '1.5' },
+										'name': 'histogram'
 								}
 	}
 
