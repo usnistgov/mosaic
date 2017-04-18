@@ -4,8 +4,9 @@ from flask import send_file, make_response, jsonify, request
 import mosaic
 from mosaic.utilities.sqlQuery import query, rawQuery
 from mosaic.utilities.analysis import caprate
-from mosaic.utilities.resource_path import resource_path
+from mosaic.utilities.resource_path import format_path
 from mosaic.trajio.metaTrajIO import EmptyDataPipeError, FileNotFoundError
+import mosaic.mdio.sqlite3MDIO as sqlite
 import mosaic.settings as settings
 
 from mosaicweb.mosaicAnalysis import mosaicAnalysis, analysisStatistics, analysisTimeSeries, analysisHistogram
@@ -18,6 +19,7 @@ import random
 import json
 import glob
 import os
+import os.path
 import logging
 import numpy as np
 
@@ -32,7 +34,7 @@ gStartTime=time.time()
 
 @app.route("/")
 def index():
-    return send_file("templates/index.html")
+	return send_file("templates/index.html")
 
 @app.route('/about', methods=['POST'])
 def about():
@@ -83,9 +85,9 @@ def newAnalysis():
 		if dataPath and not settingsString:		# brand new session
 			# print "brand new session: ", dataPath, settingsString, sessionID	
 			sessionID=gAnalysisSessions.newSession()
-			ma=mosaicAnalysis.mosaicAnalysis( resource_path(mosaic.WebServerDataLocation+'/'+dataPath), sessionID) 
+			ma=mosaicAnalysis.mosaicAnalysis( format_path(mosaic.WebServerDataLocation+'/'+dataPath), sessionID) 
 
-			gAnalysisSessions.addDataPath(sessionID, resource_path(mosaic.WebServerDataLocation+'/'+dataPath) )
+			gAnalysisSessions.addDataPath(sessionID, format_path(mosaic.WebServerDataLocation+'/'+dataPath) )
 			gAnalysisSessions.addMOSAICAnalysisObject(sessionID, ma)
 		elif sessionID and settingsString:	# update settings
 			# print "update settings: ", dataPath, settingsString, sessionID
@@ -99,10 +101,6 @@ def newAnalysis():
 		else:
 			raise InvalidPOSTRequest('An invalid POST request was received.')
 		
-		# print params
-		# print 
-		# print 
-
 
 		return jsonify(respondingURL='new-analysis', sessionID=sessionID, **ma.setupAnalysis() ), 200
 	except EmptyDataPipeError, err:
@@ -111,6 +109,37 @@ def newAnalysis():
 		return jsonify( respondingURL='new-analysis', errType='FileNotFoundError', errSummary="Files not found.", errText=str(err) ), 500
 	except InvalidPOSTRequest, err:
 		return jsonify( respondingURL='new-analysis', errType='InvalidPOSTRequest', errSummary="An invalid POST request was received.", errText=str(err) ), 500
+
+@app.route('/load-analysis', methods=['POST'])
+@gzipped
+def loadAnalysis():
+	global gAnalysisSessions
+
+	try:
+		params = dict(request.get_json())
+
+		databaseFile = format_path(mosaic.WebServerDataLocation+'/'+params.get('databaseFile', None) )
+		if not databaseFile:
+			raise InvalidPOSTRequest("Missing required parameter 'databaseFile'")
+
+		info, settings=_dbInfo(databaseFile)
+
+		dataPath=info['datPath']
+
+		sessionID=gAnalysisSessions.newSession()
+		ma=mosaicAnalysis.mosaicAnalysis(dataPath, sessionID) 
+		ma.updateSettings(settings)
+		
+		# ma.setupAnalysis()
+
+		gAnalysisSessions.addDatabaseFile(sessionID, databaseFile)
+		gAnalysisSessions.addAnalysisRunningFlag(sessionID, False)
+		gAnalysisSessions.addDataPath(sessionID, dataPath)
+		gAnalysisSessions.addMOSAICAnalysisObject(sessionID, ma)
+
+		return jsonify(respondingURL='load-analysis', sessionID=sessionID ), 200
+	except InvalidPOSTRequest, err:
+		return jsonify( respondingURL='load-analysis', errType='InvalidPOSTRequest', errSummary="An invalid POST request was received.", errText=str(err) ), 500
 
 @app.route('/start-analysis', methods=['POST'])
 def startAnalysis():
@@ -250,7 +279,7 @@ def listDataFolders():
 	if level == 'Data Root':
 		folder=mosaic.WebServerDataLocation
 	else:
-		folder=resource_path(mosaic.WebServerDataLocation+'/'+level+'/')
+		folder=format_path(mosaic.WebServerDataLocation+'/'+level+'/')
 
 	folderList=[]
 
@@ -258,29 +287,93 @@ def listDataFolders():
 		itemAttr={}
 		if os.path.isdir(item):
 			itemAttr['name']=os.path.relpath(item, folder)
-			itemAttr['relpath']=os.path.relpath(item, resource_path(mosaic.WebServerDataLocation) )
+			itemAttr['relpath']=os.path.relpath(item, format_path(mosaic.WebServerDataLocation) )
 			itemAttr['desc']=_folderDesc(item)
 			itemAttr['modified']=time.strftime('%Y-%m-%d', time.localtime(os.path.getmtime(item)))
 
 			folderList.append(itemAttr)
 
-	return jsonify( respondingURL='list-data-folders', level=level+'/', dataFolders=folderList )
+	return jsonify( respondingURL='list-data-folders', level=level+'/', fileData=folderList )
+
+@app.route('/list-database-files', methods=['POST'])
+def listDatabaseFiles():
+	params = dict(request.get_json())
+
+	level=params.get('level', 'Data Root')
+	if level == 'Data Root':
+		folder=mosaic.WebServerDataLocation
+	else:
+		folder=format_path(mosaic.WebServerDataLocation+'/'+level+'/')
+
+	fileList=[]
+
+	for item in sorted(glob.glob(folder+'/*')):
+		itemAttr={}
+		if os.path.isdir(item):
+			itemAttr['name']=os.path.relpath(item, folder)
+			itemAttr['relpath']=os.path.relpath(item, format_path(mosaic.WebServerDataLocation) )
+			itemAttr['desc']=_folderDesc(item)
+			itemAttr['modified']=time.strftime('%Y-%m-%d', time.localtime(os.path.getmtime(item)))
+
+			fileList.append(itemAttr)
+		else:
+			if _fileExtension(item)==".sqlite":
+				itemAttr['name']=os.path.relpath(item, folder)
+				itemAttr['relpath']=os.path.relpath(item, format_path(mosaic.WebServerDataLocation) )
+				itemAttr['desc']="SQLite database, {0}".format(_fileSize(item))
+				itemAttr['modified']=time.strftime('%Y-%m-%d', time.localtime(os.path.getmtime(item)))
+
+				fileList.append(itemAttr)
+
+	return jsonify( respondingURL='list-database-files', level=level+'/', fileData=fileList )
 
 def _folderDesc(item):
 	nqdf = len(glob.glob(item+'/*.qdf'))
 	nbin = len(glob.glob(item+'/*.bin'))+len(glob.glob(item+'/*.dat'))
 	nabf = len(glob.glob(item+'/*.abf'))
+	nsqlite = len(glob.glob(item+'/*.sqlite'))
 	nfolders = len( [i for i in os.listdir(item) if os.path.isdir(item+'/'+i) ] )
 
 	if nqdf > 0:
-		return "{0} QDF files".format(nqdf)
+		returnString = "{0} QDF {1}".format(nqdf, _fileLabel(nqdf))
 	elif nbin > 0:
-		return "{0} BIN files".format(nbin)
+		returnString = "{0} BIN {1}".format(nbin, _fileLabel(nbin))
 	elif nabf > 0:
-		return "{0} ABF files".format(nabf)
+		returnString = "{0} ABF {1}".format(nabf, _fileLabel(nabf))
 	elif nfolders==0:
-		return "No data files."
+		returnString = "No data {1}."
 	else:
-		return "{0} sub-folders".format(nfolders) 
+		returnString = "{0} {1}".format(nfolders, _fileLabel(nfolders, "sub-folder")) 
 
+	if nsqlite>0:
+		returnString="{0}, {1} SQLite {2}".format(returnString, nsqlite, _fileLabel(nsqlite, "database"))
+	return returnString
+
+def _fileExtension(fname):
+	return os.path.splitext(fname)[1].lower()
+
+def _fileSize(fname):
+	sz=os.stat(fname).st_size
+
+	for label in ['bytes', 'KB', 'MB', 'GB', 'TB']:
+		if sz < 1024.0:
+			return "{0} {1}".format(round(sz,1), label)
+		sz/=1024.0
+
+def _fileLabel(nitems, label="file"):
+	if nitems>1:
+		return "{0}s".format(label)
+	else:
+		return label
+
+def _dbInfo(dbname):
+	db=sqlite.sqlite3MDIO()
+	db.openDB(dbname)
+
+	info=db.readAnalysisInfo()
+	settings=db.readSettings()
+	
+	db.closeDB()
+
+	return info, settings
 	

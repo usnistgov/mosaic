@@ -12,12 +12,13 @@ angular.module('mosaicApp')
 
 			factory.fileList = [];
 
-			factory.getDirectoryListing = function(params) {
+			factory.getListing = function(params, url) {
 				var deferred = $q.defer();
 
-				var results = mosaicUtilsFactory.post('/list-data-folders', params)
+				var results = mosaicUtilsFactory.post(url, params)
 				.then(function (response, status) {	// success
-						var flist = response.data.dataFolders;
+
+						var flist = response.data.fileData;
 						if (Object.keys(flist).length > 0) {	
 							factory.subheading=response.data.level;			
 							factory.fileList=flist;
@@ -37,25 +38,41 @@ angular.module('mosaicApp')
 
 			factory.init = function() {
 				if (factory.dialogMode=="directory") {
-					factory.getDirectoryListing({
+					factory.getListing({
 						level: factory.subheading
-					});
-				} else{
+					}, '/list-data-folders');
+				} else if (factory.dialogMode=="sqlite") {
+					factory.getListing({
+						level: factory.subheading
+					}, '/list-database-files');
+				} else {
 					console.log("not implemented");
 				};
 			};
 
 			factory.upOneLevel = function() {
 				var path = factory.subheading.split('/');
-				if (path.length == 2) {
-					factory.getDirectoryListing({
-						level: 'Data Root'
-					});
-				} else {
-					factory.getDirectoryListing({
-						level: path.slice(0, -2).join()
-					});
-				};
+				if (factory.dialogMode=="directory") {
+					if (path.length == 2) {
+						factory.getListing({
+							level: 'Data Root'
+						}, '/list-data-folders');
+					} else {
+						factory.getListing({
+							level: path.slice(0, -2).join()
+						}, '/list-data-folders');
+					};
+				} else if (factory.dialogMode=="sqlite") {
+					if (path.length == 2) {
+						factory.getListing({
+							level: 'Data Root'
+						}, '/list-database-files');
+					} else {
+						factory.getListing({
+							level: path.slice(0, -2).join()
+						}, '/list-database-files');
+					};
+				}
 			};
 
 			factory.init();
@@ -91,9 +108,15 @@ angular.module('mosaicApp')
 					path = $scope.model.subheading+$scope.model.fileList[index].name
 				}
 
-				$scope.model.getDirectoryListing({
-					level: path
-				});
+				if ($scope.model.dialogMode=="directory") {
+					$scope.model.getListing({
+						level: path
+					},"/list-data-folders");
+				} else if ($scope.model.dialogMode=="sqlite") {
+					$scope.model.getListing({
+						level: path
+					},"/list-database-files");
+				}
 			};
 
 			$scope.selectItem = function(index) {

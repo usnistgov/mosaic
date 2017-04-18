@@ -104,29 +104,40 @@ angular.module('mosaicApp', ['ngRoute', 'ngMaterial', 'ngMessages', 'ngAnimate',
 		};
 
 		$scope.fileListing = function(ev) {
-			var dlg = $mdDialog.show({
+			$mdDialog.show({
 				controller: 'fileListingCtrl',
 				templateUrl: 'static/partials/filelisting.tmpl.html',
 				parent: angular.element(document.body),
 				targetEvent: ev,
 				clickOutsideToClose:true,
 				fullscreen: $scope.customFullscreen // Only for -xs, -sm breakpoints.
-			});
-
-			dlg
+			})
 			.then(function(response) {
-				analysisSetupFactory.dataPath=response.filename.relpath;
+				if (FileListingFactory.dialogMode=="directory") {
+					analysisSetupFactory.dataPath=response.filename.relpath;
 
-				var setupInit = analysisSetupFactory.getSetupData("/new-analysis", {
-									dataPath: analysisSetupFactory.dataPath
-								});
+					var setupInit = analysisSetupFactory.getSetupData("/new-analysis", {
+										dataPath: analysisSetupFactory.dataPath
+									});
 
-				setupInit
+					setupInit
+						.then(function(response) {
+							$scope.showNewAnalysisSettings();
+						}, function(error) {
+							$scope.AnalysisLoading = false;
+						});
+				} else if(FileListingFactory.dialogMode=="sqlite") {
+					mosaicUtilsFactory.post('/load-analysis', {
+						databaseFile: response.filename.relpath
+					})
 					.then(function(response) {
-						$scope.showNewAnalysisSettings();
+						$scope.AnalysisLoading = false;	
+						$location.path('/analysis/').search({sid: response.data.sessionID});
 					}, function(error) {
-						$scope.AnalysisLoading = false;
+						console.log(error);
 					});
+					
+				};
 			}, function() {
 				$scope.AnalysisLoading = false;
 			});
