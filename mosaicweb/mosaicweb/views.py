@@ -117,8 +117,9 @@ def loadAnalysis():
 
 	try:
 		params = dict(request.get_json())
+		db=params.get('databaseFile', None)
 
-		databaseFile = format_path(mosaic.WebServerDataLocation+'/'+params.get('databaseFile', None) )
+		databaseFile = format_path(mosaic.WebServerDataLocation+'/'+db )
 		if not databaseFile:
 			raise InvalidPOSTRequest("Missing required parameter 'databaseFile'")
 
@@ -140,6 +141,8 @@ def loadAnalysis():
 		return jsonify(respondingURL='load-analysis', sessionID=sessionID ), 200
 	except InvalidPOSTRequest, err:
 		return jsonify( respondingURL='load-analysis', errType='InvalidPOSTRequest', errSummary="An invalid POST request was received.", errText=str(err) ), 500
+	except BaseException, err:
+		return jsonify( respondingURL='load-analysis', errType='UnknownError', errSummary="'{0}' is not a valid database file.".format(db), errText=str(err) ), 500
 
 @app.route('/start-analysis', methods=['POST'])
 def startAnalysis():
@@ -289,7 +292,7 @@ def listDataFolders():
 			itemAttr['name']=os.path.relpath(item, folder)
 			itemAttr['relpath']=os.path.relpath(item, format_path(mosaic.WebServerDataLocation) )
 			itemAttr['desc']=_folderDesc(item)
-			itemAttr['modified']=time.strftime('%Y-%m-%d', time.localtime(os.path.getmtime(item)))
+			itemAttr['modified']=time.strftime('%m/%d/%Y', time.localtime(os.path.getmtime(item)))
 
 			folderList.append(itemAttr)
 
@@ -313,7 +316,7 @@ def listDatabaseFiles():
 			itemAttr['name']=os.path.relpath(item, folder)
 			itemAttr['relpath']=os.path.relpath(item, format_path(mosaic.WebServerDataLocation) )
 			itemAttr['desc']=_folderDesc(item)
-			itemAttr['modified']=time.strftime('%Y-%m-%d', time.localtime(os.path.getmtime(item)))
+			itemAttr['modified']=time.strftime('%m/%d/%Y, %I:%M %p', time.localtime(os.path.getmtime(item)))
 
 			fileList.append(itemAttr)
 		else:

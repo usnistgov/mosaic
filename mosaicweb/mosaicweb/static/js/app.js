@@ -134,6 +134,7 @@ angular.module('mosaicApp', ['ngRoute', 'ngMaterial', 'ngMessages', 'ngAnimate',
 						$scope.AnalysisLoading = false;	
 						$location.path('/analysis/').search({sid: response.data.sessionID});
 					}, function(error) {
+						$scope.AnalysisLoading = false;	
 						console.log(error);
 					});
 					
