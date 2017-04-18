@@ -292,7 +292,7 @@ def listDataFolders():
 			itemAttr['name']=os.path.relpath(item, folder)
 			itemAttr['relpath']=os.path.relpath(item, format_path(mosaic.WebServerDataLocation) )
 			itemAttr['desc']=_folderDesc(item)
-			itemAttr['modified']=time.strftime('%m/%d/%Y', time.localtime(os.path.getmtime(item)))
+			itemAttr['modified']=time.strftime('%m/%d/%Y, %I:%M %p', time.localtime(os.path.getmtime(item)))
 
 			folderList.append(itemAttr)
 
@@ -324,7 +324,7 @@ def listDatabaseFiles():
 				itemAttr['name']=os.path.relpath(item, folder)
 				itemAttr['relpath']=os.path.relpath(item, format_path(mosaic.WebServerDataLocation) )
 				itemAttr['desc']="SQLite database, {0}".format(_fileSize(item))
-				itemAttr['modified']=time.strftime('%Y-%m-%d', time.localtime(os.path.getmtime(item)))
+				itemAttr['modified']=time.strftime('%m/%d/%Y, %I:%M %p', time.localtime(os.path.getmtime(item)))
 
 				fileList.append(itemAttr)
 

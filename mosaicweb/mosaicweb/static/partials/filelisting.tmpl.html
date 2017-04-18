@@ -1,4 +1,4 @@
-<md-dialog flex="45" aria-label="File Listing">
+<md-dialog flex="50" aria-label="File Listing">
 	<form name="fileListing">
 		<md-toolbar>
 			<div class="md-toolbar-tools md-whiteframe">
@@ -24,7 +24,7 @@
 					<md-icon md-font-set="material-icons md-24 md-primary" ng-if="model.selectedIndex==$index">check_circle</md-icon>
 					<div flex class="md-list-item-text" layout="column" layout-align="start start">
 						<md-truncate flex><small>{{ file.name }}</small></md-truncate>
-						<p>{{ file.desc }}</p>
+						<p><small>{{ file.desc }}</small></p>
 					</div>
 					<span flex></span>
 					<p class="md-secondary" flex style="color:#696969;"><small><em>{{file.modified}}</em></small></p>

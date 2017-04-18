@@ -82,7 +82,7 @@
 			<div layout="row" layout-align="start center" style="padding:0; margin:0;">
 				<!-- <p style="color: #696969; padding:0; margin:0; padding-right: 16px; padding-left: 16px;"><small><em>Capture Rate:</em> {{statsModel.analysisStats.captureRateMean}}&#177;{{statsModel.analysisStats.captureRateSigma}} s<sup>-1</sup></small></p> -->
 				<p style="color: #696969; padding:0; margin:0; padding-right: 16px; padding-left: 16px; padding-bottom: 4px;"><small><em>Events Processed:</em> {{statsModel.analysisStats.nTotal}}</small></p>
-				<p style="color: #696969; padding:0; margin:0; padding-right: 16px; padding-bottom: 4px;"><small><em>Error:</em> {{statsModel.errorPercent}} %</small></p>
+				<p style="color: #696969; padding:0; margin:0; padding-right: 16px; padding-bottom: 4px;"><small><em>Analysis Progress:</em> {{statsModel.analysisStats.analysisProgressPercent}} %</small></p>
 				<md-button class="md-mini md-primary" type="button"
 					ng-if="model.showAnalysisControl" ng-click="showAnalysisStatistics($event)">
 					<md-tooltip md-direction="right">Show additional analysis statistics</md-tooltip>
