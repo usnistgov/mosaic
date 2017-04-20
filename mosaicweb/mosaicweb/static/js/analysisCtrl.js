@@ -5,8 +5,13 @@ angular.module('mosaicApp')
 			var factory = {};
 
 			factory.bdQuery = "select BlockDepth from metadata where ProcessingStatus='normal' and ResTime > 0.02";
+			factory.contourQuery = "select BlockDepth, ResTime from metadata where ProcessingStatus='normal' and ResTime > 0.02";
+
 			factory.bdBins = 500;
 			factory.histDensity = false;
+
+			factory.contourBins = 200;
+			factory.showContours = true;
 
 			factory.showAnalysisControl=true;
 			factory.analysisSettings = {};
@@ -16,6 +21,9 @@ angular.module('mosaicApp')
 
 			factory.requireControlUpdate = false;
 			factory.pageError = false;
+
+			factory.histLoading = false;
+			factory.contourLoading = false;
 
 			factory.contourPlot={
 				'contour': "<img width='90%' src='/static/img/contour.png' layout-padding>"
@@ -36,6 +44,37 @@ angular.module('mosaicApp')
 					},
 					yaxis: { 
 						title: 'counts', 
+						type: 'linear' 
+					},
+					paper_bgcolor:'rgba(0,0,0,0)', 
+					plot_bgcolor:'rgba(0,0,0,0)'
+				},
+				options:{}
+			}
+
+			factory.analysisContour={
+				data:[
+					{
+						x:[0,1],
+						y:[0,1],
+						z:[[10,10], [5,5]],
+						type:'contour',
+						// contour: {
+						// 	'coloring': 'Viridis'
+						// }
+						colorscale: 'Viridis'
+					},
+				],
+				layout:{
+					xaxis: { 
+						title: 'counts', 
+						type: 'linear' 
+					},
+					yaxis: { 
+						title: 'counts', 
+						type: 'linear' 
+					},
+					zaxis: { 
 						type: 'linear' 
 					},
 					paper_bgcolor:'rgba(0,0,0,0)', 
@@ -72,7 +111,12 @@ angular.module('mosaicApp')
 				});
 			};
 
-			factory.updateAnalysisData = function(params) {
+			factory.updateAnalysisStats = function() {
+				// Update stats during data update
+				AnalysisStatisticsFactory.updateErrorStats();
+			};
+
+			factory.updateAnalysisHistogram = function(params) {
 				var deferred = $q.defer();
 
 				factory.analysisSettings = params;
@@ -88,16 +132,44 @@ angular.module('mosaicApp')
 						factory.analysisPlot.layout.xaxis.type=xaxistype;
 						factory.analysisPlot.layout.yaxis.type=yaxistype;
 
-						// Update stats during data update
-						AnalysisStatisticsFactory.updateErrorStats();
+						factory.histLoading=false;
 
 						deferred.resolve(response);
 					}, function (error) {	// error
 						deferred.reject(error);
 					});
 
+				factory.histLoading=true;
 				return deferred.promise;
 			};
+
+			factory.updateAnalysisContour = function(params) {
+				var deferred = $q.defer();
+
+				factory.analysisSettings = params;
+
+				mosaicUtilsFactory.post('/analysis-contour', params)
+					.then(function (response, status) {	// success
+						//save axes types
+						var xaxistype=factory.analysisContour.layout.xaxis.type;
+						var yaxistype=factory.analysisContour.layout.yaxis.type;
+
+						factory.analysisContour=response.data;
+
+						factory.analysisContour.layout.xaxis.type=xaxistype;
+						factory.analysisContour.layout.yaxis.type=yaxistype;
+
+						factory.contourLoading=false;
+
+						deferred.resolve(response);
+					}, function (error) {	// error
+						deferred.reject(error);
+					});
+
+				factory.contourLoading=true;
+				return deferred.promise;
+			};
+
 			return factory;
 		}
 	)
@@ -116,10 +188,24 @@ angular.module('mosaicApp')
 			// Switch session ID when explicitly set in route.
 			if ($routeParams.sid != mosaicConfigFactory.sessionID) {
 				mosaicConfigFactory.sessionID=$routeParams.sid;
-				$scope.model.updateAnalysisData({
+
+				// Update statistics
+				$scope.model.updateAnalysisStats();
+
+				// Update histogram
+				$scope.model.updateAnalysisHistogram({
 					query: $scope.model.bdQuery,
-					nBins: $scope.model.bdBins
+					nBins: $scope.model.bdBins,
+					density: $scope.model.histDensity
 				});
+
+				// Update contour plot
+				$scope.model.updateAnalysisContour({
+					query: $scope.model.contourQuery,
+					nBins: $scope.model.contourBins,
+					showContours: $scope.model.showContours
+				});
+				
 			}
 		};
 		$scope.init();
@@ -127,27 +213,79 @@ angular.module('mosaicApp')
 		// watch
 		$scope.$watch('model.bdQuery', function() {
 			if ($scope.model.bdQuery != '' && $scope.model.bdBins > 0) {
-				$scope.model.updateAnalysisData({
+				$scope.model.updateAnalysisHistogram({
 						query: $scope.model.bdQuery,
-						nBins: $scope.model.bdBins
+						nBins: $scope.model.bdBins,
+						density: $scope.model.histDensity
 					});
 			};
 		});
 		$scope.$watch('model.bdBins', function() {
 			if ($scope.model.bdQuery != '' && $scope.model.bdBins > 0) {
-				$scope.model.updateAnalysisData({
+				$scope.model.updateAnalysisHistogram({
 						query: $scope.model.bdQuery,
-						nBins: $scope.model.bdBins
+						nBins: $scope.model.bdBins,
+						density: $scope.model.histDensity
 					});
+			};
+		});
+		$scope.$watch('model.histDensity', function() {
+			if ($scope.model.bdQuery != '' && $scope.model.bdBins > 0) {
+				$scope.model.updateAnalysisHistogram({
+						query: $scope.model.bdQuery,
+						nBins: $scope.model.bdBins,
+						density: $scope.model.histDensity
+					});
+			};
+		});
+		$scope.$watch('model.contourQuery', function() {
+			if ($scope.model.contourQuery != '' && $scope.model.contourBins > 0) {
+				$scope.model.updateAnalysisContour({
+					query: $scope.model.contourQuery,
+					nBins: $scope.model.contourBins,
+					showContours: $scope.model.showContours
+				});
+			};
+		});
+		$scope.$watch('model.contourBins', function() {
+			if ($scope.model.contourQuery != '' && $scope.model.contourBins > 0) {
+				$scope.model.updateAnalysisContour({
+					query: $scope.model.contourQuery,
+					nBins: $scope.model.contourBins,
+					showContours: $scope.model.showContours
+				});
+			};
+		});
+		$scope.$watch('model.showContours', function() {
+			if ($scope.model.contourQuery != '' && $scope.model.contourBins > 0) {
+				$scope.model.updateAnalysisContour({
+					query: $scope.model.contourQuery,
+					nBins: $scope.model.contourBins,
+					showContours: $scope.model.showContours
+				});
 			};
 		});
 		$scope.$watch('mosaicConfigModel.newDataAvailable', function() {
 			if ($scope.mosaicConfigModel.newDataAvailable) {
+				// Update statistics
+				$scope.model.updateAnalysisStats();
+
+				// Update histogram
 				if ($scope.model.bdQuery != '' && $scope.model.bdBins > 0) {
-					$scope.model.updateAnalysisData({
+					$scope.model.updateAnalysisHistogram({
 							query: $scope.model.bdQuery,
-							nBins: $scope.model.bdBins
+							nBins: $scope.model.bdBins,
+							density: $scope.model.histDensity
 						});
+				};
+
+				// Update contour plot
+				if ($scope.model.contourQuery != '' && $scope.model.contourBins > 0) {
+					$scope.model.updateAnalysisContour({
+						query: $scope.model.contourQuery,
+						nBins: $scope.model.contourBins,
+						showContours: $scope.model.showContours
+					});
 				};
 			};
 		});

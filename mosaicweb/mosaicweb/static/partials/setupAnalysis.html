@@ -97,11 +97,6 @@
 				<md-subheader class="md-primary" style="margin: 0; padding:0">
 					<div layout="row" flex>
 						<p flex="70">Event Partition Settings</p>
-						<!-- <span flex="20"></span>
-						<md-button class="md-icon-button" href="https://pages.nist.gov/mosaic/html/doc/GraphicalInterface.html#panels-a-b-analysis-setup-and-trajectory-viewer" target="_blank">
-							<md-tooltip md-direction="left">MOSAIC Documentation</md-tooltip>
-							<md-icon md-font-set="material-icons md-24">help</md-icon> -->
-						</md-button>
 					</div>
 				</md-subheader>
 				<div layout="row" style="margin: 6px; padding:6px">
@@ -211,11 +206,6 @@
 			<md-subheader class="md-primary" style="margin: 0; padding:0">
 				<div layout="row" flex>
 						<p flex="70">Event Processing Settings</p>
-						<!-- <span flex="20"></span>
-						<md-button class="md-icon-button" href="https://pages.nist.gov/mosaic/html/doc/GraphicalInterface.html#panels-a-b-analysis-setup-and-trajectory-viewer" target="_blank">
-							<md-tooltip md-direction="left">MOSAIC Documentation</md-tooltip>
-							<md-icon md-font-set="material-icons md-24">help</md-icon>
-						</md-button> -->
 					</div>
 			</md-subheader>
 			<div layout="row" style="margin: 6px; padding:6px">
@@ -227,24 +217,10 @@
 						</md-optgroup>
 					</md-select>
 				</md-input-container>
-				
-				<!-- <span flex="5"></span> -->
-				
-				<!-- <md-input-container ng-if="(model.selectedProcAlgoType=='ADEPT' || model.selectedProcAlgoType=='ADEPT 2-State') && model.controlEnabled" flex>
-					<label>Fit Tolerance</label>
-					<input type="text" ng-model="model.analysisSettings.fitTolerance" name="fitTolerance">
-				</md-input-container>
-
-				<span flex="5"></span> -->
-
-				<!-- <md-checkbox class="md-primary md-align-top-left" ng-model="model.analysisSettings.linkRCConstants" aria-label="Link RC Constants" ng-if="(model.selectedProcAlgoType=='ADEPT' || model.selectedProcAlgoType=='ADEPT 2-State') && model.controlEnabled" flex>
-					Link RC Constants
-				</md-checkbox> -->
-			<!-- </div> -->
 			
 				<span flex></span>
 
-				<md-switch class="md-primary" md-no-ink aria-label="Save Events to Database" ng-model="model.writeEventTS">
+				<md-switch class="md-primary" md-no-ink aria-label="Save Events to Database" ng-model="model.writeEventTS" ng-disabled="mosaicConfigModel.analysisRunning">
 					Save Events to Database
 				</md-switch>
 			</div>

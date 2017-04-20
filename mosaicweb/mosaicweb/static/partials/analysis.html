@@ -93,13 +93,16 @@
 		</section>
 	</div>
 	<br/>
-	<md-tabs md-dynamic-height class="histTabs md-whiteframe-z2 md-padding">
-		<md-tab label="Histogram">
-			<div class="md-padding" layout="column" flex ng-include="'/static/partials/Histogram.tmpl.html'"></div>
-		</md-tab>
-		<md-tab label="Contour" ng-disabled="true">
-			<div class="md-padding" layout="column" flex ng-include="'/static/partials/Contour.tmpl.html'"></div>
-		</md-tab>
-	</md-tabs>
+	<div class="md-whiteframe-z2 md-padding" layout="row">
+		<md-tabs md-dynamic-height class="histTabs md-padding" flex>
+			<md-tab label="Histogram">
+				<div class="md-padding" layout="column" flex ng-include="'/static/partials/Histogram.tmpl.html'"></div>
+			</md-tab>
+			<md-tab label="Contour" ng-disabled="false">
+				<div class="md-padding" layout="column" flex ng-include="'/static/partials/Contour.tmpl.html'"></div>
+			</md-tab>
+		</md-tabs>
+		<md-progress-circular md-mode="indeterminate" class="md-primary" md-diameter="20" ng-if="model.histLoading || model.contourLoading"></md-progress-circular>
+	</div>
 	<br>
 </md-content>

@@ -1,36 +1,37 @@
-<br>
-<div layout="row" layout-align="space-around center" layout-wrap>
-	<div flex="80" class="md-whiteframe" ng-bind-html="contourPlot.contour"></div>
-
-	<div flex>
-		<h4>X-scale</h4>
-		<md-radio-group ng-model="bdXScale"class="md-primary">
-
-			<md-radio-button value="Linear" >Linear</md-radio-button>
-			<md-radio-button value="Log">Log</md-radio-button>
-
+<div layout-gt-sm="row" layout="column" layout-align="center center" flex="60">
+	<br>
+	<div flex-gt-sm="80" flex-gt-md="85" flex="70" class="md-whiteframe" layout-align="center center" layout-padding>
+		<plotly plotly-data="model.analysisContour.data" plotly-layout="model.analysisContour.layout" plotly-options="model.analysisContour.options"></plotly>
+	</div>
+	<br>
+	<div flex layout-gt-sm="column" layout="row" ng-disabled="model.histLoading || model.contourLoading">
+		<md-radio-group ng-model="model.analysisContour.layout.xaxis.type" class="md-primary">
+			<label>X-axis</label>
+			<md-radio-button value="linear">linear</md-radio-button>
+			<md-radio-button value="log">log</md-radio-button>
 		</md-radio-group>
-
-		<h4>Y-scale</h4>
-		<md-radio-group ng-model="bdYScale" class="md-primary">
-
-			<md-radio-button value="Linear">Linear</md-radio-button>
-			<md-radio-button value="Log">Log</md-radio-button>
-
+		<span flex="5"></span>
+		<md-radio-group ng-model="model.analysisContour.layout.yaxis.type" class="md-primary">
+			<label>Y-axis</label>
+			<md-radio-button value="linear">linear</md-radio-button>
+			<md-radio-button value="log">log</md-radio-button>
 		</md-radio-group>
-	</div>					
+		<md-checkbox ng-model="model.showContours" aria-label="Show Contours" class="md-primary md-align-top-left" flex-gt-md>
+			Show Contours
+		</md-checkbox>
+	</div>
 </div>
 
 <div flex class="md-whiteframe" layout-align="space-between center">
 	<div layout="row">
-		<md-input-container class="md-block" flex="80">
+		<md-input-container class="md-block" flex="80" ng-disabled="model.histLoading || model.contourLoading">
 			<label>Query</label>
-			<input type="text" ng-model="bdQuery">
+			<input type="text" ng-model="model.contourQuery" ng-model-options="{ updateOn: 'blur', allowInvalid: false}">
 		</md-input-container>
 		<span flex="5"></span>
-		<md-input-container class="md-block" flex="10">
+		<md-input-container class="md-block" flex="10" ng-disabled="model.histLoading || model.contourLoading">
 			<label>Bins</label>
-			<input type="number"  ng-model="bdBins">
+			<input type="number"  ng-model="model.contourBins" ng-model-options="{ updateOn: 'blur', allowInvalid: false}">
 		</md-input-container>
 	</div>	
 </div>

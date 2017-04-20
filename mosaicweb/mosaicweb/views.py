@@ -9,7 +9,7 @@ from mosaic.trajio.metaTrajIO import EmptyDataPipeError, FileNotFoundError
 import mosaic.mdio.sqlite3MDIO as sqlite
 import mosaic.settings as settings
 
-from mosaicweb.mosaicAnalysis import mosaicAnalysis, analysisStatistics, analysisTimeSeries, analysisHistogram
+from mosaicweb.mosaicAnalysis import mosaicAnalysis, analysisStatistics, analysisTimeSeries, analysisHistogram, analysisContour
 from mosaicweb.sessionManager import sessionManager
 from mosaicweb.utils.utils import gzipped
 
@@ -22,6 +22,7 @@ import os
 import os.path
 import logging
 import numpy as np
+from sqlite3 import OperationalError
 
 class InvalidPOSTRequest(Exception):
 	pass
@@ -199,18 +200,48 @@ def analysisResults():
 		sessionID=params['sessionID']
 		qstr=params['query']
 		bins=params['nBins']
+		density=params.get('density', False)
 		dbfile=gAnalysisSessions.getSessionAttribute(sessionID, 'databaseFile')
 
 		ma=gAnalysisSessions.getSessionAttribute(sessionID, 'mosaicAnalysisObject')
 		gAnalysisSessions.addAnalysisRunningFlag(sessionID, ma.analysisRunning)
 
-		a=analysisHistogram.analysisHistogram(dbfile, qstr, bins)
+		a=analysisHistogram.analysisHistogram(dbfile, qstr, bins, density)
 
 		return jsonify( respondingURL="analysis-results", analysisRunning=ma.analysisRunning, **a.analysisHistogram() ), 200
 	except sessionManager.SessionNotFoundError:
 		return jsonify( respondingURL='analysis-results', errType='MissingSIDError', errSummary="A valid session ID was not found.", errText="A valid session ID was not found." ), 500
 	except KeyError, err:
 		return jsonify( respondingURL='analysis-results', errType='KeyError', errSummary="The key {0} was not found.".format(str(err)), errText="The key {0} was not found.".format(str(err)) ), 500
+	except OperationalError, err:
+		return jsonify( respondingURL='analysis-results', errType='OperationalError', errSummary="Syntax error: {0}".format(str(err)), errText="Syntax error: {0}".format(str(err)) ), 500
+
+
+@app.route('/analysis-contour', methods=['POST'])
+@gzipped
+def analysisContourPlot():
+	global gAnalysisSessions
+
+	try:
+		params = dict(request.get_json())
+		sessionID=params['sessionID']
+		qstr=params['query']
+		bins=params['nBins']
+		showContours=params.get('showContours', True)
+		dbfile=gAnalysisSessions.getSessionAttribute(sessionID, 'databaseFile')
+
+		ma=gAnalysisSessions.getSessionAttribute(sessionID, 'mosaicAnalysisObject')
+		gAnalysisSessions.addAnalysisRunningFlag(sessionID, ma.analysisRunning)
+
+		a=analysisContour.analysisContour(dbfile, qstr, bins, showContours)
+
+		return jsonify( respondingURL="analysis-contour", analysisRunning=ma.analysisRunning, **a.analysisContour() ), 200
+	except sessionManager.SessionNotFoundError:
+		return jsonify( respondingURL='analysis-contour', errType='MissingSIDError', errSummary="A valid session ID was not found.", errText="A valid session ID was not found." ), 500
+	except KeyError, err:
+		return jsonify( respondingURL='analysis-contour', errType='KeyError', errSummary="The key {0} was not found.".format(str(err)), errText="The key {0} was not found.".format(str(err)) ), 500
+	except OperationalError, err:
+		return jsonify( respondingURL='analysis-contour', errType='OperationalError', errSummary="Syntax error: {0}".format(str(err)), errText="Syntax error: {0}".format(str(err)) ), 500
 
 
 @app.route('/analysis-statistics', methods=['POST'])
