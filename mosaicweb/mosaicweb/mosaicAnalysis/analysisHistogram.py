@@ -44,12 +44,12 @@ class analysisHistogram:
 						'type': 'linear',
 						"titlefont": {
 										"family": 'Roboto, Helvetica',
-										"size": 14,
+										"size": 16,
 										"color": '#7f7f7f'
 									},
 									"tickfont": {
 										"family": 'Roboto, Helvetica',
-										"size": 14,
+										"size": 16,
 										"color": '#7f7f7f'
 									}
 					}
@@ -58,12 +58,12 @@ class analysisHistogram:
 						'type': 'linear',
 						"titlefont": {
 										"family": 'Roboto, Helvetica',
-										"size": 14,
+										"size": 16,
 										"color": '#7f7f7f'
 									},
 									"tickfont": {
 										"family": 'Roboto, Helvetica',
-										"size": 14,
+										"size": 16,
 										"color": '#7f7f7f'
 									}
 					}

@@ -40,12 +40,12 @@ class analysisContour:
 						'type': 'linear',
 						"titlefont": {
 										"family": 'Roboto, Helvetica',
-										"size": 14,
+										"size": 16,
 										"color": '#7f7f7f'
 									},
 									"tickfont": {
 										"family": 'Roboto, Helvetica',
-										"size": 14,
+										"size": 16,
 										"color": '#7f7f7f'
 									}
 						}
@@ -54,12 +54,12 @@ class analysisContour:
 						'type': 'linear',
 						"titlefont": {
 										"family": 'Roboto, Helvetica',
-										"size": 14,
+										"size": 16,
 										"color": '#7f7f7f'
 									},
 									"tickfont": {
 										"family": 'Roboto, Helvetica',
-										"size": 14,
+										"size": 16,
 										"color": '#7f7f7f'
 									}
 						}
@@ -78,7 +78,7 @@ class analysisContour:
 		contour["y"]=list(xe)
 		contour["type"]=self.plotType
 		contour['colorscale']="YIGnBu"
-
+		contour['line']={'shape':'spline', 'smoothing': 1.}
 
 		self.responseDict['data']=[contour]
 		self.responseDict['layout']=layout
