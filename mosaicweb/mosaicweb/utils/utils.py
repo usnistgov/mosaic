@@ -1,3 +1,5 @@
+# Adapted from http://flask.pocoo.org/snippets/122/
+
 from flask import after_this_request, request
 from cStringIO import StringIO as IO
 import gzip
