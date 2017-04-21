@@ -22,11 +22,11 @@
 	</div>
 </div>
 
-<div flex class="md-whiteframe" layout-align="space-between center">
+<div flex class="md-whiteframe" layout-align="space-between start">
 	<div layout="row">
 		<md-input-container class="md-block" flex="80" ng-disabled="model.histLoading || model.contourLoading">
 			<label>Query</label>
-			<input type="text" ng-model="model.contourQuery" ng-model-options="{ updateOn: 'blur', allowInvalid: false}">
+			<textarea type="text" ng-model="model.contourQuery" ng-model-options="{ updateOn: 'blur', allowInvalid: false}"></textarea>
 		</md-input-container>
 		<span flex="5"></span>
 		<md-input-container class="md-block" flex="10" ng-disabled="model.histLoading || model.contourLoading">

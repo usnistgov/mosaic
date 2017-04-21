@@ -24,12 +24,12 @@
 </div>
 
 <form name="analysisHistogramForm" ng-submit="updateControls()">
-	<div flex class="md-whiteframe" layout-align="space-between center">
+	<div flex class="md-whiteframe" layout-align="space-between start">
 		<div layout="row">
 			<md-input-container class="md-block" flex="80">
 				<label>Query</label>
-				<input 	type="text" name="bdQuery"
-						ng-model="model.bdQuery" ng-model-options="{ updateOn: 'blur', allowInvalid: false}">
+				<textarea 	type="text" name="bdQuery"
+						ng-model="model.bdQuery" ng-model-options="{ updateOn: 'blur', allowInvalid: false}"></textarea>
 			</md-input-container>
 			<span flex="5"></span>
 			<md-input-container class="md-block" flex="10">
