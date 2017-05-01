@@ -122,9 +122,9 @@ class mosaicAnalysis:
 	@property
 	def analysisStatus(self):
 		if self.analysisRunning:
-			return self.analysisObject.subProc.is_alive()
-		else:
-			return self.analysisRunning
+			self.analysisRunning = self.analysisObject.subProc.is_alive()
+		
+		return self.analysisRunning
 
 	def updateSettings(self, settingsString):
 		self._loadSettings(settingsString=settingsString)
