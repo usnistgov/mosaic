@@ -129,8 +129,6 @@ angular.module('mosaicApp')
 				}
 			};
 
-			factory.updateErrorStats();
-
 			return factory;
 		}
 	)
@@ -160,5 +158,5 @@ angular.module('mosaicApp')
 			$mdDialog.hide(answer);
 		};
 
-		// $scope.updateStats();
+		$scope.model.updateErrorStats();
 	});

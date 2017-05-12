@@ -11,6 +11,7 @@
 import mosaic.mdio.sqlite3MDIO as sqlite
 from mosaic.utilities.sqlQuery import query, rawQuery
 from mosaic.utilities.analysis import caprate
+from mosaic import WebServerDataLocation
 
 import glob
 import numpy as np
@@ -59,7 +60,7 @@ class analysisStatistics:
 		statsDict['processingAlgorithm']=analysisInfo['processingAlgorithm']
 		statsDict['FskHz']=analysisInfo['FsHz']/1000.
 		statsDict['dataType']=analysisInfo['dataType']
-		
+		statsDict['datPath']=analysisInfo['datPath'].replace(str(WebServerDataLocation), "<Data Root>")
 		return statsDict
 		
 

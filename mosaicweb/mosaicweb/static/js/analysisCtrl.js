@@ -206,7 +206,10 @@ angular.module('mosaicApp')
 					showContours: $scope.model.showContours
 				});
 				
-			}
+			} else {
+				// Update statistics
+				$scope.model.updateAnalysisStats();
+			};
 		};
 		$scope.init();
 
