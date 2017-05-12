@@ -139,6 +139,9 @@ angular.module('mosaicApp')
 
 		$scope.customFullscreen = true;
 
+		$scope.infoStyle="color: #696969; padding:0; margin:0; padding-left: 16px; padding-bottom: 12px;";
+		$scope.statsStyle="color: #696969; padding:0; margin:0; padding-left: 16px; padding-bottom: 12px;";
+
 		// $scope.model.updateErrorStats();
 
 		$scope.updateStats = function() {

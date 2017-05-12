@@ -50,6 +50,16 @@ class analysisStatistics:
 		statsDict['openChannelCurrentSigma']=o[1]
 
 		statsDict['analysisProgressPercent']=self._analysisProgress()
+
+		dbHnd=sqlite.sqlite3MDIO()
+		dbHnd.openDB(self.analysisDB)
+		analysisInfo=dbHnd.readAnalysisInfo()
+
+		statsDict['partitionAlgorithm']=analysisInfo['partitionAlgorithm']
+		statsDict['processingAlgorithm']=analysisInfo['processingAlgorithm']
+		statsDict['FskHz']=analysisInfo['FsHz']/1000.
+		statsDict['dataType']=analysisInfo['dataType']
+		
 		return statsDict
 		
 
