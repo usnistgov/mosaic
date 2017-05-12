@@ -65,7 +65,7 @@
 			</md-content>
 		</md-content>
 
-		<md-content class="md-padding" layout="column" layout-gt-sm="row" layout-align="center center" style="padding-top: 2px; background-color: transparent" flex="100">
+		<md-content class="md-padding" layout="column" layout-gt-sm="row" layout-align="center center" style="padding-top: 2px; background-color: transparent" flex="100" flex-gt-sm="50">
 			<md-content class="md-whiteframe-z2" layout="column" style="margin: 8px; padding:8px; background: transparent" flex="100" flex-gt-sm="50">
 				<md-subheader class="md-primary" style="margin: 0; padding:0; background-color: transparent">
 					<p>Metrics</p>
@@ -86,7 +86,7 @@
 				<div layout="row" layout-align="center center" flex>
 					<div flex="50"><p style="{{statsStyle}}"><small><em>Analysis Progress</em></small></p></div>
 					<div flex layout="row" layout-align="center center">
-						<md-progress-linear class="md-primary md-hue-1" style="padding:0; margin:0; padding-left: 8px; padding-bottom: 12px;"md-mode="{{model.analysisProgressMode}}" value="{{model.analysisStats.analysisProgressPercent}}" flex="55"></md-progress-linear>
+						<md-progress-linear class="md-primary md-hue-1" style="{{statsStyle}}" md-mode="{{model.analysisProgressMode}}" value="{{model.analysisStats.analysisProgressPercent}}" flex="55"></md-progress-linear>
 						<p style="{{statsStyle}}" flex layout-align="start start"><small>{{model.analysisStats.analysisProgressPercent}} %</small></p>
 					</div>
 				</div>

@@ -12,6 +12,7 @@ import mosaic.mdio.sqlite3MDIO as sqlite
 from mosaic.utilities.sqlQuery import query, rawQuery
 from mosaic.utilities.analysis import caprate
 from mosaic import WebServerDataLocation
+from mosaic.utilities.resource_path import format_path
 
 import glob
 import numpy as np
@@ -56,11 +57,14 @@ class analysisStatistics:
 		dbHnd.openDB(self.analysisDB)
 		analysisInfo=dbHnd.readAnalysisInfo()
 
-		statsDict['partitionAlgorithm']=analysisInfo['partitionAlgorithm']
-		statsDict['processingAlgorithm']=analysisInfo['processingAlgorithm']
+		procName=analysisStatistics.processingAlgorithmName
+		partName=analysisStatistics.partitionAlgorithmName
+
+		statsDict['partitionAlgorithm']=partName[analysisInfo['partitionAlgorithm']]
+		statsDict['processingAlgorithm']=procName[analysisInfo['processingAlgorithm']]
 		statsDict['FskHz']=analysisInfo['FsHz']/1000.
 		statsDict['dataType']=analysisInfo['dataType']
-		statsDict['datPath']=analysisInfo['datPath'].replace(str(WebServerDataLocation), "<Data Root>")
+		statsDict['datPath']=format_path((analysisInfo['datPath'].replace(str(WebServerDataLocation), "<Data Root>/")).replace('//', '/'))
 		return statsDict
 		
 
@@ -144,6 +148,16 @@ class analysisStatistics:
 				return int(round(pctcomplete))
 		except:
 			return "n/a"
+
+	partitionAlgorithmName={
+								"eventSegment"	:	"CurrentThreshold"
+						}
+
+	processingAlgorithmName={
+								"adept2State" 	:	"ADEPT 2-state",
+								"adept" 		:	"ADEPT",
+								"cusumPlus"		:	"CUSUM+"
+						}
 
 
 if __name__ == '__main__':
