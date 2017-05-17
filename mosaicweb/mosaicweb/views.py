@@ -9,6 +9,7 @@ from mosaic.trajio.metaTrajIO import EmptyDataPipeError, FileNotFoundError
 import mosaic.mdio.sqlite3MDIO as sqlite
 import mosaic.settings as settings
 
+from mosaicweb import __mosaicweb_version__, __mosaicweb_build__
 from mosaicweb.mosaicAnalysis import mosaicAnalysis, analysisStatistics, analysisTimeSeries, analysisHistogram, analysisContour
 from mosaicweb.sessionManager import sessionManager
 from mosaicweb.utils.utils import gzipped
@@ -39,7 +40,7 @@ def index():
 
 @app.route('/about', methods=['POST'])
 def about():
-	return jsonify(ver=mosaic.__version__, build=mosaic.__build__, uiver='1.0.0', uibuild='58cbed0'), 200
+	return jsonify(ver=mosaic.__version__, build=mosaic.__build__, uiver=str(__mosaicweb_version__), uibuild=str(__mosaicweb_build__)), 200
 
 @app.route('/validate-settings', methods=['POST'])
 def validateSettings():
