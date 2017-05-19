@@ -52,6 +52,7 @@ temp/
 data/eventMD-P28-bin.sqlite
 commit-hash
 version-hash
+mweb-version-hash
 mosaic/tests/testdata/*.sqlite
 data/eventMD-PEG28-ADEPT2State.sqlite
 doctrees
