@@ -5,7 +5,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>7. Scripting and Advanced Features &#8212; MOSAIC 1.3.2 documentation</title>
+    <title>7. Scripting and Advanced Features &#8212; MOSAIC 1.3.3 documentation</title>
     
     <link rel="stylesheet" href="../_static/basic.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -16,7 +16,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '1.3.2',
+        VERSION:     '1.3.3',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -33,7 +33,7 @@
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="top" title="MOSAIC 1.3.2 documentation" href="../index.html" />
+    <link rel="top" title="MOSAIC 1.3.3 documentation" href="../index.html" />
     <link rel="next" title="8. Extend MOSAIC" href="Extend.html" />
     <link rel="prev" title="6. Database Structure and Query Syntax" href="DatabaseStructure.html" />
 
@@ -64,7 +64,7 @@
         </button>
         <a class="navbar-brand" href="../index.html"><span><img src="../_static/icon_36.png"></span>
            </a>
-        <span class="navbar-text navbar-version pull-left"><b>1.3.2</b></span>
+        <span class="navbar-text navbar-version pull-left"><b>1.3.3</b></span>
       </div>
 
         <div class="collapse navbar-collapse nav-collapse">
@@ -287,7 +287,7 @@
 <div class="figure align-center">
 <a class="reference internal image-reference" href="../_images/advancedFig2.png"><img alt="../_images/advancedFig2.png" src="../_images/advancedFig2.png" style="width: 50%;" /></a>
 </div>
-<p>We have packaged time-series plotting into an easy to use module <code class="xref py py-class docutils literal"><span class="pre">timeseries</span></code>. Run interactive examples in an IPython notebook: <a href="#id2"><span class="problematic" id="id3">|timeseries|</span></a></p>
+<p>We have packaged time-series plotting into an easy to use module <a class="reference internal" href="../api-doc/mosaicscripts.html#module-mosaicscripts.plots.timeseries" title="mosaicscripts.plots.timeseries"><code class="xref py py-class docutils literal"><span class="pre">timeseries</span></code></a>. Run interactive examples in an IPython notebook: <a href="#id2"><span class="problematic" id="id3">|timeseries|</span></a></p>
 <p><strong>Estimate the Channel Gating Duration</strong></p>
 <p>Scripting can be used to obtain statistics from the raw time-series. In the code snippet below, we estimate the amount of time a channel spends in a gated state by combining modules defined within <em>MOSAIC</em>. The analysis is performed in blocks for efficiency. We first define a Python function that takes multiple arguments including  <em>TrajIO</em> object, the threshold at which we want to define the gated state in pA (gatingcurrentpa), the block size in seconds (blocksz), the total time of the time-series being processed in seconds (totaltime) and the sampling rate of the data in Hz (fshz). The function then calculates the number of blocks in which the channel was in a gated state and returns the time spent in that state in seconds.</p>
 <script src="https://gist.github.com/abalijepalli/0f9ea735f82cf02f19fa.js">&nbsp;</script><p><strong>Plot the Output of an Analysis</strong></p>

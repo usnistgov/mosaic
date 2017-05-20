@@ -5,7 +5,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>13.1.5. Event Partition and Segment &#8212; MOSAIC 1.3.2 documentation</title>
+    <title>13.1.5. Event Partition and Segment &#8212; MOSAIC 1.3.3 documentation</title>
     
     <link rel="stylesheet" href="../_static/basic.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -16,7 +16,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '1.3.2',
+        VERSION:     '1.3.3',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -33,7 +33,7 @@
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="top" title="MOSAIC 1.3.2 documentation" href="../index.html" />
+    <link rel="top" title="MOSAIC 1.3.3 documentation" href="../index.html" />
     <link rel="up" title="13. API Documentation" href="../doc/apidocs.html" />
     <link rel="next" title="13.1.6. Event Processing" href="mosaic.processing.html" />
     <link rel="prev" title="13.1.4. Time-Series Filters" href="mosaic.filter.html" />
@@ -65,7 +65,7 @@
         </button>
         <a class="navbar-brand" href="../index.html"><span><img src="../_static/icon_36.png"></span>
            </a>
-        <span class="navbar-text navbar-version pull-left"><b>1.3.2</b></span>
+        <span class="navbar-text navbar-version pull-left"><b>1.3.3</b></span>
       </div>
 
         <div class="collapse navbar-collapse nav-collapse">
@@ -193,7 +193,7 @@ to an implementation of eventProcessor</p>
 </div>
 <dl class="class">
 <dt id="mosaic.partition.eventSegment.eventSegment">
-<em class="property">class </em><code class="descclassname">mosaic.partition.eventSegment.</code><code class="descname">eventSegment</code><span class="sig-paren">(</span><em>trajDataObj</em>, <em>eventProcHnd</em>, <em>eventPartitionSettings</em>, <em>eventProcSettings</em>, <em>settingsString</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/partition/eventSegment.html#eventSegment"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mosaic.partition.eventSegment.eventSegment" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">mosaic.partition.eventSegment.</code><code class="descname">eventSegment</code><span class="sig-paren">(</span><em>trajDataObj</em>, <em>eventProcHnd</em>, <em>eventPartitionSettings</em>, <em>eventProcSettings</em>, <em>settingsString</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/partition/eventSegment.html#eventSegment"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mosaic.partition.eventSegment.eventSegment" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="mosaic.meta.html#mosaic.partition.metaEventPartition.metaEventPartition" title="mosaic.partition.metaEventPartition.metaEventPartition"><code class="xref py py-class docutils literal"><span class="pre">mosaic.partition.metaEventPartition.metaEventPartition</span></code></a></p>
 <p>Implement an event partitioning algorithm by sub-classing the metaEventPartition class</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -216,18 +216,6 @@ for windows with a size specified by this parameter. (default: 1 second)</p>
 <li><dl class="first docutils">
 <dt><cite>eventThreshold</cite></dt>
  <span class="classifier-delimiter">:</span> <span class="classifier">Threshold, number of SD away from the open channel mean. If the abs(curr) is less</span><dd><p class="first last">than &#8216;abs(mean)-(eventThreshold*SD)&#8217; a new event is registered (default: 6)</p>
-</dd>
-</dl>
-</li>
-<li><dl class="first docutils">
-<dt><cite>driftThreshold</cite></dt>
- <span class="classifier-delimiter">:</span> <span class="classifier">Trigger a drift warning when the mean open channel current deviates by &#8216;driftThreshold&#8217;*</span><dd><p class="first last">SD from the baseline open channel current (default: 2)</p>
-</dd>
-</dl>
-</li>
-<li><dl class="first docutils">
-<dt><cite>maxDriftRate</cite></dt>
- <span class="classifier-delimiter">:</span> <span class="classifier">Trigger a warning when the open channel conductance changes at a rate faster </span><dd><p class="first last">than that specified. (default: 2 pA/s)</p>
 </dd>
 </dl>
 </li>

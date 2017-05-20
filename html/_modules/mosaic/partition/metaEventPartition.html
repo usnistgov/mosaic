@@ -5,7 +5,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>mosaic.partition.metaEventPartition &#8212; MOSAIC 1.3.2 documentation</title>
+    <title>mosaic.partition.metaEventPartition &#8212; MOSAIC 1.3.3 documentation</title>
     
     <link rel="stylesheet" href="../../../_static/basic.css" type="text/css" />
     <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
@@ -16,7 +16,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../../',
-        VERSION:     '1.3.2',
+        VERSION:     '1.3.3',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -33,7 +33,7 @@
     <link rel="shortcut icon" href="../../../_static/favicon.ico"/>
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" />
-    <link rel="top" title="MOSAIC 1.3.2 documentation" href="../../../index.html" />
+    <link rel="top" title="MOSAIC 1.3.3 documentation" href="../../../index.html" />
     <link rel="up" title="Module code" href="../../index.html" />
 
 <meta charset='utf-8'>
@@ -63,7 +63,7 @@
         </button>
         <a class="navbar-brand" href="../../../index.html"><span><img src="../../../_static/icon_36.png"></span>
            </a>
-        <span class="navbar-text navbar-version pull-left"><b>1.3.2</b></span>
+        <span class="navbar-text navbar-version pull-left"><b>1.3.3</b></span>
       </div>
 
         <div class="collapse navbar-collapse nav-collapse">
@@ -140,9 +140,14 @@
 <span class="sd">	:License:	See LICENSE.TXT</span>
 <span class="sd">	:ChangeLog:</span>
 <span class="sd">	.. line-block::</span>
+<span class="sd">		3/25/17 	AB 	Allow an optional argument to pass a database name.</span>
 <span class="sd">		6/29/16 	AB 	Fixed the open channel statistics routine (_openchanstats) to fix an </span>
 <span class="sd">						incompatibility with numpy version 1.10 and above.</span>
 <span class="sd">		1/28/16		AB 	Fixed a bug in analysis timing.</span>
+<span class="sd">		12/16/15 	AB 	Moved drift checks from eventSegment.</span>
+<span class="sd">		12/16/15 	AB 	Moved baseline settings (minBaseline and maxBaseline) from eventSegment. Updated class docstring.</span>
+<span class="sd">		15/12/15	KB 	Program steps over bad data blocks without aborting</span>
+<span class="sd">		12/11/15 	AB 	Refactor code</span>
 <span class="sd">		12/6/15 	AB 	Add sampling frequency to analysis info table</span>
 <span class="sd">		8/18/14		AB 	Fixed parallel processing cleanup.</span>
 <span class="sd">		5/17/14		AB 	Delete Plotting support</span>
@@ -162,7 +167,7 @@
 <span class="kn">import</span> <span class="nn">datetime</span>
 <span class="kn">import</span> <span class="nn">csv</span>
 <span class="kn">import</span> <span class="nn">cPickle</span>
-<span class="kn">import</span> <span class="nn">multiprocessing</span> 
+<span class="kn">import</span> <span class="nn">multiprocessing</span>
 
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span> 
 <span class="kn">import</span> <span class="nn">scipy.stats</span>
@@ -212,12 +217,18 @@
 <span class="sd">		current working directory)</span>
 
 <span class="sd">			- `writeEventTS` :	Write event current data to file. (default: 1, write data to file)</span>
-<span class="sd">			- `parallelProc` :	Process events in parallel. (default: 1, Yes)</span>
-<span class="sd">			- `reserveNCPU` :		Reserve the specified number of CPUs and exclude them from the parallel pool</span>
+<span class="sd">			- `parallelProc` :	Process events in parallel using the pproc module. (default: 1, Yes)</span>
+<span class="sd">			- `reserveNCPU` :	Reserve the specified number of CPUs and exclude them from the parallel pool.</span>
+<span class="sd">			- `driftThreshold` :	Trigger a drift warning when the mean open channel current deviates by &#39;driftThreshold&#39;*</span>
+<span class="sd">							SD from the baseline open channel current (default: 2)</span>
+<span class="sd">			- `maxDriftRate` :	Trigger a warning when the open channel conductance changes at a rate faster </span>
+<span class="sd">							than that specified. (default: 2 pA/s)</span>
+<span class="sd">			- `minBaseline` : 	Minimum value for the ionic current baseline.</span>
+<span class="sd">			- `maxBaseline` : 	Maximum value for the ionic current baseline.</span>
 <span class="sd">	&quot;&quot;&quot;</span>
 	<span class="n">__metaclass__</span><span class="o">=</span><span class="n">ABCMeta</span>
 
-	<span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">trajDataObj</span><span class="p">,</span> <span class="n">eventProcHnd</span><span class="p">,</span> <span class="n">eventPartitionSettings</span><span class="p">,</span> <span class="n">eventProcSettings</span><span class="p">,</span> <span class="n">settingsString</span><span class="p">):</span>
+	<span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">trajDataObj</span><span class="p">,</span> <span class="n">eventProcHnd</span><span class="p">,</span> <span class="n">eventPartitionSettings</span><span class="p">,</span> <span class="n">eventProcSettings</span><span class="p">,</span> <span class="n">settingsString</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
 		<span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">			Initialize a new event segment object</span>
 <span class="sd">		&quot;&quot;&quot;</span>
@@ -239,6 +250,10 @@
 			<span class="bp">self</span><span class="o">.</span><span class="n">writeEventTS</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">settingsDict</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;writeEventTS&quot;</span><span class="p">,</span><span class="mi">1</span><span class="p">))</span>
 			<span class="bp">self</span><span class="o">.</span><span class="n">parallelProc</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">settingsDict</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;parallelProc&quot;</span><span class="p">,</span><span class="mi">1</span><span class="p">))</span>
 			<span class="bp">self</span><span class="o">.</span><span class="n">reserveNCPU</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">settingsDict</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;reserveNCPU&quot;</span><span class="p">,</span><span class="mi">2</span><span class="p">))</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">driftThreshold</span><span class="o">=</span><span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">settingsDict</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;driftThreshold&quot;</span><span class="p">,</span><span class="mf">2.0</span><span class="p">))</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">maxDriftRate</span><span class="o">=</span><span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">settingsDict</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;maxDriftRate&quot;</span><span class="p">,</span><span class="mf">2.0</span><span class="p">))</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">minBaseline</span><span class="o">=</span><span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">settingsDict</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;minBaseline&quot;</span><span class="p">,</span><span class="o">-</span><span class="mf">1.</span><span class="p">))</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">maxBaseline</span><span class="o">=</span><span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">settingsDict</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;maxBaseline&quot;</span><span class="p">,</span><span class="o">-</span><span class="mf">1.</span><span class="p">))</span>
 		<span class="k">except</span> <span class="ne">ValueError</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
 			<span class="k">raise</span> <span class="n">mosaic</span><span class="o">.</span><span class="n">commonExceptions</span><span class="o">.</span><span class="n">SettingsTypeError</span><span class="p">(</span> <span class="n">err</span> <span class="p">)</span>
 
@@ -251,7 +266,8 @@
 								<span class="n">dbPath</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">trajDataObj</span><span class="o">.</span><span class="n">datPath</span><span class="p">,</span> 
 								<span class="n">tableName</span><span class="o">=</span><span class="s1">&#39;metadata&#39;</span><span class="p">,</span>
 								<span class="n">colNames</span><span class="o">=</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tEventProcObj</span><span class="o">.</span><span class="n">mdHeadings</span><span class="p">()),</span>
-								<span class="n">colNames_t</span><span class="o">=</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tEventProcObj</span><span class="o">.</span><span class="n">mdHeadingDataType</span><span class="p">())</span>
+								<span class="n">colNames_t</span><span class="o">=</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tEventProcObj</span><span class="o">.</span><span class="n">mdHeadingDataType</span><span class="p">()),</span>
+								<span class="n">dbFilename</span><span class="o">=</span><span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;dbFilename&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
 							<span class="p">)</span>
 		<span class="bp">self</span><span class="o">.</span><span class="n">mdioDBHnd</span><span class="o">.</span><span class="n">writeSettings</span><span class="p">(</span><span class="n">settingsString</span><span class="p">)</span>
 
@@ -315,7 +331,6 @@
 		
 		<span class="c1"># Initialize segmentation</span>
 		<span class="bp">self</span><span class="o">.</span><span class="n">_setuppartition</span><span class="p">()</span>
-
 		<span class="k">try</span><span class="p">:</span>
 			<span class="n">startTime</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">timingObj</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
 			<span class="k">while</span><span class="p">(</span><span class="mi">1</span><span class="p">):</span>	
@@ -333,7 +348,11 @@
 				<span class="c1">#print self.meanOpenCurr, self.minDrift, self.maxDrift, self.minDriftR, self.maxDriftR</span>
 
 				<span class="c1"># Process the data segment for events</span>
-				<span class="bp">self</span><span class="o">.</span><span class="n">_eventsegment</span><span class="p">()</span>
+                                
+				<span class="k">if</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">meanOpenCurr</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">minBaseline</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">meanOpenCurr</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">maxBaseline</span><span class="p">)</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">minBaseline</span> <span class="o">==</span> <span class="o">-</span><span class="mf">1.0</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">maxBaseline</span> <span class="o">==</span> <span class="o">-</span><span class="mf">1.0</span><span class="p">:</span>
+					<span class="bp">self</span><span class="o">.</span><span class="n">_eventsegment</span><span class="p">()</span>
+				<span class="k">else</span><span class="p">:</span> <span class="c1">#skip over bad data, no need to abort</span>
+					<span class="k">continue</span>
 
 
 		<span class="k">except</span> <span class="n">metaTrajIO</span><span class="o">.</span><span class="n">EmptyDataPipeError</span><span class="p">,</span> <span class="n">err</span><span class="p">:</span>
@@ -414,6 +433,7 @@
 <span class="sd">			An implementation of this function should separate individual events of interest from a time-series of ionic current recordings. The data pertaining to each event is then passed 		to an instance of metaEventProcessor for detailed analysis. The function will collect the results of this analysis.</span>
 <span class="sd">		&quot;&quot;&quot;</span>
 		<span class="k">pass</span></div>
+
 	<span class="c1">#################################################################</span>
 	<span class="c1"># Internal functions</span>
 	<span class="c1">#################################################################</span>
@@ -501,9 +521,11 @@
 		<span class="c1">#### Event Queue ####</span>
 		<span class="c1"># self.eventQueue=[]</span>
 
+
 		<span class="bp">self</span><span class="o">.</span><span class="n">thrCurr</span><span class="o">=</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">meanOpenCurr</span><span class="p">)</span><span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">eventThreshold</span><span class="o">*</span><span class="nb">abs</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sdOpenCurr</span><span class="p">))</span>
 
 		<span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="n">_d</span><span class="p">(</span><span class="s2">&quot;Partition setup complete.&quot;</span><span class="p">))</span>
+
 
 		<span class="c1">#### Vars for event partition stats ####</span>
 		<span class="bp">self</span><span class="o">.</span><span class="n">minDrift</span><span class="o">=</span><span class="nb">abs</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">meanOpenCurr</span><span class="p">)</span>
@@ -545,6 +567,7 @@
 		<span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;[Summary]&#39;</span><span class="p">)</span>
 
 		<span class="c1"># write out event segment stats</span>
+
 		<span class="bp">self</span><span class="o">.</span><span class="n">formatstats</span><span class="p">()</span>
 
 		<span class="c1"># print event processing stats. Stats are limited to how many events were rejected</span>
@@ -560,6 +583,7 @@
 
 		<span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;[Settings]&quot;</span><span class="p">)</span>
 
+
 		<span class="c1"># write out trajectory IO settings</span>
 		<span class="bp">self</span><span class="o">.</span><span class="n">trajDataObj</span><span class="o">.</span><span class="n">formatsettings</span><span class="p">()</span>
 		
@@ -567,10 +591,12 @@
 		<span class="bp">self</span><span class="o">.</span><span class="n">formatsettings</span><span class="p">()</span>
 
 		<span class="c1"># event processing settings</span>
+
 		<span class="bp">self</span><span class="o">.</span><span class="n">tEventProcObj</span><span class="o">.</span><span class="n">formatsettings</span><span class="p">()</span>
 
 		<span class="c1"># Output files</span>
 		<span class="bp">self</span><span class="o">.</span><span class="n">formatoutputfiles</span><span class="p">()</span>
+
 
 		<span class="c1"># Finally, timing information</span>
 		<span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;[Timing]&#39;</span><span class="p">)</span>
@@ -610,7 +636,7 @@
 		<span class="c1">#print &quot;nPoints=&quot;, n, &quot;len(tstamp)=&quot;, len(tstamp), &quot;type(curr)&quot;, type(curr)</span>
 		
 		<span class="c1"># Calculate the mean and standard deviation of the open state</span>
-		<span class="n">mu</span><span class="p">,</span> <span class="n">sig</span><span class="o">=</span><span class="n">OpenCurrentDist</span><span class="p">(</span><span class="n">curr</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">)</span>
+		<span class="n">mu</span><span class="p">,</span> <span class="n">sig</span><span class="o">=</span><span class="n">OpenCurrentDist</span><span class="p">(</span><span class="n">curr</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">minBaseline</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">maxBaseline</span><span class="p">)</span>
 
 		<span class="c1"># Fit the data to a straight line to calculate the slope</span>
 		<span class="n">slope</span><span class="p">,</span> <span class="n">intercept</span><span class="p">,</span> <span class="n">r_value</span><span class="p">,</span> <span class="n">p_value</span><span class="p">,</span> <span class="n">std_err</span><span class="o">=</span><span class="n">scipy</span><span class="o">.</span><span class="n">stats</span><span class="o">.</span><span class="n">linregress</span><span class="p">(</span><span class="n">tstamp</span><span class="p">,</span> <span class="n">curr</span><span class="p">)</span>
@@ -618,9 +644,11 @@
 		<span class="c1"># self.logger.debug(_d(&quot;mu={0}, sigma={1}, slope={2}&quot;, mu, sig, slope ))</span>
 
 		<span class="c1"># Return stats</span>
+
 		<span class="k">return</span> <span class="p">[</span> <span class="n">mu</span><span class="p">,</span> <span class="n">sig</span><span class="p">,</span> <span class="n">slope</span> <span class="p">]</span>
 	
 		
+
 	<span class="k">def</span> <span class="nf">_checkdrift</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">curr</span><span class="p">):</span>
 		<span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">			Check the open channel current for drift. This function triggers</span>
@@ -636,6 +664,18 @@
 <span class="sd">				DriftRateError			raised when the slope of the open channel current</span>
 <span class="sd">										exceeds maxDriftRate</span>
 <span class="sd">		&quot;&quot;&quot;</span>
+		
+
+		<span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">enableCheckDrift</span><span class="p">:</span>
+			<span class="c1">#if self.meanOpenCurr == -1. or self.sdOpenCurr == -1. or self.slopeOpenCurr == -1.:</span>
+			<span class="p">[</span> <span class="bp">self</span><span class="o">.</span><span class="n">meanOpenCurr</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">sdOpenCurr</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">slopeOpenCurr</span> <span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_openchanstats</span><span class="p">(</span><span class="n">curr</span><span class="p">)</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">thrCurr</span><span class="o">=</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">meanOpenCurr</span><span class="p">)</span><span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">eventThreshold</span><span class="o">*</span><span class="nb">abs</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sdOpenCurr</span><span class="p">))</span>
+			<span class="c1">#print &#39;New Baseline: {0}\t{1}\t{2}\t{3}&#39;.format(self.meanOpenCurr, self.sdOpenCurr, self.slopeOpenCurr,self.thrCurr)</span>
+			<span class="k">return</span>
+
+		<span class="c1"># Update the threshold current from eventThreshold.</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">thrCurr</span><span class="o">=</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">meanOpenCurr</span><span class="p">)</span><span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">eventThreshold</span><span class="o">*</span><span class="nb">abs</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sdOpenCurr</span><span class="p">))</span>
+
 		<span class="p">[</span><span class="n">mu</span><span class="p">,</span><span class="n">sd</span><span class="p">,</span><span class="n">sl</span><span class="p">]</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_openchanstats</span><span class="p">(</span><span class="n">curr</span><span class="p">)</span>
 		
 		<span class="c1"># store stats</span>
@@ -656,7 +696,7 @@
 		<span class="c1"># Save the open channel conductance stats for the current window</span>
 		<span class="bp">self</span><span class="o">.</span><span class="n">windowOpenCurrentMean</span><span class="o">=</span><span class="n">mu</span>
 		<span class="bp">self</span><span class="o">.</span><span class="n">windowOpenCurrentSD</span><span class="o">=</span><span class="n">sd</span> 
-		<span class="bp">self</span><span class="o">.</span><span class="n">windowOpenCurrentSlope</span><span class="o">=</span><span class="n">sl</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">windowOpenCurrentSlope</span><span class="o">=</span><span class="n">sl</span>		
 
 	<span class="nd">@partitionTimer</span><span class="o">.</span><span class="n">FunctionTiming</span>
 	<span class="k">def</span> <span class="nf">_processEvent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">eventobj</span><span class="p">):</span>

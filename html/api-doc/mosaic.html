@@ -5,7 +5,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>13.1.1. Top-Level Interfaces &#8212; MOSAIC 1.3.2 documentation</title>
+    <title>13.1.1. Top-Level Interfaces &#8212; MOSAIC 1.3.3 documentation</title>
     
     <link rel="stylesheet" href="../_static/basic.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -16,7 +16,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '1.3.2',
+        VERSION:     '1.3.3',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -33,7 +33,7 @@
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="top" title="MOSAIC 1.3.2 documentation" href="../index.html" />
+    <link rel="top" title="MOSAIC 1.3.3 documentation" href="../index.html" />
     <link rel="up" title="13. API Documentation" href="../doc/apidocs.html" />
     <link rel="next" title="13.1.2. Meta-Classes" href="mosaic.meta.html" />
     <link rel="prev" title="13. API Documentation" href="../doc/apidocs.html" />
@@ -65,7 +65,7 @@
         </button>
         <a class="navbar-brand" href="../index.html"><span><img src="../_static/icon_36.png"></span>
            </a>
-        <span class="navbar-text navbar-version pull-left"><b>1.3.2</b></span>
+        <span class="navbar-text navbar-version pull-left"><b>1.3.3</b></span>
       </div>
 
         <div class="collapse navbar-collapse nav-collapse">
@@ -152,11 +152,12 @@
 </tbody>
 </table>
 <div class="line-block">
+<div class="line">3/25/17         AB      Allow an optional argument to pass a database name.</div>
 <div class="line">5/15/14         AB      Initial version</div>
 </div>
 <dl class="class">
 <dt id="mosaic.apps.SingleChannelAnalysis.SingleChannelAnalysis">
-<em class="property">class </em><code class="descclassname">mosaic.apps.SingleChannelAnalysis.</code><code class="descname">SingleChannelAnalysis</code><span class="sig-paren">(</span><em>dataPath</em>, <em>trajDataHnd</em>, <em>dataFilterHnd</em>, <em>eventPartitionHnd</em>, <em>eventProcHnd</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/apps/SingleChannelAnalysis.html#SingleChannelAnalysis"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mosaic.apps.SingleChannelAnalysis.SingleChannelAnalysis" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">mosaic.apps.SingleChannelAnalysis.</code><code class="descname">SingleChannelAnalysis</code><span class="sig-paren">(</span><em>dataPath</em>, <em>trajDataHnd</em>, <em>dataFilterHnd</em>, <em>eventPartitionHnd</em>, <em>eventProcHnd</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/apps/SingleChannelAnalysis.html#SingleChannelAnalysis"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mosaic.apps.SingleChannelAnalysis.SingleChannelAnalysis" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference external" href="https://docs.python.org/2/library/functions.html#object" title="(in Python v2.7)"><code class="xref py py-class docutils literal"><span class="pre">object</span></code></a></p>
 <p>Run a single channel analysis. This is the entry point class for the analysis.</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -169,6 +170,7 @@
 <li><cite>dataFilterHnd</cite> : a handle to an impementation of <code class="xref py py-class docutils literal"><span class="pre">metaIOFilter</span></code></li>
 <li><cite>eventPartitionHnd</cite> : a handle to a sub-class of <code class="xref py py-class docutils literal"><span class="pre">metaEventPartition</span></code></li>
 <li><cite>eventProcHnd</cite> : a handle to a sub-class of <code class="xref py py-class docutils literal"><span class="pre">metaEventProcessor</span></code></li>
+<li><cite>dbFilename</cite> : explicitly set the database name (optional kwarg).</li>
 </ul>
 </td>
 </tr>

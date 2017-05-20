@@ -5,7 +5,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>mosaic.apps.SingleChannelAnalysis &#8212; MOSAIC 1.3.2 documentation</title>
+    <title>mosaic.apps.SingleChannelAnalysis &#8212; MOSAIC 1.3.3 documentation</title>
     
     <link rel="stylesheet" href="../../../_static/basic.css" type="text/css" />
     <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
@@ -16,7 +16,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../../',
-        VERSION:     '1.3.2',
+        VERSION:     '1.3.3',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -33,7 +33,7 @@
     <link rel="shortcut icon" href="../../../_static/favicon.ico"/>
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" />
-    <link rel="top" title="MOSAIC 1.3.2 documentation" href="../../../index.html" />
+    <link rel="top" title="MOSAIC 1.3.3 documentation" href="../../../index.html" />
     <link rel="up" title="Module code" href="../../index.html" />
 
 <meta charset='utf-8'>
@@ -63,7 +63,7 @@
         </button>
         <a class="navbar-brand" href="../../../index.html"><span><img src="../../../_static/icon_36.png"></span>
            </a>
-        <span class="navbar-text navbar-version pull-left"><b>1.3.2</b></span>
+        <span class="navbar-text navbar-version pull-left"><b>1.3.3</b></span>
       </div>
 
         <div class="collapse navbar-collapse nav-collapse">
@@ -139,6 +139,7 @@
 <span class="sd">	:License:	See LICENSE.TXT	</span>
 <span class="sd">	:ChangeLog:</span>
 <span class="sd">	.. line-block::</span>
+<span class="sd">		3/25/17 	AB 	Allow an optional argument to pass a database name.</span>
 <span class="sd">		5/15/14		AB	Initial version</span>
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="n">__docformat__</span> <span class="o">=</span> <span class="s1">&#39;restructuredtext&#39;</span>
@@ -153,7 +154,7 @@
 <span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;SingleChannelAnalysis&quot;</span><span class="p">,</span> <span class="s2">&quot;run_eventpartition&quot;</span><span class="p">]</span>
 
 <span class="c1"># @registerRun</span>
-<span class="k">def</span> <span class="nf">run_eventpartition</span><span class="p">(</span> <span class="n">dataPath</span><span class="p">,</span> <span class="n">trajDataHnd</span><span class="p">,</span> <span class="n">dataFilterHnd</span><span class="p">,</span> <span class="n">eventPartHnd</span><span class="p">,</span> <span class="n">eventProcHnd</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">run_eventpartition</span><span class="p">(</span> <span class="n">dataPath</span><span class="p">,</span> <span class="n">trajDataHnd</span><span class="p">,</span> <span class="n">dataFilterHnd</span><span class="p">,</span> <span class="n">eventPartHnd</span><span class="p">,</span> <span class="n">eventProcHnd</span><span class="p">,</span> <span class="n">dbFilename</span><span class="p">):</span>
 	<span class="c1"># Read and parse the settings file</span>
 	<span class="n">settingsdict</span><span class="o">=</span><span class="n">settings</span><span class="o">.</span><span class="n">settings</span><span class="p">(</span> <span class="n">dataPath</span> <span class="p">)</span>	
 
@@ -165,13 +166,19 @@
 	<span class="k">else</span><span class="p">:</span>
 		<span class="n">trajDataObj</span><span class="o">=</span><span class="n">trajDataHnd</span><span class="p">(</span> <span class="n">dirname</span><span class="o">=</span><span class="n">dataPath</span><span class="p">,</span> <span class="o">**</span><span class="n">trajSettings</span> <span class="p">)</span>
 
+	<span class="k">if</span> <span class="n">dbFilename</span><span class="o">==</span><span class="s1">&#39;&#39;</span><span class="p">:</span>
+		<span class="n">kwargs</span><span class="o">=</span><span class="p">{}</span>
+	<span class="k">else</span><span class="p">:</span>
+		<span class="n">kwargs</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;dbFilename&#39;</span><span class="p">:</span> <span class="n">dataPath</span><span class="o">+</span><span class="s1">&#39;/&#39;</span><span class="o">+</span><span class="n">dbFilename</span><span class="p">}</span>
+
 	<span class="k">try</span><span class="p">:</span>
 		<span class="k">with</span> <span class="n">eventPartHnd</span><span class="p">(</span>
 							<span class="n">trajDataObj</span><span class="p">,</span> 
 							<span class="n">eventProcHnd</span><span class="p">,</span> 
 							<span class="n">settingsdict</span><span class="o">.</span><span class="n">getSettings</span><span class="p">(</span><span class="n">eventPartHnd</span><span class="o">.</span><span class="n">__name__</span><span class="p">),</span>
 							<span class="n">settingsdict</span><span class="o">.</span><span class="n">getSettings</span><span class="p">(</span><span class="n">eventProcHnd</span><span class="o">.</span><span class="n">__name__</span><span class="p">),</span>
-							<span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">settingsdict</span><span class="o">.</span><span class="n">settingsDict</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+							<span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">settingsdict</span><span class="o">.</span><span class="n">settingsDict</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">),</span>
+							<span class="o">**</span><span class="n">kwargs</span>
 						<span class="p">)</span> <span class="k">as</span> <span class="n">EventPartition</span><span class="p">:</span>
 			<span class="n">EventPartition</span><span class="o">.</span><span class="n">PartitionEvents</span><span class="p">()</span>
 	<span class="k">except</span> <span class="ne">KeyboardInterrupt</span><span class="p">:</span>
@@ -187,8 +194,9 @@
 <span class="sd">			- `dataFilterHnd` : a handle to an impementation of :class:`~mosaic.metaIOFilter`</span>
 <span class="sd">			- `eventPartitionHnd` : a handle to a sub-class of :class:`~mosaic.metaEventPartition`</span>
 <span class="sd">			- `eventProcHnd` : a handle to a sub-class of :class:`~mosaic.metaEventProcessor`</span>
+<span class="sd">			- `dbFilename` : explicitly set the database name (optional kwarg).</span>
 <span class="sd">	&quot;&quot;&quot;</span>
-	<span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dataPath</span><span class="p">,</span> <span class="n">trajDataHnd</span><span class="p">,</span> <span class="n">dataFilterHnd</span><span class="p">,</span> <span class="n">eventPartitionHnd</span><span class="p">,</span> <span class="n">eventProcHnd</span><span class="p">):</span>
+	<span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dataPath</span><span class="p">,</span> <span class="n">trajDataHnd</span><span class="p">,</span> <span class="n">dataFilterHnd</span><span class="p">,</span> <span class="n">eventPartitionHnd</span><span class="p">,</span> <span class="n">eventProcHnd</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
 		<span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">		&quot;&quot;&quot;</span>
 		<span class="bp">self</span><span class="o">.</span><span class="n">dataPath</span><span class="o">=</span><span class="n">dataPath</span>	
@@ -201,6 +209,8 @@
 		<span class="bp">self</span><span class="o">.</span><span class="n">trajDataHnd</span><span class="o">=</span><span class="n">trajDataHnd</span>
 		<span class="bp">self</span><span class="o">.</span><span class="n">eventPartitionHnd</span><span class="o">=</span><span class="n">eventPartitionHnd</span>
 		<span class="bp">self</span><span class="o">.</span><span class="n">eventProcHnd</span><span class="o">=</span><span class="n">eventProcHnd</span>
+
+		<span class="bp">self</span><span class="o">.</span><span class="n">dbFilename</span><span class="o">=</span><span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;dbFilename&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
 
 		<span class="bp">self</span><span class="o">.</span><span class="n">subProc</span><span class="o">=</span><span class="kc">None</span>
 
@@ -215,7 +225,7 @@
 			<span class="k">try</span><span class="p">:</span>
 				<span class="bp">self</span><span class="o">.</span><span class="n">subProc</span> <span class="o">=</span> <span class="n">multiprocessing</span><span class="o">.</span><span class="n">Process</span><span class="p">(</span> 
 						<span class="n">target</span><span class="o">=</span><span class="n">run_eventpartition</span><span class="p">,</span>
-						<span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dataPath</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">trajDataHnd</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">dataFilterHnd</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">eventPartitionHnd</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">eventProcHnd</span><span class="p">,)</span>
+						<span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dataPath</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">trajDataHnd</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">dataFilterHnd</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">eventPartitionHnd</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">eventProcHnd</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">dbFilename</span><span class="p">,)</span>
 					<span class="p">)</span>
 				<span class="bp">self</span><span class="o">.</span><span class="n">subProc</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
 				<span class="c1"># self.proc.join()</span>
@@ -223,7 +233,7 @@
 				<span class="bp">self</span><span class="o">.</span><span class="n">subProc</span><span class="o">.</span><span class="n">terminate</span><span class="p">()</span>
 				<span class="bp">self</span><span class="o">.</span><span class="n">subProc</span><span class="o">.</span><span class="n">join</span><span class="p">()</span>
 		<span class="k">else</span><span class="p">:</span>
-			<span class="n">run_eventpartition</span><span class="p">(</span> <span class="bp">self</span><span class="o">.</span><span class="n">dataPath</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">trajDataHnd</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">dataFilterHnd</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">eventPartitionHnd</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">eventProcHnd</span> <span class="p">)</span></div>
+			<span class="n">run_eventpartition</span><span class="p">(</span> <span class="bp">self</span><span class="o">.</span><span class="n">dataPath</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">trajDataHnd</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">dataFilterHnd</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">eventPartitionHnd</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">eventProcHnd</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">dbFilename</span><span class="p">,</span> <span class="p">)</span></div>
 
 <div class="viewcode-block" id="SingleChannelAnalysis.Stop"><a class="viewcode-back" href="../../../api-doc/mosaic.html#mosaic.apps.SingleChannelAnalysis.SingleChannelAnalysis.Stop">[docs]</a>	<span class="k">def</span> <span class="nf">Stop</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 		<span class="sd">&quot;&quot;&quot;</span>
