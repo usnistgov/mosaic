@@ -45,6 +45,10 @@ Report problems using our `issue tracker <https://github.com/usnistgov/mosaic/is
 Change Log
 =================================
 
+**v1.3.4**
+
+ - Fixed a bug in the default settings that prevented the analysis from starting in some instances.
+
 **v1.3.3**
 
  - Added support for Chimera data files.

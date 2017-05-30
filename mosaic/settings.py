@@ -115,6 +115,7 @@ __settings__="""
 		"blockSizeSec" 			: "0.5",
 		"eventPad" 				: "50",
 		"minEventLength" 		: "5",
+		"maxEventLength"		: "10000", 
 		"eventThreshold" 		: "6.0",
 		"driftThreshold" 		: "999.0",
 		"maxDriftRate" 			: "999.0",
@@ -123,7 +124,9 @@ __settings__="""
 		"slopeOpenCurr"			: "-1",
 		"writeEventTS"			: "1",
 		"parallelProc"			: "0",
-		"reserveNCPU"			: "2"
+		"reserveNCPU"			: "2",
+		"minBaseline"			: "-1",
+		"maxBaseline"			: "-1"
 	},
 	"adept2State" : {
 		"FitTol"				: "1.e-7",

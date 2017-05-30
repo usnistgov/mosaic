@@ -151,13 +151,14 @@ class eventSegment(metaEventPartition.metaEventPartition):
 			the event by 'eventPad' points and hand off to the event processing algorithm.
 		"""
 		try:
-                        skipflag = False
+			skipflag = False
 			while(1):
-                                while (skipflag == True): #if we are in a clogged state or a very long event, skip data until we reach good baseline again
-                                        t=self.currData.popleft()
-                                        self.globalDataIndex+=1
-                                        if abs(t) >= self.meanOpenCurr:
-                                                skipflag = False
+				while (skipflag == True): #if we are in a clogged state or a very long event, skip data until we reach good baseline again
+					t=self.currData.popleft()
+					self.globalDataIndex+=1
+					if abs(t) >= self.meanOpenCurr:
+						skipflag = False
+
 				t=self.currData.popleft()
 				self.globalDataIndex+=1
 
@@ -180,8 +181,8 @@ class eventSegment(metaEventPartition.metaEventPartition):
 						self.eventdat.append(t)
 						self.globalDataIndex+=1
 						if len(self.eventdat) > self.maxEventLength:
-                                                        skipflag = True
-                                                        break
+							skipflag = True
+							break
 
 					# end of event. Reset the flag
 					self.eventstart=False
@@ -200,8 +201,7 @@ class eventSegment(metaEventPartition.metaEventPartition):
 							self.meanOpenCurr, 
 							self.sdOpenCurr
 						)
-					 
-					#print self.trajDataObj.FsHz, self.windowOpenCurrentMean, self.sdOpenCurr, self.slopeOpenCurr
+					# print self.trajDataObj.FsHz, self.windowOpenCurrentMean, self.sdOpenCurr, self.slopeOpenCurr, len(self.eventdat)
 					if len(self.eventdat)>=self.minEventLength and len(self.eventdat)<self.maxEventLength:
 						self.eventcount+=1
 						# print "i=", self.eventcount
