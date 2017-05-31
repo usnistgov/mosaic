@@ -8,6 +8,7 @@ LogProperties=False		# Log all class properties defined with mosaic_property.
 LogSizeBytes=int(2<<20) # 2 MB
 DocumentationURL='https://pages.nist.gov/mosaic/'
 
+# Options for MOSAIC Web
 WebServerPort=5000
-WebServerDataLocation='/Users/arvind/Research/Experiments/AnalysisTools/ReferenceData/'
+WebServerDataLocation="Y:\\Desktop\\"
 # WebServerDataLocation='/Users/arvind/Research/Experiments/Nanoclusters/NewAnalysis/Calibration/' #PW9O34-Acetylcholine/'
