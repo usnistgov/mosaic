@@ -5,7 +5,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>mosaic.partition.eventSegment &#8212; MOSAIC 1.3.3 documentation</title>
+    <title>mosaic.partition.eventSegment &#8212; MOSAIC 1.3.4 documentation</title>
     
     <link rel="stylesheet" href="../../../_static/basic.css" type="text/css" />
     <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
@@ -16,7 +16,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../../',
-        VERSION:     '1.3.3',
+        VERSION:     '1.3.4',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -33,7 +33,7 @@
     <link rel="shortcut icon" href="../../../_static/favicon.ico"/>
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" />
-    <link rel="top" title="MOSAIC 1.3.3 documentation" href="../../../index.html" />
+    <link rel="top" title="MOSAIC 1.3.4 documentation" href="../../../index.html" />
     <link rel="up" title="Module code" href="../../index.html" />
 
 <meta charset='utf-8'>
@@ -63,7 +63,7 @@
         </button>
         <a class="navbar-brand" href="../../../index.html"><span><img src="../../../_static/icon_36.png"></span>
            </a>
-        <span class="navbar-text navbar-version pull-left"><b>1.3.3</b></span>
+        <span class="navbar-text navbar-version pull-left"><b>1.3.4</b></span>
       </div>
 
         <div class="collapse navbar-collapse nav-collapse">
@@ -284,13 +284,14 @@
 <span class="sd">			the event by &#39;eventPad&#39; points and hand off to the event processing algorithm.</span>
 <span class="sd">		&quot;&quot;&quot;</span>
 		<span class="k">try</span><span class="p">:</span>
-                        <span class="n">skipflag</span> <span class="o">=</span> <span class="kc">False</span>
+			<span class="n">skipflag</span> <span class="o">=</span> <span class="kc">False</span>
 			<span class="k">while</span><span class="p">(</span><span class="mi">1</span><span class="p">):</span>
-                                <span class="k">while</span> <span class="p">(</span><span class="n">skipflag</span> <span class="o">==</span> <span class="kc">True</span><span class="p">):</span> <span class="c1">#if we are in a clogged state or a very long event, skip data until we reach good baseline again</span>
-                                        <span class="n">t</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">currData</span><span class="o">.</span><span class="n">popleft</span><span class="p">()</span>
-                                        <span class="bp">self</span><span class="o">.</span><span class="n">globalDataIndex</span><span class="o">+=</span><span class="mi">1</span>
-                                        <span class="k">if</span> <span class="nb">abs</span><span class="p">(</span><span class="n">t</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">meanOpenCurr</span><span class="p">:</span>
-                                                <span class="n">skipflag</span> <span class="o">=</span> <span class="kc">False</span>
+				<span class="k">while</span> <span class="p">(</span><span class="n">skipflag</span> <span class="o">==</span> <span class="kc">True</span><span class="p">):</span> <span class="c1">#if we are in a clogged state or a very long event, skip data until we reach good baseline again</span>
+					<span class="n">t</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">currData</span><span class="o">.</span><span class="n">popleft</span><span class="p">()</span>
+					<span class="bp">self</span><span class="o">.</span><span class="n">globalDataIndex</span><span class="o">+=</span><span class="mi">1</span>
+					<span class="k">if</span> <span class="nb">abs</span><span class="p">(</span><span class="n">t</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">meanOpenCurr</span><span class="p">:</span>
+						<span class="n">skipflag</span> <span class="o">=</span> <span class="kc">False</span>
+
 				<span class="n">t</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">currData</span><span class="o">.</span><span class="n">popleft</span><span class="p">()</span>
 				<span class="bp">self</span><span class="o">.</span><span class="n">globalDataIndex</span><span class="o">+=</span><span class="mi">1</span>
 
@@ -313,8 +314,8 @@
 						<span class="bp">self</span><span class="o">.</span><span class="n">eventdat</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">t</span><span class="p">)</span>
 						<span class="bp">self</span><span class="o">.</span><span class="n">globalDataIndex</span><span class="o">+=</span><span class="mi">1</span>
 						<span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">eventdat</span><span class="p">)</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">maxEventLength</span><span class="p">:</span>
-                                                        <span class="n">skipflag</span> <span class="o">=</span> <span class="kc">True</span>
-                                                        <span class="k">break</span>
+							<span class="n">skipflag</span> <span class="o">=</span> <span class="kc">True</span>
+							<span class="k">break</span>
 
 					<span class="c1"># end of event. Reset the flag</span>
 					<span class="bp">self</span><span class="o">.</span><span class="n">eventstart</span><span class="o">=</span><span class="kc">False</span>
@@ -333,8 +334,7 @@
 							<span class="bp">self</span><span class="o">.</span><span class="n">meanOpenCurr</span><span class="p">,</span> 
 							<span class="bp">self</span><span class="o">.</span><span class="n">sdOpenCurr</span>
 						<span class="p">)</span>
-					 
-					<span class="c1">#print self.trajDataObj.FsHz, self.windowOpenCurrentMean, self.sdOpenCurr, self.slopeOpenCurr</span>
+					<span class="c1"># print self.trajDataObj.FsHz, self.windowOpenCurrentMean, self.sdOpenCurr, self.slopeOpenCurr, len(self.eventdat)</span>
 					<span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">eventdat</span><span class="p">)</span><span class="o">&gt;=</span><span class="bp">self</span><span class="o">.</span><span class="n">minEventLength</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">eventdat</span><span class="p">)</span><span class="o">&lt;</span><span class="bp">self</span><span class="o">.</span><span class="n">maxEventLength</span><span class="p">:</span>
 						<span class="bp">self</span><span class="o">.</span><span class="n">eventcount</span><span class="o">+=</span><span class="mi">1</span>
 						<span class="c1"># print &quot;i=&quot;, self.eventcount</span>
