@@ -174,6 +174,7 @@
 		<span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">		&quot;&quot;&quot;</span>	
 		<span class="bp">self</span><span class="o">.</span><span class="n">settingsFile</span><span class="o">=</span><span class="kc">None</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">defaultSettings</span><span class="o">=</span><span class="kc">False</span>
 
 		<span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">=</span><span class="n">mlog</span><span class="o">.</span><span class="n">mosaicLogging</span><span class="p">()</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">__name__</span><span class="p">)</span>
 
@@ -190,6 +191,7 @@
 		<span class="c1"># 	print &quot;Settings file not found in data directory. Default settings will be used.&quot;</span>
 		<span class="c1"># 	self.settingsFile=os.getcwd()+&quot;/settings&quot;</span>
 		<span class="k">else</span><span class="p">:</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">defaultSettings</span><span class="o">=</span><span class="kc">True</span>
 			<span class="k">if</span> <span class="n">defaultwarn</span><span class="p">:</span>
 				<span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span> <span class="s2">&quot;WARNING: Settings file not found in data directory. Default settings will be used.&quot;</span> <span class="p">)</span>
 			<span class="n">settingstr</span><span class="o">=</span><span class="n">__settings__</span>
@@ -234,7 +236,11 @@
 		<span class="k">try</span><span class="p">:</span>
 			<span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">settingsDict</span><span class="p">[</span><span class="n">section</span><span class="p">]</span>
 		<span class="k">except</span> <span class="ne">KeyError</span><span class="p">,</span> <span class="ne">AttributeError</span><span class="p">:</span>
-			<span class="k">return</span> <span class="p">{}</span></div></div>
+			<span class="k">return</span> <span class="p">{}</span></div>
+
+	<span class="nd">@property</span>
+	<span class="k">def</span> <span class="nf">defaultSettingsLoaded</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+		<span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">defaultSettings</span></div>
 
 <span class="n">__settings__</span><span class="o">=</span><span class="s2">&quot;&quot;&quot;</span>
 <span class="s2">{</span>
