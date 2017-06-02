@@ -6,6 +6,7 @@ from mosaic.utilities.sqlQuery import query, rawQuery
 from mosaic.utilities.analysis import caprate
 from mosaic.utilities.resource_path import format_path
 from mosaic.trajio.metaTrajIO import EmptyDataPipeError, FileNotFoundError
+from mosaic.utilities.ga import registerLaunch, registerStart, registerStop
 import mosaic.mdio.sqlite3MDIO as sqlite
 import mosaic.settings as settings
 
@@ -72,6 +73,7 @@ def processingAlgorithm():
 
 @app.route('/new-analysis', methods=['POST'])
 @gzipped
+@registerLaunch("mweb")
 def newAnalysis():
 	global gAnalysisSessions
 
@@ -145,6 +147,7 @@ def loadAnalysis():
 	except BaseException, err:
 		return jsonify( respondingURL='load-analysis', errType='UnknownError', errSummary="'{0}' is not a valid database file.".format(db), errText=str(err) ), 500
 
+@registerStart("mweb")
 @app.route('/start-analysis', methods=['POST'])
 def startAnalysis():
 	global gAnalysisSessions
@@ -172,6 +175,7 @@ def startAnalysis():
 	except (sessionManager.SessionNotFoundError, KeyError):
 		return jsonify( respondingURL='start-analysis', errType='MissingSIDError', errSummary="A valid session ID was not found.", errText="A valid session ID was not found." ), 500
 
+@registerStop("mweb")
 @app.route('/stop-analysis', methods=['POST'])
 def stopAnalysis():
 	global gAnalysisSessions
