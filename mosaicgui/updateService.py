@@ -29,20 +29,20 @@ class MOSAICUpdateDialog(QtGui.QDialog):
 		self.mosaicIcon.setPixmap( QtGui.QPixmap(resource_path("icons/icon_100px.png")).scaled(75, 75) )
 
 class MOSAICUpdateBox(QtGui.QMessageBox):
-	    def __init__(self):
-	        QtGui.QMessageBox.__init__(self)
-	        self.setSizeGripEnabled(True)
+		def __init__(self):
+			QtGui.QMessageBox.__init__(self)
+			self.setSizeGripEnabled(True)
 
-	    def event(self, e):
-	        result = QtGui.QMessageBox.event(self, e)
+		def event(self, e):
+			result = QtGui.QMessageBox.event(self, e)
 
-	        self.setMinimumHeight(0)
-	        self.setMaximumHeight(16777215)
-	        self.setMinimumWidth(0)
-	        self.setMaximumWidth(16777215)
-	        self.setSizePolicy(QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Expanding)
+			self.setMinimumHeight(0)
+			self.setMaximumHeight(16777215)
+			self.setMinimumWidth(0)
+			self.setMaximumWidth(16777215)
+			self.setSizePolicy(QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Expanding)
 
-	        return result
+			return result
 
 class updateService(object):
 	def __init__(self):
@@ -90,7 +90,10 @@ class updateService(object):
 				self.logger.info("No updates available.")
 				return False
 		except BaseException, err:
-			self.logger.exception(err)
+			if mosaic.DeveloperMode:
+				self.logger.exception(err)
+			else:
+				self.logger.error("Unable to check for updates.")
 			return False
 
 	def _downloadLink(self):
@@ -110,7 +113,7 @@ class updateService(object):
 			progressDialog=QtGui.QProgressDialog("Downloading MOSAIC ...", "Cancel", fBytes, fSize)
 			progressDialog.setFixedSize(350,100)
 			progressDialog.setWindowModality(Qt.WindowModal)
-         
+		 
 			with open(self.downloadFolder+os.path.basename(url), "wb") as updateFile:
 				while True:
 					if progressDialog.wasCanceled():
@@ -152,7 +155,10 @@ class updateService(object):
 
 			self.updateInfoDict=json.loads( self._d(stream.read()) )
 		except BaseException, err:
-			self.logger.exception(err)
+			if mosaic.DeveloperMode:
+				self.logger.exception(err)
+			else:
+				self.logger.error("Failed to dowload update file.")
 
 	def _showUpdateAvailableDialog(self):
 		"""

@@ -30,14 +30,14 @@ def registerLaunch(tag):
 		return funcWrapper
 	return _registerLaunch
 
-def registerRun(tag):
-	def _registerRun(func):
+def registerQuit(tag):
+	def _registerQuit(func):
 		@wraps(func)
 		def funcWrapper(*args, **kwargs):
-			_gaPost("run_"+tag, func.__name__)
+			_gaPost("quit_"+tag, func.__name__)
 			return func(*args, **kwargs)
 		return funcWrapper
-	return _registerRun
+	return _registerQuit
 
 def registerStart(tag):
 	def _registerStart(func):
@@ -157,7 +157,7 @@ def _getGASettings(ga_cache):
 
 _gaCredentialCache()
 
-@registerRun
+@registerLaunch("cli")
 def foo():
 	print "foo"
 
