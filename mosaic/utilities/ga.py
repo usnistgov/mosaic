@@ -32,6 +32,12 @@ def registerRun(func):
 		return func(*args, **kwargs)
 	return funcWrapper
 
+def registerStart(func):
+	def funcWrapper(*args, **kwargs):
+		_gaPost("start", func.__name__)
+		return func(*args, **kwargs)
+	return funcWrapper
+
 def registerStop(func):
 	def funcWrapper(*args, **kwargs):
 		_gaPost("stop", func.__name__)
@@ -39,15 +45,15 @@ def registerStop(func):
 	return funcWrapper
 
 def _uuid():
-    uuidfile=format_path(expanduser('~')+"/.mosaicuuid")
-    try:
-        with open (uuidfile, "r") as u:
-            return u.read()
-    except:
-        uuidgen=str(uuid.uuid4())
-        with open(uuidfile, "w") as uw:
-            uw.write(uuidgen)
-        return uuidgen
+	uuidfile=format_path(tempfile.gettempdir()+'/.mosaicuuid')
+	try:
+		with open (uuidfile, "r") as u:
+			return u.read()
+	except:
+		uuidgen=str(uuid.uuid4())
+		with open(uuidfile, "w") as uw:
+			uw.write(uuidgen)
+		return uuidgen
 
 def _gaPost(eventType, content):
 	logger=mlog.mosaicLogging().getLogger(name=__name__)
@@ -96,7 +102,15 @@ def _gaCredentialCache():
 
 		if gaAge > gaExpireAge:
 			logger.debug(_d("GA settings cache has expired."))
+			ga_old=_gaSettingsDict(ga_cache)
 			_getGASettings(ga_cache)
+			ga_new=_gaSettingsDict(ga_cache)
+
+			if ga_old["gaenable"]==False:
+				ga_new["gaenable"]=False
+
+			with open(ga_cache, "w") as ga:
+				ga.write(json.dumps(ga_new))
 		else:
 			logger.debug(_d("GA settings cache found. gaAge={0}", gaAge))
 
@@ -107,9 +121,13 @@ def _gaCredentialCache():
 	with open(ga_cache, 'r') as ga:
 		return json.loads(ga.read())
 
+def _gaSettingsDict(ga_cache):
+	with open(ga_cache, 'r') as ga:
+		return eval(json.loads(ga.read()))
+
 def _getGASettings(ga_cache):
 	logger=mlog.mosaicLogging().getLogger(name=__name__)
-
+	
 	try:
 		req=urllib2.Request(mosaic.DocumentationURL+".ga")
 		streamHandler=urllib2.build_opener()
@@ -118,7 +136,7 @@ def _getGASettings(ga_cache):
 		with open(ga_cache, 'w') as ga:
 			ga.write( stream.read() )
 
-		logger.debug(_d("Cached GA settings to {0}.", ga_cache))
+		logger.info("Cached GA settings to {0}.", ga_cache)
 	except:
 		logger.exception(_d("An error occured when trying to cache GA settings."))
 
