@@ -13,6 +13,7 @@ import os
 import glob
 import json
 import types
+import tempfile
 import multiprocessing
 import webbrowser
 import mosaic
@@ -269,7 +270,8 @@ class settingsview(QtGui.QMainWindow):
 
 		# Set ga toggle.
 		try:
-			with open(resource_path("mosaic/utilities/.ga"), "r") as garead:
+			ga_cache=format_path(tempfile.gettempdir()+'/.ga')
+			with open(ga_cache, "r") as garead:
 				gac = json.load(garead)
 		
 			if eval(gac["gauimode"]):
@@ -632,12 +634,13 @@ class settingsview(QtGui.QMainWindow):
 
 	def OnAggregateUsage(self):
 		try:
-			with open(resource_path("mosaic/utilities/.ga"), "r") as garead:
+			ga_cache=format_path(tempfile.gettempdir()+'/.ga')
+			with open(ga_cache, "r") as garead:
 				gac = json.load(garead)
 
 			gac["gaenable"] = str(self.actionAggregate_Usage.isChecked())
 
-			with open(resource_path("mosaic/utilities/.ga"), "w") as gawrite:
+			with open(ga_cache, "w") as gawrite:
 				json.dump(gac, gawrite, indent=4, sort_keys=True)
 		except:
 			pass
