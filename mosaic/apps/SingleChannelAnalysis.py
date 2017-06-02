@@ -80,7 +80,7 @@ class SingleChannelAnalysis(object):
 
 		self.subProc=None
 
-	@registerStart
+	@registerStart("qt")
 	def Run(self, forkProcess=False):
 		"""
 			Start an analysis. 
@@ -102,7 +102,7 @@ class SingleChannelAnalysis(object):
 		else:
 			run_eventpartition( self.dataPath, self.trajDataHnd, self.dataFilterHnd, self.eventPartitionHnd, self.eventProcHnd, self.dbFilename, )
 
-	@registerStop
+	@registerStop("qt")
 	def Stop(self):
 		"""
 			Stop a running analysis.
