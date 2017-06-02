@@ -12,6 +12,7 @@ import json
 import tempfile
 from base64 import b64decode as dec
 from os.path import expanduser, isfile
+from functools import wraps
 import os
 import traceback
 from datetime import datetime, timedelta
@@ -20,29 +21,43 @@ import mosaic.utilities.mosaicLogging as mlog
 from mosaic.utilities.mosaicLogFormat import _d
 from mosaic.utilities.resource_path import resource_path, format_path
 
-def registerLaunch(func):
-	def funcWrapper(*args, **kwargs):
-		_gaPost("launch", func.__name__)
-		return func(*args, **kwargs)
-	return funcWrapper
+def registerLaunch(tag):
+	def _registerLaunch(func):
+		@wraps(func)
+		def funcWrapper(*args, **kwargs):
+			_gaPost("launch_"+tag, func.__name__)
+			return func(*args, **kwargs)
+		return funcWrapper
+	return _registerLaunch
 
-def registerRun(func):
-	def funcWrapper(*args, **kwargs):
-		_gaPost("run", func.__name__)
-		return func(*args, **kwargs)
-	return funcWrapper
+def registerRun(tag):
+	def _registerRun(func):
+		@wraps(func)
+		def funcWrapper(*args, **kwargs):
+			_gaPost("run_"+tag, func.__name__)
+			return func(*args, **kwargs)
+		return funcWrapper
+	return _registerRun
 
-def registerStart(func):
-	def funcWrapper(*args, **kwargs):
-		_gaPost("start", func.__name__)
-		return func(*args, **kwargs)
-	return funcWrapper
+def registerStart(tag):
+	def _registerStart(func):
+		@wraps(func)
+		def funcWrapper(*args, **kwargs):
+			_gaPost("start_"+tag, func.__name__)
+			return func(*args, **kwargs)
+		return funcWrapper
+	return _registerStart
 
-def registerStop(func):
-	def funcWrapper(*args, **kwargs):
-		_gaPost("stop", func.__name__)
-		return func(*args, **kwargs)
-	return funcWrapper
+
+def registerStop(tag):
+	def _registerStop(func):
+		@wraps(func)
+		def funcWrapper(*args, **kwargs):
+			_gaPost("stop_"+tag, func.__name__)
+			return func(*args, **kwargs)
+		return funcWrapper
+	return _registerStop
+
 
 def _uuid():
 	uuidfile=format_path(tempfile.gettempdir()+'/.mosaicuuid')
