@@ -5,7 +5,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>mosaic.process.cusumPlus &#8212; MOSAIC 1.3.4 documentation</title>
+    <title>mosaic.process.cusumPlus &#8212; MOSAIC mweb1.0 documentation</title>
     
     <link rel="stylesheet" href="../../../_static/basic.css" type="text/css" />
     <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
@@ -16,7 +16,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../../',
-        VERSION:     '1.3.4',
+        VERSION:     'mweb1.0',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -33,7 +33,7 @@
     <link rel="shortcut icon" href="../../../_static/favicon.ico"/>
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" />
-    <link rel="top" title="MOSAIC 1.3.4 documentation" href="../../../index.html" />
+    <link rel="top" title="MOSAIC mweb1.0 documentation" href="../../../index.html" />
     <link rel="up" title="Module code" href="../../index.html" />
 
 <meta charset='utf-8'>
@@ -63,7 +63,7 @@
         </button>
         <a class="navbar-brand" href="../../../index.html"><span><img src="../../../_static/icon_36.png"></span>
            </a>
-        <span class="navbar-text navbar-version pull-left"><b>1.3.4</b></span>
+        <span class="navbar-text navbar-version pull-left"><b>mweb1.0</b></span>
       </div>
 
         <div class="collapse navbar-collapse nav-collapse">
@@ -133,13 +133,16 @@
   <h1>Source code for mosaic.process.cusumPlus</h1><div class="highlight"><pre>
 <span></span><span class="c1"># -*- coding: utf-8 -*-</span>
 <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">	Analyze a multi-step event with the CUSUM+ algorithm</span>
+<span class="sd">	Analyze a multi-step event with the CUSUM+ algorithm. Implements a modified version of the CUSUM algorithm </span>
+<span class="sd">	(used by OpenNanopore for example) in MOSAIC. This approach sacrifices including system information in the </span>
+<span class="sd">	analysis in favor of much faster fitting of single- and multi-level events.</span>
 
 <span class="sd">	:Created:	2/10/2015</span>
 <span class="sd"> 	:Author: 	Kyle Briggs &lt;kbrig035@uottawa.ca&gt;</span>
 <span class="sd">	:License:	See LICENSE.TXT</span>
 <span class="sd">	:ChangeLog:             </span>
-<span class="sd">	.. line-block::      </span>
+<span class="sd">	.. line-block::</span>
+<span class="sd">				6/3/17		AB 	Updated docstring.</span>
 <span class="sd">				8/24/15 	AB 	Rename algorithm to CUSUM+   </span>
 <span class="sd">				3/20/15 	AB 	Added a new metadata column (mdStateResTime) that saves the residence time of each state to the database.</span>
 <span class="sd">				3/18/15		KB	Implemented rise time skipping</span>
@@ -175,9 +178,7 @@
 
 
 <div class="viewcode-block" id="cusumPlus"><a class="viewcode-back" href="../../../api-doc/mosaic.processing.html#mosaic.process.cusumPlus.cusumPlus">[docs]</a><span class="k">class</span> <span class="nc">cusumPlus</span><span class="p">(</span><span class="n">metaEventProcessor</span><span class="o">.</span><span class="n">metaEventProcessor</span><span class="p">):</span>
-	<span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">		Implements a modified version of the CUSUM algorithm (used by OpenNanopore for example) in MOSAIC. This approach sacrifices including system information in the analysis in favor of much faster fitting of single- and multi-level events.</span>
-
+	<span class="sd">&quot;&quot;&quot;	</span>
 <span class="sd">		CUSUM+ will detect jumps that are smaller than `StepSize`, but they will have to be sustained longer. Threshold can be thought of, very roughly, as proportional to the length of time a subevent must be sustained for it to be detected. The algorithm will adjust the actual threshold used on a per-event basis in order to minimize false positive detection of current jumps This algorithm is based on code used in OpenNanopore, which you can read about here: http://pubs.rsc.org/en/Content/ArticleLanding/2012/NR/c2nr30951c#!divAbstract</span>
 
 
@@ -187,28 +188,29 @@
 <span class="sd">                2. CUSUM assumes an instantaneous transition between current states. As a result, if the RC rise time of the system is large, CUSUM+ can trigger and detect intermediate states during the change time. This can be avoided by choosing a number of samples to skip equal to about 2-5RC.</span>
 <span class="sd">                3. As a consequence of using a statistical t-test, CUSUM can have false positives. The algorithm has an adaptive threshold that tries to minimize the chances of this happening while maintaining good sensitivity (expected number of false positives within an event is less than 1).</span>
 
-<span class="sd">                To use it requires four settings:</span>
+
+<span class="sd">		:Keyword Args:</span>
+<span class="sd">			In addition to :class:`~mosaic.metaEventProcessor.metaEventProcessor` args,</span>
+<span class="sd">				- `StepSize` :			The number of baseline standard deviations are considered significant (3 is usually a good starting point).</span>
+<span class="sd">				- `MinThreshold` :		One of two sensitivity parameters (lower is more sensitive). A good starting point is to set `MinThreshold` equal to `StepSize`.</span>
+<span class="sd">				- `MaxThreshold` : 		One of two sensitivity parameters (lower is more sensitive). Set `MaxThreshold` about 3x higher than `MinThreshold`.</span>
+<span class="sd">				- `MinLength` : 		The number of samples to skip after detecting a jump, in order to avoid triggering during the rise time and returning an artificially high number of states. This number of points is also skipped when averaging levels. About 4 times the RC constant of the system is a good starting value.</span>
+
+<span class="sd">		:Errors:</span>
+<span class="sd">			When an event cannot be analyzed, all metadata are set to -1.</span>
+
+<span class="sd">		To use it requires four settings:</span>
 
 
-<span class="sd">				.. code-block:: javascript</span>
+<span class="sd">		.. code-block:: javascript</span>
 
-<span class="sd">					&quot;cusumPlus&quot;: {</span>
-<span class="sd">						&quot;StepSize&quot;: 3.0, </span>
-<span class="sd">						&quot;MinThreshold&quot;: 3.0,</span>
-<span class="sd">						&quot;MaxThreshold&quot;: 10.0,</span>
-<span class="sd">						&quot;MinLength&quot; : 10,</span>
-<span class="sd">					}</span>
+<span class="sd">			&quot;cusumPlus&quot;: {</span>
+<span class="sd">				&quot;StepSize&quot;: 3.0, </span>
+<span class="sd">				&quot;MinThreshold&quot;: 3.0,</span>
+<span class="sd">				&quot;MaxThreshold&quot;: 10.0,</span>
+<span class="sd">				&quot;MinLength&quot; : 10,</span>
+<span class="sd">			}</span>
 
-<span class="sd">				:Keyword Args:</span>
-<span class="sd">					In addition to :class:`~mosaic.metaEventProcessor.metaEventProcessor` args,</span>
-<span class="sd">						- `StepSize` :			The number of baseline standard deviations are considered significant (3 is usually a good starting point).</span>
-<span class="sd">						- `MinThreshold` :		One of two sensitivity parameters (lower is more sensitive). A good starting point is to set `MinThreshold` equal to `StepSize`.</span>
-<span class="sd">						- `MaxThreshold` : 		One of two sensitivity parameters (lower is more sensitive). Set `MaxThreshold` about 3x higher than `MinThreshold`.</span>
-<span class="sd">						- `MinLength` : 		The number of samples to skip after detecting a jump, in order to avoid triggering during the rise time and returning an artificially high number of states. This number of points is also skipped when averaging levels. About 4 times the RC constant of the system is a good starting value.</span>
-
-<span class="sd">				:Errors:</span>
-
-<span class="sd">					When an event cannot be analyzed, all metadata are set to -1.</span>
 <span class="sd">	&quot;&quot;&quot;</span>
 	<span class="k">def</span> <span class="nf">_init</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
 		<span class="sd">&quot;&quot;&quot;</span>

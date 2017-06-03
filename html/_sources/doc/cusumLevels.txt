@@ -19,12 +19,12 @@ Settings that control the algorithm are defined through the settings file, as de
    :align: center
 
 
-.. Algorithm Settings
-.. ##########################################
-.. .. exec::
-.. 	import mosaic.cusumPlus
+Algorithm Settings
+##########################################
+.. exec::
+	import mosaic.process.cusumPlus
 
-.. 	print mosaic.cusumPlus.cusumPlus.__doc__
+	print mosaic.process.cusumPlus.cusumPlus.__doc__
 
 
 Metadata Output
