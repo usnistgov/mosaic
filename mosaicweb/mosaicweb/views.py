@@ -246,6 +246,8 @@ def analysisContourPlot():
 		return jsonify( respondingURL='analysis-contour', errType='KeyError', errSummary="The key {0} was not found.".format(str(err)), errText="The key {0} was not found.".format(str(err)) ), 500
 	except OperationalError, err:
 		return jsonify( respondingURL='analysis-contour', errType='OperationalError', errSummary="Syntax error: {0}".format(str(err)), errText="Syntax error: {0}".format(str(err)) ), 500
+	except analysisContour.QuerySyntaxError, err:
+		return jsonify( respondingURL='analysis-contour', errType='QuerySyntaxError', errSummary="The submitted query is not allowed for contour plots.", errText="The submitted query is not allowed for contour plots." ), 500
 
 
 @app.route('/analysis-statistics', methods=['POST'])

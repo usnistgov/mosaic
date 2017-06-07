@@ -12,6 +12,9 @@ from mosaic.utilities.sqlQuery import query, rawQuery
 from mosaicweb.plotlyUtils import plotlyWrapper
 import numpy as np
 
+class QuerySyntaxError(Exception):
+	pass
+
 class analysisContour:
 	"""
 		A class that compiles MOSAIC analysis contour plots.
@@ -87,14 +90,26 @@ class analysisContour:
 		return self.responseDict
 
 	def _hist2d(self):
-		q=query(
-			self.AnalysisDBFile,
-			self.queryString
-		)
+		try:
+			q=query(
+				self.AnalysisDBFile,
+				self.queryString
+			)
 
-		x,y=np.transpose(np.array(q))
+			y,x=np.transpose(np.array(q))
+			
+			Y=np.hstack(y)
+			X=np.hstack(x)
 
-		return np.histogram2d(y, x, bins=(self.numBins, self.numBins))
+			xmin=np.max(0, min(X))
+			xmax=max(X)
+
+			ymin=np.max(0, min(Y))
+			ymax=max(Y)
+		
+			return np.histogram2d(X, Y, bins=(self.numBins, self.numBins), range=[[xmin, xmax], [ymin, ymax]])
+		except ValueError:
+			raise QuerySyntaxError("")
 
 if __name__ == '__main__':
 	import mosaic

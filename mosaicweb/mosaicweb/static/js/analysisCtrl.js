@@ -5,7 +5,7 @@ angular.module('mosaicApp')
 			var factory = {};
 
 			factory.bdQuery = "select BlockDepth from metadata where ProcessingStatus='normal' and ResTime > 0.02";
-			factory.contourQuery = "select BlockDepth, ResTime from metadata where ProcessingStatus='normal' and ResTime > 0.02";
+			factory.contourQuery = "select BlockDepth, StateResTime from metadata where ProcessingStatus='normal' and ResTime > 0.02";
 
 			factory.bdBins = 500;
 			factory.histDensity = false;
