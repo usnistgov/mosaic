@@ -3,13 +3,13 @@ import sys
 import mosaicgui.mosaicGUI as mosaicgui
 from PyQt4 import QtCore
 from mosaicgui.updateService import updateService
-from mosaic.utilities.ga import registerRun
+from mosaic.utilities.ga import registerLaunch
 from PyQt4 import QtGui
 import multiprocessing
 
 from mosaicgui.mplwidget import update_rcParams
 
-# @registerRun
+@registerLaunch("qt")
 def startMOSAIC():
 	update_rcParams()
 	
