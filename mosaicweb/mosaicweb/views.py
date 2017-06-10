@@ -194,9 +194,9 @@ def stopAnalysis():
 	except (sessionManager.SessionNotFoundError, KeyError):
 		return jsonify( respondingURL='stop-analysis', errType='MissingSIDError', errSummary="A valid session ID was not found.", errText="A valid session ID was not found." ), 500
 
-@app.route('/analysis-results', methods=['POST'])
+@app.route('/analysis-histogram', methods=['POST'])
 @gzipped
-def analysisResults():
+def analysisHistogramPlot():
 	global gAnalysisSessions
 
 	try:

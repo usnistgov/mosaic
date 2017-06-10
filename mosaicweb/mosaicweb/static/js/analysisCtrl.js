@@ -121,7 +121,7 @@ angular.module('mosaicApp')
 
 				factory.analysisSettings = params;
 
-				mosaicUtilsFactory.post('/analysis-results', params)
+				mosaicUtilsFactory.post('/analysis-histogram', params)
 					.then(function (response, status) {	// success
 						//save axes types
 						var xaxistype=factory.analysisPlot.layout.xaxis.type;
