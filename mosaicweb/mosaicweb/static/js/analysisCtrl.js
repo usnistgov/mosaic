@@ -1,11 +1,11 @@
 'use strict';
 
 angular.module('mosaicApp')
-	.factory('AnalysisFactory', function($http, $q,mosaicUtilsFactory, mosaicConfigFactory, analysisSetupFactory, AnalysisStatisticsFactory) {
+	.factory('AnalysisFactory', function($http, $q, $base64, mosaicUtilsFactory, mosaicConfigFactory, analysisSetupFactory, AnalysisStatisticsFactory) {
 			var factory = {};
 
-			factory.bdQuery = "select BlockDepth from metadata where ProcessingStatus='normal' and ResTime > 0.02";
-			factory.contourQuery = "select BlockDepth, StateResTime from metadata where ProcessingStatus='normal' and ResTime > 0.02";
+			factory.histQuery = "select BlockDepth from metadata where ProcessingStatus='normal' and ResTime > 0.02";
+			factory.contourQuery = "";
 
 			factory.bdBins = 500;
 			factory.histDensity = false;
@@ -156,6 +156,8 @@ angular.module('mosaicApp')
 
 						factory.analysisContour=response.data;
 
+						factory.contourQuery=$base64.decode(factory.analysisContour.queryString);
+
 						factory.analysisContour.layout.xaxis.type=xaxistype;
 						factory.analysisContour.layout.yaxis.type=yaxistype;
 
@@ -188,54 +190,49 @@ angular.module('mosaicApp')
 			// Switch session ID when explicitly set in route.
 			if ($routeParams.sid != mosaicConfigFactory.sessionID) {
 				mosaicConfigFactory.sessionID=$routeParams.sid;
-
-				// Update statistics
-				$scope.model.updateAnalysisStats();
-
-				// Update histogram
-				$scope.model.updateAnalysisHistogram({
-					query: $scope.model.bdQuery,
-					nBins: $scope.model.bdBins,
-					density: $scope.model.histDensity
-				});
-
-				// Update contour plot
-				$scope.model.updateAnalysisContour({
-					query: $scope.model.contourQuery,
-					nBins: $scope.model.contourBins,
-					showContours: $scope.model.showContours
-				});
-				
-			} else {
-				// Update statistics
-				$scope.model.updateAnalysisStats();
 			};
+			// Update statistics
+			$scope.model.updateAnalysisStats();
+
+			// Update histogram
+			$scope.model.updateAnalysisHistogram({
+				query: $scope.model.histQuery,
+				nBins: $scope.model.bdBins,
+				density: $scope.model.histDensity
+			});
+
+			// Update contour plot
+			$scope.model.updateAnalysisContour({
+				query: $scope.model.contourQuery,
+				nBins: $scope.model.contourBins,
+				showContours: $scope.model.showContours
+			});				
 		};
 		$scope.init();
 
 		// watch
-		$scope.$watch('model.bdQuery', function() {
-			if ($scope.model.bdQuery != '' && $scope.model.bdBins > 0) {
+		$scope.$watch('model.histQuery', function() {
+			if ($scope.model.histQuery != '' && $scope.model.bdBins > 0) {
 				$scope.model.updateAnalysisHistogram({
-						query: $scope.model.bdQuery,
+						query: $scope.model.histQuery,
 						nBins: $scope.model.bdBins,
 						density: $scope.model.histDensity
 					});
 			};
 		});
 		$scope.$watch('model.bdBins', function() {
-			if ($scope.model.bdQuery != '' && $scope.model.bdBins > 0) {
+			if ($scope.model.histQuery != '' && $scope.model.bdBins > 0) {
 				$scope.model.updateAnalysisHistogram({
-						query: $scope.model.bdQuery,
+						query: $scope.model.histQuery,
 						nBins: $scope.model.bdBins,
 						density: $scope.model.histDensity
 					});
 			};
 		});
 		$scope.$watch('model.histDensity', function() {
-			if ($scope.model.bdQuery != '' && $scope.model.bdBins > 0) {
+			if ($scope.model.histQuery != '' && $scope.model.bdBins > 0) {
 				$scope.model.updateAnalysisHistogram({
-						query: $scope.model.bdQuery,
+						query: $scope.model.histQuery,
 						nBins: $scope.model.bdBins,
 						density: $scope.model.histDensity
 					});
@@ -274,9 +271,9 @@ angular.module('mosaicApp')
 				$scope.model.updateAnalysisStats();
 
 				// Update histogram
-				if ($scope.model.bdQuery != '' && $scope.model.bdBins > 0) {
+				if ($scope.model.histQuery != '' && $scope.model.bdBins > 0) {
 					$scope.model.updateAnalysisHistogram({
-							query: $scope.model.bdQuery,
+							query: $scope.model.histQuery,
 							nBins: $scope.model.bdBins,
 							density: $scope.model.histDensity
 						});

@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('mosaicApp', ['ngRoute', 'ngMaterial', 'ngMessages', 'ngAnimate', 'plotly'])
+angular.module('mosaicApp', ['ngRoute', 'ngMaterial', 'ngMessages', 'ngAnimate', 'plotly', 'base64'])
 .config(
 	function($mdThemingProvider) {
 		var mosaicPrimary = {
