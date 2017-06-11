@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('mosaicApp')
-	.factory('AnalysisFactory', function($http, $q, $base64, mosaicUtilsFactory, mosaicConfigFactory, analysisSetupFactory, AnalysisStatisticsFactory) {
+	.factory('AnalysisFactory', function($http, $q, $base64, $document, mosaicUtilsFactory, mosaicConfigFactory, analysisSetupFactory, AnalysisStatisticsFactory) {
 			var factory = {};
 
 			factory.histQuery = "select BlockDepth from metadata where ProcessingStatus='normal' and ResTime > 0.02";
@@ -170,6 +170,37 @@ angular.module('mosaicApp')
 
 				factory.contourLoading=true;
 				return deferred.promise;
+			};
+
+			factory.transpose = function(a) {
+				return Object.keys(a[0]).map(function(c) {
+					return a.map(function(r) { return r[c]; });
+				});
+			};
+
+			factory.exportCSV = function(data) {
+				var row = [];
+				data.forEach(function (info, index) {
+					var line = info.join(",");
+					row.push(line);
+				});
+				var csvString = row.join("\n");
+
+				var blob = new Blob([csvString], { type:"text/csv;charset=utf-8;" });			
+				var downloadLink = angular.element('<a></a>');
+							downloadLink.attr('href',window.URL.createObjectURL(blob));
+							downloadLink.attr('download', 'histogram.csv');
+				
+				var body = $document.find('body').eq(0);
+				body.append(downloadLink[0]);
+				downloadLink[0].click();
+				// body.remove(downloadLink[0]);
+			};
+
+			factory.exportHistogramCSV = function() {
+				var histData=factory.analysisPlot.data[0];				
+				
+				factory.exportCSV(factory.transpose([histData.x, histData.y]));
 			};
 
 			return factory;
