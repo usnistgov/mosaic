@@ -68,7 +68,7 @@
 							</md-button>
 						</md-menu-item>
 						<md-menu-item ng-click="$mdMenu.hide()">
-							<md-button ng-click="model.exportAnalysisDatabaseCSV()">
+							<md-button ng-click="model.exportAnalysisDatabaseCSV()" ng-disabled="model.exportingCSV">
 								<p class="md-primary">CSV</p>
 							</md-button>
 						</md-menu-item>

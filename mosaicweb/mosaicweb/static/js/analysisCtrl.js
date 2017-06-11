@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('mosaicApp')
-	.factory('AnalysisFactory', function($http, $q, $base64, $document, mosaicUtilsFactory, mosaicConfigFactory, analysisSetupFactory, AnalysisStatisticsFactory) {
+	.factory('AnalysisFactory', function($http, $q, $base64, $document, $mdToast, mosaicUtilsFactory, mosaicConfigFactory, analysisSetupFactory, AnalysisStatisticsFactory) {
 			var factory = {};
 
 			factory.histQuery = "select BlockDepth from metadata where ProcessingStatus='normal' and ResTime > 0.02";
@@ -24,6 +24,8 @@ angular.module('mosaicApp')
 
 			factory.histLoading = false;
 			factory.contourLoading = false;
+
+			factory.exportingCSV = false;
 
 			factory.contourPlot={
 				'contour': "<img width='90%' src='/static/img/contour.png' layout-padding>"
@@ -198,8 +200,6 @@ angular.module('mosaicApp')
 				var body = $document.find('body').eq(0);
 				body.append(downloadLink[0]);
 				downloadLink[0].click();
-				// body.remove(downloadLink[0]);
-
 			};
 
 			factory.exportHistogramCSV = function() {
@@ -211,11 +211,28 @@ angular.module('mosaicApp')
 			factory.exportAnalysisDatabaseCSV = function() {
 				mosaicUtilsFactory.post('/analysis-database-csv', {queryString : "select * from metadata"})
 					.then(function (response, status) {	// success
-						console.log(response.data);
 						factory.exportStringAsCSV($base64.decode(response.data.dbData), response.data.dbName+'.csv');
+						factory.exportingCSV = false;
+						$mdToast.hide(factory.exportToast);
 					}, function (error) {	// error
 						console.log(error);
+						factory.exportingCSV = false;
 					});
+					factory.exportingCSV = true;
+					factory.exportToast=factory.showInfoToast("Exporting database to CSV ...");
+
+					$mdToast.show(factory.exportToast);
+			};
+
+			factory.showInfoToast = function(msg) {
+				var toast = $mdToast.simple()
+					.position('bottom left')
+					.parent("#globalToastAnchor")
+					.textContent(msg)
+					.highlightClass('md-accent')
+					.hideDelay(0);
+
+				return toast;
 			};
 
 			return factory;
