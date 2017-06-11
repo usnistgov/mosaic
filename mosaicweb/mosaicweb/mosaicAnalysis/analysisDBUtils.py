@@ -11,14 +11,17 @@
 import base64
 
 import mosaic.mdio.sqlite3MDIO as sqlite
-from mosaic.utilities.sqlQuery import query, rawQuery
+from mosaic.utilities.sqlQuery import rawQuery
 from mosaic.utilities.resource_path import path_separator
 import mosaic.errors as errors
 
 class analysisDBUtils:
 	def __init__(self, dbfile, qstr):
 		self.AnalysisDBFile=dbfile 
-		self.queryString=qstr 
+		# self.queryString=qstr 
+
+		# Always export all columns except the RecIdx and TimeSeries. Ignore a user provided qstr for now.
+		self.queryString = "select "+", ".join([ col[1] for col in rawQuery(self.AnalysisDBFile, "PRAGMA table_info(metadata);") ][1:-1])+" from metadata"
 
 		self.responseDict={}
 
@@ -33,7 +36,7 @@ class analysisDBUtils:
 
 if __name__ == '__main__':
 	import mosaic
-	
+
 	a=analysisDBUtils(mosaic.WebServerDataLocation+"/m40_0916_RbClPEG/eventMD-20161208-130302.sqlite", "select ProcessingStatus, BlockDepth, ResTime from metadata limit 5")
 	r=a.csv()
 
