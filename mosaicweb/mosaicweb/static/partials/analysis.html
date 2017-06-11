@@ -63,12 +63,12 @@
 					</md-button>
 					<md-menu-content width="2">
 						<md-menu-item ng-click="$mdMenu.hide()">
-							<md-button aria-label="SQLite" ng-click="">
+							<md-button aria-label="SQLite" ng-click="" ng-disabled="true">
 								<p class="md-primary">SQLite Database</p>
 							</md-button>
 						</md-menu-item>
 						<md-menu-item ng-click="$mdMenu.hide()">
-							<md-button ng-click="">
+							<md-button ng-click="model.exportAnalysisDatabaseCSV()">
 								<p class="md-primary">CSV</p>
 							</md-button>
 						</md-menu-item>

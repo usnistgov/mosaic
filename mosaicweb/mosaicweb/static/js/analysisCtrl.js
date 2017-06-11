@@ -178,7 +178,7 @@ angular.module('mosaicApp')
 				});
 			};
 
-			factory.exportCSV = function(data) {
+			factory.exportArrayAsCSV = function(data, filename) {
 				var row = [];
 				data.forEach(function (info, index) {
 					var line = info.join(",");
@@ -186,21 +186,36 @@ angular.module('mosaicApp')
 				});
 				var csvString = row.join("\n");
 
+				factory.exportStringAsCSV(csvString, filename);
+			};
+
+			factory.exportStringAsCSV = function(csvString, filename) {
 				var blob = new Blob([csvString], { type:"text/csv;charset=utf-8;" });			
 				var downloadLink = angular.element('<a></a>');
 							downloadLink.attr('href',window.URL.createObjectURL(blob));
-							downloadLink.attr('download', 'histogram.csv');
+							downloadLink.attr('download', filename);
 				
 				var body = $document.find('body').eq(0);
 				body.append(downloadLink[0]);
 				downloadLink[0].click();
 				// body.remove(downloadLink[0]);
+
 			};
 
 			factory.exportHistogramCSV = function() {
 				var histData=factory.analysisPlot.data[0];				
 				
-				factory.exportCSV(factory.transpose([histData.x, histData.y]));
+				factory.exportArrayAsCSV(factory.transpose([histData.x, histData.y]), 'histogram.csv');
+			};
+
+			factory.exportAnalysisDatabaseCSV = function() {
+				mosaicUtilsFactory.post('/analysis-database-csv', {queryString : "select * from metadata"})
+					.then(function (response, status) {	// success
+						console.log(response.data);
+						factory.exportStringAsCSV($base64.decode(response.data.dbData), response.data.dbName+'.csv');
+					}, function (error) {	// error
+						console.log(error);
+					});
 			};
 
 			return factory;

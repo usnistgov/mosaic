@@ -4,13 +4,13 @@ from flask import send_file, make_response, jsonify, request
 import mosaic
 from mosaic.utilities.sqlQuery import query, rawQuery
 from mosaic.utilities.analysis import caprate
-from mosaic.utilities.resource_path import format_path
+from mosaic.utilities.resource_path import format_path, path_separator
 from mosaic.trajio.metaTrajIO import EmptyDataPipeError, FileNotFoundError
 from mosaic.utilities.ga import registerLaunch, registerStart, registerStop
 import mosaic.mdio.sqlite3MDIO as sqlite
 import mosaic.settings as settings
 
-from mosaicweb.mosaicAnalysis import mosaicAnalysis, analysisStatistics, analysisTimeSeries, analysisHistogram, analysisContour
+from mosaicweb.mosaicAnalysis import mosaicAnalysis, analysisStatistics, analysisTimeSeries, analysisHistogram, analysisContour, analysisDBUtils
 from mosaicweb.sessionManager import sessionManager
 from mosaicweb.utils.utils import gzipped
 
@@ -298,8 +298,24 @@ def eventView():
 
 		return jsonify(respondingURL='event-view', **a.timeSeries()), 200
 	except (sessionManager.SessionNotFoundError, KeyError), err:
-		print err
 		return jsonify( respondingURL='event-view', errType='MissingSIDError', errSummary="A valid session ID was not found.", errText="A valid session ID was not found." ), 500
+
+@app.route('/analysis-database-csv', methods=['POST'])
+@gzipped
+def analysisDatabaseCSV():
+	global gAnalysisSessions
+
+	try:
+		params = dict(request.get_json())
+
+		sessionID=params['sessionID']
+		dbfile=gAnalysisSessions.getSessionAttribute(sessionID, 'databaseFile')
+		
+		a=analysisDBUtils.analysisDBUtils(dbfile, "select * from metadata")
+
+		return jsonify(respondingURL='analysis-database-csv', **a.csv()), 200
+	except (sessionManager.SessionNotFoundError, KeyError), err:
+		return jsonify( respondingURL='analysis-database-csv', errType='MissingSIDError', errSummary="A valid session ID was not found.", errText="A valid session ID was not found." ), 500
 
 
 @app.route('/poll-analysis-status', methods=['POST'])
