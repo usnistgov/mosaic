@@ -271,6 +271,13 @@ class sqlite3MDIO(metaMDIO.metaMDIO):
 
 		self.logger.debug(_d("{0}", csvfile))
 
+	def csvString(self, query):
+		"""
+			Return database records that match the specified query as a CSV formatted string.
+		"""
+		df=pandas.DataFrame(self.queryDB(query), columns=self._col_names(query, self.db.cursor(), self.tableName))
+		return df.to_csv( path_or_buf=None )
+
 	def _colnames(self, table=None):
 		if table:
 			tname=table
@@ -386,7 +393,7 @@ class sqlite3MDIO(metaMDIO.metaMDIO):
 if __name__=="__main__":
 	try:
 		c=sqlite3MDIO()
-		c.openDB(dbname)
+		c.openDB(resource_path('data/eventMD-PEG28-ADEPT2State.sqlite'))
 		c.logger.debug('test')
 
 		q=c.queryDB( "select TimeSeries from metadata limit 100, 200" )
@@ -399,7 +406,8 @@ if __name__=="__main__":
 		print
 		# print [ c for c in zip( c.mdColumnNames, c.mdColumnTypes ) if c[1] != 'REAL_LIST' ]
 
-		c.exportToCSV( "select * from metadata" )
+		# c.exportToCSV( "select * from metadata" )
+		print c.csvString( "select ProcessingStatus, BlockDepth from metadata limit 5" )
 
 		c.closeDB()
 		
