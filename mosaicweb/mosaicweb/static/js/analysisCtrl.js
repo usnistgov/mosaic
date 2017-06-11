@@ -11,7 +11,7 @@ angular.module('mosaicApp')
 			factory.histDensity = false;
 
 			factory.contourBins = 200;
-			factory.showContours = true;
+			factory.showContours = false;
 
 			factory.showAnalysisControl=true;
 			factory.analysisSettings = {};
