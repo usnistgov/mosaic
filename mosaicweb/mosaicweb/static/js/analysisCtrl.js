@@ -8,7 +8,7 @@ angular.module('mosaicApp')
 			factory.contourQuery = "";
 
 			factory.bdBins = 500;
-			factory.histDensity = false;
+			factory.histDensity = true;
 
 			factory.contourBins = 200;
 			factory.showContours = false;
