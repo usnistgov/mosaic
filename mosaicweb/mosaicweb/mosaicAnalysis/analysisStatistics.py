@@ -65,6 +65,8 @@ class analysisStatistics:
 		statsDict['FskHz']=analysisInfo['FsHz']/1000.
 		statsDict['dataType']=analysisInfo['dataType']
 		statsDict['datPath']=format_path((analysisInfo['datPath'].replace(str(WebServerDataLocation), "<Data Root>/")).replace('//', '/'))
+		statsDict['timeseriesSaved']=self._timeseriesSaved()
+
 		return statsDict
 		
 
@@ -98,6 +100,16 @@ class analysisStatistics:
 		)
 
 		return round(np.mean(np.hstack(q)),1), round(np.std(np.hstack(q)), 1)
+
+	def _timeseriesSaved(self):
+		try:
+			q=query(
+				self.analysisDB,
+				"select TimeSeries from metadata"
+			)
+			return len(q[0][0]) > 0
+		except:
+			return False
 
 	def _eventStats(self):
 		"""
@@ -163,6 +175,7 @@ class analysisStatistics:
 if __name__ == '__main__':
 	import mosaic
 
+	# a=analysisStatistics(mosaic.WebServerDataLocation+'/m130_3uM_A20C20_20141216_C2/eventMD-20170611-205213.sqlite')
 	a=analysisStatistics(mosaic.WebServerDataLocation+"/m40_0916_RbClPEG/eventMD-20161208-130302.sqlite")
 
 	print a.analysisStatistics()
