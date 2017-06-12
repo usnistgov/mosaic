@@ -39,7 +39,7 @@
 			</md-button>
 		
 			<md-menu>
-				<md-button ng-click="$mdOpenMenu()" class="md-icon-button" aria-label="Overflow">
+				<md-button ng-click="$mdMenu.open()" class="md-icon-button" aria-label="Overflow">
 					<md-icon md-font-set="material-icons md-24">more_vert</md-icon>
 				</md-button>
 				<md-menu-content width="4">
@@ -72,20 +72,21 @@
 		</div>
 		<div id="globalToastAnchor"></div>
 
-		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.1/angular.min.js"></script>
-		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.1/angular-animate.min.js"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular-animate.min.js"></script>
 
-		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.1/angular-route.min.js"></script>
-		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.1/angular-aria.min.js"></script>
-		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.1/angular-messages.min.js"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular-route.min.js"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular-aria.min.js"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular-messages.min.js"></script>
 
 		<!-- Angular Material Library -->
-		<script src="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.1/angular-material.min.js"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.4/angular-material.min.js"></script>
 
 		<!-- Plotly Library -->
 		<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
 		
 		<script src="/static/js/angular-plotly.js"></script>
+		<script src="/static/js/angular-base64.min.js"></script>
 		
 		<script src="/static/js/app.js"></script>
 		<script src="/static/js/aboutCtrl.js"></script>
@@ -97,5 +98,6 @@
 		<script src="/static/js/eventViewerCtrl.js"></script>
 		<script src="/static/js/mosaicUtilsFactory.js"></script>
 		<script src="/static/js/mosaicConfigFactory.js"></script>
+	
     </body>
 </html>

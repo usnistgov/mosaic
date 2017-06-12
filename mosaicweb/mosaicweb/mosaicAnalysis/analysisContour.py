@@ -9,8 +9,10 @@
 		4/15/17		AB 	Initial version
 """
 from mosaic.utilities.sqlQuery import query, rawQuery
+import mosaic.mdio.sqlite3MDIO as sqlite
 from mosaicweb.plotlyUtils import plotlyWrapper
 import numpy as np
+import base64
 
 class QuerySyntaxError(Exception):
 	pass
@@ -21,8 +23,15 @@ class analysisContour:
 	"""
 	def __init__(self, dbFile, qstr, bins, showContours):
 		self.AnalysisDBFile = dbFile
-		self.queryString=qstr
 		self.numBins=bins
+
+		dbHnd=sqlite.sqlite3MDIO()
+		dbHnd.openDB(self.AnalysisDBFile)
+		analysisInfo=dbHnd.readAnalysisInfo()
+
+		self.processingAlgorithm=analysisInfo['processingAlgorithm']
+
+		self.queryString=self._queryString(qstr)
 
 		if showContours:
 			self.plotType="contour"
@@ -87,7 +96,19 @@ class analysisContour:
 		self.responseDict['layout']=layout
 		self.responseDict['options']={'displayLogo': False}
 
+		self.responseDict['queryString']=base64.b64encode(str(self.queryString))
+
 		return self.responseDict
+
+	def _queryString(self, qstr):
+		if qstr:
+			return qstr
+		else:
+			if self.processingAlgorithm=="adept2State":
+				return """select BlockDepth, ResTime from metadata where ProcessingStatus='normal' and ResTime > 0.02"""
+			else:
+				return """select BlockDepth, StateResTime from metadata where ProcessingStatus='normal' and ResTime > 0.02"""
+
 
 	def _hist2d(self):
 		try:

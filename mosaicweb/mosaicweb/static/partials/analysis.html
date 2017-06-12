@@ -57,19 +57,19 @@
 					<md-icon md-font-set="material-icons md-24">description</md-icon>
 				</md-button>				
 				<md-menu layout-align="center center">
-					<md-button ng-click="$mdOpenMenu()" class="md-icon-button" aria-label="Overflow">
-						<md-tooltip md-direction="bottom">Download Analysis Data</md-tooltip>
+					<md-button ng-click="$mdMenu.open()" class="md-icon-button" aria-label="Overflow">
+						<md-tooltip md-direction="bottom">Download Database</md-tooltip>
 						<md-icon md-font-set="material-icons md-24">file_download</md-icon>
 					</md-button>
 					<md-menu-content width="2">
 						<md-menu-item ng-click="$mdMenu.hide()">
-							<md-button aria-label="SQLite" ng-click="">
-								<p class="md-primary">SQLite Database</p>
+							<md-button ng-click="model.exportAnalysisDatabaseCSV()" ng-disabled="model.exportingCSV">
+								<p class="md-primary">Download CSV</p>
 							</md-button>
 						</md-menu-item>
 						<md-menu-item ng-click="$mdMenu.hide()">
-							<md-button ng-click="">
-								<p class="md-primary">CSV</p>
+							<md-button aria-label="SQLite" ng-click="" ng-disabled="true">
+								<p class="md-primary">Download SQLite</p>
 							</md-button>
 						</md-menu-item>
 					</md-menu-content>
