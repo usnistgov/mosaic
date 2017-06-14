@@ -1,4 +1,5 @@
 from mosaicweb import app
 import mosaic
 
-app.run(port=mosaic.WebServerPort, debug=mosaic.DeveloperMode)
+if __name__ == '__main__':
+	app.run(port=mosaic.WebServerPort, debug=mosaic.DeveloperMode)
