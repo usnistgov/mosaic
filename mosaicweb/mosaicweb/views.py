@@ -168,10 +168,10 @@ def startAnalysis():
 		ma.runAnalysis()
 
 		gAnalysisSessions.addDatabaseFile(sessionID, ma.dbFile)
-		gAnalysisSessions.addAnalysisRunningFlag(sessionID, ma.analysisRunning)
+		gAnalysisSessions.addAnalysisRunningFlag(sessionID, ma.analysisStatus)
 		
 
-		return jsonify( respondingURL="start-analysis", analysisRunning=ma.analysisRunning), 200
+		return jsonify( respondingURL="start-analysis", analysisRunning=ma.analysisStatus), 200
 	except (sessionManager.SessionNotFoundError, KeyError):
 		return jsonify( respondingURL='start-analysis', errType='MissingSIDError', errSummary="A valid session ID was not found.", errText="A valid session ID was not found." ), 500
 
@@ -188,9 +188,9 @@ def stopAnalysis():
 		ma=gAnalysisSessions.getSessionAttribute(sessionID, 'mosaicAnalysisObject')
 		ma.stopAnalysis()
 
-		gAnalysisSessions.addAnalysisRunningFlag(sessionID, ma.analysisRunning)
+		gAnalysisSessions.addAnalysisRunningFlag(sessionID, ma.analysisStatus)
 
-		return jsonify( respondingURL="stop-analysis", analysisRunning=ma.analysisRunning, newDataAvailable=True ), 200
+		return jsonify( respondingURL="stop-analysis", analysisRunning=ma.analysisStatus, newDataAvailable=True ), 200
 	except (sessionManager.SessionNotFoundError, KeyError):
 		return jsonify( respondingURL='stop-analysis', errType='MissingSIDError', errSummary="A valid session ID was not found.", errText="A valid session ID was not found." ), 500
 
@@ -208,12 +208,12 @@ def analysisHistogramPlot():
 		dbfile=gAnalysisSessions.getSessionAttribute(sessionID, 'databaseFile')
 
 		ma=gAnalysisSessions.getSessionAttribute(sessionID, 'mosaicAnalysisObject')
-		gAnalysisSessions.addAnalysisRunningFlag(sessionID, ma.analysisRunning)
+		gAnalysisSessions.addAnalysisRunningFlag(sessionID, ma.analysisStatus)
 
 		a=analysisHistogram.analysisHistogram(dbfile, qstr, bins, density)
 		ah=a.analysisHistogram()
 
-		return jsonify( respondingURL="analysis-results", analysisRunning=ma.analysisRunning, **ah ), 200
+		return jsonify( respondingURL="analysis-results", analysisRunning=ma.analysisStatus, **ah ), 200
 	except sessionManager.SessionNotFoundError:
 		return jsonify( respondingURL='analysis-results', errType='MissingSIDError', errSummary="A valid session ID was not found.", errText="A valid session ID was not found." ), 500
 	except KeyError, err:
@@ -237,11 +237,11 @@ def analysisContourPlot():
 		dbfile=gAnalysisSessions.getSessionAttribute(sessionID, 'databaseFile')
 
 		ma=gAnalysisSessions.getSessionAttribute(sessionID, 'mosaicAnalysisObject')
-		gAnalysisSessions.addAnalysisRunningFlag(sessionID, ma.analysisRunning)
+		gAnalysisSessions.addAnalysisRunningFlag(sessionID, ma.analysisStatus)
 
 		a=analysisContour.analysisContour(dbfile, qstr, bins, showContours)
 
-		return jsonify( respondingURL="analysis-contour", analysisRunning=ma.analysisRunning, **a.analysisContour() ), 200
+		return jsonify( respondingURL="analysis-contour", analysisRunning=ma.analysisStatus, **a.analysisContour() ), 200
 	except sessionManager.SessionNotFoundError:
 		return jsonify( respondingURL='analysis-contour', errType='MissingSIDError', errSummary="A valid session ID was not found.", errText="A valid session ID was not found." ), 500
 	except KeyError, err:
