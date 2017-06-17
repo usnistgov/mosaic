@@ -4,6 +4,7 @@ from flask import send_file, make_response, jsonify, request
 import mosaic
 from mosaic.utilities.sqlQuery import query, rawQuery
 from mosaic.utilities.analysis import caprate
+import mosaic.utilities.ga as ga
 from mosaic.utilities.resource_path import format_path, path_separator
 from mosaic.trajio.metaTrajIO import EmptyDataPipeError, FileNotFoundError
 from mosaic.utilities.ga import registerLaunch, registerStart, registerStop
@@ -15,6 +16,7 @@ from mosaicweb.sessionManager import sessionManager
 from mosaicweb.utils.utils import gzipped
 
 import pprint
+import tempfile
 import time
 import random
 import json
@@ -384,6 +386,22 @@ def listDatabaseFiles():
 				fileList.append(itemAttr)
 
 	return jsonify( respondingURL='list-database-files', level=level+'/', fileData=fileList )
+
+@app.route('/analytics', methods=['POST'])
+def analytics():
+	ga_cache=format_path(tempfile.gettempdir()+'/.ga')
+
+	params = dict(request.get_json())
+	appAnalytics=params.get("appAnalytics", -1)
+
+	gac=ga._gaCredentialCache()
+	if appAnalytics!=-1:
+		gac["gaenable"]=str(appAnalytics)
+
+	with open(ga_cache, "w") as g:
+		g.write(json.dumps(gac))
+
+	return jsonify( respondingURL="analytics", appAnalytics=eval(gac["gaenable"]), showAnalyticsOptions=eval(gac["gauimode"])), 200
 
 def _folderDesc(item):
 	nqdf = len(glob.glob(item+'/*.qdf'))

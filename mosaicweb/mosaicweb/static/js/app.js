@@ -79,12 +79,15 @@ angular.module('mosaicApp', ['ngRoute', 'ngMaterial', 'ngMessages', 'ngAnimate',
 	}
 )
 .controller('AppCtrl', 
-	function($scope, $mdDialog, $http, $location, $window, $timeout, $document, mosaicConfigFactory, mosaicUtilsFactory, analysisSetupFactory, AnalysisFactory, FileListingFactory) {
+	function($scope, $mdDialog, $mdMenu, $http, $location, $window, $timeout, $document, mosaicConfigFactory, mosaicUtilsFactory, analysisSetupFactory, AnalysisFactory, FileListingFactory) {
 		$scope.location = $location;
 
 		$scope.customFullscreen = true;
 
 		$scope.AnalysisLoading = false;
+
+		$scope.appAnalytics = true;
+		$scope.showAnalyticsOptions = true;
 
 		$scope.analysisModel=AnalysisFactory;
 		$scope.mosaicConfigModel=mosaicConfigFactory;
@@ -101,6 +104,25 @@ angular.module('mosaicApp', ['ngRoute', 'ngMaterial', 'ngMessages', 'ngAnimate',
 			FileListingFactory.setDialogMode("sqlite");
 			$scope.fileListing(ev);
 			$scope.AnalysisLoading = true;
+		};
+
+		$scope.analyticsUpdate = function (ev) {
+			$scope.appAnalytics=!$scope.appAnalytics;
+
+			$scope.analyticsPost({
+				appAnalytics: $scope.appAnalytics
+			})
+		};
+
+		$scope.analyticsPost = function(params) {
+			mosaicUtilsFactory.post('/analytics', params)
+			.then(function(response) {
+				$scope.appAnalytics = response.data.appAnalytics;	
+				$scope.showAnalyticsOptions = response.data.showAnalyticsOptions;
+			}, function(error) {
+				$scope.AnalysisLoading = false;	
+				console.log(error);
+			});
 		};
 
 		$scope.fileListing = function(ev) {
@@ -160,5 +182,8 @@ angular.module('mosaicApp', ['ngRoute', 'ngMaterial', 'ngMessages', 'ngAnimate',
 		$scope.pageBack = function() {
 			$window.history.back();
 		};
+
+		// init
+		$scope.analyticsPost({});
 	});
 		
