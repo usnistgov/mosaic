@@ -1,3 +1,5 @@
+import os.path
+
 # Control global settings
 DeveloperMode=False		# Turn on developer options.
 
@@ -10,5 +12,5 @@ DocumentationURL='https://pages.nist.gov/mosaic/'
 
 # Options for MOSAIC Web
 WebServerPort=5000
-WebServerDataLocation="Y:\\Desktop\\"
-# WebServerDataLocation='/Users/arvind/Research/Experiments/Nanoclusters/NewAnalysis/Calibration/' #PW9O34-Acetylcholine/'
+# WebServerDataLocation="Y:\\Desktop\\"
+WebServerDataLocation=os.path.expanduser('~')+'/Google Drive/ReferenceData/'
