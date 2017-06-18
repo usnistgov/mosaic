@@ -59,14 +59,14 @@
 						<md-button ng-click="analyticsUpdate()" aria-label="Anonymous Analytics">
 							<md-icon md-font-set="material-icons md-24">assessment</md-icon>
 							<p class="md-primary">Anonymous Analytics</p>
-							<md-icon md-font-set="material-icons md-24" ng-show="appAnalytics" style="padding-left: 16px;">check</md-icon>
+							<md-icon class="md-primary" md-font-set="material-icons md-24" ng-show="appAnalytics" style="padding-left: 16px;">check</md-icon>
 							<md-icon md-font-set="material-icons md-24" ng-hide="appAnalytics" style="padding-left: 16px; color: white;">check</md-icon>
 						</md-button>
 					</md-menu-item>
 					<md-menu-item ng-click="$mdMenu.hide()">
 						<md-button ng-click="aboutMosaic()">
 							<md-icon md-font-set="material-icons md-24">info</md-icon>
-					    	<p class="md-primary">About</p>
+					    	<p class="md-primary">About <em>MOSAIC</em></p>
 						</md-button>
 					</md-menu-item>
 				</md-menu-content>
