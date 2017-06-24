@@ -3,6 +3,11 @@
 		<md-toolbar class="md-primary">
 			<div class="md-toolbar-tools">
 				<h3><em>Event Viewer ({{model.eventNumber}}/{{model.recordCount}})</em></h3>
+				<!-- <md-button md-menu-origin class="md-icon-button" id="event-viewer-filter-button" ng-click="filterEventsMenu($event)">
+					<md-tooltip md-direction="bottom">Filter Events</md-tooltip>
+					<md-icon md-font-set="material-icons md-24">filter_list</md-icon>
+				</md-button> -->
+					
 				<span flex></span>
 				<md-progress-circular md-mode="indeterminate" class="md-accent" md-diameter="24" ng-if="model.plotUpdating"></md-progress-circular>
 				<md-button class="md-icon-button" ng-click="cancel()">
@@ -11,12 +16,22 @@
 			</div>
 		</md-toolbar>
 		<md-dialog-content style="max-width:800px;max-height:810px;">
-			<div flex layout="column" layout-align="center center" id="toastAnchor">
-				<div layout-align="center center" style="margin: 6px; padding:6px; margin-bottom:2px;">
+			<div flex layout="column" layout-align="center center" id="toastAnchor" ng-disabled="model.plotUpdating">
+				<div layout="row" layout-align="center center" style="margin: 6px; padding:6px; margin-bottom:2px;">
+					<md-input-container layout-align="center center">
+						<md-button class="md-primary md-icon-button" ng-click="model.eventBack()">
+							<md-icon md-font-set="material-icons md-48">keyboard_arrow_left</md-icon>
+						</md-button>
+					</md-input-container>
 					<plotly plotly-data="model.eventViewPlot.data" plotly-layout="model.eventViewPlot.layout" plotly-options="model.eventViewPlot.options"></plotly>
+					<md-input-container layout-align="end end">
+						<md-button class="md-primary md-icon-button" ng-click="model.eventForward()">
+							<md-icon md-font-set="material-icons md-48">keyboard_arrow_right</md-icon>
+						</md-button>
+					</md-input-container>
 				</div>
 				<!-- <div flex="100" layout="row" ng-disabled="model.plotUpdating"> -->
-				<div layout="row" style="margin: 6px; padding:6px; margin-bottom:2px; padding-bottom:0;" ng-disabled="model.plotUpdating">
+				<!-- <div layout="row" style="margin: 6px; padding:0; margin-bottom:0; padding-bottom:0;" ng-disabled="model.plotUpdating">
 					<md-input-container layout-align="start end">
 						<md-button class="md-icon-button" ng-click="model.eventBack()">
 							<md-icon md-font-set="material-icons md-24">arrow_back</md-icon>
@@ -44,8 +59,25 @@
 							<md-icon md-font-set="material-icons md-24">arrow_forward</md-icon>
 						</md-button>
 					</md-input-container>
+				</div> -->
+
+				<div layout="row" style="margin: 6px; padding:0; margin-bottom:0; padding-bottom:0;" ng-disabled="model.plotUpdating">
+					<md-input-container layout-align="start end">
+						<md-checkbox class="md-primary" ng-model="model.displayNormal" aria-label="Normal">
+							Normal
+						</md-checkbox>
+
+						<md-checkbox class="md-primary" ng-model="model.displayWarning" aria-label="Warning">
+							Warning
+						</md-checkbox>
+
+						<md-checkbox class="md-primary" ng-model="model.displayError" aria-label="Error">
+							Error
+						</md-checkbox>
+
+					</md-input-container>
 				</div>
-				
+
 				<div layout-align="start center" style="{{model.cellStyle}}" ng-if="model.errorText==''">
 					<md-subheader class="md-primary" style="background: transparent;">Fit Parameters</md-subheader>
 					<md-list-item>

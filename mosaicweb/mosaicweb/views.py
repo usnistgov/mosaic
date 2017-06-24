@@ -30,7 +30,6 @@ from sqlite3 import OperationalError
 class InvalidPOSTRequest(Exception):
 	pass
 
-
 logger=logging.getLogger()
 
 gAnalysisSessions=sessionManager.sessionManager()
@@ -296,13 +295,19 @@ def eventView():
 
 		sessionID=params['sessionID']
 		eventNumber=params['eventNumber']
+		eventFilter=params.get('eventFilter', ['normal', 'warning', 'error'])
+
 		dbfile=gAnalysisSessions.getSessionAttribute(sessionID, 'databaseFile')
 
-		a=analysisTimeSeries.analysisTimeSeries(dbfile, eventNumber)
+		a=analysisTimeSeries.analysisTimeSeries(dbfile, eventNumber, eventFilter)
 
 		return jsonify(respondingURL='event-view', **a.timeSeries()), 200
 	except (sessionManager.SessionNotFoundError, KeyError), err:
 		return jsonify( respondingURL='event-view', errType='MissingSIDError', errSummary="A valid session ID was not found.", errText="A valid session ID was not found." ), 500
+	except analysisTimeSeries.EmptyEventFilterError:
+		return jsonify( respondingURL='event-view', errType='EmptyEventFilterError', errSummary="At least one event type must be selected.", errText="At least one event type must be selected." ), 500
+	except analysisTimeSeries.EndOfDataError:
+		return jsonify( respondingURL='event-view', errType='EndOfDataError', errSummary="End of data stream.", errText="End of data stream." ), 500
 
 @app.route('/analysis-database-csv', methods=['POST'])
 @gzipped

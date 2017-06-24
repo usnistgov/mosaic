@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('mosaicApp')
-	.factory('EventViewerFactory', function($http, $q, $mdToast, mosaicUtilsFactory, mosaicConfigFactory) {
+	.factory('EventViewerFactory', function($http, $q, $mdToast, $mdDialog, mosaicUtilsFactory, mosaicConfigFactory) {
 			var factory = {};
 
 			factory.eventNumber=1;
@@ -9,14 +9,31 @@ angular.module('mosaicApp')
 			factory.eventViewPlot='';
 			factory.errorText='';
 			factory.parameterTable={};
+			// 'normal',
+			factory.eventFilter=[];
+			factory.displayNormal=true;
+			factory.displayWarning=true;
+			factory.displayError=true;
 
 			factory.plotUpdating=false;
 
-			factory.cellStyle="margin: 6px; padding:6px; margin-bottom:0; padding-top:0; padding-bottom:0;";
+			factory.cellStyle="margin: 6px; padding:0px; margin-bottom:0; padding-top:0; padding-bottom:0;";
 
 			factory.updateEvientView = function() {
+				factory.eventFilter=[];
+				if (factory.displayNormal) {
+					factory.eventFilter.push('normal');
+				};
+				if (factory.displayWarning) {
+					factory.eventFilter.push('warning');
+				};
+				if (factory.displayError) {
+					factory.eventFilter.push('error');
+				};
+
 				mosaicUtilsFactory.post('/event-view', {
-					'eventNumber': factory.eventNumber
+					'eventNumber': factory.eventNumber,
+					'eventFilter': factory.eventFilter
 				})
 				.then(function(response, status) {
 					factory.eventViewPlot=response.data.eventViewPlot;
@@ -65,7 +82,7 @@ angular.module('mosaicApp')
 			return factory;
 		}
 	)
-	.controller('eventViewerCtrl', function($scope, $mdDialog, $interval, EventViewerFactory) {
+	.controller('eventViewerCtrl', function($scope, $mdDialog, $mdPanel, $interval, EventViewerFactory) {
 		$scope.model = EventViewerFactory;
 
 		$scope.customFullscreen = true;
@@ -74,6 +91,18 @@ angular.module('mosaicApp')
 		
 		// watch
 		$scope.$watch('model.eventNumber', function() {
+			$scope.model.updateEvientView();
+		});
+		$scope.$watch('model.displayNormal', function() {
+			$scope.model.eventNumber=1;
+			$scope.model.updateEvientView();
+		});
+		$scope.$watch('model.displayWarning', function() {
+			$scope.model.eventNumber=1;
+			$scope.model.updateEvientView();
+		});
+		$scope.$watch('model.displayError', function() {
+			$scope.model.eventNumber=1;
 			$scope.model.updateEvientView();
 		});
 

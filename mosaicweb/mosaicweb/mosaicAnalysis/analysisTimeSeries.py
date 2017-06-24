@@ -21,76 +21,86 @@ import pprint
 
 class DataTypeNotSupportedError(Exception):
 	pass
+class EmptyEventFilterError(Exception):
+	pass
+class EndOfDataError(Exception):
+	pass
 
 class analysisTimeSeries(dict):
 	"""
 		A class that plots MOSAIC time-series from a sqlite database.
 	"""
-	def __init__(self, analysisDB, index):
+	def __init__(self, analysisDB, index, eventFilter):
 		self.analysisDB = analysisDB
+		self.eventFilter=eventFilter
+
+		if len(eventFilter)==0:
+			raise EmptyEventFilterError
 
 		self.FsHz, self.procAlgorithm = rawQuery(self.analysisDB, "select FsHz, ProcessingAlgorithm from analysisinfo")[0]
-		self.qstr=""
-
 		self.errTextObject=errors.errors()
+		self.recordCount=0
+
+		# setup hash tables and funcs used in this class
+		self.qstr=self._generateQueryString(index)
+		self._setupDict()
+		self._setupFitFuncs()
 
 		self.returnMessageJSON={
 			"warning": "",
-			"recordCount": rawQuery(self.analysisDB, "select COUNT(recIDX) from metadata")[0][0],
+			"recordCount": self.recordCount,
 			"eventNumber": index,
 			"errorText": ""
 		}
 
-		# setup hash tables and funcs used in this class
-		self._setupDict(index)
-		self._setupFitFuncs()
-
-
 
 	def timeSeries(self):
-		q=query(self.analysisDB, self.qstr)[0]
-		decimate=self._calculateDecimation(len(q[1]))
+		try:
+			q=query(self.analysisDB, self.qstr)[0]
+			decimate=self._calculateDecimation(len(q[1]))
 
-		dt=(1./self.FsHz)*decimate
+			dt=(1./self.FsHz)*decimate
 
-		ydat=np.array(q[1])
-		polarity=float(np.sign(np.mean(ydat)))
+			ydat=np.array(q[1])
+			polarity=float(np.sign(np.mean(ydat)))
 
-		ydat=polarity*ydat[::decimate]
-		xdat=np.arange(0, dt*len(ydat), dt)
+			ydat=polarity*ydat[::decimate]
+			xdat=np.arange(0, dt*len(ydat), dt)
 
-		dat={}
-		if q[0]=='normal': 
-			if self.fitFuncHnd:
-				# xfit=np.arange(0,float((len(q[1]))/self.FsHz), float(1/(100*self.FsHz)))
-				xfit=np.arange(0, dt*len(ydat), dt)
-				yfit=self.fitFuncHnd( *eval(self.fitFuncArgs) )
+			dat={}
+			if q[0]=='normal': 
+				if self.fitFuncHnd:
+					# xfit=np.arange(0,float((len(q[1]))/self.FsHz), float(1/(100*self.FsHz)))
+					xfit=np.arange(0, dt*len(ydat), dt)
+					yfit=self.fitFuncHnd( *eval(self.fitFuncArgs) )
 
-			if self.stepFuncHnd:
-				# xstep=np.arange(0,float((len(q[1]))/self.FsHz), float(1/(100*self.FsHz)))
-				xstep=np.arange(0, dt*len(ydat), dt)
-				ystep=self.stepFuncHnd( *eval(self.stepFuncArgs) )
+				if self.stepFuncHnd:
+					# xstep=np.arange(0,float((len(q[1]))/self.FsHz), float(1/(100*self.FsHz)))
+					xstep=np.arange(0, dt*len(ydat), dt)
+					ystep=self.stepFuncHnd( *eval(self.stepFuncArgs) )
 
-			dat['data'] = [ 
-						plotlyWrapper.plotlyTrace(list(xdat), list(ydat), "NormalEvent"),
-						plotlyWrapper.plotlyTrace(list(xfit), list(yfit), "NormalEventFit"),
-						plotlyWrapper.plotlyTrace(list(xstep), list(ystep), "NormalEventStep")
-					]
-		elif q[0].startswith('w'):
-			dat['data'] = [ plotlyWrapper.plotlyTrace(list(xdat), list(ydat), "WarnEvent") ]
-			self.returnMessageJSON['errorText']="WARNING: "+self.errTextObject[q[0]]
-		else:
-			dat['data'] = [ plotlyWrapper.plotlyTrace(list(xdat), list(ydat), "ErrorEvent") ]
-			self.returnMessageJSON['errorText']="ERROR: "+self.errTextObject[q[0]]
+				dat['data'] = [ 
+							plotlyWrapper.plotlyTrace(list(xdat), list(ydat), "NormalEvent"),
+							plotlyWrapper.plotlyTrace(list(xfit), list(yfit), "NormalEventFit"),
+							plotlyWrapper.plotlyTrace(list(xstep), list(ystep), "NormalEventStep")
+						]
+			elif q[0].startswith('w'):
+				dat['data'] = [ plotlyWrapper.plotlyTrace(list(xdat), list(ydat), "WarnEvent") ]
+				self.returnMessageJSON['errorText']="WARNING: "+self.errTextObject[q[0]]
+			else:
+				dat['data'] = [ plotlyWrapper.plotlyTrace(list(xdat), list(ydat), "ErrorEvent") ]
+				self.returnMessageJSON['errorText']="ERROR: "+self.errTextObject[q[0]]
 
-		dat['layout']=plotlyWrapper.plotlyLayout("EventViewLayout")
-		dat['options']=plotlyWrapper.plotlyOptions()
+			dat['layout']=plotlyWrapper.plotlyLayout("EventViewLayout")
+			dat['options']=plotlyWrapper.plotlyOptions()
 
-		self.returnMessageJSON['eventViewPlot']=dat
+			self.returnMessageJSON['eventViewPlot']=dat
 
-		self.returnMessageJSON['parameterTable']=self._paramTable(*eval(self.paramTableFuncArgs))
+			self.returnMessageJSON['parameterTable']=self._paramTable(*eval(self.paramTableFuncArgs))
 
-		return self.returnMessageJSON
+			return self.returnMessageJSON
+		except IndexError:
+			raise EndOfDataError
 
 	def _calculateDecimation(self, dataLen):
 		if dataLen < 1000:
@@ -99,9 +109,6 @@ class analysisTimeSeries(dict):
 			return int(round(dataLen/500.))
 
 	def _setupFitFuncs(self):	
-		# Generate the query string based on the algorithm in the database
-		self.qstr=self.queryStringDict[self.procAlgorithm]
-
 		# Setup the fit function based on the algorithm
 		self.fitFuncHnd=self.fitFuncHndDict[self.procAlgorithm]
 		self.fitFuncArgs=self.fitFuncArgsDict[self.procAlgorithm]
@@ -110,6 +117,28 @@ class analysisTimeSeries(dict):
 		self.stepFuncArgs=self.stepFuncArgsDict[self.procAlgorithm]
 
 		self.paramTableFuncArgs=self.paramTableArgsDict[self.procAlgorithm]
+
+	def _generateQueryString(self, eventNumber):
+		# Generate the query string based on the algorithm in the database
+		queryStringDict={
+			"adept2State" 	: "select ProcessingStatus, TimeSeries, RCConstant1, RCConstant2, EventStart, EventEnd, BlockedCurrent, OpenChCurrent from metadata",
+			"adept" 		: "select ProcessingStatus, TimeSeries, RCConstant, EventDelay, CurrentStep, OpenChCurrent from metadata",
+			"cusumPlus" 	: "select ProcessingStatus, TimeSeries, EventDelay, CurrentStep, OpenChCurrent from metadata"
+		}
+		
+		eventFilterCode={
+			"normal"		: "normal",
+			"warning"		: "w%",
+			"error"			: "e%"
+		}
+
+		typeClause=" or ".join([ "ProcessingStatus like '{0}'".format(eventFilterCode[eventType]) for eventType in self.eventFilter ])
+
+		self.recordCount=rawQuery(self.analysisDB, "select COUNT(recIDX) from metadata where "+typeClause)[0][0]
+
+		qstr=queryStringDict[self.procAlgorithm]+ " where " + typeClause +" limit 1 offset {0}".format(eventNumber-1)
+
+		return qstr
 
 	def _paramTable(self, currentStep, openChCurr, eventDelay, nStates):
 		paramList=[]
@@ -129,13 +158,7 @@ class analysisTimeSeries(dict):
 
 		return paramList
 
-	def _setupDict(self, eventNumber):
-		self.queryStringDict={
-			"adept2State" 	: "select ProcessingStatus, TimeSeries, RCConstant1, RCConstant2, EventStart, EventEnd, BlockedCurrent, OpenChCurrent from metadata  where RecIdx is {0}".format(eventNumber),
-			"adept" 		: "select ProcessingStatus, TimeSeries, RCConstant, EventDelay, CurrentStep, OpenChCurrent from metadata  where RecIdx is {0}".format(eventNumber),
-			"cusumPlus" 	: "select ProcessingStatus, TimeSeries, EventDelay, CurrentStep, OpenChCurrent from metadata  where RecIdx is {0}".format(eventNumber)
-		}
-
+	def _setupDict(self):
 		self.fitFuncHndDict={
 			"adept2State" 	: fit_funcs.stepResponseFunc,
 			"adept" 		: fit_funcs.multiStateFunc,
