@@ -17,7 +17,7 @@ angular.module('mosaicApp')
 
 			factory.plotUpdating=false;
 
-			factory.cellStyle="margin: 6px; padding:0px; margin-bottom:0; padding-top:0; padding-bottom:0;";
+			factory.cellStyle="margin: 16px; padding: 16px; margin-top:0; margin-bottom:0; padding-top:0; padding-bottom:0;";
 
 			factory.updateEvientView = function() {
 				factory.eventFilter=[];

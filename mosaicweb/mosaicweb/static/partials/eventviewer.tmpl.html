@@ -30,6 +30,22 @@
 						</md-button>
 					</md-input-container>
 				</div>
+				<div layout="row" layout-align="center center" style="margin: 0px; padding:0; margin-bottom:0; padding-bottom:0;" ng-disabled="model.plotUpdating">
+					<md-input-container layout-align="start end">
+						<md-checkbox class="md-primary" ng-model="model.displayNormal" aria-label="Normal">
+							<small>Normal</small>
+						</md-checkbox>
+
+						<md-checkbox class="md-primary" ng-model="model.displayWarning" aria-label="Warning">
+							<small>Warning</small>
+						</md-checkbox>
+
+						<md-checkbox class="md-primary" ng-model="model.displayError" aria-label="Error">
+							<small>Error</small>
+						</md-checkbox>
+
+					</md-input-container>
+				</div>
 				<!-- <div flex="100" layout="row" ng-disabled="model.plotUpdating"> -->
 				<!-- <div layout="row" style="margin: 6px; padding:0; margin-bottom:0; padding-bottom:0;" ng-disabled="model.plotUpdating">
 					<md-input-container layout-align="start end">
@@ -61,24 +77,9 @@
 					</md-input-container>
 				</div> -->
 
-				<div layout="row" style="margin: 6px; padding:0; margin-bottom:0; padding-bottom:0;" ng-disabled="model.plotUpdating">
-					<md-input-container layout-align="start end">
-						<md-checkbox class="md-primary" ng-model="model.displayNormal" aria-label="Normal">
-							Normal
-						</md-checkbox>
+				
 
-						<md-checkbox class="md-primary" ng-model="model.displayWarning" aria-label="Warning">
-							Warning
-						</md-checkbox>
-
-						<md-checkbox class="md-primary" ng-model="model.displayError" aria-label="Error">
-							Error
-						</md-checkbox>
-
-					</md-input-container>
-				</div>
-
-				<div layout-align="start center" style="{{model.cellStyle}}" ng-if="model.errorText==''">
+				<div layout-align="start start" style="{{model.cellStyle}}" ng-if="model.errorText==''">
 					<md-subheader class="md-primary" style="background: transparent;">Fit Parameters</md-subheader>
 					<md-list-item>
 						<p style="{{model.cellStyle}}"><small><em>j</em></small></p>
