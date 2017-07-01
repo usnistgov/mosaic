@@ -127,7 +127,7 @@ def _gaCredentialCache():
 			with open(ga_cache, "w") as ga:
 				ga.write(json.dumps(ga_new))
 		else:
-			logger.debug(_d("GA settings cache found. gaAge={0}", gaAge))
+			logger.debug(_d("GA settings cache found ({0}). gaAge={1}", str(ga_cache), str(gaAge)))
 
 	except:
 		logger.debug(_d("GA settings are not cached."))
@@ -151,7 +151,7 @@ def _getGASettings(ga_cache):
 		with open(ga_cache, 'w') as ga:
 			ga.write( stream.read() )
 
-		logger.info("Cached GA settings to {0}.", ga_cache)
+		logger.info("Cached GA settings to {0}.", str(ga_cache))
 	except:
 		logger.exception(_d("An error occured when trying to cache GA settings."))
 

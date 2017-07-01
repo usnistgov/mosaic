@@ -27,6 +27,26 @@ angular.module('mosaicApp')
 
 			factory.exportingCSV = false;
 
+			//chips
+			factory.selectedDBCols=null;
+			factory.searchText=null;
+			factory.searchConstraintText=null;
+			factory.contourDBCols = ['BlockDepth', 'StateResTime', 'CurrentStep'];
+			factory.contourDBConstraintCols = ['ResTime', 'NStates', 'AbsEventStart', 'RCConstant'];
+			factory.contourDBColsModel=[];
+			factory.contourDBConstraintModel=[];
+			factory.contourDBColsRemainingChoices=null;
+			factory.contourDBConstraintColsRemainingChoices=null;
+			factory.contourChipsReadonly=false;
+			factory.contourDBColsRange={};
+			factory.contourDBColMin=0;
+			factory.contourDBColMax=1;
+			factory.contourChipSelected=false;
+			factory.contourSelectedChipName=null;
+			factory.contourDBConstrain=false;
+
+			factory.contourAdvancedQuery=false;
+
 			factory.contourPlot={
 				'contour': "<img width='90%' src='/static/img/contour.png' layout-padding>"
 			};
@@ -84,6 +104,99 @@ angular.module('mosaicApp')
 				},
 				options:{}
 			}
+
+			factory.querySearch = function(query) {
+				if (factory.contourDBColsModel.length == 2) {
+					return [];
+				};
+
+				factory.contourDBColsRemainingChoices=factory.contourDBCols.filter(function(n) {
+					return factory.contourDBColsModel.indexOf(n) === -1;
+				});
+
+				var results = query ? factory.contourDBCols.filter(factory.createFilterFor(query)) : factory.contourDBColsRemainingChoices;
+				return results;
+			};
+
+			factory.querySearchConstraints = function(query) {
+				factory.contourDBConstraintColsRemainingChoices=factory.contourDBConstraintCols.filter(function(n) {
+					return factory.contourDBConstraintModel.indexOf(n) === -1;
+				});
+
+				var results = query ? factory.contourDBConstraintCols.filter(factory.createFilterFor(query)) : factory.contourDBConstraintColsRemainingChoices;
+				return results;
+			};
+
+			factory.createFilterFor = function(query) {
+				var lowercaseQuery = angular.lowercase(query);
+
+				return function filterFn(col) {
+					return (col.toLowerCase().indexOf(lowercaseQuery) === 0);
+				};
+			};
+
+			factory.addConstraintChip= function(chip_info) {
+				factory.contourDBColsRange[chip_info]={
+					min: 0,
+					max: 1
+				};
+				factory.contourDBColMin=factory.contourDBColsRange[chip_info].min;
+				factory.contourDBColMax=factory.contourDBColsRange[chip_info].max;
+			};
+
+			factory.getConstraintChipInfo= function(chip_info) {
+				if (chip_info) {
+					factory.contourSelectedChipName=chip_info;
+
+					var rng=factory.contourDBColsRange[chip_info];
+
+					factory.contourDBColMin=rng.min;
+					factory.contourDBColMax=rng.max;					
+
+					factory.contourChipSelected=true;
+				} else {
+					factory.contourChipSelected=false;
+				};
+
+			};
+
+			factory.buildContourQuery = function() {
+				if (factory.contourDBColsModel.length==2) {
+					var baseq = "select " + factory.contourDBColsModel.join(", ") + " from metadata where ProcessingStatus='normal'";
+					var consarr=[];
+
+					if (factory.contourDBConstrain && factory.contourDBConstraintModel.length > 0 ) {
+						Object.keys(factory.contourDBColsRange).forEach(function(key,index) {
+							if (key !== null || key !== undefined) {
+								consarr.push(key+" between "+ factory.contourDBColsRange[key].min + " and " + factory.contourDBColsRange[key].max);								
+							}
+						});
+						return String(baseq+" and "+consarr.join(" and "));
+					} else {
+						return String(baseq);
+					};
+				} else {
+					return ""
+				};
+			};
+
+			factory.updateContourQuery = function() {
+				var qstr=factory.contourQuery;
+
+				if (factory.contourAdvancedQuery) {
+					qstr=factory.contourQuery;
+				} else {
+					qstr=factory.buildContourQuery();
+				};
+
+				if (factory.contourBins > 0) {
+					factory.updateAnalysisContour({
+						query: qstr,
+						nBins: factory.contourBins,
+						showContours: factory.showContours
+					});
+				};
+			};
 
 			factory.toggleAnalysisControlFlag = function() {
 				factory.showAnalysisControl = !factory.showAnalysisControl;
@@ -249,6 +362,18 @@ angular.module('mosaicApp')
 
 		$scope.customFullscreen = true;
 
+		$scope.makeDBColsObject = function() {
+				var dbcols=[
+					{'name': 'BlockDepth'},
+					{'name': 'StateResTime'}
+				];
+
+				return dbcols.map(function (col) {
+					col._lowername = col.name.toLowerCase();
+					return col;
+				});
+			};			
+
 		$scope.init = function() {
 			// Switch session ID when explicitly set in route.
 			if ($routeParams.sid != mosaicConfigFactory.sessionID) {
@@ -265,15 +390,28 @@ angular.module('mosaicApp')
 			});
 
 			// Update contour plot
-			$scope.model.updateAnalysisContour({
-				query: $scope.model.contourQuery,
-				nBins: $scope.model.contourBins,
-				showContours: $scope.model.showContours
-			});				
+			$scope.model.updateContourQuery()
 		};
 		$scope.init();
 
 		// watch
+		$scope.$watch('model.contourDBColMin', function() {
+			if ($scope.model.contourSelectedChipName !== null){
+				$scope.model.contourDBColsRange[$scope.model.contourSelectedChipName]={
+					min : $scope.model.contourDBColMin,
+					max : $scope.model.contourDBColMax
+				};
+			};
+
+		});
+		$scope.$watch('model.contourDBColMax', function() {
+			if ($scope.model.contourSelectedChipName !== null){
+				$scope.model.contourDBColsRange[$scope.model.contourSelectedChipName]={
+					min : $scope.model.contourDBColMin,
+					max : $scope.model.contourDBColMax
+				};
+			};
+		});
 		$scope.$watch('model.histQuery', function() {
 			if ($scope.model.histQuery != '' && $scope.model.bdBins > 0) {
 				$scope.model.updateAnalysisHistogram({
@@ -301,32 +439,14 @@ angular.module('mosaicApp')
 					});
 			};
 		});
-		$scope.$watch('model.contourQuery', function() {
-			if ($scope.model.contourQuery != '' && $scope.model.contourBins > 0) {
-				$scope.model.updateAnalysisContour({
-					query: $scope.model.contourQuery,
-					nBins: $scope.model.contourBins,
-					showContours: $scope.model.showContours
-				});
-			};
-		});
+		// $scope.$watch('model.contourQuery', function() {
+		// 	$scope.model.updateContourQuery();
+		// });
 		$scope.$watch('model.contourBins', function() {
-			if ($scope.model.contourQuery != '' && $scope.model.contourBins > 0) {
-				$scope.model.updateAnalysisContour({
-					query: $scope.model.contourQuery,
-					nBins: $scope.model.contourBins,
-					showContours: $scope.model.showContours
-				});
-			};
+			$scope.model.updateContourQuery();
 		});
 		$scope.$watch('model.showContours', function() {
-			if ($scope.model.contourQuery != '' && $scope.model.contourBins > 0) {
-				$scope.model.updateAnalysisContour({
-					query: $scope.model.contourQuery,
-					nBins: $scope.model.contourBins,
-					showContours: $scope.model.showContours
-				});
-			};
+			$scope.model.updateContourQuery();
 		});
 		$scope.$watch('mosaicConfigModel.newDataAvailable', function() {
 			if ($scope.mosaicConfigModel.newDataAvailable) {
@@ -343,13 +463,7 @@ angular.module('mosaicApp')
 				};
 
 				// Update contour plot
-				if ($scope.model.contourQuery != '' && $scope.model.contourBins > 0) {
-					$scope.model.updateAnalysisContour({
-						query: $scope.model.contourQuery,
-						nBins: $scope.model.contourBins,
-						showContours: $scope.model.showContours
-					});
-				};
+				$scope.model.updateContourQuery();
 			};
 		});
 
