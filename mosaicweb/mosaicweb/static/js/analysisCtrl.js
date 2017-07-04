@@ -27,13 +27,14 @@ angular.module('mosaicApp')
 
 			factory.exportingCSV = false;
 
-			//chips
+			factory.histogramAdvancedQuery=true;
+
 			factory.selectedDBCols=null;
 			factory.searchText=null;
 			factory.searchConstraintText=null;
 			factory.contourDBCols = ['BlockDepth', 'StateResTime', 'CurrentStep'];
 			factory.contourDBConstraintCols = ['ResTime', 'NStates', 'AbsEventStart', 'RCConstant'];
-			factory.contourDBColsModel=[];
+			factory.contourDBColsModel=['BlockDepth', 'StateResTime'];
 			factory.contourDBConstraintModel=[];
 			factory.contourDBColsRemainingChoices=null;
 			factory.contourDBConstraintColsRemainingChoices=null;
@@ -140,6 +141,8 @@ angular.module('mosaicApp')
 					min: 0,
 					max: 1
 				};
+				factory.contourSelectedChipName=null;
+
 				factory.contourDBColMin=factory.contourDBColsRange[chip_info].min;
 				factory.contourDBColMax=factory.contourDBColsRange[chip_info].max;
 			};
@@ -166,7 +169,7 @@ angular.module('mosaicApp')
 					var consarr=[];
 
 					if (factory.contourDBConstrain && factory.contourDBConstraintModel.length > 0 ) {
-						Object.keys(factory.contourDBColsRange).forEach(function(key,index) {
+						factory.contourDBConstraintModel.forEach(function(key,index) {
 							if (key !== null || key !== undefined) {
 								consarr.push(key+" between "+ factory.contourDBColsRange[key].min + " and " + factory.contourDBColsRange[key].max);								
 							}
