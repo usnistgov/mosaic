@@ -21,7 +21,7 @@
 				ng-click="selectItem($index)" ng-dblclick="folderDblClick($index)">
 				<!-- ng-class="{selectedIndex: model.selectedIndex===$index}" -->
 					<md-icon md-font-set="material-icons md-24" ng-if="model.selectedIndex!=$index">folder</md-icon>
-					<md-icon md-font-set="material-icons md-24 md-primary" ng-if="model.selectedIndex==$index">check_circle</md-icon>
+					<md-icon md-font-set="material-icons md-24 md-accent" ng-if="model.selectedIndex==$index">check_circle</md-icon>
 					<div flex class="md-list-item-text" layout="column" layout-align="start start">
 						<md-truncate flex><small>{{ file.name }}</small></md-truncate>
 						<p><small>{{ file.desc }}</small></p>
