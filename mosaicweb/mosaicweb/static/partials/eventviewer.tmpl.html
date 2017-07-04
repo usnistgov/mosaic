@@ -17,18 +17,19 @@
 		</md-toolbar>
 		<md-dialog-content style="max-width:800px;max-height:810px;">
 			<div flex layout="column" layout-align="center center" id="toastAnchor" ng-disabled="model.plotUpdating">
-				<div layout="row" layout-align="center center" style="margin: 6px; padding:6px; margin-bottom:2px;">
-					<md-input-container layout-align="center center">
+				<div layout="row" layout-align="center center">
+					<md-input-container>
 						<md-button class="md-primary md-icon-button" ng-click="model.eventBack()">
-							<md-icon md-font-set="material-icons md-48">keyboard_arrow_left</md-icon>
+							<md-icon md-font-set="material-icons" style="font-size: 36px !important;">keyboard_arrow_left</md-icon>
 						</md-button>
 					</md-input-container>
 					<plotly plotly-data="model.eventViewPlot.data" plotly-layout="model.eventViewPlot.layout" plotly-options="model.eventViewPlot.options"></plotly>
-					<md-input-container layout-align="end end">
+					<md-input-container>
 						<md-button class="md-primary md-icon-button" ng-click="model.eventForward()">
-							<md-icon md-font-set="material-icons md-48">keyboard_arrow_right</md-icon>
+							<md-icon md-font-set="material-icons" style="font-size: 36px !important;">keyboard_arrow_right</md-icon>
 						</md-button>
 					</md-input-container>
+					<span>&nbsp;&nbsp;&nbsp;</span>					
 				</div>
 				<div layout="row" layout-align="center center" style="margin: 0px; padding:0; margin-bottom:0; padding-bottom:0;" ng-disabled="model.plotUpdating">
 					<md-input-container layout-align="start end">
