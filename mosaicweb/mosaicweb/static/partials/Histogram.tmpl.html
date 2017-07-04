@@ -1,4 +1,14 @@
 <div layout-gt-sm="row" layout="column" layout-align="center center" flex="60">
+	<div>
+		<md-button 
+			class="md-fab md-fab-bottom-right md-accent" aria-label="Export Histogram to CSV"
+			style="position:fixed !important;" ng-click="model.exportHistogramCSV()">
+			<!-- ng-click="returnToAnalysis()" -->
+
+			<md-tooltip md-direction="left">Export Histogram to CSV</md-tooltip>
+			<md-icon md-font-set="material-icons md-24" style="color: white;">file_download</md-icon>
+		</md-button>
+	</div>
 	<br>
 	<div flex-gt-sm="80" flex-gt-md="85" flex="70" class="md-whiteframe" layout-align="center center" layout-padding>
 		<plotly plotly-data="model.analysisPlot.data" plotly-layout="model.analysisPlot.layout" plotly-options="model.analysisPlot.options"></plotly>
@@ -10,16 +20,23 @@
 			<md-radio-button value="linear">linear</md-radio-button>
 			<md-radio-button value="log">log</md-radio-button>
 		</md-radio-group>
-		<span flex="5"></span>
 		<md-radio-group ng-model="model.analysisPlot.layout.yaxis.type" class="md-primary">
 			<label>Y-axis</label>
 			<md-radio-button value="linear">linear</md-radio-button>
 			<md-radio-button value="log">log</md-radio-button>
 		</md-radio-group>
-		<span flex="5"></span>
 		<md-checkbox ng-model="model.histDensity" aria-label="Histogram Type" class="md-primary md-align-top-left" flex-gt-md>
 			Density
 		</md-checkbox>
+		<md-input-container class="md-block">
+			<label>Bins</label>
+			<input 	type="number" name="bdBins"
+					ng-model="model.bdBins" ng-model-options="{ updateOn: 'blur', allowInvalid: false}">
+			<div ng-messages="analysisHistogramForm.bdBins.$error" multiple md-auto-hide="false">
+				<div ng-message="required">The number of bins must be specified.</div>
+				<div ng-message="min">Number of bins must be positive.</div>
+			</div>
+		</md-input-container>
 	</div>
 </div>
 
@@ -32,20 +49,21 @@
 						ng-model="model.histQuery" ng-model-options="{ updateOn: 'blur', allowInvalid: false}"></textarea>
 			</md-input-container>
 			<span flex="5"></span>
-			<md-input-container class="md-block" flex="10">
-				<label>Bins</label>
-				<input 	type="number" name="bdBins"
-						ng-model="model.bdBins" ng-model-options="{ updateOn: 'blur', allowInvalid: false}">
-				<div ng-messages="analysisHistogramForm.bdBins.$error" multiple md-auto-hide="false">
-					<div ng-message="required">The number of bins must be specified.</div>
-					<div ng-message="min">Bin Size must be positive.</div>
-				</div>
-			</md-input-container>
 		</div>
-		<md-button class="md-primary" type="button"
+		<div layout="row" layout-align="start center" flex>
+			<md-button class="md-primary" type="button"
+				ng-click="">
+				Update Plot
+			</md-button>
+			<md-switch ng-model="model.histogramAdvancedQuery" class="md-primary" aria-label="Histogram Plot Advanced Mode">
+				Advanced
+			</md-switch>
+			<span flex></span>
+		</div>
+		<!-- <md-button class="md-primary" type="button"
 			ng-click="model.exportHistogramCSV()" ng-disabled="false">
 			<md-tooltip md-direction="right">Export histogram data in CSV format</md-tooltip>
 			Export to CSV
-		</md-button>
+		</md-button> -->
 	</div>
 </form>
