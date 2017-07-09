@@ -31,7 +31,7 @@
 				</md-button>
 			</span>
 			<span flex-gt-sm="15" flex="30"></span>
-			<md-progress-circular md-mode="indeterminate" class="md-primary" md-diameter="20" ng-if="mosaicConfigModel.analysisRunning" ></md-progress-circular>
+			<md-progress-circular md-mode="indeterminate" class="md-accent" md-diameter="20" ng-if="mosaicConfigModel.analysisRunning || model.histLoading || model.contourLoading"></md-progress-circular>
 			<span flex="5"></span>
 			<md-button class="md-icon-button" style="padding-right:12px;" aria-label="Analysis Settings" ng-click="showAnalysisSettings()">
 				<md-tooltip md-direction="bottom">Analysis Settings</md-tooltip>
@@ -102,7 +102,7 @@
 				<div class="md-padding" layout="column" flex ng-include="'/static/partials/Histogram.tmpl.html'"></div>
 			</md-tab>
 		</md-tabs>
-		<md-progress-circular md-mode="indeterminate" class="md-primary" md-diameter="20" ng-if="model.histLoading || model.contourLoading"></md-progress-circular>
+		<!-- <md-progress-circular md-mode="indeterminate" class="md-primary" md-diameter="20" ng-if="model.histLoading || model.contourLoading"></md-progress-circular> -->
 	</div>
 	<br>
 </md-content>
