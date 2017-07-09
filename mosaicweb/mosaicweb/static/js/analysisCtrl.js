@@ -32,9 +32,9 @@ angular.module('mosaicApp')
 			factory.selectedDBCols=null;
 			factory.searchText=null;
 			factory.searchConstraintText=null;
-			factory.contourDBCols = ['BlockDepth', 'StateResTime', 'CurrentStep'];
-			factory.contourDBConstraintCols = ['ResTime', 'NStates', 'AbsEventStart', 'RCConstant'];
-			factory.contourDBColsModel=['BlockDepth', 'StateResTime'];
+			factory.contourDBCols = [];
+			factory.contourDBConstraintCols = [];
+			factory.contourDBColsModel=[];
 			factory.contourDBConstraintModel=[];
 			factory.contourDBColsRemainingChoices=null;
 			factory.contourDBConstraintColsRemainingChoices=null;
@@ -275,6 +275,13 @@ angular.module('mosaicApp')
 						factory.analysisContour=response.data;
 
 						factory.contourQuery=$base64.decode(factory.analysisContour.queryString);
+
+						factory.contourDBConstraintCols=factory.analysisContour.queryConstraintsCols;
+						factory.contourDBCols=factory.analysisContour.queryCols;
+
+						if (factory.contourDBColsModel.length === 0) {
+							factory.contourDBColsModel=factory.analysisContour.selectedCols;
+						}
 
 						factory.analysisContour.layout.xaxis.type=xaxistype;
 						factory.analysisContour.layout.yaxis.type=yaxistype;

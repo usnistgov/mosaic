@@ -98,6 +98,10 @@ class analysisContour:
 
 		self.responseDict['queryString']=base64.b64encode(str(self.queryString))
 
+		self.responseDict['queryCols']=self._queryCols()
+		self.responseDict['queryConstraintsCols']=self._queryConsCols()
+		self.responseDict['selectedCols']=self._querySelectedCols()
+
 		return self.responseDict
 
 	def _queryString(self, qstr):
@@ -109,6 +113,24 @@ class analysisContour:
 			else:
 				return """select BlockDepth, StateResTime from metadata where ProcessingStatus='normal' and ResTime > 0.02"""
 
+	def _queryCols(self):
+		if self.processingAlgorithm=="adept2State":
+			return ['BlockedCurrent','BlockDepth', 'ResTime']
+		else:
+			return ['BlockDepth', 'StateResTime']
+
+	def _queryConsCols(self):
+		if self.processingAlgorithm=="adept2State":
+			return ['BlockDepth', 'BlockedCurrent', 'ResTime', 'OpenChCurrent']
+		else:
+			return ['NStates', 'OpenChCurrent', 'ResTime']
+
+	def _querySelectedCols(self):
+		if self.processingAlgorithm=="adept2State":
+			return ['BlockDepth', 'ResTime']
+		else:
+			return ['BlockDepth', 'StateResTime']
+		
 
 	def _hist2d(self):
 		try:
@@ -128,7 +150,8 @@ class analysisContour:
 			ymin=np.max(0, min(Y))
 			ymax=max(Y)
 		
-			return np.histogram2d(X, Y, bins=(self.numBins, self.numBins), range=[[xmin, xmax], [ymin, ymax]])
+			# range=[[xmin, xmax], [ymin, ymax]]
+			return np.histogram2d(X, Y, bins=(self.numBins, self.numBins))
 		except ValueError:
 			raise QuerySyntaxError("")
 
