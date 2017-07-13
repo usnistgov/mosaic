@@ -1,4 +1,4 @@
-<md-dialog aria-label="Analysis Log" flex="40" ng-keyup="key($event)">
+<md-dialog aria-label="Event Viewer" flex="50" ng-keyup="key($event)">
 	<form name="eventViewerForm">
 		<md-toolbar class="md-primary">
 			<div class="md-toolbar-tools">
@@ -16,7 +16,7 @@
 			</div>
 		</md-toolbar>
 		<md-dialog-content style="max-width:800px;max-height:810px;">
-			<div flex layout="column" layout-align="center center" id="toastAnchor" ng-disabled="model.plotUpdating">
+			<div layout="column" layout-align="center center" id="toastAnchor" ng-disabled="model.plotUpdating">
 				<div layout="row" layout-align="center center">
 					<md-input-container>
 						<md-button class="md-primary md-icon-button" ng-click="model.eventBack()">
@@ -29,7 +29,6 @@
 							<md-icon md-font-set="material-icons" style="font-size: 36px !important;">keyboard_arrow_right</md-icon>
 						</md-button>
 					</md-input-container>
-					<span>&nbsp;&nbsp;&nbsp;</span>					
 				</div>
 				<div layout="row" layout-align="center center" style="margin: 0px; padding:0; margin-bottom:0; padding-bottom:0;" ng-disabled="model.plotUpdating">
 					<md-input-container layout-align="start end">
