@@ -1,14 +1,4 @@
 <div layout-gt-sm="row" layout="column" layout-align="center center" flex="60">
-	<div>
-		<md-button 
-			class="md-fab md-fab-bottom-right md-accent" aria-label="Export Histogram to CSV"
-			style="position:fixed !important;" ng-click="model.exportHistogramCSV()">
-			<!-- ng-click="returnToAnalysis()" -->
-
-			<md-tooltip md-direction="left">Export Histogram to CSV</md-tooltip>
-			<md-icon md-font-set="material-icons md-24" style="color: white;">file_download</md-icon>
-		</md-button>
-	</div>
 	<br>
 	<div flex-gt-sm="80" flex-gt-md="85" flex="70" class="md-whiteframe" layout-align="center center" layout-padding>
 		<plotly plotly-data="model.analysisPlot.data" plotly-layout="model.analysisPlot.layout" plotly-options="model.analysisPlot.options"></plotly>
@@ -25,18 +15,26 @@
 			<md-radio-button value="linear">linear</md-radio-button>
 			<md-radio-button value="log">log</md-radio-button>
 		</md-radio-group>
-		<md-checkbox ng-model="model.histDensity" aria-label="Histogram Type" class="md-primary md-align-top-left" flex-gt-md>
-			Density
-		</md-checkbox>
-		<md-input-container class="md-block">
-			<label>Bins</label>
-			<input 	type="number" name="bdBins"
-					ng-model="model.bdBins" ng-model-options="{ updateOn: 'blur', allowInvalid: false}">
-			<div ng-messages="analysisHistogramForm.bdBins.$error" multiple md-auto-hide="false">
-				<div ng-message="required">The number of bins must be specified.</div>
-				<div ng-message="min">Number of bins must be positive.</div>
-			</div>
-		</md-input-container>
+		<div layout="column" layout-align="start start">
+			<md-checkbox ng-model="model.histDensity" aria-label="Histogram Type" class="md-primary md-align-top-left" flex-gt-md>
+				Density
+			</md-checkbox>
+			
+			<md-input-container class="md-block">
+				<label>Bins</label>
+				<input 	type="number" name="bdBins"
+						ng-model="model.bdBins" ng-model-options="{ updateOn: 'blur', allowInvalid: false}">
+				<div ng-messages="analysisHistogramForm.bdBins.$error" multiple md-auto-hide="false">
+					<div ng-message="required">The number of bins must be specified.</div>
+					<div ng-message="min">Number of bins must be positive.</div>
+				</div>
+			</md-input-container>
+			<md-button class="md-primary" type="button"
+				ng-click="model.exportHistogramCSV()" ng-disabled="false">
+				<md-tooltip md-direction="right">Export histogram data in CSV format</md-tooltip>
+				Export to CSV
+			</md-button>
+		</div>
 	</div>
 </div>
 
