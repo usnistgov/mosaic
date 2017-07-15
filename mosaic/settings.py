@@ -7,6 +7,7 @@
 	:License:	See LICENSE.TXT
 	:ChangeLog:
 	.. line-block::
+		7/15/17 	AB 	Add the filterEventPadding option to eventSegment.
 		3/16/16 	AB 	Replaced InitThreshold with StepSize in default settings for ADEPT and warn users when InitThreshold is used.
 		8/24/15 	AB 	Updated algorithm names.
 		6/24/15 	AB 	Added an option to unlink the RC constants in stepResponseAnalysis.
@@ -120,7 +121,8 @@ __settings__="""
 		"parallelProc"			: "0",
 		"reserveNCPU"			: "2",
 		"minBaseline"			: "-1",
-		"maxBaseline"			: "-1"
+		"maxBaseline"			: "-1",
+		"filterEventPadding"	: "0"
 	},
 	"adept2State" : {
 		"FitTol"				: "1.e-7",

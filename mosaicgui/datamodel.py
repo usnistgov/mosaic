@@ -5,7 +5,7 @@
 	:License:	See LICENSE.TXT
 	:ChangeLog:
 		.. line-block::
-                        07/29/16        KB      Integrated chimeraTrajIO
+						07/29/16        KB      Integrated chimeraTrajIO
 			03/30/16 	AB 	Change UnlinkRCConst to LinkRCConst.
 			3/16/16 	AB 	Migrate InitThreshold setting to CUSUM StepSize.
 			8/24/15 	AB 	Updated algorithm names to ADEPT and CUSUM+
@@ -260,6 +260,7 @@ class guiDataModel(dict):
 								"sdOpenCurr"			: float,
 								"slopeOpenCurr"			: float,
 								"writeEventTS"			: int,
+								"filterEventPadding"	: int,
 								"parallelProc"			: int,
 								"reserveNCPU" 			: int,
 								"FitTol" 				: float,
@@ -295,12 +296,12 @@ class guiDataModel(dict):
 								"AmplifierOffset"		: str,
 								"SamplingFrequency"		: int,
 								"HeaderOffset"			: int,
-                                                                "mVoffset"                      : float,
-                                                                "ADCvref"                       : float,
-                                                                "ADCbits"                       : int,
-                                                                "TIAgain"                       : float,
-                                                                "preADCgain"                    : float,
-                                                                "pAoffset"                      : float,
+								"mVoffset"				: float,
+								"ADCvref"				: float,
+								"ADCbits"				: int,
+								"TIAgain"				: float,
+								"preADCgain"			: float,
+								"pAoffset"				: float,
 								"ColumnTypes"			: str,
 								"IonicCurrentColumn"	: str,
 								"filter"				: str,
@@ -316,7 +317,7 @@ class guiDataModel(dict):
 								"blockSizeSec" 			: float,
 								"eventPad" 				: int,
 								"minEventLength" 		: int,
-                                                                "maxEventLength"                : int,
+								"maxEventLength"		: int,
 								"eventThreshold" 		: float,
 								"driftThreshold" 		: float,
 								"maxDriftRate" 			: float,
@@ -325,7 +326,8 @@ class guiDataModel(dict):
 								"slopeOpenCurr"			: float,
 								"writeEventTS"			: int,
 								"parallelProc"			: int,
-								"reserveNCPU" 			: int
+								"reserveNCPU" 			: int,
+								"filterEventPadding"	: int
 							}
 		self.adept2StateKeys={
 								"FitTol" 				: float,
@@ -386,13 +388,13 @@ class guiDataModel(dict):
 								"timeCol"				: int,
 								"currCol"				: int,
 								"scale"					: float,
-                                                                "HeaderOffset"			: int,
-                                                                "mVoffset"                      : float,
-                                                                "ADCvref"                       : float,
-                                                                "ADCbits"                       : int,
-                                                                "TIAgain"                       : float,
-                                                                "preADCgain"                    : float,
-                                                                "pAoffset"                      : float
+																"HeaderOffset"			: int,
+																"mVoffset"                      : float,
+																"ADCvref"                       : float,
+																"ADCbits"                       : int,
+																"TIAgain"                       : float,
+																"preADCgain"                    : float,
+																"pAoffset"                      : float
 							}
 		self.eventPartitionAlgoKeys={
 								"CurrentThreshold" 		: "eventSegment"
@@ -412,14 +414,14 @@ class guiDataModel(dict):
 								"ABF" 					: "abfTrajIO",
 								"BIN" 					: "binTrajIO",
 								"TSV"					: "tsvTrajIO",
-                                                                "LOG"                                   : "chimeraTrajIO"
+																"LOG"                                   : "chimeraTrajIO"
 							}
 		self.analysisSetupKeys={
 								"QDF" 					: mosaic.trajio.qdfTrajIO.qdfTrajIO,
 								"ABF" 					: mosaic.trajio.abfTrajIO.abfTrajIO,
 								"BIN" 					: mosaic.trajio.binTrajIO.binTrajIO,
 								"TSV" 					: mosaic.trajio.tsvTrajIO.tsvTrajIO,
-                                                                "LOG"                                   : mosaic.trajio.chimeraTrajIO.chimeraTrajIO,
+																"LOG"                                   : mosaic.trajio.chimeraTrajIO.chimeraTrajIO,
 								"SingleChannelAnalysis" : mosaic.apps.SingleChannelAnalysis.SingleChannelAnalysis,
 								"CurrentThreshold" 		: mosaic.partition.eventSegment.eventSegment,
 								"adept2State" 			: mosaic.process.adept2State.adept2State,
