@@ -59,6 +59,7 @@ class eventSegment(metaEventPartition.metaEventPartition):
 							calculate automatically)
 			- `slopeOpenCurr` :	Explicitly set open channel current slope. (default: -1, to 
 							calculate automatically)
+			- `filterEventPadding` :	Filter post event padding to remove outliers and nieghboring events. Set to 1 for data sets with a high event density (default: 0)
 	"""
 	def _init(self, trajDataObj, eventProcHnd, eventPartitionSettings, eventProcSettings):
 		"""
@@ -74,6 +75,7 @@ class eventSegment(metaEventPartition.metaEventPartition):
 			self.meanOpenCurr=float(self.settingsDict.pop("meanOpenCurr",-1.))
 			self.sdOpenCurr=float(self.settingsDict.pop("sdOpenCurr",-1.))
 			self.slopeOpenCurr=float(self.settingsDict.pop("slopeOpenCurr",-1.))
+			self.filterEventPadding=int(self.settingsDict.pop("filterEventPadding", 0))
 		except ValueError as err:
 			raise commonExceptions.SettingsTypeError( err )
 
@@ -191,16 +193,20 @@ class eventSegment(metaEventPartition.metaEventPartition):
 					if len(self.currData) < self.eventPad:
 						self.currData.extend(list(self.trajDataObj.popdata(self.nPoints)))
 
-					# Cleanup event pad data before adding it to the event. We look for:
-					# 	1. the start of a second event
-					#	2. Outliers
-					# The threshold for accepting a point is eventThreshold/2.0
-					eventpaddat = util.selectS( 
-							[ self.currData[i] for i in range(self.eventPad) ],
-							self.eventThreshold/2.0,
-							self.meanOpenCurr, 
-							self.sdOpenCurr
-						)
+					if self.filterEventPadding:
+						eventpaddat = [ self.currData[i] for i in range(self.eventPad) ]
+					else:
+						# Cleanup event pad data before adding it to the event. We look for:
+							# 1. the start of a second event
+							# 2. Outliers
+							# The threshold for accepting a point is eventThreshold/2.0
+						eventpaddat = util.selectS( 
+								[ self.currData[i] for i in range(self.eventPad) ],
+								self.eventThreshold/1.0,
+								self.meanOpenCurr, 
+								self.sdOpenCurr
+							)
+		
 					# print self.trajDataObj.FsHz, self.windowOpenCurrentMean, self.sdOpenCurr, self.slopeOpenCurr, len(self.eventdat)
 					if len(self.eventdat)>=self.minEventLength and len(self.eventdat)<self.maxEventLength:
 						self.eventcount+=1
