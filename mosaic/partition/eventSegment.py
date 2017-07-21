@@ -194,18 +194,18 @@ class eventSegment(metaEventPartition.metaEventPartition):
 						self.currData.extend(list(self.trajDataObj.popdata(self.nPoints)))
 
 					if self.filterEventPadding:
-						eventpaddat = [ self.currData[i] for i in range(self.eventPad) ]
-					else:
 						# Cleanup event pad data before adding it to the event. We look for:
-							# 1. the start of a second event
-							# 2. Outliers
-							# The threshold for accepting a point is eventThreshold/2.0
+						# 1. the start of a second event
+						# 2. Outliers
+						# The threshold for accepting a point is eventThreshold/2.0
 						eventpaddat = util.selectS( 
 								[ self.currData[i] for i in range(self.eventPad) ],
 								self.eventThreshold/1.0,
 								self.meanOpenCurr, 
 								self.sdOpenCurr
-							)
+							)					
+					else:
+						eventpaddat = [ self.currData[i] for i in range(self.eventPad) ]
 		
 					# print self.trajDataObj.FsHz, self.windowOpenCurrentMean, self.sdOpenCurr, self.slopeOpenCurr, len(self.eventdat)
 					if len(self.eventdat)>=self.minEventLength and len(self.eventdat)<self.maxEventLength:
