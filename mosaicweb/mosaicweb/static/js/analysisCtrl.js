@@ -125,6 +125,7 @@ angular.module('mosaicApp')
 				});
 
 				var results = query ? factory.contourDBConstraintCols.filter(factory.createFilterFor(query)) : factory.contourDBConstraintColsRemainingChoices;
+				factory.contourChipSelected=true;
 				return results;
 			};
 
@@ -157,9 +158,9 @@ angular.module('mosaicApp')
 					factory.contourDBColMax=rng.max;					
 
 					factory.contourChipSelected=true;
-				} else {
-					factory.contourChipSelected=false;
-				};
+				}; //else {
+				// 	factory.contourChipSelected=false;
+				// };
 
 			};
 
