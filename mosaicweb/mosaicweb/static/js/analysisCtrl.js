@@ -202,6 +202,16 @@ angular.module('mosaicApp')
 				};
 			};
 
+			factory.updateHistogramQuery = function () {
+				if (factory.bdBins > 0) {
+					factory.updateAnalysisHistogram({
+							query: factory.histQuery,
+							nBins: factory.bdBins,
+							density: factory.histDensity
+						});
+				};
+			};
+
 			factory.toggleAnalysisControlFlag = function() {
 				factory.showAnalysisControl = !factory.showAnalysisControl;
 			};
@@ -423,15 +433,15 @@ angular.module('mosaicApp')
 				};
 			};
 		});
-		$scope.$watch('model.histQuery', function() {
-			if ($scope.model.histQuery != '' && $scope.model.bdBins > 0) {
-				$scope.model.updateAnalysisHistogram({
-						query: $scope.model.histQuery,
-						nBins: $scope.model.bdBins,
-						density: $scope.model.histDensity
-					});
-			};
-		});
+		// $scope.$watch('model.histQuery', function() {
+		// 	if ($scope.model.histQuery != '' && $scope.model.bdBins > 0) {
+		// 		$scope.model.updateAnalysisHistogram({
+		// 				query: $scope.model.histQuery,
+		// 				nBins: $scope.model.bdBins,
+		// 				density: $scope.model.histDensity
+		// 			});
+		// 	};
+		// });
 		$scope.$watch('model.bdBins', function() {
 			if ($scope.model.histQuery != '' && $scope.model.bdBins > 0) {
 				$scope.model.updateAnalysisHistogram({
