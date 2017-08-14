@@ -145,10 +145,10 @@ class analysisContour:
 			X=np.hstack(x)
 
 			xmin=np.max([0, 0.9*np.min(X)])
-			xmax=np.min([1, 1.1*np.max(X)])
+			xmax=1.1*np.max(X)
 
 			ymin=np.max([0, 0.9*np.min(Y)])
-			ymax=1.1*np.max(Y)
+			ymax=np.min([1, 1.1*np.max(Y)])
 		
 			return np.histogram2d(X, Y, bins=(self.numBins, self.numBins), range=[[xmin, xmax], [ymin, ymax]])
 		except ValueError:
