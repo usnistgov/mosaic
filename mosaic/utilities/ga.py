@@ -118,11 +118,7 @@ def _getGASettings(ga_cache):
 		with open(ga_cache, 'w') as ga:
 			ga.write( stream.read() )
 
-<<<<<<< Updated upstream
-		logger.debug(_d("Cached GA settings to {0}.", ga_cache))
-=======
 		logger.info("Cached GA settings to {0}.".format(str(ga_cache)))
->>>>>>> Stashed changes
 	except:
 		logger.exception(_d("An error occured when trying to cache GA settings."))
 
