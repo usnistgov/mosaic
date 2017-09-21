@@ -218,7 +218,7 @@ def analysisHistogramPlot():
 	except sessionManager.SessionNotFoundError:
 		return jsonify( respondingURL='analysis-results', errType='MissingSIDError', errSummary="A valid session ID was not found.", errText="A valid session ID was not found." ), 500
 	except KeyError, err:
-		return jsonify( respondingURL='analysis-results', errType='KeyError', errSummary="The key {0} was not found.".format(str(err)), errText="The key {0} was not found.".format(str(err)) ), 500
+		return jsonify( respondingURL='analysis-results', errType='KeyError', errSummary="The key {0} is not permitted.".format(str(err)), errText="The key {0} was not found.".format(str(err)) ), 500
 	except OperationalError, err:
 		return jsonify( respondingURL='analysis-results', errType='OperationalError', errSummary="Syntax error: {0}".format(str(err)), errText="Syntax error: {0}".format(str(err)) ), 500
 	except BaseException, err:
