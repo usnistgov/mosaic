@@ -25,16 +25,18 @@ class analysisHistogram:
 		self.responseDict={}
 
 	def analysisHistogram(self):
-		xlabel={
+		xlabeldict={
 			"BlockDepth"	: "i/i<sub>0</sub>",
 			"ResTime"		: "t (ms)"
-		}[self.queryString.split('from')[0].split('select')[1].split()[0]]
+		}
+		xlabel=xlabeldict.pop(self.queryString.split('from')[0].split('select')[1].split()[0], self.queryString.split('from')[0].split('select')[1].split()[0])
 		
 		if self.density:
-			ylabel={
+			ylabeldict={
 				"BlockDepth"	: "rho",
 				"ResTime"		: "rho (ms<sup>-1</sup>)"
-			}[self.queryString.split('from')[0].split('select')[1].split()[0]]
+			}
+			ylabel=ylabeldict.pop(self.queryString.split('from')[0].split('select')[1].split()[0], "rho")
 		else:
 			ylabel="counts"
 
@@ -87,8 +89,9 @@ class analysisHistogram:
 		)
 		x=np.hstack( np.hstack( np.array( q ) ) )
 		
-		xmin=np.max(0, min(x))
-		xmax=max(x)
+		# xmin=np.max([0, np.min(x)])
+		xmin=np.min(x)
+		xmax=np.max(x)
 
 		return np.array(np.histogram(x, bins=self.numBins, density=self.density))
 
