@@ -5,7 +5,7 @@
 			<h4 style="color: #696969;"><em>New Analysis Setup</em></h4>
 			<span flex></span>
 			<md-progress-circular md-mode="indeterminate" class="md-primary" md-diameter="24" ng-if="model.controlsUpdating"></md-progress-circular>
-			<md-button class="md-primary" type="button" id="advancedButton" ng-click="showAdvancedSettings()" ng-disabled="formDisabled()" style="padding:10px; margin:10px;">
+			<md-button class="md-primary" type="button" id="advancedButton" ng-click="showAdvancedSettings()" ng-disabled="model.controlsUpdating || mosaicConfigModel.analysisRunning" style="padding:10px; margin:10px;">
 				Advanced Settings
 			</md-button>
 		</div>
