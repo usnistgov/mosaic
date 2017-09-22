@@ -8,6 +8,7 @@
 	:License:	See LICENSE.TXT
 	:ChangeLog:
 	.. line-block::
+		9/25/17 	AB 	Save unfiltered event padding by default.
 		1/18/17 	AB 	Fix pre event baseline.
 		6/17/16 	AB 	Log function timing in developer mode.
 		5/17/14		AB  Delete plotting support
@@ -59,7 +60,6 @@ class eventSegment(metaEventPartition.metaEventPartition):
 							calculate automatically)
 			- `slopeOpenCurr` :	Explicitly set open channel current slope. (default: -1, to 
 							calculate automatically)
-			- `filterEventPadding` :	Filter post event padding to remove outliers and nieghboring events. Set to 1 for data sets with a high event density (default: 0)
 	"""
 	def _init(self, trajDataObj, eventProcHnd, eventPartitionSettings, eventProcSettings):
 		"""
@@ -75,7 +75,6 @@ class eventSegment(metaEventPartition.metaEventPartition):
 			self.meanOpenCurr=float(self.settingsDict.pop("meanOpenCurr",-1.))
 			self.sdOpenCurr=float(self.settingsDict.pop("sdOpenCurr",-1.))
 			self.slopeOpenCurr=float(self.settingsDict.pop("slopeOpenCurr",-1.))
-			self.filterEventPadding=int(self.settingsDict.pop("filterEventPadding", 0))
 		except ValueError as err:
 			raise commonExceptions.SettingsTypeError( err )
 
@@ -193,19 +192,19 @@ class eventSegment(metaEventPartition.metaEventPartition):
 					if len(self.currData) < self.eventPad:
 						self.currData.extend(list(self.trajDataObj.popdata(self.nPoints)))
 
-					if self.filterEventPadding:
-						# Cleanup event pad data before adding it to the event. We look for:
-						# 1. the start of a second event
-						# 2. Outliers
-						# The threshold for accepting a point is eventThreshold/2.0
-						eventpaddat = util.selectS( 
-								[ self.currData[i] for i in range(self.eventPad) ],
-								self.eventThreshold/1.0,
-								self.meanOpenCurr, 
-								self.sdOpenCurr
-							)					
-					else:
-						eventpaddat = [ self.currData[i] for i in range(self.eventPad) ]
+					
+					# Cleanup event pad data before adding it to the event. We look for:
+					# 1. the start of a second event
+					# 2. Outliers
+					# The threshold for accepting a point is eventThreshold/2.0
+					eventpaddat = util.selectS( 
+							[ self.currData[i] for i in range(self.eventPad) ],
+							self.eventThreshold/1.0,
+							self.meanOpenCurr, 
+							self.sdOpenCurr
+						)		
+					# unfiltered padding.			
+					eventpaddatU = [ self.currData[i] for i in range(self.eventPad) ]
 		
 					# print self.trajDataObj.FsHz, self.windowOpenCurrentMean, self.sdOpenCurr, self.slopeOpenCurr, len(self.eventdat)
 					if len(self.eventdat)>=self.minEventLength and len(self.eventdat)<self.maxEventLength:
@@ -218,6 +217,7 @@ class eventSegment(metaEventPartition.metaEventPartition):
 						self._processEvent(
 							 self.eventProcHnd(
 								list(self.preeventdat)[:-1] + self.eventdat + eventpaddat, 
+								list(self.preeventdat)[:-1] + self.eventdat + eventpaddatU, 
 								self.FsHz,
 								eventstart=len(self.preeventdat)+1,						# event start point
 								eventend=len(self.preeventdat)+len(self.eventdat)+1,	# event end point

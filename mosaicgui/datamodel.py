@@ -5,7 +5,8 @@
 	:License:	See LICENSE.TXT
 	:ChangeLog:
 		.. line-block::
-						07/29/16        KB      Integrated chimeraTrajIO
+			9/25/17 	AB 	Save unfiltered event padding by default.
+			07/29/16        KB      Integrated chimeraTrajIO
 			03/30/16 	AB 	Change UnlinkRCConst to LinkRCConst.
 			3/16/16 	AB 	Migrate InitThreshold setting to CUSUM StepSize.
 			8/24/15 	AB 	Updated algorithm names to ADEPT and CUSUM+
@@ -260,7 +261,6 @@ class guiDataModel(dict):
 								"sdOpenCurr"			: float,
 								"slopeOpenCurr"			: float,
 								"writeEventTS"			: int,
-								"filterEventPadding"	: int,
 								"parallelProc"			: int,
 								"reserveNCPU" 			: int,
 								"FitTol" 				: float,
@@ -326,8 +326,7 @@ class guiDataModel(dict):
 								"slopeOpenCurr"			: float,
 								"writeEventTS"			: int,
 								"parallelProc"			: int,
-								"reserveNCPU" 			: int,
-								"filterEventPadding"	: int
+								"reserveNCPU" 			: int
 							}
 		self.adept2StateKeys={
 								"FitTol" 				: float,

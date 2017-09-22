@@ -8,6 +8,7 @@
 	:License:	See LICENSE.TXT
 	:ChangeLog:
 	.. line-block::
+		9/22/17 	AB 	Add a parameter to save unfiltered event padding.
 		8/3/16		JF	Fixed missing dependency (time)
 		5/27/16 	AB 	Add a flagEvent function that should be used to set a non-critical warning status.
 		5/26/16 	AB 	If developer mode is enabled (in mosaic/_global), metadata is not set to -1 when an error occurs.
@@ -48,6 +49,7 @@ class metaEventProcessor(object):
 
 		:Parameters:
 				- `icurr` :				ionic current in pA
+				- `icurrU`:				ionic current in pA with unfiltered event padding
 				- `Fs` :				sampling frequency in Hz
 
 		:Keyword Args:
@@ -60,12 +62,13 @@ class metaEventProcessor(object):
 	"""
 	__metaclass__=ABCMeta
 
-	def __init__(self, icurr, Fs, **kwargs):
+	def __init__(self, icurr, icurrU, Fs, **kwargs):
 		"""
 			Store a ref to the raw event data.
 			
 		"""
 		self.eventData=icurr
+		self.eventDataU=icurrU
 		self.Fs=Fs
 
 		self.logger=mlog.mosaicLogging().getLogger(name=__name__)
@@ -211,7 +214,7 @@ class metaEventProcessor(object):
 		"""
 		try:
 			if self.dataFileHnd:
-				self.dataFileHnd.writeRecord( (self._mdList())+[self.mdEventProcessTime, self.eventData] )
+				self.dataFileHnd.writeRecord( (self._mdList())+[self.mdEventProcessTime, self.eventDataU] )
 		except sqlite3.OperationalError, err:
 			# If the db is locked, wait 1 s and try again.
 			print err

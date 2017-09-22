@@ -15,6 +15,7 @@ class Base2StateTest(object):
 		self._setupTestCase(datfile, prmfile,algoHnd)
 
 		self.testobj=algoHnd(
+							self.dat,
 							self.dat, 
 							self.Fs,
 							eventstart=int(self.prm['tau1']/self.dt),			# event start point
@@ -59,7 +60,8 @@ class BaseMultiStateTest(object):
 		self._setupTestCase(datfile, prmfile,algoHnd)
 			
 		testobj=algoHnd(
-					self.dat, 
+					self.dat,
+					self.dat,
 					self.Fs,
 					eventstart=int(self.prm['eventDelay'][0]/self.dt),			# event start point
 					eventend=int(self.prm['eventDelay'][-1]/self.dt),    		# event end point

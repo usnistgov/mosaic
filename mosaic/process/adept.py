@@ -364,6 +364,7 @@ class adept(metaEventProcessor.metaEventProcessor):
 		# print cusumSettings
 
 		cusumObj=cusum.cusumPlus(
+				edat,
 				edat, 
 				self.Fs,
 				eventstart=self.eStartEstimate,						# event start point

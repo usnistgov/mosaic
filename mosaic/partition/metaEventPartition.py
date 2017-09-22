@@ -7,6 +7,7 @@
 	:License:	See LICENSE.TXT
 	:ChangeLog:
 	.. line-block::
+		9/25/17 	AB 	Save unfiltered event padding by default.
 		3/25/17 	AB 	Allow an optional argument to pass a database name.
 		6/29/16 	AB 	Fixed the open channel statistics routine (_openchanstats) to fix an 
 						incompatibility with numpy version 1.10 and above.
@@ -126,7 +127,7 @@ class metaEventPartition(object):
 
 		sys.stdout.flush()
 
-		self.tEventProcObj=self.eventProcHnd([], self.FsHz, eventstart=0,eventend=0, baselinestats=[ 0,0,0 ], algosettingsdict=self.eventProcSettingsDict.copy(), savets=False, absdatidx=0, datafileHnd=None )
+		self.tEventProcObj=self.eventProcHnd([], [], self.FsHz, eventstart=0,eventend=0, baselinestats=[ 0,0,0 ], algosettingsdict=self.eventProcSettingsDict.copy(), savets=False, absdatidx=0, datafileHnd=None )
 
 		self.mdioDBHnd=sqlite3MDIO.sqlite3MDIO()
 		self.mdioDBHnd.initDB(
