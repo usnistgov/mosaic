@@ -74,7 +74,7 @@ def processingAlgorithm():
 
 @app.route('/new-analysis', methods=['POST'])
 @gzipped
-@registerLaunch("mweb")
+@registerLaunch("new_analysis_mweb")
 def newAnalysis():
 	global gAnalysisSessions
 
@@ -116,6 +116,7 @@ def newAnalysis():
 
 @app.route('/load-analysis', methods=['POST'])
 @gzipped
+@registerLaunch("load_analysis_mweb")
 def loadAnalysis():
 	global gAnalysisSessions
 
@@ -148,8 +149,8 @@ def loadAnalysis():
 	except BaseException, err:
 		return jsonify( respondingURL='load-analysis', errType='UnknownError', errSummary="'{0}' is not a valid database file.".format(db), errText=str(err) ), 500
 
-@registerStart("mweb")
 @app.route('/start-analysis', methods=['POST'])
+@registerStart("mweb")
 def startAnalysis():
 	global gAnalysisSessions
 
@@ -176,8 +177,8 @@ def startAnalysis():
 	except (sessionManager.SessionNotFoundError, KeyError):
 		return jsonify( respondingURL='start-analysis', errType='MissingSIDError', errSummary="A valid session ID was not found.", errText="A valid session ID was not found." ), 500
 
-@registerStop("mweb")
 @app.route('/stop-analysis', methods=['POST'])
+@registerStop("mweb")
 def stopAnalysis():
 	global gAnalysisSessions
 
