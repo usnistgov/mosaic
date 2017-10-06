@@ -1,0 +1,35 @@
+.histTabs md-tabs.md-default-theme md-ink-bar, md-tabs md-ink-bar {
+		background-color:#283593 !important; }
+
+.animate-enter {
+		-webkit-transition: 1s linear all; /* Chrome */
+		transition: 1s linear all;
+		opacity: 0;
+	}
+	 
+.animate-enter.animate-enter-active {
+	opacity: 1;
+}
+
+._md-center {
+	left: 50%;
+	transform: translate3d(-50%, 0, 0);
+}
+
+#globalToastAnchor
+{
+  position: fixed;
+  bottom: 0;
+  z-index: 999;
+  overflow: visible !important;
+}
+
+#gsimage {
+    opacity: 0.3;
+    filter: alpha(opacity=30); /* For IE8 and earlier */
+}
+
+#gsimage {
+    -webkit-filter: grayscale(100%); /* Safari 6.0 - 9.0 */
+    filter: grayscale(100%);
+}

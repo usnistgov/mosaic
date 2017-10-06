@@ -1,0 +1,23 @@
+{
+	"colors" : {
+		"keyword" : "darkBlue",
+		"reservedClasses" : "rgb(219, 94, 0)",
+		"assignmentOperator" : "green",
+		"delimiter" : "black",
+		"specialConstant" : "green",
+		"boolean" : "green",
+		"number" : "black",
+		"comment" : "rgb(59, 61, 145)",
+		"string" : "darkGray"
+	},
+	"rules" : {
+		"keyword" : "['Status', 'Summary', 'Settings', 'Output', 'Timing']",
+		"reservedClasses" : "['WARNING', 'ADEPT', 'ADEPT 2-State', 'CUSUM+', 'ERROR', 'USER STOP']",
+		"assignmentOperator" : "",
+		"delimiter" : "[\\)\\(]+|[\\{\\}]+|[][]+",
+		"specialConstant" : "",
+		"boolean" : "'True', 'False'",
+		"number" : "[-+]?[0-9]*\\.?[0-9]+([eE][-+]?[0-9]+)?",
+		"comment" : ""
+	}
+}

@@ -2,7 +2,7 @@
 import sys
 import sqlite3
 from os.path import expanduser
-import mosaic.sqlite3MDIO as sqlite
+import mosaic.mdio.sqlite3MDIO as sqlite
 from PyQt4 import QtCore, QtGui
 from PyQt4.QtCore import Qt
 
@@ -20,7 +20,7 @@ class sqlQueryWorker(QtCore.QObject):
 	@QtCore.pyqtSlot(bool)
 	def dbColumnNames(self, filterRealList):
 		self.queryDatabase=sqlite.sqlite3MDIO()
-		self.queryDatabase.openDB(self.dbFile)
+		self.queryDatabase.openDB(self.dbFile, timeout=3.0)
 		if filterRealList:
 			self.dbColumnsReady.emit( [ col[0] for col in zip( self.queryDatabase.mdColumnNames, self.queryDatabase.mdColumnTypes ) if col[1] != 'REAL_LIST' ] )
 		else:

@@ -8,7 +8,7 @@ import sqlite3
 
 from PyQt4 import QtCore, QtGui, uic
 
-import mosaic.sqlite3MDIO as sqlite
+import mosaic.mdio.sqlite3MDIO as sqlite
 import mosaic.errors as err
 import mosaicgui.autocompleteedit as autocomplete
 from mosaic.utilities.resource_path import resource_path, last_file_in_directory
@@ -16,10 +16,6 @@ import mosaic.utilities.fit_funcs as fit_funcs
 
 import matplotlib.ticker as ticker
 # from mosaicgui.trajview.trajviewui import Ui_Dialog
-
-css = """QLabel {
-      color: red;
-}"""
 
 class FitEventWindow(QtGui.QDialog):
 	def __init__(self, parent = None):
@@ -79,7 +75,7 @@ class FitEventWindow(QtGui.QDialog):
 
 		# Store the analysis algorithm
 		try:
-			self.analysisAlgorithm=str(self.queryDatabase.readAnalysisInfo()[3])
+			self.analysisAlgorithm=str(self.queryDatabase.readAnalysisInfo()['processingAlgorithm'])
 		except:
 			# If the database doesn't have information on the alogirthm type, 
 			# default to adept2State
@@ -155,36 +151,43 @@ class FitEventWindow(QtGui.QDialog):
 
 			np.seterr(invalid='ignore', over='ignore', under='ignore')
 			# fit function data
-			if str(q[0])=="normal":
+			if str(q[0])=="normal" or str(q[0]).startswith('w'):
 				c='#%02x%02x%02x' % (72,91,144)
 				cf='#%02x%02x%02x' % (50,50,47)
 				cs='#%02x%02x%02x' % (170,41,45)
 				self.mpl_hist.canvas.ax.cla()
 				self.mpl_hist.canvas.ax.hold(True)
-				self.mpl_hist.canvas.ax.plot( xdat, ydat, linestyle='None', marker='o', color=c, markersize=8, markeredgecolor='none', alpha=0.6)
+				self.mpl_hist.canvas.ax.plot( xdat, ydat, linestyle='None', marker='o', markersize=8, markeredgecolor='None', alpha=0.6)
 				
 				if self.fitFuncHnd:
 					xfit=np.arange(0,float((len(q[1]))/fs), float(1/(100*fs)))
 					yfit=self.fitFuncHnd( *eval(self.fitFuncArgs) )
-					self.mpl_hist.canvas.ax.plot( xfit, yfit, linestyle='-', linewidth='2.0', color=cf)
+					self.mpl_hist.canvas.ax.plot( xfit, yfit, linestyle='-', linewidth='2.0')
 
 				if self.stepFuncHnd:
 					xstep=np.arange(0,float((len(q[1]))/fs), float(1/(100*fs)))
 					ystep=self.stepFuncHnd( *eval(self.stepFuncArgs) )
-					self.mpl_hist.canvas.ax.plot( xstep, ystep, linestyle='--', linewidth='2.0', color=cs)
+					self.mpl_hist.canvas.ax.plot( xstep, ystep, linestyle='--', color='k', linewidth='2.0')
 
-				self.errLabel.setText(str(""))
+				# Warning
+				if str(q[0]).startswith('w'):
+					self.errIcon.setText("<html><img height='24' width='24' src='"+resource_path("icons/warning-128.png")+"'></html>")
+					self.errLabel.setText(self.errText[str(q[0])])
+				else:
+					self.errIcon.setText(str(""))
+					self.errLabel.setText(str(""))
 
 				header, data=self._bdTable(*eval(self.bdFuncArgs))
 				self.tableModel.update( header, data ) 
 				self.fitStatesTableView.resizeColumnsToContents()
 			else:
+				# Error
+
 				self.mpl_hist.canvas.ax.cla()
 				self.mpl_hist.canvas.ax.plot( xdat, ydat, linestyle='None', marker='o', color='r', markersize=8, markeredgecolor='none', alpha=0.6)
 				
-				# Set error line edit color to red
-				self.errLabel.setStyleSheet(css)
-				self.errLabel.setText("Error: "+ self.errText[str(q[0])] )
+				self.errIcon.setText("<html><img height='24' width='24' src='"+resource_path("icons/error-128.png")+"'></html>")
+				self.errLabel.setText(self.errText[str(q[0])])
 
 				self.tableModel.update( [self._columnhead,['1']], [['N/A'], ['N/A']] )
 
@@ -201,7 +204,7 @@ class FitEventWindow(QtGui.QDialog):
 				limittxt=" (at viewer limit)"
 			else:
 				limittxt=""
-			self.setWindowTitle( "Event Viewer - " + str(self.eventIndex) + "/" + str(len(self.queryData)-1) + limittxt)
+			self.setWindowTitle( "Event Viewer: " + str(self.eventIndex) + "/" + str(len(self.queryData)-1) + limittxt)
 		except ValueError:
 			self.EndOfData=True
 		except IndexError:
@@ -277,6 +280,9 @@ class FitEventWindow(QtGui.QDialog):
 		axes.yaxis.set_major_formatter(ticker.FormatStrFormatter('%d'))
 
 	def _updatequery(self):
+		if self.isHidden() and self.updateDataOnIdle:
+			return
+
 		try:
 			if not self.EndOfData:
 				self.queryData=self.queryDatabase.queryDB(self.queryString)
@@ -394,6 +400,10 @@ class FitViewModel(QtCore.QAbstractTableModel):
 		self.emit(QtCore.SIGNAL("layoutChanged()"))
 
 if __name__ == '__main__':
+	from mosaicgui.mplwidget import update_rcParams
+
+	update_rcParams()
+	
 	dbfile=resource_path('eventMD-PEG28-cusumLevelAnalysis.sqlite')
 	# dbfile=resource_path('eventMD-PEG28-ADEPT2State.sqlite')
 	# dbfile=resource_path('eventMD-tempMSA.sqlite')

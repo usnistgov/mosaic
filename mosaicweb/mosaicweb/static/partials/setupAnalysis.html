@@ -1,0 +1,229 @@
+<md-content aria-label="New Analysis" flex-gt-sm="70" flex="90" flex-offset-gt-sm="15" flex-offset="5">
+<!-- ng-submit="startAnalysis()"  -->
+	<form layout="column" name="newAnalysisForm" ng-disabled="mosaicConfigModel.analysisRunning">
+		<div layout="row" layout-align="end center">
+			<h4 style="color: #696969;"><em>New Analysis Setup</em></h4>
+			<span flex></span>
+			<md-progress-circular md-mode="indeterminate" class="md-primary" md-diameter="24" ng-if="model.controlsUpdating"></md-progress-circular>
+			<md-button class="md-primary" type="button" id="advancedButton" ng-click="showAdvancedSettings()" ng-disabled="model.controlsUpdating || mosaicConfigModel.analysisRunning" style="padding:10px; margin:10px;">
+				Advanced Settings
+			</md-button>
+		</div>
+		
+		<md-button class="md-fab md-warn md-fab-bottom-right" style="position:fixed !important; padding:16px;" ng-click="updateControls()" ng-if="model.requireControlUpdate && !mosaicConfigModel.analysisRunning">
+			<md-tooltip md-direction="left">Apply Settings</md-tooltip>
+			<md-icon md-font-set="material-icons md-24">check</md-icon>
+		</md-button>
+		<md-button class="md-fab  md-accent md-fab-bottom-right" style="position:fixed !important; padding:16px;" ng-click="startAnalysis()" ng-if="( !model.requireControlUpdate && !formDisabled() ) && !mosaicConfigModel.analysisRunning">
+			<md-tooltip md-direction="left">Start Analysis</md-tooltip>
+			<md-icon md-font-set="material-icons md-24" style="color: white;">play_arrow</md-icon>
+		</md-button>
+		<div layout="column" ng-if="mosaicConfigModel.analysisRunning" flex ng-include="'/static/partials/BackToAnalysisFAB.tmpl.html'"></div>
+		
+		<md-content class="md-whiteframe-z2" layout="column" style="margin: 8px; padding:8px; background: transparent">
+			<md-subheader class="md-primary" style="margin: 0; padding:0">
+				<p>Time-Series</p>
+			</md-subheader>
+			<div layout-align="center center" ng-if="model.modelInit" style="margin: 6px; padding:6px; margin-bottom:2px;">
+				<plotly plotly-data="model.trajPlot.data" plotly-layout="model.trajPlot.layout" plotly-options="model.trajPlot.options"></plotly>
+			</div>
+			<div style="margin: 0px; padding:0px; padding-left:4px; padding-right: 4px;" flex layout="column">
+				<p style="color: #696969; margin:0; padding:0;"><em><small>Data Path: {{model.dataPath}}/</small></em></p>
+				<!-- <span flex></span> -->
+				<p style="color: #696969; margin:0; padding:0;"><em><small>F<sub>s</sub>={{model.FsKHz}} kHz</small></em></p>
+			</div>
+		</md-content>
+
+		<div layout-gt-sm="row" layout="column">
+			<md-content class="md-whiteframe-z2" style="margin: 8px; padding:8px;" flex-gt-sm="40">
+				<md-subheader class="md-primary" style="margin: 0; padding:0">
+					<div layout="row" flex>
+						<p flex="70">Data File Settings</p>
+						<!-- <span flex="20"></span>
+						<md-button class="md-icon-button" href="https://pages.nist.gov/mosaic/html/doc/GraphicalInterface.html#panels-a-b-analysis-setup-and-trajectory-viewer" target="_blank">
+							<md-tooltip md-direction="left">MOSAIC Documentation</md-tooltip>
+							<md-icon md-font-set="material-icons md-24">help</md-icon>
+						</md-button> -->
+					</div>
+				</md-subheader>
+				<div layout="row" style="margin: 6px; padding:6px">
+					<md-input-container flex="40">
+						<label>File Type</label>
+						<md-select ng-model="model.selectedFileType" md-selected-text="getFileType()" ng-disabled="true">
+							<md-optgroup label="File Types">
+								<md-option ng-value="ftype" ng-repeat="ftype in ::model.ftypes">{{ftype}}</md-option>
+							</md-optgroup>
+						</md-select>
+					</md-input-container>
+					<span flex="5"></span>
+					<md-input-container flex>
+						<label>DC Offset</label>
+						<!-- ng-model-options="{ updateOn: 'blur', allowInvalid: false}"  -->
+						<input type="number" step="0.1" ng-model="model.dcOffset" ng-disabled="model.controlsUpdating">
+						<md-icon md-font-set="regular-font">pA</md-icon>
+					</md-input-container>					
+					<!-- <span flex="40"></span> -->
+				</div>
+
+				<div layout="row" style="margin: 6px; padding:6px">
+					<md-input-container>
+						<label>Start</label>
+						<input type="number" min="0" step="0.01" ng-model="model.start" name="start" ng-disabled="model.controlsUpdating" ng-model-options="{ updateOn: 'blur', allowInvalid: false}">
+						<div ng-messages="newAnalysisForm.start.$error" multiple md-auto-hide="false">
+							<div ng-message="min">
+								Start time cannot be negative.
+							</div>
+							<div ng-message="max">
+								Start time exceeds the time-series length.
+							</div>
+						</div>
+					</md-input-container>
+					<md-icon md-font-set="regular-font">s</md-icon>
+					<span flex="5"></span>
+					<md-input-container>
+						<label>End</label>
+						<input type="number" step="0.01" min="{{model.start}}" ng-model="model.end" name="end" ng-disabled="model.controlsUpdating" ng-model-options="{ updateOn: 'blur', allowInvalid: false}">
+						<div ng-messages="newAnalysisForm.end.$error" multiple md-auto-hide="false">
+							<div ng-message="min">
+								The end time cannot preceed the start time of {{model.analysisSettings.start}} s.
+							</div>
+						</div>
+					</md-input-container>
+					<md-icon md-font-set="regular-font">s</md-icon>
+				</div>
+			</md-content>
+
+			<md-content class="md-whiteframe-z2" flex-gt-sm style="margin: 8px; padding:8px;">
+				<md-subheader class="md-primary" style="margin: 0; padding:0">
+					<div layout="row" flex>
+						<p flex="70">Event Partition Settings</p>
+					</div>
+				</md-subheader>
+				<div layout="row" style="margin: 6px; padding:6px">
+					<md-input-container flex="55">
+						<label>Partition Algorithm</label>
+						<md-select ng-model="model.selectedPartAlgoType" md-selected-text="getPartAlgoType()" ng-disabled="mosaicConfigModel.analysisRunning">
+							<md-optgroup label="Partition Algorithms">
+								<md-option ng-value="partAlgoType" ng-repeat="partAlgoType in ::model.partAlgoTypes">{{partAlgoType}}</md-option>
+							</md-optgroup>
+						</md-select>
+					</md-input-container>
+					
+					<span flex="5"></span>
+
+					<md-input-container flex>
+						<label>Block Size</label>
+						<!-- ng-model-options="{ updateOn: 'blur', allowInvalid: false}"  -->
+						<input required type="number" max="3"  min="0.0" step="0.01" ng-model="model.analysisSettings.eventSegment.blockSizeSec" 
+							name="blockSize" ng-disabled="model.controlsUpdating"
+							ng-model-options="{ updateOn: 'blur', allowInvalid: false}">
+						<div ng-messages="newAnalysisForm.blockSize.$error" multiple md-auto-hide="false">
+							<div ng-message="required">
+								Block Size is not valid.
+							</div>
+
+							<div ng-message="min">
+								Block Size must be positive.
+							</div>
+
+							<div ng-message="max">
+								Block Size cannot exceed 3<em>s</em>.
+							</div>
+						</div>
+						<md-icon md-font-set="regular-font">s</md-icon>
+					</md-input-container>
+				</div>
+
+				<md-slider-container ng-disabled="mosaicConfigModel.analysisRunning" style="margin: 6px; padding:6px padding-right: 8px;">
+					<span flex>Threshold</span>
+					<span flex="5"></span>
+					<md-slider required ng-model="model.currThresholdpA" ng-model-options="{ debounce: 100 }" min="0" max="{{model.currMeanDisplay}}" step="0.01" aria-label="threshold" value="100" id="thr-slider" class="md-primary">
+					</md-slider>
+					<!-- <span flex="5"></span> -->
+					<md-input-container>
+						<input required type="number" min="0.0" step="0.01" max="{{model.currMeanDisplay}}" ng-model="model.currThresholdpA" ng-model-options="{ debounce: 100 }" aria-label="threshold" aria-controls="thr-slider" id="thr-slider" name="currThreshold">
+						<div ng-messages="newAnalysisForm.currThreshold.$error" multiple md-auto-hide="false">
+							<div ng-message="required">
+								A current threshold is required.
+							</div>
+							<div ng-message="min">
+								Threshold must be positive.
+							</div>
+							<div ng-message="max">
+								Threshold cannot exceed the mean current.
+							</div>
+						</div>
+						<md-icon md-font-set="regular-font">pA</md-icon>
+					</md-input-container>
+				</md-slider-container>
+
+				<div layout="row" style="margin: 6px; padding:6px">
+					<md-input-container>
+						<label>&#x2329;i<sub>0</sub>&#x232A;</label>
+						 <!-- ng-model-options="{ updateOn: 'blur', allowInvalid: false}" -->
+						<input required type="number" min="0.0" step="0.01" ng-model="model.currMeanDisplay" name="currMean" ng-disabled="model.currAuto">
+						<div ng-messages="newAnalysisForm.currMean.$error" multiple md-auto-hide="false">
+							<div ng-message="required">
+								You must enter a valid mean current.
+							</div>
+
+							<div ng-message="min">
+								The mean current must be positive.
+							</div>
+						</div>
+						<md-icon md-font-set="regular-font">pA</md-icon>
+					</md-input-container>
+
+					<span flex="5"></span>
+
+					<md-input-container>
+						<label>&#x3C3;<sub>i<sub>0</sub></sub></label>
+						<!-- ng-model-options="{ updateOn: 'blur', allowInvalid: false}"  -->
+						<input required type="number" min="0.0" step="0.01" ng-model="model.currSigmaDisplay" name="currSigma" ng-disabled="model.currAuto">
+						<div ng-messages="newAnalysisForm.currSigma.$error" multiple md-auto-hide="false">
+							<div ng-message="required">
+								You must enter a valid standard deviation.
+							</div>
+
+							<div ng-message="min">
+								The standard deviation must be positive.
+							</div>
+						</div>
+						<md-icon md-font-set="regular-font">pA</md-icon>
+					</md-input-container>
+
+					<span flex="5"></span>
+
+					<md-switch class="md-primary" md-no-ink aria-label="Automatically estimate baseline current" ng-model="model.currAuto" name="currAuto" ng-change="model.toggleCurrAuto()" ng-disabled="mosaicConfigModel.analysisRunning">
+						Auto
+					</md-switch>
+
+				</div>
+			</md-content>
+		</div>
+
+		<md-content class="md-whiteframe-z2" layout="column" style="margin: 8px; padding:8px;" flex-gt-sm ng-disabled="mosaicConfigModel.analysisRunning">
+			<md-subheader class="md-primary" style="margin: 0; padding:0">
+				<div layout="row" flex>
+						<p flex="70">Event Processing Settings</p>
+					</div>
+			</md-subheader>
+			<div layout="row" style="margin: 6px; padding:6px">
+				<md-input-container flex="35">
+					<label>Processing Algorithm</label>
+					<md-select ng-model="model.selectedProcAlgoType" name="selectedProcAlgoType" md-selected-text="getProcAlgoType()" ng-disabled="mosaicConfigModel.analysisRunning">
+						<md-optgroup label="Processing Algorithms">
+							<md-option ng-value="procAlgoType" ng-repeat="procAlgoType in ::model.procAlgoTypes">{{procAlgoType.name}}</md-option>
+						</md-optgroup>
+					</md-select>
+				</md-input-container>
+			
+				<span flex></span>
+
+				<md-switch class="md-primary" md-no-ink aria-label="Save Events to Database" ng-model="model.writeEventTS" ng-disabled="mosaicConfigModel.analysisRunning">
+					Save Events to Database
+				</md-switch>
+			</div>
+		</md-content>
+	</form>
+</md-content>

@@ -4,17 +4,23 @@
 	:Created:	4/22/2013
 	:Author: 	Arvind Balijepalli <arvind.balijepalli@nist.gov>
 	:License:	See LICENSE.TXT
+	:ChangeLog:
+		.. line-block::
+                        07/29/16        KB      Integrated chimeraTrajIO
 """	
 import sys
 import os
 import glob
 import json
 import types
+import tempfile
 import multiprocessing
 import webbrowser
+import mosaic
 
 from PyQt4 import QtCore, QtGui, uic
 from mosaic.utilities.resource_path import resource_path, format_path
+import mosaic.utilities.ga as ga
 import mosaicgui.EBSStateFileDict
 import mosaicgui.trajview.trajview
 import mosaicgui.advancedsettings.advancedsettings
@@ -32,11 +38,8 @@ class settingsview(QtGui.QMainWindow):
 	def __init__(self, parent = None):
 		super(settingsview, self).__init__(parent)
 
-		# uic.loadUi(os.path.join(os.path.dirname(os.path.abspath(__file__)),"SettingsWindow.ui"), self)
 		uic.loadUi(resource_path("SettingsWindow.ui"), self)
-		
-		# self.setupUi(self)
-
+	
 		self.setMenuBar(self.menubar)
 		self._positionWindow()
 
@@ -104,7 +107,7 @@ class settingsview(QtGui.QMainWindow):
 		QtCore.QObject.connect(self.partitionThresholdHorizontalSlider, QtCore.SIGNAL('valueChanged ( int )'), self.OnThresholdChange)
 
 		# Misc signals
-		QtCore.QObject.connect(self.advancedModeCheckBox, QtCore.SIGNAL('clicked(bool)'), self.OnAdvancedMode)
+		QtCore.QObject.connect(self.advancedModeButton, QtCore.SIGNAL('clicked()'), self.OnAdvancedMode)
 		QtCore.QObject.connect(self.writeEventsCheckBox, QtCore.SIGNAL('clicked(bool)'), self.OnWriteEvents)
 		QtCore.QObject.connect(self.parallelCheckBox, QtCore.SIGNAL('clicked(bool)'), self.OnParallelProcessing)
 		QtCore.QObject.connect(self.parallelCoresSpinBox, QtCore.SIGNAL('valueChanged ( int )'), self.OnParallelProcessing)
@@ -127,6 +130,7 @@ class settingsview(QtGui.QMainWindow):
 
 		# Help Menu signals
 		QtCore.QObject.connect(self.actionMOSAIC_Help, QtCore.SIGNAL('triggered()'), self.OnShowHelp)
+		QtCore.QObject.connect(self.actionAggregate_Usage, QtCore.SIGNAL('triggered()'), self.OnAggregateUsage)
 
 		# Dialog signals and slots
 		QtCore.QObject.connect(self.trajViewerWindow.waveletLevelSpinBox, QtCore.SIGNAL('valueChanged ( int )'), self.OnWaveletLevelChange)
@@ -155,7 +159,8 @@ class settingsview(QtGui.QMainWindow):
 					"QDF" : self.datTypeComboBox.findText("QDF"), 
 					"ABF" : self.datTypeComboBox.findText("ABF"),
 					"BIN" : self.datTypeComboBox.findText("BIN"),
-					"TSV" : self.datTypeComboBox.findText("TSV")
+					"TSV" : self.datTypeComboBox.findText("TSV"),
+                                        "LOG" : self.datTypeComboBox.findText("LOG")
 				}
 		path=model["DataFilesPath"] 
 		if len(glob.glob(format_path( str(path)+'/*qdf') )) > 0:
@@ -173,9 +178,12 @@ class settingsview(QtGui.QMainWindow):
 		elif len(glob.glob( format_path(str(path)+'/*tsv') )) > 0:
 			self.datTypeComboBox.setCurrentIndex( datidx["TSV"] )
 			model["filter"]="*.tsv"
-		elif len(glob.glob( format_path(str(path)+'/*txt') )) > 0:
+		elif len(glob.glob( format_path(str(path)+'/*txt') )) > 0 and len(glob.glob( format_path(str(path)+'/*log') )) == 0:
 			self.datTypeComboBox.setCurrentIndex( datidx["TSV"] )
 			model["filter"]="*.txt"
+		elif len(glob.glob( format_path(str(path)+'/*log') )) > 0:
+			self.datTypeComboBox.setCurrentIndex( datidx["LOG"] )
+			model["filter"]="*.log"
 
 		# store the  data type in the trajviewer data struct
 		model["DataFilesType"] = str(self.datTypeComboBox.currentText())
@@ -224,15 +232,18 @@ class settingsview(QtGui.QMainWindow):
 		self.plotEventFitsCheckBox.setEnabled(int(model["writeEventTS"]))
 
 		# check if parallel is available
-		try:
-			import zmq
+		# try:
+		# 	import zmq
 			
-			self.parallelCheckBox.setChecked(int(model["parallelProc"]))				
-			self.parallelCoresSpinBox.setValue(multiprocessing.cpu_count()-int(model["reserveNCPU"]))
-		except ImportError:
-			self.parallelCheckBox.hide()
-			self.parallelCoresSpinBox.hide()
-			self.parallelCoresLabel.hide()	
+		# 	self.parallelCheckBox.setChecked(int(model["parallelProc"]))				
+		# 	self.parallelCoresSpinBox.setValue(multiprocessing.cpu_count()-int(model["reserveNCPU"]))
+		# except ImportError:
+		# 	self.parallelCheckBox.hide()
+		# 	self.parallelCoresSpinBox.hide()
+		# 	self.parallelCoresLabel.hide()
+		self.parallelCheckBox.hide()
+		self.parallelCoresSpinBox.hide()
+		self.parallelCoresLabel.hide()	
 
 		procidx= {}
 		for v in self.analysisDataModel.eventProcessingAlgoKeys.keys():
@@ -261,6 +272,24 @@ class settingsview(QtGui.QMainWindow):
 		# Hide Rfb and Cfb for QDF files
 		[control.hide() for control in [self.RfbLabel, self.qdfRfbLineEdit, self.RfbUnitsLabel, self.CfbLabel, self.qdfCfbLineEdit, self.CfbUnitsLabel]]
 
+		# Set ga toggle.
+		try:
+			ga_cache=format_path(tempfile.gettempdir()+'/.ga')
+			with open(ga_cache, "r") as garead:
+				gac = json.load(garead)
+		
+			if eval(gac["gauimode"]):
+				self.actionAggregate_Usage.setVisible(True)
+			else:
+				self.actionAggregate_Usage.setVisible(False)
+
+			if eval(gac["gaenable"]):
+				self.actionAggregate_Usage.setChecked(True)
+			else:
+				self.actionAggregate_Usage.setChecked(False)
+		except:
+			self.actionAggregate_Usage.setVisible(False)
+
 		self.updateDialogs=True
 
 	def _loadEBSState(self):
@@ -281,22 +310,6 @@ class settingsview(QtGui.QMainWindow):
 				# More Traj viewer settings
 				self.analysisDataModel["Rfb"]=rfb
 				self.analysisDataModel["Cfb"]=cfb
-
-				# Show QDF specific widgets
-				# self.qdfCfbLineEdit.show()				
-				# self.qdfRfbLineEdit.show()
-				# self.CfbLabel.show()
-				# self.RfbLabel.show()
-				# self.CfbUnitsLabel.show()
-				# self.RfbUnitsLabel.show()
-			# else:
-				# Hide QDF specific widgets
-				# self.qdfCfbLineEdit.hide()				
-				# self.qdfRfbLineEdit.hide()
-				# self.CfbLabel.hide()
-				# self.RfbLabel.hide()
-				# self.CfbUnitsLabel.hide()
-				# self.RfbUnitsLabel.hide()
 
 
 	def _setThreshold(self, mean, sd, threshold):
@@ -326,7 +339,7 @@ class settingsview(QtGui.QMainWindow):
 		self.parallelCheckBox.setEnabled(state)
 		self.parallelCoresSpinBox.setEnabled(state)
 		self.processingAlgorithmComboBox.setEnabled(state)
-		self.advancedModeCheckBox.setEnabled(state)
+		self.advancedModeButton.setEnabled(state)
 
 	def _setEnableDataSettingsWidgets(self, state):
 		self.processingAlgorithmComboBox.setEnabled(state)
@@ -570,25 +583,25 @@ class settingsview(QtGui.QMainWindow):
 
 		self.analysisDataModel["reserveNCPU"]=multiprocessing.cpu_count()-int(self.parallelCoresSpinBox.value())
 
-	def OnAdvancedMode(self, value):
-		if value:
-			if self.dataFilterDenoise:
-				fltr=self.analysisDataModel["FilterAlgorithm"]
-			else:
-				fltr=None
-
-			self.advancedSettingsDialog.updateSettingsString(
-					self.analysisDataModel.GenerateSettingsView(
-						eventPartitionAlgo=str(self.partitionAlgorithmComboBox.currentText()), 
-						eventProcessingAlgo=str(self.processingAlgorithmComboBox.currentText()),
-						dataFilterAlgo=fltr
-					)
-				)
-			self.advancedSettingsDialog.show()
-			self._setEnableSettingsWidgets(False)
+	def OnAdvancedMode(self):
+		# if value:
+		if self.dataFilterDenoise:
+			fltr=self.analysisDataModel["FilterAlgorithm"]
 		else:
-			self.advancedSettingsDialog.hide()
-			self._setEnableSettingsWidgets(True)
+			fltr=None
+
+		self.advancedSettingsDialog.updateSettingsString(
+				self.analysisDataModel.GenerateSettingsView(
+					eventPartitionAlgo=str(self.partitionAlgorithmComboBox.currentText()), 
+					eventProcessingAlgo=str(self.processingAlgorithmComboBox.currentText()),
+					dataFilterAlgo=fltr
+				)
+			)
+		self.advancedSettingsDialog.show()
+		self._setEnableSettingsWidgets(False)
+		# else:
+		# 	self.advancedSettingsDialog.hide()
+		# 	self._setEnableSettingsWidgets(True)
 
 	def OnProcessingAlgoChange(self, value):
 		self.analysisDataModel["ProcessingAlgorithm"]=value
@@ -612,8 +625,7 @@ class settingsview(QtGui.QMainWindow):
 
 	# Menu SLOTs
 	def OnAdvancedModeMenuAction(self):
-		self.advancedModeCheckBox.setChecked(True)
-		self.OnAdvancedMode(True)
+		self.OnAdvancedMode()
 
 	def OnShowStatisticsWindow(self):
 		self.statisticsView.show()
@@ -626,7 +638,20 @@ class settingsview(QtGui.QMainWindow):
 
 
 	def OnShowHelp(self):
-		webbrowser.open('http://usnistgov.github.io/mosaic/html/index.html', new=0, autoraise=True)
+		webbrowser.open(mosaic.DocumentationURL+'html/index.html', new=0, autoraise=True)
+
+	def OnAggregateUsage(self):
+		try:
+			ga_cache=format_path(tempfile.gettempdir()+'/.ga')
+			with open(ga_cache, "r") as garead:
+				gac = json.load(garead)
+
+			gac["gaenable"] = str(self.actionAggregate_Usage.isChecked())
+
+			with open(ga_cache, "w") as gawrite:
+				json.dump(gac, gawrite, indent=4, sort_keys=True)
+		except:
+			pass
 
 	# Dialog SLOTS
 	def OnShowTrajectoryViewer(self):
@@ -642,7 +667,6 @@ class settingsview(QtGui.QMainWindow):
 
 	def OnAdvancedModeCancel(self):
 		if not self.analysisRunning:
-			self.advancedModeCheckBox.setChecked(False)
 			self._setEnableSettingsWidgets(True)
 
 	def OnTrajDenoise(self, value):
@@ -709,7 +733,6 @@ class settingsview(QtGui.QMainWindow):
 			self._trajviewerdata()
 			self.trajViewerWindow.refreshPlot()
 
-			self.advancedModeCheckBox.setChecked(False)
 			self._setEnableSettingsWidgets(True)
 
 

@@ -3,6 +3,8 @@ import os
 import glob
 import string
 
+__all__=["path_separator", "resource_path", "last_file_in_directory", "format_path", "NotFoundError"]
+
 class NotFoundError(Exception):
 	pass
 
@@ -19,12 +21,25 @@ def resource_path(filename):
 	sep=path_separator()
 	dirlist=string.split( os.path.dirname( os.path.abspath(__file__) ), sep )[:-2]
 
+	resource_files=[
+				"icon.png", 
+				"icons/icon_100px.png", 
+				"commit-hash", 
+				"version-hash", 
+				"icons/error-128.png", 
+				"icons/warning-128.png", 
+				"mosaicgui/highlight-spec/python.json", 
+				"mosaicgui/highlight-spec/json.json",
+				"mosaicgui/highlight-spec/log.json",
+				"mosaic/utilities/.ga"
+			]
+
 	if filename in [ ".settings", "settings"]:
 		if os.path.isfile ( str(sep.join( dirlist ))+sep+filename ):
 			return str(sep.join( dirlist ))
 		elif os.path.isfile ( str(sep.join( dirlist[:-1] ))+sep+filename ):
 			return str(sep.join( dirlist[:-1] ))
-	elif filename in ["icon.png", "icons/icon_100px.png", "commit-hash"]:
+	elif filename in resource_files:
 		if os.path.isfile ( str(sep.join( dirlist ))+sep+filename ):
 			return str(sep.join( dirlist )+sep+filename)
 		elif os.path.isfile ( str(sep.join( dirlist[:-1] ))+sep+filename ):
@@ -43,6 +58,8 @@ def resource_path(filename):
 			# print format_path(str(sep.join( dirlist ))+'/ui/'+filename)
 			return format_path(str(sep.join( dirlist ))+'/ui/'+filename)
 		# elif hasattr(sys, "_MEIPASS"):
+
+	return filename
 
 
 def last_file_in_directory(path, filefilter):

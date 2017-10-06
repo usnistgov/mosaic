@@ -8,11 +8,12 @@
 	:ChangeLog:
 	.. line-block::
 		3/23/15		AB	Initial version
+		7/5/16 		AB 	Updated code to use new module layout
 """
 
 import argparse
 import os
-import mosaic.sqlite3MDIO as sqlite3MDIO
+import mosaic.mdio.sqlite3MDIO as sqlite3MDIO
 import sqlite3
 
 def parseCLArgs():

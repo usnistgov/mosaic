@@ -5,24 +5,25 @@ import os
 import csv
 
 from PyQt4 import QtCore, QtGui, uic
-import mosaic.sqlite3MDIO as sqlite
+import mosaic.mdio.sqlite3MDIO as sqlite
 from mosaic.utilities.resource_path import resource_path, last_file_in_directory, format_path
+import mosaicgui.mosaicSyntaxHighlight as mosaicSyntaxHighlight
 from sqlite3 import OperationalError
+
 
 class AnalysisLogDialog(QtGui.QDialog):
 	def __init__(self, parent = None):
 		super(AnalysisLogDialog, self).__init__(parent)
 
-		# uic.loadUi(os.path.join(os.path.dirname(os.path.abspath(__file__)),"consoleDialog.ui"), self)
 		uic.loadUi( resource_path("consoleDialog.ui"), self)
-		
-		# self.setupUi(self)
 		self._positionWindow()
 
 		self.idleTimer=QtCore.QTimer()
 		self.idleTimer.start(5000)
 
 		self.logFileTimeStamp=0.0
+
+		mosaicSyntaxHighlight.mosaicSyntaxHighlight( self.consoleLogTextEdit, resource_path("mosaicgui/highlight-spec/log.json") )
 
 		# Idle processing
 		QtCore.QObject.connect(self.idleTimer, QtCore.SIGNAL('timeout()'), self.OnAppIdle)
@@ -53,11 +54,9 @@ class AnalysisLogDialog(QtGui.QDialog):
 		"""
 		screen = QtGui.QDesktopWidget().screenGeometry()
 		self.setGeometry(405, 555, 640, 200)
-		# self.move( (-screen.width()/2)+200, -screen.height()/2 )
 
 	# SLOTS
 	def OnSave(self):
-		# self.accept()
 		pass
 
 	def OnCancel(self):
@@ -77,7 +76,7 @@ class AnalysisLogDialog(QtGui.QDialog):
 if __name__ == '__main__':
 	app = QtGui.QApplication(sys.argv)
 	dmw = AnalysisLogDialog()
-	dmw.openDBFile(resource_path("eventMD-PEG29-Reference.sqlite"))
+	dmw.openDBFile(resource_path("eventMD-PEG28-cusumLevelAnalysis.sqlite"))
 
 	dmw.show()
 	dmw.raise_()

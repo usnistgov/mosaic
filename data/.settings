@@ -9,7 +9,7 @@
     "adept" : {
        "FitTol"	: "1.e-7",
        "FitIters" : "50000",
-       "InitThreshold" : "2.5",
+       "StepSize" : "2.5",
        "MinStateLength" : "10",
        "MaxEventLength" : "10000",
        "UnlinkRCConst" 	: "1"
@@ -24,9 +24,9 @@
         "meanOpenCurr": -1.0, 
         "slopeOpenCurr": -1.0, 
         "eventPad": 50, 
-        "driftThreshold": 999.0, 
-        "maxDriftRate": 999.0, 
-        "eventThreshold": 3.937328564396069, 
+        "driftThreshold": -1, 
+        "maxDriftRate": -1, 
+        "eventThreshold": 4.0, 
         "writeEventTS": 1, 
         "minEventLength": 5, 
         "sdOpenCurr": -1.0, 

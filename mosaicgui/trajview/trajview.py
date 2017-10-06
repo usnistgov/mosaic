@@ -7,11 +7,12 @@ import csv
 
 from PyQt4 import QtCore, QtGui, uic
 
-import mosaic.abfTrajIO as abf
-import mosaic.qdfTrajIO as qdf
-import mosaic.binTrajIO as bin
-import mosaic.tsvTrajIO as tsv
-from mosaic.metaTrajIO import FileNotFoundError, EmptyDataPipeError
+import mosaic.trajio.abfTrajIO as abf
+import mosaic.trajio.qdfTrajIO as qdf
+import mosaic.trajio.binTrajIO as bin
+import mosaic.trajio.tsvTrajIO as tsv
+import mosaic.trajio.chimeraTrajIO as chimera
+from mosaic.trajio.metaTrajIO import FileNotFoundError, EmptyDataPipeError
 from mosaic.utilities.resource_path import resource_path
 from mosaic.utilities.ionic_current_stats import OpenCurrentDist
 
@@ -26,7 +27,6 @@ class TrajectoryWindow(QtGui.QDialog):
 
 		super(TrajectoryWindow, self).__init__(parent)
 
-		# uic.loadUi(os.path.join(os.path.dirname(os.path.abspath(__file__)),"trajviewui.ui"), self)
 		uic.loadUi(resource_path("trajviewui.ui"), self)
 		
 		# Add a toolbar the matplolib widget
@@ -64,7 +64,6 @@ class TrajectoryWindow(QtGui.QDialog):
 			self.setGeometry(425, 30, 500, 400)
 		else:
 			self.setGeometry(405, 0, 500, 400)
-		# self.move( (-screen.width()/2)+200, -screen.height()/2 )
 
 	@property
 	def FskHz(self):
@@ -124,7 +123,20 @@ class TrajectoryWindow(QtGui.QDialog):
 						self.IOArgs["scale"]=self.datadict["scale"]
 					except:
 						self.IOArgs["scale"]=1
+                                elif self.datadict["DataFilesType"] ==  "LOG":
+					self.iohnd=chimera.chimeraTrajIO
 
+                                        self.IOArgs["mVoffset"]=self.datadict["mVoffset"]
+                                        self.IOArgs["ADCvref"]=self.datadict["ADCvref"]
+                                        self.IOArgs["ADCbits"]=self.datadict["ADCbits"]
+                                        self.IOArgs["TIAgain"]=self.datadict["TIAgain"]
+                                        self.IOArgs["preADCgain"]=self.datadict["preADCgain"]
+                                        self.IOArgs["pAoffset"]=self.datadict["pAoffset"]
+					self.IOArgs["SamplingFrequency"]=self.datadict["SamplingFrequency"]
+					self.IOArgs["ColumnTypes"]=self.datadict["ColumnTypes"]
+					self.IOArgs["IonicCurrentColumn"]=self.datadict["IonicCurrentColumn"]
+					self.IOArgs["HeaderOffset"]=self.datadict["HeaderOffset"]
+					self.IOArgs["filter"]=self.datadict["filter"]
 				else:
 					self.iohnd=abf.abfTrajIO	
 					self.IOArgs["filter"]=self.datadict["filter"]
@@ -135,11 +147,6 @@ class TrajectoryWindow(QtGui.QDialog):
 				if hasattr(self, 'IOObject'):
 					self.IOObject=None
 
-				# if self.IOObject:
-				# 	del self.IOObject
-
-				# print self.IOArgs
-				# print self.iohnd
 				self.IOObject=self.iohnd(**self.IOArgs)
 
 				# By default display 250 ms second of data
@@ -152,11 +159,8 @@ class TrajectoryWindow(QtGui.QDialog):
 
 				if self.DenoiseIOObj:
   					# set the max level value in the level spinner
-  					# print int(self.DenoiseIOObj.dataFilterObj.maxWaveletLevel)
 					self.waveletLevelSpinBox.setMaximum(int(self.DenoiseIOObj.dataFilterObj.maxWaveletLevel))
 
-
-				# self.mpl_hist.canvas.ax.set_autoscale_on(True)
 				self.update_graph()
 		except AttributeError:
 			QtGui.QMessageBox.warning(self, "Path Error","Data path not set")
@@ -169,14 +173,11 @@ class TrajectoryWindow(QtGui.QDialog):
 
   	def updatePlot(self, datadict):
   		self.datadict=datadict
-  		# print self.datadict
+
   		# set block size
   		self.blockSize=self.datadict.pop( "blockSizeSec", 0.25)
   		self.thrCurrPicoA=self.datadict.pop("eventThresholdpA",0.0)
 
-	  	# print self.thrCurrPicoA
-
-  		# self.mpl_hist.canvas.ax.set_autoscale_on(False)
   		self.update_graph()
 
   	def setTrajdata(self, datadict, denoiseobj):
@@ -186,7 +187,6 @@ class TrajectoryWindow(QtGui.QDialog):
   		# set block size
   		self.blockSize=self.datadict.pop( "blockSizeSec", 0.25)
   		self.thrCurrPicoA=self.datadict.pop("eventThresholdpA",0.0)
-	  	# print self.thrCurrPicoA
 
 	def update_graph(self):
 		try:
@@ -195,7 +195,6 @@ class TrajectoryWindow(QtGui.QDialog):
 				ydat=datasign*np.array(self.trajData, dtype='float64')
 				xdat=np.arange(float(self.nUpdate)*self.blockSize,float(self.nUpdate+1)*self.blockSize,self.decimate/float(self.IOObject.FsHz))[:len(ydat)]
 	
-				# print "update_graph: ", self.thrCurrPicoA
 				self._calculateThreshold(ydat)
 
 				# display the mean current val and thr
@@ -215,7 +214,7 @@ class TrajectoryWindow(QtGui.QDialog):
 					self.mpl_hist.canvas.ax.plot( xdat, ydat, color=c, markersize='1.')
 
 					ydatd=np.abs(self.trajDataDenoise)
-					self.mpl_hist.canvas.ax.plot( xdat, ydatd, color=cd, markersize='1.')
+					self.mpl_hist.canvas.ax.plot( xdat, ydatd,  markersize='1.')
 
 					self.mpl_hist.canvas.ax2.cla()
 					self.mpl_hist.canvas.ax2.hold(True)
@@ -240,31 +239,25 @@ class TrajectoryWindow(QtGui.QDialog):
 				else:					
 					c='#%02x%02x%02x' % (72,91,144)
 					self.mpl_hist.canvas.ax.cla()
-					self.mpl_hist.canvas.ax.plot( xdat, ydat, color=c, markersize='1.')
+					self.mpl_hist.canvas.ax.plot( xdat, ydat, markersize='1.')
 
 					self.mpl_hist.canvas.ax2.cla()
-					self.mpl_hist.canvas.ax2.hist( 
+					
+					hist, bins=np.histogram(
 						ydat, 
 						bins=200, 
-						normed=1, 
-						histtype='step',
-						rwidth=0.1,
-						color=c,
-						orientation='horizontal'
+						normed=1
 					)
+					self.mpl_hist.canvas.ax2.plot ( hist, bins[:-1]	)
 
 
-				self.mu_line = self.mpl_hist.canvas.ax.axhline(self.mu, color='0.25', linestyle='--', lw=1.5)
+				self.mu_line = self.mpl_hist.canvas.ax.axhline(self.mu, color='0.5', linestyle='--', lw=1.5)
 				cl='#%02x%02x%02x' % (182,69,71)
-				self.mpl_hist.canvas.ax.axhline(self.mu-self.thr*self.sd, color=cl, lw=1.5)
+				self.mpl_hist.canvas.ax.axhline(self.mu-self.thr*self.sd, color='#DB5E00', lw=1.5)
 
-				self.mu_line = self.mpl_hist.canvas.ax2.axhline(self.mu, color='0.25', linestyle='--', lw=1.5)
-				self.mpl_hist.canvas.ax2.axhline(self.mu-self.thr*self.sd, color=cl, lw=1.5)
+				self.mu_line = self.mpl_hist.canvas.ax2.axhline(self.mu, color='0.5', linestyle='--', lw=1.5)
+				self.mpl_hist.canvas.ax2.axhline(self.mu-self.thr*self.sd, color='#DB5E00', lw=1.5)
 
-				# self._ticks(5)
-
-				# self.mpl_hist.canvas.ax2.set_xticklabels([])
-				# self.mpl_hist.canvas.ax2.set_yticklabels([])
 				plt.setp( self.mpl_hist.canvas.ax2.get_xticklabels(), visible=False)
 				plt.setp( self.mpl_hist.canvas.ax2.get_yticklabels(), visible=False)
 				
@@ -285,7 +278,6 @@ class TrajectoryWindow(QtGui.QDialog):
 		if float(self.datadict["meanOpenCurr"]) == -1 or float(self.datadict["sdOpenCurr"]) == -1:
 			try:
 				self.mu, self.sd = OpenCurrentDist(dat, 0.5)
-				# print "_calculateThreshold: ", self.thrCurrPicoA
 				if self.thrCurrPicoA==0.:
 					self.thr=float(self.datadict["eventThreshold"])
 
@@ -297,25 +289,13 @@ class TrajectoryWindow(QtGui.QDialog):
 					# If self.thrCurrPicoA is set, then calculate a new threshold in SD 
 					# so as to keep self.thrCurrPicoA constant.
 					self.thr=(self.mu-self.thrCurrPicoA)/self.sd
-
-				# self.thr=float(self.datadict["eventThreshold"])
-				# print icurr, self.thr
 			except AttributeError:
-				# self.mu=np.mean(dat)
-				# self.sd=np.std(dat)
 				self.mu, self.sd = OpenCurrentDist(dat, 0.5)
-				# self.thr=float(self.datadict["eventThreshold"])
 				self.thr=(self.mu-self.thrCurrPicoA)/self.sd
 		else:
 			self.mu=abs(float(self.datadict["meanOpenCurr"]))
 			self.sd=float(self.datadict["sdOpenCurr"])
-			# self.thr=float(self.datadict["eventThreshold"])
 			self.thr=(self.mu-self.thrCurrPicoA)/self.sd
-
-		# When loading more data, update the parent window
-		# threshold spinbox maximum
-		# self.parent().ThresholdDoubleSpinBox.setMaximum(self.mu)
-
 
 	def _ticks(self, nticks):
 		axes=self.mpl_hist.canvas.ax
@@ -337,7 +317,6 @@ class TrajectoryWindow(QtGui.QDialog):
 				self._loaddata()
 				self.nUpdate+=1
 
-				# self.mpl_hist.canvas.ax.set_autoscale_on(False)
 				self.update_graph()
 			except EmptyDataPipeError:
 				pass
@@ -348,6 +327,7 @@ class TrajectoryWindow(QtGui.QDialog):
 		denoiseWarnBox.setIcon(QtGui.QMessageBox.Warning)
 		denoiseWarnBox.addButton(QtGui.QPushButton('Yes'), QtGui.QMessageBox.YesRole)
 		denoiseWarnBox.addButton(QtGui.QPushButton('No'), QtGui.QMessageBox.RejectRole)
+		
 		return denoiseWarnBox.exec_()
 
 

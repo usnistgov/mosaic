@@ -12,6 +12,7 @@ import string
 import glob
 import multiprocessing
 from  mosaic.utilities.resource_path import format_path
+from mosaicgui.updateService import updateService
 from sqlite3 import DatabaseError
 
 from PyQt4 import QtCore
@@ -21,7 +22,7 @@ from PyQt4 import QtGui
 import mosaicgui.settingsview
 import mosaicgui.analysisWorker as analysisworker
 
-from mosaic.metaTrajIO import FileNotFoundError
+from mosaic.trajio.metaTrajIO import FileNotFoundError
 
 class qtAnalysisGUI(mosaicgui.settingsview.settingsview):
 	def __init__(self, parent = None):
@@ -47,6 +48,7 @@ class qtAnalysisGUI(mosaicgui.settingsview.settingsview):
 		QtCore.QObject.connect(self.actionSave_Histogram, QtCore.SIGNAL('triggered()'), self.OnSaveHistogram)
 		QtCore.QObject.connect(self.actionExport_Database_to_CSV, QtCore.SIGNAL('triggered()'), self.OnExportDB)
 		QtCore.QObject.connect(self.actionAbout_MOSAIC, QtCore.SIGNAL('triggered()'), self.OnAboutApp)
+		QtCore.QObject.connect(self.actionCheck_for_Updates, QtCore.SIGNAL('triggered()'), self.OnCheckUdate)
 
 		QtCore.QObject.connect(self.datPathLineEdit, QtCore.SIGNAL('textChanged(const QString &)'), self.OnDBFileDropped)
 		
@@ -67,7 +69,7 @@ class qtAnalysisGUI(mosaicgui.settingsview.settingsview):
 					else:
 						fltr=None
 
-					with open(self.analysisDataModel["DataFilesPath"]+"/.settings", 'w') as f:
+					with open(format_path(self.analysisDataModel["DataFilesPath"]+"/.settings"), 'w') as f:
 						f.write(
 							self.analysisDataModel.GenerateSettingsView(
 								eventPartitionAlgo=str(self.partitionAlgorithmComboBox.currentText()), 
@@ -265,6 +267,10 @@ class qtAnalysisGUI(mosaicgui.settingsview.settingsview):
 
 	def OnAboutApp(self):
 		self.aboutDialog.show()
+
+	def OnCheckUdate(self):
+		u=updateService()	
+		u.CheckUpdate(parent=self, noUpdateDialog=True)
 
 	def _getdbfiles(self):
 		path=self.analysisDataModel["DataFilesPath"]

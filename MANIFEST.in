@@ -1,5 +1,13 @@
 include *.txt
 include *.rst
-recursive-include dependencies *.txt
-recursive-include mosaic/utest/testdata *.prm
-recursive-include mosaic/utest/testdata *.csv
+recursive-include mosaic/tests/testdata *.prm
+recursive-include mosaic/tests/testdata *.csv
+recursive-include mosaic/tests/testdata *.tsv
+recursive-include mosaic/tests/testdata *.qdf
+recursive-include mosaic/tests/testdata *.bin
+recursive-include mosaic/tests/testdata *.json
+recursive-include mosaicweb/mosaicweb/static/css *
+recursive-include mosaicweb/mosaicweb/static/js *
+recursive-include mosaicweb/mosaicweb/static/img *
+recursive-include mosaicweb/mosaicweb/static/partials *
+recursive-include mosaicweb/mosaicweb/templates *

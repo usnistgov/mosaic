@@ -3,10 +3,12 @@
 	Load analysis settings from a JSON file. 
 
 	:Created:	8/24/2012
- 	:Author: 	Arvind Balijepalli <arvind.balijepalli@nist.gov>
+	:Author: 	Arvind Balijepalli <arvind.balijepalli@nist.gov>
 	:License:	See LICENSE.TXT
 	:ChangeLog:
 	.. line-block::
+		9/22/17 	AB 	Removed the filterEventPadding option to eventSegment.
+		7/15/17 	AB 	Add the filterEventPadding option to eventSegment.
 		3/16/16 	AB 	Replaced InitThreshold with StepSize in default settings for ADEPT and warn users when InitThreshold is used.
 		8/24/15 	AB 	Updated algorithm names.
 		6/24/15 	AB 	Added an option to unlink the RC constants in stepResponseAnalysis.
@@ -24,6 +26,10 @@
 import json
 import os
 import os.path
+from mosaic.utilities.resource_path import format_path
+import mosaic.utilities.mosaicLogging as mlog
+
+__all__ = ["settings"]
 
 class settings:
 	"""
@@ -37,6 +43,9 @@ class settings:
 		"""
 		"""	
 		self.settingsFile=None
+		self.defaultSettings=False
+
+		self.logger=mlog.mosaicLogging().getLogger(name=__name__)
 
 		if os.path.isfile(datpath+'/.settings'):
 			self.settingsFile=datpath+"/.settings"
@@ -51,8 +60,9 @@ class settings:
 		# 	print "Settings file not found in data directory. Default settings will be used."
 		# 	self.settingsFile=os.getcwd()+"/settings"
 		else:
+			self.defaultSettings=True
 			if defaultwarn:
-				print "WARNING: Settings file not found in data directory. Default settings will be used."
+				self.logger.warning( "WARNING: Settings file not found in data directory. Default settings will be used." )
 			settingstr=__settings__
 
 
@@ -67,11 +77,11 @@ class settings:
 					tempval=self.settingsDict[s][k]
 					del self.settingsDict[s][k]
 
-					print "WARNING: The setting '{key}' in '{sec}' has been replaced by '{newkey}'.\n".format(
+					self.logger.warning( "WARNING: The setting '{key}' in '{sec}' has been replaced by '{newkey}'.".format(
 								key=k, 
 								sec=s,
 								newkey=v
-							)
+							))
 
 					self.settingsDict[s][v]=tempval
 		except KeyError:
@@ -97,92 +107,91 @@ class settings:
 		except KeyError, AttributeError:
 			return {}
 
+	@property
+	def defaultSettingsLoaded(self):
+		return self.defaultSettings
+
 __settings__="""
-	{
-		"eventSegment" : {
-			"blockSizeSec" 			: "0.5",
-			"eventPad" 				: "50",
-			"minEventLength" 		: "5",
-			"eventThreshold" 		: "6.0",
-			"driftThreshold" 		: "999.0",
-			"maxDriftRate" 			: "999.0",
-			"meanOpenCurr"			: "-1",
-			"sdOpenCurr"			: "-1",
-			"slopeOpenCurr"			: "-1",
-			"writeEventTS"			: "1",
-			"parallelProc"			: "0",
-			"reserveNCPU"			: "2"
-		},
-		"singleStepEvent" : {
-			"binSize" 				: "1.0",
-			"histPad" 				: "10",
-			"maxFitIters"			: "5000",
-			"a12Ratio" 				: "1.e4",
-			"minEvntTime" 			: "10.e-6",
-			"minDataPad" 			: "75"
-		},
-		"adept2State" : {
-			"FitTol"				: "1.e-7",
-			"FitIters"				: "50000",
-			"LinkRCConst" 			: "1"
-		},
-		"adept" : {
-            "FitTol"				: "1.e-7",
-            "FitIters"				: "1000",
-            "StepSize"				: "2.5",
-            "MinStateLength"		: "10",
-            "MaxEventLength" 		: "50000",
-            "LinkRCConst" 			: "1"
-	     },
-	     "cusumPlus": {
-			"StepSize"				: 3.0, 
-			"MinThreshold"			: 3.0,
-			"MaxThreshold"			: 10.0,
-			"MinLength" 			: 10
-    	}, 
-		"besselLowpassFilter" : {
-			"filterOrder"			: "6",
-			"filterCutoff"			: "10000",
-			"decimate"				: "1"	
-		},
-		"waveletDenoiseFilter" : {
-			"wavelet"				: "sym5",
-			"level"					: "5",
-			"thresholdType"			: "soft",
-			"thresholdSubType"		: "sqtwolog"
-		},
-		"abfTrajIO" : {
-			"filter"				: "*.abf", 
-			"start"					: 0.0, 
-			"dcOffset"				: 0.0
-		},
-		"qdfTrajIO": {
-			"Rfb": 9.1e+12, 
-			"Cfb": 1.07e-12, 
-			"dcOffset": 0.0, 
-			"filter": "*.qdf", 
-			"start": 0.0,
-			"format" : "V"
-		},
-		"binTrajIO": {
-			"AmplifierScale": "1.0", 
-			"AmplifierOffset": "0.0", 
-			"SamplingFrequency": "50000",
-			"HeaderOffset": "0",
-			"ColumnTypes": "[('curr_pA', 'float64')]",
-			"IonicCurrentColumn" : "curr_pA",
-			"dcOffset": "0.0", 
-			"filter": "*.bin", 
-			"start": "0.0"
-		},
-		"tsvTrajIO": {
-	        "filter" :  "*.tsv", 
-	        "headers" : "False", 
-	        "Fs" :	"500000",
-	        "dcOffset" : 0.0, 
-	        "start" : 0.0 
-    	}
+{
+	"eventSegment" : {
+		"blockSizeSec" 			: "0.5",
+		"eventPad" 				: "50",
+		"minEventLength" 		: "5",
+		"maxEventLength"		: "10000", 
+		"eventThreshold" 		: "6.0",
+		"driftThreshold" 		: "999.0",
+		"maxDriftRate" 			: "999.0",
+		"meanOpenCurr"			: "-1",
+		"sdOpenCurr"			: "-1",
+		"slopeOpenCurr"			: "-1",
+		"writeEventTS"			: "1",
+		"parallelProc"			: "0",
+		"reserveNCPU"			: "2",
+		"minBaseline"			: "-1",
+		"maxBaseline"			: "-1"
+	},
+	"adept2State" : {
+		"FitTol"				: "1.e-7",
+		"FitIters"				: "50000",
+		"LinkRCConst" 			: "1"
+	},
+	"adept" : {
+		"FitTol"				: "1.e-7",
+		"FitIters"				: "1000",
+		"StepSize"				: "2.5",
+		"MinStateLength"		: "10",
+		"MaxEventLength" 		: "50000",
+		"LinkRCConst" 			: "1"
+	 },
+	 "cusumPlus": {
+		"StepSize"				: 3.0, 
+		"MinThreshold"			: 3.0,
+		"MaxThreshold"			: 10.0,
+		"MinLength" 			: 10
+	}, 
+	"besselLowpassFilter" : {
+		"filterOrder"			: "6",
+		"filterCutoff"			: "10000",
+		"decimate"				: "1"	
+	},
+	"waveletDenoiseFilter" : {
+		"wavelet"				: "sym5",
+		"level"					: "5",
+		"thresholdType"			: "soft",
+		"thresholdSubType"		: "sqtwolog"
+	},
+	"abfTrajIO" : {
+		"filter"				: "*.abf", 
+		"start"					: 0.0, 
+		"dcOffset"				: 0.0
+	},
+	"qdfTrajIO": {
+		"Rfb": 9.1e+12, 
+		"Cfb": 1.07e-12, 
+		"dcOffset": 0.0, 
+		"filter": "*.qdf", 
+		"start": 0.0,
+		"format" : "V"
+	},
+	"binTrajIO": {
+		"AmplifierScale": "1.0", 
+		"AmplifierOffset": "0.0", 
+		"SamplingFrequency": "50000",
+		"HeaderOffset": "0",
+		"ColumnTypes": "[('curr_pA', 'float64')]",
+		"IonicCurrentColumn" : "curr_pA",
+		"dcOffset": "0.0", 
+		"filter": "*.bin", 
+		"start": "0.0"
+	},
+	"tsvTrajIO": {
+		"filter" :  "*.tsv", 
+		"headers" : "False", 
+		"Fs" :	"500000",
+		"dcOffset" : 0.0, 
+		"start" : 0.0 
 	}
+}
 """
 
 __legacy_settings__={

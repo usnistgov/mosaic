@@ -15,17 +15,19 @@ addons:
     - libblas-dev
     - liblapack-dev
     - gfortran
-    - libzmq3-dev
+    #- libzmq3-dev
     - libqt4-dev
     - qt4-dev-tools 
     - python-qt4-dev 
     - pyqt4-dev-tools
     - python-qt4
+    - python-docutils
 before_install:
+  - pip install docutils
   - pip install -U pip
 install:
   - travis_wait travis_retry pip install -r requirements.txt --upgrade
-  - pip install pyzmq --upgrade
+  #- pip install pyzmq --upgrade
   - ln -s /usr/lib/python2.7/dist-packages/PyQt4/ $VIRTUAL_ENV/lib/python2.7/site-packages/
   - ln -s /usr/lib/python2.7/dist-packages/sip.so $VIRTUAL_ENV/lib/python2.7/site-packages/
 script: 

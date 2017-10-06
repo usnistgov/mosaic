@@ -1,6 +1,8 @@
 .. image:: https://travis-ci.org/usnistgov/mosaic.svg?branch=devel-1.0
     :target: https://travis-ci.org/usnistgov/mosaic
-    
+.. image:: https://badge.fury.io/gh/usnistgov%2Fmosaic.svg
+    :target: https://badge.fury.io/gh/usnistgov%2Fmosaic
+        
 MOSAIC: A modular single-molecule analysis interface
 =================================
 
@@ -9,19 +11,19 @@ MOSAIC is a single molecule analysis toolbox that automatically decodes multi-st
 
 Nanometer-scale pores have demonstrated potential use in biotechnology applications, including DNA sequencing, single-molecule force spectroscopy, and single-molecule mass spectrometry. The data modeling and analysis methods implemented in MOSAIC allow for dramatic improvements in the quantification of molecular interactions with the channel in each of these applications.
 
-**If you use MOSAIC in your work, please cite:** `ACS Nano 2014, 8, 1547–1553.  <http://pubs.acs.org/doi/abs/10.1021/nn405761y>`_
+**If you use MOSAIC in your work, please cite:** `Analytical Chemistry 2016, (88) pp. 11900–11907  <http://pubs.acs.org/doi/abs/10.1021/acs.analchem.6b03725>`_ and `ACS Nano 2014, (8) pp. 1547–1553.  <http://pubs.acs.org/doi/abs/10.1021/nn405761y>`_
 
 
 Installation
 =================================
 
-Please refer to the `Installation <https://usnistgov.github.io/mosaic/html/doc/GettingStarted.html>`_ section of the MOSAIC documentation for details on installation.
+Please refer to the `Installation <https://pages.nist.gov/mosaic/html/doc/GettingStarted.html>`_ section of the MOSAIC documentation for details on installation.
 
 
 Getting Help
 =================================
 
-For questions and help, please join our `mailing list <https://usnistgov.github.io/mosaic/html/doc/mailingList.html>`_. 
+For questions and help, please join our `mailing list <https://pages.nist.gov/mosaic/html/doc/mailingList.html>`_. 
 
 To subscribe:
 
@@ -43,24 +45,48 @@ Report problems using our `issue tracker <https://github.com/usnistgov/mosaic/is
 Change Log
 =================================
 
+**v1.3.4**
+
+- Fixed a bug in the default settings that prevented the analysis from starting in some instances.
+
+**v1.3.3**
+
+- Added support for Chimera data files.
+- Resolves issues #92 and #95. 
+
+**v1.3.2**
+
+- Fixed event partiioning bugs.
+- [GUI] UI tweaks.
+
+**v1.3.1**
+
+- Bug fix release.
+ 
 **v1.3**
 
-- Added a brand new MOSAIC examples repository that contains plotting scripts and Jupyter notebooks (https://github.com/usnistgov/mosaic-examples)
+- Added a new MOSAIC examples repository that contains plotting scripts and Jupyter notebooks (https://github.com/usnistgov/mosaic-examples)
 
-- Added CUSUM+ algorithm (see pull requests #34, #43, #45, and #46)
+- Updated Bessel fiter implementation to allow causal and non-causal filters.
+- Added the CUSUM+ algorithm (see pull requests #34, #43, #45, and #46)
+- Added the ability to read arbitrary binary files.
 - Renamed StepResponseAnalysis to ADEPT 2-state.
 - Renamed multiStateAnalysis to ADEPT.
 - CUSUM+ is now used to generate initial guesses for ADEPT
 - Streamlined unit test framework. Added new tests for CUSUM+.
 - Updated MOSAIC dependencies to include newer package versions and pandas. Run 'python setup.py mosaic_deps' to update.
 - Added a new metadata column (mdStateResTime) that saves the residence time of each state to the database. This affects ADEPT and CUSUM+.
+- Processing time per event is now saved to the database.
+- Added support for warning status codes that begin with 'w'. These codes preserve metadata in the SQLite output and are used to flag events that need closer inspection.
 - Removed mosaicgui from PyPi. 'pip install mosaic-nist' only installs command line modules. 
-- Top level ConvertToCSV supports arbitrary file extensions.
+- Top level ConvertTrajIO supports binary and ASCII files.
 - Added Travis continous integration support.
+- [GUI] Added a binary update service for Windows and OS X.
 - [GUI] Added a table that displays fit parameters in the event viewer window.
 - [GUI] Added more descriptive fit errors.
 - [GUI] Added CUSUM+ support to MOSAIC GUI.
 - [GUI] Export SQLITE database to CSV (#56).
+- [GUI] Support for warning codes in fit event viewer.
 - [GUI] Performance optimizations.
 - [GUI] Fit window in MOSAIC GUI displays idealized pulses overlays.
 - [GUI] Added additional analysis statistics.
@@ -69,7 +95,6 @@ Change Log
 - [Addons] Mathematica queries are *optionally* handled through an external Python script to improve performance.
 - [Addons] Added an option to limit PlotEvents in Mathematica addon to N events.
 
-- Fixes issues #36, #37, #38, #39, #47, #48, #54, #56, #58, #62, #65 and #66.
 - Known Issues: See #8, #10, #40, #63 and #69.
 
 **v1.2**
@@ -81,7 +106,7 @@ Change Log
 
 **v1.1**
 
-- [Addons] IGOR_ support.
+- [Addons] IGOR support.
 - PyPi package automatically installs MOSAIC dependencies.
 - Miscellaneous bug fixes.
 - *Known Issues:* See #8 and #10.

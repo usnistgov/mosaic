@@ -1,0 +1,47 @@
+<md-dialog flex="50" aria-label="File Listing">
+	<form name="fileListing">
+		<md-toolbar>
+			<div class="md-toolbar-tools md-whiteframe">
+				<h3><em>{{model.toolbarTitle}}</em></h3>
+				<span flex></span>
+				<md-button class="md-icon-button" ng-click="cancel()">
+					<md-icon md-font-set="material-icons md-24">close</md-icon>
+				</md-button>
+			</div>
+		</md-toolbar>
+		<md-dialog-content style="max-width:800px;max-height:610px; ">
+			<md-list class="md-dense" flex>
+				<md-subheader class="md-no-sticky">
+					<md-button class="md-icon-button" ng-if="model.subheading != 'Data Root/'" ng-click="model.upOneLevel()">
+						<md-icon md-font-set="material-icons md-24">arrow_back</md-icon>
+					</md-button>
+					{{model.subheading}}
+				</md-subheader>
+				<md-list-item flex class="md-2-line animate-repeat md-padding" ng-repeat="file in model.fileList" 
+				ng-click="selectItem($index)" ng-dblclick="folderDblClick($index)">
+				<!-- ng-class="{selectedIndex: model.selectedIndex===$index}" -->
+					<md-icon md-font-set="material-icons md-24" ng-if="model.selectedIndex!=$index && model.dialogMode=='directory'">folder</md-icon>
+					<md-icon md-font-set="material-icons md-24" ng-if="model.selectedIndex!=$index && model.dialogMode=='sqlite'">insert_drive_file</md-icon>
+					<md-icon md-font-set="material-icons md-24 md-accent" ng-if="model.selectedIndex==$index">check_circle</md-icon>
+					<div flex class="md-list-item-text" layout="column" layout-align="start start">
+						<md-truncate flex><small>{{ file.name }}</small></md-truncate>
+						<p><small>{{ file.desc }}</small></p>
+					</div>
+					<span flex></span>
+					<p class="md-secondary" flex style="color:#696969;"><small><em>{{file.modified}}</em></small></p>
+				</md-list-item>
+			</md-list>
+
+		</md-dialog-content>
+
+		<md-dialog-actions layout="row">
+			<md-button ng-click="cancel()" style="color:#696969;">
+				Cancel
+			</md-button>
+			<md-button class="md-primary" ng-disabled="model.selectedIndex == null"
+				ng-click="answer('Load Data')" style="margin-right:16px;">
+				Load
+			</md-button>
+		</md-dialog-actions>
+	</form>
+</md-dialog>
