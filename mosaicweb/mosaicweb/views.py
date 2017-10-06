@@ -287,7 +287,7 @@ def analysisLog():
 		return jsonify( respondingURL='analysis-statistics', errType='MissingSIDError', errSummary="A valid session ID was not found.", errText="A valid session ID was not found." ), 500
 
 @app.route('/event-view', methods=['POST'])
-# @gzipped
+@gzipped
 def eventView():
 	global gAnalysisSessions
 
