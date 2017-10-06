@@ -7,6 +7,10 @@ from mosaic.utilities.ga import registerLaunch
 from PyQt4 import QtGui
 import multiprocessing
 
+from mosaicweb import app
+import mosaic
+import webbrowser
+	
 from mosaicgui.mplwidget import update_rcParams
 
 @registerLaunch("qt")
@@ -26,7 +30,13 @@ def startMOSAIC():
 	
 		sys.exit(app.exec_())
 
+def startMOSAICWeb():
+	webbrowser.open("http://localhost:5000/", new=1, autoraise=True)
+	app.run(port=mosaic.WebServerPort, debug=mosaic.DeveloperMode)
+
+
 if __name__ == '__main__':
 	if sys.platform.startswith('win'):
 		multiprocessing.freeze_support()
-	startMOSAIC()
+	startMOSAICWeb()
+	# startMOSAIC()
