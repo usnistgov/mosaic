@@ -252,16 +252,6 @@ class metaEventPartition(object):
 		# Write the list of processed files to the database
 		[ self.mdioDBHnd.writeRecord(f, table='processedfiles') for f in self.trajDataObj.ProcessedFiles ]
 
-
-		self.logFileHnd.write(self.outputString)
-		self.logFileHnd.close()
-
-		# write the output log to the database
-		tstr=self.mdioDBHnd.readAnalysisLog()+self.outputString
-		self.mdioDBHnd.writeAnalysisLog(tstr)
-
-		self.mdioDBHnd.closeDB()
-
 	#################################################################
 	# Interface functions
 	#################################################################
