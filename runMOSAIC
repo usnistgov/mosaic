@@ -7,11 +7,20 @@ from mosaic.utilities.ga import registerLaunch
 from PyQt4 import QtGui
 import multiprocessing
 
-from mosaicweb import app
-import mosaic
-import webbrowser
-	
+from mosaicweb.run import startMOSAICWeb	
 from mosaicgui.mplwidget import update_rcParams
+
+import argparse
+
+def parseCLIArgs():
+	parser = argparse.ArgumentParser(description='Run the MOSAIC graphical interface')
+	
+	parser.add_argument('-w', '--web', dest='web', default=False, action='store_true', help='Run the MOSAIC web interface (default)')
+	parser.add_argument('-q', '--qt', dest='qt', default=False, action='store_true', help='Run the MOSAIC Qt interface')
+	
+	args = vars(parser.parse_args())
+
+	return args
 
 @registerLaunch("qt")
 def startMOSAIC():
@@ -30,13 +39,13 @@ def startMOSAIC():
 	
 		sys.exit(app.exec_())
 
-def startMOSAICWeb():
-	webbrowser.open("http://localhost:5000/", new=1, autoraise=True)
-	app.run(port=mosaic.WebServerPort, debug=mosaic.DeveloperMode)
-
-
 if __name__ == '__main__':
 	if sys.platform.startswith('win'):
 		multiprocessing.freeze_support()
-	startMOSAICWeb()
-	# startMOSAIC()
+	
+	cliArgs=parseCLIArgs()
+
+	if cliArgs["qt"]:
+		startMOSAIC()
+	else:
+		startMOSAICWeb()
