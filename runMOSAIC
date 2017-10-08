@@ -9,7 +9,7 @@ import multiprocessing
 
 from mosaicgui.mplwidget import update_rcParams
 
-# @registerRun
+@registerRun
 def startMOSAIC():
 	update_rcParams()
 	
