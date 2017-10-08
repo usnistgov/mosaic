@@ -1,3 +1,14 @@
+# -*- coding: utf-8 -*-
+"""
+	Setup MOSAIC graphical interfaces.
+
+	:Created:	10/07/2017
+ 	:Author: 	Arvind Balijepalli <arvind.balijepalli@nist.gov>
+	:License:	See LICENSE.TXT
+	:ChangeLog:
+	.. line-block::
+		10/07/17 	AB 	Initial version
+"""	
 import sys
 import multiprocessing
 import argparse
