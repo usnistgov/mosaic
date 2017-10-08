@@ -1,16 +1,10 @@
 #! /usr/bin/env python
 import sys
-import mosaicgui.mosaicGUI as mosaicgui
-from PyQt4 import QtCore
-from mosaicgui.updateService import updateService
-from mosaic.utilities.ga import registerLaunch
-from PyQt4 import QtGui
 import multiprocessing
-
-from mosaicweb.run import startMOSAICWeb	
-from mosaicgui.mplwidget import update_rcParams
-
 import argparse
+
+from mosaicweb.run import startMOSAICWeb
+from mosaicgui.run import startMOSAICQt
 
 def parseCLIArgs():
 	parser = argparse.ArgumentParser(description='Run the MOSAIC graphical interface')
@@ -22,23 +16,6 @@ def parseCLIArgs():
 
 	return args
 
-@registerLaunch("qt")
-def startMOSAIC():
-	update_rcParams()
-	
-	app = QtGui.QApplication(sys.argv)
-
-	u=updateService()	
-	if not u.CheckUpdate():
-		dmw = mosaicgui.qtAnalysisGUI()
-		dmw.show()
-		dmw.raise_()
-
-		# cleanup processing
-		app.connect(app, QtCore.SIGNAL("aboutToQuit()"), dmw.OnQuit)
-	
-		sys.exit(app.exec_())
-
 if __name__ == '__main__':
 	if sys.platform.startswith('win'):
 		multiprocessing.freeze_support()
@@ -46,6 +23,6 @@ if __name__ == '__main__':
 	cliArgs=parseCLIArgs()
 
 	if cliArgs["qt"]:
-		startMOSAIC()
+		startMOSAICQt()
 	else:
 		startMOSAICWeb()
