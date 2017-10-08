@@ -1,28 +1,6 @@
 #! /usr/bin/env python
-import sys
-import multiprocessing
-import argparse
-
-from mosaicweb.run import startMOSAICWeb
-from mosaicgui.run import startMOSAICQt
-
-def parseCLIArgs():
-	parser = argparse.ArgumentParser(description='Run the MOSAIC graphical interface')
-	
-	parser.add_argument('-w', '--web', dest='web', default=False, action='store_true', help='Run the MOSAIC web interface (default)')
-	parser.add_argument('-q', '--qt', dest='qt', default=False, action='store_true', help='Run the MOSAIC Qt interface')
-	
-	args = vars(parser.parse_args())
-
-	return args
+from mosaic.mosaicSetup	import mosaicSetup
 
 if __name__ == '__main__':
-	if sys.platform.startswith('win'):
-		multiprocessing.freeze_support()
-	
-	cliArgs=parseCLIArgs()
+	mosaicSetup().launcMOSAIC()
 
-	if cliArgs["qt"]:
-		startMOSAICQt()
-	else:
-		startMOSAICWeb()
