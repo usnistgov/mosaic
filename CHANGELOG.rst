@@ -1,7 +1,7 @@
 Change Log
 ++++++++++++++++++++++++++++++++++++++++++
 
-***v1.3.5***
+**v1.3.5**
 
  - Saves raw events in database. Resolves #93.
 
