@@ -5,7 +5,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>13.1.6. Event Processing &#8212; MOSAIC 1.3.4 documentation</title>
+    <title>13.1.6. Event Processing &#8212; MOSAIC 1.3.5 documentation</title>
     
     <link rel="stylesheet" href="../_static/basic.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -16,7 +16,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '1.3.4',
+        VERSION:     '1.3.5',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -33,7 +33,7 @@
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="top" title="MOSAIC 1.3.4 documentation" href="../index.html" />
+    <link rel="top" title="MOSAIC 1.3.5 documentation" href="../index.html" />
     <link rel="up" title="13. API Documentation" href="../doc/apidocs.html" />
     <link rel="next" title="13.1.7. Data Output" href="mosaic.output.html" />
     <link rel="prev" title="13.1.5. Event Partition and Segment" href="mosaic.partition.html" />
@@ -65,7 +65,7 @@
         </button>
         <a class="navbar-brand" href="../index.html"><span><img src="../_static/icon_36.png"></span>
            </a>
-        <span class="navbar-text navbar-version pull-left"><b>1.3.4</b></span>
+        <span class="navbar-text navbar-version pull-left"><b>1.3.5</b></span>
       </div>
 
         <div class="collapse navbar-collapse nav-collapse">
@@ -182,7 +182,7 @@
 </div>
 <dl class="class">
 <dt id="mosaic.process.adept2State.adept2State">
-<em class="property">class </em><code class="descclassname">mosaic.process.adept2State.</code><code class="descname">adept2State</code><span class="sig-paren">(</span><em>icurr</em>, <em>Fs</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/process/adept2State.html#adept2State"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mosaic.process.adept2State.adept2State" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">mosaic.process.adept2State.</code><code class="descname">adept2State</code><span class="sig-paren">(</span><em>icurr</em>, <em>icurrU</em>, <em>Fs</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/process/adept2State.html#adept2State"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mosaic.process.adept2State.adept2State" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="mosaic.meta.html#mosaic.process.metaEventProcessor.metaEventProcessor" title="mosaic.process.metaEventProcessor.metaEventProcessor"><code class="xref py py-class docutils literal"><span class="pre">mosaic.process.metaEventProcessor.metaEventProcessor</span></code></a></p>
 <p>Analyze an event that is characteristic of PEG blockades. This method includes system 
 information in the analysis, specifically the filtering effects (throught the RC constant)
@@ -293,7 +293,7 @@ and displayed at the end of a run.</p>
 </div>
 <dl class="class">
 <dt id="mosaic.process.adept.adept">
-<em class="property">class </em><code class="descclassname">mosaic.process.adept.</code><code class="descname">adept</code><span class="sig-paren">(</span><em>icurr</em>, <em>Fs</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/process/adept.html#adept"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mosaic.process.adept.adept" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">mosaic.process.adept.</code><code class="descname">adept</code><span class="sig-paren">(</span><em>icurr</em>, <em>icurrU</em>, <em>Fs</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/process/adept.html#adept"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mosaic.process.adept.adept" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="mosaic.meta.html#mosaic.process.metaEventProcessor.metaEventProcessor" title="mosaic.process.metaEventProcessor.metaEventProcessor"><code class="xref py py-class docutils literal"><span class="pre">mosaic.process.metaEventProcessor.metaEventProcessor</span></code></a></p>
 <p>Analyze a multi-step event that contains two or more states. This method includes system 
 information in the analysis, specifically the filtering effects (through the RC constant)
@@ -345,15 +345,13 @@ and displayed at the end of a run.</p>
 </div>
 <div class="section" id="mosaic-process-cusumplus-module">
 <h2>13.1.6.3. mosaic.process.cusumPlus module<a class="headerlink" href="#mosaic-process-cusumplus-module" title="Permalink to this headline">¶</a></h2>
-<img src="../_images/inheritance-0dff859b5e362416568f42a8dae08c2e294e21aa.png" alt="Inheritance diagram of mosaic.process.cusumPlus" usemap="#inheritance6c5c146ee6" class="inheritance"/>
+<img src="../_images/inheritance-542d04eeffc694a13b717b115357dd41d898e748.png" alt="Inheritance diagram of mosaic.process.cusumPlus" usemap="#inheritance6c5c146ee6" class="inheritance"/>
 <map id="inheritance6c5c146ee6" name="inheritance6c5c146ee6">
-<area shape="rect" id="node2" href="#mosaic.process.cusumPlus.cusumPlus" target="_top" title="CUSUM+ will detect jumps that are smaller than `StepSize`, but they will have to be sustained longer. Threshold can be thought of, very roughly, as proportional to the length of time a subevent must be sustained for it to be detected. The algorithm will adjust the actual threshold used on a per&#45;event basis in order to minimize false positive detection of current jumps This algorithm is based on code used in OpenNanopore, which you can read about here: http://pubs.rsc.org/en/Content/ArticleLanding/2012/NR/c2nr30951c#!divAbstract" alt="" coords="325,53,481,77"/>
+<area shape="rect" id="node2" href="#mosaic.process.cusumPlus.cusumPlus" target="_top" title="Implements a modified version of the CUSUM algorithm (used by OpenNanopore for example) in MOSAIC. This approach sacrifices including system information in the analysis in favor of much faster fitting of single&#45; and multi&#45;level events." alt="" coords="325,53,481,77"/>
 <area shape="rect" id="node3" href="mosaic.meta.html#mosaic.process.metaEventProcessor.metaEventProcessor" target="_top" title=".. warning:: |metaclass|" alt="" coords="5,53,277,77"/>
 <area shape="rect" id="node4" title="Smart data block that holds a time&#45;series of data and keeps track" alt="" coords="71,5,211,29"/>
 </map>
-<span class="target" id="module-mosaic.process.cusumPlus"></span><p>Analyze a multi-step event with the CUSUM+ algorithm. Implements a modified version of the CUSUM algorithm 
-(used by OpenNanopore for example) in MOSAIC. This approach sacrifices including system information in the 
-analysis in favor of much faster fitting of single- and multi-level events.</p>
+<span class="target" id="module-mosaic.process.cusumPlus"></span><p>Analyze a multi-step event with the CUSUM+ algorithm</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -369,7 +367,6 @@ analysis in favor of much faster fitting of single- and multi-level events.</p>
 </tbody>
 </table>
 <div class="line-block">
-<div class="line">6/3/17          AB      Updated docstring.</div>
 <div class="line">8/24/15         AB      Rename algorithm to CUSUM+</div>
 <div class="line">3/20/15         AB      Added a new metadata column (mdStateResTime) that saves the residence time of each state to the database.</div>
 <div class="line">3/18/15         KB      Implemented rise time skipping</div>
@@ -379,8 +376,9 @@ analysis in favor of much faster fitting of single- and multi-level events.</p>
 </div>
 <dl class="class">
 <dt id="mosaic.process.cusumPlus.cusumPlus">
-<em class="property">class </em><code class="descclassname">mosaic.process.cusumPlus.</code><code class="descname">cusumPlus</code><span class="sig-paren">(</span><em>icurr</em>, <em>Fs</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/process/cusumPlus.html#cusumPlus"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mosaic.process.cusumPlus.cusumPlus" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">mosaic.process.cusumPlus.</code><code class="descname">cusumPlus</code><span class="sig-paren">(</span><em>icurr</em>, <em>icurrU</em>, <em>Fs</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/process/cusumPlus.html#cusumPlus"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mosaic.process.cusumPlus.cusumPlus" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="mosaic.meta.html#mosaic.process.metaEventProcessor.metaEventProcessor" title="mosaic.process.metaEventProcessor.metaEventProcessor"><code class="xref py py-class docutils literal"><span class="pre">mosaic.process.metaEventProcessor.metaEventProcessor</span></code></a></p>
+<p>Implements a modified version of the CUSUM algorithm (used by OpenNanopore for example) in MOSAIC. This approach sacrifices including system information in the analysis in favor of much faster fitting of single- and multi-level events.</p>
 <p>CUSUM+ will detect jumps that are smaller than <cite>StepSize</cite>, but they will have to be sustained longer. Threshold can be thought of, very roughly, as proportional to the length of time a subevent must be sustained for it to be detected. The algorithm will adjust the actual threshold used on a per-event basis in order to minimize false positive detection of current jumps This algorithm is based on code used in OpenNanopore, which you can read about here: <a class="reference external" href="http://pubs.rsc.org/en/Content/ArticleLanding/2012/NR/c2nr30951c#!divAbstract">http://pubs.rsc.org/en/Content/ArticleLanding/2012/NR/c2nr30951c#!divAbstract</a></p>
 <p>Some known issues with CUSUM+:</p>
 <ol class="arabic simple">
@@ -388,6 +386,16 @@ analysis in favor of much faster fitting of single- and multi-level events.</p>
 <li>CUSUM assumes an instantaneous transition between current states. As a result, if the RC rise time of the system is large, CUSUM+ can trigger and detect intermediate states during the change time. This can be avoided by choosing a number of samples to skip equal to about 2-5RC.</li>
 <li>As a consequence of using a statistical t-test, CUSUM can have false positives. The algorithm has an adaptive threshold that tries to minimize the chances of this happening while maintaining good sensitivity (expected number of false positives within an event is less than 1).</li>
 </ol>
+<p>To use it requires four settings:</p>
+<blockquote>
+<div><div class="highlight-javascript"><div class="highlight"><pre><span></span><span class="s2">&quot;cusumPlus&quot;</span><span class="o">:</span> <span class="p">{</span>
+        <span class="s2">&quot;StepSize&quot;</span><span class="o">:</span> <span class="mf">3.0</span><span class="p">,</span> 
+        <span class="s2">&quot;MinThreshold&quot;</span><span class="o">:</span> <span class="mf">3.0</span><span class="p">,</span>
+        <span class="s2">&quot;MaxThreshold&quot;</span><span class="o">:</span> <span class="mf">10.0</span><span class="p">,</span>
+        <span class="s2">&quot;MinLength&quot;</span> <span class="o">:</span> <span class="mi">10</span><span class="p">,</span>
+<span class="p">}</span>
+</pre></div>
+</div>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -409,15 +417,7 @@ analysis in favor of much faster fitting of single- and multi-level events.</p>
 </tr>
 </tbody>
 </table>
-<p>To use it requires four settings:</p>
-<div class="highlight-javascript"><div class="highlight"><pre><span></span><span class="s2">&quot;cusumPlus&quot;</span><span class="o">:</span> <span class="p">{</span>
-        <span class="s2">&quot;StepSize&quot;</span><span class="o">:</span> <span class="mf">3.0</span><span class="p">,</span> 
-        <span class="s2">&quot;MinThreshold&quot;</span><span class="o">:</span> <span class="mf">3.0</span><span class="p">,</span>
-        <span class="s2">&quot;MaxThreshold&quot;</span><span class="o">:</span> <span class="mf">10.0</span><span class="p">,</span>
-        <span class="s2">&quot;MinLength&quot;</span> <span class="o">:</span> <span class="mi">10</span><span class="p">,</span>
-<span class="p">}</span>
-</pre></div>
-</div>
+</div></blockquote>
 <dl class="method">
 <dt id="mosaic.process.cusumPlus.cusumPlus.formatsettings">
 <code class="descname">formatsettings</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/process/cusumPlus.html#cusumPlus.formatsettings"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mosaic.process.cusumPlus.cusumPlus.formatsettings" title="Permalink to this definition">¶</a></dt>

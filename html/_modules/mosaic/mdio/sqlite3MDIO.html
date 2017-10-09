@@ -5,7 +5,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>mosaic.mdio.sqlite3MDIO &#8212; MOSAIC 1.3.4 documentation</title>
+    <title>mosaic.mdio.sqlite3MDIO &#8212; MOSAIC 1.3.5 documentation</title>
     
     <link rel="stylesheet" href="../../../_static/basic.css" type="text/css" />
     <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
@@ -16,7 +16,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../../',
-        VERSION:     '1.3.4',
+        VERSION:     '1.3.5',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -33,7 +33,7 @@
     <link rel="shortcut icon" href="../../../_static/favicon.ico"/>
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" />
-    <link rel="top" title="MOSAIC 1.3.4 documentation" href="../../../index.html" />
+    <link rel="top" title="MOSAIC 1.3.5 documentation" href="../../../index.html" />
     <link rel="up" title="Module code" href="../../index.html" />
 
 <meta charset='utf-8'>
@@ -63,7 +63,7 @@
         </button>
         <a class="navbar-brand" href="../../../index.html"><span><img src="../../../_static/icon_36.png"></span>
            </a>
-        <span class="navbar-text navbar-version pull-left"><b>1.3.4</b></span>
+        <span class="navbar-text navbar-version pull-left"><b>1.3.5</b></span>
       </div>
 
         <div class="collapse navbar-collapse nav-collapse">
@@ -404,6 +404,13 @@
 
 		<span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="n">_d</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{0}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">csvfile</span><span class="p">))</span></div>
 
+<div class="viewcode-block" id="sqlite3MDIO.csvString"><a class="viewcode-back" href="../../../api-doc/mosaic.output.html#mosaic.mdio.sqlite3MDIO.sqlite3MDIO.csvString">[docs]</a>	<span class="k">def</span> <span class="nf">csvString</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">query</span><span class="p">):</span>
+		<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">			Return database records that match the specified query as a CSV formatted string.</span>
+<span class="sd">		&quot;&quot;&quot;</span>
+		<span class="n">df</span><span class="o">=</span><span class="n">pandas</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">queryDB</span><span class="p">(</span><span class="n">query</span><span class="p">),</span> <span class="n">columns</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_col_names</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">cursor</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">tableName</span><span class="p">))</span>
+		<span class="k">return</span> <span class="n">df</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span> <span class="n">path_or_buf</span><span class="o">=</span><span class="kc">None</span> <span class="p">)</span></div>
+
 	<span class="k">def</span> <span class="nf">_colnames</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">table</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 		<span class="k">if</span> <span class="n">table</span><span class="p">:</span>
 			<span class="n">tname</span><span class="o">=</span><span class="n">table</span>
@@ -519,7 +526,7 @@
 <span class="k">if</span> <span class="n">__name__</span><span class="o">==</span><span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
 	<span class="k">try</span><span class="p">:</span>
 		<span class="n">c</span><span class="o">=</span><span class="n">sqlite3MDIO</span><span class="p">()</span>
-		<span class="n">c</span><span class="o">.</span><span class="n">openDB</span><span class="p">(</span><span class="n">dbname</span><span class="p">)</span>
+		<span class="n">c</span><span class="o">.</span><span class="n">openDB</span><span class="p">(</span><span class="n">resource_path</span><span class="p">(</span><span class="s1">&#39;data/eventMD-PEG28-ADEPT2State.sqlite&#39;</span><span class="p">))</span>
 		<span class="n">c</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;test&#39;</span><span class="p">)</span>
 
 		<span class="n">q</span><span class="o">=</span><span class="n">c</span><span class="o">.</span><span class="n">queryDB</span><span class="p">(</span> <span class="s2">&quot;select TimeSeries from metadata limit 100, 200&quot;</span> <span class="p">)</span>
@@ -532,7 +539,8 @@
 		<span class="nb">print</span>
 		<span class="c1"># print [ c for c in zip( c.mdColumnNames, c.mdColumnTypes ) if c[1] != &#39;REAL_LIST&#39; ]</span>
 
-		<span class="n">c</span><span class="o">.</span><span class="n">exportToCSV</span><span class="p">(</span> <span class="s2">&quot;select * from metadata&quot;</span> <span class="p">)</span>
+		<span class="c1"># c.exportToCSV( &quot;select * from metadata&quot; )</span>
+		<span class="nb">print</span> <span class="n">c</span><span class="o">.</span><span class="n">csvString</span><span class="p">(</span> <span class="s2">&quot;select ProcessingStatus, BlockDepth from metadata limit 5&quot;</span> <span class="p">)</span>
 
 		<span class="n">c</span><span class="o">.</span><span class="n">closeDB</span><span class="p">()</span>
 		
