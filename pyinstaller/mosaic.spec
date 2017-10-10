@@ -25,9 +25,7 @@ a.datas += [
 				('icons/warning-128.png', '../icons/warning-128.png',  'DATA'),
 				('commit-hash', '../commit-hash', 'DATA'),
 				('version-hash', '../version-hash', 'DATA'),
-				('mosaicgui/highlight-spec/python.json', '../mosaicgui/highlight-spec/python.json', 'DATA'),
-				('mosaicgui/highlight-spec/json.json', '../mosaicgui/highlight-spec/json.json', 'DATA'),
-				('mosaicgui/highlight-spec/log.json', '../mosaicgui/highlight-spec/log.json', 'DATA')
+				('mosaicweb/templates/index.html', '../mosaicweb/templates/index.html', 'DATA')
 			]
 pyz = PYZ(a.pure)
 # On OS X, collect data files and  build an application bundle
@@ -43,7 +41,7 @@ if sys.platform=='darwin':
 		  icon='icon.png' )
 	coll = COLLECT(exe,
 				   a.binaries,
-				   Tree('../mosaicgui/ui', prefix='ui'),
+				   Tree('../mosaicweb/static', prefix='mosaicweb/static'),
 				   a.zipfiles,
 				   a.datas,
 				   strip=None,
@@ -59,7 +57,7 @@ elif sys.platform=='win32' or sys.platform=='win64':
 	exe = EXE(pyz,
 		a.scripts,
 		a.binaries,
-		Tree(format_path('../mosaicgui/ui'), prefix='ui'),
+		Tree(format_path('../mosaicweb/static'), prefix='mosaicweb/static'),
 		a.zipfiles,
 		a.datas,
 		name='MOSAIC.exe',
