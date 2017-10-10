@@ -1,1 +1,1 @@
-Sitemap: https://pages.nist.gov/mosaic/html/sitemap.xml
+Sitemap: https://pages.nist.gov/mosaic/sitemap.xml
