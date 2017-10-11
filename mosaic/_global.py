@@ -12,5 +12,4 @@ DocumentationURL='https://pages.nist.gov/mosaic/'
 
 # Options for MOSAIC Web
 WebServerPort=5000
-# WebServerDataLocation="Y:\\Desktop\\"
-WebServerDataLocation=os.path.expanduser('~')+'/Google Drive/ReferenceData/'
+WebServerDataLocation=os.path.expanduser('~')
