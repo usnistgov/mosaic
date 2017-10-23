@@ -423,7 +423,7 @@ def _folderDesc(item):
 	elif nabf > 0:
 		returnString = "{0} ABF {1}".format(nabf, _fileLabel(nabf))
 	elif nfolders==0:
-		returnString = "No data {1}."
+		returnString = "No data"
 	else:
 		returnString = "{0} {1}".format(nfolders, _fileLabel(nfolders, "sub-folder")) 
 
