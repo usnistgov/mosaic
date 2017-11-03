@@ -30,12 +30,20 @@ class mosaicSetup:
 			multiprocessing.freeze_support()
 
 		if self.args["qt"]:
-			from mosaicgui.run import startMOSAICQt
+			try:
+				from mosaicgui.run import startMOSAICQt
+			except ImportError, err:
+				print "Missing dependencies for Qt GUI ({0}).".format(err)
+				return
 
 			startMOSAICQt()
 		elif self.args["web"]:
-			from mosaicweb.run import startMOSAICWeb
-			
+			try:
+				from mosaicweb.run import startMOSAICWeb
+			except ImportError, err:
+				print "Missing dependencies for Web GUI ({0}).".format(err)
+				return
+
 			startMOSAICWeb()
 		else:
 			self.parser.print_help()
