@@ -13,10 +13,6 @@ import sys
 import multiprocessing
 import argparse
 
-from mosaicweb.run import startMOSAICWeb
-from mosaicgui.run import startMOSAICQt
-
-
 class mosaicSetup:
 	def __init__(self):
 		self.parseCLIArgs()
@@ -34,8 +30,12 @@ class mosaicSetup:
 			multiprocessing.freeze_support()
 
 		if self.args["qt"]:
+			from mosaicgui.run import startMOSAICQt
+
 			startMOSAICQt()
 		elif self.args["web"]:
+			from mosaicweb.run import startMOSAICWeb
+			
 			startMOSAICWeb()
 		else:
 			self.parser.print_help()
