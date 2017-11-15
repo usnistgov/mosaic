@@ -1,4 +1,4 @@
-.. image:: https://travis-ci.org/usnistgov/mosaic.svg?branch=devel-1.0
+.. image:: https://travis-ci.org/usnistgov/mosaic.svg?branch=devel-2.0
     :target: https://travis-ci.org/usnistgov/mosaic
 .. image:: https://badge.fury.io/gh/usnistgov%2Fmosaic.svg
     :target: https://badge.fury.io/gh/usnistgov%2Fmosaic
