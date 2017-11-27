@@ -20,8 +20,8 @@ class mosaicSetup:
 	def parseCLIArgs(self):
 		self.parser = argparse.ArgumentParser(description='Run the MOSAIC graphical interface')
 		
-		self.parser.add_argument('-w', '--web', dest='web', default=True, action='store_true', help='Run the MOSAIC web interface (default)')
-		self.parser.add_argument('-q', '--qt', dest='qt', default=False, action='store_true', help='Run the MOSAIC Qt interface')
+		self.parser.add_argument('-w', '--web', dest='web', default=False, action='store_true', help='Run the MOSAIC web interface (default)')
+		self.parser.add_argument('-q', '--qt', dest='qt', default=True, action='store_true', help='Run the MOSAIC Qt interface')
 		
 		self.args = vars(self.parser.parse_args())
 
