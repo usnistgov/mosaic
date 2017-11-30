@@ -29,15 +29,7 @@ class mosaicSetup:
 		if sys.platform.startswith('win'):
 			multiprocessing.freeze_support()
 
-		if self.args["qt"]:
-			try:
-				from mosaicgui.run import startMOSAICQt
-			except ImportError, err:
-				print "Missing dependencies for Qt GUI ({0}).".format(err)
-				return
-
-			startMOSAICQt()
-		elif self.args["web"]:
+		if self.args["web"]:
 			try:
 				from mosaicweb.run import startMOSAICWeb
 			except ImportError, err:
@@ -45,5 +37,13 @@ class mosaicSetup:
 				return
 
 			startMOSAICWeb()
+		elif self.args["qt"]:
+			try:
+				from mosaicgui.run import startMOSAICQt
+			except ImportError, err:
+				print "Missing dependencies for Qt GUI ({0}).".format(err)
+				return
+
+			startMOSAICQt()
 		else:
 			self.parser.print_help()
