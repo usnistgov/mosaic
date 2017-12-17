@@ -33,9 +33,9 @@
 			<md-button md-no-ink ng-href="/#/" class="md-white" style="padding: 0; margin: 0;">MOSAIC</md-button>
 			<h2 flex md-truncate><em> </em></h2>
 			
-			<md-button class="md-icon-button" href="https://pages.nist.gov/mosaic/html/" target="_blank">
-				<md-tooltip md-direction="left">MOSAIC Documentation</md-tooltip>
-				<md-icon md-font-set="material-icons md-24">help_outline</md-icon>
+			<md-button class="md-icon-button" href="" ng-disabled="true">
+				<md-tooltip md-direction="left">View Active Sessions</md-tooltip>
+				<md-icon md-font-set="material-icons md-24">swap_vert</md-icon>
 			</md-button>
 		
 			<md-menu>
@@ -43,6 +43,12 @@
 					<md-icon md-font-set="material-icons md-24">more_vert</md-icon>
 				</md-button>
 				<md-menu-content width="4">
+					<md-menu-item ng-click="$mdMenu.hide()">
+						<md-button aria-label="MOSAIC Docs"  href="https://pages.nist.gov/mosaic/html/" target="_blank">
+							<md-icon md-font-set="material-icons md-24">help</md-icon>
+							<p class="md-primary">MOSAIC Documentation</p>
+						</md-button>
+					</md-menu-item>
 					<md-menu-item ng-click="$mdMenu.hide()">
 						<md-button aria-label="SQuestions" ng-href="mailto:mosaic@nist.gov">
 							<md-icon md-font-set="material-icons md-24">question_answer</md-icon>
