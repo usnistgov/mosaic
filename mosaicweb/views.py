@@ -393,6 +393,18 @@ def listDatabaseFiles():
 
 	return jsonify( respondingURL='list-database-files', level=level+'/', fileData=fileList )
 
+@app.route('/list-active-sessions', methods=['POST'])
+def listActiveSessions():
+	sessions={}
+
+	for key in gAnalysisSessions.keys():
+		sessions[key]={
+			'dataPath': str(gAnalysisSessions.getSessionAttribute(key, 'dataPath')).split(path_separator())[-1],
+			'analysisRunning': gAnalysisSessions.getSessionAttribute(key, 'analysisRunning'),
+			'sessionCreateTime': time.strftime('%m/%d/%Y, %I:%M:%S %p', gAnalysisSessions.getSessionAttribute(key, 'sessionCreateTime'))
+		}
+	return jsonify( respondingURL='list-active-sessions', sessions=sessions )
+
 @app.route('/analytics', methods=['POST'])
 def analytics():
 	ga_cache=format_path(tempfile.gettempdir()+'/.ga')
