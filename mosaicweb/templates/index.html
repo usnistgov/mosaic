@@ -33,14 +33,36 @@
 			<md-button md-no-ink ng-href="/#/" class="md-white" style="padding: 0; margin: 0;">MOSAIC</md-button>
 			<h2 flex md-truncate><em> </em></h2>
 			
-			<md-button class="md-icon-button" href="" ng-disabled="true">
-				<md-tooltip md-direction="left">View Active Sessions</md-tooltip>
-				<md-icon md-font-set="material-icons md-24">swap_vert</md-icon>
-			</md-button>
-		
+			<md-menu md->
+				<md-button ng-click="listActiveSessions($mdMenu, $event)" class="md-icon-button"  ng-disabled="false">
+					<md-tooltip md-direction="left">View Active Sessions</md-tooltip>
+					<md-icon md-font-set="material-icons md-24" md-menu-origin>format_list_numbered</md-icon>
+				</md-button>
+				<md-menu-content width="5">
+					<md-menu-item flex layout-align="center center" ng-show="querySessions">
+						<md-progress-circular md-mode="indeterminate" class="md-primary" md-diameter="24" ></md-progress-circular>
+					</md-menu-item>
+					<md-menu-item flex layout-align="center center" ng-show="noActiveSessions">
+						<div flex layout-align="center center">
+							<span>No Active Sessions</span>
+						</div>
+					</md-menu-item>
+					<md-menu-item ng-click="$mdMenu.hide()" ng-repeat="sessionInfo in activeSessionInfo">
+						<md-button aria-label="MOSAIC Docs"  ng-href="{{sessionInfo.url}}">
+							<div flex layout="row" layout-align="start center">
+								<md-icon md-font-set="material-icons md-24">description</md-icon>
+								<md-truncate><small>{{sessionInfo.text}}</small></md-truncate>
+								<span flex md-padding></span>
+								<md-progress-circular md-mode="indeterminate" class="md-primary" md-diameter="20" ng-if=sessionInfo.analysisRunning></md-progress-circular>
+							</div>
+						</md-button>
+					</md-menu-item>
+				</md-menu-content>
+			</md-menu>
+
 			<md-menu>
 				<md-button ng-click="$mdMenu.open()" class="md-icon-button" aria-label="Overflow">
-					<md-icon md-font-set="material-icons md-24">more_vert</md-icon>
+					<md-icon md-font-set="material-icons md-24" >more_vert</md-icon>
 				</md-button>
 				<md-menu-content width="4">
 					<md-menu-item ng-click="$mdMenu.hide()">
