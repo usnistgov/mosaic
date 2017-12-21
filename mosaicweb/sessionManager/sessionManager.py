@@ -9,6 +9,7 @@
 		3/24/17		AB 	Initial version
 """
 import uuid
+import time
 
 class SessionNotFoundError(Exception):
 	pass
@@ -16,16 +17,25 @@ class AttributeNotFoundError(Exception):
 	pass
 
 class session(dict):
-	def __init__(self, sid):
+	def __init__(self, sid=''):
 		self['sessionID']=sid
+		self['sessionCreateTime']=time.localtime(time.time())
+		self['analysisRunning']=False
 
 	def __setitem__(self, key, val):
-		if val=='':
-			sid=uuid.uuid4().hex
+		if key=='sessionID':
+			if val=='':
+				v1=uuid.uuid4().hex
+			else:
+				v1=val
+		elif key=='analysisRunning':
+			if val==True:
+				self['sessionRunStartTime']=time.localtime(time.time())
+			v1=val
 		else:
-			sid=val
+			v1=val
 
-		dict.__setitem__(self, key, sid)
+		dict.__setitem__(self, key, v1)
 
 	def __getitem__(self, key):
 		return dict.__getitem__(self, key)
@@ -42,7 +52,7 @@ class sessionManager(dict):
 			:Parameters: 
 				None
 		"""
-		sidObj=session('')
+		sidObj=session()
 		self[sidObj['sessionID']]=sidObj
 
 		return sidObj['sessionID']
@@ -90,13 +100,14 @@ class sessionManager(dict):
 if __name__ == '__main__':
 	s=sessionManager()
 
-	s.newSession()
-	s.addDataPath(s.keys()[0], 'foo/bar')
-	s.addSettingsString(s.keys()[0], '{}')
-	s.addDatabaseFile(s.keys()[0], 'foo.sqlite')
+	key=s.newSession()
+	s.addDataPath(key, 'foo/bar')
+	s.addSettingsString(key, '{}')
+	s.addDatabaseFile(key, 'foo.sqlite')
 
-	print s[s.keys()[0]] 
-
-	print s.getSession(s.keys()[0])
+	print s.keys()
+	print s[key] 
+	s.addAnalysisRunningFlag(key, True)
+	print s.getSession(key)
 
 	print s.getSessionAttribute(s.keys()[0], 'dataPath')
