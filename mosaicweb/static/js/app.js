@@ -93,6 +93,11 @@ angular.module('mosaicApp', ['ngRoute', 'ngMaterial', 'ngMessages', 'ngAnimate',
 		$scope.mosaicConfigModel=mosaicConfigFactory;
 		$scope.mosaicUtilsModel = mosaicUtilsFactory;
 
+		$scope.noActiveSessions = true;
+		$scope.querySessions = false;
+		$scope.activeSessions = {};
+		$scope.activeSessionInfo = {};
+
 		// funcs
 		$scope.setupNewAnalysis = function(ev) {
 			FileListingFactory.setDialogMode("directory");
@@ -121,6 +126,38 @@ angular.module('mosaicApp', ['ngRoute', 'ngMaterial', 'ngMessages', 'ngAnimate',
 				$scope.showAnalyticsOptions = response.data.showAnalyticsOptions;
 			}, function(error) {
 				$scope.AnalysisLoading = false;	
+				console.log(error);
+			});
+		};
+
+		$scope.listActiveSessions = function(m, ev) {
+			$scope.noActiveSessions=false;
+			$scope.querySessions=true;
+
+			m.open(ev);
+
+			mosaicUtilsFactory.post('/list-active-sessions', {})
+			.then(function(response) {
+				$scope.activeSessions = response.data.sessions;
+
+				var sessionKeys=Object.keys($scope.activeSessions);
+				if (sessionKeys.length > 0) {
+					for (var i = 0; i < sessionKeys.length; i++) {
+						$scope.activeSessionInfo[sessionKeys[i]] = {
+							'url' 				: "/#/analysis/?sid="+sessionKeys[i],
+							'text'				: $scope.activeSessions[sessionKeys[i]].sessionCreateTime+" ("+$scope.activeSessions[sessionKeys[i]].dataPath+")",
+							'analysisRunning' 	: $scope.activeSessions[sessionKeys[i]].analysisRunning
+						};	
+					}
+					$scope.querySessions=false;
+					$scope.noActiveSessions=false;
+				} else {
+					$scope.querySessions=false;
+					$scope.noActiveSessions=true;
+				};
+			}, function(error) {
+				$scope.querySessions=false;
+				$scope.noActiveSessions=true;
 				console.log(error);
 			});
 		};
