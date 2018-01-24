@@ -24,7 +24,7 @@
 					<md-icon md-font-set="material-icons md-24" ng-if="model.selectedIndex!=$index && model.dialogMode=='sqlite'">insert_drive_file</md-icon>
 					<md-icon md-font-set="material-icons md-24 md-accent" ng-if="model.selectedIndex==$index">check_circle</md-icon>
 					<div flex class="md-list-item-text" layout="column" layout-align="start start">
-						<md-truncate flex><small>{{ file.name }}</small></md-truncate>
+						<p>{{ file.name }}</p>
 						<p><small>{{ file.desc }}</small></p>
 					</div>
 					<span flex></span>
