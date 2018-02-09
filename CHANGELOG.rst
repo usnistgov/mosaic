@@ -1,6 +1,10 @@
 Change Log
 ++++++++++++++++++++++++++++++++++++++++++
 
+**v2.0a1**
+
+ - Run MOSAIC using a new web interface.
+
 **v1.3.5**
 
  - Saves raw events in database. Resolves #93.
