@@ -202,40 +202,33 @@ to an implementation of eventProcessor</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Settings:</th><td class="field-body"><p class="first">In addition to the parameters described in <code class="xref py py-class docutils literal"><span class="pre">metaEventPartition</span></code>, the following parameters from are read from the settings file (.settings in the data path or current working directory):</p>
-<ul class="last">
+<ul class="last simple">
 <li><dl class="first docutils">
 <dt><cite>blockSizeSec</cite></dt>
- <span class="classifier-delimiter">:</span> <span class="classifier">Functions that perform block processing use this value to set the size of </span><dd><p class="first last">their windows in seconds. For example, open channel conductance is processed
-for windows with a size specified by this parameter. (default: 1 second)</p>
-</dd>
+ <span class="classifier-delimiter">:</span> <span class="classifier">Functions that perform block processing use this value to set the size of </span><dd>their windows in seconds. For example, open channel conductance is processed
+for windows with a size specified by this parameter. (default: 1 second)</dd>
 </dl>
 </li>
-<li><p class="first"><cite>eventPad</cite> :          Number of points to include before and after a detected event. (default: 500)</p>
-</li>
-<li><p class="first"><cite>minEventLength</cite> :    Minimum number points in the blocked state to qualify as an event (default: 5)</p>
-</li>
+<li><cite>eventPad</cite> :          Number of points to include before and after a detected event. (default: 500)</li>
+<li><cite>minEventLength</cite> :    Minimum number points in the blocked state to qualify as an event (default: 5)</li>
 <li><dl class="first docutils">
 <dt><cite>eventThreshold</cite></dt>
- <span class="classifier-delimiter">:</span> <span class="classifier">Threshold, number of SD away from the open channel mean. If the abs(curr) is less</span><dd><p class="first last">than &#8216;abs(mean)-(eventThreshold*SD)&#8217; a new event is registered (default: 6)</p>
-</dd>
+ <span class="classifier-delimiter">:</span> <span class="classifier">Threshold, number of SD away from the open channel mean. If the abs(curr) is less</span><dd>than &#8216;abs(mean)-(eventThreshold*SD)&#8217; a new event is registered (default: 6)</dd>
 </dl>
 </li>
 <li><dl class="first docutils">
 <dt><cite>meanOpenCurr</cite></dt>
- <span class="classifier-delimiter">:</span> <span class="classifier">Explicitly set mean open channel current. (pA) (default: -1, to </span><dd><p class="first last">calculate automatically)</p>
-</dd>
+ <span class="classifier-delimiter">:</span> <span class="classifier">Explicitly set mean open channel current. (pA) (default: -1, to </span><dd>calculate automatically)</dd>
 </dl>
 </li>
 <li><dl class="first docutils">
 <dt><cite>sdOpenCurr</cite></dt>
- <span class="classifier-delimiter">:</span> <span class="classifier">Explicitly set open channel current SD. (pA) (default: -1, to </span><dd><p class="first last">calculate automatically)</p>
-</dd>
+ <span class="classifier-delimiter">:</span> <span class="classifier">Explicitly set open channel current SD. (pA) (default: -1, to </span><dd>calculate automatically)</dd>
 </dl>
 </li>
 <li><dl class="first docutils">
 <dt><cite>slopeOpenCurr</cite></dt>
- <span class="classifier-delimiter">:</span> <span class="classifier">Explicitly set open channel current slope. (default: -1, to </span><dd><p class="first last">calculate automatically)</p>
-</dd>
+ <span class="classifier-delimiter">:</span> <span class="classifier">Explicitly set open channel current slope. (default: -1, to </span><dd>calculate automatically)</dd>
 </dl>
 </li>
 </ul>

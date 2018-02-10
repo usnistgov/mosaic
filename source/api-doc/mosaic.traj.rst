@@ -31,6 +31,16 @@ mosaic.trajio.binTrajIO module
     :members:
     :show-inheritance:
 
+mosaic.trajio.chimeraTrajIO module
+--------------------------------
+
+.. inheritance-diagram:: mosaic.trajio.chimeraTrajIO
+   :parts: 2
+
+.. automodule:: mosaic.trajio.chimeraTrajIO
+    :members:
+    :show-inheritance:
+
 mosaic.tsvTrajIO module
 --------------------------------
 

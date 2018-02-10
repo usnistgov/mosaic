@@ -153,25 +153,20 @@ partition has completed.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
 <li><dl class="first docutils">
 <dt><cite>trajDataObj</cite></dt>
- <span class="classifier-delimiter">:</span> <span class="classifier">properly initialized object instantiated from a sub-class </span><dd><p class="first last">of metaTrajIO.</p>
-</dd>
+ <span class="classifier-delimiter">:</span> <span class="classifier">properly initialized object instantiated from a sub-class </span><dd>of metaTrajIO.</dd>
 </dl>
 </li>
 <li><dl class="first docutils">
 <dt><cite>eventProcHnd</cite></dt>
- <span class="classifier-delimiter">:</span> <span class="classifier">handle to a sub-class of metaEventProcessor. Objects of </span><dd><p class="first last">this class are initialized as necessary</p>
-</dd>
+ <span class="classifier-delimiter">:</span> <span class="classifier">handle to a sub-class of metaEventProcessor. Objects of </span><dd>this class are initialized as necessary</dd>
 </dl>
 </li>
-<li><p class="first"><cite>eventPartitionSettings</cite> :    settings dictionary for the partition algorithm.</p>
-</li>
-<li><p class="first"><cite>eventProcSettings</cite> :         settings dictionary for the event processing algorithm.</p>
-</li>
-<li><p class="first"><cite>settingsString</cite> :                    settings dictionary in JSON format</p>
-</li>
+<li><cite>eventPartitionSettings</cite> :    settings dictionary for the partition algorithm.</li>
+<li><cite>eventProcSettings</cite> :         settings dictionary for the event processing algorithm.</li>
+<li><cite>settingsString</cite> :                    settings dictionary in JSON format</li>
 </ul>
 </td>
 </tr>
@@ -180,29 +175,22 @@ partition has completed.</p>
 <p>Common algorithm parameters from settings file (.settings in the data path or 
 current working directory)</p>
 <blockquote>
-<div><ul>
-<li><p class="first"><cite>writeEventTS</cite> :      Write event current data to file. (default: 1, write data to file)</p>
-</li>
-<li><p class="first"><cite>parallelProc</cite> :      Process events in parallel using the pproc module. (default: 1, Yes)</p>
-</li>
-<li><p class="first"><cite>reserveNCPU</cite> :       Reserve the specified number of CPUs and exclude them from the parallel pool.</p>
-</li>
+<div><ul class="simple">
+<li><cite>writeEventTS</cite> :      Write event current data to file. (default: 1, write data to file)</li>
+<li><cite>parallelProc</cite> :      Process events in parallel using the pproc module. (default: 1, Yes)</li>
+<li><cite>reserveNCPU</cite> :       Reserve the specified number of CPUs and exclude them from the parallel pool.</li>
 <li><dl class="first docutils">
 <dt><cite>driftThreshold</cite></dt>
- <span class="classifier-delimiter">:</span> <span class="classifier">Trigger a drift warning when the mean open channel current deviates by &#8216;driftThreshold&#8217;*</span><dd><p class="first last">SD from the baseline open channel current (default: 2)</p>
-</dd>
+ <span class="classifier-delimiter">:</span> <span class="classifier">Trigger a drift warning when the mean open channel current deviates by &#8216;driftThreshold&#8217;*</span><dd>SD from the baseline open channel current (default: 2)</dd>
 </dl>
 </li>
 <li><dl class="first docutils">
 <dt><cite>maxDriftRate</cite></dt>
- <span class="classifier-delimiter">:</span> <span class="classifier">Trigger a warning when the open channel conductance changes at a rate faster </span><dd><p class="first last">than that specified. (default: 2 pA/s)</p>
-</dd>
+ <span class="classifier-delimiter">:</span> <span class="classifier">Trigger a warning when the open channel conductance changes at a rate faster </span><dd>than that specified. (default: 2 pA/s)</dd>
 </dl>
 </li>
-<li><p class="first"><cite>minBaseline</cite> :       Minimum value for the ionic current baseline.</p>
-</li>
-<li><p class="first"><cite>maxBaseline</cite> :       Maximum value for the ionic current baseline.</p>
-</li>
+<li><cite>minBaseline</cite> :       Minimum value for the ionic current baseline.</li>
+<li><cite>maxBaseline</cite> :       Maximum value for the ionic current baseline.</li>
 </ul>
 </div></blockquote>
 <dl class="method">
@@ -294,16 +282,14 @@ current working directory)</p>
 algorithm must sub-class metaEventProcessor and implement the following abstract
 functions:</p>
 <blockquote>
-<div><ul>
+<div><ul class="simple">
 <li><dl class="first docutils">
 <dt><cite>processEvent</cite></dt>
- <span class="classifier-delimiter">:</span> <span class="classifier">process raw event data and populate event meta-data. Store each </span><dd><p class="first last">piece of processed event data in a class attribute starting with &#8216;md&#8217;.
-For example, the blockade depth meta-data can be defined as &#8216;mdBlockadeDepth&#8217;</p>
-</dd>
+ <span class="classifier-delimiter">:</span> <span class="classifier">process raw event data and populate event meta-data. Store each </span><dd>piece of processed event data in a class attribute starting with &#8216;md&#8217;.
+For example, the blockade depth meta-data can be defined as &#8216;mdBlockadeDepth&#8217;</dd>
 </dl>
 </li>
-<li><p class="first"><cite>printMetadata</cite> :     print meta-data set by event processing in a human readable format.</p>
-</li>
+<li><cite>printMetadata</cite> :     print meta-data set by event processing in a human readable format.</li>
 </ul>
 </div></blockquote>
 <table class="docutils field-list" frame="void" rules="none">

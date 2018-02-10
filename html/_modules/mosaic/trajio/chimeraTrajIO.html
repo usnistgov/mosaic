@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>mosaic.trajio.chimeraTrajIO &#8212; MOSAIC 1.3.5 documentation</title>
+    
+    <link rel="stylesheet" href="../../../_static/basic.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/bootswatch-3.3.6/paper/bootstrap.min.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/bootstrap-sphinx.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/style.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '1.3.5',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="../../../_static/js/jquery-1.11.0.min.js"></script>
+    <script type="text/javascript" src="../../../_static/js/jquery-fix.js"></script>
+    <script type="text/javascript" src="../../../_static/bootstrap-3.3.6/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../../../_static/bootstrap-sphinx.js"></script>
+    <link rel="shortcut icon" href="../../../_static/favicon.ico"/>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="top" title="MOSAIC 1.3.5 documentation" href="../../../index.html" />
+    <link rel="up" title="Module code" href="../../index.html" />
+
+<meta charset='utf-8'>
+<meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
+<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
+<meta name="apple-mobile-web-app-capable" content="yes">
+
+	<script type="text/javascript"
+		src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+	</script>
+	<script async type="text/javascript" id="_fed_an_ua_tag" src="https://dap.digitalgov.gov/Universal-Federated-Analytics-Min.js?agency=NIST&subagency=github&pua=UA-42404149-54&yt=true&exts=ppsx,pps,f90,sch,rtf,wrl,txz,m1v,xlsm,msi,xsd,f,tif,eps,mpg,xml,pl,xlt,c">
+	</script>	
+
+	<meta name="theme-color" content="#283593">
+
+  </head>
+  <body role="document">
+
+  <div id="navbar" class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="../../../index.html"><span><img src="../../../_static/icon_36.png"></span>
+           </a>
+        <span class="navbar-text navbar-version pull-left"><b>1.3.5</b></span>
+      </div>
+
+        <div class="collapse navbar-collapse nav-collapse">
+          <ul class="nav navbar-nav">
+            
+                <li><a href="../../../../latex/MOSAIC.pdf">Download PDF</a></li>
+                <li><a href="../../../doc/mailingList.html">Mailing List</a></li>
+                <li><a href="//github.com/usnistgov/mosaic">Develop</a></li>
+                <li><a href="//github.com/usnistgov/mosaic/issues">Issue Tracker</a></li>
+            
+            
+              <li class="dropdown globaltoc-container">
+  <a role="button"
+     id="dLabelGlobalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="../../../index.html">Contents <b class="caret"></b></a>
+  <ul class="dropdown-menu globaltoc"
+      role="menu"
+      aria-labelledby="dLabelGlobalToc"><ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../doc/Introduction.html">1. Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../doc/Algorithms.html">2. Data Processing Algorithms in <em>MOSAIC</em></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../doc/GettingStarted.html">3. Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../doc/GraphicalInterface.html">4. <em>MOSAIC</em> GUI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../doc/settingsFile.html">5. Settings File</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../doc/DatabaseStructure.html">6. Database Structure and Query Syntax</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../doc/ScriptingandAdvancedFeatures.html">7. Scripting and Advanced Features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../doc/Extend.html">8. Extend <em>MOSAIC</em></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../doc/PublicationFigures.html">9. Publication Quality Figures</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../doc/AdvancedAnalysis.html">10. Advanced Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../doc/Addons.html">11. Addons</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../doc/DeveloperTools.html">12. Developer Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../doc/apidocs.html">13. API Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../doc/ChangeLog.html">14. Change Log</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../doc/References.html">15. Bibliography</a></li>
+</ul>
+</ul>
+</li>
+              
+            
+            
+            
+            
+            
+              <li class="hidden-sm"></li>
+            
+          </ul>
+
+          
+            
+<form class="navbar-form navbar-right" action="../../../search.html" method="get">
+ <div class="form-group">
+  <input type="text" name="q" class="form-control" placeholder="Search" />
+ </div>
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+          
+        </div>
+    </div>
+  </div>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-12 content">
+      
+  <h1>Source code for mosaic.trajio.chimeraTrajIO</h1><div class="highlight"><pre>
+<span></span><span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Chimera VC100 concatenated file format implementation of metaTrajIO. Read concatenated chimera files with specified amplifier settings. </span>
+
+<span class="sd">	:Created: 7/11/2016</span>
+<span class="sd">	:Author: 	Kyle Briggs &lt;kbrig035@uottawa.ca&gt;</span>
+<span class="sd">	:License:	See LICENSE.TXT</span>
+<span class="sd">	:ChangeLog:</span>
+<span class="sd">	.. line-block::</span>
+<span class="sd">                7/29/16         KB      Miscelleneous bugfixes</span>
+<span class="sd">		7/11/16		KB	Initial version</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">import</span> <span class="nn">struct</span>
+
+<span class="kn">import</span> <span class="nn">mosaic.trajio.metaTrajIO</span> <span class="k">as</span> <span class="nn">metaTrajIO</span>
+<span class="kn">import</span> <span class="nn">mosaic.utilities.mosaicLogging</span> <span class="k">as</span> <span class="nn">mlog</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;chimeraTrajIO&quot;</span><span class="p">,</span> <span class="s2">&quot;InvalidDataColumnError&quot;</span><span class="p">]</span>
+
+<span class="k">class</span> <span class="nc">InvalidDataColumnError</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
+	<span class="k">pass</span>
+
+<div class="viewcode-block" id="chimeraTrajIO"><a class="viewcode-back" href="../../../api-doc/mosaic.traj.html#mosaic.trajio.chimeraTrajIO.chimeraTrajIO">[docs]</a><span class="k">class</span> <span class="nc">chimeraTrajIO</span><span class="p">(</span><span class="n">metaTrajIO</span><span class="o">.</span><span class="n">metaTrajIO</span><span class="p">):</span>
+	<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">		Read a file generated by the Chimera VC100. The current in pA </span>
+<span class="sd">		is returned after scaling by the amplifier scale factors.</span>
+
+<span class="sd">		:Usage and Assumptions:</span>
+
+<span class="sd">				Binary data is in a single column. As of 7/11/16 can only be unsigned 16 bit integers and has only one column:</span>
+
+<span class="sd">				The column layout is specified with the ``ColumnTypes`` parameter, which accepts a list of tuples. </span>
+
+<span class="sd">					[(&#39;curr_pA&#39;, &#39;&lt;u2&#39;)]</span>
+
+<span class="sd">				The option is left in in case of future changes to the platform, but can be left alone in the settings file for now.</span>
+<span class="sd">				The first element of each tuple is an arbitrary text label and the second element is </span>
+<span class="sd">				a valid `Numpy type &lt;http://docs.scipy.org/doc/numpy/user/basics.types.html&gt;`_.</span>
+
+<span class="sd">				Chimera gain settings are used to convert the integers stored by the ADC to current values.</span>
+<span class="sd">				The following block provides an example. Parameters can be found in the .mat files output by the VC100.</span>
+
+<span class="sd">				IMPORTANT: This setup assumes that all files that match `filter` have the same ADC settings.</span>
+<span class="sd">				Future versions could imlement reading of the matching .mat files to remove the necessity</span>
+<span class="sd">				to enter these parameters. </span>
+<span class="sd">				</span>
+
+<span class="sd">				.. code-block:: javascript</span>
+
+<span class="sd">					&quot;chimeraTrajIO&quot;: {</span>
+<span class="sd">						&quot;TIAgain&quot; : &quot;100000000&quot;,</span>
+<span class="sd">						&quot;preADCgain&quot; : &quot;1.305&quot;,</span>
+<span class="sd">						&quot;SamplingFrequency&quot; : &quot;4166666.66667&quot;,</span>
+<span class="sd">						&quot;ColumnTypes&quot; : &quot;[(&#39;curr_pA&#39;, &#39;&lt;u2&#39;)]&quot;,</span>
+<span class="sd">						&quot;IonicCurrentColumn&quot; : &quot;curr_pA&quot;,</span>
+<span class="sd">						&quot;mVoffset&quot;: &quot;-0.2776&quot;,</span>
+<span class="sd">						&quot;pAoffset&quot;: &quot;2.0e-10&quot;,</span>
+<span class="sd">						&quot;ADCvref&quot;: &quot;2.5&quot;,</span>
+<span class="sd">						&quot;ADCbits&quot;: &quot;14&quot;,</span>
+<span class="sd">						&quot;filter&quot;: &quot;*.log&quot;, </span>
+<span class="sd">						&quot;start&quot;: &quot;0.0&quot;,</span>
+<span class="sd">						&quot;HeaderOffset&quot;: &quot;0&quot;</span>
+<span class="sd">					}</span>
+<span class="sd">		</span>
+<span class="sd">		:Parameters:</span>
+<span class="sd">				In addition to :class:`~mosaic.metaTrajIO.metaTrajIO` args,</span>
+<span class="sd">					</span>
+<span class="sd">					- `SamplingFrequency` :	Sampling rate of data in the file in Hz.</span>
+<span class="sd">					- `ColumnTypes` :	A list of tuples with column names and types (see `Numpy types &lt;http://docs.scipy.org/doc/numpy/user/basics.types.html&gt;`_). Note only integer and floating point numbers are supported.</span>
+<span class="sd">					- `IonicCurrentColumn`: Column name that holds ionic current data.</span>
+<span class="sd">					- `mVoffset` :		voltage offset of ADC</span>
+<span class="sd">					- `ADCvref` :           voltage reference point for ADC</span>
+<span class="sd">					- `ADCbits` :           amplifier scale precision in bits</span>
+<span class="sd">					- `TIAgain` :		Feedback resistor value.</span>
+<span class="sd">					- `preADCgain` :	analog gain before ADC</span>
+<span class="sd">					- `HeaderOffset` :	Ignore first *n* bytes of the file for header (currently fixed at: 0 bytes).</span>
+<span class="sd">		:Returns:</span>
+<span class="sd">				None</span>
+<span class="sd">		:Errors:</span>
+<span class="sd">				None</span>
+<span class="sd">	&quot;&quot;&quot;</span>
+	<span class="k">def</span> <span class="nf">_init</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+		<span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;SamplingFrequency&#39;</span><span class="p">):</span>
+			<span class="k">raise</span> <span class="n">metaTrajIO</span><span class="o">.</span><span class="n">InsufficientArgumentsError</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{0}</span><span class="s2"> requires the sampling rate in Hz to be defined.&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__name__</span><span class="p">))</span>
+
+		<span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;ColumnTypes&#39;</span><span class="p">):</span>
+			<span class="k">raise</span> <span class="n">metaTrajIO</span><span class="o">.</span><span class="n">InsufficientArgumentsError</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{0}</span><span class="s2"> requires the column types to be defined.&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__name__</span><span class="p">))</span>
+		<span class="k">else</span><span class="p">:</span>
+			<span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ColumnTypes</span><span class="p">)</span> <span class="ow">is</span> <span class="nb">str</span> <span class="ow">or</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ColumnTypes</span><span class="p">)</span> <span class="ow">is</span> <span class="n">unicode</span><span class="p">:</span> 
+				<span class="bp">self</span><span class="o">.</span><span class="n">ColumnTypes</span><span class="o">=</span><span class="nb">eval</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ColumnTypes</span><span class="p">)</span>
+		
+		<span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;IonicCurrentColumn&#39;</span><span class="p">):</span>
+			<span class="k">raise</span> <span class="n">metaTrajIO</span><span class="o">.</span><span class="n">InsufficientArgumentsError</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{0}</span><span class="s2"> requires the ionic current column to be defined.&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__name__</span><span class="p">))</span>
+		
+		<span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;HeaderOffset&#39;</span><span class="p">):</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">HeaderOffset</span><span class="o">=</span><span class="mi">0</span>
+
+		<span class="k">try</span><span class="p">:</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">IonicCurrentType</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ColumnTypes</span><span class="p">)[</span><span class="bp">self</span><span class="o">.</span><span class="n">IonicCurrentColumn</span><span class="p">]</span>
+		<span class="k">except</span> <span class="ne">KeyError</span><span class="p">,</span> <span class="n">err</span><span class="p">:</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">IonicCurrentColumn</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">ColumnTypes</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">IonicCurrentType</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">ColumnTypes</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span>
+
+			<span class="nb">print</span> <span class="s2">&quot;IonicCurrentColumn </span><span class="si">{0}</span><span class="s2"> not found. Defaulting to </span><span class="si">{1}</span><span class="s2">.&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">err</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">IonicCurrentColumn</span><span class="p">)</span>
+
+
+		<span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;TIAgain&#39;</span><span class="p">):</span>
+			<span class="k">raise</span> <span class="n">metaTrajIO</span><span class="o">.</span><span class="n">InsufficientArgumentsError</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{0}</span><span class="s2"> requires the TIAgain be specified as found in the appropriate .mat file.&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__name__</span><span class="p">))</span>
+		<span class="k">else</span><span class="p">:</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">TIAgain</span><span class="o">=</span><span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">TIAgain</span><span class="p">)</span>
+
+		<span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;preADCgain&#39;</span><span class="p">):</span>
+			<span class="k">raise</span> <span class="n">metaTrajIO</span><span class="o">.</span><span class="n">InsufficientArgumentsError</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{0}</span><span class="s2"> requires the preADCgain be specified as found in the appropriate .mat file.&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__name__</span><span class="p">))</span>
+		<span class="k">else</span><span class="p">:</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">preADCgain</span><span class="o">=</span><span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">preADCgain</span><span class="p">)</span>
+
+
+                <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;mVoffset&#39;</span><span class="p">):</span>
+			<span class="k">raise</span> <span class="n">metaTrajIO</span><span class="o">.</span><span class="n">InsufficientArgumentsError</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{0}</span><span class="s2"> requires the mVoffset be specified as found in the appropriate .mat file.&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__name__</span><span class="p">))</span>
+		<span class="k">else</span><span class="p">:</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">mVoffset</span><span class="o">=</span><span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">mVoffset</span><span class="p">)</span>
+
+		<span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;pAoffset&#39;</span><span class="p">):</span>
+			<span class="k">raise</span> <span class="n">metaTrajIO</span><span class="o">.</span><span class="n">InsufficientArgumentsError</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{0}</span><span class="s2"> requires the pAoffset be specified as found in the appropriate .mat file.&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__name__</span><span class="p">))</span>
+		<span class="k">else</span><span class="p">:</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">pAoffset</span><span class="o">=</span><span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pAoffset</span><span class="p">)</span>
+
+		<span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;ADCvref&#39;</span><span class="p">):</span>
+			<span class="k">raise</span> <span class="n">metaTrajIO</span><span class="o">.</span><span class="n">InsufficientArgumentsError</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{0}</span><span class="s2"> requires the ADCvref be specified as found in the appropriate .mat file.&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__name__</span><span class="p">))</span>
+		<span class="k">else</span><span class="p">:</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">ADCvref</span><span class="o">=</span><span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ADCvref</span><span class="p">)</span>
+
+		<span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;ADCbits&#39;</span><span class="p">):</span>
+			<span class="k">raise</span> <span class="n">metaTrajIO</span><span class="o">.</span><span class="n">InsufficientArgumentsError</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{0}</span><span class="s2"> requires the ADCbits be specified as found in the appropriate .mat file.&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__name__</span><span class="p">))</span>
+		<span class="k">else</span><span class="p">:</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">ADCbits</span><span class="o">=</span><span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ADCbits</span><span class="p">)</span>
+
+		<span class="c1"># additional meta data</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">fileFormat</span><span class="o">=</span><span class="s1">&#39;bin&#39;</span>
+
+		<span class="c1"># set the sampling frequency in Hz.</span>
+		<span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;Fs&#39;</span><span class="p">):</span>	
+			<span class="bp">self</span><span class="o">.</span><span class="n">Fs</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">SamplingFrequency</span>
+
+                <span class="bp">self</span><span class="o">.</span><span class="n">chimeraLogger</span><span class="o">=</span><span class="n">mlog</span><span class="o">.</span><span class="n">mosaicLogging</span><span class="p">()</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">__name__</span><span class="p">)</span>
+
+<div class="viewcode-block" id="chimeraTrajIO.readdata"><a class="viewcode-back" href="../../../api-doc/mosaic.traj.html#mosaic.trajio.chimeraTrajIO.chimeraTrajIO.readdata">[docs]</a>	<span class="k">def</span> <span class="nf">readdata</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fname</span><span class="p">):</span>
+		<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">			Return raw data from a single data file. Set a class </span>
+<span class="sd">			attribute Fs with the sampling frequency in Hz.</span>
+
+<span class="sd">			:Parameters:</span>
+
+<span class="sd">				- `fname` :  fileame to read</span>
+<span class="sd">			</span>
+<span class="sd">			:Returns:</span>
+<span class="sd">			</span>
+<span class="sd">				- An array object that holds raw (unscaled) data from `fname`</span>
+<span class="sd">			</span>
+<span class="sd">			:Errors:</span>
+
+<span class="sd">				None</span>
+<span class="sd">		&quot;&quot;&quot;</span>
+		<span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">readBinaryFile</span><span class="p">(</span><span class="n">fname</span><span class="p">)</span></div>
+		
+	<span class="k">def</span> <span class="nf">_formatsettings</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+		<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">			Populate `logObject` with settings strings for display</span>
+
+<span class="sd">			:Parameters:</span>
+
+<span class="sd">				- `logObject` : 	a object that holds logging text (see :class:`~mosaic.utilities.mosaicLog.mosaicLog`)				</span>
+<span class="sd">		&quot;&quot;&quot;</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">chimeraLogger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span> <span class="s1">&#39;</span><span class="se">\t\t</span><span class="s1">TIAgain = </span><span class="si">{0}</span><span class="s1"> Ohms&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">TIAgain</span><span class="p">)</span> <span class="p">)</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">chimeraLogger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span> <span class="s1">&#39;</span><span class="se">\t\t</span><span class="s1">preADCgain = </span><span class="si">{0}</span><span class="s1"> &#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">preADCgain</span><span class="p">)</span> <span class="p">)</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">chimeraLogger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span> <span class="s1">&#39;</span><span class="se">\t\t</span><span class="s1">mVoffset = </span><span class="se">\&#39;</span><span class="si">{0}</span><span class="se">\&#39;</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">mVoffset</span><span class="p">)</span> <span class="p">)</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">chimeraLogger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span> <span class="s1">&#39;</span><span class="se">\t\t</span><span class="s1">ADCvref = </span><span class="se">\&#39;</span><span class="si">{0}</span><span class="se">\&#39;</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ADCvref</span><span class="p">)</span> <span class="p">)</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">chimeraLogger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span> <span class="s1">&#39;</span><span class="se">\t\t</span><span class="s1">ADCbits = </span><span class="se">\&#39;</span><span class="si">{0}</span><span class="se">\&#39;</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ADCbits</span><span class="p">)</span> <span class="p">)</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">chimeraLogger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span> <span class="s1">&#39;</span><span class="se">\t\t</span><span class="s1">pAoffset = </span><span class="se">\&#39;</span><span class="si">{0}</span><span class="se">\&#39;</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pAoffset</span><span class="p">)</span> <span class="p">)</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">chimeraLogger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span> <span class="s1">&#39;</span><span class="se">\t\t</span><span class="s1">Header offset = </span><span class="si">{0}</span><span class="s1"> bytes&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">HeaderOffset</span><span class="p">)</span> <span class="p">)</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">chimeraLogger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span> <span class="s1">&#39;</span><span class="se">\t\t</span><span class="s1">Data type = </span><span class="se">\&#39;</span><span class="si">{0}</span><span class="se">\&#39;</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">IonicCurrentType</span><span class="p">)</span> <span class="p">)</span>
+		
+
+	<span class="k">def</span> <span class="nf">readBinaryFile</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fname</span><span class="p">):</span>
+		<span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">memmap</span><span class="p">(</span><span class="n">fname</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">ColumnTypes</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="n">offset</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">HeaderOffset</span><span class="p">)[</span><span class="bp">self</span><span class="o">.</span><span class="n">IonicCurrentColumn</span><span class="p">]</span>
+		
+<div class="viewcode-block" id="chimeraTrajIO.scaleData"><a class="viewcode-back" href="../../../api-doc/mosaic.traj.html#mosaic.trajio.chimeraTrajIO.chimeraTrajIO.scaleData">[docs]</a>	<span class="k">def</span> <span class="nf">scaleData</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+		<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">			See :func:`mosaic.metaTrajIO.metaTrajIO.scaleData`.</span>
+<span class="sd">		&quot;&quot;&quot;</span>
+
+                <span class="n">gain</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">TIAgain</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">preADCgain</span>
+                <span class="n">bitmask</span> <span class="o">=</span> <span class="nb">int</span><span class="p">((</span><span class="mi">2</span><span class="o">**</span><span class="mi">16</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">-</span> <span class="p">(</span><span class="mi">2</span><span class="o">**</span><span class="p">(</span><span class="mi">16</span><span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">ADCbits</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">))</span>
+                <span class="n">data</span> <span class="o">=</span> <span class="n">data</span> <span class="o">&amp;</span> <span class="n">bitmask</span>
+                <span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ADCvref</span> <span class="o">-</span> <span class="mi">2</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">ADCvref</span><span class="o">*</span><span class="n">data</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span><span class="o">/</span><span class="nb">float</span><span class="p">(</span><span class="mi">2</span><span class="o">**</span><span class="mi">16</span><span class="p">)</span>
+                <span class="n">data</span> <span class="o">=</span> <span class="o">-</span><span class="n">data</span><span class="o">/</span><span class="n">gain</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">pAoffset</span>
+		<span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">data</span><span class="o">*</span><span class="mf">1.0e12</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span></div></div>
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+	<span class="nb">print</span> <span class="s2">&quot;Main funcion not implemented for chimeraTrajIO&quot;</span>
+
+
+
+</pre></div>
+
+    </div>
+      
+  </div>
+</div>
+<!-- 
+<footer class="footer">
+  <div class="container">
+    <p class="pull-right">
+      <a href="#">Back to top</a>
+      
+    </p>
+    <p>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.8.<br/>
+    </p>
+  </div>
+</footer> -->
+<div class="footer" style="vertical-align: center" align="center">
+		<table width="90%" style="vertical-align: center">
+			<col width=40%>
+			<col width=60%>
+			<tr>
+				<td align="left">
+					<a href="../../../doc/Developers.html"><small><em>MOSAIC Developers</em></small></a> |
+					<a href="http://www.nist.gov/pml/div683/grp06/abalijepalli.cfm"><small><em>Contact</em></small></a> |
+					<a href="../../../doc/Disclaimer.html"><small><em>Terms of Use</em></small></a>
+				</td>
+			<!-- </tr>
+			<tr> -->
+				<td align="right">
+					<a target="_blank" href="http://www.nist.gov/public_affairs/privacy.cfm#privpolicy"><small>Privacy Policy</small></a> |
+					<a target="_blank" href="http://www.nist.gov/public_affairs/privacy.cfm#secnot"><small>Security Notice</small></a> |
+					<a href="http://www.nist.gov/public_affairs/privacy.cfm#accesstate"><small>Accessibility Statement</small></a> |
+					<a target="_blank" href="mailto:data@nist.gov?subject=Feedback%20on%20Web%20Site%20Template"><small>Send feedback</small></a>
+					<br/>
+				</td>
+			</tr>
+		</table>
+
+		<br />
+		<a href="http://www.nist.gov/"><small><em>National Institute of Standards and Technology</em></small></a>
+		<!-- <a href="http://www.nist.gov"><img src="_static/nist_logo.png" width="30%" alt="National Institute of Standards and Technology"></a> -->
+
+</div>
+
+  </body>
+</html>

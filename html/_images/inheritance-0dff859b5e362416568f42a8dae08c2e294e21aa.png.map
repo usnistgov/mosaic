@@ -1,5 +1,0 @@
-<map id="inheritance6c5c146ee6" name="inheritance6c5c146ee6">
-<area shape="rect" id="node2" href="#mosaic.process.cusumPlus.cusumPlus" target="_top" title="CUSUM+ will detect jumps that are smaller than `StepSize`, but they will have to be sustained longer. Threshold can be thought of, very roughly, as proportional to the length of time a subevent must be sustained for it to be detected. The algorithm will adjust the actual threshold used on a per&#45;event basis in order to minimize false positive detection of current jumps This algorithm is based on code used in OpenNanopore, which you can read about here: http://pubs.rsc.org/en/Content/ArticleLanding/2012/NR/c2nr30951c#!divAbstract" alt="" coords="325,53,481,77"/>
-<area shape="rect" id="node3" href="mosaic.meta.html#mosaic.process.metaEventProcessor.metaEventProcessor" target="_top" title=".. warning:: |metaclass|" alt="" coords="5,53,277,77"/>
-<area shape="rect" id="node4" title="Smart data block that holds a time&#45;series of data and keeps track" alt="" coords="71,5,211,29"/>
-</map>
