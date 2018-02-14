@@ -105,11 +105,6 @@ def _gaPost(eventType, content):
 		pass
 
 def _gaCredentialCache():
-	logger=mlog.mosaicLogging().getLogger(name=__name__)
-	# ga_cache=resource_path("mosaic/utilities/.ga")
-	ga_cache=format_path(tempfile.gettempdir()+'/.ga')
-	logger.debug(_d("Looking for GA cache {0}", ga_cache))
-
 	try:
 		gaModTime = datetime.fromtimestamp(os.stat(ga_cache).st_mtime)
 		gaExpireAge=timedelta(hours=24)
@@ -129,12 +124,11 @@ def _gaCredentialCache():
 		else:
 			logger.debug(_d("GA settings cache found ({0}). gaAge={1}", str(ga_cache), str(gaAge)))
 
-	except:
-		logger.debug(_d("GA settings are not cached."))
-		_getGASettings(ga_cache)
-
-	with open(ga_cache, 'r') as ga:
-		return json.loads(ga.read())
+		with open(ga_cache, 'r') as ga:
+			return json.loads(ga.read())
+	except BaseException as err:
+		# logger.debug(_d("Exception ignored: {0}\n{1}", repr(err), traceback.format_exc()))
+		pass
 
 def _gaSettingsDict(ga_cache):
 	with open(ga_cache, 'r') as ga:
