@@ -13,7 +13,8 @@ a = Analysis(['../runMOSAIC'],
 			 		'Tkconstants',
 			 		'FileDialog',
 			 		'Dialog',
-			 		'cython_blas'
+			 		'cython_blas',
+			 		'pywt._extensions._cwt'
 			 	],
 			 hookspath=None,
 			 runtime_hooks=None)
