@@ -419,7 +419,8 @@ def analytics():
 	with open(ga_cache, "w") as g:
 		g.write(json.dumps(gac))
 
-	return jsonify( respondingURL="analytics", appAnalytics=eval(gac["gaenable"]), showAnalyticsOptions=eval(gac["gauimode"])), 200
+	return jsonify( respondingURL="analytics", appAnalytics=0, showAnalyticsOptions=0), 200
+	# return jsonify( respondingURL="analytics", appAnalytics=eval(gac["gaenable"]), showAnalyticsOptions=eval(gac["gauimode"])), 200
 
 def _folderDesc(item):
 	nqdf = len(glob.glob(item+'/*.qdf'))

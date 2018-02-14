@@ -106,29 +106,38 @@ def _gaPost(eventType, content):
 
 def _gaCredentialCache():
 	try:
-		gaModTime = datetime.fromtimestamp(os.stat(ga_cache).st_mtime)
-		gaExpireAge=timedelta(hours=24)
-		gaAge=datetime.today() - gaModTime
+		try:
+			logger=mlog.mosaicLogging().getLogger(name=__name__)
+			
+			ga_cache=format_path(tempfile.gettempdir()+'/.ga')
+			logger.debug(_d("Looking for GA cache {0}", ga_cache))
 
-		if gaAge > gaExpireAge:
-			logger.debug(_d("GA settings cache has expired."))
-			ga_old=_gaSettingsDict(ga_cache)
+			gaModTime = datetime.fromtimestamp(os.stat(ga_cache).st_mtime)
+			gaExpireAge=timedelta(hours=24)
+			gaAge=datetime.today() - gaModTime
+
+			if gaAge > gaExpireAge:
+				logger.debug(_d("GA settings cache has expired."))
+				ga_old=_gaSettingsDict(ga_cache)
+				_getGASettings(ga_cache)
+				ga_new=_gaSettingsDict(ga_cache)
+
+				if ga_old["gaenable"]==False:
+					ga_new["gaenable"]=False
+
+				with open(ga_cache, "w") as ga:
+					ga.write(json.dumps(ga_new))
+			else:
+				logger.debug(_d("GA settings cache found ({0}). gaAge={1}", str(ga_cache), str(gaAge)))
+		except:
+			logger.debug(_d("GA settings are not cached."))
 			_getGASettings(ga_cache)
-			ga_new=_gaSettingsDict(ga_cache)
-
-			if ga_old["gaenable"]==False:
-				ga_new["gaenable"]=False
-
-			with open(ga_cache, "w") as ga:
-				ga.write(json.dumps(ga_new))
-		else:
-			logger.debug(_d("GA settings cache found ({0}). gaAge={1}", str(ga_cache), str(gaAge)))
 
 		with open(ga_cache, 'r') as ga:
 			return json.loads(ga.read())
 	except BaseException as err:
-		# logger.debug(_d("Exception ignored: {0}\n{1}", repr(err), traceback.format_exc()))
-		pass
+		logger.debug(_d("Exception ignored: {0}\n{1}", repr(err), traceback.format_exc()))
+		return
 
 def _gaSettingsDict(ga_cache):
 	with open(ga_cache, 'r') as ga:
