@@ -1,6 +1,10 @@
 Change Log
 ++++++++++++++++++++++++++++++++++++++++++
 
+**v1.3.6**
+
+- Bug Fixes
+
 **v1.3.5**
 
  - Saves raw events in database. Resolves #93.
