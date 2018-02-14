@@ -13,7 +13,15 @@ a = Analysis(['../runMOSAIC'],
 			 		'Tkconstants',
 			 		'FileDialog',
 			 		'Dialog',
-			 		'cython_blas'
+			 		'cython_blas',
+			 		'pywt._extensions._cwt',
+			 		'email.mime.multipart',
+			 		'email.mime.message',
+					'email.mime.text',
+					'email.mime.image',
+					'email.mime.audio', 
+					'sqlalchemy.sql.default_comparator',
+					'jinja2'
 			 	],
 			 hookspath=None,
 			 runtime_hooks=None)
