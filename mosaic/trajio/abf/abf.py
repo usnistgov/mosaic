@@ -476,8 +476,8 @@ if __name__ == '__main__':
 	
 	print len(data)
 
-	import matplotlib.pyplot as plt
+	# import matplotlib.pyplot as plt
 
-	plt.plot( data[:100000] )
-	plt.show()
+	# plt.plot( data[:100000] )
+	# plt.show()
 
