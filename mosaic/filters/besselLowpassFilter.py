@@ -15,7 +15,6 @@
 import numpy as np 
 import scipy.signal as sig
 import sys
-import pylab as pl
 
 import mosaic.filters.metaIOFilter as metaIOFilter
 import mosaic.utilities.mosaicLogging as mlog

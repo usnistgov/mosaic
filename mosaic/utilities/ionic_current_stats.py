@@ -54,7 +54,7 @@ def OpenCurrentDist(dat, limit, minBaseline=-1, maxBaseline=-1):
 
 if __name__ == '__main__':
 	import mosaic.qdfTrajIO as qdf
-	import pylab
+	# import pylab
 	from os.path import expanduser
 
 	d=qdf.qdfTrajIO(dirname='../../data/',filter='*qdf', Rfb=9.1E+9, Cfb=1.07E-12)
