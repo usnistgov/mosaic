@@ -6,14 +6,6 @@ a = Analysis(['../runMOSAIC'],
 			 pathex=['..'], 		# resource_path('.settings')
 			 hiddenimports=[
 			 		'scipy.special._ufuncs_cxx', 
-			 		'mosaicgui.mplwidget',
-			 		'Tkinter',
-			 		'FixTk',
-			 		'_tkinter',
-			 		'Tkconstants',
-			 		'FileDialog',
-			 		'Dialog',
-			 		'cython_blas',
 			 		'pywt._extensions._cwt',
 			 		'email.mime.multipart',
 			 		'email.mime.message',
@@ -25,7 +17,6 @@ a = Analysis(['../runMOSAIC'],
 			 	],
 			 hookspath=None,
 			 runtime_hooks=None)
-# ('.settings', '../.settings',  'DATA'),
 
 a.datas += [ 
 				('icons/icon_100px.png', '../icons/icon_100px.png',  'DATA'),
@@ -74,11 +65,3 @@ elif sys.platform=='win32' or sys.platform=='win64':
 		upx=True,
 		console=False,
 		icon='..\\icons\\icon_256px.ico' )
-	# coll = COLLECT(exe,
-	# 	a.binaries,
-	# 	Tree(format_path('../mosaicgui/ui'), prefix='ui'),
-	# 	a.zipfiles,
-	# 	a.datas,
-	# 	strip=None,
-	# 	upx=True,
-	# 	name=os.path.join('dist', 'MOSAIC'))
