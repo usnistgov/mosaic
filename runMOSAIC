@@ -1,4 +1,5 @@
 #! /usr/bin/env python
+import multiprocessing
 from mosaic.mosaicSetup	import mosaicSetup
 
 if __name__ == '__main__':

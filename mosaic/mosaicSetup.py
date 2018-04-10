@@ -10,7 +10,6 @@
 		10/07/17 	AB 	Initial version
 """	
 import sys
-import multiprocessing
 import argparse
 
 class mosaicSetup:
