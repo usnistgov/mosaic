@@ -27,9 +27,6 @@ class mosaicSetup:
 		self.args = vars(self.parser.parse_args())
 
 	def launcMOSAIC(self):
-		if sys.platform.startswith('win'):
-			multiprocessing.freeze_support()
-
 		# if self.args["qt"]:
 		# 	try:
 		# 		from mosaicgui.run import startMOSAICQt
