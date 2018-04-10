@@ -9,7 +9,6 @@
 	.. line-block::
 		10/07/17 	AB 	Initial version
 """	
-import sys
 import argparse
 
 class mosaicSetup:
