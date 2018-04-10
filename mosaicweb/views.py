@@ -10,6 +10,7 @@ from mosaic.trajio.metaTrajIO import EmptyDataPipeError, FileNotFoundError
 from mosaic.utilities.ga import registerLaunch, registerStart, registerStop
 import mosaic.mdio.sqlite3MDIO as sqlite
 import mosaic.settings as settings
+import mosaic.utilities.mosaicLogging as mlog
 
 from mosaicweb.mosaicAnalysis import mosaicAnalysis, analysisStatistics, analysisTimeSeries, analysisHistogram, analysisContour, analysisDBUtils
 from mosaicweb.sessionManager import sessionManager
@@ -30,7 +31,7 @@ from sqlite3 import OperationalError
 class InvalidPOSTRequest(Exception):
 	pass
 
-logger=logging.getLogger()
+logger=logging.getLogger(name="mwebserver")
 
 gAnalysisSessions=sessionManager.sessionManager()
 gStartTime=time.time()
@@ -77,6 +78,7 @@ def processingAlgorithm():
 @registerLaunch("new_analysis_mweb")
 def newAnalysis():
 	global gAnalysisSessions
+	# logger=mlog.mosaicLogging().getLogger(name=__name__)
 
 	try:
 		defaultSettings=False
@@ -88,6 +90,8 @@ def newAnalysis():
 
 		if dataPath and not settingsString:		# brand new session
 			# print "brand new session: ", dataPath, settingsString, sessionID	
+			logger.info("/new-analysis: "+format_path(mosaic.WebServerDataLocation+'/'+dataPath))
+
 			sessionID=gAnalysisSessions.newSession()
 			ma=mosaicAnalysis.mosaicAnalysis( format_path(mosaic.WebServerDataLocation+'/'+dataPath), sessionID) 
 
@@ -339,12 +343,16 @@ def pollAnalysisStatus():
 
 @app.route('/list-data-folders', methods=['POST'])
 def listDataFolders():
+	# logger=mlog.mosaicLogging().getLogger(name=__name__)
+
 	params = dict(request.get_json())
 
 	level=params.get('level', 'Data Root')
 	if level == 'Data Root':
+		logger.info("/list-data-folders: "+format_path(mosaic.WebServerDataLocation))
 		folder=mosaic.WebServerDataLocation
 	else:
+		logger.info("/list-data-folders: "+format_path(mosaic.WebServerDataLocation+'/'+level+'/'))
 		folder=format_path(mosaic.WebServerDataLocation+'/'+level+'/')
 
 	folderList=[]
@@ -363,12 +371,16 @@ def listDataFolders():
 
 @app.route('/list-database-files', methods=['POST'])
 def listDatabaseFiles():
+	# logger=mlog.mosaicLogging().getLogger(name=__name__)
+
 	params = dict(request.get_json())
 
 	level=params.get('level', 'Data Root')
 	if level == 'Data Root':
+		logger.info("/list-database-files: "+format_path(mosaic.WebServerDataLocation))
 		folder=mosaic.WebServerDataLocation
 	else:
+		logger.info("/list-database-files: "+format_path(mosaic.WebServerDataLocation+'/'+level+'/'))
 		folder=format_path(mosaic.WebServerDataLocation+'/'+level+'/')
 
 	fileList=[]
