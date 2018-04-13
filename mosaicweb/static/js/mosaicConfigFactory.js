@@ -7,6 +7,7 @@ angular.module('mosaicApp')
 			factory.sessionID = null;
 			factory.analysisRunning = false;
 			factory.newDataAvailable = false;
+			factory.serverMode = 'local';
 			
 			return factory;
 		}
