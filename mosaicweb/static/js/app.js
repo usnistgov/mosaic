@@ -79,7 +79,7 @@ angular.module('mosaicApp', ['ngRoute', 'ngMaterial', 'ngMessages', 'ngAnimate',
 	}
 )
 .controller('AppCtrl', 
-	function($scope, $mdDialog, $mdMenu, $http, $location, $window, $timeout, $document, mosaicConfigFactory, mosaicUtilsFactory, analysisSetupFactory, AnalysisFactory, FileListingFactory) {
+	function($scope, $mdDialog, $mdMenu, $http, $location, $window, $q, $timeout, $document, mosaicConfigFactory, mosaicUtilsFactory, analysisSetupFactory, AnalysisFactory, FileListingFactory) {
 		$scope.location = $location;
 
 		$scope.customFullscreen = true;
@@ -221,9 +221,37 @@ angular.module('mosaicApp', ['ngRoute', 'ngMaterial', 'ngMessages', 'ngAnimate',
 		};
 
 		$scope.quitLocalServer = function() {
-			mosaicUtilsFactory.post('/quit-local-server', {})
-			location.reload(true);
+			$scope.showConfirmDialog(
+				'Shutdown MOSAIC Server?',
+				"All active and running analysis sessions will end if you proceed.",
+				'Proceed',
+				'Cancel'
+			).then(function(response) {
+					mosaicUtilsFactory.post('/quit-local-server', {})
+					location.reload(true);
+				}, function(error) {
+				}
+			);			
 		};
+
+		$scope.showConfirmDialog = function(title, content, okText, cancelText ) {
+			var deferred = $q.defer();
+
+			var confirm = $mdDialog.confirm()
+							.title(title)
+							.textContent(content)
+							.ariaLabel(title)
+							.ok(okText)
+							.cancel(cancelText);
+
+			$mdDialog.show(confirm).then(function() {
+				deferred.resolve('OKAY');
+			}, function() {
+				deferred.reject('CANCEL');
+			});
+			return deferred.promise;
+		};
+
 		// init
 		$scope.analyticsPost({});
 	});
