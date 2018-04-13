@@ -35,7 +35,7 @@
 			
 			<md-menu md->
 				<md-button ng-click="listActiveSessions($mdMenu, $event)" class="md-icon-button"  ng-disabled="false">
-					<md-tooltip md-direction="left">View Active Sessions</md-tooltip>
+					<md-tooltip md-direction="bottom">View Active Sessions</md-tooltip>
 					<md-icon md-font-set="material-icons md-24" md-menu-origin>format_list_numbered</md-icon>
 				</md-button>
 				<md-menu-content width="5">
@@ -61,12 +61,12 @@
 			</md-menu>
 
 			<md-button ng-click="quitLocalServer()" class="md-icon-button"  ng-show="mosaicConfigModel.serverMode=='local'">
-				<md-tooltip md-direction="left">Shutdown MOSAIC Server</md-tooltip>
+				<md-tooltip md-direction="bottom">Shutdown MOSAIC Server</md-tooltip>
 				<md-icon md-font-set="material-icons md-24" md-menu-origin>power_settings_new</md-icon>
 			</md-button>
 
 			<md-button class="md-icon-button"  ng-disabled="true" ng-show="false">
-				<md-tooltip md-direction="left">Account</md-tooltip>
+				<md-tooltip md-direction="bottom">Account</md-tooltip>
 				<md-icon md-font-set="material-icons md-24" md-menu-origin>account_circle</md-icon>
 			</md-button>
 
