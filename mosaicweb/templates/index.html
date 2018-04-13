@@ -60,7 +60,7 @@
 				</md-menu-content>
 			</md-menu>
 
-			<md-button ng-click="quitLocalServer()" class="md-icon-button"  ng-disabled="mosaicConfigModel.analysisRunning" ng-show="true">
+			<md-button ng-click="quitLocalServer()" class="md-icon-button"  ng-disabled="mosaicConfigModel.analysisRunning" ng-show="mosaicConfigModel.serverMode=='local'">
 				<md-tooltip md-direction="left">Shutdown MOSAIC Server</md-tooltip>
 				<md-icon md-font-set="material-icons md-24" md-menu-origin>power_settings_new</md-icon>
 			</md-button>
