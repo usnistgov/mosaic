@@ -119,11 +119,13 @@ angular.module('mosaicApp', ['ngRoute', 'ngMaterial', 'ngMessages', 'ngAnimate',
 			})
 		};
 
-		$scope.analyticsPost = function(params) {
-			mosaicUtilsFactory.post('/analytics', params)
+		$scope.initializationPost = function(params) {
+			mosaicUtilsFactory.post('/initialization', params)
 			.then(function(response) {
 				$scope.appAnalytics = response.data.appAnalytics;	
 				$scope.showAnalyticsOptions = response.data.showAnalyticsOptions;
+
+				mosaicConfigFactory.serverMode = response.data.serverMode;
 			}, function(error) {
 				$scope.AnalysisLoading = false;	
 				console.log(error);
@@ -253,6 +255,6 @@ angular.module('mosaicApp', ['ngRoute', 'ngMaterial', 'ngMessages', 'ngAnimate',
 		};
 
 		// init
-		$scope.analyticsPost({});
+		$scope.initializationPost({});
 	});
 		
