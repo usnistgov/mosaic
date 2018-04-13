@@ -220,6 +220,10 @@ angular.module('mosaicApp', ['ngRoute', 'ngMaterial', 'ngMessages', 'ngAnimate',
 			$window.history.back();
 		};
 
+		$scope.quitLocalServer = function() {
+			mosaicUtilsFactory.post('/quit-local-server', {})
+			location.reload(true);
+		};
 		// init
 		$scope.analyticsPost({});
 	});
