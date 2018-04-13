@@ -417,8 +417,8 @@ def listActiveSessions():
 		}
 	return jsonify( respondingURL='list-active-sessions', sessions=sessions ), 200
 
-@app.route('/analytics', methods=['POST'])
-def analytics():
+@app.route('/initialization', methods=['POST'])
+def initialization():
 	ga_cache=format_path(tempfile.gettempdir()+'/.ga')
 
 	params = dict(request.get_json())
@@ -431,8 +431,8 @@ def analytics():
 	with open(ga_cache, "w") as g:
 		g.write(json.dumps(gac))
 
-	return jsonify( respondingURL="analytics", appAnalytics=0, showAnalyticsOptions=0), 200
-	# return jsonify( respondingURL="analytics", appAnalytics=eval(gac["gaenable"]), showAnalyticsOptions=eval(gac["gauimode"])), 200
+	return jsonify( respondingURL="initialization", appAnalytics=0, showAnalyticsOptions=0, serverMode=mosaic.WebServerMode), 200
+	# return jsonify( respondingURL="analytics", appAnalytics=eval(gac["gaenable"]), showAnalyticsOptions=eval(gac["gauimode"]), serverMode=mosaic.WebServerMode), 200
 
 @app.route('/quit-local-server', methods=['POST'])
 def quitLocalServer():
