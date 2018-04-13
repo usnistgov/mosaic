@@ -367,7 +367,7 @@ def listDataFolders():
 
 			folderList.append(itemAttr)
 
-	return jsonify( respondingURL='list-data-folders', level=level+'/', fileData=folderList )
+	return jsonify( respondingURL='list-data-folders', level=level+'/', fileData=folderList ), 200
 
 @app.route('/list-database-files', methods=['POST'])
 def listDatabaseFiles():
@@ -403,7 +403,7 @@ def listDatabaseFiles():
 
 				fileList.append(itemAttr)
 
-	return jsonify( respondingURL='list-database-files', level=level+'/', fileData=fileList )
+	return jsonify( respondingURL='list-database-files', level=level+'/', fileData=fileList ), 200
 
 @app.route('/list-active-sessions', methods=['POST'])
 def listActiveSessions():
@@ -415,7 +415,7 @@ def listActiveSessions():
 			'analysisRunning': gAnalysisSessions.getSessionAttribute(key, 'analysisRunning'),
 			'sessionCreateTime': time.strftime('%m/%d/%Y, %I:%M:%S %p', gAnalysisSessions.getSessionAttribute(key, 'sessionCreateTime'))
 		}
-	return jsonify( respondingURL='list-active-sessions', sessions=sessions )
+	return jsonify( respondingURL='list-active-sessions', sessions=sessions ), 200
 
 @app.route('/analytics', methods=['POST'])
 def analytics():
@@ -433,6 +433,32 @@ def analytics():
 
 	return jsonify( respondingURL="analytics", appAnalytics=0, showAnalyticsOptions=0), 200
 	# return jsonify( respondingURL="analytics", appAnalytics=eval(gac["gaenable"]), showAnalyticsOptions=eval(gac["gauimode"])), 200
+
+@app.route('/quit-local-server', methods=['POST'])
+def quitLocalServer():
+	logger.info("Received remote shutdown request.")
+	
+	_shutdownServer()
+
+	return jsonify( respondingURL='quit-local-server' ), 200
+
+def _shutdownServer():
+	global gAnalysisSessions
+
+	logger.info("Starting shutdown.")
+
+	func = request.environ.get('werkzeug.server.shutdown')
+	if func is None:
+		raise RuntimeError('No servers found.')
+
+	for k, s in gAnalysisSessions.iteritems():
+		logger.info('Shutting down running analysis {0}'.format(k))
+		if s['analysisRunning']:
+			s['mosaicAnalysisObject'].stopAnalysis()
+		
+
+	logger.info("Shutdown complete.")
+	func()
 
 def _folderDesc(item):
 	nqdf = len(glob.glob(item+'/*.qdf'))
