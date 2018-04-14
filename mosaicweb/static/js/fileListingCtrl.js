@@ -52,6 +52,7 @@ angular.module('mosaicApp')
 
 			factory.upOneLevel = function() {
 				var path = factory.subheading.split('/');
+
 				if (factory.dialogMode=="directory") {
 					if (path.length == 2) {
 						factory.getListing({
@@ -59,7 +60,7 @@ angular.module('mosaicApp')
 						}, '/list-data-folders');
 					} else {
 						factory.getListing({
-							level: path.slice(0, -2).join()
+							level: path.slice(0, -2).join('/')
 						}, '/list-data-folders');
 					};
 				} else if (factory.dialogMode=="sqlite") {
@@ -68,8 +69,9 @@ angular.module('mosaicApp')
 							level: 'Data Root'
 						}, '/list-database-files');
 					} else {
+						console.log(path.slice(0, -2).join('/'));
 						factory.getListing({
-							level: path.slice(0, -2).join()
+							level: path.slice(0, -2).join('/')
 						}, '/list-database-files');
 					};
 				}
