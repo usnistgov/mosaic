@@ -24,6 +24,7 @@ a.datas += [
 				('icons/warning-128.png', '../icons/warning-128.png',  'DATA'),
 				('commit-hash', '../commit-hash', 'DATA'),
 				('version-hash', '../version-hash', 'DATA'),
+				('mweb-version-hash', '../mweb-version-hash', 'DATA'),
 				('mosaicweb/templates/index.html', '../mosaicweb/templates/index.html', 'DATA')
 			]
 pyz = PYZ(a.pure)
