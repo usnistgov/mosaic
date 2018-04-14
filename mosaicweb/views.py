@@ -112,8 +112,10 @@ def newAnalysis():
 
 		return jsonify(respondingURL='new-analysis', sessionID=sessionID, **ma.setupAnalysis() ), 200
 	except EmptyDataPipeError, err:
+		gAnalysisSessions.pop(sessionID, None)
 		return jsonify( respondingURL='new-analysis', errType='EmptyDataPipeError', errSummary="End of data.", errText=str(err) ), 500
 	except FileNotFoundError, err:
+		gAnalysisSessions.pop(sessionID, None)
 		return jsonify( respondingURL='new-analysis', errType='FileNotFoundError', errSummary="Files not found.", errText=str(err) ), 500
 	except InvalidPOSTRequest, err:
 		return jsonify( respondingURL='new-analysis', errType='InvalidPOSTRequest', errSummary="An invalid POST request was received.", errText=str(err) ), 500
