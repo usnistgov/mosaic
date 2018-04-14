@@ -351,11 +351,12 @@ def listDataFolders():
 
 	level=params.get('level', 'Data Root')
 	if level == 'Data Root':
-		logger.info("/list-data-folders: "+format_path(mosaic.WebServerDataLocation))
 		folder=mosaic.WebServerDataLocation
+		logger.info("/list-data-folders: "+folder)
 	else:
-		logger.info("/list-data-folders: "+format_path(mosaic.WebServerDataLocation+'/'+level+'/'))
 		folder=format_path(mosaic.WebServerDataLocation+'/'+level+'/')
+		logger.info("/list-data-folders: "+folder)
+		
 
 	folderList=[]
 
@@ -373,17 +374,16 @@ def listDataFolders():
 
 @app.route('/list-database-files', methods=['POST'])
 def listDatabaseFiles():
-	# logger=mlog.mosaicLogging().getLogger(name=__name__)
-
 	params = dict(request.get_json())
 
 	level=params.get('level', 'Data Root')
+	logger.info("/list-database-files: "+str(level))
 	if level == 'Data Root':
-		logger.info("/list-database-files: "+format_path(mosaic.WebServerDataLocation))
 		folder=mosaic.WebServerDataLocation
+		logger.info("/list-database-files: "+folder)
 	else:
-		logger.info("/list-database-files: "+format_path(mosaic.WebServerDataLocation+'/'+level+'/'))
 		folder=format_path(mosaic.WebServerDataLocation+'/'+level+'/')
+		logger.info("/list-database-files: "+folder)
 
 	fileList=[]
 
