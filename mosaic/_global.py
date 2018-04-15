@@ -1,7 +1,7 @@
 import os.path
 
 # Control global settings
-DeveloperMode=True		# Turn on developer options.
+DeveloperMode=False		# Turn on developer options.
 
 CodeProfiling='summary'	# Either 'summary' to print a summary at the end of a run, 
 						# 'none' for no timing, or 
@@ -13,4 +13,4 @@ DocumentationURL='https://pages.nist.gov/mosaic/'
 # Options for MOSAIC Web
 WebServerPort=5000
 WebServerDataLocation=os.path.expanduser('~')
-WebServerMode='local'
+WebServerMode='remote'
