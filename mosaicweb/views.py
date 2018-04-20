@@ -467,7 +467,17 @@ def _folderDesc(item):
 	nbin = len(glob.glob(item+'/*.bin'))+len(glob.glob(item+'/*.dat'))
 	nabf = len(glob.glob(item+'/*.abf'))
 	nsqlite = len(glob.glob(item+'/*.sqlite'))
-	nfolders = len( [i for i in os.listdir(item) if os.path.isdir(item+'/'+i) ] )
+	#nfolders = len( [i for i in os.listdir(item) if os.path.isdir(item+'/'+i) ] )
+	nfolders=0
+	try:
+		for i in os.listdir(item):
+			try:
+				if os.path.isdir(item+'/'+i):
+					nfolders+=1
+			except WindowsError:
+				pass
+	except:
+		pass
 
 	if nqdf > 0:
 		returnString = "{0} QDF {1}".format(nqdf, _fileLabel(nqdf))
