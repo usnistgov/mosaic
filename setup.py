@@ -138,11 +138,11 @@ setup(
 			'mosaic.trajio.abf',
 			'mosaic.utilities',
 			'mosaicweb',
-			'mosaicweb.mosaicweb',
-			'mosaicweb.mosaicweb.mosaicAnalysis',
-			'mosaicweb.mosaicweb.plotlyUtils',
-			'mosaicweb.mosaicweb.sessionManager',
-			'mosaicweb.mosaicweb.utils'
+			'mosaicweb',
+			'mosaicweb.mosaicAnalysis',
+			'mosaicweb.plotlyUtils',
+			'mosaicweb.sessionManager',
+			'mosaicweb.utils'
 			],
 	scripts=[
 			'bin/analysis.py', 
