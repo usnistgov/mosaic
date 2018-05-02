@@ -9,14 +9,8 @@
 #}
 {%- extends "!layout.html" %}
 
-{# Custom CSS overrides #}
-{% set bootswatch_css_custom = ['_static/style.css'] %}
-
 {%- block extrahead %}
 {{ super() }}
-	<script type="text/javascript"
-		src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
-	</script>
 	<script async type="text/javascript" id="_fed_an_ua_tag" src="https://dap.digitalgov.gov/Universal-Federated-Analytics-Min.js?agency=NIST&subagency=github&pua=UA-42404149-54&yt=true&exts=ppsx,pps,f90,sch,rtf,wrl,txz,m1v,xlsm,msi,xsd,f,tif,eps,mpg,xml,pl,xlt,c">
 	</script>	
 
@@ -25,6 +19,9 @@
 
 {%- block footer %}
 <!-- {{ super() }} -->
+<script type="text/javascript"
+	src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
 <div class="footer" style="vertical-align: center" align="center">
 		<table width="90%" style="vertical-align: center">
 			<col width=40%>

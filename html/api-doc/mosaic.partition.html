@@ -1,58 +1,39 @@
 <!DOCTYPE html>
 
-
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    
-    <title>13.1.5. Event Partition and Segment &#8212; MOSAIC 1.3.6 documentation</title>
-    
-    <link rel="stylesheet" href="../_static/basic.css" type="text/css" />
-    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="../_static/bootswatch-3.3.6/paper/bootstrap.min.css" type="text/css" />
+    <title>14.1.5. Event Partition and Segment &#8212; MOSAIC 2.0b1 documentation</title>
     <link rel="stylesheet" href="../_static/bootstrap-sphinx.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <link rel="stylesheet" href="../_static/style.css" type="text/css" />
-    
-    <script type="text/javascript">
-      var DOCUMENTATION_OPTIONS = {
-        URL_ROOT:    '../',
-        VERSION:     '1.3.6',
-        COLLAPSE_INDEX: false,
-        FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true
-      };
-    </script>
+    <script type="text/javascript" src="../_static/documentation_options.js"></script>
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <script type="text/javascript" src="../_static/js/jquery-1.11.0.min.js"></script>
     <script type="text/javascript" src="../_static/js/jquery-fix.js"></script>
-    <script type="text/javascript" src="../_static/bootstrap-3.3.6/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../_static/bootstrap-3.3.7/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="../_static/bootstrap-sphinx.js"></script>
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="top" title="MOSAIC 1.3.6 documentation" href="../index.html" />
-    <link rel="up" title="13. API Documentation" href="../doc/apidocs.html" />
-    <link rel="next" title="13.1.6. Event Processing" href="mosaic.processing.html" />
-    <link rel="prev" title="13.1.4. Time-Series Filters" href="mosaic.filter.html" />
+    <link rel="next" title="14.1.6. Event Processing" href="mosaic.processing.html" />
+    <link rel="prev" title="14.1.4. Time-Series Filters" href="mosaic.filter.html" />
 
 <meta charset='utf-8'>
 <meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
 <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
 <meta name="apple-mobile-web-app-capable" content="yes">
 
-	<script type="text/javascript"
-		src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
-	</script>
 	<script async type="text/javascript" id="_fed_an_ua_tag" src="https://dap.digitalgov.gov/Universal-Federated-Analytics-Min.js?agency=NIST&subagency=github&pua=UA-42404149-54&yt=true&exts=ppsx,pps,f90,sch,rtf,wrl,txz,m1v,xlsm,msi,xsd,f,tif,eps,mpg,xml,pl,xlt,c">
 	</script>	
 
 	<meta name="theme-color" content="#283593">
 
-  </head>
-  <body role="document">
+  </head><body>
 
   <div id="navbar" class="navbar navbar-default navbar-fixed-top">
     <div class="container">
@@ -63,9 +44,9 @@
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </button>
-        <a class="navbar-brand" href="../index.html"><span><img src="../_static/icon_36.png"></span>
+        <a class="navbar-brand" href="../index.html"><span><img src="../_static/icon_48.png"></span>
            </a>
-        <span class="navbar-text navbar-version pull-left"><b>1.3.6</b></span>
+        <span class="navbar-text navbar-version pull-left"><b>2.0b1</b></span>
       </div>
 
         <div class="collapse navbar-collapse nav-collapse">
@@ -90,16 +71,16 @@
 <li class="toctree-l1"><a class="reference internal" href="../doc/Algorithms.html">2. Data Processing Algorithms in <em>MOSAIC</em></a></li>
 <li class="toctree-l1"><a class="reference internal" href="../doc/GettingStarted.html">3. Getting Started</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../doc/GraphicalInterface.html">4. <em>MOSAIC</em> GUI</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../doc/settingsFile.html">5. Settings File</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../doc/DatabaseStructure.html">6. Database Structure and Query Syntax</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../doc/ScriptingandAdvancedFeatures.html">7. Scripting and Advanced Features</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../doc/Extend.html">8. Extend <em>MOSAIC</em></a></li>
-<li class="toctree-l1"><a class="reference internal" href="../doc/PublicationFigures.html">9. Publication Quality Figures</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../doc/AdvancedAnalysis.html">10. Advanced Analysis</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../doc/Addons.html">11. Addons</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../doc/DeveloperTools.html">12. Developer Tools</a></li>
-<li class="toctree-l1 current"><a class="reference internal" href="../doc/apidocs.html">13. API Documentation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../doc/ChangeLog.html">14. Change Log</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../doc/WebInterface.html">5. <em>MOSAIC</em> WEB</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../doc/settingsFile.html">6. Settings File</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../doc/DatabaseStructure.html">7. Database Structure and Query Syntax</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../doc/ScriptingandAdvancedFeatures.html">8. Scripting and Advanced Features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../doc/Extend.html">9. Extend <em>MOSAIC</em></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../doc/PublicationFigures.html">10. Publication Quality Figures</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../doc/AdvancedAnalysis.html">11. Advanced Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../doc/Addons.html">12. Addons</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../doc/DeveloperTools.html">13. Developer Tools</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../doc/apidocs.html">14. API Documentation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../doc/References.html">15. Bibliography</a></li>
 </ul>
 </ul>
@@ -133,15 +114,14 @@
     <div class="col-md-12 content">
       
   <div class="section" id="event-partition-and-segment">
-<h1>13.1.5. Event Partition and Segment<a class="headerlink" href="#event-partition-and-segment" title="Permalink to this headline">¶</a></h1>
+<h1>14.1.5. Event Partition and Segment<a class="headerlink" href="#event-partition-and-segment" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="mosaic-partition-eventsegment-module">
-<h2>13.1.5.1. mosaic.partition.eventSegment module<a class="headerlink" href="#mosaic-partition-eventsegment-module" title="Permalink to this headline">¶</a></h2>
+<h2>14.1.5.1. mosaic.partition.eventSegment module<a class="headerlink" href="#mosaic-partition-eventsegment-module" title="Permalink to this headline">¶</a></h2>
 <img src="../_images/inheritance-21b073f11943fd24a873150fb7bc3a11852d23e3.png" alt="Inheritance diagram of mosaic.partition.eventSegment" usemap="#inheritance96dd370ed1" class="inheritance"/>
 <map id="inheritance96dd370ed1" name="inheritance96dd370ed1">
 <area shape="rect" id="node1" href="#mosaic.partition.eventSegment.eventSegment" target="_top" title="Implement an event partitioning algorithm by sub&#45;classing the metaEventPartition class" alt="" coords="304,5,501,29"/>
 <area shape="rect" id="node2" href="mosaic.meta.html#mosaic.partition.metaEventPartition.metaEventPartition" target="_top" title=".. warning:: |metaclass|" alt="" coords="5,5,256,29"/>
-</map>
-<span class="target" id="module-mosaic.partition.eventSegment"></span><p>Partition a trajectory into individual events and pass each event 
+</map><span class="target" id="module-mosaic.partition.eventSegment"></span><p>Partition a trajectory into individual events and pass each event 
 to an implementation of eventProcessor</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -177,10 +157,10 @@ to an implementation of eventProcessor</p>
 </div>
 <div class="line">9/26/12         AB  Allowed automatic open channel state calculation to be overridden.</div>
 <div class="line-block">
-<div class="line">To do this the settings &#8220;meanOpenCurr&#8221;,&#8221;sdOpenCurr&#8221; and &#8220;slopeOpenCurr&#8221;</div>
+<div class="line">To do this the settings “meanOpenCurr”,”sdOpenCurr” and “slopeOpenCurr”</div>
 <div class="line">must be set manually. If all three settings are absent or</div>
 <div class="line">set to 01, they are autuomatically estimated.</div>
-<div class="line">Added &#8220;writeEventTS&#8221; boolean setting to control whether raw</div>
+<div class="line">Added “writeEventTS” boolean setting to control whether raw</div>
 <div class="line">events are written to file. Default is ON (1)</div>
 </div>
 <div class="line">8/24/12         AB      Settings are now read from a settings file that</div>
@@ -195,40 +175,40 @@ to an implementation of eventProcessor</p>
 <dl class="class">
 <dt id="mosaic.partition.eventSegment.eventSegment">
 <em class="property">class </em><code class="descclassname">mosaic.partition.eventSegment.</code><code class="descname">eventSegment</code><span class="sig-paren">(</span><em>trajDataObj</em>, <em>eventProcHnd</em>, <em>eventPartitionSettings</em>, <em>eventProcSettings</em>, <em>settingsString</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/partition/eventSegment.html#eventSegment"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mosaic.partition.eventSegment.eventSegment" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="mosaic.meta.html#mosaic.partition.metaEventPartition.metaEventPartition" title="mosaic.partition.metaEventPartition.metaEventPartition"><code class="xref py py-class docutils literal"><span class="pre">mosaic.partition.metaEventPartition.metaEventPartition</span></code></a></p>
+<dd><p>Bases: <a class="reference internal" href="mosaic.meta.html#mosaic.partition.metaEventPartition.metaEventPartition" title="mosaic.partition.metaEventPartition.metaEventPartition"><code class="xref py py-class docutils literal notranslate"><span class="pre">mosaic.partition.metaEventPartition.metaEventPartition</span></code></a></p>
 <p>Implement an event partitioning algorithm by sub-classing the metaEventPartition class</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Settings:</th><td class="field-body"><p class="first">In addition to the parameters described in <code class="xref py py-class docutils literal"><span class="pre">metaEventPartition</span></code>, the following parameters from are read from the settings file (.settings in the data path or current working directory):</p>
+<tr class="field-odd field"><th class="field-name">Settings:</th><td class="field-body"><p class="first">In addition to the parameters described in <code class="xref py py-class docutils literal notranslate"><span class="pre">metaEventPartition</span></code>, the following parameters from are read from the settings file (.settings in the data path or current working directory):</p>
 <ul class="last simple">
 <li><dl class="first docutils">
-<dt><cite>blockSizeSec</cite></dt>
- <span class="classifier-delimiter">:</span> <span class="classifier">Functions that perform block processing use this value to set the size of </span><dd>their windows in seconds. For example, open channel conductance is processed
+<dt><cite>blockSizeSec</cite> <span class="classifier-delimiter">:</span> <span class="classifier">Functions that perform block processing use this value to set the size of </span></dt>
+<dd>their windows in seconds. For example, open channel conductance is processed
 for windows with a size specified by this parameter. (default: 1 second)</dd>
 </dl>
 </li>
 <li><cite>eventPad</cite> :          Number of points to include before and after a detected event. (default: 500)</li>
 <li><cite>minEventLength</cite> :    Minimum number points in the blocked state to qualify as an event (default: 5)</li>
 <li><dl class="first docutils">
-<dt><cite>eventThreshold</cite></dt>
- <span class="classifier-delimiter">:</span> <span class="classifier">Threshold, number of SD away from the open channel mean. If the abs(curr) is less</span><dd>than &#8216;abs(mean)-(eventThreshold*SD)&#8217; a new event is registered (default: 6)</dd>
+<dt><cite>eventThreshold</cite> <span class="classifier-delimiter">:</span> <span class="classifier">Threshold, number of SD away from the open channel mean. If the abs(curr) is less</span></dt>
+<dd>than ‘abs(mean)-(eventThreshold*SD)’ a new event is registered (default: 6)</dd>
 </dl>
 </li>
 <li><dl class="first docutils">
-<dt><cite>meanOpenCurr</cite></dt>
- <span class="classifier-delimiter">:</span> <span class="classifier">Explicitly set mean open channel current. (pA) (default: -1, to </span><dd>calculate automatically)</dd>
+<dt><cite>meanOpenCurr</cite> <span class="classifier-delimiter">:</span> <span class="classifier">Explicitly set mean open channel current. (pA) (default: -1, to </span></dt>
+<dd>calculate automatically)</dd>
 </dl>
 </li>
 <li><dl class="first docutils">
-<dt><cite>sdOpenCurr</cite></dt>
- <span class="classifier-delimiter">:</span> <span class="classifier">Explicitly set open channel current SD. (pA) (default: -1, to </span><dd>calculate automatically)</dd>
+<dt><cite>sdOpenCurr</cite> <span class="classifier-delimiter">:</span> <span class="classifier">Explicitly set open channel current SD. (pA) (default: -1, to </span></dt>
+<dd>calculate automatically)</dd>
 </dl>
 </li>
 <li><dl class="first docutils">
-<dt><cite>slopeOpenCurr</cite></dt>
- <span class="classifier-delimiter">:</span> <span class="classifier">Explicitly set open channel current slope. (default: -1, to </span><dd>calculate automatically)</dd>
+<dt><cite>slopeOpenCurr</cite> <span class="classifier-delimiter">:</span> <span class="classifier">Explicitly set open channel current slope. (default: -1, to </span></dt>
+<dd>calculate automatically)</dd>
 </dl>
 </li>
 </ul>
@@ -236,6 +216,16 @@ for windows with a size specified by this parameter. (default: 1 second)</dd>
 </tr>
 </tbody>
 </table>
+<dl class="method">
+<dt id="mosaic.partition.eventSegment.eventSegment.formatoutputfiles">
+<code class="descname">formatoutputfiles</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/partition/eventSegment.html#eventSegment.formatoutputfiles"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mosaic.partition.eventSegment.eventSegment.formatoutputfiles" title="Permalink to this definition">¶</a></dt>
+<dd><div class="admonition important">
+<p class="first admonition-title">Important</p>
+<p class="last"><strong>Abstract method:</strong> This method must be implemented by a sub-class.</p>
+</div>
+<p>Return a formatted string of output files.</p>
+</dd></dl>
+
 <dl class="method">
 <dt id="mosaic.partition.eventSegment.eventSegment.formatsettings">
 <code class="descname">formatsettings</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/partition/eventSegment.html#eventSegment.formatsettings"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mosaic.partition.eventSegment.eventSegment.formatsettings" title="Permalink to this definition">¶</a></dt>
@@ -266,10 +256,13 @@ for windows with a size specified by this parameter. (default: 1 second)</dd>
       
     </p>
     <p>
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.8.<br/>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.4.<br/>
     </p>
   </div>
 </footer> -->
+<script type="text/javascript"
+	src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
 <div class="footer" style="vertical-align: center" align="center">
 		<table width="90%" style="vertical-align: center">
 			<col width=40%>

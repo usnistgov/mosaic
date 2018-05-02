@@ -42,9 +42,11 @@ extensions = [
     'sphinx.ext.viewcode',
     'sphinxcontrib.bibtex',
     'sphinxcontrib.gist',
-    'sphinx.ext.githubpages',
-    'exec'
+    'sphinx.ext.githubpages'
 ]
+
+def setup(app):
+  app.add_stylesheet("style.css")
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
@@ -177,7 +179,7 @@ html_theme_options = {
 
 # The name of an image file (relative to this directory) to place at the top
 # of the sidebar.
-html_logo='images/icon_36.png'
+html_logo='images/icon_48.png'
 
 # The name of an image file (within the static path) to use as favicon of the
 # docs.  This file should be a Windows icon file (.ico) being 16x16 or 32x32
@@ -259,35 +261,28 @@ latex_elements = {
 
     \makeatletter
     \renewcommand{\maketitle}{%
+    \let\spx@tempa\relax
+    \ifHy@pageanchor\def\spx@tempa{\Hy@pageanchortrue}\fi
+    \hypersetup{pageanchor=false}% avoid duplicate destination warnings
       \begin{titlepage}%
         \let\footnotesize\small
         \let\footnoterule\relax
-        \ifsphinxpdfoutput
-          \begingroup
-          % This \def is required to deal with multi-line authors; it
-          % changes \\ to ', ' (comma-space), making it pass muster for
-          % generating document info in the PDF file.
-          \def\\{, }
-          \pdfinfo{
-            /Author (\@author)
-            /Title (\@title)
-          }
-          \endgroup
-        \fi
-        \changepage{1in}{}{1in}{0.5in}{}{-0.5in}{}{}{}
-        \begin{flushright}%
-          \includegraphics[scale=0.8]{icon}\par%
-          \vskip 3em%
-          {\rm\Huge\py@HeaderFamily \@title \par}%
-          {\em\LARGE\py@HeaderFamily \py@release\releaseinfo \par}
-          \vfill
-          \includegraphics[scale=0.75]{nistlogo}\par
-          %{\py@authoraddress \par}
-          %\vfill
-          {%\large
-           %\vfill
-          }%
-        \end{flushright}%\par
+        \par
+      \begingroup % for PDF information dictionary
+        \def\endgraf{ }\def\and{\& }%
+        \pdfstringdefDisableCommands{\def\\{, }}% overwrite hyperref setup
+        \hypersetup{pdfauthor={\@author}, pdftitle={\@title}}%
+      \endgroup
+      \begin{flushright}{%
+        \includegraphics[scale=0.8]{icon}\par
+        \vskip 3em%
+        {\rm\Huge\py@HeaderFamily \@title \par}%
+        {\em\LARGE\py@HeaderFamily \py@release\releaseinfo \par}
+        \vfill
+        \includegraphics[scale=0.75]{nistlogo}
+        %{\py@authoraddress \par}%
+    }%
+    \end{flushright}%\par
         \@thanks
       \end{titlepage}%
       %\clearpage%
@@ -308,6 +303,8 @@ latex_elements = {
       \setcounter{footnote}{0}%
       \let\thanks\relax\let\maketitle\relax
       %\gdef\@thanks{}\gdef\@author{}\gdef\@title{}
+      \if@openright\cleardoublepage\else\clearpage\fi
+      \spx@tempa
     }
     \makeatother
     

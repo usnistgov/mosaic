@@ -1,55 +1,37 @@
 <!DOCTYPE html>
 
-
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    
-    <title>Wrapper Function to Estimate the Capture Rate &#8212; MOSAIC 1.3.6 documentation</title>
-    
-    <link rel="stylesheet" href="../_static/basic.css" type="text/css" />
-    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="../_static/bootswatch-3.3.6/paper/bootstrap.min.css" type="text/css" />
+    <title>Wrapper Function to Estimate the Capture Rate &#8212; MOSAIC 2.0b1 documentation</title>
     <link rel="stylesheet" href="../_static/bootstrap-sphinx.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <link rel="stylesheet" href="../_static/style.css" type="text/css" />
-    
-    <script type="text/javascript">
-      var DOCUMENTATION_OPTIONS = {
-        URL_ROOT:    '../',
-        VERSION:     '1.3.6',
-        COLLAPSE_INDEX: false,
-        FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true
-      };
-    </script>
+    <script type="text/javascript" src="../_static/documentation_options.js"></script>
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <script type="text/javascript" src="../_static/js/jquery-1.11.0.min.js"></script>
     <script type="text/javascript" src="../_static/js/jquery-fix.js"></script>
-    <script type="text/javascript" src="../_static/bootstrap-3.3.6/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../_static/bootstrap-3.3.7/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="../_static/bootstrap-sphinx.js"></script>
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="top" title="MOSAIC 1.3.6 documentation" href="../index.html" />
 
 <meta charset='utf-8'>
 <meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
 <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
 <meta name="apple-mobile-web-app-capable" content="yes">
 
-	<script type="text/javascript"
-		src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
-	</script>
 	<script async type="text/javascript" id="_fed_an_ua_tag" src="https://dap.digitalgov.gov/Universal-Federated-Analytics-Min.js?agency=NIST&subagency=github&pua=UA-42404149-54&yt=true&exts=ppsx,pps,f90,sch,rtf,wrl,txz,m1v,xlsm,msi,xsd,f,tif,eps,mpg,xml,pl,xlt,c">
 	</script>	
 
 	<meta name="theme-color" content="#283593">
 
-  </head>
-  <body role="document">
+  </head><body>
 
   <div id="navbar" class="navbar navbar-default navbar-fixed-top">
     <div class="container">
@@ -60,9 +42,9 @@
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </button>
-        <a class="navbar-brand" href="../index.html"><span><img src="../_static/icon_36.png"></span>
+        <a class="navbar-brand" href="../index.html"><span><img src="../_static/icon_48.png"></span>
            </a>
-        <span class="navbar-text navbar-version pull-left"><b>1.3.6</b></span>
+        <span class="navbar-text navbar-version pull-left"><b>2.0b1</b></span>
       </div>
 
         <div class="collapse navbar-collapse nav-collapse">
@@ -87,16 +69,16 @@
 <li class="toctree-l1"><a class="reference internal" href="Algorithms.html">2. Data Processing Algorithms in <em>MOSAIC</em></a></li>
 <li class="toctree-l1"><a class="reference internal" href="GettingStarted.html">3. Getting Started</a></li>
 <li class="toctree-l1"><a class="reference internal" href="GraphicalInterface.html">4. <em>MOSAIC</em> GUI</a></li>
-<li class="toctree-l1"><a class="reference internal" href="settingsFile.html">5. Settings File</a></li>
-<li class="toctree-l1"><a class="reference internal" href="DatabaseStructure.html">6. Database Structure and Query Syntax</a></li>
-<li class="toctree-l1"><a class="reference internal" href="ScriptingandAdvancedFeatures.html">7. Scripting and Advanced Features</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Extend.html">8. Extend <em>MOSAIC</em></a></li>
-<li class="toctree-l1"><a class="reference internal" href="PublicationFigures.html">9. Publication Quality Figures</a></li>
-<li class="toctree-l1"><a class="reference internal" href="AdvancedAnalysis.html">10. Advanced Analysis</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Addons.html">11. Addons</a></li>
-<li class="toctree-l1"><a class="reference internal" href="DeveloperTools.html">12. Developer Tools</a></li>
-<li class="toctree-l1"><a class="reference internal" href="apidocs.html">13. API Documentation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="ChangeLog.html">14. Change Log</a></li>
+<li class="toctree-l1"><a class="reference internal" href="WebInterface.html">5. <em>MOSAIC</em> WEB</a></li>
+<li class="toctree-l1"><a class="reference internal" href="settingsFile.html">6. Settings File</a></li>
+<li class="toctree-l1"><a class="reference internal" href="DatabaseStructure.html">7. Database Structure and Query Syntax</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ScriptingandAdvancedFeatures.html">8. Scripting and Advanced Features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Extend.html">9. Extend <em>MOSAIC</em></a></li>
+<li class="toctree-l1"><a class="reference internal" href="PublicationFigures.html">10. Publication Quality Figures</a></li>
+<li class="toctree-l1"><a class="reference internal" href="AdvancedAnalysis.html">11. Advanced Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Addons.html">12. Addons</a></li>
+<li class="toctree-l1"><a class="reference internal" href="DeveloperTools.html">13. Developer Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="apidocs.html">14. API Documentation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="References.html">15. Bibliography</a></li>
 </ul>
 </ul>
@@ -130,14 +112,14 @@
     <div class="col-md-12 content">
       
   <p>Estimate the capture rate of molecules partitioning into a nanopore.</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="p">:</span><span class="n">Created</span><span class="p">:</span>    <span class="mi">12</span><span class="o">/</span><span class="mi">27</span><span class="o">/</span><span class="mi">2015</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">:</span><span class="n">Created</span><span class="p">:</span>    <span class="mi">12</span><span class="o">/</span><span class="mi">27</span><span class="o">/</span><span class="mi">2015</span>
 <span class="p">:</span><span class="n">Author</span><span class="p">:</span>     <span class="n">Arvind</span> <span class="n">Balijepalli</span> <span class="o">&lt;</span><span class="n">arvind</span><span class="o">.</span><span class="n">balijepalli</span><span class="nd">@nist</span><span class="o">.</span><span class="n">gov</span><span class="o">&gt;</span>
 <span class="p">:</span><span class="n">License</span><span class="p">:</span>    <span class="n">See</span> <span class="n">LICENSE</span><span class="o">.</span><span class="n">TXT</span>
 <span class="p">:</span><span class="n">ChangeLog</span><span class="p">:</span>
     <span class="mi">12</span><span class="o">/</span><span class="mi">27</span><span class="o">/</span><span class="mi">15</span>        <span class="n">AB</span>    <span class="n">Initial</span> <span class="n">version</span>
 </pre></div>
 </div>
-<div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<div class="code python highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 
 <span class="kn">from</span> <span class="nn">mosaicscripts.analysis.kinetics</span> <span class="k">import</span> <span class="n">CaptureRate</span>
 </pre></div>
@@ -145,11 +127,11 @@
 <div class="section" id="wrapper-function-to-estimate-the-capture-rate">
 <h1>Wrapper Function to Estimate the Capture Rate<a class="headerlink" href="#wrapper-function-to-estimate-the-capture-rate" title="Permalink to this headline">¶</a></h1>
 <p>The capture rate can be estimated directly by calling the
-<code class="docutils literal"><span class="pre">CaptureRate</span></code> function in <code class="docutils literal"><span class="pre">mosaicscripts.analysis.kinetics</span></code>. The
+<code class="docutils literal notranslate"><span class="pre">CaptureRate</span></code> function in <code class="docutils literal notranslate"><span class="pre">mosaicscripts.analysis.kinetics</span></code>. The
 function returns a list with two elements: the capture rate
 (s:math:<cite>^{-1}</cite>), and the standard error of the capture rate
 (s:math:<cite>^{-1}</cite>).</p>
-<div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span>
+<div class="code python highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span>
         <span class="n">CaptureRate</span><span class="p">(</span>
             <span class="s2">&quot;../data/eventMD-P28-bin.sqlite&quot;</span><span class="p">,</span>
             <span class="s2">&quot;select AbsEventStart from metadata where ProcessingStatus=&#39;normal&#39; and ResTime &gt; 0.02 order by AbsEventStart ASC&quot;</span>
@@ -158,13 +140,13 @@ function returns a list with two elements: the capture rate
     <span class="p">)</span>
 </pre></div>
 </div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">array</span><span class="p">([</span> <span class="mf">27.9</span><span class="p">,</span>   <span class="mf">0.2</span><span class="p">])</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">array</span><span class="p">([</span> <span class="mf">27.9</span><span class="p">,</span>   <span class="mf">0.2</span><span class="p">])</span>
 </pre></div>
 </div>
 </div>
 <div class="section" id="capture-rate-details">
 <h1>Capture Rate Details<a class="headerlink" href="#capture-rate-details" title="Permalink to this headline">¶</a></h1>
-<div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">scipy.optimize</span> <span class="k">import</span> <span class="n">curve_fit</span>
+<div class="code python highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">scipy.optimize</span> <span class="k">import</span> <span class="n">curve_fit</span>
 <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
 
 <span class="kn">from</span> <span class="nn">mosaicscripts.analysis.kinetics</span> <span class="k">import</span> <span class="n">query1Col</span>
@@ -172,31 +154,31 @@ function returns a list with two elements: the capture rate
 <span class="kn">from</span> <span class="nn">mosaic.utilities.fit_funcs</span> <span class="k">import</span> <span class="n">singleExponential</span>
 </pre></div>
 </div>
-<div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="n">mplformat</span><span class="o">.</span><span class="n">update_rcParams</span><span class="p">()</span>
+<div class="code python highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mplformat</span><span class="o">.</span><span class="n">update_rcParams</span><span class="p">()</span>
 </pre></div>
 </div>
 <p>Continue reading to dig deeper into how the capture rate is estimated
-within the <code class="docutils literal"><span class="pre">CaptureRate</span></code> function.</p>
+within the <code class="docutils literal notranslate"><span class="pre">CaptureRate</span></code> function.</p>
 <p>The first step is to read in the start times for each event. This is
 easily done with a query to the MOSAIC database as shown below. The
-start times are stored in the <code class="docutils literal"><span class="pre">AbsEventStart</span></code> column. We limit the
+start times are stored in the <code class="docutils literal notranslate"><span class="pre">AbsEventStart</span></code> column. We limit the
 events we use to estimate the capture rate to ones that were
-successfully fit (<code class="docutils literal"><span class="pre">ProcessingStatus</span></code>=&#8217;normal&#8217;) and those whose
-residence times (<code class="docutils literal"><span class="pre">ResTime</span></code>) in the pore are longer than 20
-<span class="math">\(\mu\)</span>s.</p>
-<p>Finally, we sort the <code class="docutils literal"><span class="pre">AbsEventStart</span></code> to ensure the event start times
+successfully fit (<code class="docutils literal notranslate"><span class="pre">ProcessingStatus</span></code>=’normal’) and those whose
+residence times (<code class="docutils literal notranslate"><span class="pre">ResTime</span></code>) in the pore are longer than 20
+<span class="math notranslate nohighlight">\(\mu\)</span>s.</p>
+<p>Finally, we sort the <code class="docutils literal notranslate"><span class="pre">AbsEventStart</span></code> to ensure the event start times
 are in ascending order.</p>
-<div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="n">start_times</span><span class="o">=</span><span class="n">query1Col</span><span class="p">(</span>
+<div class="code python highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">start_times</span><span class="o">=</span><span class="n">query1Col</span><span class="p">(</span>
         <span class="s2">&quot;../data/eventMD-P28-bin.sqlite&quot;</span><span class="p">,</span>
         <span class="s2">&quot;select AbsEventStart from metadata where ProcessingStatus=&#39;normal&#39; and ResTime &gt; 0.02 order by AbsEventStart ASC&quot;</span>
     <span class="p">)</span>
 </pre></div>
 </div>
 <p>Next, we calculate the arrival times, i.e. the time between the start of
-successive events. This is done with the <code class="docutils literal"><span class="pre">Numpy</span></code> diff function. Note
-that <code class="docutils literal"><span class="pre">AbsEventStart</span></code> is stored in milliseconds within the database.
+successive events. This is done with the <code class="docutils literal notranslate"><span class="pre">Numpy</span></code> diff function. Note
+that <code class="docutils literal notranslate"><span class="pre">AbsEventStart</span></code> is stored in milliseconds within the database.
 Here, we also convert the arrival times to seconds.</p>
-<div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="n">arrival_times</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">diff</span><span class="p">(</span><span class="n">start_times</span><span class="p">)</span><span class="o">/</span><span class="mf">1000.</span>
+<div class="code python highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">arrival_times</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">diff</span><span class="p">(</span><span class="n">start_times</span><span class="p">)</span><span class="o">/</span><span class="mf">1000.</span>
 </pre></div>
 </div>
 <p>The partitioning of molecules into the pore is a stochastic process.
@@ -206,15 +188,15 @@ robust. With randomly occuring events that have some mean rate, the
 number of events scales linearly with time. Therefore, the distribution
 of these events follows a single exponential form. We can easily test
 this by calculating the probability density function (PDF) using the
-<code class="docutils literal"><span class="pre">Numpy</span></code> histogram function. Note that the <code class="docutils literal"><span class="pre">density</span></code>=<code class="docutils literal"><span class="pre">True</span></code>
+<code class="docutils literal notranslate"><span class="pre">Numpy</span></code> histogram function. Note that the <code class="docutils literal notranslate"><span class="pre">density</span></code>=<code class="docutils literal notranslate"><span class="pre">True</span></code>
 argument normalizes the histogram resulting in a PDF.</p>
-<div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="n">density</span><span class="p">,</span><span class="n">bins</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">histogram</span><span class="p">(</span><span class="n">arrival_times</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">density</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<div class="code python highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">density</span><span class="p">,</span><span class="n">bins</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">histogram</span><span class="p">(</span><span class="n">arrival_times</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">density</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>Plot the resulting PDF with <code class="docutils literal"><span class="pre">Matplotlib</span></code> to verify the distribution.
+<p>Plot the resulting PDF with <code class="docutils literal notranslate"><span class="pre">Matplotlib</span></code> to verify the distribution.
 Sure enough on a semilog scale, the resulting distribution appears
 linear suggesting an exponential form.</p>
-<div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">semilogy</span><span class="p">(</span>
+<div class="code python highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">semilogy</span><span class="p">(</span>
         <span class="n">bins</span><span class="p">[:</span><span class="nb">len</span><span class="p">(</span><span class="n">density</span><span class="p">)],</span> <span class="n">density</span><span class="p">,</span>
         <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;None&#39;</span><span class="p">,</span>
         <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;o&#39;</span><span class="p">,</span>
@@ -225,7 +207,7 @@ linear suggesting an exponential form.</p>
 <span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">(</span><span class="mf">0.005</span><span class="p">,</span><span class="mf">0.3</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="mf">0.006</span><span class="p">,</span><span class="mi">25</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">([</span><span class="mf">0.05</span><span class="p">,</span><span class="mf">0.15</span><span class="p">,</span><span class="mf">0.25</span><span class="p">])</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">yticks</span><span class="p">([</span><span class="mi">1</span><span class="n">e</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span><span class="mf">0.1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="n">e1</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">yticks</span><span class="p">([</span><span class="mf">1e-2</span><span class="p">,</span><span class="mf">0.1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mf">1e1</span><span class="p">])</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">axes</span><span class="p">()</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Arrival Times (s)&quot;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">axes</span><span class="p">()</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Density (s$^{-1}$)&quot;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
@@ -233,15 +215,15 @@ linear suggesting an exponential form.</p>
 </div>
 <img alt="../_images/CaptureRate_15_0.png" src="../_images/CaptureRate_15_0.png" />
 <p>Next we fit the PDF to a single exponential function of the form
-<span class="math">\(a\ e^{-t/\tau}\)</span>, where a is a scaling factor and <span class="math">\(\tau\)</span> is
-the mean time of the distribution (with a rate of 1/<span class="math">\(\tau\)</span>).
-This is accomplished with the <code class="docutils literal"><span class="pre">curve_fit</span></code> function within <code class="docutils literal"><span class="pre">Scipy</span></code>.</p>
-<div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="n">popt</span><span class="p">,</span> <span class="n">pcov</span> <span class="o">=</span> <span class="n">curve_fit</span><span class="p">(</span><span class="n">singleExponential</span><span class="p">,</span> <span class="n">bins</span><span class="p">[:</span><span class="nb">len</span><span class="p">(</span><span class="n">density</span><span class="p">)],</span> <span class="n">density</span><span class="p">,</span> <span class="n">p0</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">arrival_times</span><span class="p">)])</span>
+<span class="math notranslate nohighlight">\(a\ e^{-t/\tau}\)</span>, where a is a scaling factor and <span class="math notranslate nohighlight">\(\tau\)</span> is
+the mean time of the distribution (with a rate of 1/<span class="math notranslate nohighlight">\(\tau\)</span>).
+This is accomplished with the <code class="docutils literal notranslate"><span class="pre">curve_fit</span></code> function within <code class="docutils literal notranslate"><span class="pre">Scipy</span></code>.</p>
+<div class="code python highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">popt</span><span class="p">,</span> <span class="n">pcov</span> <span class="o">=</span> <span class="n">curve_fit</span><span class="p">(</span><span class="n">singleExponential</span><span class="p">,</span> <span class="n">bins</span><span class="p">[:</span><span class="nb">len</span><span class="p">(</span><span class="n">density</span><span class="p">)],</span> <span class="n">density</span><span class="p">,</span> <span class="n">p0</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">arrival_times</span><span class="p">)])</span>
 </pre></div>
 </div>
 <p>We then visually check the fit, by superimposing the resulting fit
 function over the PDF.</p>
-<div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">semilogy</span><span class="p">(</span>
+<div class="code python highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">semilogy</span><span class="p">(</span>
         <span class="n">bins</span><span class="p">[:</span><span class="nb">len</span><span class="p">(</span><span class="n">density</span><span class="p">)],</span> <span class="n">density</span><span class="p">,</span>
         <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;None&#39;</span><span class="p">,</span>
         <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;o&#39;</span><span class="p">,</span>
@@ -257,19 +239,19 @@ function over the PDF.</p>
 <span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">(</span><span class="mf">0.005</span><span class="p">,</span><span class="mf">0.3</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="mf">0.006</span><span class="p">,</span><span class="mi">25</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">([</span><span class="mf">0.05</span><span class="p">,</span><span class="mf">0.15</span><span class="p">,</span><span class="mf">0.25</span><span class="p">])</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">yticks</span><span class="p">([</span><span class="mi">1</span><span class="n">e</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span><span class="mf">0.1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="n">e1</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">yticks</span><span class="p">([</span><span class="mf">1e-2</span><span class="p">,</span><span class="mf">0.1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mf">1e1</span><span class="p">])</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">axes</span><span class="p">()</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Arrival Times (s)&quot;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">axes</span><span class="p">()</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Density (s$^{-1}$)&quot;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
 <img alt="../_images/CaptureRate_19_0.png" src="../_images/CaptureRate_19_0.png" />
-<p>Finally, we can extract the capture rate (1/<span class="math">\(\tau\)</span>) from the
+<p>Finally, we can extract the capture rate (1/<span class="math notranslate nohighlight">\(\tau\)</span>) from the
 optimal fit parameters.</p>
-<div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">([</span><span class="mi">1</span><span class="o">/</span><span class="n">popt</span><span class="p">[</span><span class="mi">1</span><span class="p">]],</span> <span class="n">decimals</span><span class="o">=</span><span class="mi">1</span> <span class="p">)</span>
+<div class="code python highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">([</span><span class="mi">1</span><span class="o">/</span><span class="n">popt</span><span class="p">[</span><span class="mi">1</span><span class="p">]],</span> <span class="n">decimals</span><span class="o">=</span><span class="mi">1</span> <span class="p">)</span>
 </pre></div>
 </div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">array</span><span class="p">([</span> <span class="mf">27.9</span><span class="p">])</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">array</span><span class="p">([</span> <span class="mf">27.9</span><span class="p">])</span>
 </pre></div>
 </div>
 </div>
@@ -287,10 +269,13 @@ optimal fit parameters.</p>
       
     </p>
     <p>
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.8.<br/>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.4.<br/>
     </p>
   </div>
 </footer> -->
+<script type="text/javascript"
+	src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
 <div class="footer" style="vertical-align: center" align="center">
 		<table width="90%" style="vertical-align: center">
 			<col width=40%>

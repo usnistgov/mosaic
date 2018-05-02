@@ -1,58 +1,39 @@
 <!DOCTYPE html>
 
-
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    
-    <title>13.1.2. Meta-Classes &#8212; MOSAIC 1.3.6 documentation</title>
-    
-    <link rel="stylesheet" href="../_static/basic.css" type="text/css" />
-    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="../_static/bootswatch-3.3.6/paper/bootstrap.min.css" type="text/css" />
+    <title>14.1.2. Meta-Classes &#8212; MOSAIC 2.0b1 documentation</title>
     <link rel="stylesheet" href="../_static/bootstrap-sphinx.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <link rel="stylesheet" href="../_static/style.css" type="text/css" />
-    
-    <script type="text/javascript">
-      var DOCUMENTATION_OPTIONS = {
-        URL_ROOT:    '../',
-        VERSION:     '1.3.6',
-        COLLAPSE_INDEX: false,
-        FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true
-      };
-    </script>
+    <script type="text/javascript" src="../_static/documentation_options.js"></script>
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <script type="text/javascript" src="../_static/js/jquery-1.11.0.min.js"></script>
     <script type="text/javascript" src="../_static/js/jquery-fix.js"></script>
-    <script type="text/javascript" src="../_static/bootstrap-3.3.6/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../_static/bootstrap-3.3.7/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="../_static/bootstrap-sphinx.js"></script>
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="top" title="MOSAIC 1.3.6 documentation" href="../index.html" />
-    <link rel="up" title="13. API Documentation" href="../doc/apidocs.html" />
-    <link rel="next" title="13.1.3. Time-Series IO" href="mosaic.traj.html" />
-    <link rel="prev" title="13.1.1. Top-Level Interfaces" href="mosaic.html" />
+    <link rel="next" title="14.1.3. Time-Series IO" href="mosaic.traj.html" />
+    <link rel="prev" title="14.1.1. Top-Level Interfaces" href="mosaic.html" />
 
 <meta charset='utf-8'>
 <meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
 <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
 <meta name="apple-mobile-web-app-capable" content="yes">
 
-	<script type="text/javascript"
-		src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
-	</script>
 	<script async type="text/javascript" id="_fed_an_ua_tag" src="https://dap.digitalgov.gov/Universal-Federated-Analytics-Min.js?agency=NIST&subagency=github&pua=UA-42404149-54&yt=true&exts=ppsx,pps,f90,sch,rtf,wrl,txz,m1v,xlsm,msi,xsd,f,tif,eps,mpg,xml,pl,xlt,c">
 	</script>	
 
 	<meta name="theme-color" content="#283593">
 
-  </head>
-  <body role="document">
+  </head><body>
 
   <div id="navbar" class="navbar navbar-default navbar-fixed-top">
     <div class="container">
@@ -63,9 +44,9 @@
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </button>
-        <a class="navbar-brand" href="../index.html"><span><img src="../_static/icon_36.png"></span>
+        <a class="navbar-brand" href="../index.html"><span><img src="../_static/icon_48.png"></span>
            </a>
-        <span class="navbar-text navbar-version pull-left"><b>1.3.6</b></span>
+        <span class="navbar-text navbar-version pull-left"><b>2.0b1</b></span>
       </div>
 
         <div class="collapse navbar-collapse nav-collapse">
@@ -90,16 +71,16 @@
 <li class="toctree-l1"><a class="reference internal" href="../doc/Algorithms.html">2. Data Processing Algorithms in <em>MOSAIC</em></a></li>
 <li class="toctree-l1"><a class="reference internal" href="../doc/GettingStarted.html">3. Getting Started</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../doc/GraphicalInterface.html">4. <em>MOSAIC</em> GUI</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../doc/settingsFile.html">5. Settings File</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../doc/DatabaseStructure.html">6. Database Structure and Query Syntax</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../doc/ScriptingandAdvancedFeatures.html">7. Scripting and Advanced Features</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../doc/Extend.html">8. Extend <em>MOSAIC</em></a></li>
-<li class="toctree-l1"><a class="reference internal" href="../doc/PublicationFigures.html">9. Publication Quality Figures</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../doc/AdvancedAnalysis.html">10. Advanced Analysis</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../doc/Addons.html">11. Addons</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../doc/DeveloperTools.html">12. Developer Tools</a></li>
-<li class="toctree-l1 current"><a class="reference internal" href="../doc/apidocs.html">13. API Documentation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../doc/ChangeLog.html">14. Change Log</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../doc/WebInterface.html">5. <em>MOSAIC</em> WEB</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../doc/settingsFile.html">6. Settings File</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../doc/DatabaseStructure.html">7. Database Structure and Query Syntax</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../doc/ScriptingandAdvancedFeatures.html">8. Scripting and Advanced Features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../doc/Extend.html">9. Extend <em>MOSAIC</em></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../doc/PublicationFigures.html">10. Publication Quality Figures</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../doc/AdvancedAnalysis.html">11. Advanced Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../doc/Addons.html">12. Addons</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../doc/DeveloperTools.html">13. Developer Tools</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../doc/apidocs.html">14. API Documentation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../doc/References.html">15. Bibliography</a></li>
 </ul>
 </ul>
@@ -133,13 +114,13 @@
     <div class="col-md-12 content">
       
   <div class="section" id="meta-classes">
-<span id="api-metaclass-page"></span><h1>13.1.2. Meta-Classes<a class="headerlink" href="#meta-classes" title="Permalink to this headline">¶</a></h1>
+<span id="api-metaclass-page"></span><h1>14.1.2. Meta-Classes<a class="headerlink" href="#meta-classes" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="mosaic-partition-metaeventpartition-module">
-<h2>13.1.2.1. mosaic.partition.metaEventPartition module<a class="headerlink" href="#mosaic-partition-metaeventpartition-module" title="Permalink to this headline">¶</a></h2>
+<h2>14.1.2.1. mosaic.partition.metaEventPartition module<a class="headerlink" href="#mosaic-partition-metaeventpartition-module" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="mosaic.partition.metaEventPartition.metaEventPartition">
 <em class="property">class </em><code class="descclassname">mosaic.partition.metaEventPartition.</code><code class="descname">metaEventPartition</code><span class="sig-paren">(</span><em>trajDataObj</em>, <em>eventProcHnd</em>, <em>eventPartitionSettings</em>, <em>eventProcSettings</em>, <em>settingsString</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/partition/metaEventPartition.html#metaEventPartition"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mosaic.partition.metaEventPartition.metaEventPartition" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference external" href="https://docs.python.org/2/library/functions.html#object" title="(in Python v2.7)"><code class="xref py py-class docutils literal"><span class="pre">object</span></code></a></p>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.6)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
 <div class="admonition warning">
 <p class="first admonition-title">Warning</p>
 <p class="last">This metaclass must be sub-classed. All abstract methods within this metaclass must be implemented.</p>
@@ -155,13 +136,13 @@ partition has completed.</p>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
 <li><dl class="first docutils">
-<dt><cite>trajDataObj</cite></dt>
- <span class="classifier-delimiter">:</span> <span class="classifier">properly initialized object instantiated from a sub-class </span><dd>of metaTrajIO.</dd>
+<dt><cite>trajDataObj</cite> <span class="classifier-delimiter">:</span> <span class="classifier">properly initialized object instantiated from a sub-class </span></dt>
+<dd>of metaTrajIO.</dd>
 </dl>
 </li>
 <li><dl class="first docutils">
-<dt><cite>eventProcHnd</cite></dt>
- <span class="classifier-delimiter">:</span> <span class="classifier">handle to a sub-class of metaEventProcessor. Objects of </span><dd>this class are initialized as necessary</dd>
+<dt><cite>eventProcHnd</cite> <span class="classifier-delimiter">:</span> <span class="classifier">handle to a sub-class of metaEventProcessor. Objects of </span></dt>
+<dd>this class are initialized as necessary</dd>
 </dl>
 </li>
 <li><cite>eventPartitionSettings</cite> :    settings dictionary for the partition algorithm.</li>
@@ -180,13 +161,13 @@ current working directory)</p>
 <li><cite>parallelProc</cite> :      Process events in parallel using the pproc module. (default: 1, Yes)</li>
 <li><cite>reserveNCPU</cite> :       Reserve the specified number of CPUs and exclude them from the parallel pool.</li>
 <li><dl class="first docutils">
-<dt><cite>driftThreshold</cite></dt>
- <span class="classifier-delimiter">:</span> <span class="classifier">Trigger a drift warning when the mean open channel current deviates by &#8216;driftThreshold&#8217;*</span><dd>SD from the baseline open channel current (default: 2)</dd>
+<dt><cite>driftThreshold</cite> <span class="classifier-delimiter">:</span> <span class="classifier">Trigger a drift warning when the mean open channel current deviates by ‘driftThreshold’*</span></dt>
+<dd>SD from the baseline open channel current (default: 2)</dd>
 </dl>
 </li>
 <li><dl class="first docutils">
-<dt><cite>maxDriftRate</cite></dt>
- <span class="classifier-delimiter">:</span> <span class="classifier">Trigger a warning when the open channel conductance changes at a rate faster </span><dd>than that specified. (default: 2 pA/s)</dd>
+<dt><cite>maxDriftRate</cite> <span class="classifier-delimiter">:</span> <span class="classifier">Trigger a warning when the open channel conductance changes at a rate faster </span></dt>
+<dd>than that specified. (default: 2 pA/s)</dd>
 </dl>
 </li>
 <li><cite>minBaseline</cite> :       Minimum value for the ionic current baseline.</li>
@@ -269,11 +250,11 @@ current working directory)</p>
 
 </div>
 <div class="section" id="mosaic-process-metaeventprocessor-module">
-<h2>13.1.2.2. mosaic.process.metaEventProcessor module<a class="headerlink" href="#mosaic-process-metaeventprocessor-module" title="Permalink to this headline">¶</a></h2>
+<h2>14.1.2.2. mosaic.process.metaEventProcessor module<a class="headerlink" href="#mosaic-process-metaeventprocessor-module" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="mosaic.process.metaEventProcessor.metaEventProcessor">
 <em class="property">class </em><code class="descclassname">mosaic.process.metaEventProcessor.</code><code class="descname">metaEventProcessor</code><span class="sig-paren">(</span><em>icurr</em>, <em>icurrU</em>, <em>Fs</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/process/metaEventProcessor.html#metaEventProcessor"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mosaic.process.metaEventProcessor.metaEventProcessor" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference external" href="https://docs.python.org/2/library/functions.html#object" title="(in Python v2.7)"><code class="xref py py-class docutils literal"><span class="pre">object</span></code></a></p>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.6)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
 <div class="admonition warning">
 <p class="first admonition-title">Warning</p>
 <p class="last">This metaclass must be sub-classed. All abstract methods within this metaclass must be implemented.</p>
@@ -284,9 +265,9 @@ functions:</p>
 <blockquote>
 <div><ul class="simple">
 <li><dl class="first docutils">
-<dt><cite>processEvent</cite></dt>
- <span class="classifier-delimiter">:</span> <span class="classifier">process raw event data and populate event meta-data. Store each </span><dd>piece of processed event data in a class attribute starting with &#8216;md&#8217;.
-For example, the blockade depth meta-data can be defined as &#8216;mdBlockadeDepth&#8217;</dd>
+<dt><cite>processEvent</cite> <span class="classifier-delimiter">:</span> <span class="classifier">process raw event data and populate event meta-data. Store each </span></dt>
+<dd>piece of processed event data in a class attribute starting with ‘md’.
+For example, the blockade depth meta-data can be defined as ‘mdBlockadeDepth’</dd>
 </dl>
 </li>
 <li><cite>printMetadata</cite> :     print meta-data set by event processing in a human readable format.</li>
@@ -372,7 +353,7 @@ For example, the blockade depth meta-data can be defined as &#8216;mdBlockadeDep
 <dl class="method">
 <dt id="mosaic.process.metaEventProcessor.metaEventProcessor.flagEvent">
 <code class="descname">flagEvent</code><span class="sig-paren">(</span><em>status</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/process/metaEventProcessor.html#metaEventProcessor.flagEvent"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mosaic.process.metaEventProcessor.metaEventProcessor.flagEvent" title="Permalink to this definition">¶</a></dt>
-<dd><p>Set a warning status that starts with &#8216;w&#8217; for non-critical errors. 
+<dd><p>Set a warning status that starts with ‘w’ for non-critical errors. 
 Metadata for these events is preserved and the user can be warned (e.g., in the GUI.)</p>
 </dd></dl>
 
@@ -410,7 +391,7 @@ is returned.</p>
 <dl class="method">
 <dt id="mosaic.process.metaEventProcessor.metaEventProcessor.rejectEvent">
 <code class="descname">rejectEvent</code><span class="sig-paren">(</span><em>status</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/process/metaEventProcessor.html#metaEventProcessor.rejectEvent"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mosaic.process.metaEventProcessor.metaEventProcessor.rejectEvent" title="Permalink to this definition">¶</a></dt>
-<dd><p>Set an event as rejected if it doesn&#8217;t pass tests in processing.
+<dd><p>Set an event as rejected if it doesn’t pass tests in processing.
 The status is assigned to mdProcessingStatus.</p>
 </dd></dl>
 
@@ -424,11 +405,11 @@ The status is assigned to mdProcessingStatus.</p>
 
 </div>
 <div class="section" id="mosaic-filters-metaiofilter-module">
-<h2>13.1.2.3. mosaic.filters.metaIOFilter module<a class="headerlink" href="#mosaic-filters-metaiofilter-module" title="Permalink to this headline">¶</a></h2>
+<h2>14.1.2.3. mosaic.filters.metaIOFilter module<a class="headerlink" href="#mosaic-filters-metaiofilter-module" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="mosaic.filters.metaIOFilter.metaIOFilter">
 <em class="property">class </em><code class="descclassname">mosaic.filters.metaIOFilter.</code><code class="descname">metaIOFilter</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/filters/metaIOFilter.html#metaIOFilter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mosaic.filters.metaIOFilter.metaIOFilter" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference external" href="https://docs.python.org/2/library/functions.html#object" title="(in Python v2.7)"><code class="xref py py-class docutils literal"><span class="pre">object</span></code></a></p>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.6)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
 <div class="admonition warning">
 <p class="first admonition-title">Warning</p>
 <p class="last">This metaclass must be sub-classed. All abstract methods within this metaclass must be implemented.</p>
@@ -517,11 +498,11 @@ function:</p>
 
 </div>
 <div class="section" id="mosaic-mdio-metamdio-module">
-<h2>13.1.2.4. mosaic.mdio.metaMDIO module<a class="headerlink" href="#mosaic-mdio-metamdio-module" title="Permalink to this headline">¶</a></h2>
+<h2>14.1.2.4. mosaic.mdio.metaMDIO module<a class="headerlink" href="#mosaic-mdio-metamdio-module" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="mosaic.mdio.metaMDIO.metaMDIO">
 <em class="property">class </em><code class="descclassname">mosaic.mdio.metaMDIO.</code><code class="descname">metaMDIO</code><a class="reference internal" href="../_modules/mosaic/mdio/metaMDIO.html#metaMDIO"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mosaic.mdio.metaMDIO.metaMDIO" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference external" href="https://docs.python.org/2/library/functions.html#object" title="(in Python v2.7)"><code class="xref py py-class docutils literal"><span class="pre">object</span></code></a></p>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.6)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
 <div class="admonition warning">
 <p class="first admonition-title">Warning</p>
 <p class="last">This metaclass must be sub-classed. All abstract methods within this metaclass must be implemented.</p>
@@ -592,7 +573,7 @@ SQL database.</p>
 the common args below:</p>
 <blockquote>
 <div><ul class="simple">
-<li><cite>dbPath</cite> :            directory to store the MD database (&#8216;&lt;full path to data directory&gt;&#8217;)</li>
+<li><cite>dbPath</cite> :            directory to store the MD database (‘&lt;full path to data directory&gt;’)</li>
 <li><cite>colNames</cite> :  list of text names for the columns in the tables</li>
 <li><cite>colNames_t</cite> :        list of data types for each column.</li>
 </ul>
@@ -608,7 +589,7 @@ the common args below:</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><cite>dbname</cite> :            directory to store the MD database (&#8216;&lt;full path to data directory&gt;&#8217;)</li>
+<li><cite>dbname</cite> :            directory to store the MD database (‘&lt;full path to data directory&gt;’)</li>
 </ul>
 </td>
 </tr>
@@ -684,8 +665,8 @@ the common args below:</p>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Args:</th><td class="field-body"><ul class="first last">
 <li><dl class="first docutils">
-<dt><cite>infolist</cite></dt>
- <span class="classifier-delimiter">:</span> <span class="classifier">A list of strings in the following order [ datPath, dataType, partitionAlgorithm, processingAlgorithm, filteringAlgorithm].</span><dd><p class="first"><cite>datPath</cite>                               : full path to the data directory</p>
+<dt><cite>infolist</cite> <span class="classifier-delimiter">:</span> <span class="classifier">A list of strings in the following order [ datPath, dataType, partitionAlgorithm, processingAlgorithm, filteringAlgorithm].</span></dt>
+<dd><p class="first"><cite>datPath</cite>                               : full path to the data directory</p>
 <p><cite>dataType</cite>                              : type of data processed (e.g. ABF, QDF, etc.)</p>
 <p><cite>partitionAlgorithm</cite>    : name of partition algorithm (e.g. eventSegment)</p>
 <p><cite>processingAlgorithm</cite>   : name of event processing algorithm (e.g. multStateAnalysis)</p>
@@ -757,8 +738,252 @@ to writing data to a default table.</p>
 </dd></dl>
 
 </div>
-<div class="section" id="mosaic-metatrajio-module">
-<h2>13.1.2.5. mosaic.metaTrajIO module<a class="headerlink" href="#mosaic-metatrajio-module" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="mosaic-trajio-metatrajio-module">
+<h2>14.1.2.5. mosaic.trajio.metaTrajIO module<a class="headerlink" href="#mosaic-trajio-metatrajio-module" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="mosaic.trajio.metaTrajIO.metaTrajIO">
+<em class="property">class </em><code class="descclassname">mosaic.trajio.metaTrajIO.</code><code class="descname">metaTrajIO</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/trajio/metaTrajIO.html#metaTrajIO"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mosaic.trajio.metaTrajIO.metaTrajIO" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.6)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">This metaclass must be sub-classed. All abstract methods within this metaclass must be implemented.</p>
+</div>
+<p>Initialize a TrajIO object. The object can load all the data in a directory,
+N files from a directory or from an explicit list of filenames. In addition 
+to the arguments defined below, implementations of this meta class may require 
+the definition of additional arguments. See the documentation of those classes
+for what those may be. For example, the qdfTrajIO implementation of metaTrajIO also requires
+the feedback resistance (Rfb) and feedback capacitance (Cfb) to be passed at initialization.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><cite>dirname</cite> :           all files from a directory (‘&lt;full path to data directory&gt;’)</li>
+<li><cite>nfiles</cite> :            if requesting N files (in addition to dirname) from a specified directory</li>
+<li><cite>fnames</cite> :            explicit list of filenames ([file1, file2,…]). This argument cannot be used in conjuction with dirname/nfiles. The filter argument is ignored when used in combination with fnames.</li>
+<li><cite>filter</cite> :            ‘&lt;wildcard filter&gt;’ (optional, filter is ‘*’ if not specified)</li>
+<li><cite>start</cite> :             Data start point in seconds.</li>
+<li><cite>end</cite> :                       Data end point in seconds.</li>
+<li><cite>datafilter</cite> :        Handle to the algorithm to use to filter the data. If no algorithm is specified, datafilter     is None and no filtering is performed.</li>
+<li><cite>dcOffset</cite> :          Subtract a DC offset from the ionic current data.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Properties:</th><td class="field-body"><ul class="first simple">
+<li><cite>FsHz</cite> :                                      sampling frequency in Hz. If the data was decimated, this property will hold the sampling frequency after decimation.</li>
+<li><cite>LastFileProcessed</cite> :         return the data file that was last processed.</li>
+<li><cite>ElapsedTimeSeconds</cite> :        return the analysis time in sec.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Errors:</th><td class="field-body"><ul class="first last simple">
+<li><cite>IncompatibleArgumentsError</cite> :        when conflicting arguments are used.</li>
+<li><cite>EmptyDataPipeError</cite> :                        when out of data.</li>
+<li><cite>FileNotFoundError</cite> :                         when data files do not exist in the specified path.</li>
+<li><cite>InsufficientArgumentsError</cite> :        when incompatible arguments are passed</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="mosaic.trajio.metaTrajIO.metaTrajIO._init">
+<code class="descname">_init</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/trajio/metaTrajIO.html#metaTrajIO._init"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mosaic.trajio.metaTrajIO.metaTrajIO._init" title="Permalink to this definition">¶</a></dt>
+<dd><div class="admonition important">
+<p class="first admonition-title">Important</p>
+<p class="last"><strong>Abstract method:</strong> This method must be implemented by a sub-class.</p>
+</div>
+<p>This function is called at the end of the class constructor to perform additional initialization specific to the algorithm being implemented. The arguments to this function are identical to those passed to the class constructor.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="mosaic.trajio.metaTrajIO.metaTrajIO._formatsettings">
+<code class="descname">_formatsettings</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/trajio/metaTrajIO.html#metaTrajIO._formatsettings"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mosaic.trajio.metaTrajIO.metaTrajIO._formatsettings" title="Permalink to this definition">¶</a></dt>
+<dd><p>Log settings strings</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="mosaic.trajio.metaTrajIO.metaTrajIO.DataLengthSec">
+<code class="descname">DataLengthSec</code><a class="headerlink" href="#mosaic.trajio.metaTrajIO.metaTrajIO.DataLengthSec" title="Permalink to this definition">¶</a></dt>
+<dd><div class="admonition important">
+<p class="first admonition-title">Important</p>
+<p class="last"><strong>Property</strong></p>
+</div>
+<p>Return the approximate length of data that will be processed. If the data are in multiple files,
+this property assumes that each file contains an equal amount of data.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="mosaic.trajio.metaTrajIO.metaTrajIO.ElapsedTimeSeconds">
+<code class="descname">ElapsedTimeSeconds</code><a class="headerlink" href="#mosaic.trajio.metaTrajIO.metaTrajIO.ElapsedTimeSeconds" title="Permalink to this definition">¶</a></dt>
+<dd><div class="admonition important">
+<p class="first admonition-title">Important</p>
+<p class="last"><strong>Property</strong></p>
+</div>
+<p>Return the elapsed time in the time-series in seconds.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="mosaic.trajio.metaTrajIO.metaTrajIO.FsHz">
+<code class="descname">FsHz</code><a class="headerlink" href="#mosaic.trajio.metaTrajIO.metaTrajIO.FsHz" title="Permalink to this definition">¶</a></dt>
+<dd><div class="admonition important">
+<p class="first admonition-title">Important</p>
+<p class="last"><strong>Property</strong></p>
+</div>
+<p>Return the sampling frequency in Hz.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="mosaic.trajio.metaTrajIO.metaTrajIO.LastFileProcessed">
+<code class="descname">LastFileProcessed</code><a class="headerlink" href="#mosaic.trajio.metaTrajIO.metaTrajIO.LastFileProcessed" title="Permalink to this definition">¶</a></dt>
+<dd><div class="admonition important">
+<p class="first admonition-title">Important</p>
+<p class="last"><strong>Property</strong></p>
+</div>
+<p>Return the last data file that was processed</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="mosaic.trajio.metaTrajIO.metaTrajIO.ProcessedFiles">
+<code class="descname">ProcessedFiles</code><a class="headerlink" href="#mosaic.trajio.metaTrajIO.metaTrajIO.ProcessedFiles" title="Permalink to this definition">¶</a></dt>
+<dd><div class="admonition important">
+<p class="first admonition-title">Important</p>
+<p class="last"><strong>Property</strong></p>
+</div>
+<p>Return a list of processed data filenames.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="mosaic.trajio.metaTrajIO.metaTrajIO.formatsettings">
+<code class="descname">formatsettings</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/trajio/metaTrajIO.html#metaTrajIO.formatsettings"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mosaic.trajio.metaTrajIO.metaTrajIO.formatsettings" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a formatted string of settings for display</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="mosaic.trajio.metaTrajIO.metaTrajIO.popfnames">
+<code class="descname">popfnames</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/trajio/metaTrajIO.html#metaTrajIO.popfnames"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mosaic.trajio.metaTrajIO.metaTrajIO.popfnames" title="Permalink to this definition">¶</a></dt>
+<dd><p>Pop a single filename from the start of <code class="docutils literal notranslate"><span class="pre">self.dataFiles</span></code>. If <code class="docutils literal notranslate"><span class="pre">self.dataFiles</span></code> is empty,
+raise an <code class="docutils literal notranslate"><span class="pre">EmptyDataPipeError</span></code> error.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li>None</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">A single filename if successful.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Errors:</th><td class="field-body"><ul class="first last simple">
+<li><cite>EmptyDataPipeError</cite> : when the filename list is empty.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="mosaic.trajio.metaTrajIO.metaTrajIO.previewdata">
+<code class="descname">previewdata</code><span class="sig-paren">(</span><em>n</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/trajio/metaTrajIO.html#metaTrajIO.previewdata"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mosaic.trajio.metaTrajIO.metaTrajIO.previewdata" title="Permalink to this definition">¶</a></dt>
+<dd><p>Preview data points in self.currDataPipe. This function is identical in 
+behavior to popdata, except it does not remove data point from the queue.
+Like popdata, it uses recursion to automatically read data files 
+when the queue length is shorter than the requested data points. When all 
+data files are read, an EmptyDataPipeError is thrown.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><cite>n</cite> : number of requested data points</p>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><ul class="first simple">
+<li>Numpy array with requested data</li>
+</ul>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Errors:</th><td class="field-body"><ul class="first last simple">
+<li><cite>EmptyDataPipeError</cite> : if the queue has fewer data points than requested.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="mosaic.trajio.metaTrajIO.metaTrajIO.readdata">
+<code class="descname">readdata</code><span class="sig-paren">(</span><em>fname</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/trajio/metaTrajIO.html#metaTrajIO.readdata"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mosaic.trajio.metaTrajIO.metaTrajIO.readdata" title="Permalink to this definition">¶</a></dt>
+<dd><div class="admonition important">
+<p class="first admonition-title">Important</p>
+<p class="last"><strong>Abstract method:</strong> This method must be implemented by a sub-class.</p>
+</div>
+<p>Return raw data from a single data file. Set a class 
+attribute Fs with the sampling frequency in Hz.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><cite>fname</cite> :  fileame to read</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">An array object that holds raw (unscaled) data from <cite>fname</cite></p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Errors:</th><td class="field-body"><p class="first last">None</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="mosaic.trajio.metaTrajIO.metaTrajIO.scaleData">
+<code class="descname">scaleData</code><span class="sig-paren">(</span><em>data</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/trajio/metaTrajIO.html#metaTrajIO.scaleData"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mosaic.trajio.metaTrajIO.metaTrajIO.scaleData" title="Permalink to this definition">¶</a></dt>
+<dd><div class="admonition important">
+<p class="first admonition-title">Important</p>
+<p class="last"><strong>Abstract method:</strong> This optional interface method can be overridden by a sub-class to modify functionality.</p>
+</div>
+<p>Scale the raw data loaded with <code class="xref py py-func docutils literal notranslate"><span class="pre">readdata()</span></code>. Note this function will not necessarily receive the entire data array loaded with <code class="xref py py-func docutils literal notranslate"><span class="pre">readdata()</span></code>. Transformations must be able to process partial data chunks.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><cite>data</cite> : partial chunk of raw data loaded using <code class="xref py py-func docutils literal notranslate"><span class="pre">readdata()</span></code>.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><ul class="first simple">
+<li>Array containing scaled data.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name" colspan="2">Default Behavior:</th></tr>
+<tr class="field-odd field"><td>&#160;</td><td class="field-body"><ul class="first simple">
+<li>If not implemented by a sub-class, the default behavior is to return <code class="docutils literal notranslate"><span class="pre">data</span></code> to the calling function without modifications.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Example:</th><td class="field-body"><p class="first last">Assuming the amplifier scale and offset values are stored in the class variables <code class="docutils literal notranslate"><span class="pre">AmplifierScale</span></code> and <code class="docutils literal notranslate"><span class="pre">AmplifierOffset</span></code>, the raw data read using <code class="xref py py-func docutils literal notranslate"><span class="pre">readdata()</span></code> can be transformed by <code class="xref py py-func docutils literal notranslate"><span class="pre">scaleData()</span></code>. We can also use this function to change the array data type.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">scaleData</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">data</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">AmplifierScale</span><span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">AmplifierOffset</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="s1">&#39;f8&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</dd></dl>
+
 </div>
 </div>
 
@@ -775,10 +1000,13 @@ to writing data to a default table.</p>
       
     </p>
     <p>
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.8.<br/>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.4.<br/>
     </p>
   </div>
 </footer> -->
+<script type="text/javascript"
+	src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
 <div class="footer" style="vertical-align: center" align="center">
 		<table width="90%" style="vertical-align: center">
 			<col width=40%>
