@@ -20,7 +20,7 @@
     </head>
 
     <body ng-app="mosaicApp" layout="column" ng-controller="AppCtrl" ng-cloak>
-		<md-toolbar class="md-toolbar-tools md-toolbar-tools-center md-whiteframe-z4" layout="row">
+		<md-toolbar class="fixed-header md-toolbar-tools md-toolbar-tools-center" md-whiteframe="4" layout="row" style="position: fixed; z-index: 9;">
 			<md-button 
 				style="padding: 0; margin: 0;"
 				class="md-icon-button" aria-label="Back" 
@@ -114,7 +114,7 @@
 			</md-menu>
 		</md-toolbar>
 
-		<br>
+		<br><br><br><br>
 
 		<div class='md-padding'>
 			<div ng-view ng-cloak></div>

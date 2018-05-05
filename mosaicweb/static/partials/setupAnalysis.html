@@ -20,7 +20,7 @@
 		</md-button>
 		<div layout="column" ng-if="mosaicConfigModel.analysisRunning" flex ng-include="'/static/partials/BackToAnalysisFAB.tmpl.html'"></div>
 		
-		<md-content class="md-whiteframe-z2" layout="column" style="margin: 8px; padding:8px; background: transparent">
+		<md-content md-whiteframe="2" layout="column" style="margin: 8px; padding:8px; background: transparent">
 			<md-subheader class="md-primary" style="margin: 0; padding:0">
 				<p>Time-Series</p>
 			</md-subheader>
@@ -35,7 +35,7 @@
 		</md-content>
 
 		<div layout-gt-sm="row" layout="column">
-			<md-content class="md-whiteframe-z2" style="margin: 8px; padding:8px;" flex-gt-sm="40">
+			<md-content md-whiteframe="2" style="margin: 8px; padding:8px;" flex-gt-sm="40">
 				<md-subheader class="md-primary" style="margin: 0; padding:0">
 					<div layout="row" flex>
 						<p flex="70">Data File Settings</p>
@@ -93,7 +93,7 @@
 				</div>
 			</md-content>
 
-			<md-content class="md-whiteframe-z2" flex-gt-sm style="margin: 8px; padding:8px;">
+			<md-content md-whiteframe="2" flex-gt-sm style="margin: 8px; padding:8px;">
 				<md-subheader class="md-primary" style="margin: 0; padding:0">
 					<div layout="row" flex>
 						<p flex="70">Event Partition Settings</p>
@@ -202,7 +202,7 @@
 			</md-content>
 		</div>
 
-		<md-content class="md-whiteframe-z2" layout="column" style="margin: 8px; padding:8px;" flex-gt-sm ng-disabled="mosaicConfigModel.analysisRunning">
+		<md-content md-whiteframe="2" layout="column" style="margin: 8px; padding:8px;" flex-gt-sm ng-disabled="mosaicConfigModel.analysisRunning">
 			<md-subheader class="md-primary" style="margin: 0; padding:0">
 				<div layout="row" flex>
 						<p flex="70">Event Processing Settings</p>
