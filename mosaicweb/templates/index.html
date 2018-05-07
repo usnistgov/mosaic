@@ -75,28 +75,34 @@
 					<md-icon md-font-set="material-icons md-24" >more_vert</md-icon>
 				</md-button>
 				<md-menu-content width="4">
-					<md-menu-item ng-click="$mdMenu.hide()">
+					<md-menu-item flex ng-click="$mdMenu.hide()" ng-mouseover="docsNewWindow=true" ng-mouseleave="docsNewWindow=false">
 						<md-button aria-label="MOSAIC Docs"  href="https://pages.nist.gov/mosaic/html/" target="_blank">
-							<md-icon md-font-set="material-icons md-24">help</md-icon>
-							<p class="md-primary">MOSAIC Documentation</p>
-							<md-icon md-font-set="material-icons md-16">open_in_new</md-icon>
+							<div flex layout="row" layout-align="center end">
+								<md-icon md-font-set="material-icons md-24">help</md-icon>
+								<p flex class="md-primary">Documentation</p>
+								<md-icon ng-show="docsNewWindow" md-font-set="material-icons md-16"><small>open_in_new</small></md-icon>
+							</div>
 						</md-button>
 					</md-menu-item>
-					<md-menu-item ng-click="$mdMenu.hide()">
-						<md-button aria-label="SQuestions" ng-href="mailto:mosaic@nist.gov">
-							<md-icon md-font-set="material-icons md-24">question_answer</md-icon>
-							<p class="md-primary">Ask a Question</p>
-							<md-icon md-font-set="material-icons md-16">open_in_new</md-icon>
+					<md-menu-item flex ng-click="$mdMenu.hide()" ng-mouseover="questionNewWindow=true" ng-mouseleave="questionNewWindow=false">
+						<md-button aria-label="SQuestions" ng-href="mailto:mosaic@nist.gov" >
+							<div flex layout="row" layout-align="center end">
+								<md-icon md-font-set="material-icons md-24">question_answer</md-icon>
+								<p flex class="md-primary">Ask a Question</p>
+								<md-icon ng-show="questionNewWindow" md-font-set="material-icons md-16"><small>open_in_new</small></md-icon>
+							</div>
 						</md-button>
 					</md-menu-item>
-					<md-menu-item ng-click="$mdMenu.hide()">
+					<md-menu-item flex ng-click="$mdMenu.hide()" ng-mouseover="bugNewWindow=true" ng-mouseleave="bugNewWindow=false">
 						<md-button href="https://github.com/usnistgov/mosaic/issues" target="_blank">
-							<md-icon md-font-set="material-icons md-24">bug_report</md-icon>
-							<p class="md-primary">Report a Bug</p>
-							<md-icon md-font-set="material-icons md-16">open_in_new</md-icon>
+							<div flex layout="row" layout-align="center end">
+								<md-icon md-font-set="material-icons md-24">bug_report</md-icon>
+								<p flex class="md-primary">Report a Bug</p>
+								<md-icon ng-show="bugNewWindow" md-font-set="material-icons md-16"><small>open_in_new</small></md-icon>
+							</div>
 						</md-button>
 					</md-menu-item>
-					<md-menu-item ng-show="showAnalyticsOptions" ng-click="$mdMenu.hide()">
+					<md-menu-item flex ng-show="showAnalyticsOptions" ng-click="$mdMenu.hide()">
 						<md-button ng-click="analyticsUpdate()" aria-label="Anonymous Analytics">
 							<md-icon md-font-set="material-icons md-24">assessment</md-icon>
 							<p class="md-primary">Anonymous Analytics</p>

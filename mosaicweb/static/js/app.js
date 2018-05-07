@@ -98,6 +98,10 @@ angular.module('mosaicApp', ['ngRoute', 'ngMaterial', 'ngMessages', 'ngAnimate',
 		$scope.activeSessions = {};
 		$scope.activeSessionInfo = {};
 
+		$scope.docsNewWindow = false;
+		$scope.questionNewWindow = false;
+		$scope.bugNewWindow = false;
+
 		// funcs
 		$scope.setupNewAnalysis = function(ev) {
 			FileListingFactory.setDialogMode("directory");
