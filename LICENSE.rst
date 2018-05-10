@@ -1,11 +1,12 @@
-# Terms of Use
+Terms of Use
+============================
 
 This software was developed by employees of the 
-[National Institute of Standards and Technology][_nist]
+`National Institute of Standards and Technology  <https://www.nist.gov>`_
 (NIST), an agency of the Federal Government. Pursuant to
-[Title 17, United States Code Section 105][_copy], works of NIST employees are
+`Title 17, United States Code Section 105 <https://www.copyright.gov/title17/92chap1.html#105>`_, works of NIST employees are
 not subject to copyright protection in the United States and are considered to
-be in the [public domain][_pubd]. Permission to freely use, copy, modify, and distribute
+be in the `public domain <https://www.copyright.gov/help/faq-definitions.html#public_domain>`_. Permission to freely use, copy, modify, and distribute
 this software and its documentation without fee is hereby granted, provided that
 this notice and disclaimer of warranty appears in all copies.
 
@@ -25,7 +26,3 @@ RESULTS OF, OR USE OF, THE SOFTWARE OR SERVICES PROVIDED HEREUNDER.
 Distributions of NIST software should also include copyright and licensing
 statements of any third-party software that are legally bundled with the code
 in compliance with the conditions of those licenses.
-
-[_copy]: https://www.copyright.gov/title17/92chap1.html#105
-[_nist]: https://www.nist.gov
-[_pubd]: https://www.copyright.gov/help/faq-definitions.html#public_domain
