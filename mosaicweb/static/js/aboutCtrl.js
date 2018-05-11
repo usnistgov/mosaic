@@ -62,6 +62,17 @@ angular.module('mosaicApp')
 				})
 			};
 
+			$scope.showDisclaimer = function(ev) {
+				$mdDialog.show({
+					controller: TermsOfUseDialogController,
+					templateUrl: 'static/partials/disclaimer.tmpl.html',
+					parent: angular.element(document.body),
+					targetEvent: ev,
+					clickOutsideToClose:true,
+					fullscreen: $scope.customFullscreen // Only for -xs, -sm breakpoints.
+				})
+			};
+
 			function DevelopersDialogController($scope, $mdDialog, AboutFactory) {
 				$scope.developers = AboutFactory.developers;
 
