@@ -82,7 +82,11 @@ class analysisContour:
 		layout['showlegend']=False
 		layout['autosize']=True
 
-		Z,xe,ye = self._hist2d()
+		try:
+			Z,xe,ye = self._hist2d()
+		except QuerySyntaxError:
+			self.queryString=self._queryString("")
+			Z,xe,ye = self._hist2d()
 
 		contour={}
 		contour["z"]=Z.tolist()
