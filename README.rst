@@ -11,7 +11,10 @@ MOSAIC is a single molecule analysis toolbox that automatically decodes multi-st
 
 Nanometer-scale pores have demonstrated potential use in biotechnology applications, including DNA sequencing, single-molecule force spectroscopy, and single-molecule mass spectrometry. The data modeling and analysis methods implemented in MOSAIC allow for dramatic improvements in the quantification of molecular interactions with the channel in each of these applications.
 
-**If you use MOSAIC in your work, please cite:** `Analytical Chemistry 2016, (88) pp. 11900–11907  <http://pubs.acs.org/doi/abs/10.1021/acs.analchem.6b03725>`_ and `ACS Nano 2014, (8) pp. 1547–1553.  <http://pubs.acs.org/doi/abs/10.1021/nn405761y>`_
+**If you use MOSAIC in your work, please cite both papers below:**
+
+1. `Analytical Chemistry 2016, (88) pp. 11900–11907  <http://pubs.acs.org/doi/abs/10.1021/acs.analchem.6b03725>`_
+2. `ACS Nano 2014, (8) pp. 1547–1553.  <http://pubs.acs.org/doi/abs/10.1021/nn405761y>`_
 
 
 Installation
