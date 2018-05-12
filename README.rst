@@ -47,4 +47,4 @@ Report problems using our `issue tracker <https://github.com/usnistgov/mosaic/is
 What's New?
 =================================
 
-Read the `CHANGELOG <CHANGELOG.rst>`_
+Read the `Change Log <CHANGELOG.rst>`_
