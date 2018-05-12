@@ -46,7 +46,7 @@ Change Log
 =================================
 
 
-**v2.0a1**
+**v2.0b1**
 
 - Run MOSAIC using a new web interface.
  
