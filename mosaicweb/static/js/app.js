@@ -228,7 +228,7 @@ angular.module('mosaicApp', ['ngRoute', 'ngMaterial', 'ngMessages', 'ngAnimate',
 
 		$scope.quitLocalServer = function() {
 			$scope.showConfirmDialog(
-				'Shutdown MOSAIC Server?',
+				'Shutdown MOSAIC?',
 				"All active and running analysis sessions will end if you proceed.",
 				'Proceed',
 				'Cancel'
