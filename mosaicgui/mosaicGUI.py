@@ -246,6 +246,9 @@ class qtAnalysisGUI(mosaicgui.settingsview.settingsview):
 				# set data path in the console viewer
 				self.consoleLog.openDBFile(analysisfile)
 
+				# set data path in the processed files viewer
+				self.processedFiles.openDBFile(analysisfile)
+
 				# enable the path select button to allow a new alaysis to be started
 				self.datPathLineEdit.setEnabled(True)
 		except DatabaseError:
@@ -279,6 +282,9 @@ class qtAnalysisGUI(mosaicgui.settingsview.settingsview):
 			self.blockDepthWindow.show()
 		self.statisticsView.openDBFile( self.DataFile )
 		self.statisticsView.show()
+
+		# set data path in the processed files viewer
+		self.processedFiles.openDBFile( self.DataFile )
 
 		self.fitEventsView.openDBFile( self.DataFile, self.trajViewerWindow.FskHz )
 		if self.showFitEventsWindow:
@@ -315,7 +321,7 @@ class qtAnalysisGUI(mosaicgui.settingsview.settingsview):
 			self.OnStartAnalysis()
 		self.statisticsView.closeDB()
 		self.blockDepthWindow.closeDB()
-
+		self.processedFiles.closeDB()
 
 def main():
 	print "Type 'python runMOSAIC' to start MOSAIC.\n"

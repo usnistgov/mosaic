@@ -1,32 +1,11 @@
 #! /usr/bin/env python
-import sys
-import mosaicgui.mosaicGUI as mosaicgui
-from PyQt4 import QtCore
-from mosaicgui.updateService import updateService
-from mosaic.utilities.ga import registerRun
-from PyQt4 import QtGui
 import multiprocessing
-
-from mosaicgui.mplwidget import update_rcParams
-
-@registerRun
-def startMOSAIC():
-	update_rcParams()
-	
-	app = QtGui.QApplication(sys.argv)
-
-	u=updateService()	
-	if not u.CheckUpdate():
-		dmw = mosaicgui.qtAnalysisGUI()
-		dmw.show()
-		dmw.raise_()
-
-		# cleanup processing
-		app.connect(app, QtCore.SIGNAL("aboutToQuit()"), dmw.OnQuit)
-	
-		sys.exit(app.exec_())
+import sys
+from mosaic.mosaicSetup	import mosaicSetup
 
 if __name__ == '__main__':
 	if sys.platform.startswith('win'):
 		multiprocessing.freeze_support()
-	startMOSAIC()
+
+	mosaicSetup().launcMOSAIC()
+

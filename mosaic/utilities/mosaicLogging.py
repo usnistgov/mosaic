@@ -40,9 +40,12 @@ class metaSingleton(type):
 		return cls._instances[cls]
 
 class MessageFormatter(logging.Formatter):
-    def format(self, record):
-        record.msg = record.msg.strip()
-        return super(MessageFormatter, self).format(record)
+	def format(self, record):
+		try:
+			record.msg = record.msg.strip()
+		except:
+			pass
+		return super(MessageFormatter, self).format(record)
 
 
 class mosaicLogging(object):

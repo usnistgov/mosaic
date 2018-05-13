@@ -10,9 +10,11 @@
 		4/13/17 	AB 	Negative end values enable runnning an analysis on all available data.
 		7/29/16 	AB 	Add additional filtering when constructing a list of data files to process.
 		1/27/17 	AB 	Perform a lexical sort of input data files
-		9/13/15 	AB 	Updated logging to use mosaicLogFormat class
+		9/13/15 	AB 	Updated logging to use mosaicLog class
+		4/4/15		AB 	Merge changes from devel-1.0 	
 		4/1/15 		AB 	Added a new property (DataLengthSec) to estimate the length of a data set.
 		3/28/15 	AB 	Optimized file read interface for improved large file support.
+		1/17/15 	AB 	Store names of processed files in an array.
 		8/22/14 	AB 	Setup a new property ('LastDataFile') that tracks the current
 						data file being processed.
 		5/27/14		AB 	Added dcOffset kwarg to initialization to allow 
@@ -24,6 +26,7 @@
 import sys
 from abc import ABCMeta, abstractmethod
 import glob
+import os
 import numpy as np
 
 import mosaic.settings as settings
@@ -180,6 +183,9 @@ class metaTrajIO(object):
 
 		self.initPipe=False
 
+		# A list that holds the names of processed files.
+		self.processedFilenames=[]
+
 		self.logger=mlog.mosaicLogging().getLogger(name=__name__)
 
 		# Call sub-class init
@@ -236,6 +242,15 @@ class metaTrajIO(object):
 			Return the last data file that was processed
 		"""
 		return self.currentFilename
+
+	@mosaic_property 
+	def ProcessedFiles(self):
+		"""
+			.. important:: |property|
+
+			Return a list of processed data filenames.
+		"""
+		return self.processedFilenames
 
 	@mosaic_property 
 	def DataLengthSec(self):
@@ -394,7 +409,9 @@ class metaTrajIO(object):
 		except (StopIteration, AttributeError):
 			# Read a new data file to get more data
 			fname=self.popfnames()
+
 			if fname:
+				self.processedFilenames.extend([[fname, self.fileFormat, os.path.getmtime(fname)]])
 				self.rawData=self.readdata( fname )
 				self.dataGenerator=self._createGenerator()
 				self._appenddata()

@@ -1,0 +1,112 @@
+<div layout-gt-sm="row" layout="column" layout-align="center center" flex="60">
+	<br>
+	<div flex-gt-sm="80" flex-gt-md="85" flex="70" class="md-whiteframe" layout-align="center center" layout-padding>
+		<plotly plotly-data="model.analysisContour.data" plotly-layout="model.analysisContour.layout" plotly-options="model.analysisContour.options"></plotly>
+	</div>
+	<br>
+	<div flex layout-gt-sm="column" layout="row" ng-disabled="model.histLoading || model.contourLoading">
+		<md-radio-group ng-model="model.analysisContour.layout.xaxis.type" class="md-primary">
+			<label>X-axis</label>
+			<md-radio-button value="linear">linear</md-radio-button>
+			<md-radio-button value="log">log</md-radio-button>
+		</md-radio-group>
+		<span flex="5"></span>
+		<md-radio-group ng-model="model.analysisContour.layout.yaxis.type" class="md-primary">
+			<label>Y-axis</label>
+			<md-radio-button value="linear">linear</md-radio-button>
+			<md-radio-button value="log">log</md-radio-button>
+		</md-radio-group>
+		<md-checkbox ng-model="model.showContours" aria-label="Show Contours" class="md-primary md-align-top-left" flex-gt-md>
+			Show Contours
+		</md-checkbox>
+		<md-input-container class="md-block" flex-gt-md ng-disabled="model.histLoading || model.contourLoading">
+			<label>Bins</label>
+			<input type="number"  ng-model="model.contourBins" ng-model-options="{ updateOn: 'blur', allowInvalid: false}">
+		</md-input-container>
+	</div>
+</div>
+
+<div flex class="md-whiteframe" layout-align="space-between start">
+	<div layout="row">
+		<md-input-container class="md-block" flex="80" ng-disabled="model.histLoading || model.contourLoading" ng-show="model.contourAdvancedQuery">
+			<label>Query</label>
+			<textarea type="text" ng-model="model.contourQuery" ng-model-options="{ updateOn: 'blur', allowInvalid: false}"></textarea>
+		</md-input-container>
+		<div flex layout="column" ng-disabled="model.histLoading || model.contourLoading" ng-hide="model.contourAdvancedQuery">
+			<div layout="row" layout-align"center center" flex>
+				<md-chips flex
+					ng-model="model.contourDBColsModel" 
+					md-autocomplete-snap 
+					md-require-match="true" 
+					readonly="model.contourChipsReadonly" 
+					md-removable="true">
+					<md-autocomplete 
+							md-autofocus="true"
+							md-no-cache="true"
+							md-min-length="0"
+							md-selected-item="model.selectedDBCols"
+							md-search-text="model.searchText"
+							md-select-on-match="false"
+							md-items="item in model.querySearch(searchText)"
+							md-item-text="item"
+							placeholder="Select density plot data ...">
+						<md-item-template>{{item}}</md-item-template>
+					</md-autocomplete>
+
+					<md-chip-template><span><em>{{$chip}}</em></span></md-chip-template>
+				</md-chips>
+				<span flex="5"></span>
+				<md-checkbox ng-model="model.contourDBConstrain" aria-label="Filter Results" class="md-primary">
+					Filter Results
+				</md-checkbox>
+			</div>
+			<div layout="row" flex layout-align"center center" ng-show="model.contourDBConstrain">
+				<md-icon flex="10" md-font-set="material-icons md-24">subdirectory_arrow_right</md-icon>
+				<md-chips flex
+					ng-model="model.contourDBConstraintModel" 
+					md-autocomplete-snap 
+					md-require-match="true" 
+					md-removable="true" 
+					md-on-add="model.addConstraintChip($chip)"
+					md-on-select="model.getConstraintChipInfo($chip)">
+					<md-autocomplete 
+							md-autofocus="true"
+							md-no-cache="true"
+							md-min-length="0"
+							md-search-text="model.searchConstraintText"
+							md-select-on-match="false"
+							md-items="item in model.querySearchConstraints(searchConstraintText)"
+							md-item-text="item"
+							placeholder="Add data filters ...">
+						<md-item-template>{{item}}</md-item-template>
+					</md-autocomplete>
+
+					<md-chip-template><span><em>{{$chip}}</em></span></md-chip-template>
+				</md-chips>
+				<span flex="20"></span>
+			</div>
+			<div flex layout="row" class="md-padding" ng-show="model.contourChipSelected && model.contourDBConstrain">
+				<span flex="10"></span>
+				<md-input-container>
+					<label>{{model.contourSelectedChipName}} Min</label>
+					<input type="number" ng-model="model.contourDBColMin" ng-model-options="{ updateOn: 'blur', allowInvalid: false}">
+				</md-input-container>
+				<md-input-container>
+					<label>{{model.contourSelectedChipName}} Max</label>
+					<input type="number" ng-model="model.contourDBColMax" ng-model-options="{ updateOn: 'blur', allowInvalid: false}">
+				</md-input-container>
+				<span flex="60"></span>
+			</div>
+		</div>
+	</div>
+	<div layout="row" layout-align="start center" flex>
+		<md-button class="md-primary" type="button"
+			ng-click="model.updateContourQuery()">
+			Update Plot
+		</md-button>
+		<md-switch ng-model="model.contourAdvancedQuery" class="md-primary" aria-label="Contour Plot Advanced Mode">
+			Advanced
+		</md-switch>
+		<span flex></span>
+	</div>
+</div>

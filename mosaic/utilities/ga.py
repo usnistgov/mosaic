@@ -12,6 +12,7 @@ import json
 import tempfile
 from base64 import b64decode as dec
 from os.path import expanduser, isfile
+from functools import wraps
 import os
 import traceback
 from datetime import datetime, timedelta
@@ -20,34 +21,54 @@ import mosaic.utilities.mosaicLogging as mlog
 from mosaic.utilities.mosaicLogFormat import _d
 from mosaic.utilities.resource_path import resource_path, format_path
 
-def registerLaunch(func):
-	def funcWrapper(*args, **kwargs):
-		_gaPost("launch", func.__name__)
-		return func(*args, **kwargs)
-	return funcWrapper
+def registerLaunch(tag):
+	def _registerLaunch(func):
+		@wraps(func)
+		def funcWrapper(*args, **kwargs):
+			_gaPost("launch_"+tag, func.__name__)
+			return func(*args, **kwargs)
+		return funcWrapper
+	return _registerLaunch
 
-def registerRun(func):
-	def funcWrapper(*args, **kwargs):
-		_gaPost("run", func.__name__)
-		return func(*args, **kwargs)
-	return funcWrapper
+def registerQuit(tag):
+	def _registerQuit(func):
+		@wraps(func)
+		def funcWrapper(*args, **kwargs):
+			_gaPost("quit_"+tag, func.__name__)
+			return func(*args, **kwargs)
+		return funcWrapper
+	return _registerQuit
 
-def registerStop(func):
-	def funcWrapper(*args, **kwargs):
-		_gaPost("stop", func.__name__)
-		return func(*args, **kwargs)
-	return funcWrapper
+def registerStart(tag):
+	def _registerStart(func):
+		@wraps(func)
+		def funcWrapper(*args, **kwargs):
+			_gaPost("start_"+tag, func.__name__)
+			return func(*args, **kwargs)
+		return funcWrapper
+	return _registerStart
+
+
+def registerStop(tag):
+	def _registerStop(func):
+		@wraps(func)
+		def funcWrapper(*args, **kwargs):
+			_gaPost("stop_"+tag, func.__name__)
+			return func(*args, **kwargs)
+		return funcWrapper
+	return _registerStop
+
 
 def _uuid():
-    uuidfile=format_path(expanduser('~')+"/.mosaicuuid")
-    try:
-        with open (uuidfile, "r") as u:
-            return u.read()
-    except:
-        uuidgen=str(uuid.uuid4())
-        with open(uuidfile, "w") as uw:
-            uw.write(uuidgen)
-        return uuidgen
+	uuidfile=format_path(tempfile.gettempdir()+'/.mosaicuuid')
+	try:
+		with open (uuidfile, "r") as u:
+			return u.read()
+	except:
+		uuidgen=str(uuid.uuid4())
+		with open(uuidfile, "w") as uw:
+			uw.write(uuidgen)
+		return uuidgen
 
 def _gaPost(eventType, content):
 	logger=mlog.mosaicLogging().getLogger(name=__name__)
@@ -85,12 +106,12 @@ def _gaPost(eventType, content):
 
 def _gaCredentialCache():
 	try:
-		logger=mlog.mosaicLogging().getLogger(name=__name__)
-		# ga_cache=resource_path("mosaic/utilities/.ga")
-		ga_cache=format_path(tempfile.gettempdir()+'/.ga')
-		logger.debug(_d("Looking for GA cache {0}", ga_cache))
-
 		try:
+			logger=mlog.mosaicLogging().getLogger(name=__name__)
+			
+			ga_cache=format_path(tempfile.gettempdir()+'/.ga')
+			logger.debug(_d("Looking for GA cache {0}", ga_cache))
+
 			gaModTime = datetime.fromtimestamp(os.stat(ga_cache).st_mtime)
 			gaExpireAge=timedelta(hours=24)
 			gaAge=datetime.today() - gaModTime
@@ -116,11 +137,15 @@ def _gaCredentialCache():
 			return json.loads(ga.read())
 	except BaseException as err:
 		logger.debug(_d("Exception ignored: {0}\n{1}", repr(err), traceback.format_exc()))
-		pass
+		return
+
+def _gaSettingsDict(ga_cache):
+	with open(ga_cache, 'r') as ga:
+		return eval(json.loads(ga.read()))
 
 def _getGASettings(ga_cache):
 	logger=mlog.mosaicLogging().getLogger(name=__name__)
-
+	
 	try:
 		req=urllib2.Request(mosaic.DocumentationURL+".ga")
 		streamHandler=urllib2.build_opener()
@@ -135,7 +160,7 @@ def _getGASettings(ga_cache):
 
 _gaCredentialCache()
 
-@registerRun
+@registerLaunch("cli")
 def foo():
 	print "foo"
 

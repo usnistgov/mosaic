@@ -1,0 +1,67 @@
+<div layout-gt-sm="row" layout="column" layout-align="center center" flex="60">
+	<br>
+	<div flex-gt-sm="80" flex-gt-md="85" flex="70" class="md-whiteframe" layout-align="center center" layout-padding>
+		<plotly plotly-data="model.analysisPlot.data" plotly-layout="model.analysisPlot.layout" plotly-options="model.analysisPlot.options"></plotly>
+	</div>
+	<br>
+	<div flex layout-gt-sm="column" layout="row">
+		<md-radio-group ng-model="model.analysisPlot.layout.xaxis.type" class="md-primary">
+			<label>X-axis</label>
+			<md-radio-button value="linear">linear</md-radio-button>
+			<md-radio-button value="log">log</md-radio-button>
+		</md-radio-group>
+		<md-radio-group ng-model="model.analysisPlot.layout.yaxis.type" class="md-primary">
+			<label>Y-axis</label>
+			<md-radio-button value="linear">linear</md-radio-button>
+			<md-radio-button value="log">log</md-radio-button>
+		</md-radio-group>
+		<div layout="column" layout-align="start start">
+			<md-checkbox ng-model="model.histDensity" aria-label="Histogram Type" class="md-primary md-align-top-left" flex-gt-md>
+				Density
+			</md-checkbox>
+			
+			<md-input-container class="md-block">
+				<label>Bins</label>
+				<input 	type="number" name="bdBins"
+						ng-model="model.bdBins" ng-model-options="{ updateOn: 'blur', allowInvalid: false}">
+				<div ng-messages="analysisHistogramForm.bdBins.$error" multiple md-auto-hide="false">
+					<div ng-message="required">The number of bins must be specified.</div>
+					<div ng-message="min">Number of bins must be positive.</div>
+				</div>
+			</md-input-container>
+			<md-button class="md-primary" type="button"
+				ng-click="model.exportHistogramCSV()" ng-disabled="false">
+				<md-tooltip md-direction="right">Export histogram data in CSV format</md-tooltip>
+				Export to CSV
+			</md-button>
+		</div>
+	</div>
+</div>
+
+<form name="analysisHistogramForm" ng-submit="updateControls()">
+	<div flex class="md-whiteframe" layout-align="space-between start">
+		<div layout="row">
+			<md-input-container class="md-block" flex="80">
+				<label>Query</label>
+				<textarea 	type="text" name="histQuery"
+						ng-model="model.histQuery" ng-model-options="{ updateOn: 'blur', allowInvalid: false}"></textarea>
+			</md-input-container>
+			<span flex="5"></span>
+		</div>
+		<div layout="row" layout-align="start center" flex>
+			<md-button class="md-primary" type="button"
+				ng-click="model.updateHistogramQuery()">
+				Update Plot
+			</md-button>
+			<!-- <md-switch ng-disabled="true" ng-model="model.histogramAdvancedQuery" class="md-primary" aria-label="Histogram Plot Advanced Mode">
+				Advanced
+			</md-switch> -->
+			<span flex></span>
+		</div>
+		<!-- <md-button class="md-primary" type="button"
+			ng-click="model.exportHistogramCSV()" ng-disabled="false">
+			<md-tooltip md-direction="right">Export histogram data in CSV format</md-tooltip>
+			Export to CSV
+		</md-button> -->
+	</div>
+</form>

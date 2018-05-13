@@ -12,7 +12,7 @@
 __docformat__ = 'restructuredtext'
 
 import mosaic.settings as settings
-from mosaic.utilities.ga import registerLaunch
+from mosaic.utilities.ga import registerStart, registerStop
 import multiprocessing
 import os
 import signal
@@ -20,7 +20,6 @@ import json
 
 __all__ = ["SingleChannelAnalysis", "run_eventpartition"]
 
-@registerLaunch
 def run_eventpartition( dataPath, trajDataHnd, dataFilterHnd, eventPartHnd, eventProcHnd, dbFilename):
 	# Read and parse the settings file
 	settingsdict=settings.settings( dataPath )	
@@ -81,6 +80,7 @@ class SingleChannelAnalysis(object):
 
 		self.subProc=None
 
+	@registerStart("core")
 	def Run(self, forkProcess=False):
 		"""
 			Start an analysis. 
@@ -102,6 +102,7 @@ class SingleChannelAnalysis(object):
 		else:
 			run_eventpartition( self.dataPath, self.trajDataHnd, self.dataFilterHnd, self.eventPartitionHnd, self.eventProcHnd, self.dbFilename, )
 
+	@registerStop("core")
 	def Stop(self):
 		"""
 			Stop a running analysis.

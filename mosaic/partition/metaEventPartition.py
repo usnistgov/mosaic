@@ -222,6 +222,10 @@ class metaEventPartition(object):
 				else: #skip over bad data, no need to abort
 					continue
 
+				# Write the list of processed files to the database
+				[ self.mdioDBHnd.writeRecord(f, table='processedfiles') for f in self.trajDataObj.ProcessedFiles ]
+				self.trajDataObj.processedFilenames=[]
+
 
 		except metaTrajIO.EmptyDataPipeError, err:
 			self.segmentTime=self.timingObj.time()-startTime
@@ -244,7 +248,9 @@ class metaEventPartition(object):
 
 		# Write the output log file
 		self._writeoutputlog()
-			
+
+		# Write the list of processed files to the database
+		[ self.mdioDBHnd.writeRecord(f, table='processedfiles') for f in self.trajDataObj.ProcessedFiles ]
 
 	#################################################################
 	# Interface functions

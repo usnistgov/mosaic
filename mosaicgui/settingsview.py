@@ -13,6 +13,7 @@ import os
 import glob
 import json
 import types
+import tempfile
 import multiprocessing
 import webbrowser
 import mosaic
@@ -26,6 +27,7 @@ import mosaicgui.advancedsettings.advancedsettings
 import mosaicgui.blockdepthview.blockdepthview
 import mosaicgui.statisticsview.statisticsview
 import mosaicgui.consolelog.consolelog
+import mosaicgui.fileview.fileview
 import mosaicgui.fiteventsview.fiteventsview
 import mosaicgui.csvexportview.csvexportview
 import mosaicgui.aboutdialog.aboutdialog
@@ -49,6 +51,7 @@ class settingsview(QtGui.QMainWindow):
 		self.trajViewerWindow = mosaicgui.trajview.trajview.TrajectoryWindow(parent=self)
 		self.advancedSettingsDialog = mosaicgui.advancedsettings.advancedsettings.AdvancedSettingsDialog(parent=self)
 		self.consoleLog = mosaicgui.consolelog.consolelog.AnalysisLogDialog(parent=self)
+		self.processedFiles = mosaicgui.fileview.fileview.FileViewWindow(parent=self)
 		self.blockDepthWindow = mosaicgui.blockdepthview.blockdepthview.BlockDepthWindow(parent=self)
 		self.statisticsView = mosaicgui.statisticsview.statisticsview.StatisticsWindow(parent=self)
 		self.fitEventsView = mosaicgui.fiteventsview.fiteventsview.FitEventWindow(parent=self)
@@ -121,6 +124,8 @@ class settingsview(QtGui.QMainWindow):
 		QtCore.QObject.connect(self.actionEvent_Fits, QtCore.SIGNAL('triggered()'), self.OnShowFitEventsViewer)
 		QtCore.QObject.connect(self.actionStatistics, QtCore.SIGNAL('triggered()'), self.OnShowStatisticsWindow)
 		QtCore.QObject.connect(self.actionAnalysis_Log, QtCore.SIGNAL('triggered()'), self.OnShowConsoleLog)
+		QtCore.QObject.connect(self.actionProcessed_Files, QtCore.SIGNAL('triggered()'), self.OnShowProcessedFiles)
+		
 		
 
 		# Help Menu signals
@@ -269,7 +274,8 @@ class settingsview(QtGui.QMainWindow):
 
 		# Set ga toggle.
 		try:
-			with open(resource_path("mosaic/utilities/.ga"), "r") as garead:
+			ga_cache=format_path(tempfile.gettempdir()+'/.ga')
+			with open(ga_cache, "r") as garead:
 				gac = json.load(garead)
 		
 			if eval(gac["gauimode"]):
@@ -627,17 +633,22 @@ class settingsview(QtGui.QMainWindow):
 	def OnShowConsoleLog(self):
 		self.consoleLog.show()
 
+	def OnShowProcessedFiles(self):
+		self.processedFiles.show()
+
+
 	def OnShowHelp(self):
 		webbrowser.open(mosaic.DocumentationURL+'html/index.html', new=0, autoraise=True)
 
 	def OnAggregateUsage(self):
 		try:
-			with open(resource_path("mosaic/utilities/.ga"), "r") as garead:
+			ga_cache=format_path(tempfile.gettempdir()+'/.ga')
+			with open(ga_cache, "r") as garead:
 				gac = json.load(garead)
 
 			gac["gaenable"] = str(self.actionAggregate_Usage.isChecked())
 
-			with open(resource_path("mosaic/utilities/.ga"), "w") as gawrite:
+			with open(ga_cache, "w") as gawrite:
 				json.dump(gac, gawrite, indent=4, sort_keys=True)
 		except:
 			pass

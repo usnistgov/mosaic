@@ -1,0 +1,25 @@
+<div id="popupContainer" flex layout="column" layout-align="center center" layout-padding ng-cloak>
+	<div flex="100" layout="column" layout-gt-sm="column" class="" layout-align="center center" layout-padding>
+		<br>
+		<img height="200" width="200" src="static/img/icon.png" layout-padding>           
+		<br><br><br>
+		<form class="form-signin" role="form">
+			<div layout="column" layout-align="center center">
+				<md-button class="md-primary md-raised" type="button" id="setupAnalysisButton" 
+					ng-click="setupNewAnalysis($event)"
+					ng-disabled="analysisModel.analysisRunning || AnalysisLoading">
+					New Analysis
+				</md-button>
+				<md-button class="md-primary" type="button" id="setupAnalysisButton"
+					ng-click="loadPreviousAnalysis($event)"
+					 ng-disabled="analysisModel.analysisRunning || AnalysisLoading">
+					Load Previous Analysis
+				</md-button>
+				<br>
+				<br>
+				<md-progress-circular md-mode="indeterminate" class="md-primary" md-diameter="24" ng-if="AnalysisLoading"></md-progress-circular>
+			</div>
+		</form>
+	</div>
+	<div layout="column" ng-if="mosaicConfigModel.analysisRunning" flex ng-include="'/static/partials/BackToAnalysisFAB.tmpl.html'"></div>
+</div>

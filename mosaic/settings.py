@@ -43,6 +43,7 @@ class settings:
 		"""
 		"""	
 		self.settingsFile=None
+		self.defaultSettings=False
 
 		self.logger=mlog.mosaicLogging().getLogger(name=__name__)
 
@@ -59,6 +60,7 @@ class settings:
 		# 	print "Settings file not found in data directory. Default settings will be used."
 		# 	self.settingsFile=os.getcwd()+"/settings"
 		else:
+			self.defaultSettings=True
 			if defaultwarn:
 				self.logger.warning( "WARNING: Settings file not found in data directory. Default settings will be used." )
 			settingstr=__settings__
@@ -104,6 +106,10 @@ class settings:
 			return self.settingsDict[section]
 		except KeyError, AttributeError:
 			return {}
+
+	@property
+	def defaultSettingsLoaded(self):
+		return self.defaultSettings
 
 __settings__="""
 {

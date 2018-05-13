@@ -1,0 +1,102 @@
+<md-dialog aria-label="Event Viewer" flex="50" ng-keyup="key($event)">
+	<form name="eventViewerForm">
+		<md-toolbar class="md-primary">
+			<div class="md-toolbar-tools">
+				<h3><em>Event Viewer ({{model.eventNumber}}/{{model.recordCount}})</em></h3>
+				<!-- <md-button md-menu-origin class="md-icon-button" id="event-viewer-filter-button" ng-click="filterEventsMenu($event)">
+					<md-tooltip md-direction="bottom">Filter Events</md-tooltip>
+					<md-icon md-font-set="material-icons md-24">filter_list</md-icon>
+				</md-button> -->
+					
+				<span flex></span>
+				<md-progress-circular md-mode="indeterminate" class="md-accent" md-diameter="24" ng-if="model.plotUpdating"></md-progress-circular>
+				<md-button class="md-icon-button" ng-click="cancel()">
+					<md-icon md-font-set="material-icons md-24">close</md-icon>
+				</md-button>
+			</div>
+		</md-toolbar>
+		<md-dialog-content style="max-width:800px;max-height:810px;">
+			<div layout="column" layout-align="center center" id="toastAnchor" ng-disabled="model.plotUpdating">
+				<div layout="row" layout-align="center center">
+					<md-input-container>
+						<md-button class="md-primary md-icon-button" ng-click="model.eventBack()">
+							<md-icon md-font-set="material-icons" style="font-size: 36px !important;">keyboard_arrow_left</md-icon>
+						</md-button>
+					</md-input-container>
+					<plotly plotly-data="model.eventViewPlot.data" plotly-layout="model.eventViewPlot.layout" plotly-options="model.eventViewPlot.options"></plotly>
+					<md-input-container>
+						<md-button class="md-primary md-icon-button" ng-click="model.eventForward()">
+							<md-icon md-font-set="material-icons" style="font-size: 36px !important;">keyboard_arrow_right</md-icon>
+						</md-button>
+					</md-input-container>
+				</div>
+				<div layout="row" layout-align="center center" style="margin: 0px; padding:0; margin-bottom:0; padding-bottom:0;" ng-disabled="model.plotUpdating">
+					<md-input-container layout-align="start end">
+						<md-checkbox class="md-primary" ng-model="model.displayNormal" aria-label="Normal">
+							<small>Normal</small>
+						</md-checkbox>
+
+						<md-checkbox class="md-primary" ng-model="model.displayWarning" aria-label="Warning">
+							<small>Warning</small>
+						</md-checkbox>
+
+						<md-checkbox class="md-primary" ng-model="model.displayError" aria-label="Error">
+							<small>Error</small>
+						</md-checkbox>
+
+					</md-input-container>
+				</div>
+				<!-- <div flex="100" layout="row" ng-disabled="model.plotUpdating"> -->
+				<!-- <div layout="row" style="margin: 6px; padding:0; margin-bottom:0; padding-bottom:0;" ng-disabled="model.plotUpdating">
+					<md-input-container layout-align="start end">
+						<md-button class="md-icon-button" ng-click="model.eventBack()">
+							<md-icon md-font-set="material-icons md-24">arrow_back</md-icon>
+						</md-button>
+					</md-input-container>
+					<md-input-container md-block style="max-width: 50px; align: center">
+						<label>Event</label>
+						<input type="number" name="eventNumber" min="1" max="{{model.recordCount}}" ng-model="model.eventNumber" ng-model-options="{ updateOn: 'blur', allowInvalid: false}">
+						<div ng-messages="eventViewerForm.eventNumber.$error" multiple md-auto-hide="false">
+							<div ng-message="required">
+								A valid event number is required.
+							</div>
+
+							<div ng-message="min">
+								Event number must be greater than 1.
+							</div>
+
+							<div ng-message="max">
+								Event number must be less than {{model.recordCount}}.
+							</div>
+						</div>
+					</md-input-container>
+					<md-input-container layout-align="end end">
+						<md-button class="md-icon-button" ng-click="model.eventForward()">
+							<md-icon md-font-set="material-icons md-24">arrow_forward</md-icon>
+						</md-button>
+					</md-input-container>
+				</div> -->
+
+				
+
+				<div layout-align="start start" style="{{model.cellStyle}}" ng-if="model.errorText==''">
+					<md-subheader class="md-primary" style="background: transparent;">Fit Parameters</md-subheader>
+					<md-list-item>
+						<p style="{{model.cellStyle}}"><small><em>j</em></small></p>
+						<p style="{{model.cellStyle}}"><small>&#x3008;<em>i<sub>j</sub></em>&#x3009;&#x2215;&#x3008;<em>i<sub>0</sub></em>&#x3009;</small></p>
+						<p style="{{model.cellStyle}}"><small><em>t<sub>j</sub></em> (&mu;s)</small></p>
+					</md-list-item>
+					<md-divider></md-divider>
+					<md-list-item ng-repeat="item in model.parameterTable">
+						<p style="{{model.cellStyle}}"><small>{{item.index}}</small></p>
+						<p style="{{model.cellStyle}}"><small>{{item.blockDepth}}</small></p>
+						<p style="{{model.cellStyle}}"><small>{{item.resTime}}</small></p>
+					</md-list-item>
+				</div>
+				<div ng-if="model.errorText!=''">
+					<br>
+				</div>
+			</div>
+		</md-dialog-content>
+	</form>
+</md-dialog>

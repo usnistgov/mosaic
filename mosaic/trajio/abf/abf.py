@@ -475,9 +475,3 @@ if __name__ == '__main__':
 	print freq, hdr, bandwidth, gain
 	
 	print len(data)
-
-	import matplotlib.pyplot as plt
-
-	plt.plot( data[:100000] )
-	plt.show()
-

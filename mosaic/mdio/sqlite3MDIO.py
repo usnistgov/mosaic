@@ -153,9 +153,11 @@ class sqlite3MDIO(metaMDIO.metaMDIO):
 		if not table:
 			tabname=self.tableName
 			cols=self.colNames
+			datalist=self._datalist(data)
 		else:
 			tabname=table
-			cols=self._colnames(table)
+			cols=self._colnames(table)[:-1]
+			datalist=data
 
 		placeholders_list=','.join(['?' for i in range(len(data))])
 
@@ -163,8 +165,10 @@ class sqlite3MDIO(metaMDIO.metaMDIO):
 			self.db.execute(	'INSERT INTO ' + 
 						tabname + 
 						'('+', '.join(cols)+') VALUES('+
-						placeholders_list+')', self._datalist(data)
+						placeholders_list+')', datalist
 					)
+
+
 	def writeSettings(self, settingsstring):
 		with self.db:
 			self.db.execute( 'INSERT INTO analysissettings VALUES(?, ?)', (settingsstring, None,) )
@@ -261,6 +265,16 @@ class sqlite3MDIO(metaMDIO.metaMDIO):
 		except sqlite3.OperationalError, err:
 			raise
 
+	def executeSQL(self, query):
+		try:
+			self.db.commit()
+			c = self.db.cursor()
+			
+			c.execute(str(query))
+
+			return c.fetchall()
+		except sqlite3.OperationalError, err:
+			raise
 	def exportToCSV(self, query):
 		"""
 			Export database records that match the specified query to a CSV flat file.
@@ -366,6 +380,14 @@ class sqlite3MDIO(metaMDIO.metaMDIO):
 			# create a table to store the analysis output log.
 			c.execute("create table analysislog ( \
 					logstring TEXT, \
+					recIDX INTEGER PRIMARY KEY AUTOINCREMENT \
+				)")
+
+			# create a table to store a list of processed data filenames
+			c.execute("create table processedfiles ( \
+					filename TEXT, \
+					fileformat TEXT, \
+					modifiedtime TEXT, \
 					recIDX INTEGER PRIMARY KEY AUTOINCREMENT \
 				)")
 

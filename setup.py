@@ -136,7 +136,13 @@ setup(
 			'mosaic.tests', 
 			'mosaic.trajio.qdf',
 			'mosaic.trajio.abf',
-			'mosaic.utilities'
+			'mosaic.utilities',
+			'mosaicweb',
+			'mosaicweb',
+			'mosaicweb.mosaicAnalysis',
+			'mosaicweb.plotlyUtils',
+			'mosaicweb.sessionManager',
+			'mosaicweb.utils'
 			],
 	scripts=[
 			'bin/analysis.py', 
@@ -154,8 +160,10 @@ setup(
 			'data/.settings',
 			'data/SingleChan-0001.qdf',
 			'data/SingleChan-0001_state.txt',
+			'mosaicweb/mosaicweb/static/'
 			'commit-hash',
 			'version-hash',
+			'mweb-version-hash',
 			'requirements.txt',
 			'DISCLAIMER.TXT',
 			'LICENSE.TXT'

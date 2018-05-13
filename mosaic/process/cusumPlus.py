@@ -1,12 +1,15 @@
 # -*- coding: utf-8 -*-
 """
-	Analyze a multi-step event with the CUSUM+ algorithm
+	Analyze a multi-step event with the CUSUM+ algorithm. Implements a modified version of the CUSUM algorithm 
+	(used by OpenNanopore for example) in MOSAIC. This approach sacrifices including system information in the 
+	analysis in favor of much faster fitting of single- and multi-level events.
 
 	:Created:	2/10/2015
  	:Author: 	Kyle Briggs <kbrig035@uottawa.ca>
 	:License:	See LICENSE.TXT
 	:ChangeLog:             
-	.. line-block::      
+	.. line-block::
+				6/3/17		AB 	Updated docstring.
 				8/24/15 	AB 	Rename algorithm to CUSUM+   
 				3/20/15 	AB 	Added a new metadata column (mdStateResTime) that saves the residence time of each state to the database.
 				3/18/15		KB	Implemented rise time skipping
@@ -42,9 +45,7 @@ class datblock:
 
 
 class cusumPlus(metaEventProcessor.metaEventProcessor):
-	"""
-		Implements a modified version of the CUSUM algorithm (used by OpenNanopore for example) in MOSAIC. This approach sacrifices including system information in the analysis in favor of much faster fitting of single- and multi-level events.
-
+	"""	
 		CUSUM+ will detect jumps that are smaller than `StepSize`, but they will have to be sustained longer. Threshold can be thought of, very roughly, as proportional to the length of time a subevent must be sustained for it to be detected. The algorithm will adjust the actual threshold used on a per-event basis in order to minimize false positive detection of current jumps This algorithm is based on code used in OpenNanopore, which you can read about here: http://pubs.rsc.org/en/Content/ArticleLanding/2012/NR/c2nr30951c#!divAbstract
 
 
@@ -54,28 +55,29 @@ class cusumPlus(metaEventProcessor.metaEventProcessor):
                 2. CUSUM assumes an instantaneous transition between current states. As a result, if the RC rise time of the system is large, CUSUM+ can trigger and detect intermediate states during the change time. This can be avoided by choosing a number of samples to skip equal to about 2-5RC.
                 3. As a consequence of using a statistical t-test, CUSUM can have false positives. The algorithm has an adaptive threshold that tries to minimize the chances of this happening while maintaining good sensitivity (expected number of false positives within an event is less than 1).
 
-                To use it requires four settings:
+
+		:Keyword Args:
+			In addition to :class:`~mosaic.metaEventProcessor.metaEventProcessor` args,
+				- `StepSize` :			The number of baseline standard deviations are considered significant (3 is usually a good starting point).
+				- `MinThreshold` :		One of two sensitivity parameters (lower is more sensitive). A good starting point is to set `MinThreshold` equal to `StepSize`.
+				- `MaxThreshold` : 		One of two sensitivity parameters (lower is more sensitive). Set `MaxThreshold` about 3x higher than `MinThreshold`.
+				- `MinLength` : 		The number of samples to skip after detecting a jump, in order to avoid triggering during the rise time and returning an artificially high number of states. This number of points is also skipped when averaging levels. About 4 times the RC constant of the system is a good starting value.
+
+		:Errors:
+			When an event cannot be analyzed, all metadata are set to -1.
+
+		To use it requires four settings:
 
 
-				.. code-block:: javascript
+		.. code-block:: javascript
 
-					"cusumPlus": {
-						"StepSize": 3.0, 
-						"MinThreshold": 3.0,
-						"MaxThreshold": 10.0,
-						"MinLength" : 10,
-					}
+			"cusumPlus": {
+				"StepSize": 3.0, 
+				"MinThreshold": 3.0,
+				"MaxThreshold": 10.0,
+				"MinLength" : 10,
+			}
 
-				:Keyword Args:
-					In addition to :class:`~mosaic.metaEventProcessor.metaEventProcessor` args,
-						- `StepSize` :			The number of baseline standard deviations are considered significant (3 is usually a good starting point).
-						- `MinThreshold` :		One of two sensitivity parameters (lower is more sensitive). A good starting point is to set `MinThreshold` equal to `StepSize`.
-						- `MaxThreshold` : 		One of two sensitivity parameters (lower is more sensitive). Set `MaxThreshold` about 3x higher than `MinThreshold`.
-						- `MinLength` : 		The number of samples to skip after detecting a jump, in order to avoid triggering during the rise time and returning an artificially high number of states. This number of points is also skipped when averaging levels. About 4 times the RC constant of the system is a good starting value.
-
-				:Errors:
-
-					When an event cannot be analyzed, all metadata are set to -1.
 	"""
 	def _init(self, **kwargs):
 		"""
