@@ -1,3 +1,16 @@
+"""
+	A Flask server for MOSAIC
+
+	:Created:	10/06/2017
+	:Author: 	Arvind Balijepalli <arvind.balijepalli@nist.gov>
+	:License:	See LICENSE.rst
+	:ChangeLog:
+	.. line-block::
+		04/13/18 	AB 	Support client initiated local server shutdown.
+		04/10/18 	AB 	Log debug information.
+		12/21/17 	AB 	Track active sessions.	
+		10/06/17	AB 	Initial version
+"""
 from mosaicweb import app
 from flask import send_file, make_response, jsonify, request
 
