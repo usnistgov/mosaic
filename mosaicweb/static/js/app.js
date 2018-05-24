@@ -152,7 +152,7 @@ angular.module('mosaicApp', ['ngRoute', 'ngMaterial', 'ngMessages', 'ngAnimate',
 						$scope.activeSessionInfo[sessionKeys[i]] = {
 							'url' 				: "/#/analysis/?sid="+sessionKeys[i],
 							'text'				: $scope.activeSessions[sessionKeys[i]].sessionCreateTime+" ("+$scope.activeSessions[sessionKeys[i]].dataPath+")",
-							'analysisRunning' 	: $scope.activeSessions[sessionKeys[i]].analysisRunning
+							'analysisRunning' 	: ($scope.activeSessions[sessionKeys[i]].analysisRunning === 'true')
 						};	
 					}
 					$scope.querySessions=false;
