@@ -1,5 +1,6 @@
 include *.txt
 include *.rst
+recursive-include tests/ *
 recursive-include mosaic/tests/testdata *.prm
 recursive-include mosaic/tests/testdata *.csv
 recursive-include mosaic/tests/testdata *.tsv

@@ -3,7 +3,7 @@ import mosaic
 import os
 import sys
 import nose
-from mosaic.tests.mosaicUnitTests import _mosaicUnitTests
+from tests.mosaicUnitTests import _mosaicUnitTests
 
 class mosaicBinaries(Command):
 	description = "build MOSAIC binaries."
