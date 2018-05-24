@@ -65,7 +65,7 @@ class analysisStatistics:
 		statsDict['FskHz']=analysisInfo['FsHz']/1000.
 		statsDict['dataType']=analysisInfo['dataType']
 		statsDict['datPath']=format_path((analysisInfo['datPath'].replace(str(WebServerDataLocation), "<Data Root>/")).replace('//', '/'))
-		statsDict['timeseriesSaved']=self._timeseriesSaved()
+		statsDict['timeseriesSaved']=str(self._timeseriesSaved())
 
 		return statsDict
 		
