@@ -427,7 +427,7 @@ def listActiveSessions():
 	for key in gAnalysisSessions.keys():
 		sessions[key]={
 			'dataPath': str(gAnalysisSessions.getSessionAttribute(key, 'dataPath')).split(path_separator())[-1],
-			'analysisRunning': gAnalysisSessions.getSessionAttribute(key, 'analysisRunning'),
+			'analysisRunning': str(gAnalysisSessions.getSessionAttribute(key, 'analysisRunning')),
 			'sessionCreateTime': time.strftime('%m/%d/%Y, %I:%M:%S %p', gAnalysisSessions.getSessionAttribute(key, 'sessionCreateTime'))
 		}
 	return jsonify( respondingURL='list-active-sessions', sessions=sessions ), 200
