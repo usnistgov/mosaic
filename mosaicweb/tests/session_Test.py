@@ -67,3 +67,19 @@ class Session_TestSuite(mwebCommonTest):
 		
 		[ self.assertEqual(d[k], d1[k]) for k in d1.keys() ]
 
+	def test_eventView(self):
+		result=self._post( '/load-analysis', dict( databaseFile="data/eventMD-PEG28-ADEPT2State.sqlite" ) )
+		d=self._get_data(result)
+		sid=d["sessionID"]
+		
+		for i in range(10):
+			result=self._post( '/event-view', dict( 
+					sessionID=sid,
+					eventNumber=i
+				)
+			)
+			d=self._get_data(result)
+
+			self.assertBaseline("event-view", result)
+			self.assertEqual(d["errorText"], "")
+			self.assertEqual(d["warning"], "")
