@@ -53,7 +53,7 @@ class TrajIOTest(object):
 class TrajIO_TestSuite(TrajIOTest):
 	def test_trajio(self):
 		for dat in ['qdf','bin', 'tsv', 'csv']:
-			yield self.runTestCase, dat, 'testdata/'
+			yield self.runTestCase, dat, 'mosaic/tests/testdata/'
 
 if __name__ == '__main__':
 	t=TrajIOTest()

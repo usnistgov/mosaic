@@ -8,7 +8,7 @@ import mosaic.process.adept2State as a2s
 
 class EventPartitionTest(object):
 	def setUp(self):
-		self.datapath = 'testdata'
+		self.datapath = 'mosaic/tests/testdata'
 
 	def runTestCase(self, datfile, prmfile, eventPartHnd, parallel):
 		prm=testutil.readparams(prmfile)
@@ -42,5 +42,5 @@ class EventPartitionTest(object):
 
 		testobj.Stop()
 
-		for f in glob.glob('testdata/*.sqlite'):
+		for f in glob.glob('mosaic/tests/testdata/*.sqlite'):
 			os.remove(f)

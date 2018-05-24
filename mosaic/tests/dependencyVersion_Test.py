@@ -8,7 +8,7 @@ class DependencyVersionTest(object):
 
 class DepencencyVersion_TestSuite(DependencyVersionTest):
 	def test_dependencyVersion(self):
-		with open('../../requirements.txt', 'r') as req:
+		with open('requirements.txt', 'r') as req:
 			modlist=req.read()
 
 		for mod in modlist.split():
