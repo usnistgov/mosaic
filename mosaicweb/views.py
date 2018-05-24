@@ -262,7 +262,7 @@ def analysisContourPlot():
 
 		a=analysisContour.analysisContour(dbfile, qstr, bins, showContours)
 
-		return jsonify( respondingURL="analysis-contour", analysisRunning=ma.analysisStatus, **a.analysisContour() ), 200
+		return jsonify( respondingURL="analysis-contour", analysisRunning=str(ma.analysisStatus), **a.analysisContour() ), 200
 	except sessionManager.SessionNotFoundError:
 		return jsonify( respondingURL='analysis-contour', errType='MissingSIDError', errSummary="A valid session ID was not found.", errText="A valid session ID was not found." ), 500
 	except KeyError, err:
