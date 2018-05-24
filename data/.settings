@@ -1,37 +1,29 @@
 {
     "qdfTrajIO": {
-        "filter": "*.qdf", 
-        "start": 0.0, 
+        "end": -1, 
+        "start": 0, 
         "Cfb": 1.07e-12, 
-        "dcOffset": 0.0, 
-        "Rfb": 9100000000.0
+        "dcOffset": 0, 
+        "filter": "*.qdf", 
+        "Rfb": 9100000000
     }, 
-    "adept" : {
-       "FitTol"	: "1.e-7",
-       "FitIters" : "50000",
-       "StepSize" : "2.5",
-       "MinStateLength" : "10",
-       "MaxEventLength" : "10000",
-       "UnlinkRCConst" 	: "1"
-    },
     "adept2State": {
-        "FitTol": 1e-07, 
-        "UnlinkRCConst": "1", 
-        "BlockRejectRatio": 0.9, 
-        "FitIters": 50000
+        "FitTol": "1.e-7", 
+        "LinkRCConst": "0", 
+        "FitIters": "50000"
     }, 
     "eventSegment": {
-        "meanOpenCurr": -1.0, 
-        "slopeOpenCurr": -1.0, 
+        "meanOpenCurr": 136.251, 
+        "slopeOpenCurr": -1, 
         "eventPad": 50, 
         "driftThreshold": -1, 
         "maxDriftRate": -1, 
-        "eventThreshold": 4.0, 
         "writeEventTS": 1, 
         "minEventLength": 5, 
-        "sdOpenCurr": -1.0, 
+        "eventThreshold": 4.000441696113075, 
         "reserveNCPU": 3, 
         "parallelProc": 0, 
-        "blockSizeSec": 0.5
+        "blockSizeSec": 0.5, 
+        "sdOpenCurr": 6.792
     }
 }
