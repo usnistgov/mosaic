@@ -17,35 +17,36 @@ Sampling Frequency=500 kHz
 Analysis
 ----------------------------
 
-Algorithm: MOSAIC StepResponse
-OutputDB: eventMD-PEG28-Reference.sqlite
+Algorithm: MOSAIC ADEPT 2-State
+OutputDB: eventMD-PEG28-ADEPT2State.sqlite
 Settings:
 
 {
-    "stepResponseAnalysis": {
-        "FitTol": 1e-07,
-        "BlockRejectRatio": 0.9,
-        "FitIters": 50000
-    },
     "qdfTrajIO": {
-        "filter": "*.qdf",
-        "start": 0.0,
-        "Cfb": 1.07e-12,
-        "dcOffset": 0.0,
-        "Rfb": 9100000000.0
-    },
+        "end": -1, 
+        "start": 0, 
+        "Cfb": 1.07e-12, 
+        "dcOffset": 0, 
+        "filter": "*.qdf", 
+        "Rfb": 9100000000
+    }, 
+    "adept2State": {
+        "FitTol": "1.e-7", 
+        "LinkRCConst": "0", 
+        "FitIters": "50000"
+    }, 
     "eventSegment": {
-        "meanOpenCurr": -1.0,
-        "slopeOpenCurr": -1.0,
-        "eventPad": 50,
-        "driftThreshold": 999.0,
-        "maxDriftRate": 999.0,
-        "eventThreshold": 3.9373285666187976,
-        "writeEventTS": 1,
-        "minEventLength": 5,
-        "sdOpenCurr": -1.0,
-        "reserveNCPU": 3,
-        "parallelProc": 0,
-        "blockSizeSec": 0.5
+        "meanOpenCurr": 136.251, 
+        "slopeOpenCurr": -1, 
+        "eventPad": 50, 
+        "driftThreshold": -1, 
+        "maxDriftRate": -1, 
+        "writeEventTS": 1, 
+        "minEventLength": 5, 
+        "eventThreshold": 4.000441696113075, 
+        "reserveNCPU": 3, 
+        "parallelProc": 0, 
+        "blockSizeSec": 0.5, 
+        "sdOpenCurr": 6.792
     }
 }
