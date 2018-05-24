@@ -55,7 +55,7 @@ def index():
 
 @app.route('/about', methods=['POST'])
 def about():
-	return jsonify(ver=mosaic.__version__, build=mosaic.__build__, uiver=str(mosaic.__mweb_version__)), 200
+	return jsonify(respondingURL="about", ver=mosaic.__version__, build=mosaic.__build__, uiver=str(mosaic.__mweb_version__)), 200
 
 @app.route('/validate-settings', methods=['POST'])
 def validateSettings():
