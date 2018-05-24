@@ -11,7 +11,8 @@ def _mosaicUnitTests(base):
                         ('segment','s', 'run time-series segmentation tests'),
                         ('dependencies', 'd', 'test MOSAIC dependency versions'),
                         ('modules', 'm', 'test MOSAIC modules'),
-                        ('trajio', 't', 'test MOSAIC I/O')
+                        ('trajio', 't', 'test MOSAIC I/O'),
+                        ('mosaicweb', 'w', 'test MOSAIC web')
                         ]
 
         def initialize_options(self):
@@ -20,6 +21,7 @@ def _mosaicUnitTests(base):
             self.dependencies=0
             self.modules=0
             self.trajio=0
+            self.mosaicweb=0
 
         def finalize_options(self):
             pass
@@ -27,28 +29,32 @@ def _mosaicUnitTests(base):
         def run(self):
             try:
                 testList=[]
+                testargs=['mosaic']
 
                 if self.algorithms:
                     mosaicUnitTests.log.debug("Running algorithm unit tests")
-                    testList.extend(['adept_Test', 'cusum_Test', 'adept2State_Test'])
+                    testList.extend(['mosaic/tests/adept2State_Test.py', 'mosaic/tests/adept_Test.py', 'mosaic/tests/cusum_Test.py'])
                 if self.segment:
                     mosaicUnitTests.log.debug("Running event segmentation unit tests")
-                    testList.extend(['eventPartition_Test', 'eventPartitionParallel_Test'])
+                    testList.extend(['mosaic/tests/eventPartition_Test.py', 'mosaic/tests/eventPartitionParallel_Test.py'])
                 if self.dependencies:
                     mosaicUnitTests.log.debug("Running dependency unit tests")
-                    testList.extend(['dependencyVersion_Test'])
+                    testList.extend(['tests/dependencyVersion_Test.py'])
                 if self.modules:
                     mosaicUnitTests.log.debug("Running module import unit tests")
-                    testList.extend(['import_Tests'])
+                    testList.extend(['mosaic/tests/import_Tests.py'])
                 if self.trajio:
                     mosaicUnitTests.log.debug("Running module trajectory I/O unit tests")
-                    testList.extend(['trajio_Test'])
+                    testList.extend(['mosaic/tests/trajio_Test.py'])
+                if self.mosaicweb:
+                    mosaicUnitTests.log.debug("Running module Mosaic web unit tests")
+                    testList.extend(['mosaicweb/tests/status_Test.py', 'mosaicweb/tests/session_Test.py'])
 
                 if self.verbose:
                     mosaicUnitTests.log.debug("Running verbose unit tests")
-                    testargs=['mosaic', '-v', '--where=mosaic/tests/']
+                    testargs.extend(['-v'])
                 else:
-                    testargs=['mosaic', '--where=mosaic/tests/']
+                    testargs.extend([])
                 
                 testargs.extend(testList)
 
