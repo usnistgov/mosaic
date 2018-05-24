@@ -71,8 +71,8 @@ class plotlyLayout(dict):
 			self['paper_bgcolor']='rgba(0,0,0,0)'
 			self['plot_bgcolor']='rgba(0,0,0,0)'
 			self['margin']={'l':'50', 'r':'50', 't':'0', 'b':'50'}
-			self['showlegend']=False
-			self['autosize']=True
+			self['showlegend']=str(False)
+			self['autosize']=str(True)
 			self['side']='right'
 			
 			self.update(plotlyLayout.layoutConfig[layoutType])
@@ -149,4 +149,4 @@ class plotlyLayout(dict):
 
 class plotlyOptions(dict):
 	def __init__(self):
-		self["displayLogo"]=False
+		self["displayLogo"]=str(False)
