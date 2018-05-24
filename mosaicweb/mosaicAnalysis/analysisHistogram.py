@@ -72,13 +72,13 @@ class analysisHistogram:
 		layout['paper_bgcolor']='rgba(0,0,0,0)'
 		layout['plot_bgcolor']='rgba(0,0,0,0)'
 		layout['margin']={'l':'50', 'r':'50', 't':'0', 'b':'50'}
-		layout['showlegend']=False
-		layout['autosize']=True
+		layout['showlegend']="False"
+		layout['autosize']="True"
 
 		ydat, xdat = self._hist()
 		self.responseDict['data']=[plotlyWrapper.plotlyTrace(list(xdat), list(ydat), "Histogram")]
 		self.responseDict['layout']=layout
-		self.responseDict['options']={'displayLogo': False}
+		self.responseDict['options']={'displayLogo': "False"}
 
 		return self.responseDict
 

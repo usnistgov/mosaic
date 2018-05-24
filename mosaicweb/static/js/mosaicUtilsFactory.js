@@ -22,7 +22,7 @@ angular.module('mosaicApp')
 						mosaicConfigFactory.sessionID=response.data.sessionID;
 					};
 					if ('analysisRunning' in response.data) {
-						mosaicConfigFactory.analysisRunning=response.data.analysisRunning;
+						mosaicConfigFactory.analysisRunning=(response.data.analysisRunning === 'true');
 					};
 					if ('newDataAvailable' in response.data) {
 						mosaicConfigFactory.newDataAvailable=response.data.newDataAvailable;
