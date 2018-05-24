@@ -72,7 +72,7 @@ class Session_TestSuite(mwebCommonTest):
 		d=self._get_data(result)
 		sid=d["sessionID"]
 		
-		for i in range(10):
+		for i in range(50):
 			result=self._post( '/event-view', dict( 
 					sessionID=sid,
 					eventNumber=i
