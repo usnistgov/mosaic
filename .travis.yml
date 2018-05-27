@@ -31,4 +31,4 @@ install:
   - ln -s /usr/lib/python2.7/dist-packages/PyQt4/ $VIRTUAL_ENV/lib/python2.7/site-packages/
   - ln -s /usr/lib/python2.7/dist-packages/sip.so $VIRTUAL_ENV/lib/python2.7/site-packages/
 script: 
-  - python setup.py test -asdmt
+  - python setup.py test -w
