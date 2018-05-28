@@ -32,5 +32,5 @@ install:
   - ln -s /usr/lib/python2.7/dist-packages/sip.so $VIRTUAL_ENV/lib/python2.7/site-packages/
 script: 
   # - python setup.py test -madst
-  - nosetests --with-coverage 'mosaic/tests/adept2State_Test.py', 'mosaic/tests/adept_Test.py', 'mosaic/tests/cusum_Test.py', 'mosaic/tests/eventPartition_Test.py', 'mosaic/tests/eventPartitionParallel_Test.py', 'tests/dependencyVersion_Test.py', 'mosaic/tests/import_Tests.py', 'mosaic/tests/trajio_Test.py'
+  - nosetests --with-coverage -v mosaic/tests/adept2State_Test.py mosaic/tests/adept_Test.py mosaic/tests/cusum_Test.py mosaic/tests/eventPartition_Test.py mosaic/tests/eventPartitionParallel_Test.py tests/dependencyVersion_Test.py mosaic/tests/import_Tests.py mosaic/tests/trajio_Test.py
   - codecov
