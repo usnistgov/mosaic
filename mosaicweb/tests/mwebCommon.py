@@ -3,7 +3,7 @@ from mosaicweb import app
 import mosaic
 import unittest 
 
-mosaic.WebServerDataLocation=mosaic.__path__[0]+"/.."
+mosaic.WebServerDataLocation=mosaic.__path__[0]#+"/.."
 
 class mwebCommonTest(unittest.TestCase): 
 	def setUp(self):
