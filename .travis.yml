@@ -22,6 +22,7 @@ addons:
     - pyqt4-dev-tools
     - python-qt4
     - python-docutils
+    - sqlite3
 before_install:
   - pip install docutils
   - pip install -U pip
