@@ -5,6 +5,13 @@ import unittest
 
 mosaic.WebServerDataLocation=mosaic.__path__[0]+"/.."
 
+class mwebSimpleCommonTest(unittest.TestCase):
+	def setUp(self):
+		pass
+
+	def tearDown(self):
+		pass
+
 class mwebCommonTest(unittest.TestCase): 
 	def setUp(self):
 		self.app = app.test_client()
