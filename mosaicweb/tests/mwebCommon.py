@@ -1,6 +1,6 @@
 import json
-from mosaicweb import app
 import mosaic
+from mosaicweb import app
 import unittest 
 
 mosaic.WebServerDataLocation=mosaic.__path__[0]+"/.."
@@ -12,7 +12,7 @@ class mwebSimpleCommonTest(unittest.TestCase):
 	def tearDown(self):
 		pass
 
-class mwebCommonTest(unittest.TestCase): 
+class mwebCommonTest(unittest.TestCase):
 	def setUp(self):
 		self.app = app.test_client()
 		self.app.testing = True 

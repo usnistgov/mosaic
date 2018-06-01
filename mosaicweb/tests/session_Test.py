@@ -1,5 +1,5 @@
 import unittest
-import mosaic
+import mosaicweb.tests.mwebCommon
 from mosaicweb.tests.mwebCommon import mwebCommonTest
 
 class Session_TestSuite(mwebCommonTest):
@@ -10,19 +10,10 @@ class Session_TestSuite(mwebCommonTest):
 		self.assertBaseline("load-analysis", result)
 
 	def test_loadHistogram(self):
-		result=self._post( '/load-analysis', dict( databaseFile="data/eventMD-PEG28-ADEPT2State.sqlite" ) )
-		d=self._get_data(result)
+		self._histTest(False)
 
-		result=self._post( '/analysis-histogram', dict( 
-			sessionID=d["sessionID"],
-			query="select BlockDepth from metadata where ResTime > 0.02",
-			nBins=500, 
-			databaseFile="data/eventMD-PEG28-ADEPT2State.sqlite" ) 
-		)
-		d=self._get_data(result)
-
-		self.assertBaseline("analysis-histogram", result)
-		self.assertGreater(d.keys(), 0)
+	def test_loadPDF(self):
+		self._histTest(True)
 
 	def test_loadContour(self):
 		result=self._post( '/load-analysis', dict( databaseFile="data/eventMD-PEG28-ADEPT2State.sqlite" ) )
@@ -83,3 +74,22 @@ class Session_TestSuite(mwebCommonTest):
 			self.assertBaseline("event-view", result)
 			self.assertEqual(d["errorText"], "")
 			self.assertEqual(d["warning"], "")
+
+	def _histTest(self, density):
+		result=self._post( '/load-analysis', dict( databaseFile="data/eventMD-PEG28-ADEPT2State.sqlite" ) )
+		d=self._get_data(result)
+
+		result=self._post( '/analysis-histogram', dict( 
+				sessionID=d["sessionID"],
+				query="select BlockDepth from metadata where ResTime > 0.02",
+				nBins=500, 
+				databaseFile="data/eventMD-PEG28-ADEPT2State.sqlite",
+				density=density
+			)
+			
+		)
+		d=self._get_data(result)
+
+		self.assertBaseline("analysis-histogram", result)
+		self.assertGreater(d.keys(), 0)
+		
