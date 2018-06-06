@@ -3,6 +3,7 @@ import time
 import mosaicweb.mosaicAnalysis.analysisHistogram as analysisHistogram
 import mosaicweb.mosaicAnalysis.analysisContour as analysisContour
 import mosaicweb.mosaicAnalysis.analysisStatistics as analysisStatistics
+import mosaicweb.mosaicAnalysis.analysisTimeSeries as analysisTimeSeries
 import mosaicweb.mosaicAnalysis.analysisDBUtils as analysisDBUtils
 import mosaicweb.mosaicAnalysis.mosaicAnalysis as mosaicAnalysis
 import mosaicweb.sessionManager.sessionManager as sessionManager
@@ -68,6 +69,13 @@ class Status_TestSuite(mwebSimpleCommonTest):
 		ac=analysisStatistics.analysisStatistics(resource_path("eventMD-PEG28-ADEPT2State.sqlite"))
 
 		res=ac.analysisStatistics()
+
+		self.assertGreater(len(res.keys()), 0)
+
+	def test_analysisTimeSeries(self):
+		ac=analysisTimeSeries.analysisTimeSeries(resource_path("eventMD-PEG28-ADEPT2State.sqlite"), 1, ['normal', 'warning', 'error'])
+
+		res=ac.timeSeries()
 
 		self.assertGreater(len(res.keys()), 0)
 
