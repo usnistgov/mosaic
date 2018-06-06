@@ -11,7 +11,9 @@ exclude_lines =
 omit=
 	mosaicweb/utils/*.py
 	mosaicweb/views.py
+	mosaicweb/tests/*
 	mosaic/apps/*.py
 	mosaic/errors.py
 	mosaic/filters/*.py
 	mosaic/trajio/abf/abf.py
+	mosaic/tests/*
