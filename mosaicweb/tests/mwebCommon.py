@@ -31,3 +31,9 @@ class mwebCommonTest(unittest.TestCase):
 
 		self.assertEqual(result.status_code, 200)
 		self.assertEqual(d["respondingURL"], url)
+
+	def assertBaselineError(self, url, result):
+		d=self._get_data(result)
+
+		self.assertEqual(result.status_code, 500)
+		self.assertEqual(d["respondingURL"], url)

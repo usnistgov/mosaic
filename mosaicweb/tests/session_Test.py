@@ -1,8 +1,36 @@
 import unittest
+import time
 import mosaicweb.tests.mwebCommon
 from mosaicweb.tests.mwebCommon import mwebCommonTest
 
 class Session_TestSuite(mwebCommonTest):
+	def test_newAnalysis(self):
+		result=self._post( '/new-analysis', dict( dataPath="data/" ) )
+
+		self.assertBaseline("new-analysis", result)
+
+	def test_newAnalysisError(self):
+		result=self._post( '/new-analysis', dict() )
+
+		self.assertBaselineError("new-analysis", result)
+
+	def test_runAnalysis(self):
+		result=self._post( '/new-analysis', dict( dataPath="data/" ) )
+		self.assertBaseline("new-analysis", result)
+
+		d=self._get_data(result)
+
+
+		result=self._post( '/start-analysis', dict( sessionID=d["sessionID"] ) )
+
+		self.assertBaseline("start-analysis", result)
+
+		# time.sleep(3)
+
+		result=self._post( '/stop-analysis', dict( sessionID=d["sessionID"] ) )
+		self.assertBaseline("stop-analysis", result)
+		
+
 	def test_loadAnalysis(self):
 		result=self._post( '/load-analysis', dict( databaseFile="data/eventMD-PEG28-ADEPT2State.sqlite" ) )
 
@@ -74,6 +102,28 @@ class Session_TestSuite(mwebCommonTest):
 			self.assertBaseline("event-view", result)
 			self.assertEqual(d["errorText"], "")
 			self.assertEqual(d["warning"], "")
+
+	def test_validateSettings(self):	
+		result=self._post( '/validate-settings', dict( analysisSettings="{}" ) )
+
+		self.assertBaseline("validate-settings", result)
+
+	def test_validateSettingsError(self):	
+		result=self._post( '/validate-settings', dict( analysisSettings="" ) )
+
+		self.assertBaselineError("validate-settings", result)
+
+	def test_processingAlgorithm(self):	
+		result=self._post( '/processing-algorithm', dict( procAlgorithm="adept" ) )
+
+		self.assertBaseline("processing-algorithm", result)
+
+	def test_processingAlgorithmError(self):	
+		result=self._post( '/processing-algorithm', dict( procAlgorithm="proc" ) )
+
+		self.assertBaselineError("processing-algorithm", result)
+
+
 
 	def _histTest(self, density):
 		result=self._post( '/load-analysis', dict( databaseFile="data/eventMD-PEG28-ADEPT2State.sqlite" ) )
