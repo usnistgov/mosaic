@@ -8,3 +8,10 @@ exclude_lines =
     raise NotImplementedError
     if 0:
     if __name__ == .__main__.:
+omit=
+	mosaicweb/utils/*.py
+	mosaicweb/views.py
+	mosaic/apps/*.py
+	mosaic/errors.py
+	mosaic/filters/*.py
+	mosaic/trajio/abf/abf.py
