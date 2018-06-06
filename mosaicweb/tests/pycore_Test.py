@@ -21,7 +21,24 @@ class Status_TestSuite(mwebSimpleCommonTest):
 		self.assertEqual(ac.queryString, "")
 
 	def test_analysisHistogramADEPT2State(self):
-		ac=analysisHistogram.analysisHistogram(resource_path("eventMD-PEG28-ADEPT2State.sqlite"), """select BlockDepth from metadata where ProcessingStatus='normal' and ResTime > 0.2""", 200, False)
+		ac=analysisHistogram.analysisHistogram(
+			resource_path("eventMD-PEG28-ADEPT2State.sqlite"), 
+			"""select BlockDepth from metadata where ProcessingStatus='normal' and ResTime > 0.2""", 
+			200, 
+			False
+		)
+
+		res=ac.analysisHistogram()
+
+		self.assertGreater(len(res.keys()), 0)
+
+	def test_analysisPDFADEPT2State(self):
+		ac=analysisHistogram.analysisHistogram(
+			resource_path("eventMD-PEG28-ADEPT2State.sqlite"), 
+			"""select BlockDepth from metadata where ProcessingStatus='normal' and ResTime > 0.2""", 
+			200, 
+			True
+		)
 
 		res=ac.analysisHistogram()
 
