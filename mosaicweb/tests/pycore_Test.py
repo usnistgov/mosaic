@@ -2,6 +2,7 @@ import os
 import time
 import mosaicweb.mosaicAnalysis.analysisHistogram as analysisHistogram
 import mosaicweb.mosaicAnalysis.analysisContour as analysisContour
+import mosaicweb.mosaicAnalysis.analysisStatistics as analysisStatistics
 import mosaicweb.mosaicAnalysis.analysisDBUtils as analysisDBUtils
 import mosaicweb.mosaicAnalysis.mosaicAnalysis as mosaicAnalysis
 import mosaicweb.sessionManager.sessionManager as sessionManager
@@ -51,7 +52,6 @@ class Status_TestSuite(mwebSimpleCommonTest):
 
 		self.assertEqual(ac.responseDict, {})
 
-
 	def test_analysisContourQuerySyntax(self):
 		ac=analysisContour.analysisContour(resource_path("eventMD-PEG28-ADEPT2State.sqlite"), """select ResTime from metadata where ProcessingStatus='normal' and ResTime > 0.02""", 200, False)
 
@@ -64,6 +64,12 @@ class Status_TestSuite(mwebSimpleCommonTest):
 		self.assertEqual(res['data'][0]['type'], "heatmap")
 		self.assertEqual(res['queryCols'], ['BlockedCurrent', 'BlockDepth', 'ResTime'])		
 
+	def test_analysisStatistics(self):
+		ac=analysisStatistics.analysisStatistics(resource_path("eventMD-PEG28-ADEPT2State.sqlite"))
+
+		res=ac.analysisStatistics()
+
+		self.assertGreater(len(res.keys()), 0)
 
 	def test_analysisDBUtilsInit(self):
 		adb=analysisDBUtils.analysisDBUtils(resource_path("eventMD-PEG28-ADEPT2State.sqlite"), "")
