@@ -1,5 +1,6 @@
 import os
 import time
+import mosaicweb.mosaicAnalysis.analysisHistogram as analysisHistogram
 import mosaicweb.mosaicAnalysis.analysisContour as analysisContour
 import mosaicweb.mosaicAnalysis.analysisDBUtils as analysisDBUtils
 import mosaicweb.mosaicAnalysis.mosaicAnalysis as mosaicAnalysis
@@ -11,6 +12,19 @@ import mosaic
 import mosaic.settings as settings
 
 class Status_TestSuite(mwebSimpleCommonTest):
+	def test_analysisHistogramInit(self):
+		ac=analysisHistogram.analysisHistogram(resource_path("eventMD-PEG28-ADEPT2State.sqlite"), "", 200, False)
+
+		self.assertEqual(ac.responseDict, {})
+		self.assertEqual(ac.queryString, "")
+
+	def test_analysisHistogramADEPT2State(self):
+		ac=analysisHistogram.analysisHistogram(resource_path("eventMD-PEG28-ADEPT2State.sqlite"), """select BlockDepth from metadata where ProcessingStatus='normal' and ResTime > 0.2""", 200, False)
+
+		res=ac.analysisHistogram()
+
+		self.assertGreater(len(res.keys()), 0)
+
 	def test_analysisContourInit(self):
 		ac=analysisContour.analysisContour(resource_path("eventMD-PEG28-ADEPT2State.sqlite"), "", 200, False)
 
