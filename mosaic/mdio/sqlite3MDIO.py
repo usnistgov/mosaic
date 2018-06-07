@@ -412,7 +412,7 @@ class sqlite3MDIO(metaMDIO.metaMDIO):
 		d=data_record( colnames, rec, colnames_t )
 		return [ d[col] for col in colnames ]
 
-if __name__=="__main__":
+if __name__ == '__main__':
 	try:
 		c=sqlite3MDIO()
 		c.openDB(resource_path('data/eventMD-PEG28-ADEPT2State.sqlite'))
