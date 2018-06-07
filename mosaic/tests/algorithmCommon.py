@@ -1,4 +1,7 @@
 import testutil
+import copy
+import mosaic.commonExceptions
+from nose.tools import raises
 import mosaic.settings as settings
 import numpy as np
 
@@ -11,10 +14,8 @@ class Base2StateTest(object):
 
 		self.dt=int(1e6/self.dat[0])
 
-	def runTestCase(self, datfile, prmfile, algoHnd):
-		self._setupTestCase(datfile, prmfile,algoHnd)
-
-		self.testobj=algoHnd(
+	def _setupTestObject(self, datfile, prmfile, algoHnd):
+		return algoHnd(
 							self.dat,
 							self.dat, 
 							self.Fs,
@@ -26,12 +27,24 @@ class Base2StateTest(object):
 							absdatidx=0.0,
 							datafileHnd=None
 						)
+
+	def runTestCase(self, datfile, prmfile, algoHnd):
+		self._setupTestCase(datfile, prmfile,algoHnd)
+
+		self.testobj=self._setupTestObject(datfile, prmfile, algoHnd)
 		self.testobj.processEvent()
 
 		assert self.testobj.mdProcessingStatus == 'normal' 
 		assert round(self.testobj.mdBlockDepth,1) == 1.0-abs(self.prm['a']) 
 		assert round(self.testobj.mdResTime,1) == (self.prm['tau2']-self.prm['tau1'])/1000. 
 
+	@raises(mosaic.commonExceptions.SettingsTypeError)
+	def runTestError(self, datfile, prmfile, algoHnd, param):
+		self._setupTestCase(datfile, prmfile,algoHnd)
+
+		self.sett[param]="param"
+
+		self.testobj=self._setupTestObject(datfile, prmfile, algoHnd)
 
 class BaseMultiStateTest(object):
 	def almostEqual(self, a, b, tol):
@@ -56,10 +69,8 @@ class BaseMultiStateTest(object):
 		# self.sett["MaxEventLength"] = 100000
 		# self.sett["UnlinkRCConst"] = 0
 	
-	def runTestCase(self, datfile, prmfile, algoHnd):
-		self._setupTestCase(datfile, prmfile,algoHnd)
-			
-		testobj=algoHnd(
+	def _setupTestObject(self, datfile, prmfile, algoHnd):			
+		return algoHnd(
 					self.dat,
 					self.dat,
 					self.Fs,
@@ -71,8 +82,35 @@ class BaseMultiStateTest(object):
 					absdatidx=0.0,
 					datafileHnd=None
 				)
+
+
+	def runTestCase(self, datfile, prmfile, algoHnd):
+		self._setupTestCase(datfile, prmfile,algoHnd)
+
+		testobj=self._setupTestObject(datfile, prmfile, algoHnd)
+		
 		testobj.processEvent()
 
 		assert testobj.mdProcessingStatus == 'normal'
 		assert self.almostEqual( testobj.mdNStates, self.prm['n'], 1)
 		assert self.almostEqual( testobj.mdOpenChCurrent, self.prm['OpenChCurrent'], 1.0)
+
+	@raises(mosaic.commonExceptions.SettingsTypeError)
+	def runTestError(self, datfile, prmfile, algoHnd, param):
+		self._setupTestCase(datfile, prmfile,algoHnd)
+
+		self.sett[param]="param"
+
+		testobj=self._setupTestObject(datfile, prmfile, algoHnd)
+
+	def runTestAttr(self, datfile, prmfile, algoHnd):
+		self._setupTestCase(datfile, prmfile,algoHnd)
+
+		testobj=self._setupTestObject(datfile, prmfile, algoHnd)
+		testobj.processEvent()
+
+		
+		assert len(testobj._mdList()) > 0
+		assert len(testobj._mdHeadingDataType()) > 0
+		assert len(testobj._mdHeadings()) > 0
+		assert testobj.formatsettings() == None

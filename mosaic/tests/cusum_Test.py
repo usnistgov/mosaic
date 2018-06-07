@@ -8,3 +8,14 @@ class CUSUM_TestSuite(BaseMultiStateTest):
 			baseobj=BaseMultiStateTest()
 
 			yield self.runTestCase, basename+'_raw.bin', basename+'_params.json', cpl.cusumPlus
+
+	def test_cusumerror(self):
+		basename='mosaic/tests/testdata/eventLong_0'
+
+		for param in [ "StepSize", "MinThreshold", "MaxThreshold", "MinLength" ]:
+			yield self.runTestError, basename+'_raw.bin', basename+'_params.json', cpl.cusumPlus, param
+
+	def test_cusumattrr(self):
+		basename='mosaic/tests/testdata/eventLong_0'
+
+		yield self.runTestAttr, basename+'_raw.bin', basename+'_params.json', cpl.cusumPlus
