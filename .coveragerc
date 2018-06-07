@@ -12,6 +12,9 @@ omit=
 	mosaicweb/utils/*.py
 	mosaicweb/views.py
 	mosaicweb/tests/*
+	mosaic/commonExceptions.py 
+	mosaic/utilities/*.py
+	mosaic/_version.py
 	mosaic/apps/*.py
 	mosaic/errors.py
 	mosaic/filters/*.py
