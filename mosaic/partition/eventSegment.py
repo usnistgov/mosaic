@@ -37,6 +37,7 @@ import mosaic.utilities.mosaicLogFormat as log
 from mosaic.utilities.resource_path import format_path
 import mosaic.utilities.mosaicLogging as mlog
 from  collections import deque
+from mosaic import commonExceptions
 import metaEventPartition
 
 __all__ = ["eventSegment"]
