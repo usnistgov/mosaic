@@ -1,6 +1,8 @@
 import json
 import glob
 import os
+from nose.tools import raises
+import mosaic
 import mosaic.settings as settings
 from mosaic.trajio.tsvTrajIO import *
 import testutil
@@ -44,3 +46,22 @@ class EventPartitionTest(object):
 
 		for f in glob.glob('mosaic/tests/testdata/*.sqlite'):
 			os.remove(f)
+
+	@raises(mosaic.commonExceptions.SettingsTypeError)
+	def runTestError(self, datfile, param, eventPartHnd, parallel):
+		dat=tsvTrajIO(fnames=[datfile], Fs=50000, separator=',')
+
+		sett = (settings.settings('.', defaultwarn=False).settingsDict)
+
+		epartsettings = sett[eventPartHnd.__name__]
+
+		epartsettings[param] = 'param'
+
+		testobj=eventPartHnd(
+							dat, 
+							a2s.adept2State, 
+							epartsettings,
+							sett["adept2State"],
+							json.dumps(sett, indent=4)
+						)
+		
