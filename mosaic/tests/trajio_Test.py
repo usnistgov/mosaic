@@ -119,6 +119,9 @@ class TrajIOTest(object):
 
 		assert len(dat)>0
 
+	def runCHIErrorTestCase(self, dirname, setting):
+		self.runSettingsErrorTestCase('chi', dirname, setting)
+
 	@raises(IndexError)
 	def runTSVCurrentTestCase(self, dirname):
 		t=TrajIOTest._trajioHnd['tsv']
@@ -140,7 +143,7 @@ class TrajIO_TestSuite(TrajIOTest):
 
 	def test_chiErrorTest(self):
 		for k in ["SamplingFrequency", "ColumnTypes", "IonicCurrentColumn", "TIAgain", "preADCgain", "mVoffset", "pAoffset", "ADCvref", "ADCbits"]:
-			yield self.runBINErrorTestCase, 'mosaic/tests/testdata/', k
+			yield self.runCHIErrorTestCase, 'mosaic/tests/testdata/', k
 
 	def test_binErrorTest(self):
 		for k in ["SamplingFrequency", "ColumnTypes", "IonicCurrentColumn"]:
