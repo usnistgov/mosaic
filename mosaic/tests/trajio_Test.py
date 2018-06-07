@@ -4,6 +4,7 @@ import mosaic.trajio.metaTrajIO as metaTrajIO
 import mosaic.trajio.qdfTrajIO as qdfTrajIO
 import mosaic.trajio.binTrajIO as binTrajIO
 import mosaic.trajio.tsvTrajIO as tsvTrajIO
+import mosaic.trajio.chimeraTrajIO as chimeraTrajIO
 from mosaic.utilities.ionic_current_stats import OpenCurrentDist
 import numpy as np
 
@@ -41,7 +42,22 @@ class TrajIOTest(object):
 				        "dcOffset" : 0.0, 
 				        "start" : 0.0 
 			    	}
-			  	)
+			  	),
+		'chi' :	( chimeraTrajIO.chimeraTrajIO, {
+						"TIAgain" : 100000000,
+						"preADCgain" : 1.305,
+						"SamplingFrequency" : 50000,
+						"ColumnTypes" : "[('curr_pA', '<u2')]",
+						"IonicCurrentColumn" : "curr_pA",
+						"mVoffset": -0.2776,
+						"pAoffset": 2.0e-10,
+						"ADCvref": 2.5,
+						"ADCbits": 14,
+						"filter": "SingleChan-0001_1.bin", 
+						"start": 0.0,
+						"HeaderOffset": 0
+					}
+				)
 	}
 
 	def currentStats(self, curr):
@@ -57,6 +73,16 @@ class TrajIOTest(object):
 
 		assert round(current[0],1)==round(TrajIOTest._refcurrent[0],1)
 		assert round(current[1],1)==round(TrajIOTest._refcurrent[1],1)
+
+	def runTestCaseChimera(self, dattype, dirname):
+		t=TrajIOTest._trajioHnd[dattype]
+		q=t[0](dirname=dirname, **t[1])
+
+		dat=q.popdata(100000)
+		current=self.currentStats(dat)
+		q._formatsettings()
+
+		assert len(dat)==100000
 
 	@raises(metaTrajIO.InsufficientArgumentsError, KeyError)
 	def runSettingsErrorTestCase(self,dattype, dirname, setting):
@@ -108,6 +134,13 @@ class TrajIO_TestSuite(TrajIOTest):
 	def test_trajio(self):
 		for dat in ['qdf','bin', 'tsv', 'csv']:
 			yield self.runTestCase, dat, 'mosaic/tests/testdata/'
+
+	def test_trajiochimera(self):
+		yield self.runTestCaseChimera, 'chi', 'mosaic/tests/testdata/'
+
+	def test_chiErrorTest(self):
+		for k in ["SamplingFrequency", "ColumnTypes", "IonicCurrentColumn", "TIAgain", "preADCgain", "mVoffset", "pAoffset", "ADCvref", "ADCbits"]:
+			yield self.runBINErrorTestCase, 'mosaic/tests/testdata/', k
 
 	def test_binErrorTest(self):
 		for k in ["SamplingFrequency", "ColumnTypes", "IonicCurrentColumn"]:
