@@ -156,6 +156,14 @@ class Status_TestSuite(mwebSimpleCommonTest):
 		self.assertEqual(s["sessionID"], "sessionID")
 		self.assertIn("sessionRunStartTime", s.keys())
 
+	def test_sessionManager(self):
+		s=sessionManager.sessionManager()
+
+		sid=s.newSession()
+
+		s.addAnalysisRunningFlag(sid, True)
+		s.addDatabaseFile(sid, resource_path("eventMD-PEG28-ADEPT2State.sqlite"))
+
 	def test_sessionManagerSessionNotFoundError(self):
 		sm=sessionManager.sessionManager()
 
