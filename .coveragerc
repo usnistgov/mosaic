@@ -13,6 +13,7 @@ omit=
 	mosaicweb/utils/*.py
 	mosaicweb/views.py
 	mosaicweb/tests/*
+	mosaic/mosaicSetup.py
 	mosaic/commonExceptions.py 
 	mosaic/trajio/abfTrajIO.py 
 	mosaic/utilities/*.py
