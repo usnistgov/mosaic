@@ -1,10 +1,12 @@
 import copy
 from nose.tools import raises
+from mosaic.utilities.resource_path import resource_path
 import mosaic.trajio.metaTrajIO as metaTrajIO
 import mosaic.trajio.qdfTrajIO as qdfTrajIO
 import mosaic.trajio.binTrajIO as binTrajIO
 import mosaic.trajio.tsvTrajIO as tsvTrajIO
 import mosaic.trajio.chimeraTrajIO as chimeraTrajIO
+import mosaic.filters.besselLowpassFilter as besselLowpassFilter
 from mosaic.utilities.ionic_current_stats import OpenCurrentDist
 import numpy as np
 
@@ -92,6 +94,21 @@ class TrajIOTest(object):
 
 		t[0](dirname=dirname, **t[1])
 
+	@raises(metaTrajIO.InsufficientArgumentsError, metaTrajIO.IncompatibleArgumentsError, metaTrajIO.FileNotFoundError)
+	def runSetupErrorTestCase(self, dattype, sdict):
+		t=copy.deepcopy(TrajIOTest._trajioHnd[dattype])
+
+		print sdict
+		t[0](**sdict)
+
+	def runSetupTestCase(self, dattype, sdict):
+		t=copy.deepcopy(TrajIOTest._trajioHnd[dattype])
+
+		for k in sdict.keys():
+			t[1][k]=sdict[k]
+
+		t[0](**t[1])
+
 	def runBINErrorTestCase(self, dirname, setting):
 		self.runSettingsErrorTestCase('bin', dirname, setting)
 
@@ -133,6 +150,26 @@ class TrajIOTest(object):
 
 		dat=q.popdata(1000)
 
+	def runFuncTestCase(self, dattype, sdict, funcname, args, kwargs):
+		t=copy.deepcopy(TrajIOTest._trajioHnd[dattype])
+
+		for k in sdict.keys():
+			t[1][k]=sdict[k]
+
+		d=t[0](**t[1])
+		getattr(d, funcname)(*args, **kwargs)
+
+	def runPropTestCase(self, dattype, sdict, propname):
+		t=copy.deepcopy(TrajIOTest._trajioHnd[dattype])
+
+		for k in sdict.keys():
+			t[1][k]=sdict[k]
+
+		d=t[0](**t[1])
+		
+		print propname, "=", getattr(d, propname)
+		assert len(str(getattr(d, propname))) > 0
+
 class TrajIO_TestSuite(TrajIOTest):
 	def test_trajio(self):
 		for dat in ['qdf','bin', 'tsv', 'csv']:
@@ -162,6 +199,29 @@ class TrajIO_TestSuite(TrajIOTest):
 
 	def test_tsvSettingsTest(self):
 		yield self.runTSVCurrentTestCase, 'mosaic/tests/testdata/'
+
+	def test_trajioSetupErrorTest(self):
+		for sett in [
+					{"dirname": "mosaic/tests/testdata/", "fnames" : resource_path("SingleChan-0001.qdf")},
+					{"dirname": "mosaic/tests/testdata/", "nfiles" : 1},
+					{"dirname": "mosaic/tests/testdata/", "filter" : "*.xyz"},
+					{}
+				]:
+			yield self.runSetupErrorTestCase, "qdf", sett	
+
+	def test_trajioSetupTest(self):
+		for sett in [
+					{"dirname": "mosaic/tests/testdata/", "datafilter" : besselLowpassFilter.besselLowpassFilter}
+				]:
+			yield self.runSetupTestCase, "qdf", sett
+
+	def test_trajioFuncTest(self):
+		for n in [10, 1000, 100000, 1000000]:
+			yield self.runFuncTestCase, "qdf", {"dirname": "mosaic/tests/testdata/"}, "previewdata", [n], {}
+
+	def test_trajioPropTest(self):
+		for prop in ["FsHz", "ElapsedTimeSeconds", "LastFileProcessed", "ProcessedFiles", "DataLengthSec"]:
+			yield self.runPropTestCase, "qdf", {"dirname": "mosaic/tests/testdata/"}, prop
 
 if __name__ == '__main__':
 	t=TrajIOTest()
