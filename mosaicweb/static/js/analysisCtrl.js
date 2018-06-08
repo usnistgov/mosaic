@@ -258,6 +258,12 @@ angular.module('mosaicApp')
 
 						factory.analysisPlot=response.data;
 
+						// Handle boolean values sent back as string.
+						factory.analysisPlot.layout.autosize=(response.data.layout.autosize.toUpperCase() === 'TRUE');
+						factory.analysisPlot.layout.showlegend=(response.data.layout.showlegend.toUpperCase() === 'TRUE');
+
+						factory.analysisPlot.options.displayLogo=(response.data.options.displayLogo.toUpperCase() === 'TRUE');
+
 						factory.analysisPlot.layout.xaxis.type=xaxistype;
 						factory.analysisPlot.layout.yaxis.type=yaxistype;
 
