@@ -22,10 +22,10 @@ angular.module('mosaicApp')
 						mosaicConfigFactory.sessionID=response.data.sessionID;
 					};
 					if ('analysisRunning' in response.data) {
-						mosaicConfigFactory.analysisRunning=(response.data.analysisRunning === 'true');
+						mosaicConfigFactory.analysisRunning=(response.data.analysisRunning.toUpperCase() === 'TRUE');
 					};
 					if ('newDataAvailable' in response.data) {
-						mosaicConfigFactory.newDataAvailable=response.data.newDataAvailable;
+						mosaicConfigFactory.newDataAvailable=(response.data.newDataAvailable.toUpperCase() === 'TRUE');
 					};
 					deferred.resolve(response);
 				}, function (error) {	// error
