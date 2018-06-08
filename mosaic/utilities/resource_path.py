@@ -45,7 +45,7 @@ def resource_path(filename):
 			return str(sep.join( dirlist )+sep+filename)
 		elif os.path.isfile ( str(sep.join( dirlist[:-1] ))+sep+filename ):
 			return str(sep.join( dirlist[:-1] )+sep+filename)
-	elif filename.endswith(('.sqlite', 'state.txt')):
+	elif filename.endswith(('.sqlite', 'state.txt', '.qdf')):
 		if os.path.isfile ( str(sep.join( dirlist ))+sep+'data'+sep+filename ):
 			return str(sep.join( dirlist )+sep+'data'+sep+filename)
 		elif os.path.isfile ( str(sep.join( dirlist[:-1] ))+sep+'data'+sep+filename ):
@@ -83,6 +83,7 @@ def format_path(path):
 if __name__ == '__main__':
 	print resource_path('.settings')
 	print resource_path('eventMD-PEG29-Reference.sqlite')
+	print resource_path('SingleChan-0001.qdf')
 	print last_file_in_directory('C:\\temp\\', '*sqlite')
 	print format_path('C:\\temp\\*sqlite')
 	# return os.path.join(
