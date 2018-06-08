@@ -83,11 +83,11 @@ class sqlite3MDIO(metaMDIO.metaMDIO):
 		if not hasattr(self, 'tableName'):
 			self.tableName='metadata'
 		if not hasattr(self, 'colNames'):
-			raise metaMDIO.InsufficientArgumentsError("Missing arguments: 'colNames' must be supplied to initialize {0}".format(type(self).__name__))
 			self.logger.error("Missing arguments: 'colNames' must be supplied to initialize {0}".format(type(self).__name__))
+			raise metaMDIO.InsufficientArgumentsError("Missing arguments: 'colNames' must be supplied to initialize {0}".format(type(self).__name__))
 		if not hasattr(self, 'colNames_t'):
-			raise metaMDIO.InsufficientArgumentsError("Missing arguments: 'colNames_t' must be supplied to initialize {0}".format(type(self).__name__))
 			self.logger.error("Missing arguments: 'colNames_t' must be supplied to initialize {0}".format(type(self).__name__))
+			raise metaMDIO.InsufficientArgumentsError("Missing arguments: 'colNames_t' must be supplied to initialize {0}".format(type(self).__name__))
 
 		dbTimeout=kwargs.pop('timeout', 11.0)
 		self.logger.debug(_d("DB Timeout = {0}", dbTimeout))
