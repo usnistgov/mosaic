@@ -5,6 +5,14 @@ from nose.tools import raises
 import mosaic.settings as settings
 import numpy as np
 
+class DatBlockTest(object):
+	def runTestCase(self, mod):
+		d=mod.datblock([1,1,1,1])
+
+		assert d.mean==1
+		assert d.sd==0
+
+
 class Base2StateTest(object): 
 	def _setupTestCase(self, datfile, prmfile, algoHnd):
 		[self.Fs, self.dat]=testutil.readcsv(datfile)

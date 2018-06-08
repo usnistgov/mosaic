@@ -17,4 +17,3 @@ class ADEPT_TestSuite(BaseMultiStateTest):
 		basename='mosaic/tests/testdata/eventLong_0'
 
 		yield self.runTestAttr, basename+'_raw.bin', basename+'_params.json', adept.adept
-
