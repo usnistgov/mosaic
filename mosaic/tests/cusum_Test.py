@@ -1,5 +1,5 @@
 import mosaic.process.cusumPlus as cpl
-from mosaic.tests.algorithmCommon import BaseMultiStateTest
+from mosaic.tests.algorithmCommon import BaseMultiStateTest, DatBlockTest
 
 class CUSUM_TestSuite(BaseMultiStateTest):
 	def test_cusum(self):
@@ -8,3 +8,18 @@ class CUSUM_TestSuite(BaseMultiStateTest):
 			baseobj=BaseMultiStateTest()
 
 			yield self.runTestCase, basename+'_raw.bin', basename+'_params.json', cpl.cusumPlus
+
+	def test_cusumerror(self):
+		basename='mosaic/tests/testdata/eventLong_0'
+
+		for param in [ "StepSize", "MinThreshold", "MaxThreshold", "MinLength" ]:
+			yield self.runTestError, basename+'_raw.bin', basename+'_params.json', cpl.cusumPlus, param
+
+	def test_cusumattrr(self):
+		basename='mosaic/tests/testdata/eventLong_0'
+
+		yield self.runTestAttr, basename+'_raw.bin', basename+'_params.json', cpl.cusumPlus
+
+class cusumPlusDatBlock_TestSuite(DatBlockTest):
+	def test_datblock(self):
+		yield self.runTestCase, cpl

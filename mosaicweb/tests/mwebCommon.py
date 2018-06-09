@@ -1,11 +1,18 @@
 import json
-from mosaicweb import app
 import mosaic
+from mosaicweb import app
 import unittest 
 
 mosaic.WebServerDataLocation=mosaic.__path__[0]+"/.."
 
-class mwebCommonTest(unittest.TestCase): 
+class mwebSimpleCommonTest(unittest.TestCase):
+	def setUp(self):
+		pass
+
+	def tearDown(self):
+		pass
+
+class mwebCommonTest(unittest.TestCase):
 	def setUp(self):
 		self.app = app.test_client()
 		self.app.testing = True 
@@ -23,4 +30,10 @@ class mwebCommonTest(unittest.TestCase):
 		d=self._get_data(result)
 
 		self.assertEqual(result.status_code, 200)
+		self.assertEqual(d["respondingURL"], url)
+
+	def assertBaselineError(self, url, result):
+		d=self._get_data(result)
+
+		self.assertEqual(result.status_code, 500)
 		self.assertEqual(d["respondingURL"], url)

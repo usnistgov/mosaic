@@ -9,3 +9,5 @@ numpy==1.11.1
 scipy==0.18.1
 docutils==0.14
 flask==0.12.2
+coverage==4.5.1
+codecov==2.0.15

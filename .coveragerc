@@ -1,0 +1,25 @@
+[report]
+exclude_lines =
+    pragma: no cover
+    def __repr__
+    if self.debug:
+    if settings.DEBUG
+    raise AssertionError
+    raise NotImplementedError
+    if 0:
+    if __name__ == .__main__.:
+    pass
+omit=
+	mosaicweb/utils/*.py
+	mosaicweb/views.py
+	mosaicweb/tests/*
+	mosaic/mosaicSetup.py
+	mosaic/commonExceptions.py 
+	mosaic/trajio/abfTrajIO.py 
+	mosaic/utilities/*.py
+	mosaic/_version.py
+	mosaic/apps/*.py
+	mosaic/errors.py
+	mosaic/filters/*.py
+	mosaic/trajio/abf/abf.py
+	mosaic/tests/*

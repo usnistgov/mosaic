@@ -69,6 +69,13 @@ angular.module('mosaicApp')
 
 					if (response.data.respondingURL=='new-analysis') {
 						factory.trajPlot=response.data.trajPlot;
+
+						// Handle boolean values sent back as string.
+						factory.trajPlot.layout.autosize=(response.data.trajPlot.layout.autosize.toUpperCase() === 'TRUE');
+						factory.trajPlot.layout.showlegend=(response.data.trajPlot.layout.showlegend.toUpperCase() === 'TRUE');
+
+						factory.trajPlot.options.displayLogo=(response.data.trajPlot.options.displayLogo.toUpperCase() === 'TRUE');
+
 						factory.trajPlotOriginalCurrent = factory.trajPlot.data[0].y;
 
 						factory.currMeanAuto=response.data.currMeanAuto;

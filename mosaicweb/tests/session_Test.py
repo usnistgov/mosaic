@@ -1,8 +1,38 @@
 import unittest
+import time
 import mosaic
+import mosaicweb.tests.mwebCommon
 from mosaicweb.tests.mwebCommon import mwebCommonTest
 
 class Session_TestSuite(mwebCommonTest):
+	def test_newAnalysis(self):
+		result=self._post( '/new-analysis', dict( dataPath="data/" ) )
+
+		self.assertBaseline("new-analysis", result)
+
+	def test_newAnalysisError(self):
+		result=self._post( '/new-analysis', dict() )
+
+		self.assertBaselineError("new-analysis", result)
+
+	@unittest.skipUnless(mosaic.WebServerMode=="local", "requires local web server.")
+	def test_runAnalysis(self):
+		result=self._post( '/new-analysis', dict( dataPath="data/" ) )
+		self.assertBaseline("new-analysis", result)
+
+		d=self._get_data(result)
+
+
+		result=self._post( '/start-analysis', dict( sessionID=d["sessionID"] ) )
+
+		self.assertBaseline("start-analysis", result)
+
+		# time.sleep(3)
+
+		result=self._post( '/stop-analysis', dict( sessionID=d["sessionID"] ) )
+		self.assertBaseline("stop-analysis", result)
+		
+	@unittest.skipUnless(mosaic.WebServerMode=="local", "requires local web server.")
 	def test_loadAnalysis(self):
 		result=self._post( '/load-analysis', dict( databaseFile="data/eventMD-PEG28-ADEPT2State.sqlite" ) )
 
@@ -10,20 +40,12 @@ class Session_TestSuite(mwebCommonTest):
 		self.assertBaseline("load-analysis", result)
 
 	def test_loadHistogram(self):
-		result=self._post( '/load-analysis', dict( databaseFile="data/eventMD-PEG28-ADEPT2State.sqlite" ) )
-		d=self._get_data(result)
+		self._histTest(False)
 
-		result=self._post( '/analysis-histogram', dict( 
-			sessionID=d["sessionID"],
-			query="select BlockDepth from metadata where ResTime > 0.02",
-			nBins=500, 
-			databaseFile="data/eventMD-PEG28-ADEPT2State.sqlite" ) 
-		)
-		d=self._get_data(result)
+	def test_loadPDF(self):
+		self._histTest(True)
 
-		self.assertBaseline("analysis-histogram", result)
-		self.assertGreater(d.keys(), 0)
-
+	@unittest.skipUnless(mosaic.WebServerMode=="local", "requires local web server.")
 	def test_loadContour(self):
 		result=self._post( '/load-analysis', dict( databaseFile="data/eventMD-PEG28-ADEPT2State.sqlite" ) )
 		d=self._get_data(result)
@@ -38,6 +60,7 @@ class Session_TestSuite(mwebCommonTest):
 		# self.assertBaseline("analysis-contour", result)
 		self.assertGreater(len(d), 0)
 
+	@unittest.skipUnless(mosaic.WebServerMode=="local", "requires local web server.")
 	def test_analysisLog(self):
 		result=self._post( '/load-analysis', dict( databaseFile="data/eventMD-PEG28-ADEPT2State.sqlite" ) )
 		d=self._get_data(result)
@@ -51,6 +74,7 @@ class Session_TestSuite(mwebCommonTest):
 		self.assertBaseline("analysis-log", result)
 		self.assertGreater(len(d["logText"]), 0)
 
+	@unittest.skipUnless(mosaic.WebServerMode=="local", "requires local web server.")
 	def test_analysisStatistics(self):
 		result=self._post( '/load-analysis', dict( databaseFile="data/eventMD-PEG28-ADEPT2State.sqlite" ) )
 		d=self._get_data(result)
@@ -67,6 +91,7 @@ class Session_TestSuite(mwebCommonTest):
 		
 		[ self.assertEqual(d[k], d1[k]) for k in d1.keys() ]
 
+	@unittest.skipUnless(mosaic.WebServerMode=="local", "requires local web server.")
 	def test_eventView(self):
 		result=self._post( '/load-analysis', dict( databaseFile="data/eventMD-PEG28-ADEPT2State.sqlite" ) )
 		d=self._get_data(result)
@@ -83,3 +108,43 @@ class Session_TestSuite(mwebCommonTest):
 			self.assertBaseline("event-view", result)
 			self.assertEqual(d["errorText"], "")
 			self.assertEqual(d["warning"], "")
+
+	def test_validateSettings(self):	
+		result=self._post( '/validate-settings', dict( analysisSettings="{}" ) )
+
+		self.assertBaseline("validate-settings", result)
+
+	def test_validateSettingsError(self):	
+		result=self._post( '/validate-settings', dict( analysisSettings="" ) )
+
+		self.assertBaselineError("validate-settings", result)
+
+	def test_processingAlgorithm(self):	
+		result=self._post( '/processing-algorithm', dict( procAlgorithm="adept" ) )
+
+		self.assertBaseline("processing-algorithm", result)
+
+	def test_processingAlgorithmError(self):	
+		result=self._post( '/processing-algorithm', dict( procAlgorithm="proc" ) )
+
+		self.assertBaselineError("processing-algorithm", result)
+
+	@unittest.skipUnless(mosaic.WebServerMode=="local", "requires local web server.")
+	def _histTest(self, density):
+		result=self._post( '/load-analysis', dict( databaseFile="data/eventMD-PEG28-ADEPT2State.sqlite" ) )
+		d=self._get_data(result)
+
+		result=self._post( '/analysis-histogram', dict( 
+				sessionID=d["sessionID"],
+				query="select BlockDepth from metadata where ResTime > 0.02",
+				nBins=500, 
+				databaseFile="data/eventMD-PEG28-ADEPT2State.sqlite",
+				density=density
+			)
+			
+		)
+		d=self._get_data(result)
+
+		self.assertBaseline("analysis-histogram", result)
+		self.assertGreater(d.keys(), 0)
+		

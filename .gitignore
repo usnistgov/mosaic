@@ -63,3 +63,7 @@ pyinstaller/icon.*
 _testnotebooks/
 mosaic/utilities/.ga
 conda-build/
+.coverage
+cover/
+travis-debug
+coverage.xml

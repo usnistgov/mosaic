@@ -12,6 +12,7 @@ def _mosaicUnitTests(base):
                         ('dependencies', 'd', 'test MOSAIC dependency versions'),
                         ('modules', 'm', 'test MOSAIC modules'),
                         ('trajio', 't', 'test MOSAIC I/O'),
+                        ('mdio', 'i', 'test MOSAIC MDIO'),
                         ('mosaicweb', 'w', 'test MOSAIC web')
                         ]
 
@@ -21,6 +22,7 @@ def _mosaicUnitTests(base):
             self.dependencies=0
             self.modules=0
             self.trajio=0
+            self.mdio=0
             self.mosaicweb=0
 
         def finalize_options(self):
@@ -46,6 +48,9 @@ def _mosaicUnitTests(base):
                 if self.trajio:
                     mosaicUnitTests.log.debug("Running module trajectory I/O unit tests")
                     testList.extend(['mosaic/tests/trajio_Test.py'])
+                if self.mdio:
+                    mosaicUnitTests.log.debug("Running module metadata I/O unit tests")
+                    testList.extend(['mosaic/tests/mdio_Test.py'])                  
                 if self.mosaicweb:
                     mosaicUnitTests.log.debug("Running module Mosaic web unit tests")
                     testList.extend(['mosaicweb/tests/status_Test.py', 'mosaicweb/tests/session_Test.py'])

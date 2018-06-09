@@ -15,7 +15,7 @@ class Status_TestSuite(mwebCommonTest):
 		d=self._get_data(result)
 
 		self.assertBaseline("about", result)
-		self.assertGreaterEqual(int(d["ver"][0]), 2)
+		# self.assertGreaterEqual(int(d["ver"][0]), 2)
 
 	def test_listActiveSessions(self):
 		result=self._post( '/list-active-sessions', dict() )

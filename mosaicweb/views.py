@@ -178,21 +178,23 @@ def startAnalysis():
 		sessionID=params['sessionID']
 		session=gAnalysisSessions[sessionID]
 
+		ma=gAnalysisSessions.getSessionAttribute(sessionID, 'mosaicAnalysisObject')
+
 		try:
 			settingsString=params['settingsString'] 
 			gAnalysisSessions.addSettingsString(sessionID, settingsString)
+
+			ma.updateSettings(settingsString)
 		except KeyError:
 			pass
 
-		ma=gAnalysisSessions.getSessionAttribute(sessionID, 'mosaicAnalysisObject')
-		ma.updateSettings(settingsString)
 		ma.runAnalysis()
 
 		gAnalysisSessions.addDatabaseFile(sessionID, ma.dbFile)
 		gAnalysisSessions.addAnalysisRunningFlag(sessionID, ma.analysisStatus)
 		
 
-		return jsonify( respondingURL="start-analysis", analysisRunning=ma.analysisStatus), 200
+		return jsonify( respondingURL="start-analysis", analysisRunning=str(ma.analysisStatus)), 200
 	except (sessionManager.SessionNotFoundError, KeyError):
 		return jsonify( respondingURL='start-analysis', errType='MissingSIDError', errSummary="A valid session ID was not found.", errText="A valid session ID was not found." ), 500
 
@@ -211,7 +213,7 @@ def stopAnalysis():
 
 		gAnalysisSessions.addAnalysisRunningFlag(sessionID, ma.analysisStatus)
 
-		return jsonify( respondingURL="stop-analysis", analysisRunning=ma.analysisStatus, newDataAvailable=True ), 200
+		return jsonify( respondingURL="stop-analysis", analysisRunning=str(ma.analysisStatus), newDataAvailable="True" ), 200
 	except (sessionManager.SessionNotFoundError, KeyError):
 		return jsonify( respondingURL='stop-analysis', errType='MissingSIDError', errSummary="A valid session ID was not found.", errText="A valid session ID was not found." ), 500
 

@@ -55,10 +55,10 @@ class metaMDIO(object):
 
 		if not hasattr(self, 'dbPath'):
 			raise InsufficientArgumentsError("Missing arguments: 'dbPath' must be supplied to initialize {0}".format(type(self).__name__))
-		if not hasattr(self, 'colNames'):
-			raise InsufficientArgumentsError("Missing arguments: 'colNames' must be supplied to initialize {0}".format(type(self).__name__))
-		if not hasattr(self, 'colNames_t'):
-			raise InsufficientArgumentsError("Missing arguments: 'colNames_t' must be supplied to initialize {0}".format(type(self).__name__))
+		# if not hasattr(self, 'colNames'):
+		# 	raise InsufficientArgumentsError("Missing arguments: 'colNames' must be supplied to initialize {0}".format(type(self).__name__))
+		# if not hasattr(self, 'colNames_t'):
+		# 	raise InsufficientArgumentsError("Missing arguments: 'colNames_t' must be supplied to initialize {0}".format(type(self).__name__))
 
 		self._initdb(**kwargs)
 
