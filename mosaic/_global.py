@@ -13,4 +13,4 @@ DocumentationURL='https://pages.nist.gov/mosaic/'
 # Options for MOSAIC Web
 WebServerPort=5000
 WebServerDataLocation=os.path.expanduser('~')
-WebServerMode='remote'
+WebServerMode='local'
