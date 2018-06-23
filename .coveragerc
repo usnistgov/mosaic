@@ -18,7 +18,7 @@ omit=
 	mosaic/trajio/abfTrajIO.py 
 	mosaic/utilities/*.py
 	mosaic/_version.py
-	mosaic/apps/*.py
+	mosaic/apps/ConvertTrajIO.py
 	mosaic/errors.py
 	mosaic/filters/*.py
 	mosaic/trajio/abf/abf.py
