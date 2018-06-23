@@ -8,6 +8,7 @@ def _mosaicUnitTests(base):
         description = "run the MOSAIC unit test suite."
         user_options = [
                         ('algorithms','a', 'run algorithmic tests'),
+                        ('apps','p', 'run top-level application tests'),
                         ('segment','s', 'run time-series segmentation tests'),
                         ('dependencies', 'd', 'test MOSAIC dependency versions'),
                         ('modules', 'm', 'test MOSAIC modules'),
@@ -18,6 +19,7 @@ def _mosaicUnitTests(base):
 
         def initialize_options(self):
             self.algorithms=0
+            self.apps=0
             self.segment=0
             self.dependencies=0
             self.modules=0
@@ -36,6 +38,9 @@ def _mosaicUnitTests(base):
                 if self.algorithms:
                     mosaicUnitTests.log.debug("Running algorithm unit tests")
                     testList.extend(['mosaic/tests/adept2State_Test.py', 'mosaic/tests/adept_Test.py', 'mosaic/tests/cusum_Test.py'])
+                if self.apps:
+                    mosaicUnitTests.log.debug("Running top-level applications unit tests")
+                    testList.extend(['mosaic/tests/apps_Test.py'])
                 if self.segment:
                     mosaicUnitTests.log.debug("Running event segmentation unit tests")
                     testList.extend(['mosaic/tests/eventPartition_Test.py', 'mosaic/tests/eventPartitionParallel_Test.py'])
