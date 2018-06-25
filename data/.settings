@@ -5,7 +5,7 @@
         "Cfb": 1.07e-12, 
         "dcOffset": 0, 
         "filter": "*.qdf", 
-        "Rfb": 9100000000
+        "Rfb": 9100000000.0
     }, 
     "adept2State": {
         "FitTol": "1.e-7", 
