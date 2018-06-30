@@ -3,7 +3,7 @@
 .. image:: https://badge.fury.io/gh/usnistgov%2Fmosaic.svg
     :target: https://badge.fury.io/gh/usnistgov%2Fmosaic
 .. image:: https://codecov.io/gh/usnistgov/mosaic/branch/devel-2.0/graph/badge.svg
-  :target: https://codecov.io/gh/usnistov/mosaic   
+  :target: https://codecov.io/gh/usnistgov/mosaic  
   
 MOSAIC: A modular single-molecule analysis interface
 =================================
