@@ -37,6 +37,12 @@ angular.module('mosaicApp')
 				})
 				.then(function(response, status) {
 					factory.eventViewPlot=response.data.eventViewPlot;
+					
+					factory.eventViewPlot.layout.autosize=(response.data.eventViewPlot.layout.autosize.toUpperCase() === 'TRUE');
+					factory.eventViewPlot.layout.showlegend=(response.data.eventViewPlot.layout.showlegend.toUpperCase() === 'TRUE');
+
+					factory.eventViewPlot.options.displayLogo=(response.data.eventViewPlot.options.displayLogo.toUpperCase() === 'TRUE');
+
 					factory.eventNumber=response.data.eventNumber;
 					factory.recordCount=response.data.recordCount;
 					factory.errorText=response.data.errorText;
