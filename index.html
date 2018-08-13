@@ -20,7 +20,27 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/0.10.0/angular-material.min.css">
 
-    <link rel="stylesheet" href="assets/app.css"/>    
+    <link rel="stylesheet" href="assets/app.css"/>  
+    
+    <script type="application/ld+json">
+      {
+        "@context" : "http://schema.org",
+        "@type" : "SoftwareApplication",
+        "name" : "MOSAIC",
+        "image" : "https://pages.nist.gov/mosaic/assets/img/icon.png",
+        "author" : {
+          "@type" : "Person",
+          "name" : "Arvind Balijepalli"
+        },
+        "publisher" : {
+          "@type" : "Organization",
+          "name" : "National Institute of Standards and Technology"
+        },
+        "downloadUrl" : "https://pages.nist.gov/mosaic/download.html",
+        "screenshot" : "https://pages.nist.gov/mosaic/assets/img/GUI-01.png"
+      }
+    </script>
+
   </head>
 
   <body ng-app="mosaicApp" layout="row" ng-controller="AppCtrl">
