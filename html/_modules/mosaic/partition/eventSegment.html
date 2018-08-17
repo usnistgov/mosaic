@@ -151,6 +151,7 @@
 <span class="kn">from</span> <span class="nn">mosaic.utilities.resource_path</span> <span class="k">import</span> <span class="n">format_path</span>
 <span class="kn">import</span> <span class="nn">mosaic.utilities.mosaicLogging</span> <span class="k">as</span> <span class="nn">mlog</span>
 <span class="kn">from</span>  <span class="nn">collections</span> <span class="k">import</span> <span class="n">deque</span>
+<span class="kn">from</span> <span class="nn">mosaic</span> <span class="k">import</span> <span class="n">commonExceptions</span>
 <span class="kn">import</span> <span class="nn">metaEventPartition</span>
 
 <span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;eventSegment&quot;</span><span class="p">]</span>
@@ -222,8 +223,8 @@
 		<span class="bp">self</span><span class="o">.</span><span class="n">esLogger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span> <span class="s1">&#39;</span><span class="se">\t\t</span><span class="s1">Min. event rejection length = </span><span class="si">{0}</span><span class="s1"> points&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">minEventLength</span><span class="p">)</span> <span class="p">)</span>
 		<span class="bp">self</span><span class="o">.</span><span class="n">esLogger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span> <span class="s1">&#39;</span><span class="se">\t\t</span><span class="s1">Event trigger threshold = </span><span class="si">{0:5.2f}</span><span class="s1"> * SD&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">eventThreshold</span><span class="p">)</span> <span class="p">)</span>
 		<span class="bp">self</span><span class="o">.</span><span class="n">esLogger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span> <span class="s1">&#39;</span><span class="se">\t\t</span><span class="s1">Drift error threshold = </span><span class="si">{0}</span><span class="s1"> * SD&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">driftThreshold</span><span class="p">)</span> <span class="p">)</span>
-		<span class="bp">self</span><span class="o">.</span><span class="n">esLogger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span> <span class="s1">&#39;</span><span class="se">\t\t</span><span class="s1">Drift rate error threshold = </span><span class="si">{0}</span><span class="s1"> pA/s&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">maxDriftRate</span><span class="p">)</span> <span class="p">)</span>
-</div>
+		<span class="bp">self</span><span class="o">.</span><span class="n">esLogger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span> <span class="s1">&#39;</span><span class="se">\t\t</span><span class="s1">Drift rate error threshold = </span><span class="si">{0}</span><span class="s1"> pA/s&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">maxDriftRate</span><span class="p">)</span> <span class="p">)</span></div>
+
 
 <div class="viewcode-block" id="eventSegment.formatstats"><a class="viewcode-back" href="../../../api-doc/mosaic.partition.html#mosaic.partition.eventSegment.eventSegment.formatstats">[docs]</a>	<span class="k">def</span> <span class="nf">formatstats</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 		<span class="sd">&quot;&quot;&quot;</span>
@@ -238,8 +239,8 @@
 
 
 		<span class="bp">self</span><span class="o">.</span><span class="n">esLogger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\t\t</span><span class="s1">Open channel drift (max) = </span><span class="si">{0}</span><span class="s1"> * SD&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="nb">round</span><span class="p">((</span><span class="nb">abs</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">meanOpenCurr</span><span class="p">)</span><span class="o">-</span><span class="nb">abs</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">maxDrift</span><span class="p">))</span><span class="o">/</span><span class="bp">self</span><span class="o">.</span><span class="n">sdOpenCurr</span><span class="p">,</span><span class="mi">2</span><span class="p">))))</span>
-		<span class="bp">self</span><span class="o">.</span><span class="n">esLogger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\t\t</span><span class="s1">Open channel drift rate (min/max) = (</span><span class="si">{0}</span><span class="s1">/</span><span class="si">{1}</span><span class="s1">) pA/s&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">minDriftR</span><span class="p">,</span><span class="mi">2</span><span class="p">),</span> <span class="nb">round</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">maxDriftR</span><span class="p">)))</span>
-</div>
+		<span class="bp">self</span><span class="o">.</span><span class="n">esLogger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\t\t</span><span class="s1">Open channel drift rate (min/max) = (</span><span class="si">{0}</span><span class="s1">/</span><span class="si">{1}</span><span class="s1">) pA/s&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">minDriftR</span><span class="p">,</span><span class="mi">2</span><span class="p">),</span> <span class="nb">round</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">maxDriftR</span><span class="p">)))</span></div>
+
 <div class="viewcode-block" id="eventSegment.formatoutputfiles"><a class="viewcode-back" href="../../../api-doc/mosaic.partition.html#mosaic.partition.eventSegment.eventSegment.formatoutputfiles">[docs]</a>	<span class="k">def</span> <span class="nf">formatoutputfiles</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 		<span class="bp">self</span><span class="o">.</span><span class="n">esLogger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;[Output]&#39;</span><span class="p">)</span>
 		<span class="c1"># self.esLogger.info(&#39;\tOutput path = \&#39;{0}\&#39;&#39;.format(self.trajDataObj.datPath))</span>
@@ -247,8 +248,8 @@
 		<span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">writeEventTS</span><span class="p">:</span>
 			<span class="bp">self</span><span class="o">.</span><span class="n">esLogger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\t</span><span class="s1">Event time-series = ***enabled***&#39;</span><span class="p">)</span>
 		<span class="k">else</span><span class="p">:</span>
-			<span class="bp">self</span><span class="o">.</span><span class="n">esLogger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\t</span><span class="s1">Event time-series = ***disabled***&#39;</span><span class="p">)</span>
-</div>
+			<span class="bp">self</span><span class="o">.</span><span class="n">esLogger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\t</span><span class="s1">Event time-series = ***disabled***&#39;</span><span class="p">)</span></div>
+
 
 	<span class="c1">#################################################################</span>
 	<span class="c1"># Interface functions</span>
@@ -344,8 +345,8 @@
 	
 					<span class="bp">self</span><span class="o">.</span><span class="n">preeventdat</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
 		<span class="k">except</span> <span class="ne">IndexError</span><span class="p">:</span>
-			<span class="k">return</span>
-</div>
+			<span class="k">return</span></div>
+
 	<span class="c1"># def __roundufloat(self, uf):</span>
 	<span class="c1"># 	u=uncertainties</span>
 	<span class="c1"># 	return u.ufloat(( round( u.nominal_value(uf), 4), round( u.std_dev(uf), 4) ))</span>

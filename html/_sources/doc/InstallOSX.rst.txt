@@ -17,7 +17,7 @@ First we will install Homebrew, a useful package manager, to help install some o
 
 Note, if the Apple command line tools are not installed, Homebrew_ will prompt you do so during installation. 
 
-.. hint:: To test if Homebrew_ is properly installed, run the following in the terminal: ``brew doctor`` 
+.. hint:: To test if Homebrew is properly installed, run the following in the terminal: ``brew doctor`` 
 
 To ensure that Homebrew_ is set up correctly, add the Homebrew_ directory to ~/.bash_profile. This can be done using the following command:
 

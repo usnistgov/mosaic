@@ -16,20 +16,32 @@ angular
       $scope.exampleURL = $scope.baseURL+"/html/doc/examples.html"
       $scope.extendURL = $scope.baseURL+"/html/doc/Extend.html"
       $scope.addonURL = $scope.baseURL+"/html/doc/Addons.html"
-      $scope.guiURL = $scope.baseURL+"/html/doc/GraphicalInterface.html"
+      $scope.guiURL = $scope.baseURL+"/html/doc/WebInterface.html"
       $scope.developersURL = $scope.baseURL+"/html/doc/Developers.html"
       $scope.termsURL = $scope.baseURL+"/html/doc/Disclaimer.html"
-      $scope.contactURL = "http://www.nist.gov/cgi-bin/wwwph/cso.nist.gov?Query=Arvind+Balijepalli"
+      $scope.contactURL = "https://www.nist.gov/people/arvind-balijepalli"
 
       $scope.toggleLeft = buildToggler('left');
       $scope.toggleRight = buildToggler('right');
 
-      $scope.useCaseURL = generateUseCaseURL();
+      $scope.useCaseIMG = generateUseCaseIMG();
+      $scope.GUIIMG = generateGUIIMG();
       /**
        * Build handler to open/close a SideNav; when animation finishes
        * report completion in console
        */
-      function generateUseCaseURL() {
+      function generateGUIIMG() {
+        var imgs = Array(
+          "assets/img/GUI-01.png", 
+          "assets/img/GUI-02.png",
+          "assets/img/GUI-03.png",
+          "assets/img/GUI-04.png"
+          );
+        var img = imgs[Math.floor(Math.random()*imgs.length)];
+
+        return img 
+      }
+      function generateUseCaseIMG() {
         var imgs = Array("assets/img/UseCase-01.png", "assets/img/UseCase-02.png");
         var img = imgs[Math.floor(Math.random()*imgs.length)];
 

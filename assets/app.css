@@ -89,10 +89,10 @@ md-toolbar {
   padding-top: 30px;
 }
 
-#footer  {
+/*#footer  {
   padding-left: 0%;
   padding-right: 0%;
-}
+}*/
 
 
 #content .md-button.contact {
@@ -217,7 +217,7 @@ span.name {
 }
 
 p {
-  text-indent: 20px;
+  text-indent: 0px;
   color: #696969;
   font-family: 'Roboto', sans-serif;
   font-size: 16px;
@@ -304,16 +304,19 @@ h1 {
   font-weight: 300;
 }
 
-.page-footer a {
+/*.page-footer a {
   text-decoration: none;
 }
+*/
 
-.page-footer h2 {
+a.footer {
+  /*color: #696969;*/
+  color: #1F2B90;
   padding-top: 10px;
-  color: #696969;
+  padding-bottom: 20px;
+  font-size: 10pt;
   font-family: 'Roboto', sans-serif;
-  font-size:16px;
-  font-weight: 200; 
+  font-weight: 200;
 }
 
 .download-links h4 {

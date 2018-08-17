@@ -1,5 +1,0 @@
-<map id="inheritance24256f9782" name="inheritance24256f9782">
-<area shape="rect" id="node1" href="#mosaic.trajio.binTrajIO.InvalidDataColumnError" target="_top" title="binTrajIO.InvalidDataColumnError" alt="" coords="5,53,227,77"/>
-<area shape="rect" id="node2" href="#mosaic.trajio.binTrajIO.binTrajIO" target="_top" title="Read a file that contains interleaved binary data, ordered by column. Only a single " alt="" coords="275,5,409,29"/>
-<area shape="rect" id="node3" href="mosaic.meta.html#mosaic.trajio.metaTrajIO.metaTrajIO" target="_top" title=".. warning:: |metaclass|" alt="" coords="37,5,195,29"/>
-</map>

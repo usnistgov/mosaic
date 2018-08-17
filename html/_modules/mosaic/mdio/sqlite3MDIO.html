@@ -180,8 +180,8 @@
 
 <div class="viewcode-block" id="data_record.update"><a class="viewcode-back" href="../../../api-doc/mosaic.output.html#mosaic.mdio.sqlite3MDIO.data_record.update">[docs]</a>	<span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
 		<span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="nb">dict</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
-			<span class="bp">self</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">v</span>
-		</div></div>
+			<span class="bp">self</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">v</span></div></div>
+		
 <div class="viewcode-block" id="sqlite3MDIO"><a class="viewcode-back" href="../../../api-doc/mosaic.output.html#mosaic.mdio.sqlite3MDIO.sqlite3MDIO">[docs]</a><span class="k">class</span> <span class="nc">sqlite3MDIO</span><span class="p">(</span><span class="n">metaMDIO</span><span class="o">.</span><span class="n">metaMDIO</span><span class="p">):</span>
 	<span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">	&quot;&quot;&quot;</span>
@@ -197,11 +197,11 @@
 		<span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;tableName&#39;</span><span class="p">):</span>
 			<span class="bp">self</span><span class="o">.</span><span class="n">tableName</span><span class="o">=</span><span class="s1">&#39;metadata&#39;</span>
 		<span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;colNames&#39;</span><span class="p">):</span>
-			<span class="k">raise</span> <span class="n">metaMDIO</span><span class="o">.</span><span class="n">InsufficientArgumentsError</span><span class="p">(</span><span class="s2">&quot;Missing arguments: &#39;colNames&#39; must be supplied to initialize </span><span class="si">{0}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="p">))</span>
 			<span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;Missing arguments: &#39;colNames&#39; must be supplied to initialize </span><span class="si">{0}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="p">))</span>
+			<span class="k">raise</span> <span class="n">metaMDIO</span><span class="o">.</span><span class="n">InsufficientArgumentsError</span><span class="p">(</span><span class="s2">&quot;Missing arguments: &#39;colNames&#39; must be supplied to initialize </span><span class="si">{0}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="p">))</span>
 		<span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;colNames_t&#39;</span><span class="p">):</span>
-			<span class="k">raise</span> <span class="n">metaMDIO</span><span class="o">.</span><span class="n">InsufficientArgumentsError</span><span class="p">(</span><span class="s2">&quot;Missing arguments: &#39;colNames_t&#39; must be supplied to initialize </span><span class="si">{0}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="p">))</span>
 			<span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;Missing arguments: &#39;colNames_t&#39; must be supplied to initialize </span><span class="si">{0}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="p">))</span>
+			<span class="k">raise</span> <span class="n">metaMDIO</span><span class="o">.</span><span class="n">InsufficientArgumentsError</span><span class="p">(</span><span class="s2">&quot;Missing arguments: &#39;colNames_t&#39; must be supplied to initialize </span><span class="si">{0}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="p">))</span>
 
 		<span class="n">dbTimeout</span><span class="o">=</span><span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;timeout&#39;</span><span class="p">,</span> <span class="mf">11.0</span><span class="p">)</span>
 		<span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="n">_d</span><span class="p">(</span><span class="s2">&quot;DB Timeout = </span><span class="si">{0}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">dbTimeout</span><span class="p">))</span>
@@ -261,8 +261,8 @@
 
 <div class="viewcode-block" id="sqlite3MDIO.closeDB"><a class="viewcode-back" href="../../../api-doc/mosaic.output.html#mosaic.mdio.sqlite3MDIO.sqlite3MDIO.closeDB">[docs]</a>	<span class="k">def</span> <span class="nf">closeDB</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 		<span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
-		<span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
-		</div>
+		<span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">close</span><span class="p">()</span></div>
+		
 <div class="viewcode-block" id="sqlite3MDIO.writeRecord"><a class="viewcode-back" href="../../../api-doc/mosaic.output.html#mosaic.mdio.sqlite3MDIO.sqlite3MDIO.writeRecord">[docs]</a>	<span class="k">def</span> <span class="nf">writeRecord</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">table</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 		<span class="k">if</span> <span class="ow">not</span> <span class="n">table</span><span class="p">:</span>
 			<span class="n">tabname</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">tableName</span>
@@ -280,26 +280,26 @@
 						<span class="n">tabname</span> <span class="o">+</span> 
 						<span class="s1">&#39;(&#39;</span><span class="o">+</span><span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">cols</span><span class="p">)</span><span class="o">+</span><span class="s1">&#39;) VALUES(&#39;</span><span class="o">+</span>
 						<span class="n">placeholders_list</span><span class="o">+</span><span class="s1">&#39;)&#39;</span><span class="p">,</span> <span class="n">datalist</span>
-					<span class="p">)</span>
-</div>
+					<span class="p">)</span></div>
+
 
 <div class="viewcode-block" id="sqlite3MDIO.writeSettings"><a class="viewcode-back" href="../../../api-doc/mosaic.output.html#mosaic.mdio.sqlite3MDIO.sqlite3MDIO.writeSettings">[docs]</a>	<span class="k">def</span> <span class="nf">writeSettings</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">settingsstring</span><span class="p">):</span>
 		<span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="p">:</span>
-			<span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span> <span class="s1">&#39;INSERT INTO analysissettings VALUES(?, ?)&#39;</span><span class="p">,</span> <span class="p">(</span><span class="n">settingsstring</span><span class="p">,</span> <span class="kc">None</span><span class="p">,)</span> <span class="p">)</span>
-</div>
+			<span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span> <span class="s1">&#39;INSERT INTO analysissettings VALUES(?, ?)&#39;</span><span class="p">,</span> <span class="p">(</span><span class="n">settingsstring</span><span class="p">,</span> <span class="kc">None</span><span class="p">,)</span> <span class="p">)</span></div>
+
 <div class="viewcode-block" id="sqlite3MDIO.writeAnalysisInfo"><a class="viewcode-back" href="../../../api-doc/mosaic.output.html#mosaic.mdio.sqlite3MDIO.sqlite3MDIO.writeAnalysisInfo">[docs]</a>	<span class="k">def</span> <span class="nf">writeAnalysisInfo</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">infolist</span><span class="p">):</span>
 		<span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="p">:</span>
 			<span class="c1"># allow only one entry in this table</span>
 			<span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s1">&#39;DELETE FROM analysisinfo&#39;</span><span class="p">)</span>
-			<span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span> <span class="s1">&#39;INSERT INTO analysisinfo VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)&#39;</span><span class="p">,</span>  <span class="p">(</span><span class="n">infolist</span><span class="o">+</span><span class="p">[</span><span class="n">mosaic</span><span class="o">.</span><span class="n">__version__</span><span class="p">,</span> <span class="n">mosaic</span><span class="o">.</span><span class="n">__build__</span><span class="p">,</span> <span class="kc">None</span><span class="p">]))</span>
-</div>
+			<span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span> <span class="s1">&#39;INSERT INTO analysisinfo VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)&#39;</span><span class="p">,</span>  <span class="p">(</span><span class="n">infolist</span><span class="o">+</span><span class="p">[</span><span class="n">mosaic</span><span class="o">.</span><span class="n">__version__</span><span class="p">,</span> <span class="n">mosaic</span><span class="o">.</span><span class="n">__build__</span><span class="p">,</span> <span class="kc">None</span><span class="p">]))</span></div>
+
 
 <div class="viewcode-block" id="sqlite3MDIO.writeAnalysisLog"><a class="viewcode-back" href="../../../api-doc/mosaic.output.html#mosaic.mdio.sqlite3MDIO.sqlite3MDIO.writeAnalysisLog">[docs]</a>	<span class="k">def</span> <span class="nf">writeAnalysisLog</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">analysislog</span><span class="p">):</span>
 		<span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="p">:</span>
 			<span class="c1"># first delete any old records because we want analysis log to only have one entry.</span>
 			<span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s1">&#39;DELETE FROM analysislog&#39;</span><span class="p">)</span>
-			<span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span> <span class="s1">&#39;INSERT INTO analysislog VALUES(?, ?)&#39;</span><span class="p">,</span> <span class="p">(</span><span class="n">analysislog</span><span class="p">,</span> <span class="kc">None</span><span class="p">,)</span> <span class="p">)</span>
-</div>
+			<span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span> <span class="s1">&#39;INSERT INTO analysislog VALUES(?, ?)&#39;</span><span class="p">,</span> <span class="p">(</span><span class="n">analysislog</span><span class="p">,</span> <span class="kc">None</span><span class="p">,)</span> <span class="p">)</span></div>
+
 <div class="viewcode-block" id="sqlite3MDIO.readSettings"><a class="viewcode-back" href="../../../api-doc/mosaic.output.html#mosaic.mdio.sqlite3MDIO.sqlite3MDIO.readSettings">[docs]</a>	<span class="k">def</span> <span class="nf">readSettings</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 		<span class="k">try</span><span class="p">:</span>
 			<span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
@@ -311,8 +311,8 @@
 			<span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="n">settstr</span><span class="p">[</span><span class="mi">0</span><span class="p">])[</span><span class="mi">0</span><span class="p">]</span>
 			<span class="c1"># return base64.b64decode(list(settstr[0])[0])</span>
 		<span class="k">except</span> <span class="n">sqlite3</span><span class="o">.</span><span class="n">OperationalError</span><span class="p">,</span> <span class="n">err</span><span class="p">:</span>
-			<span class="k">raise</span>
-		</div>
+			<span class="k">raise</span></div>
+		
 <div class="viewcode-block" id="sqlite3MDIO.readAnalysisLog"><a class="viewcode-back" href="../../../api-doc/mosaic.output.html#mosaic.mdio.sqlite3MDIO.sqlite3MDIO.readAnalysisLog">[docs]</a>	<span class="k">def</span> <span class="nf">readAnalysisLog</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 		<span class="k">try</span><span class="p">:</span>
 			<span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
@@ -327,8 +327,8 @@
 				<span class="k">return</span> <span class="s2">&quot;&quot;</span>
 			<span class="c1"># return base64.b64decode(list(settstr[0])[0])</span>
 		<span class="k">except</span> <span class="n">sqlite3</span><span class="o">.</span><span class="n">OperationalError</span><span class="p">,</span> <span class="n">err</span><span class="p">:</span>
-			<span class="k">raise</span>
-</div>
+			<span class="k">raise</span></div>
+
 
 <div class="viewcode-block" id="sqlite3MDIO.readAnalysisInfo"><a class="viewcode-back" href="../../../api-doc/mosaic.output.html#mosaic.mdio.sqlite3MDIO.sqlite3MDIO.readAnalysisInfo">[docs]</a>	<span class="k">def</span> <span class="nf">readAnalysisInfo</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 		<span class="k">try</span><span class="p">:</span>
@@ -347,8 +347,8 @@
 
 			<span class="k">return</span> <span class="n">infodict</span>
 		<span class="k">except</span> <span class="n">sqlite3</span><span class="o">.</span><span class="n">OperationalError</span><span class="p">,</span> <span class="n">err</span><span class="p">:</span>
-			<span class="k">raise</span>
-</div>
+			<span class="k">raise</span></div>
+
 
 	<span class="k">def</span> <span class="nf">rawQuery</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">query</span><span class="p">):</span>
 		<span class="k">try</span><span class="p">:</span>
@@ -377,8 +377,8 @@
 		
 			<span class="k">return</span> <span class="p">[</span> <span class="bp">self</span><span class="o">.</span><span class="n">_decoderecord</span><span class="p">(</span><span class="n">colnames</span><span class="p">,</span> <span class="n">colnames_t</span><span class="p">,</span> <span class="n">rec</span><span class="p">)</span> <span class="k">for</span> <span class="n">rec</span> <span class="ow">in</span> <span class="n">c</span><span class="o">.</span><span class="n">fetchall</span><span class="p">()</span> <span class="p">]</span>
 		<span class="k">except</span> <span class="n">sqlite3</span><span class="o">.</span><span class="n">OperationalError</span><span class="p">,</span> <span class="n">err</span><span class="p">:</span>
-			<span class="k">raise</span>
-</div>
+			<span class="k">raise</span></div>
+
 	<span class="k">def</span> <span class="nf">executeSQL</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">query</span><span class="p">):</span>
 		<span class="k">try</span><span class="p">:</span>
 			<span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
@@ -397,15 +397,15 @@
 		<span class="n">df</span><span class="o">=</span><span class="n">pandas</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">queryDB</span><span class="p">(</span><span class="n">query</span><span class="p">),</span> <span class="n">columns</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_col_names</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">cursor</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">tableName</span><span class="p">))</span>
 		<span class="n">df</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span> <span class="n">csvfile</span> <span class="p">)</span>
 
-		<span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="n">_d</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{0}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">csvfile</span><span class="p">))</span>
-</div>
+		<span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="n">_d</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{0}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">csvfile</span><span class="p">))</span></div>
+
 <div class="viewcode-block" id="sqlite3MDIO.csvString"><a class="viewcode-back" href="../../../api-doc/mosaic.output.html#mosaic.mdio.sqlite3MDIO.sqlite3MDIO.csvString">[docs]</a>	<span class="k">def</span> <span class="nf">csvString</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">query</span><span class="p">):</span>
 		<span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">			Return database records that match the specified query as a CSV formatted string.</span>
 <span class="sd">		&quot;&quot;&quot;</span>
 		<span class="n">df</span><span class="o">=</span><span class="n">pandas</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">queryDB</span><span class="p">(</span><span class="n">query</span><span class="p">),</span> <span class="n">columns</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_col_names</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">cursor</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">tableName</span><span class="p">))</span>
-		<span class="k">return</span> <span class="n">df</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span> <span class="n">path_or_buf</span><span class="o">=</span><span class="kc">None</span> <span class="p">)</span>
-</div>
+		<span class="k">return</span> <span class="n">df</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span> <span class="n">path_or_buf</span><span class="o">=</span><span class="kc">None</span> <span class="p">)</span></div>
+
 	<span class="k">def</span> <span class="nf">_colnames</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">table</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 		<span class="k">if</span> <span class="n">table</span><span class="p">:</span>
 			<span class="n">tname</span><span class="o">=</span><span class="n">table</span>
@@ -524,9 +524,9 @@
 		
 	<span class="k">def</span> <span class="nf">_decoderecord</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">colnames</span><span class="p">,</span> <span class="n">colnames_t</span><span class="p">,</span> <span class="n">rec</span><span class="p">):</span>
 		<span class="n">d</span><span class="o">=</span><span class="n">data_record</span><span class="p">(</span> <span class="n">colnames</span><span class="p">,</span> <span class="n">rec</span><span class="p">,</span> <span class="n">colnames_t</span> <span class="p">)</span>
-		<span class="k">return</span> <span class="p">[</span> <span class="n">d</span><span class="p">[</span><span class="n">col</span><span class="p">]</span> <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">colnames</span> <span class="p">]</span>
-</div>
-<span class="k">if</span> <span class="vm">__name__</span><span class="o">==</span><span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+		<span class="k">return</span> <span class="p">[</span> <span class="n">d</span><span class="p">[</span><span class="n">col</span><span class="p">]</span> <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">colnames</span> <span class="p">]</span></div>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
 	<span class="k">try</span><span class="p">:</span>
 		<span class="n">c</span><span class="o">=</span><span class="n">sqlite3MDIO</span><span class="p">()</span>
 		<span class="n">c</span><span class="o">.</span><span class="n">openDB</span><span class="p">(</span><span class="n">resource_path</span><span class="p">(</span><span class="s1">&#39;data/eventMD-PEG28-ADEPT2State.sqlite&#39;</span><span class="p">))</span>

@@ -310,9 +310,9 @@ latex_elements = {
     
     \authoraddress{\Large Questions/Suggestions\\
     \\
-    \small Subscribe to our mailing list: email \href{mailto:mosaic-request@nist.gov?subject=subscribe}{mosaic-request@nist.gov} with subject \textit{subscribe}\\
-    Once subscribed, send messages by emailing \href{mailto:mosaic@nist.gov}{mosaic@nist.gov}.\\
-    The list archive can be found at: \href[pdfnewwindow=true]{http://news.gmane.org/gmane.comp.python.mosaic}{http://news.gmane.org/gmane.comp.python.mosaic}\\
+    \small Subscribe to our mailing list: visit \href{https://groups.google.com/a/list.nist.gov/group/mosaic/}{https://groups.google.com/a/list.nist.gov/group/mosaic/}.\\
+    Once subscribed, send messages by emailing \href{mailto:mosaic@list.nist.gov}{mosaic@list.nist.gov}.\\
+    To unsubscribe: email \href{mailto:mosaic+unsubscribe@list.nist.gov}{mosaic+unsubscribe@list.nist.gov}.\\
     \\
     \\
     Report problems with MOSAIC using the issue tracker on GitHub\\

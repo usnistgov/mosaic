@@ -169,13 +169,13 @@
 
 		<span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;dbPath&#39;</span><span class="p">):</span>
 			<span class="k">raise</span> <span class="n">InsufficientArgumentsError</span><span class="p">(</span><span class="s2">&quot;Missing arguments: &#39;dbPath&#39; must be supplied to initialize </span><span class="si">{0}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="p">))</span>
-		<span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;colNames&#39;</span><span class="p">):</span>
-			<span class="k">raise</span> <span class="n">InsufficientArgumentsError</span><span class="p">(</span><span class="s2">&quot;Missing arguments: &#39;colNames&#39; must be supplied to initialize </span><span class="si">{0}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="p">))</span>
-		<span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;colNames_t&#39;</span><span class="p">):</span>
-			<span class="k">raise</span> <span class="n">InsufficientArgumentsError</span><span class="p">(</span><span class="s2">&quot;Missing arguments: &#39;colNames_t&#39; must be supplied to initialize </span><span class="si">{0}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="p">))</span>
+		<span class="c1"># if not hasattr(self, &#39;colNames&#39;):</span>
+		<span class="c1"># 	raise InsufficientArgumentsError(&quot;Missing arguments: &#39;colNames&#39; must be supplied to initialize {0}&quot;.format(type(self).__name__))</span>
+		<span class="c1"># if not hasattr(self, &#39;colNames_t&#39;):</span>
+		<span class="c1"># 	raise InsufficientArgumentsError(&quot;Missing arguments: &#39;colNames_t&#39; must be supplied to initialize {0}&quot;.format(type(self).__name__))</span>
 
-		<span class="bp">self</span><span class="o">.</span><span class="n">_initdb</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-</div>
+		<span class="bp">self</span><span class="o">.</span><span class="n">_initdb</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+
 <div class="viewcode-block" id="metaMDIO.openDB"><a class="viewcode-back" href="../../../api-doc/mosaic.meta.html#mosaic.mdio.metaMDIO.metaMDIO.openDB">[docs]</a>	<span class="k">def</span> <span class="nf">openDB</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dbname</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
 		<span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">			Open an existing database file.</span>
@@ -185,8 +185,8 @@
 
 <span class="sd">			.. seealso:: The arguments passed to init change based on the method of file IO selected, in addition to the common args.</span>
 <span class="sd">		&quot;&quot;&quot;</span>
-		<span class="bp">self</span><span class="o">.</span><span class="n">_opendb</span><span class="p">(</span><span class="n">dbname</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-</div>
+		<span class="bp">self</span><span class="o">.</span><span class="n">_opendb</span><span class="p">(</span><span class="n">dbname</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+
 	<span class="nd">@abstractmethod</span>
 	<span class="k">def</span> <span class="nf">_dbfile</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 		<span class="sd">&quot;&quot;&quot;</span>
@@ -201,22 +201,22 @@
 		<span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">			.. important:: |abstractmethod|</span>
 <span class="sd">		&quot;&quot;&quot;</span>
-		<span class="k">pass</span>
-</div>
+		<span class="k">pass</span></div>
+
 <div class="viewcode-block" id="metaMDIO._initdb"><a class="viewcode-back" href="../../../api-doc/mosaic.meta.html#mosaic.mdio.metaMDIO.metaMDIO._initdb">[docs]</a>	<span class="nd">@abstractmethod</span>
 	<span class="k">def</span> <span class="nf">_initdb</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
 		<span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">			.. important:: |abstractmethod|</span>
 <span class="sd">		&quot;&quot;&quot;</span>
-		<span class="k">pass</span>
-</div>
+		<span class="k">pass</span></div>
+
 <div class="viewcode-block" id="metaMDIO.closeDB"><a class="viewcode-back" href="../../../api-doc/mosaic.meta.html#mosaic.mdio.metaMDIO.metaMDIO.closeDB">[docs]</a>	<span class="nd">@abstractmethod</span>
 	<span class="k">def</span> <span class="nf">closeDB</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 		<span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">			.. important:: |abstractmethod|</span>
 <span class="sd">		&quot;&quot;&quot;</span>
-		<span class="k">pass</span>
-</div>
+		<span class="k">pass</span></div>
+
 <div class="viewcode-block" id="metaMDIO.writeRecord"><a class="viewcode-back" href="../../../api-doc/mosaic.meta.html#mosaic.mdio.metaMDIO.metaMDIO.writeRecord">[docs]</a>	<span class="nd">@abstractmethod</span>
 	<span class="k">def</span> <span class="nf">writeRecord</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">table</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 		<span class="sd">&quot;&quot;&quot;</span>
@@ -226,8 +226,8 @@
 <span class="sd">			is None. In this case sub-classes should fall back </span>
 <span class="sd">			to writing data to a default table.</span>
 <span class="sd">		&quot;&quot;&quot;</span>
-		<span class="k">pass</span>
-</div>
+		<span class="k">pass</span></div>
+
 <div class="viewcode-block" id="metaMDIO.writeSettings"><a class="viewcode-back" href="../../../api-doc/mosaic.meta.html#mosaic.mdio.metaMDIO.metaMDIO.writeSettings">[docs]</a>	<span class="nd">@abstractmethod</span>
 	<span class="k">def</span> <span class="nf">writeSettings</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">settingsstring</span><span class="p">):</span>
 		<span class="sd">&quot;&quot;&quot;</span>
@@ -238,8 +238,8 @@
 <span class="sd">			:Args:</span>
 <span class="sd">				- `settingsstring` : a JSON_ formatted settings string.</span>
 <span class="sd">		&quot;&quot;&quot;</span>
-		<span class="k">pass</span>
-</div>
+		<span class="k">pass</span></div>
+
 <div class="viewcode-block" id="metaMDIO.writeAnalysisLog"><a class="viewcode-back" href="../../../api-doc/mosaic.meta.html#mosaic.mdio.metaMDIO.metaMDIO.writeAnalysisLog">[docs]</a>	<span class="nd">@abstractmethod</span>
 	<span class="k">def</span> <span class="nf">writeAnalysisLog</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">analysislog</span><span class="p">):</span>
 		<span class="sd">&quot;&quot;&quot;</span>
@@ -250,8 +250,8 @@
 <span class="sd">			:Args:</span>
 <span class="sd">				- `analysislog` :	analysis log string to save</span>
 <span class="sd">		&quot;&quot;&quot;</span>
-		<span class="k">pass</span>
-</div>
+		<span class="k">pass</span></div>
+
 <div class="viewcode-block" id="metaMDIO.writeAnalysisInfo"><a class="viewcode-back" href="../../../api-doc/mosaic.meta.html#mosaic.mdio.metaMDIO.metaMDIO.writeAnalysisInfo">[docs]</a>	<span class="nd">@abstractmethod</span>
 	<span class="k">def</span> <span class="nf">writeAnalysisInfo</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">infolist</span><span class="p">):</span>
 		<span class="sd">&quot;&quot;&quot;</span>
@@ -271,8 +271,8 @@
 <span class="sd">								</span>
 <span class="sd">								`filteringAlgorithm`	: name of filtering algorithm (e.g. waveletDenoiseFilter) or None if no filtering was performed.</span>
 <span class="sd">		&quot;&quot;&quot;</span>
-		<span class="k">pass</span>
-</div>
+		<span class="k">pass</span></div>
+
 <div class="viewcode-block" id="metaMDIO.readSettings"><a class="viewcode-back" href="../../../api-doc/mosaic.meta.html#mosaic.mdio.metaMDIO.metaMDIO.readSettings">[docs]</a>	<span class="nd">@abstractmethod</span>
 	<span class="k">def</span> <span class="nf">readSettings</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 		<span class="sd">&quot;&quot;&quot;</span>
@@ -280,8 +280,8 @@
 
 <span class="sd">			Read JSON settings from the database.</span>
 <span class="sd">		&quot;&quot;&quot;</span>
-		<span class="k">pass</span>
-</div>
+		<span class="k">pass</span></div>
+
 <div class="viewcode-block" id="metaMDIO.readAnalysisLog"><a class="viewcode-back" href="../../../api-doc/mosaic.meta.html#mosaic.mdio.metaMDIO.metaMDIO.readAnalysisLog">[docs]</a>	<span class="nd">@abstractmethod</span>
 	<span class="k">def</span> <span class="nf">readAnalysisLog</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 		<span class="sd">&quot;&quot;&quot;</span>
@@ -289,8 +289,8 @@
 
 <span class="sd">			Read the analysis log from the database.</span>
 <span class="sd">		&quot;&quot;&quot;</span>
-		<span class="k">pass</span>
-</div>
+		<span class="k">pass</span></div>
+
 <div class="viewcode-block" id="metaMDIO.readAnalysisInfo"><a class="viewcode-back" href="../../../api-doc/mosaic.meta.html#mosaic.mdio.metaMDIO.metaMDIO.readAnalysisInfo">[docs]</a>	<span class="nd">@abstractmethod</span>
 	<span class="k">def</span> <span class="nf">readAnalysisInfo</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 		<span class="sd">&quot;&quot;&quot;</span>
@@ -298,15 +298,15 @@
 
 <span class="sd">			Read analysis information from the database.</span>
 <span class="sd">		&quot;&quot;&quot;</span>
-		<span class="k">pass</span>
-</div>
+		<span class="k">pass</span></div>
+
 <div class="viewcode-block" id="metaMDIO._colnames"><a class="viewcode-back" href="../../../api-doc/mosaic.meta.html#mosaic.mdio.metaMDIO.metaMDIO._colnames">[docs]</a>	<span class="nd">@abstractmethod</span>
 	<span class="k">def</span> <span class="nf">_colnames</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">table</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 		<span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">			.. important:: |abstractmethod|</span>
 <span class="sd">		&quot;&quot;&quot;</span>
-		<span class="k">pass</span>
-</div>
+		<span class="k">pass</span></div>
+
 	<span class="nd">@abstractmethod</span>
 	<span class="k">def</span> <span class="nf">_coltypes</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">table</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 		<span class="sd">&quot;&quot;&quot;</span>
@@ -325,8 +325,8 @@
 
 <span class="sd">			.. seealso:: See specific implementations of metaMDIO for query syntax.</span>
 <span class="sd">		&quot;&quot;&quot;</span>
-		<span class="k">pass</span>
-</div>
+		<span class="k">pass</span></div>
+
 	<span class="nd">@mosaic_property</span> 
 	<span class="k">def</span> <span class="nf">mdColumnNames</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 		<span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_colnames</span><span class="p">()</span>
@@ -340,8 +340,8 @@
 		<span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dbfile</span><span class="p">()</span>
 		
 	<span class="k">def</span> <span class="nf">_generateRecordKey</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-		<span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">timingObj</span><span class="o">.</span><span class="n">time</span><span class="p">()</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">pid</span><span class="p">)</span>
-</div>
+		<span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">timingObj</span><span class="o">.</span><span class="n">time</span><span class="p">()</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">pid</span><span class="p">)</span></div>
+
 
 </pre></div>
 

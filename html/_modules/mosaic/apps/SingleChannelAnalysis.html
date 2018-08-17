@@ -214,8 +214,8 @@
 				<span class="bp">self</span><span class="o">.</span><span class="n">subProc</span><span class="o">.</span><span class="n">terminate</span><span class="p">()</span>
 				<span class="bp">self</span><span class="o">.</span><span class="n">subProc</span><span class="o">.</span><span class="n">join</span><span class="p">()</span>
 		<span class="k">else</span><span class="p">:</span>
-			<span class="n">run_eventpartition</span><span class="p">(</span> <span class="bp">self</span><span class="o">.</span><span class="n">dataPath</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">trajDataHnd</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">dataFilterHnd</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">eventPartitionHnd</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">eventProcHnd</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">dbFilename</span><span class="p">,</span> <span class="p">)</span>
-</div>
+			<span class="n">run_eventpartition</span><span class="p">(</span> <span class="bp">self</span><span class="o">.</span><span class="n">dataPath</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">trajDataHnd</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">dataFilterHnd</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">eventPartitionHnd</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">eventProcHnd</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">dbFilename</span><span class="p">,</span> <span class="p">)</span></div>
+
 <div class="viewcode-block" id="SingleChannelAnalysis.Stop"><a class="viewcode-back" href="../../../api-doc/mosaic.html#mosaic.apps.SingleChannelAnalysis.SingleChannelAnalysis.Stop">[docs]</a>	<span class="nd">@registerStop</span><span class="p">(</span><span class="s2">&quot;core&quot;</span><span class="p">)</span>
 	<span class="k">def</span> <span class="nf">Stop</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 		<span class="sd">&quot;&quot;&quot;</span>
@@ -224,12 +224,7 @@
 		<span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">subProc</span><span class="p">:</span>
 			<span class="n">os</span><span class="o">.</span><span class="n">kill</span><span class="p">(</span> <span class="bp">self</span><span class="o">.</span><span class="n">subProc</span><span class="o">.</span><span class="n">pid</span><span class="p">,</span> <span class="n">signal</span><span class="o">.</span><span class="n">SIGINT</span> <span class="p">)</span>
 		<span class="k">else</span><span class="p">:</span>
-			<span class="n">os</span><span class="o">.</span><span class="n">kill</span><span class="p">(</span> <span class="n">os</span><span class="o">.</span><span class="n">getpid</span><span class="p">(),</span> <span class="n">signal</span><span class="o">.</span><span class="n">SIGINT</span> <span class="p">)</span>
-</div>
-	<span class="nd">@property</span> 
-	<span class="k">def</span> <span class="nf">DataPath</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-		<span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">trajDataObj</span><span class="o">.</span><span class="n">datPath</span>
-</div>
+			<span class="n">os</span><span class="o">.</span><span class="n">kill</span><span class="p">(</span> <span class="n">os</span><span class="o">.</span><span class="n">getpid</span><span class="p">(),</span> <span class="n">signal</span><span class="o">.</span><span class="n">SIGINT</span> <span class="p">)</span></div></div>
 </pre></div>
 
     </div>

@@ -249,3 +249,19 @@ a.internal, .xref, .py, .py-class, .docutils, .literal {
 	font-family: Roboto, sans-serif;
 	font-weight: 300;
 }
+div.hint {
+	background-color: #B3E5FC;
+}
+div.warning {
+	background-color: #FFE0B2;
+}
+div.important {
+	background-color: #ffcdd2;
+}
+div.seealso {
+	background-color: #E0E0E0;
+}
+.std-ref {
+	font-weight: 300;
+	color: black;
+}

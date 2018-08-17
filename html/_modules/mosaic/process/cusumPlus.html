@@ -144,8 +144,8 @@
 <span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;cusumPlus&quot;</span><span class="p">,</span> <span class="s2">&quot;InvalidEvent&quot;</span><span class="p">]</span>
 
 <div class="viewcode-block" id="InvalidEvent"><a class="viewcode-back" href="../../../api-doc/mosaic.processing.html#mosaic.process.cusumPlus.InvalidEvent">[docs]</a><span class="k">class</span> <span class="nc">InvalidEvent</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
-	<span class="k">pass</span>
-</div>
+	<span class="k">pass</span></div>
+
 
 <span class="k">class</span> <span class="nc">datblock</span><span class="p">:</span>
 	<span class="sd">&quot;&quot;&quot;</span>
@@ -308,8 +308,8 @@
 <span class="sd">			Return a list of meta-data properties that will be averaged </span>
 <span class="sd">			and displayed at the end of a run. </span>
 <span class="sd">		&quot;&quot;&quot;</span>
-		<span class="k">pass</span>
-</div>
+		<span class="k">pass</span></div>
+
 <div class="viewcode-block" id="cusumPlus.formatsettings"><a class="viewcode-back" href="../../../api-doc/mosaic.processing.html#mosaic.process.cusumPlus.cusumPlus.formatsettings">[docs]</a>	<span class="k">def</span> <span class="nf">formatsettings</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 		<span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">			Return a formatted string of settings for display</span>
@@ -320,8 +320,8 @@
 		<span class="bp">self</span><span class="o">.</span><span class="n">cusumLogger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span> <span class="s1">&#39;</span><span class="se">\t\t</span><span class="s1">Jump Size  = </span><span class="si">{0}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">StepSize</span><span class="p">)</span> <span class="p">)</span>
 		<span class="bp">self</span><span class="o">.</span><span class="n">cusumLogger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span> <span class="s1">&#39;</span><span class="se">\t\t</span><span class="s1">Min. State Length  = </span><span class="si">{0}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">MinLength</span><span class="p">)</span> <span class="p">)</span>
 		<span class="bp">self</span><span class="o">.</span><span class="n">cusumLogger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span> <span class="s1">&#39;</span><span class="se">\t\t</span><span class="s1">Min. Threshold  = </span><span class="si">{0}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">MinThreshold</span><span class="p">)</span> <span class="p">)</span>
-		<span class="bp">self</span><span class="o">.</span><span class="n">cusumLogger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span> <span class="s1">&#39;</span><span class="se">\t\t</span><span class="s1">Max. Threshold  = </span><span class="si">{0}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">MaxThreshold</span><span class="p">)</span> <span class="p">)</span>
-</div>
+		<span class="bp">self</span><span class="o">.</span><span class="n">cusumLogger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span> <span class="s1">&#39;</span><span class="se">\t\t</span><span class="s1">Max. Threshold  = </span><span class="si">{0}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">MaxThreshold</span><span class="p">)</span> <span class="p">)</span></div>
+
 
 	<span class="c1">###########################################################################</span>
 	<span class="c1"># Local functions</span>
@@ -419,7 +419,7 @@
                                 <span class="n">minstepflag</span> <span class="o">=</span> <span class="mi">0</span>
                                 <span class="k">while</span> <span class="n">minstepflag</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
                                         <span class="n">minstepflag</span> <span class="o">=</span> <span class="mi">1</span>
-                                        <span class="n">currentlevels</span> <span class="o">=</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">average</span><span class="p">(</span><span class="n">edat</span><span class="p">[</span><span class="n">edges</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">MinLength</span><span class="p">:</span><span class="n">edges</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">]])</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">nStates</span><span class="p">)]</span> <span class="c1">#detect current levels during detected sub-events</span>
+                                        <span class="n">currentlevels</span> <span class="o">=</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">average</span><span class="p">(</span><span class="n">edat</span><span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">edges</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">MinLength</span><span class="p">):</span><span class="nb">int</span><span class="p">(</span><span class="n">edges</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">])])</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">nStates</span><span class="p">)]</span> <span class="c1">#detect current levels during detected sub-events</span>
                                         <span class="n">toosmall</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">absolute</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">diff</span><span class="p">(</span><span class="n">currentlevels</span><span class="p">))</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">StepSize</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">baseSD</span><span class="o">/</span><span class="mi">2</span>
                                         <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">toosmall</span><span class="p">)):</span>
                                                 <span class="k">if</span> <span class="n">toosmall</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="kc">True</span><span class="p">:</span>
@@ -472,8 +472,8 @@
 
 
 			<span class="k">if</span> <span class="n">math</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">mdOpenChCurrent</span><span class="p">):</span>
-				<span class="bp">self</span><span class="o">.</span><span class="n">rejectEvent</span><span class="p">(</span><span class="s1">&#39;eInvalidOpenChCurr&#39;</span><span class="p">)</span>
-</pre></div></div>
+				<span class="bp">self</span><span class="o">.</span><span class="n">rejectEvent</span><span class="p">(</span><span class="s1">&#39;eInvalidOpenChCurr&#39;</span><span class="p">)</span></div>
+</pre></div>
 
     </div>
       

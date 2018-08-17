@@ -5,7 +5,7 @@ def GenerateTitle():
   return """
     <div flex layout="column" tabIndex="-1" role="main" class="md-whiteframe-z3">
 
-      <md-toolbar ng-controller="AppCtrl" layout="row" hide-sm class="md-toolbar-tools md-toolbar-tools-center md-medium-tall md-whiteframe-z2">
+      <md-toolbar ng-controller="AppCtrl" layout="row" hide-sm class="md-toolbar-tools md-toolbar-tools-center md-medium-tall md-whiteframe-z2" style="background-color: white;">
         <a href="index.html" style="padding-top: 15px; padding-left: 25px;"><md-icon md-font-set="material-icons md-24">arrow_back</md-icon></img></a>
         <span flex></span>
         <md-button ng-href="{{docURL}}"><h4>Documentation</h4></md-button>
@@ -63,7 +63,7 @@ def GenerateHeader():
 
     <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Roboto:200,300,400,400italic'>
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/0.10.0/angular-material.min.css">
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.8/angular-material.min.css">
 
     <link rel="stylesheet" href="assets/app.css"/>
 
@@ -123,8 +123,9 @@ if __name__ == '__main__':
   url="https://github.com/usnistgov/mosaic/releases/download/v"
   vers=[
 
-    ("Version "+str(version), str(version), ".0a2ea45", True),
-    ("Version 1.3.5", "1.3.5", ".801e7e5", True),
+    ("Version "+str(version), str(version), ".f98ae80", True),
+    ("Version 1.3.5", "1.3.6", ".0a2ea45", False),
+    ("Version 1.3.5", "1.3.5", ".801e7e5", False),
     ("Version 1.3.4", "1.3.4", ".4932336", False),
     ("Version 1.3.2", "1.3.2", ".d88866c", False),
     ("Version 1.3.1", "1.3.1", ".9977009", False),
@@ -146,10 +147,12 @@ if __name__ == '__main__':
     </md-content>
     </div>
  
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular-animate.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular-aria.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/angular_material/0.10.0/angular-material.min.js"></script>
+     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-animate.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-aria.min.js"></script>
+
+    <!-- Angular Material Library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.8/angular-material.min.js"></script>
 
     <script src="mosaic.js"></script>
 
