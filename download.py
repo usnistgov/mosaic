@@ -124,7 +124,7 @@ if __name__ == '__main__':
   vers=[
 
     ("Version "+str(version), str(version), ".f98ae80", True),
-    ("Version 1.3.5", "1.3.6", ".0a2ea45", False),
+    ("Version 1.3.6", "1.3.6", ".0a2ea45", False),
     ("Version 1.3.5", "1.3.5", ".801e7e5", False),
     ("Version 1.3.4", "1.3.4", ".4932336", False),
     ("Version 1.3.2", "1.3.2", ".d88866c", False),
