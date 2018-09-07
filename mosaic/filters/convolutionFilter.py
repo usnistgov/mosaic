@@ -10,13 +10,12 @@
 		9/13/15 	AB 	Updated logging to use mosaicLogFormat class
 		8/16/13		AB	Initial version
 """
-import ast
-
 import numpy as np 
 import scipy.signal as sig
 
 import mosaic.filters.metaIOFilter as metaIOFilter
 import mosaic.utilities.mosaicLogging as mlog
+from mosaic.utilities.util import eval_
 
 __all__ = ["convolutionFilter"]
 
@@ -31,7 +30,7 @@ class convolutionFilter(metaIOFilter.metaIOFilter):
 		"""
 		"""		
 		try:
-			self.filterCoeff=ast.literal_eval(kwargs['filterCoeff'])
+			self.filterCoeff=ast.eval_(kwargs['filterCoeff'])
 		except KeyError:
 			self.filterCoeff=[1.0/10.0]*10
 

@@ -1,8 +1,9 @@
-import ast
 import csv
 import string
 import json
 import numpy as np
+
+from mosaic.utilities.util import eval_
 
 param_t={
 	"n" 				: int,
@@ -41,7 +42,7 @@ def readparams(fname):
 
 	def _formatstr(s):
 		if s.startswith('List'):
-			return list(ast.literal_eval(s.replace('List','')))
+			return list(eval_(s.replace('List','')))
 		else:
 			return float(s)
 
@@ -55,7 +56,7 @@ def readParametersJSON(paramfile):
 	prm=json.loads("".join((open(paramfile, 'r').readlines())))
 	
 	for k in prm.keys():
-		v=ast.literal_eval(prm[k])
+		v=eval_(prm[k])
 		prm[k]=param_t[k](v)
 
 	return prm

@@ -11,10 +11,10 @@ Chimera VC100 concatenated file format implementation of metaTrajIO. Read concat
 		7/11/16		KB	Initial version
 """
 import struct
-import ast
 
 import mosaic.trajio.metaTrajIO as metaTrajIO
 import mosaic.utilities.mosaicLogging as mlog
+from mosaic.utilities.util import eval_
 
 import numpy as np
 
@@ -90,7 +90,7 @@ class chimeraTrajIO(metaTrajIO.metaTrajIO):
 			raise metaTrajIO.InsufficientArgumentsError("{0} requires the column types to be defined.".format(type(self).__name__))
 		else:
 			if type(self.ColumnTypes) is str or type(self.ColumnTypes) is unicode: 
-				self.ColumnTypes=ast.literal_eval(self.ColumnTypes)
+				self.ColumnTypes=eval_(self.ColumnTypes)
 		
 		if not hasattr(self, 'IonicCurrentColumn'):
 			raise metaTrajIO.InsufficientArgumentsError("{0} requires the ionic current column to be defined.".format(type(self).__name__))
