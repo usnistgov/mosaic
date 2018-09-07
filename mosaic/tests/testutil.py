@@ -1,3 +1,4 @@
+import ast
 import csv
 import string
 import json
@@ -40,7 +41,7 @@ def readparams(fname):
 
 	def _formatstr(s):
 		if s.startswith('List'):
-			return list(eval(s.replace('List','')))
+			return list(ast.literal_eval(s.replace('List','')))
 		else:
 			return float(s)
 
@@ -54,7 +55,7 @@ def readParametersJSON(paramfile):
 	prm=json.loads("".join((open(paramfile, 'r').readlines())))
 	
 	for k in prm.keys():
-		v=eval(prm[k])
+		v=ast.literal_eval(prm[k])
 		prm[k]=param_t[k](v)
 
 	return prm
