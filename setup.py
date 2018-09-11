@@ -125,6 +125,8 @@ setup(
 	version=mosaic.__version__+'+'+mosaic.__build__,
 	author='Arvind Balijepalli',
 	author_email='arvind.balijepalli@nist.gov',
+	maintainer='Arvind Balijepalli',
+	maintainer_email='arvind.balijepalli@nist.gov',
 	packages=[
 			'mosaic', 
 			'mosaic.filters',
@@ -173,4 +175,5 @@ setup(
 	license=open('LICENSE.rst').read(),
 	description='A Modular Single-Molecule Analysis Interface.',
 	long_description=open('README.rst').read(),
+	platforms=['MacOS', 'Windows', 'Linux'],
 )
