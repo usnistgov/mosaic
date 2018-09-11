@@ -110,6 +110,9 @@ class mosaicDocs(Command):
 		else:
 			os.system("make -C _nistpages html latexpdf")
 
+with open('LICENSE.rst', 'r') as l:
+	lic=l.read()
+
 setup(
 	cmdclass={
 		'test'              : _mosaicUnitTests(Command), 
@@ -170,7 +173,7 @@ setup(
 			],
 	install_requires=open('requirements.txt').read().splitlines(),
 	url=mosaic.DocumentationURL,
-	license='LICENSE.txt',
+	license=lic,
 	description='A Modular Single-Molecule Analysis Interface.',
 	long_description=open('README.rst').read(),
 )
