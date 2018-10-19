@@ -42,6 +42,7 @@ class mosaicSetup:
 			startMOSAICWeb()
 		else:
 			self.parser.print_help()
+
 		from mosaicweb.run import startMOSAICWeb
 		startMOSAICWeb()
 	
