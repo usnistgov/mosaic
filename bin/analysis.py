@@ -1,16 +1,7 @@
-import sys
-import os
-import glob
-import time
-import signal
-import resource
-import csv
-
 import mosaic.apps.SingleChannelAnalysis
 
 import mosaic.partition.eventSegment as es
 
-import mosaic.process.singleStepEvent as sse
 import mosaic.process.adept2State as adept2State
 import mosaic.process.adept as adept 
 import mosaic.process.cusumPlus as cusumPlus
@@ -24,7 +15,7 @@ from mosaic.filters.besselLowpassFilter import *
 from mosaic.filters.waveletDenoiseFilter import *
 
 mosaic.apps.SingleChannelAnalysis.SingleChannelAnalysis(
-			'data/',
+			'data',
 			qdfTrajIO, 
 			None,
 			es.eventSegment,
@@ -32,7 +23,7 @@ mosaic.apps.SingleChannelAnalysis.SingleChannelAnalysis(
 		).Run()
 
 mosaic.apps.SingleChannelAnalysis.SingleChannelAnalysis(
-			'data/',
+			'data',
 			qdfTrajIO, 
 			None,
 			es.eventSegment,
@@ -40,7 +31,7 @@ mosaic.apps.SingleChannelAnalysis.SingleChannelAnalysis(
 		).Run()
 
 mosaic.apps.SingleChannelAnalysis.SingleChannelAnalysis(
-			'data/',
+			'data',
 			qdfTrajIO, 
 			None,
 			es.eventSegment,
