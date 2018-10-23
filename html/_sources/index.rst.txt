@@ -30,26 +30,4 @@
    doc/References
 
 
-.. .. toctree::
-..    :hidden:
-
-..    doc/Home
-..    doc/WorkingWithSQLite
-..    doc/dataFiltering
-..    doc/eventPartition
-..    doc/eventProcessing
-..    doc/eventSegment
-..    doc/multiState
-..    doc/stepResponse
-..    doc/trajectoryIO
-
-
-.. Indices and tables
-.. ==================
-
-.. * :ref:`genindex`
-.. * :ref:`modindex`
-.. * :ref:`search`
-
-
 .. include:: aliases.rst

@@ -7,6 +7,9 @@ To test the |projname| installation, in the |projname| directory type
 
 Verify that all tests pass as seen below
 
-.. figure:: ../images/unitTests.png
-   :width: 40 %
-   :align: left
+
+	.. figure:: ../images/unitTests.png
+	   :width: 60 %
+	   :align: left
+
+

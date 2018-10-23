@@ -18,13 +18,31 @@ Binary Installation
 Source Installation
 ---------------------------------------------------
 
-#. :ref:`installosx`
+.. only:: latex
+
+		.. include:: InstallOSX.rst
 
 
-#. :ref:`installubuntu`
+		.. include:: InstallUbuntu.rst
 
 
-#. :ref:`installwin`
+		.. include:: InstallWindows.rst
+
+
+.. only:: html
+	
+	Install |projname| from source following the instructions for your platform below.
+
+
+		:ref:`installosx`
+
+
+		:ref:`installubuntu`
+
+
+		:ref:`installwin`
+
+
 
 
 .. include:: ../aliases.rst
