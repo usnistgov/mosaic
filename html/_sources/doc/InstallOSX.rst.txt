@@ -55,3 +55,8 @@ At this point, it is a good idea to update the PYTHONPATH environment variable i
 **4. Installing MOSAIC**
 
 .. include:: InstallMosaicSource.rst   
+
+**5. Testing MOSAIC**
+
+.. include:: TestMosaicSource.rst   
+

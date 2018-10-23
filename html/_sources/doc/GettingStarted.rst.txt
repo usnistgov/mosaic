@@ -18,7 +18,13 @@ Binary Installation
 Source Installation
 ---------------------------------------------------
 
-.. include:: InstallOSX.rst
-.. include:: InstallUbuntu.rst
+#. :ref:`installosx`
+
+
+#. :ref:`installubuntu`
+
+
+#. :ref:`installwin`
+
 
 .. include:: ../aliases.rst

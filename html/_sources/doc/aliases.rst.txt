@@ -17,6 +17,7 @@
 .. _ODBC Administrator: http://support.apple.com/kb/DL895
 .. _SQLite driver for IGOR: http://www.ch-werner.de/sqliteodbc/
 .. _Homebrew: http://brew.sh/
+.. _Anaconda: https://www.anaconda.com/
 .. _mksqlite: http://sourceforge.net/projects/mksqlite/
 
 .. _download binaries: http://pages.nist.gov/mosaic/platforms.html

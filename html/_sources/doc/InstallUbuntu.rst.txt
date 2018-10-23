@@ -1,4 +1,5 @@
 .. _installubuntu:
+
 Install |projname| on Ubuntu(14.04)
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -32,3 +33,7 @@ Next add the following to ~/.bashrc
 **3. Installing MOSAIC**
 
 .. include:: InstallMosaicSource.rst   
+
+**4. Testing MOSAIC**
+
+.. include:: TestMosaicSource.rst   

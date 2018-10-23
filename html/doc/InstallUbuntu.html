@@ -112,7 +112,7 @@
     <div class="col-md-12 content">
       
   <div class="section" id="install-projname-on-ubuntu-14-04">
-<h1>Install <em>MOSAIC</em> on Ubuntu(14.04)<a class="headerlink" href="#install-projname-on-ubuntu-14-04" title="Permalink to this headline">¶</a></h1>
+<span id="installubuntu"></span><h1>Install <em>MOSAIC</em> on Ubuntu(14.04)<a class="headerlink" href="#install-projname-on-ubuntu-14-04" title="Permalink to this headline">¶</a></h1>
 <p><em>MOSAIC</em> can be run under Ubuntu using a procedure very similar to <a class="reference internal" href="InstallOSX.html#installosx"><span class="std std-ref">Install MOSAIC on Mac OS X</span></a>.</p>
 <p><strong>1. Prerequisites</strong></p>
 <p>Several prerequisites must be installed prior to building <em>MOSAIC</em> dependencies. This is easily accomplished in Ubuntu using the <cite>aptitude</cite> package manager.</p>
@@ -202,6 +202,15 @@
 </ol>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">(MOSAIC)$</span> <span class="nb">export</span> <span class="nv">PYTHONPATH</span><span class="o">=</span><span class="nv">$PYTHONPATH</span>:~/projects/MOSAIC
 </pre></div>
+</div>
+<p><strong>4. Testing MOSAIC</strong></p>
+<p>To test the <em>MOSAIC</em> installation, in the <em>MOSAIC</em> directory type</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span>  python setup.py <span class="nb">test</span> -q
+</pre></div>
+</div>
+<p>Verify that all tests pass as seen below</p>
+<div class="figure align-left">
+<a class="reference internal image-reference" href="../_images/unitTests.png"><img alt="../_images/unitTests.png" src="../_images/unitTests.png" style="width: 40%;" /></a>
 </div>
 </div>
 

@@ -129,6 +129,7 @@
 
 <span class="kn">import</span> <span class="nn">mosaic.filters.metaIOFilter</span> <span class="k">as</span> <span class="nn">metaIOFilter</span>
 <span class="kn">import</span> <span class="nn">mosaic.utilities.mosaicLogging</span> <span class="k">as</span> <span class="nn">mlog</span>
+<span class="kn">from</span> <span class="nn">mosaic.utilities.util</span> <span class="k">import</span> <span class="n">eval_</span>
 
 <span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;convolutionFilter&quot;</span><span class="p">]</span>
 
@@ -143,7 +144,7 @@
 		<span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">		&quot;&quot;&quot;</span>		
 		<span class="k">try</span><span class="p">:</span>
-			<span class="bp">self</span><span class="o">.</span><span class="n">filterCoeff</span><span class="o">=</span><span class="nb">eval</span><span class="p">(</span><span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;filterCoeff&#39;</span><span class="p">])</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">filterCoeff</span><span class="o">=</span><span class="n">ast</span><span class="o">.</span><span class="n">eval_</span><span class="p">(</span><span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;filterCoeff&#39;</span><span class="p">])</span>
 		<span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
 			<span class="bp">self</span><span class="o">.</span><span class="n">filterCoeff</span><span class="o">=</span><span class="p">[</span><span class="mf">1.0</span><span class="o">/</span><span class="mf">10.0</span><span class="p">]</span><span class="o">*</span><span class="mi">10</span>
 
@@ -161,8 +162,8 @@
 <span class="sd">		&quot;&quot;&quot;</span>
 		<span class="bp">self</span><span class="o">.</span><span class="n">filtBuf</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">hstack</span><span class="p">(</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">filtBuf</span><span class="p">,</span> <span class="n">icurr</span><span class="p">)</span> <span class="p">)</span>
 		<span class="bp">self</span><span class="o">.</span><span class="n">eventData</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">correlate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">filtBuf</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">filterCoeff</span><span class="p">,</span> <span class="s1">&#39;valid&#39;</span><span class="p">)</span>
-		<span class="bp">self</span><span class="o">.</span><span class="n">filtBuf</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">filtBuf</span><span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">filterCoeff</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">:]</span>
-</div>
+		<span class="bp">self</span><span class="o">.</span><span class="n">filtBuf</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">filtBuf</span><span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">filterCoeff</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">:]</span></div>
+
 
 <div class="viewcode-block" id="convolutionFilter.formatsettings"><a class="viewcode-back" href="../../../api-doc/mosaic.filter.html#mosaic.filters.convolutionFilter.convolutionFilter.formatsettings">[docs]</a>	<span class="k">def</span> <span class="nf">formatsettings</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 		<span class="sd">&quot;&quot;&quot;</span>
@@ -172,8 +173,8 @@
 
 		<span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span> <span class="s1">&#39;</span><span class="se">\t\t</span><span class="s1">Filter type = </span><span class="si">{0}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="p">)</span> <span class="p">)</span>
 		<span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span> <span class="s1">&#39;</span><span class="se">\t\t</span><span class="s1">Filter coefficients = </span><span class="si">{0}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">filterCoeff</span><span class="p">)</span> <span class="p">)</span>
-		<span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span> <span class="s1">&#39;</span><span class="se">\t\t</span><span class="s1">Decimation = </span><span class="si">{0}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">decimate</span><span class="p">)</span> <span class="p">)</span>
-		</div></div>
+		<span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span> <span class="s1">&#39;</span><span class="se">\t\t</span><span class="s1">Decimation = </span><span class="si">{0}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">decimate</span><span class="p">)</span> <span class="p">)</span></div></div>
+		
 </pre></div>
 
     </div>

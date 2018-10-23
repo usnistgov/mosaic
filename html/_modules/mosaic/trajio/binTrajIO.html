@@ -135,14 +135,15 @@
 
 <span class="kn">import</span> <span class="nn">mosaic.trajio.metaTrajIO</span> <span class="k">as</span> <span class="nn">metaTrajIO</span>
 <span class="kn">import</span> <span class="nn">mosaic.utilities.mosaicLogging</span> <span class="k">as</span> <span class="nn">mlog</span>
+<span class="kn">from</span> <span class="nn">mosaic.utilities.util</span> <span class="k">import</span> <span class="n">eval_</span>
 
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 
 <span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;binTrajIO&quot;</span><span class="p">,</span> <span class="s2">&quot;InvalidDataColumnError&quot;</span><span class="p">]</span>
 
 <div class="viewcode-block" id="InvalidDataColumnError"><a class="viewcode-back" href="../../../api-doc/mosaic.traj.html#mosaic.trajio.binTrajIO.InvalidDataColumnError">[docs]</a><span class="k">class</span> <span class="nc">InvalidDataColumnError</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
-	<span class="k">pass</span>
-</div>
+	<span class="k">pass</span></div>
+
 <div class="viewcode-block" id="binTrajIO"><a class="viewcode-back" href="../../../doc/settingsFile.html#mosaic.trajio.binTrajIO.binTrajIO">[docs]</a><span class="k">class</span> <span class="nc">binTrajIO</span><span class="p">(</span><span class="n">metaTrajIO</span><span class="o">.</span><span class="n">metaTrajIO</span><span class="p">):</span>
 	<span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">		Read a file that contains interleaved binary data, ordered by column. Only a single </span>
@@ -246,7 +247,7 @@
 			<span class="k">raise</span> <span class="n">metaTrajIO</span><span class="o">.</span><span class="n">InsufficientArgumentsError</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{0}</span><span class="s2"> requires the column types to be defined.&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="p">))</span>
 		<span class="k">else</span><span class="p">:</span>
 			<span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ColumnTypes</span><span class="p">)</span> <span class="ow">is</span> <span class="nb">str</span> <span class="ow">or</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ColumnTypes</span><span class="p">)</span> <span class="ow">is</span> <span class="n">unicode</span><span class="p">:</span> 
-				<span class="bp">self</span><span class="o">.</span><span class="n">ColumnTypes</span><span class="o">=</span><span class="nb">eval</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ColumnTypes</span><span class="p">)</span>
+				<span class="bp">self</span><span class="o">.</span><span class="n">ColumnTypes</span><span class="o">=</span><span class="n">eval_</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ColumnTypes</span><span class="p">)</span>
 		
 		<span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;IonicCurrentColumn&#39;</span><span class="p">):</span>
 			<span class="k">raise</span> <span class="n">metaTrajIO</span><span class="o">.</span><span class="n">InsufficientArgumentsError</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{0}</span><span class="s2"> requires the ionic current column to be defined.&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="p">))</span>
@@ -266,7 +267,7 @@
 		<span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;AmplifierScale&#39;</span><span class="p">):</span>
 			<span class="bp">self</span><span class="o">.</span><span class="n">AmplifierScale</span><span class="o">=</span><span class="mf">1.0</span>
 		<span class="k">else</span><span class="p">:</span>
-			<span class="bp">self</span><span class="o">.</span><span class="n">AmplifierScale</span><span class="o">=</span><span class="nb">float</span><span class="p">(</span><span class="nb">eval</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">AmplifierScale</span><span class="p">))</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">AmplifierScale</span><span class="o">=</span><span class="nb">float</span><span class="p">(</span><span class="n">eval_</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">AmplifierScale</span><span class="p">))</span>
 
 		<span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;AmplifierOffset&#39;</span><span class="p">):</span> 
 			<span class="bp">self</span><span class="o">.</span><span class="n">AmplifierOffset</span><span class="o">=</span><span class="mf">0.0</span>
@@ -299,8 +300,8 @@
 
 <span class="sd">				None</span>
 <span class="sd">		&quot;&quot;&quot;</span>
-		<span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">readBinaryFile</span><span class="p">(</span><span class="n">fname</span><span class="p">)</span>
-		</div>
+		<span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">readBinaryFile</span><span class="p">(</span><span class="n">fname</span><span class="p">)</span></div>
+		
 	<span class="k">def</span> <span class="nf">_formatsettings</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 		<span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">			Log settings strings</span>
@@ -317,8 +318,8 @@
 		<span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">			See :func:`mosaic.metaTrajIO.metaTrajIO.scaleData`.</span>
 <span class="sd">		&quot;&quot;&quot;</span>
-		<span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">data</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">AmplifierScale</span><span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">AmplifierOffset</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
-</div></div>
+		<span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">data</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">AmplifierScale</span><span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">AmplifierOffset</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span></div></div>
+
 <span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
 	<span class="kn">from</span> <span class="nn">mosaic.utilities.resource_path</span> <span class="k">import</span> <span class="n">resource_path</span>
 	<span class="kn">import</span> <span class="nn">os</span>
