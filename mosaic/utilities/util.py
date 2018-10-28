@@ -2,6 +2,7 @@
 	A collection of utility functions
 """
 import sys
+import ast
 import numpy
 
 __all__=["avg", "sd", "filter", "partition", "decimate", "commonest", "selectS", "flat2", "WindowSizeError"]
@@ -71,3 +72,10 @@ def flat2(dat):
 		Flatten a 2D array to a list
 	"""
 	return reduce(lambda x,y: x+y,dat)
+
+def eval_(expr):
+	try:
+		tree=ast.parse(expr, mode='eval')
+		return eval(compile(tree, '<ast>', 'eval'))
+	except:
+		raise

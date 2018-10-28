@@ -20,6 +20,7 @@ import mosaic
 import mosaic.utilities.mosaicLogging as mlog
 from mosaic.utilities.mosaicLogFormat import _d
 from mosaic.utilities.resource_path import resource_path, format_path
+from mosaic.utilities.util import eval_
 
 def registerLaunch(tag):
 	def _registerLaunch(func):
@@ -77,7 +78,7 @@ def _gaPost(eventType, content):
 		headers = {"Content-type": "application/x-www-form-urlencoded", "Accept": "text/plain"}
 		gac=_gaCredentialCache()
 
-		if eval(gac["gaenable"]):
+		if eval_(gac["gaenable"]):
 			payload="v=1&tid={0}&cid={1}&t=event&ec=mosaic-{2}-{3}&ea={4}&el={5}".format(
 					dec(gac["gaid"]), 
 					_uuid(),
@@ -141,7 +142,7 @@ def _gaCredentialCache():
 
 def _gaSettingsDict(ga_cache):
 	with open(ga_cache, 'r') as ga:
-		return eval(json.loads(ga.read()))
+		return dict(json.loads(ga.read()))
 
 def _getGASettings(ga_cache):
 	logger=mlog.mosaicLogging().getLogger(name=__name__)

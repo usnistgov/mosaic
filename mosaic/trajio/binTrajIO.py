@@ -21,6 +21,7 @@ import struct
 
 import mosaic.trajio.metaTrajIO as metaTrajIO
 import mosaic.utilities.mosaicLogging as mlog
+from mosaic.utilities.util import eval_
 
 import numpy as np
 
@@ -132,7 +133,7 @@ class binTrajIO(metaTrajIO.metaTrajIO):
 			raise metaTrajIO.InsufficientArgumentsError("{0} requires the column types to be defined.".format(type(self).__name__))
 		else:
 			if type(self.ColumnTypes) is str or type(self.ColumnTypes) is unicode: 
-				self.ColumnTypes=eval(self.ColumnTypes)
+				self.ColumnTypes=eval_(self.ColumnTypes)
 		
 		if not hasattr(self, 'IonicCurrentColumn'):
 			raise metaTrajIO.InsufficientArgumentsError("{0} requires the ionic current column to be defined.".format(type(self).__name__))
@@ -152,7 +153,7 @@ class binTrajIO(metaTrajIO.metaTrajIO):
 		if not hasattr(self, 'AmplifierScale'):
 			self.AmplifierScale=1.0
 		else:
-			self.AmplifierScale=float(eval(self.AmplifierScale))
+			self.AmplifierScale=float(eval_(self.AmplifierScale))
 
 		if not hasattr(self, 'AmplifierOffset'): 
 			self.AmplifierOffset=0.0
