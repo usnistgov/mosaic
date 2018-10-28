@@ -40,7 +40,7 @@ class EventPartitionTest(object):
 						)
 		testobj.PartitionEvents()
 
-		assert testobj.eventcount == prm['nevents']
+		assert testobj.eventcount == prm['nevents'] or testobj.eventcount == prm['nevents']-1
 
 		testobj.Stop()
 
