@@ -8,6 +8,7 @@
 	:License:	See LICENSE.TXT
 	:ChangeLog:
 	.. line-block::
+		10/28/18	AB 	Fix spurious shallow events as outlined in https://github.com/usnistgov/mosaic/issues/102
 		9/25/17 	AB 	Save unfiltered event padding by default.
 		1/18/17 	AB 	Fix pre event baseline.
 		6/17/16 	AB 	Log function timing in developer mode.
@@ -178,7 +179,7 @@ class eventSegment(metaEventPartition.metaEventPartition):
 				if self.eventstart:
 					#mean=abs(util.avg(self.preeventdat))
                                         mean = self.meanOpenCurr
-					while(abs(t)<mean):
+					while(abs(t)<self.thrCurr):
 						t=self.currData.popleft()
 						self.eventdat.append(t)
 						self.globalDataIndex+=1
