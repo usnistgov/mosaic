@@ -79,3 +79,10 @@ def eval_(expr):
 		return eval(compile(tree, '<ast>', 'eval'))
 	except:
 		raise
+
+def exec_(expr):
+	try:
+		tree=ast.parse(expr, mode='exec')
+		return eval(compile(tree, '<ast>', 'exec'))
+	except:
+		raise
