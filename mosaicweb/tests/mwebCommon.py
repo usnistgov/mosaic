@@ -1,7 +1,9 @@
+import unittest 
 import json
 import mosaic
 from mosaicweb import app
-import unittest 
+from mosaic.utilities.util import eval_
+
 
 mosaic.WebServerDataLocation=mosaic.__path__[0]+"/.."
 
@@ -24,7 +26,7 @@ class mwebCommonTest(unittest.TestCase):
 		return self.app.post(url, data=json.dumps(data), content_type='application/json', follow_redirects=True)
 	
 	def _get_data(self, result):
-		return eval(result.get_data())
+		return eval_(result.get_data())
 
 	def assertBaseline(self, url, result):
 		d=self._get_data(result)
