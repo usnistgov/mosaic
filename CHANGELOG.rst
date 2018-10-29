@@ -3,12 +3,12 @@ Change Log
 
 **v2.0b2**
 
- - Fixed an issue where spurious events were detected that were contained entirely within the open channel current (see `#102 <https://github.com/usnistgov/mosaic/issues/102>`_).
- - Added detailed Windows build instructions.
+- Fixed an issue where spurious events were detected that were contained entirely within the open channel current (see `#102 <https://github.com/usnistgov/mosaic/issues/102>`_).
+- Added detailed Windows build instructions.
 
 **v2.0b1**
 
- - Run MOSAIC using a new web interface.
+- Run MOSAIC using a new web interface.
 
 **v1.3.6**
 
@@ -16,25 +16,25 @@ Change Log
 
 **v1.3.5**
 
- - Saves raw events in database. Resolves #93.
+- Saves raw events in database. Resolves #93.
 
 **v1.3.4**
 
- - Fixed a bug in the default settings that prevented the analysis from starting in some instances.
+- Fixed a bug in the default settings that prevented the analysis from starting in some instances.
 
 **v1.3.3**
 
- - Added support for Chimera data files.
- - Resolves issues #92 and #95. 
+- Added support for Chimera data files.
+- Resolves issues #92 and #95. 
 
 **v1.3.2**
 
- - Fixed event partiioning bugs.
- - [GUI] UI tweaks.
+- Fixed event partiioning bugs.
+- [GUI] UI tweaks.
 
 **v1.3.1**
 
- - Bug fix release.
+- Bug fix release.
 
 **v1.3**
 
