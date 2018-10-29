@@ -6,13 +6,13 @@
 	:License:	See LICENSE.TXT
 	:ChangeLog:
 	.. line-block::
+		10/29/18 	AB 	Replace eval statements with static functions.
 		3/27/17		AB 	Initial version
 """
 import mosaic.mdio.sqlite3MDIO as sqlite
 from mosaic.utilities.sqlQuery import query, rawQuery
 import mosaic.errors as errors
 import mosaic.utilities.fit_funcs as fit_funcs
-
 from mosaicweb.plotlyUtils import plotlyWrapper
 
 import glob
@@ -43,9 +43,7 @@ class analysisTimeSeries(dict):
 
 		# setup hash tables and funcs used in this class
 		self.qstr=self._generateQueryString(index)
-		self._setupDict()
-		self._setupFitFuncs()
-
+		
 		self.returnMessageJSON={
 			"warning": "",
 			"recordCount": self.recordCount,
@@ -69,19 +67,22 @@ class analysisTimeSeries(dict):
 
 			dat={}
 			if q[0]=='normal': 
-				if self.fitFuncHnd:
-					# xfit=np.arange(0,float((len(q[1]))/self.FsHz), float(1/(100*self.FsHz)))
+				if self.procAlgorithm!="cusumPlus":
 					xfit=np.arange(0, dt*len(ydat), dt)
-					yfit=self.fitFuncHnd( *eval(self.fitFuncArgs) )
+					yfit=self._evalFitFunction(xdat*1000, q)
 
-				if self.stepFuncHnd:
-					# xstep=np.arange(0,float((len(q[1]))/self.FsHz), float(1/(100*self.FsHz)))
-					xstep=np.arange(0, dt*len(ydat), dt)
-					ystep=self.stepFuncHnd( *eval(self.stepFuncArgs) )
+				xstep=np.arange(0, dt*len(ydat), dt)
+				ystep=self._evalStepFunction(xdat*1000, q)
 
-				dat['data'] = [ 
+				if self.procAlgorithm!="cusumPlus":
+					dat['data'] = [ 
 							plotlyWrapper.plotlyTrace(list(xdat), list(ydat), "NormalEvent"),
 							plotlyWrapper.plotlyTrace(list(xfit), list(yfit), "NormalEventFit"),
+							plotlyWrapper.plotlyTrace(list(xstep), list(ystep), "NormalEventStep")
+						]
+				else:
+					dat['data'] = [ 
+							plotlyWrapper.plotlyTrace(list(xdat), list(ydat), "NormalEvent"),
 							plotlyWrapper.plotlyTrace(list(xstep), list(ystep), "NormalEventStep")
 						]
 			elif q[0].startswith('w'):
@@ -96,7 +97,7 @@ class analysisTimeSeries(dict):
 
 			self.returnMessageJSON['eventViewPlot']=dat
 
-			self.returnMessageJSON['parameterTable']=self._paramTable(*eval(self.paramTableFuncArgs))
+			self.returnMessageJSON['parameterTable']=self._paramTable(q)
 
 			return self.returnMessageJSON
 		except IndexError:
@@ -108,15 +109,23 @@ class analysisTimeSeries(dict):
 		else:
 			return int(round(dataLen/500.))
 
-	def _setupFitFuncs(self):	
-		# Setup the fit function based on the algorithm
-		self.fitFuncHnd=self.fitFuncHndDict[self.procAlgorithm]
-		self.fitFuncArgs=self.fitFuncArgsDict[self.procAlgorithm]
+	def _evalFitFunction(self, xdat, q):
+		if self.procAlgorithm=="adept2State":
+			return fit_funcs.stepResponseFunc(xdat, q[2], q[3], q[4], q[5], abs(q[7]-q[6]), q[7])
+		elif self.procAlgorithm=="adept":
+			return fit_funcs.multiStateFunc(xdat, q[2], q[3], q[4], q[5], len(q[3]))
+		else:
+			return None
 
-		self.stepFuncHnd=self.stepFuncHndDict[self.procAlgorithm]
-		self.stepFuncArgs=self.stepFuncArgsDict[self.procAlgorithm]
-
-		self.paramTableFuncArgs=self.paramTableArgsDict[self.procAlgorithm]
+	def _evalStepFunction(self, xdat, q):
+		if self.procAlgorithm=="adept2State":
+			return fit_funcs.multiStateStepFunc(xdat, [q[4], q[5]], [-abs(q[7]-q[6]), abs(q[7]-q[6])], q[7], 2)
+		elif self.procAlgorithm=="adept":
+			return fit_funcs.multiStateStepFunc(xdat, q[3], q[4], q[5], len(q[3]))
+		elif self.procAlgorithm=="cusumPlus":
+			return fit_funcs.multiStateStepFunc(xdat, q[2], q[3], q[4], len(q[2]))
+		else:
+			return None
 
 	def _generateQueryString(self, eventNumber):
 		# Generate the query string based on the algorithm in the database
@@ -140,7 +149,15 @@ class analysisTimeSeries(dict):
 
 		return qstr
 
-	def _paramTable(self, currentStep, openChCurr, eventDelay, nStates):
+	def _paramTable(self, q):
+		if self.procAlgorithm=="adept2State":
+			[currentStep, openChCurr, eventDelay, nStates]=[[-abs(q[7]-q[6])], q[7], [q[4],q[5]], 1]
+		elif self.procAlgorithm=="adept":
+			[currentStep, openChCurr, eventDelay, nStates]=[q[4], q[5], q[3], len(q[3])-1]
+		elif self.procAlgorithm=="cusumPlus":
+			[currentStep, openChCurr, eventDelay, nStates]=[q[3], q[4], q[2], len(q[2])-1]
+
+
 		paramList=[]
 
 		# nStates=[ str(i) for i in range(1, nStates+1)]
@@ -157,37 +174,6 @@ class analysisTimeSeries(dict):
 			)
 
 		return paramList
-
-	def _setupDict(self):
-		self.fitFuncHndDict={
-			"adept2State" 	: fit_funcs.stepResponseFunc,
-			"adept" 		: fit_funcs.multiStateFunc,
-			"cusumPlus" 	: None
-		}
-
-		self.fitFuncArgsDict={
-			"adept2State" 	: "[xfit*1000, q[2], q[3], q[4], q[5], abs(q[7]-q[6]), q[7]]",
-			"adept" 		: "[xfit*1000, q[2], q[3], q[4], q[5], len(q[3])]",
-			"cusumPlus" 	: "[]"
-		}
-
-		self.stepFuncHndDict={
-			"adept2State" 	: fit_funcs.multiStateStepFunc,
-			"adept" 		: fit_funcs.multiStateStepFunc,
-			"cusumPlus"		: fit_funcs.multiStateStepFunc
-		}
-
-		self.stepFuncArgsDict={
-			"adept2State" 	: "[xstep*1000, [q[4], q[5]], [-abs(q[7]-q[6]), abs(q[7]-q[6])], q[7], 2]",
-			"adept" 		: "[xstep*1000, q[3], q[4], q[5], len(q[3])]",
-			"cusumPlus" 	: "[xstep*1000, q[2], q[3], q[4], len(q[2])]"
-		}
-
-		self.paramTableArgsDict={
-			"adept2State" 	: "[[-abs(q[7]-q[6])], q[7], [q[4],q[5]], 1]",
-			"adept" 		: "[q[4], q[5], q[3], len(q[3])-1]",
-			"cusumPlus" 	: "[q[3], q[4], q[2], len(q[2])-1]"
-		}
 
 if __name__ == '__main__':
 	import mosaic
