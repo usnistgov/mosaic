@@ -4,7 +4,7 @@ Change Log
 **v2.0b2**
 
  - Fixed an issue where spurious events were detected that were contained entirely within the open channel current (see `#102 <https://github.com/usnistgov/mosaic/issues/102>`_).
- - Added detailed Window build instructions.
+ - Added detailed Windows build instructions.
 
 **v2.0b1**
 
