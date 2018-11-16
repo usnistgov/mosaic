@@ -16,7 +16,7 @@ Change Log
 
 **v1.3.5**
 
-- Saves raw events in database. Resolves #93.
+- Saves raw events in database. Resolves `#93 <https://github.com/usnistgov/mosaic/issues/93>`_.
 
 **v1.3.4**
 
@@ -25,7 +25,7 @@ Change Log
 **v1.3.3**
 
 - Added support for Chimera data files.
-- Resolves issues #92 and #95. 
+- Resolves issues `#92 <https://github.com/usnistgov/mosaic/issues/92>`_ and `#95 <https://github.com/usnistgov/mosaic/issues/95>`_. 
 
 **v1.3.2**
 
