@@ -16,7 +16,7 @@ Change Log
 
 **v1.3.5**
 
-- Saves raw events in database. Resolves `#93 <https://github.com/usnistgov/mosaic/issues/93>`.
+- Saves raw events in database. Resolves `#93 <https://github.com/usnistgov/mosaic/issues/93>`_.
 
 **v1.3.4**
 
