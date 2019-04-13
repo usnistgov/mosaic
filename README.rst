@@ -8,7 +8,6 @@
 MOSAIC: A modular single-molecule analysis interface
 =================================
 
-
 MOSAIC is a single molecule analysis toolbox that automatically decodes multi-state nanopore data. By modeling the nanopore system with an equivalent circuit, MOSAIC leverages the transient response of a molecule entering the channel to quantify pore-molecule interactions. In contrast to existing techniques such as ionic current thresholding or Viterbi decoding, this technique allows the estimation of short-lived transient events that are otherwise not analyzed.
 
 Nanometer-scale pores have demonstrated potential use in biotechnology applications, including DNA sequencing, single-molecule force spectroscopy, and single-molecule mass spectrometry. The data modeling and analysis methods implemented in MOSAIC allow for dramatic improvements in the quantification of molecular interactions with the channel in each of these applications.
@@ -18,12 +17,15 @@ Nanometer-scale pores have demonstrated potential use in biotechnology applicati
 1. `Analytical Chemistry 2016, (88) pp. 11900–11907  <http://pubs.acs.org/doi/abs/10.1021/acs.analchem.6b03725>`_
 2. `ACS Nano 2014, (8) pp. 1547–1553.  <http://pubs.acs.org/doi/abs/10.1021/nn405761y>`_
 
-
 Installation
 =================================
 
 Please refer to the `Installation <https://pages.nist.gov/mosaic/html/doc/GettingStarted.html>`_ section of the MOSAIC documentation for details on installation.
 
+Documentation
+=================================
+
+A PDF version of the MOSAIC documentation can be downloaded `here <https://github.com/usnistgov/mosaic/raw/nist-pages/latex/MOSAIC.pdf>`_.
 
 Getting Help
 =================================
