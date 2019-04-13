@@ -24,7 +24,7 @@ class mosaicSetup:
 		
 		self.args = vars(self.parser.parse_args())
 
-	def launcMOSAIC(self):
+	def launchMOSAIC(self):
 		if self.args["qt"]:
 			try:
 				from mosaicgui.run import startMOSAICQt
