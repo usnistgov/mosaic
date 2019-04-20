@@ -128,7 +128,8 @@ __settings__="""
 		"parallelProc"			: "0",
 		"reserveNCPU"			: "2",
 		"minBaseline"			: "-1",
-		"maxBaseline"			: "-1"
+		"maxBaseline"			: "-1",
+		"baselineTracking"		: "0"
 	},
 	"adept2State" : {
 		"FitTol"				: "1.e-7",
