@@ -114,6 +114,8 @@ class metaEventPartition(object):
 		self.FsHz=self.trajDataObj.FsHz
 		self.DataLengthSec=self.trajDataObj.DataLengthSec
 
+		self.AutomaticBaseline=False
+
 		try:
 			self.writeEventTS=int(self.settingsDict.pop("writeEventTS",1))
 			self.parallelProc=int(self.settingsDict.pop("parallelProc",1))
@@ -122,6 +124,7 @@ class metaEventPartition(object):
 			self.maxDriftRate=float(self.settingsDict.pop("maxDriftRate",2.0))
 			self.minBaseline=float(self.settingsDict.pop("minBaseline",-1.))
 			self.maxBaseline=float(self.settingsDict.pop("maxBaseline",-1.))
+			self.trackBaseline=bool(self.settingsDict.pop("trackBaseline",0))
 		except ValueError as err:
 			raise mosaic.commonExceptions.SettingsTypeError( err )
 
@@ -204,8 +207,14 @@ class metaEventPartition(object):
 			while(1):	
 				# with each pass obtain more data and
 				d=self.trajDataObj.popdata(self.nPoints)
-				# Check for excessive open channel drift
-				self._checkdrift(d)
+
+				# Update open channel stats if tracking the baseline current
+				if self.AutomaticBaseline and self.trackBaseline:
+					[ self.meanOpenCurr, self.sdOpenCurr, self.slopeOpenCurr ] = self._openchanstats(d)
+					# print self.meanOpenCurr, self.sdOpenCurr, self.slopeOpenCurr
+				else:
+					# Check for excessive open channel drift only if baseline tracking is OFF.
+					self._checkdrift(d)
 
 				# store the new data into a local store
 				self.currData.extend(list(d))
@@ -382,6 +391,9 @@ class metaEventPartition(object):
 
 		if self.meanOpenCurr == -1. or self.sdOpenCurr == -1. or self.slopeOpenCurr == -1.:
 			[ self.meanOpenCurr, self.sdOpenCurr, self.slopeOpenCurr ] = self._openchanstats(self.trajDataObj.previewdata(self.nPoints))
+			
+			self.AutomaticBaseline=True
+
 			self.logger.debug(_d("Automatic open channel stats: {0}, {1}, {2}", self.meanOpenCurr, self.sdOpenCurr, self.slopeOpenCurr))
 		else:
 			self.logger.warning("WARNING: Automatic open channel state estimation has been disabled.")
