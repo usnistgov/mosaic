@@ -3,7 +3,8 @@ Change Log
 
 **v2.0b2**
 
-- Fixed an issue where spurious events were detected that were contained entirely within the open channel current (see `#102 <https://github.com/usnistgov/mosaic/issues/102>`_).
+- Fixed an issue where spurious events were detected that were contained entirely within the open channel current (see #`102 <https://github.com/usnistgov/mosaic/issues/102>`_).
+- Changed eval calls to safer `AST <https://docs.python.org/2/library/ast.html>`_-based versions within the core mosaic modules.
 - Added detailed Windows build instructions.
 
 **v2.0b1**
@@ -25,7 +26,7 @@ Change Log
 **v1.3.3**
 
 - Added support for Chimera data files.
-- Resolves issues `#92 <https://github.com/usnistgov/mosaic/issues/92>`_ and `#95 <https://github.com/usnistgov/mosaic/issues/95>`_. 
+- Resolves issues `#92 <https://github.com/usnistgov/mosaic/issues/92>`_ and `#95 <https://github.com/usnistgov/mosaic/issues/95>`_.
 
 **v1.3.2**
 
