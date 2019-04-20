@@ -24,6 +24,7 @@ from mosaic.utilities.ga import registerLaunch, registerStart, registerStop
 import mosaic.mdio.sqlite3MDIO as sqlite
 import mosaic.settings as settings
 import mosaic.utilities.mosaicLogging as mlog
+from mosaic.utilities.util import eval_
 
 from mosaicweb.mosaicAnalysis import mosaicAnalysis, analysisStatistics, analysisTimeSeries, analysisHistogram, analysisContour, analysisDBUtils
 from mosaicweb.sessionManager import sessionManager
@@ -73,7 +74,7 @@ def validateSettings():
 @app.route('/processing-algorithm', methods=['POST'])
 def processingAlgorithm():
 	try:
-			defaultSettings=eval(settings.__settings__)
+			defaultSettings=eval_(settings.__settings__)
 			params = dict(request.get_json())
 
 			procAlgorithmSectionName=params["procAlgorithm"]
@@ -448,8 +449,20 @@ def initialization():
 	with open(ga_cache, "w") as g:
 		g.write(json.dumps(gac))
 
-	return jsonify( respondingURL="initialization", appAnalytics=0, showAnalyticsOptions=0, serverMode=mosaic.WebServerMode), 200
-	# return jsonify( respondingURL="analytics", appAnalytics=eval(gac["gaenable"]), showAnalyticsOptions=eval(gac["gauimode"]), serverMode=mosaic.WebServerMode), 200
+	gaenable=False
+	gauimode=False
+
+	if gac["gaenable"]:
+		gaenable="True"
+	else:
+		gaenable="False"
+
+	if gac["gauimode"]:
+		gauimode="True"
+	else:
+		gauimode="False"
+
+	return jsonify( respondingURL="initialization", appAnalytics=gaenable, showAnalyticsOptions=gauimode, serverMode=mosaic.WebServerMode), 200
 
 @app.route('/quit-local-server', methods=['POST'])
 def quitLocalServer():
