@@ -185,8 +185,7 @@ class qtAnalysisGUI(mosaicgui.settingsview.settingsview):
 
 			# reset the analysis workers
 			del self.aWorker
-			del self.aThread
-
+			del self.aThrea
 	def OnLoadAnalysis(self):
 		fd=QtGui.QFileDialog(parent=self, caption=QtCore.QString('Open Analysis Results'))
 		

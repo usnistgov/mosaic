@@ -191,6 +191,10 @@ class TrajectoryWindow(QtGui.QDialog):
 	def update_graph(self):
 		try:
 			if self.dataLoaded:
+
+				print self.trajData[:10]
+
+
 				datasign=float(np.sign(np.mean(self.trajData)))
 				ydat=datasign*np.array(self.trajData, dtype='float64')
 				xdat=np.arange(float(self.nUpdate)*self.blockSize,float(self.nUpdate+1)*self.blockSize,self.decimate/float(self.IOObject.FsHz))[:len(ydat)]
