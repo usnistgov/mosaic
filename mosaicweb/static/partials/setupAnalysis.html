@@ -1,4 +1,4 @@
-<md-content aria-label="New Analysis" flex-gt-sm="70" flex="90" flex-offset-gt-sm="15" flex-offset="5">
+<md-content aria-label="New Analysis" flex-gt-sm="75" flex="90" flex-offset-gt-sm="15" flex-offset="0">
 <!-- ng-submit="startAnalysis()"  -->
 	<form layout="column" name="newAnalysisForm" ng-disabled="mosaicConfigModel.analysisRunning">
 		<div layout="row" layout-align="end center">
@@ -199,6 +199,21 @@
 					</md-switch>
 
 				</div>
+
+				<div layout="row" style="margin: 6px; padding:6px">
+					
+					<div layout="row" layout-align="left center">
+						<!-- <span flex>Track Baseline Current</span>
+						<span flex="5"> -->
+						<md-switch class="md-primary" md-no-ink aria-label="Automatically track baseline current" ng-model="model.baselineTracking" name="baselineTracking" ng-disabled="mosaicConfigModel.analysisRunning || !model.currAuto">
+							Track Baseline Current
+						</md-switch>
+						<!-- <span flex="5"> -->
+					</div>
+
+					<span flex></span>
+				</div>
+
 			</md-content>
 		</div>
 

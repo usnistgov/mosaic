@@ -41,18 +41,18 @@ angular.module('mosaicApp')
 		// factory.analysisSettings.linkRCConstants = false;
 
 		//local vars
-		factory.currAuto = true;
+		factory.currAuto = false;
 		factory.currMeanAuto = 0;
 		factory.currSigmaAuto = 0;
 		factory.currMeanDisplay = 100;
 		factory.currSigmaDisplay = 0;
 		factory.currThresholdpA = 100;
-		factory.currAuto = false;
 		factory.dcOffset = 0;
 		factory.start = 0;
 		factory.end = '';
 		factory.writeEventTS = false;
 		factory.FsKHz = 0;
+		factory.baselineTracking = false;
 
 		factory.controlsUpdating = false;
 		factory.controlEnabled = false;
@@ -169,11 +169,15 @@ angular.module('mosaicApp')
 			if( factory.currAuto ) {
 				factory.currMeanDisplay = factory.currMeanAuto;
 				factory.currSigmaDisplay = factory.currSigmaAuto;
+			} else {
+				factory.baselineTracking = false;
 			};
-		}
+		};
+
 		//Update funcs for local vars when advanced settings are changed
 		factory.updateLocals = function() {
 			factory.updateCurrAuto();
+			factory.updateBaselineTracking();
 			factory.updateCurrThresholdpA();
 			factory.updateTrajIO();
 			factory.procAlgorithmFromSettings();
@@ -188,8 +192,21 @@ angular.module('mosaicApp')
 				factory.currSigmaDisplay = Math.round(factory.currSigmaAuto*1000)/1000;
 			} else {
 				factory.currAuto = false;
+				factory.baselineTracking = false;
 				factory.currMeanDisplay = Math.round(factory.analysisSettings.eventSegment.meanOpenCurr*1000)/1000;
 				factory.currSigmaDisplay = Math.round(factory.analysisSettings.eventSegment.sdOpenCurr*1000)/1000;
+			};
+		};
+
+		factory.updateBaselineTracking = function() {
+			if (factory.currAuto) {
+				if (factory.analysisSettings.eventSegment.trackBaseline) {
+					factory.baselineTracking = true;
+				} else {
+					factory.baselineTracking = false;
+				};
+			} else {
+				factory.baselineTracking = false;
 			};
 		};
 
@@ -236,9 +253,15 @@ angular.module('mosaicApp')
 			if (factory.currAuto) {
 				settings.eventSegment.meanOpenCurr=-1;
 				settings.eventSegment.sdOpenCurr=-1;
+
+				if (factory.baselineTracking) {
+					settings.eventSegment.trackBaseline=1;
+				};
 			} else {
 				settings.eventSegment.meanOpenCurr=factory.currMeanDisplay;
 				settings.eventSegment.sdOpenCurr=factory.currSigmaDisplay;
+
+				settings.eventSegment.trackBaseline=0;
 			};
 
 			settings.eventSegment.eventThreshold=(factory.currMeanDisplay-factory.currThresholdpA)/factory.currSigmaDisplay;
