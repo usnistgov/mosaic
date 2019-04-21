@@ -7,6 +7,7 @@
 	:License:	See LICENSE.TXT
 	:ChangeLog:
 	.. line-block::
+		4/19/19		AB 	Added an option (trackBaseline) to continuously track the opent channel baseline current during an analysis.
 		9/22/17 	AB 	Removed the filterEventPadding option to eventSegment.
 		7/15/17 	AB 	Add the filterEventPadding option to eventSegment.
 		3/16/16 	AB 	Replaced InitThreshold with StepSize in default settings for ADEPT and warn users when InitThreshold is used.
@@ -129,7 +130,7 @@ __settings__="""
 		"reserveNCPU"			: "2",
 		"minBaseline"			: "-1",
 		"maxBaseline"			: "-1",
-		"baselineTracking"		: "0"
+		"trackBaseline"			: "0"
 	},
 	"adept2State" : {
 		"FitTol"				: "1.e-7",
