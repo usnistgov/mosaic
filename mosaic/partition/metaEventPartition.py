@@ -7,6 +7,7 @@
 	:License:	See LICENSE.TXT
 	:ChangeLog:
 	.. line-block::
+		4/19/19		AB 	Added an option (trackBaseline) to continuously track the opent channel baseline current during an analysis.
 		9/25/17 	AB 	Save unfiltered event padding by default.
 		3/25/17 	AB 	Allow an optional argument to pass a database name.
 		6/29/16 	AB 	Fixed the open channel statistics routine (_openchanstats) to fix an 
@@ -398,6 +399,13 @@ class metaEventPartition(object):
 		else:
 			self.logger.warning("WARNING: Automatic open channel state estimation has been disabled.")
 
+		if self.AutomaticBaseline and self.trackBaseline:
+			self.logger.warning("WARNING: Automatic open channel current tracking (trackBaseline) has been enabled.")
+
+			self.logger.warning("WARNING: Open channel current limits (minBaseline and maxBaseline) have been disabled.")
+			self.minBaseline=-1.0
+			self.maxBaseline=-1.0
+
 		# Initialize a FIFO queue to keep track of open channel conductance
 		#self.openchanFIFO=npfifo.npfifo(nPoints)
 		
@@ -472,6 +480,7 @@ class metaEventPartition(object):
 
 		# write out trajectory IO settings
 		self.trajDataObj.formatsettings()
+		self.logger.info( '\t\tBaseline channel current tracking = {0}'.format(self.trackBaseline) )
 		
 		# write out event segment settings/stats
 		self.formatsettings()
