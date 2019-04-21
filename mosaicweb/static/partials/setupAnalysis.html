@@ -1,4 +1,4 @@
-<md-content aria-label="New Analysis" flex-gt-sm="75" flex="90" flex-offset-gt-sm="15" flex-offset="0">
+<md-content aria-label="New Analysis" flex-gt-sm="80" flex="90" flex-offset-gt-sm="10" flex-offset="5">
 <!-- ng-submit="startAnalysis()"  -->
 	<form layout="column" name="newAnalysisForm" ng-disabled="mosaicConfigModel.analysisRunning">
 		<div layout="row" layout-align="end center">
@@ -30,7 +30,7 @@
 		</md-content>
 
 		<div layout-gt-sm="row" layout="column">
-			<md-content md-whiteframe="2" style="margin: 8px; padding:8px;" flex-gt-sm>
+			<md-content md-whiteframe="2" style="margin: 8px; padding:8px;" flex-gt-sm="40">
 				<md-subheader class="md-primary" style="margin: 0; padding:0">
 					<div layout="row" flex>
 						<p flex="70">Data File Settings</p>
@@ -98,7 +98,7 @@
 						<input type="number" min="0" step="1" ng-model="model.FsKHz" name="FsKHz" ng-disabled="true">
 					</md-input-container>
 					<md-icon md-font-set="regular-font">kHz</md-icon>
-					<span flex="50"></span>
+					<span flex="40"></span>
 				</div>
 			</md-content>
 
@@ -222,7 +222,12 @@
 						<md-switch class="md-primary" md-no-ink aria-label="Automatically track baseline current" ng-model="model.baselineTracking" name="baselineTracking" ng-disabled="mosaicConfigModel.analysisRunning || !model.currAuto">
 							Track Baseline Current
 						</md-switch>
-						<!-- <span flex="5"> -->
+						
+						<span flex="5"></span>
+
+						<md-switch class="md-primary" md-no-ink aria-label="Save Events to Database" ng-model="model.writeEventTS" ng-disabled="mosaicConfigModel.analysisRunning">
+							Save Events to Database
+						</md-switch>
 					</div>
 
 					<span flex></span>
@@ -254,9 +259,6 @@
 			
 				<span flex></span>
 
-				<md-switch class="md-primary" md-no-ink aria-label="Save Events to Database" ng-model="model.writeEventTS" ng-disabled="mosaicConfigModel.analysisRunning">
-					Save Events to Database
-				</md-switch>
 			</div>
 		</md-content>
 	</form>
