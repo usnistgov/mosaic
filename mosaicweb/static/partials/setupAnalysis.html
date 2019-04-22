@@ -43,11 +43,17 @@
 				</md-subheader>
 
 				<div layout="column" style="margin:6px; padding:6px">
-					<p flex-gt-sm="100" style="color: #696969; margin:0; padding:0;"><em>Data Path:</em>{{model.dataPath}}</p>
+					<md-content class="md-whiteframe" style="margin: 0; padding: 0">
+						<md-input-container class="md-block">
+							<label>Data Path</label>
+							<textarea ng-model="model.dataPath" tabindex="0" style="color: #696969; font-size: 14px;" aria-label="Data Path" ng-disabled="true"></textarea>
+						</md-input-container>
+					</md-content>
+					
 				</div>
 
 
-				<div layout="row" style="margin: 6px; padding:6px">
+				<div layout="row" style="margin: 2px; padding:2px">
 					<md-input-container flex="40">
 						<label>File Type</label>
 						<md-select ng-model="model.selectedFileType" md-selected-text="getFileType()" ng-disabled="true">
@@ -56,8 +62,10 @@
 							</md-optgroup>
 						</md-select>
 					</md-input-container>
+					
 					<span flex="5"></span>
-					<md-input-container flex>
+					
+					<md-input-container flex style="border: none;">
 						<label>DC Offset</label>
 						<input type="number" step="0.1" ng-model="model.dcOffset" ng-disabled="model.controlsUpdating">
 						<md-icon md-font-set="regular-font">pA</md-icon>
@@ -65,7 +73,7 @@
 					<!-- <span flex="40"></span> -->
 				</div>
 
-				<div layout="row" style="margin: 6px; padding:6px">
+				<div layout="row" style="margin: 2px; padding:2px">
 					<md-input-container>
 						<label>Start</label>
 						<input type="number" min="0" step="0.01" ng-model="model.start" name="start" ng-disabled="model.controlsUpdating" ng-model-options="{ updateOn: 'blur', allowInvalid: false}">
@@ -92,7 +100,7 @@
 					<md-icon md-font-set="regular-font">s</md-icon>
 				</div>
 
-				<div layout="row" style="margin: 6px; padding:6px">
+				<div layout="row" style="margin: 2px; padding:2px">
 					<md-input-container>
 						<label>Sampling Rate (F<sub>s</sub>)</label>
 						<input type="number" min="0" step="1" ng-model="model.FsKHz" name="FsKHz" ng-disabled="true">
@@ -113,7 +121,7 @@
 						</md-button>
 					</div>
 				</md-subheader>
-				<div layout="row" style="margin: 6px; padding:6px">
+				<div layout="row" style="margin: 2px; padding:2px">
 					<md-input-container flex="55">
 						<label>Partition Algorithm</label>
 						<md-select ng-model="model.selectedPartAlgoType" md-selected-text="getPartAlgoType()" ng-disabled="mosaicConfigModel.analysisRunning">
@@ -171,7 +179,7 @@
 					</md-input-container>
 				</md-slider-container>
 
-				<div layout="row" style="margin: 6px; padding:6px">
+				<div layout="row" style="margin: 2px; padding:2px">
 					<md-input-container>
 						<label>&#x2329;i<sub>0</sub>&#x232A;</label>
 						 <!-- ng-model-options="{ updateOn: 'blur', allowInvalid: false}" -->
@@ -214,7 +222,7 @@
 
 				</div>
 
-				<div layout="row" style="margin: 6px; padding:6px">
+				<div layout="row" style="margin: 2px; padding:2px">
 					
 					<div layout="row" layout-align="left center">
 						<!-- <span flex>Track Baseline Current</span>
@@ -247,7 +255,7 @@
 						</md-button>
 					</div>
 			</md-subheader>
-			<div layout="row" style="margin: 6px; padding:6px">
+			<div layout="row" style="margin: 2px; padding:2px">
 				<md-input-container flex="35">
 					<label>Processing Algorithm</label>
 					<md-select ng-model="model.selectedProcAlgoType" name="selectedProcAlgoType" md-selected-text="getProcAlgoType()" ng-disabled="mosaicConfigModel.analysisRunning">
