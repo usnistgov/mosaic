@@ -256,6 +256,8 @@ angular.module('mosaicApp')
 
 				if (factory.baselineTracking) {
 					settings.eventSegment.trackBaseline=1;
+				} else {
+					settings.eventSegment.trackBaseline=0;
 				};
 			} else {
 				settings.eventSegment.meanOpenCurr=factory.currMeanDisplay;
