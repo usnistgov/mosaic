@@ -443,6 +443,7 @@ def initialization():
 	appAnalytics=params.get("appAnalytics", -1)
 
 	gac=ga._gaCredentialCache()
+
 	if appAnalytics!=-1:
 		gac["gaenable"]=str(appAnalytics)
 
@@ -452,12 +453,12 @@ def initialization():
 	gaenable=False
 	gauimode=False
 
-	if gac["gaenable"]:
+	if eval(gac["gaenable"]):
 		gaenable="True"
 	else:
 		gaenable="False"
 
-	if gac["gauimode"]:
+	if eval(gac["gauimode"]):
 		gauimode="True"
 	else:
 		gauimode="False"

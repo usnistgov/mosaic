@@ -126,8 +126,8 @@ angular.module('mosaicApp', ['ngRoute', 'ngMaterial', 'ngMessages', 'ngAnimate',
 		$scope.initializationPost = function(params) {
 			mosaicUtilsFactory.post('/initialization', params)
 			.then(function(response) {
-				$scope.appAnalytics = response.data.appAnalytics;	
-				$scope.showAnalyticsOptions = response.data.showAnalyticsOptions;
+				$scope.appAnalytics = response.data.appAnalytics == "True" ? true : false;
+				$scope.showAnalyticsOptions = response.data.showAnalyticsOptions == "True" ? true : false;
 
 				mosaicConfigFactory.serverMode = response.data.serverMode;
 			}, function(error) {
