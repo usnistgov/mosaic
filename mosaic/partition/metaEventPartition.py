@@ -480,10 +480,10 @@ class metaEventPartition(object):
 
 		# write out trajectory IO settings
 		self.trajDataObj.formatsettings()
-		self.logger.info( '\t\tBaseline channel current tracking = {0}'.format(self.trackBaseline) )
 		
 		# write out event segment settings/stats
 		self.formatsettings()
+		self.logger.info( '\t\tBaseline channel current tracking = {0}'.format(self.trackBaseline) )
 
 		# event processing settings
 
