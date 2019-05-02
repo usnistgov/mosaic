@@ -1,13 +1,13 @@
 language: python
 
-os:
-  - linux
-  - osx
+matrix:
+  include:
+    - os: linux
+        python: 2.7
+    - os: osx
+        language: generic
 
 sudo: false
-
-python:
-  - "2.7"
 
 notifications:
   email: 
