@@ -50,3 +50,4 @@ install:
 script: 
   - nosetests --with-coverage -v --cover-package=mosaic --cover-package=mosaicweb 
   - codecov
+  
