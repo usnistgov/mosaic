@@ -133,13 +133,15 @@ class binTrajIO(metaTrajIO.metaTrajIO):
 			raise metaTrajIO.InsufficientArgumentsError("{0} requires the column types to be defined.".format(type(self).__name__))
 		else:
 			if type(self.ColumnTypes) is str or type(self.ColumnTypes) is unicode: 
-				self.ColumnTypes=eval_(self.ColumnTypes)
+				self.ColumnTypes=eval(str(self.ColumnTypes))
 		
 		if not hasattr(self, 'IonicCurrentColumn'):
 			raise metaTrajIO.InsufficientArgumentsError("{0} requires the ionic current column to be defined.".format(type(self).__name__))
 		
 		if not hasattr(self, 'HeaderOffset'):
 			self.HeaderOffset=0
+		else:
+			self.HeaderOffset=int(eval(str(self.HeaderOffset)))
 
 		try:
 			self.IonicCurrentType=dict(self.ColumnTypes)[self.IonicCurrentColumn]
@@ -153,12 +155,12 @@ class binTrajIO(metaTrajIO.metaTrajIO):
 		if not hasattr(self, 'AmplifierScale'):
 			self.AmplifierScale=1.0
 		else:
-			self.AmplifierScale=float(eval_(self.AmplifierScale))
+			self.AmplifierScale=eval(str(self.AmplifierScale))
 
 		if not hasattr(self, 'AmplifierOffset'): 
 			self.AmplifierOffset=0.0
 		else:
-			self.AmplifierOffset=float(self.AmplifierOffset)
+			self.AmplifierOffset=float(eval(str(self.AmplifierOffset)))
 
 		# additional meta data
 		self.fileFormat='bin'
@@ -166,6 +168,8 @@ class binTrajIO(metaTrajIO.metaTrajIO):
 		# set the sampling frequency in Hz.
 		if not hasattr(self, 'Fs'):	
 			self.Fs=self.SamplingFrequency
+		else:
+			self.Fs=float(eval(str(self.Fs)))
 
 		self.binLogger=mlog.mosaicLogging().getLogger(name=__name__)
 
