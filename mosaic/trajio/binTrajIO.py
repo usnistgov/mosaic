@@ -169,7 +169,7 @@ class binTrajIO(metaTrajIO.metaTrajIO):
 		if not hasattr(self, 'Fs'):	
 			self.Fs=self.SamplingFrequency
 		else:
-			self.Fs=float(eval(str(self.Fs)))
+			self.Fs=int(eval(str(self.Fs)))
 
 		self.binLogger=mlog.mosaicLogging().getLogger(name=__name__)
 
