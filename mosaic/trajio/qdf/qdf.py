@@ -8,6 +8,7 @@
 	:License:	See LICENSE.TXT
 	:ChangeLog:
 	.. line-block::
+		5/24/19		AB 	Port to Python 3.7
 		9/25/16 	AB 	Code cleanup and bug fixes.
 		9/22/16 	AB 	Fixed a QUBTree parsing bug and added data integrity checks.
 		9/22/16		AB 	Update scaling when the time-series is stored as current.
@@ -22,6 +23,12 @@ qubDataTypes={
 	144		:	"i",
 	3328	:	"d"
 }
+
+def str_(s):
+	if type(s)==bytes:
+		return str(s, 'utf-8')
+	else:
+		return s
 
 class qnode(object):
 	"""
@@ -75,7 +82,8 @@ class qnode(object):
 
 class qdict(dict):
 	def __getitem__(self, key):
-		node=dict.__getitem__(self, key)
+		k=str_(key)
+		node=dict.__getitem__(self, k)
 		
 		if isinstance(node, qnode):
 			if len(node.data)==1:
@@ -86,12 +94,13 @@ class qdict(dict):
 		return node
 
 	def __setitem__(self, key, val):
-		dict.__setitem__(self, key, val)
+		k=str_(key)
+
+		dict.__setitem__(self, k, val)
 
 	def update(self, *args, **kwargs):
-		for k, v in dict(*args, **kwargs).iteritems():
-			self[k] = v
-
+		for k, v in dict(*args, **kwargs).items():
+			self[str_(k)] = v
 
 class qtree(dict):
 	"""
@@ -100,6 +109,20 @@ class qtree(dict):
 	def __init__(self, fhnd, offset):
 		self.fhnd=fhnd
 		self.hdrOffset=offset
+
+	def __getitem__(self, key):
+		k=str_(key)
+		
+		return dict.__getitem__(self, k)
+
+	def __setitem__(self, key, val):
+		k=str_(key)
+
+		dict.__setitem__(self, k, val)
+
+	def update(self, *args, **kwargs):
+		for k, v in dict(*args, **kwargs).items():
+			self[str_(k)] = v
 
 	def parse(self):
 		qn=qnode(self.fhnd, self.hdrOffset)
@@ -112,14 +135,14 @@ class qtree(dict):
 			try:
 				while s.siblingOffset:
 					s=qnode(self.fhnd, s.siblingOffset)
-					if s.nodeName in childDict.keys():
+					if s.nodeName in list(childDict.keys()):
 						raise QDFError("The node name {0} already exists.".format(s.nodeName))
 					else:
 						childDict[s.nodeName]=s
 			except AttributeError:
 				pass
 
-			for k,v in childDict.iteritems():
+			for k,v in childDict.items():
 				if v.childOffset:
 					t=qtree(self.fhnd, v.childOffset)
 					t.parse()
@@ -144,6 +167,7 @@ class QDF(object):
 		self.qdftree=qtree(fhnd, 12)
 		self.qdftree.parse()
 
+		print(self.qdftree)
 		nchans=self.qdftree["DataFile"]["ADChannelCount"]
 		if nchans > 1:
 			raise QDFError("Multiple I/O channels ({0}) are not supported.".format(nchans))
@@ -151,7 +175,7 @@ class QDF(object):
 
 	def _checkMagic(self, fhnd):
 		magic=fhnd.read(12)
-		if magic != "QUB_(;-)_QFS":
+		if str(magic, "utf-8") != "QUB_(;-)_QFS":
 			raise QDFError("Incorrect magic string found: {0}".format(magic))
 
 
@@ -183,9 +207,12 @@ if __name__ == '__main__':
 	import pprint
 
 	def kvprint(d, key):
-		print "{0} = {1}".format(key, d[key])
+		print("{0} = {1}".format(key, d[key]))
 
 	q=QDF('data/SingleChan-0001.qdf', 9.1e9, 1.07e-12)
+
+	print(q)
+
 	d=q.VoltageToCurrent()
 
 	df=q.qdftree["DataFile"]
@@ -198,6 +225,6 @@ if __name__ == '__main__':
 	kvprint( df, "Sampling" )
 	kvprint( df, "Scaling" )
 	kvprint( df["Segments"]["Segment"], "StartTime" )
-	print
+	print()
 	pp = pprint.PrettyPrinter(indent=2)
 	pp.pprint(q.qdftree)
