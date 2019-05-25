@@ -40,9 +40,9 @@ class data_record(dict):
 		in a sqlite3 DB.
 	"""
 	def __init__(self, data_label, data, data_t):
-		self.update( dict(zip( data_label, zip(data_t, data))) )
+		self.update( dict(list(zip( data_label, list(zip(data_t, data))))) )
 
-		self.dtypes=dict( zip(data_label, data_t) )
+		self.dtypes=dict( list(zip(data_label, data_t)) )
 
 	def __setitem__(self, key, val):
 		dat=val[1]
@@ -53,7 +53,7 @@ class data_record(dict):
 			elif val[0]=='INTEGER_LIST':
 				(packstr, bytes) = ('%si', 4)
 
-			if isinstance(val[1], unicode):
+			if isinstance(val[1], str):
 				decoded_data=base64.b64decode(val[1])
 				dat = list(struct.unpack( packstr % int(len(decoded_data)/bytes), decoded_data ))
 			else:
@@ -65,7 +65,7 @@ class data_record(dict):
 		return dict.__getitem__(self, key)
 
 	def update(self, *args, **kwargs):
-		for k, v in dict(*args, **kwargs).iteritems():
+		for k, v in dict(*args, **kwargs).items():
 			self[k] = v
 		
 class sqlite3MDIO(metaMDIO.metaMDIO):
@@ -196,7 +196,7 @@ class sqlite3MDIO(metaMDIO.metaMDIO):
 			
 			return list(settstr[0])[0]
 			# return base64.b64decode(list(settstr[0])[0])
-		except sqlite3.OperationalError, err:
+		except sqlite3.OperationalError as err:
 			raise
 		
 	def readAnalysisLog(self):
@@ -212,7 +212,7 @@ class sqlite3MDIO(metaMDIO.metaMDIO):
 			else:
 				return ""
 			# return base64.b64decode(list(settstr[0])[0])
-		except sqlite3.OperationalError, err:
+		except sqlite3.OperationalError as err:
 			raise
 
 
@@ -232,7 +232,7 @@ class sqlite3MDIO(metaMDIO.metaMDIO):
 				infodict[k]=v
 
 			return infodict
-		except sqlite3.OperationalError, err:
+		except sqlite3.OperationalError as err:
 			raise
 
 
@@ -246,7 +246,7 @@ class sqlite3MDIO(metaMDIO.metaMDIO):
 			self.logger.debug(_d("{0}", query))
 
 			return c.fetchall()
-		except sqlite3.OperationalError, err:
+		except sqlite3.OperationalError as err:
 			raise
 
 	def queryDB(self, query):
@@ -262,7 +262,7 @@ class sqlite3MDIO(metaMDIO.metaMDIO):
 			c.execute(str(query))
 		
 			return [ self._decoderecord(colnames, colnames_t, rec) for rec in c.fetchall() ]
-		except sqlite3.OperationalError, err:
+		except sqlite3.OperationalError as err:
 			raise
 
 	def executeSQL(self, query):
@@ -273,7 +273,7 @@ class sqlite3MDIO(metaMDIO.metaMDIO):
 			c.execute(str(query))
 
 			return c.fetchall()
-		except sqlite3.OperationalError, err:
+		except sqlite3.OperationalError as err:
 			raise
 	def exportToCSV(self, query):
 		"""
@@ -419,17 +419,17 @@ if __name__ == '__main__':
 		c.logger.debug('test')
 
 		q=c.queryDB( "select TimeSeries from metadata limit 100, 200" )
-		print "Results:", len(q)
+		print("Results:", len(q))
 
-		print c.readSettings()
-		print c.readAnalysisLog()
-		print c.readAnalysisInfo()
+		print(c.readSettings())
+		print(c.readAnalysisLog())
+		print(c.readAnalysisInfo())
 		# print zip( c.mdColumnNames, c.mdColumnTypes )
-		print
+		print()
 		# print [ c for c in zip( c.mdColumnNames, c.mdColumnTypes ) if c[1] != 'REAL_LIST' ]
 
 		# c.exportToCSV( "select * from metadata" )
-		print c.csvString( "select ProcessingStatus, BlockDepth from metadata limit 5" )
+		print(c.csvString( "select ProcessingStatus, BlockDepth from metadata limit 5" ))
 
 		c.closeDB()
 		
