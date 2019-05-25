@@ -17,7 +17,7 @@ from numpy import memmap
 import re
 import datetime
 
-class struct_file(file):
+class struct_file:
 	def read_f(self, format , offset = None):
 		if offset is not None:
 			self.seek(offset)
@@ -472,6 +472,6 @@ if __name__ == '__main__':
 
 	[freq, hdr, bandwidth, gain, data]=abfload_gp(f)
 
-	print freq, hdr, bandwidth, gain
+	print(freq, hdr, bandwidth, gain)
 	
-	print len(data)
+	print(len(data))

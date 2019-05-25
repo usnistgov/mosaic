@@ -1,4 +1,4 @@
-import testutil
+from . import testutil
 import copy
 import mosaic.commonExceptions
 from nose.tools import raises

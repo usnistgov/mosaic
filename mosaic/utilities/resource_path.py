@@ -19,7 +19,7 @@ def resource_path(filename):
 		Find the location of a file in the source tree and return its absolute path.
 	"""
 	sep=path_separator()
-	dirlist=string.split( os.path.dirname( os.path.abspath(__file__) ), sep )[:-2]
+	dirlist=os.path.dirname( os.path.abspath(__file__) ).split( sep )[:-2]
 
 	resource_files=[
 				"icon.png", 
@@ -81,11 +81,11 @@ def format_path(path):
 
 
 if __name__ == '__main__':
-	print resource_path('.settings')
-	print resource_path('eventMD-PEG29-Reference.sqlite')
-	print resource_path('SingleChan-0001.qdf')
-	print last_file_in_directory('C:\\temp\\', '*sqlite')
-	print format_path('C:\\temp\\*sqlite')
+	print((resource_path('.settings')))
+	print((resource_path('eventMD-PEG29-Reference.sqlite')))
+	print((resource_path('SingleChan-0001.qdf')))
+	print((last_file_in_directory('C:\\temp\\', '*sqlite')))
+	print((format_path('C:\\temp\\*sqlite')))
 	# return os.path.join(
 	# 	os.environ.get(
 	# 		"_MEIPASS2",

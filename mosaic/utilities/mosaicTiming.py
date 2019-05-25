@@ -149,7 +149,7 @@ class mosaicTiming:
 			Print timing results of the most recent function call
 		"""
 		if self.TimingEnabled:
-			for k, v in self.timingDataDict.iteritems():
+			for k, v in list(self.timingDataDict.items()):
 				self.logger.debug( _d(*v._currentTime()) )
 		
 	def PrintStatistics(self):
@@ -157,7 +157,7 @@ class mosaicTiming:
 			Print average timing results of the function call
 		"""
 		if self.TimingEnabled:
-			for k, v in self.timingDataDict.iteritems():
+			for k, v in list(self.timingDataDict.items()):
 				try:
 					self.logger.debug( _d(*v._timingStatistics()) )
 				except ZeroDivisionError:

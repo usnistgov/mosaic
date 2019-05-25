@@ -20,7 +20,7 @@ import numpy as np
 
 import mosaic.trajio.metaTrajIO as metaTrajIO
 import mosaic.utilities.mosaicLogging as mlog
-import qdf.qdf as qdf
+import mosaic.trajio.qdf.qdf as qdf
 
 __all__ = ["qdfTrajIO"]
 
@@ -127,7 +127,7 @@ if __name__ == '__main__':
 
 	for i in range(100):
 		d=b.popdata(100000)
-		print i, len(d)/100000., d[0], d[-1], np.mean(d), os.path.basename(b.LastFileProcessed)
+		print(i, len(d)/100000., d[0], d[-1], np.mean(d), os.path.basename(b.LastFileProcessed))
 
 
 

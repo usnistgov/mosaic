@@ -21,8 +21,8 @@ param_t={
 def readcsv(fname):
 	r1=csv.reader(open(fname,'rU'), delimiter=',')
 
-	p1=r1.next()
-	p2=r1.next()
+	p1=next(r1)
+	p2=next(r1)
 
 	Fs=1e6/(float(p2[0])-float(p1[0]))
 		
@@ -55,7 +55,7 @@ def readDataRAW(datfile):
 def readParametersJSON(paramfile):
 	prm=json.loads("".join((open(paramfile, 'r').readlines())))
 	
-	for k in prm.keys():
+	for k in list(prm.keys()):
 		v=eval_(prm[k])
 		prm[k]=param_t[k](v)
 

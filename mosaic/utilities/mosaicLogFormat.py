@@ -159,6 +159,6 @@ if __name__ == '__main__':
 
 	bar=foo()
 
-	print bar.x
+	print((bar.x))
 	bar.x=200
-	print bar.x
+	print((bar.x))

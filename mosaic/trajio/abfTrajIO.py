@@ -14,7 +14,7 @@
 
 """
 import mosaic.trajio.metaTrajIO as metaTrajIO
-import abf.abf as abf
+import mosaic.trajio.abf.abf as abf
 import mosaic.utilities.mosaicLogging as mlog
 
 import numpy as np

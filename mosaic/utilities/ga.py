@@ -5,8 +5,8 @@
 	:Author: 	Arvind Balijepalli <arvind.balijepalli@nist.gov>
 	:License:	See LICENSE.TXT
 """	
-import httplib
-import urllib2
+import http.client
+import urllib.request, urllib.error, urllib.parse
 import uuid
 import json
 import tempfile
@@ -93,7 +93,7 @@ def _gaPost(eventType, content):
 			else:
 				_debug=""
 
-			conn=httplib.HTTPSConnection(dec(gac["gaurl"]))
+			conn=http.client.HTTPSConnection(dec(gac["gaurl"]))
 			conn.request("POST", "{0}/{1}".format(_debug, dec(gac["gamode"])), payload, headers)
 			response=conn.getresponse()
 			data=response.read()
@@ -148,8 +148,8 @@ def _getGASettings(ga_cache):
 	logger=mlog.mosaicLogging().getLogger(name=__name__)
 	
 	try:
-		req=urllib2.Request(mosaic.DocumentationURL+".ga")
-		streamHandler=urllib2.build_opener()
+		req=urllib.request.Request(mosaic.DocumentationURL+".ga")
+		streamHandler=urllib.request.build_opener()
 		stream=streamHandler.open(req)
 
 		with open(ga_cache, 'w') as ga:
@@ -163,7 +163,7 @@ _gaCredentialCache()
 
 @registerLaunch("cli")
 def foo():
-	print "foo"
+	print("foo")
 
 if __name__ == '__main__':
 	foo()

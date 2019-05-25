@@ -16,19 +16,15 @@
 		9/21/16		AB	Initial version	
 """
 import struct
-import numpy as np 
+import numpy as np
+
+from mosaic.utilities.util import str_
 
 qubDataTypes={
 	28		:	"h",
 	144		:	"i",
 	3328	:	"d"
 }
-
-def str_(s):
-	if type(s)==bytes:
-		return str(s, 'utf-8')
-	else:
-		return s
 
 class qnode(object):
 	"""
@@ -167,7 +163,6 @@ class QDF(object):
 		self.qdftree=qtree(fhnd, 12)
 		self.qdftree.parse()
 
-		print(self.qdftree)
 		nchans=self.qdftree["DataFile"]["ADChannelCount"]
 		if nchans > 1:
 			raise QDFError("Multiple I/O channels ({0}) are not supported.".format(nchans))

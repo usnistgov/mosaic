@@ -60,7 +60,7 @@ ignorelist=[
 		"*.sqlite"
 	]
 
-class metaTrajIO(object):
+class metaTrajIO(object, metaclass=ABCMeta):
 	"""
 			.. warning:: |metaclass|
 
@@ -97,7 +97,6 @@ class metaTrajIO(object):
 				- `FileNotFoundError` : 			when data files do not exist in the specified path.
 				- `InsufficientArgumentsError` : 	when incompatible arguments are passed
 	"""
-	__metaclass__=ABCMeta
 
 	def __init__(self, **kwargs):
 		"""
@@ -106,7 +105,7 @@ class metaTrajIO(object):
 		self.dataGenerator=None
 
 		# start by setting all passed keyword arguments as class attributes
-		for (k,v) in kwargs.iteritems():
+		for (k,v) in kwargs.items():
 			setattr(self, k, v)
 
 		# Check if the passed arguments are sane	
@@ -134,7 +133,7 @@ class metaTrajIO(object):
 					delattr(self, 'dirname')
 				else:
 					raise IncompatibleArgumentsError("Missing arguments: 'dirname' or 'fnames' must be supplied to initialize {0}".format(type(self).__name__))
-			except AttributeError, err:
+			except AttributeError as err:
 				raise IncompatibleArgumentsError(err)
 
 		# set additional meta-data
@@ -143,7 +142,7 @@ class metaTrajIO(object):
 		try:
 			sep=path_separator()
 			self.datPath=format_path(sep.join((self.dataFiles[0].split( sep ))[:-1]))
-		except IndexError, err:
+		except IndexError as err:
 			raise FileNotFoundError("Files not found.")
 
 		# setup data filtering
@@ -314,7 +313,7 @@ class metaTrajIO(object):
 
 			# return the popped data
 			return t
-		except IndexError, err:
+		except IndexError as err:
 			if self.nearEndOfData>0:
 				self.currDataIdx+=n
 				self.globalDataIndex+=n
@@ -355,7 +354,7 @@ class metaTrajIO(object):
 			if len(t) < n: raise IndexError 
 				
 			return t
-		except IndexError, err:
+		except IndexError as err:
 			if self.nearEndOfData>0:
 				return t
 			else:
@@ -398,7 +397,7 @@ class metaTrajIO(object):
 			.. seealso:: See implementations of metaTrajIO for specfic documentation.
 		"""
 		try:			
-			data=self.scaleData(self.dataGenerator.next())
+			data=self.scaleData(next(self.dataGenerator))
 
 			if self.dataFilter:
 				self.dataFilterObj.filterData(data, self.Fs)
@@ -406,7 +405,7 @@ class metaTrajIO(object):
 			else:
 				self.currDataPipe=np.hstack((self.currDataPipe, data ))
 
-		except (StopIteration, AttributeError):
+		except (StopIteration, AttributeError, TypeError):
 			# Read a new data file to get more data
 			fname=self.popfnames()
 
