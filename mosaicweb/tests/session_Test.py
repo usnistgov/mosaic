@@ -63,8 +63,10 @@ class Session_TestSuite(mwebCommonTest):
 	@unittest.skipUnless(mosaic.WebServerMode=="local", "requires local web server.")
 	def test_analysisLog(self):
 		result=self._post( '/load-analysis', dict( databaseFile="data/eventMD-PEG28-ADEPT2State.sqlite" ) )
+		print(result)
 		d=self._get_data(result)
 
+		print(d)
 		result=self._post( '/analysis-log', dict( 
 			sessionID=d["sessionID"],
 			databaseFile="data/eventMD-PEG28-ADEPT2State.sqlite" ) 
@@ -146,5 +148,5 @@ class Session_TestSuite(mwebCommonTest):
 		d=self._get_data(result)
 
 		self.assertBaseline("analysis-histogram", result)
-		self.assertGreater(d.keys(), 0)
+		self.assertGreater(len(d.keys()), 0)
 		

@@ -9,6 +9,7 @@
 		4/15/17		AB 	Initial version
 """
 from mosaic.utilities.sqlQuery import query, rawQuery
+from mosaic.utilities.util import bytes_, str_
 import mosaic.mdio.sqlite3MDIO as sqlite
 from mosaicweb.plotlyUtils import plotlyWrapper
 import numpy as np
@@ -100,7 +101,7 @@ class analysisContour:
 		self.responseDict['layout']=layout
 		self.responseDict['options']={'displayLogo': False}
 
-		self.responseDict['queryString']=base64.b64encode(str(self.queryString))
+		self.responseDict['queryString']=str_(base64.b64encode(bytes_(self.queryString)))
 
 		self.responseDict['queryCols']=self._queryCols()
 		self.responseDict['queryConstraintsCols']=self._queryConsCols()
@@ -167,4 +168,4 @@ if __name__ == '__main__':
 			50
 		)
 
-	print a.analysisContour()
+	print(a.analysisContour())

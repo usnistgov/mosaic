@@ -10,7 +10,7 @@ class plotlyTrace(dict):
 			self['x']=xdat
 			self['y']=ydat
 			self.update(plotlyTrace.traceConfig[traceType])
-		except KeyError, err:
+		except KeyError as err:
 			raise InvalidTraceTypeError("Trace type '{0}' is not valid.".format(traceType))
 
 	traceConfig={
@@ -76,7 +76,7 @@ class plotlyLayout(dict):
 			self['side']='right'
 			
 			self.update(plotlyLayout.layoutConfig[layoutType])
-		except KeyError, err:
+		except KeyError as err:
 			raise InvalidLayoutTypeError("Layout type '{0}' is not valid.".format(layoutType))
 	
 	layoutConfig={

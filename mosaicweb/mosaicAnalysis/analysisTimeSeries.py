@@ -59,7 +59,7 @@ class analysisTimeSeries(dict):
 
 			dt=(1./self.FsHz)*decimate
 
-			ydat=np.array(q[1])
+			ydat=np.array(q[1]).astype(np.float64)
 			polarity=float(np.sign(np.mean(ydat)))
 
 			ydat=polarity*ydat[::decimate]
@@ -179,17 +179,18 @@ if __name__ == '__main__':
 	import mosaic
 	import time
 
-	for i in range(1,1000):
-		a=analysisTimeSeries(mosaic.WebServerDataLocation+"/m40_0916_RbClPEG/eventMD-20161208-130302.sqlite", i)
+	for i in range(1,10):
+		a=analysisTimeSeries(mosaic.WebServerDataLocation+"/Google Drive File Stream/My Drive/ReferenceData/m40_0916_RbClPEG/eventMD-20161208-130302.sqlite", i, ['normal'])
 		t=a.timeSeries()
+		print(t["eventNumber"], t["parameterTable"],t["eventViewPlot"])
 		if t["errorText"] != "":
-			print i, t["errorText"]
+			print( i, t["errorText"] )
 
-	times=np.array([], dtype=np.float)
-	for i in range(1,1000):
-		t1=time.time()
-		a=analysisTimeSeries(mosaic.WebServerDataLocation+"/m40_0916_RbClPEG/eventMD-20161208-130302.sqlite",i)
-		t=a.timeSeries()
-		times=np.append(times, [(time.time()-t1)*1e3]) 
+	# times=np.array([], dtype=np.float)
+	# for i in range(1,10):
+	# 	t1=time.time()
+	# 	a=analysisTimeSeries(mosaic.WebServerDataLocation+"/Google Drive File Stream/My Drive/ReferenceData/m40_0916_RbClPEG/eventMD-20161208-130302.sqlite",i, ['normal'])
+	# 	t=a.timeSeries()
+	# 	times=np.append(times, [(time.time()-t1)*1e3]) 
 
-	print round(np.mean(times), 2), "+/-", round(np.std(times), 2), "ms"
+	# print( round(np.mean(times), 2), "+/-", round(np.std(times), 2), "ms" )

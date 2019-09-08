@@ -41,7 +41,7 @@ class session(dict):
 		return dict.__getitem__(self, key)
 
 	def update(self, *args, **kwargs):
-		for k, v in dict(*args, **kwargs).iteritems():
+		for k, v in dict(*args, **kwargs).items():
 			self[k] = v
 
 class sessionManager(dict):
@@ -105,9 +105,9 @@ if __name__ == '__main__':
 	s.addSettingsString(key, '{}')
 	s.addDatabaseFile(key, 'foo.sqlite')
 
-	print s.keys()
-	print s[key] 
+	print(s.keys())
+	print(s[key])
 	s.addAnalysisRunningFlag(key, True)
-	print s.getSession(key)
+	print(s.getSession(key))
 
-	print s.getSessionAttribute(s.keys()[0], 'dataPath')
+	print(s.getSessionAttribute(s.keys()[0], 'dataPath'))
