@@ -43,13 +43,13 @@ if __name__ == "__main__":
 
 	s=EBSStateFileDict(resource_path('SingleChan-0001_state.txt'))
 
-	print s
+	print(s)
 
-	print
-	print
+	print()
+	print()
 
-	print 'FB Resistance =', float(s['FB Resistance'])/1e9, "GOhm"
-	print 'FB Capacitance =', float(s['FB Capacitance'])/1e-12, "pF"
-	print 'Sample Rate (Hz) = ', int(s['Sample Rate (Hz)'])/1e6, "MHz"
+	print( 'FB Resistance =', float(s['FB Resistance'])/1e9, "GOhm" )
+	print( 'FB Capacitance =', float(s['FB Capacitance'])/1e-12, "pF" )
+	print( 'Sample Rate (Hz) = ', int(s['Sample Rate (Hz)'])/1e6, "MHz" )
 
 	
