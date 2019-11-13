@@ -35,7 +35,7 @@ __all__ = ["metaEventProcessor", "MissingMDIOError"]
 class MissingMDIOError(Exception):
 	pass
 
-class metaEventProcessor(object):
+class metaEventProcessor(object, metaclass=ABCMeta):
 	"""
 		.. warning:: |metaclass|
 
@@ -60,7 +60,6 @@ class metaEventProcessor(object):
 				- `absdatidx` :			index of data start. This arg can allow arrival time estimation.
 				- `datafilehnd` :		reference to an metaMDIO object for meta-data IO
 	"""
-	__metaclass__=ABCMeta
 
 	def __init__(self, icurr, icurrU, Fs, **kwargs):
 		"""
@@ -204,7 +203,7 @@ class metaEventProcessor(object):
 		if self.mdProcessingStatus=='normal':
 			if not mosaic.DeveloperMode:
 				# set all meta data to -1
-				[ self._setRejectMetadata(mdHead) for mdHead in self.__dict__.keys() if mdHead.startswith('md')==True ]
+				[ self._setRejectMetadata(mdHead) for mdHead in list(self.__dict__.keys()) if mdHead.startswith('md')==True ]
 			# set processing status to status
 			self.mdProcessingStatus=status
 
@@ -215,9 +214,9 @@ class metaEventProcessor(object):
 		try:
 			if self.dataFileHnd:
 				self.dataFileHnd.writeRecord( (self._mdList())+[self.mdEventProcessTime, self.eventDataU] )
-		except sqlite3.OperationalError, err:
+		except sqlite3.OperationalError as err:
 			# If the db is locked, wait 1 s and try again.
-			print err
+			print(err)
 			time.sleep(1)
 			self.writeEvent()
 		# else:
@@ -237,7 +236,7 @@ class metaEventProcessor(object):
 		"""
 			Round a float to 3 decimal places. Leave ints and strings unchanged
 		"""
-		if type(dat) is types.FloatType:
+		if type(dat) is float:
 			return round(dat, 3)
 		else:
 			return dat

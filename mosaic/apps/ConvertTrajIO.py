@@ -76,7 +76,7 @@ class ConvertTrajIO(object):
 		if f != self.filePrefix:
 			self.filePrefix=f
 
-			self.fileGenerator=itertools.imap( 
+			self.fileGenerator=map( 
 							lambda n : self.filePrefix+"_"+str(n), 
 							itertools.count(1)
 						)
@@ -104,6 +104,6 @@ if __name__ == '__main__':
 			extension=ext
 		).Convert(100000)
 
-	print numpy.fromfile('data/SingleChan-0001_1.bin')[:5]
-	print numpy.hstack(numpy.fromfile('data/SingleChan-0001_1.csv', sep='\n'))[:5]
-	print numpy.hstack(numpy.fromfile('data/SingleChan-0001_1.tsv', sep='\t'))[:5]
+	print(numpy.fromfile('data/SingleChan-0001_1.bin')[:5])
+	print(numpy.hstack(numpy.fromfile('data/SingleChan-0001_1.csv', sep='\n'))[:5])
+	print(numpy.hstack(numpy.fromfile('data/SingleChan-0001_1.tsv', sep='\t'))[:5])

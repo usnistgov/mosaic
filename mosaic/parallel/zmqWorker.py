@@ -1,5 +1,5 @@
 import zmqIO
-import cPickle
+import pickle
 import sqlite3MDIO
 
 __all__ = ["zmqWorker", "InvalidFunctionName"]
@@ -17,7 +17,7 @@ def zmqWorker(inchdict, outchdict, workfuncname, dbSpec):
 	outchan=zmqIO.zmqIO(zmqIO.PUSH, outchdict)
 	inchan=zmqIO.zmqIO(zmqIO.PULL, inchdict)
 
-	outchanname=outchdict.keys()[0]
+	outchanname=list(outchdict.keys())[0]
 
 	# setup MDIO
 	if dbSpec[0]=="sqlite3MDIO":
@@ -32,7 +32,7 @@ def zmqWorker(inchdict, outchdict, workfuncname, dbSpec):
 					break
 
 				# unpickle the object
-				procObj=cPickle.loads( data )
+				procObj=pickle.loads( data )
 
 				# First set the meta-data IO object in eventobj
 				procObj.dataFileHnd=db

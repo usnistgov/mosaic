@@ -1,7 +1,7 @@
 import os.path
 
 # Control global settings
-DeveloperMode=False		# Turn on developer options.
+DeveloperMode=True		# Turn on developer options.
 
 CodeProfiling='summary'	# Either 'summary' to print a summary at the end of a run, 
 						# 'none' for no timing, or 

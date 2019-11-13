@@ -37,7 +37,7 @@
 		9/26/13		AB	Initial version
 """
 import mosaic.commonExceptions
-import metaEventProcessor
+from . import metaEventProcessor
 import mosaic.utilities.util as util
 import mosaic.utilities.mosaicLogging as mlog
 import mosaic.utilities.fit_funcs as fit_funcs
@@ -273,12 +273,13 @@ class adept(metaEventProcessor.metaEventProcessor):
 
 			igdict=params.valuesdict()
 
+			print(params)
 			optfit=Minimizer(self._objfunc, params, fcn_args=(ts,edat,))
 			optfit.prepare_fit()
 			result=optfit.leastsq(xtol=self.FitTol,ftol=self.FitTol,maxfev=self.FitIters)
 
 			if result.success:
-				tt=[init[0] for init, final in zip(igdict.items(), (result.params.valuesdict()).items()) if init==final]
+				tt=[init[0] for init, final in zip(list(igdict.items()), list((result.params.valuesdict()).items())) if init==final]
 				if len(tt) > 0:
 					self.flagEvent('wInitGuessUnchanged')
 
@@ -291,8 +292,9 @@ class adept(metaEventProcessor.metaEventProcessor):
 			raise
 		except InvalidEvent:
 			self.rejectEvent('eInvalidEvent')
-		except:
-	 		self.rejectEvent('eFitFailure')
+		except BaseException as err:
+			print(err)
+			self.rejectEvent('eFitFailure')
 
 	def _objfunc(self, params, t, data):
 		""" model parameters for multistate blockade """
@@ -381,6 +383,6 @@ class adept(metaEventProcessor.metaEventProcessor):
 			# raise InvalidEvent
 			self.rejectEvent(cusumObj.mdProcessingStatus+"_init")
 		else:
-			return zip(cusumObj.mdCurrentStep, cusumObj.mdEventDelay)
+			return list(zip(cusumObj.mdCurrentStep, cusumObj.mdEventDelay))
 
 

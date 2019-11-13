@@ -24,7 +24,7 @@
 		4/18/13		AB	Initial version
 """
 import mosaic.commonExceptions
-import metaEventProcessor
+from . import metaEventProcessor
 import mosaic.utilities.util as util
 import mosaic.utilities.mosaicLogging as mlog
 import mosaic.utilities.fit_funcs as fit_funcs
@@ -215,8 +215,8 @@ class adept2State(metaEventProcessor.metaEventProcessor):
 			blockedCurrent=min(edat)
 			tauVal=dt
 
-			estart 	= self.__eventStartIndex( self.__threadList( edat, range(0,len(edat)) ), i0, i0sig ) - 1
-			eend 	= self.__eventEndIndex( self.__threadList( edat, range(0,len(edat)) ), i0, i0sig ) - 2
+			estart 	= self.__eventStartIndex( self.__threadList( edat, list(range(0,len(edat))) ), i0, i0sig ) - 1
+			eend 	= self.__eventEndIndex( self.__threadList( edat, list(range(0,len(edat))) ), i0, i0sig ) - 2
 
 			# For long events, fix the blocked current to speed up the fit
 			#if (eend-estart) > 1000:
@@ -302,7 +302,7 @@ class adept2State(metaEventProcessor.metaEventProcessor):
 	def __threadList(self, l1, l2):
 		""" thread two lists	"""
 		try:
-			return map( lambda x,y : (x,y), l1, l2 )
+			return list(map( lambda x,y : (x,y), l1, l2 ))
 		except KeyboardInterrupt:
 			raise
 

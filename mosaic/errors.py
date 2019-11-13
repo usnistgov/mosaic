@@ -50,7 +50,7 @@ class errors(dict):
 if __name__ == '__main__':
 	e=errors()
 
-	print e["eInvalidEvent"]
-	print e["eInvalidRCConst"]
-	print e["eInvalidStates_init"]
-	print e["wInvalidRedChiSq"]
+	print(e["eInvalidEvent"])
+	print(e["eInvalidRCConst"])
+	print(e["eInvalidStates_init"])
+	print(e["wInvalidRedChiSq"])

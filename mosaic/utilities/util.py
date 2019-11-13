@@ -13,7 +13,15 @@ class WindowSizeError:
 	
 def str_(s):
 	if type(s)==bytes:
-		return str(s, 'utf-8')
+		# return str(s, 'utf-8')
+		return str(s, 'latin-1')
+	else:
+		return s
+
+def bytes_(s):
+	if type(s)==str:
+		# return str(s, 'utf-8')
+		return bytes(s, 'latin-1')
 	else:
 		return s
 

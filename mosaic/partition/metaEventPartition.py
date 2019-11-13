@@ -35,13 +35,10 @@ import os
 import time
 import datetime
 import csv
-import cPickle
+import pickle
 import multiprocessing
-
 import numpy as np 
-import scipy.stats
 import uncertainties
-from  collections import deque
 
 import mosaic.commonExceptions
 import mosaic.trajio.metaTrajIO as metaTrajIO
@@ -50,7 +47,10 @@ from mosaic.utilities.resource_path import format_path
 from mosaic.utilities.ionic_current_stats import OpenCurrentDist
 import mosaic.utilities.mosaicTiming as mosaicTiming
 import mosaic.utilities.mosaicLogging as mlog
+
 from mosaic.utilities.mosaicLogFormat import _d
+from  collections import deque
+from scipy import stats
 
 __all__ = ["metaEventPartition", "ExcessiveDriftError", "DriftRateError"]
 
@@ -63,7 +63,7 @@ class ExcessiveDriftError(Exception):
 class DriftRateError(Exception):
 	pass
 
-class metaEventPartition(object):
+class metaEventPartition(object, metaclass=ABCMeta):
 	"""
 		.. warning:: |metaclass|
 
@@ -95,7 +95,6 @@ class metaEventPartition(object):
 			- `minBaseline` : 	Minimum value for the ionic current baseline.
 			- `maxBaseline` : 	Maximum value for the ionic current baseline.
 	"""
-	__metaclass__=ABCMeta
 
 	def __init__(self, trajDataObj, eventProcHnd, eventPartitionSettings, eventProcSettings, settingsString, **kwargs):
 		"""
@@ -179,10 +178,10 @@ class metaEventPartition(object):
 				self.SendJobsChan.zmqSendData('job','STOP')
 			
 			# wait for the processes to terminate
-			for k in self.parallelProcDict.keys():
+			for k in list(self.parallelProcDict.keys()):
 				os.kill( self.parallelProcDict[k].pid, signal.SIGINT )
 				# self.parallelProcDict[k].terminate()
-			for k in self.parallelProcDict.keys():
+			for k in list(self.parallelProcDict.keys()):
 				self.parallelProcDict[k].join()
 
 			# shutdown the zmq channels
@@ -226,7 +225,7 @@ class metaEventPartition(object):
 				#print self.meanOpenCurr, self.minDrift, self.maxDrift, self.minDriftR, self.maxDriftR
 
 				# Process the data segment for events
-                         
+						 
 				if (self.meanOpenCurr > self.minBaseline and self.meanOpenCurr < self.maxBaseline) or self.minBaseline == -1.0 or self.maxBaseline == -1.0:
 					self._eventsegment()
 				else: #skip over bad data, no need to abort
@@ -237,7 +236,7 @@ class metaEventPartition(object):
 				self.trajDataObj.processedFilenames=[]
 
 
-		except metaTrajIO.EmptyDataPipeError, err:
+		except metaTrajIO.EmptyDataPipeError as err:
 			self.segmentTime=self.timingObj.time()-startTime
 			self.logger.info('[Status]')
 			self.logger.info('\tSegment trajectory: ***NORMAL***')
@@ -246,7 +245,7 @@ class metaEventPartition(object):
 			self.logger.info('[Status]')
 			self.logger.info('\tSegment trajectory: ***ERROR***')
 			self.logger.info('\t\t{0}'.format(str(err)))
-		except KeyboardInterrupt, err:
+		except KeyboardInterrupt as err:
 			self.segmentTime=self.timingObj.time()-startTime
 			self.logger.info('[Status]')
 			self.logger.info('\tSegment trajectory: ***USER STOP***')
@@ -441,14 +440,14 @@ class metaEventPartition(object):
 
 						if self.eventprocessedcount%100 == 0:
 							sys.stdout.write('Processing %d of %d events.\r' % (self.eventprocessedcount,self.eventcount) )
-	    					sys.stdout.flush()
+							sys.stdout.flush()
 
 			self.logger.info('\tProcess events: ***NORMAL***')
 			self.procTime+=self.timingObj.time()-startTime
 		except KeyboardInterrupt:
 			self.procTime+=self.timingObj.time()-startTime
 			self.logger.info('\tProcess events: ***USER STOP***')
-		except BaseException, err:
+		except BaseException as err:
 			self.logger.info('\tProcess events: ***ERROR***')
 			self.logger.info('\t\t{0}'.format(str(err)))
 			self.procTime+=self.timingObj.time()-startTime
@@ -503,7 +502,7 @@ class metaEventPartition(object):
 
 		logfile=self.mdioDBHnd.dbFilename.replace('eventMD', 'eventProcessing').replace('sqlite', 'log')
 		log=self.mdioDBHnd.readAnalysisLog()
-		print log
+		print(log)
 		with open(logfile, 'w') as f:
 			f.write(log)
 
@@ -534,7 +533,7 @@ class metaEventPartition(object):
 		mu, sig=OpenCurrentDist(curr, 0.5, self.minBaseline, self.maxBaseline)
 
 		# Fit the data to a straight line to calculate the slope
-		slope, intercept, r_value, p_value, std_err=scipy.stats.linregress(tstamp, curr)
+		slope, intercept, r_value, p_value, std_err=stats.linregress(tstamp, curr)
 
 		# self.logger.debug(_d("mu={0}, sigma={1}, slope={2}", mu, sig, slope ))
 
@@ -601,7 +600,7 @@ class metaEventPartition(object):
 			# handle parallel
 			sys.stdout.flush()
 
-			self.SendJobsChan.zmqSendData('job', cPickle.dumps(eventobj))
+			self.SendJobsChan.zmqSendData('job', pickle.dumps(eventobj))
 			
 			# check for a message 100 times. If an empty message is recevied quit immediately
 			for i in range(100):	

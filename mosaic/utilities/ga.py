@@ -20,7 +20,7 @@ import mosaic
 import mosaic.utilities.mosaicLogging as mlog
 from mosaic.utilities.mosaicLogFormat import _d
 from mosaic.utilities.resource_path import resource_path, format_path
-from mosaic.utilities.util import eval_
+from mosaic.utilities.util import eval_, str_
 
 def registerLaunch(tag):
 	def _registerLaunch(func):
@@ -80,7 +80,7 @@ def _gaPost(eventType, content):
 
 		if eval_(gac["gaenable"]):
 			payload="v=1&tid={0}&cid={1}&t=event&ec=mosaic-{2}-{3}&ea={4}&el={5}".format(
-					dec(gac["gaid"]), 
+					str_(dec(gac["gaid"])), 
 					_uuid(),
 					mosaic.__version__, 
 					mosaic.__build__, 
@@ -93,14 +93,16 @@ def _gaPost(eventType, content):
 			else:
 				_debug=""
 
-			conn=http.client.HTTPSConnection(dec(gac["gaurl"]))
-			conn.request("POST", "{0}/{1}".format(_debug, dec(gac["gamode"])), payload, headers)
+			conn=http.client.HTTPSConnection(str_(dec(gac["gaurl"])))
+			conn.request("POST", "{0}/{1}".format(_debug, str_(dec(gac["gamode"]))), payload, headers)
 			response=conn.getresponse()
 			data=response.read()
 
 			conn.close()
 			if _debug:
 				logger.debug(_d("ga collect: {0}", data))
+		else:
+			logger.debug(_d("GA disabled."))
 	except BaseException as err:
 		logger.debug(_d("Exception ignored: {0}\n{1}", repr(err), traceback.format_exc()))
 		pass
@@ -135,7 +137,8 @@ def _gaCredentialCache():
 			_getGASettings(ga_cache)
 
 		with open(ga_cache, 'r') as ga:
-			return json.loads(ga.read())
+			cache=ga.read()
+			return json.loads(cache)
 	except BaseException as err:
 		logger.debug(_d("Exception ignored: {0}\n{1}", repr(err), traceback.format_exc()))
 		return
@@ -153,7 +156,7 @@ def _getGASettings(ga_cache):
 		stream=streamHandler.open(req)
 
 		with open(ga_cache, 'w') as ga:
-			ga.write( stream.read() )
+			ga.write( str_(stream.read()) )
 
 		logger.info("Cached GA settings to {0}.".format(str(ga_cache)))
 	except:
@@ -163,7 +166,7 @@ _gaCredentialCache()
 
 @registerLaunch("cli")
 def foo():
-	print("foo")
+	pass
 
 if __name__ == '__main__':
 	foo()

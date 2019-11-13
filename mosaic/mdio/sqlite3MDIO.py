@@ -16,7 +16,7 @@
 		9/28/14		AB 	Initial version
 """
 import sys
-
+	
 import sqlite3
 import base64
 import struct
@@ -228,7 +228,7 @@ class sqlite3MDIO(metaMDIO.metaMDIO):
 			infolist=c.fetchall()[0]
 
 			infodict={}
-			for k,v in zip(infoheadings, infolist)[:-1]:
+			for k,v in list(zip(infoheadings, infolist))[:-1]:
 				infodict[k]=v
 
 			return infodict
@@ -415,7 +415,8 @@ class sqlite3MDIO(metaMDIO.metaMDIO):
 if __name__ == '__main__':
 	try:
 		c=sqlite3MDIO()
-		c.openDB(resource_path('data/eventMD-PEG28-ADEPT2State.sqlite'))
+		# c.openDB(resource_path('data/eventMD-PEG28-ADEPT2State.sqlite'))
+		c.openDB(mosaic.WebServerDataLocation+"/Google Drive File Stream/My Drive/ReferenceData/3.5M_121712/m40mV/eventMD-20190601-151120")
 		c.logger.debug('test')
 
 		q=c.queryDB( "select TimeSeries from metadata limit 100, 200" )
@@ -434,5 +435,4 @@ if __name__ == '__main__':
 		c.closeDB()
 		
 	except:
-		# c.closeDB()
 		raise

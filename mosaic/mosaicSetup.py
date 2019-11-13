@@ -28,16 +28,16 @@ class mosaicSetup:
 		if self.args["qt"]:
 			try:
 				from mosaicgui.run import startMOSAICQt
-			except ImportError, err:
-				print "Missing dependencies for Qt GUI ({0}).".format(err)
+			except ImportError as err:
+				print("Missing dependencies for Qt GUI ({0}).".format(err))
 				return
 
 			startMOSAICQt()
 		elif self.args["web"]:
 			try:
 				from mosaicweb.run import startMOSAICWeb
-			except ImportError, err:
-				print "Missing dependencies for Web GUI ({0}).".format(err)
+			except ImportError as err:
+				print("Missing dependencies for Web GUI ({0}).".format(err))
 				return
 			startMOSAICWeb()
 		else:
