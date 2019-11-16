@@ -49,15 +49,15 @@ class data_record(dict):
 
 		if val[0].endswith('_LIST'):
 			if val[0]=='REAL_LIST':
-				(packstr, bytes) = ('%sd', 8)
+				(packstr, nBytes) = ('%sd', 8)
 			elif val[0]=='INTEGER_LIST':
-				(packstr, bytes) = ('%si', 4)
+				(packstr, nBytes) = ('%si', 4)
 
-			if isinstance(val[1], str):
+			if isinstance(val[1], type('')) or isinstance(val[1], type(b'')):
 				decoded_data=base64.b64decode(val[1])
-				dat = list(struct.unpack( packstr % int(len(decoded_data)/bytes), decoded_data ))
+				dat = list(struct.unpack( packstr % int(len(decoded_data)/nBytes), decoded_data ))
 			else:
-				dat = base64.b64encode(struct.pack( packstr % len(val[1]), *val[1] ))
+				dat = base64.b64encode(struct.pack(packstr % len(val[1]), *val[1]))
 
 		dict.__setitem__(self, key, dat)
 
@@ -416,7 +416,7 @@ if __name__ == '__main__':
 	try:
 		c=sqlite3MDIO()
 		# c.openDB(resource_path('data/eventMD-PEG28-ADEPT2State.sqlite'))
-		c.openDB(mosaic.WebServerDataLocation+"/Google Drive File Stream/My Drive/ReferenceData/3.5M_121712/m40mV/eventMD-20190601-151120")
+		c.openDB("/Volumes/GoogleDrive/My Drive/ReferenceData/POM_ph5_45_m120_6/eventMD-20191115-194009.sqlite")
 		c.logger.debug('test')
 
 		q=c.queryDB( "select TimeSeries from metadata limit 100, 200" )
