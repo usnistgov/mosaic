@@ -19,20 +19,16 @@ class mosaicSetup:
 	def parseCLIArgs(self):
 		self.parser = argparse.ArgumentParser(description='Run the MOSAIC graphical interface')
 		
-		self.parser.add_argument('-w', '--web', dest='web', default=True, action='store_true', help='Run the MOSAIC web interface (default)')
-		self.parser.add_argument('-q', '--qt', dest='qt', default=False, action='store_true', help='Run the MOSAIC Qt interface')
+		self.parser.add_argument('-w', '--web', dest='web', default=True, action='store_true', help='(default) Run the MOSAIC web interface (default)')
+		self.parser.add_argument('-q', '--qt', dest='qt', default=False, action='store_true', help='(depracated) Run the MOSAIC Qt interface')
 		
 		self.args = vars(self.parser.parse_args())
 
 	def launchMOSAIC(self):
 		if self.args["qt"]:
-			try:
-				from mosaicgui.run import startMOSAICQt
-			except ImportError as err:
-				print("Missing dependencies for Qt GUI ({0}).".format(err))
-				return
+			print("\nThe MOSAIC Qt GUI is no longer supported. Please use the web interface.\n")			
 
-			startMOSAICQt()
+			self.parser.print_help()
 		elif self.args["web"]:
 			try:
 				from mosaicweb.run import startMOSAICWeb
