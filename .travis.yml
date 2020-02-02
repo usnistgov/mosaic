@@ -29,8 +29,8 @@ addons:
     - sqlite3
 
 before_install:
-  - if [ "$TRAVIS_OS_NAME" == "osx" ]; then     brew update;                                                            fi
-  - if [ "$TRAVIS_OS_NAME" == "osx" ]; then     brew install python gcc openssl readline;  fi
+  # - if [ "$TRAVIS_OS_NAME" == "osx" ]; then     brew update;                                                            fi
+  # - if [ "$TRAVIS_OS_NAME" == "osx" ]; then     brew install python gcc openssl readline;  fi
   - if [ "$TRAVIS_OS_NAME" == "osx" ]; then     export PYTHONPATH=$PYTHONPATH:/usr/local/lib/python3.7/site-packages;   fi
   
   -  pip install docutils
