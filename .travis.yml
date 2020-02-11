@@ -9,6 +9,10 @@ matrix:
       language: shell
       python: 3.7
 
+jobs:
+  allow_failures:
+    - os: osx
+
 sudo: false
 
 notifications:
@@ -30,13 +34,6 @@ addons:
     - sqlite3
 
 before_install:
-#   - if [ "$TRAVIS_OS_NAME" == "osx" ]; then     
-#           brew update;
-#           brew upgrade python; 
-#           brew link --overwrite python; 
-#     fi
-  # - if [ "$TRAVIS_OS_NAME" == "osx" ]; then     export PYTHONPATH=$PYTHONPATH:/usr/local/lib/python3.7/site-packages;   fi
-
   -  python3 --version
   -  pip3 --version
   -  pip3 install docutils
