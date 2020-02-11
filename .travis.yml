@@ -26,7 +26,6 @@ addons:
     - libblas-dev
     - liblapack-dev
     - gfortran
-    #- libzmq3-dev
     - python-docutils
     - sqlite3
 
