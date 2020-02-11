@@ -37,15 +37,15 @@ before_install:
 #     fi
   # - if [ "$TRAVIS_OS_NAME" == "osx" ]; then     export PYTHONPATH=$PYTHONPATH:/usr/local/lib/python3.7/site-packages;   fi
 
-  -  python --version
-  -  pip --version
-  -  pip install docutils
-  -  pip install -U pip
+  -  python3 --version
+  -  pip3 --version
+  -  pip3 install docutils
+  -  pip3 install -U pip
 
 install:
-  - travis_wait travis_retry pip install -r requirements.txt --upgrade
+  - travis_wait travis_retry pip3 install -r requirements.txt --upgrade
 
 script: 
-  - nosetests --with-coverage -v --cover-package=mosaic --cover-package=mosaicweb 
+  - python3 setup.py nosetests
   - codecov
   
