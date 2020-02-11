@@ -14,13 +14,13 @@ from mosaic.trajio.binTrajIO import *
 from mosaic.filters.besselLowpassFilter import *
 from mosaic.filters.waveletDenoiseFilter import *
 
-mosaic.apps.SingleChannelAnalysis.SingleChannelAnalysis(
-			'data',
-			qdfTrajIO, 
-			None,
-			es.eventSegment,
-			adept.adept
-		).Run()
+# mosaic.apps.SingleChannelAnalysis.SingleChannelAnalysis(
+# 			'data',
+# 			qdfTrajIO, 
+# 			None,
+# 			es.eventSegment,
+# 			adept.adept
+# 		).Run()
 
 mosaic.apps.SingleChannelAnalysis.SingleChannelAnalysis(
 			'data',
@@ -30,10 +30,10 @@ mosaic.apps.SingleChannelAnalysis.SingleChannelAnalysis(
 			adept2State.adept2State
 		).Run()
 
-mosaic.apps.SingleChannelAnalysis.SingleChannelAnalysis(
-			'data',
-			qdfTrajIO, 
-			None,
-			es.eventSegment,
-			cusumPlus.cusumPlus
-		).Run()
+# mosaic.apps.SingleChannelAnalysis.SingleChannelAnalysis(
+# 			'data',
+# 			qdfTrajIO, 
+# 			None,
+# 			es.eventSegment,
+# 			cusumPlus.cusumPlus
+# 		).Run()

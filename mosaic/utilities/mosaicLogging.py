@@ -35,7 +35,7 @@ class metaSingleton(type):
 	_instances = {}
 
 	def __call__(cls, *args, **kwargs):
-		if cls not in cls._instances.keys():
+		if cls not in list(cls._instances.keys()):
 			cls._instances[cls] = super(metaSingleton, cls).__call__(*args, **kwargs)
 		return cls._instances[cls]
 
@@ -48,12 +48,11 @@ class MessageFormatter(logging.Formatter):
 		return super(MessageFormatter, self).format(record)
 
 
-class mosaicLogging(object):
+class mosaicLogging(object, metaclass=metaSingleton):
 	"""
 		A custom logging class that uses the Python logging facility. Logs are automatically saved to a metaMDIO instance,
 		and to a file log when DeveloperMode is active.
 	"""
-	__metaclass__ = metaSingleton
 
 	_loggers = {}
 
@@ -66,7 +65,7 @@ class mosaicLogging(object):
 	try:
 		logdir=mosaic.LogLocation
 		log.info("Logs will be saved to: {0}".format(logdir))
-	except AttributeError, err:
+	except AttributeError as err:
 		if sys.platform.startswith('darwin'):
 			logdir=format_path(os.path.expanduser('~')+"/Library/Logs/MOSAIC")
 			if not os.path.exists(logdir):
@@ -120,7 +119,7 @@ class mosaicLogging(object):
 		"""
 		if not name:
 			logger=logging.getLogger()
-		elif name not in mosaicLogging._loggers.keys():
+		elif name not in list(mosaicLogging._loggers.keys()):
 			logger=logging.getLogger(str(name))
 			mosaicLogging._loggers[name]=logger
 		else:
@@ -132,7 +131,7 @@ class mosaicLogging(object):
 			mosaicLogging.sh.setLevel(logging.INFO)
 			mosaicLogging.sh.setFormatter(logging.Formatter("%(message)s\n"))
 
-			for name in mosaicLogging._loggers.keys():
+			for name in list(mosaicLogging._loggers.keys()):
 				l=mosaicLogging._loggers[name]
 				for h in l.handlers:
 					if isinstance(h, sqliteHandler):

@@ -323,7 +323,7 @@ class qtAnalysisGUI(mosaicgui.settingsview.settingsview):
 		self.processedFiles.closeDB()
 
 def main():
-	print "Type 'python runMOSAIC' to start MOSAIC.\n"
+	print("Type 'python runMOSAIC' to start MOSAIC.\n")
 
 if __name__ == '__main__':
 	main()

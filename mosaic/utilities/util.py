@@ -4,11 +4,26 @@
 import sys
 import ast
 import numpy
+from functools import reduce
 
 __all__=["avg", "sd", "filter", "partition", "decimate", "commonest", "selectS", "flat2", "WindowSizeError"]
 
 class WindowSizeError:
 	pass
+	
+def str_(s):
+	if type(s)==bytes:
+		# return str(s, 'utf-8')
+		return str(s, 'latin-1')
+	else:
+		return s
+
+def bytes_(s):
+	if type(s)==str:
+		# return str(s, 'utf-8')
+		return bytes(s, 'latin-1')
+	else:
+		return s
 
 def avg(dat):
 	"""
@@ -43,7 +58,7 @@ def partition(dat, size):
 		Partition a list into sub-lists, each of length size. If the number of elements
 		in dat does not partition evenly, the last sub-list will have fewer elements.
 	"""
-	return (lambda dat, size:  map(lambda i: dat[i:i+size],  xrange(0, len(dat), size)))(dat,size)
+	return (lambda dat, size:  [dat[i:i+size] for i in range(0, len(dat), size)])(dat,size)
 
 
 def decimate(dat, size):

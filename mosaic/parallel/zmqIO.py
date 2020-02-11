@@ -40,7 +40,7 @@ class zmqIO():
 					self.mSockets = self.mContext.socket(zmq.PULL)
 				
 				# connect all subscribe sockets
-				for (k,v) in urldict.iteritems():
+				for (k,v) in urldict.items():
 					self.mSockets.connect( transport+"://" + v )
 
 				# turn off any filtering on subscribe sockets
@@ -52,7 +52,7 @@ class zmqIO():
 				
 			elif( self.mSocketType == PUBLISH or self.mSocketType == PUSH ):
 				self.mSockets={}
-				for (k,v) in urldict.iteritems():
+				for (k,v) in urldict.items():
 					if (self.mSocketType == PUBLISH):
 						s = self.mContext.socket(zmq.PUB)
 					else:
@@ -65,8 +65,8 @@ class zmqIO():
 					self.mSockets[k] = s
 			else:
 				raise IllegalConnectionType("Unknown socket type.")
-		except IllegalConnectionType, e:
-			print( "{0}, IllegalConnectionType: {1}\n. Exiting!".format(os.path.basename(sys.argv[0]),e) )
+		except IllegalConnectionType as e:
+			print(( "{0}, IllegalConnectionType: {1}\n. Exiting!".format(os.path.basename(sys.argv[0]),e) ))
 			exit(-1)
 		except:
 			raise
@@ -108,7 +108,7 @@ class zmqIO():
 			#print "Closing network connections...",
 			sys.stdout.flush()
 			if( self.mSocketType==PUBLISH or self.mSocketType==PUSH):
-				for (k,v) in self.mSockets.iteritems():
+				for (k,v) in self.mSockets.items():
 					self.mSockets[k].close()
 			else:
 				self.mSockets.close()

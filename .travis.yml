@@ -1,11 +1,17 @@
-language: python
 
 matrix:
   include:
     - os: linux
-      python: 2.7
+      language: python
+      python: 3.7
     - os: osx
-      language: generic
+      osx_image: xcode11.3
+      language: shell
+      python: 3.7
+
+jobs:
+  allow_failures:
+    - os: osx
 
 sudo: false
 
@@ -24,30 +30,19 @@ addons:
     - libblas-dev
     - liblapack-dev
     - gfortran
-    #- libzmq3-dev
-    - libqt4-dev
-    - qt4-dev-tools 
-    - python-qt4-dev 
-    - pyqt4-dev-tools
-    - python-qt4
     - python-docutils
     - sqlite3
 
 before_install:
-  - if [ "$TRAVIS_OS_NAME" == "osx" ]; then     brew update;                                                            fi
-  - if [ "$TRAVIS_OS_NAME" == "osx" ]; then     brew install python@2 gcc qt pyqt openssl readline;  fi
-  - if [ "$TRAVIS_OS_NAME" == "osx" ]; then     export PYTHONPATH=$PYTHONPATH:/usr/local/lib/python2.7/site-packages;   fi
-  
-  -  pip install docutils
-  -  pip install -U pip
+  -  python3 --version
+  -  pip3 --version
+  -  pip3 install docutils
+  -  pip3 install -U pip
 
 install:
-  - travis_wait travis_retry pip install -r requirements.txt --upgrade
-
-  - if [ "$TRAVIS_OS_NAME" == "linux" ]; then   ln -s /usr/lib/python2.7/dist-packages/PyQt4/ $VIRTUAL_ENV/lib/python2.7/site-packages/;    fi
-  - if [ "$TRAVIS_OS_NAME" == "linux" ]; then   ln -s /usr/lib/python2.7/dist-packages/sip.so $VIRTUAL_ENV/lib/python2.7/site-packages/;    fi
+  - travis_wait travis_retry pip3 install -r requirements.txt --upgrade
 
 script: 
-  - nosetests --with-coverage -v --cover-package=mosaic --cover-package=mosaicweb 
+  - python3 setup.py nosetests
   - codecov
   

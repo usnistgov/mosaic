@@ -13,6 +13,7 @@ import base64
 import mosaic.mdio.sqlite3MDIO as sqlite
 from mosaic.utilities.sqlQuery import rawQuery
 from mosaic.utilities.resource_path import path_separator
+from mosaic.utilities.util import bytes_, str_
 import mosaic.errors as errors
 
 class analysisDBUtils:
@@ -30,7 +31,7 @@ class analysisDBUtils:
 		dbHnd.openDB(self.AnalysisDBFile)
 
 		self.responseDict["dbName"]=self.AnalysisDBFile.split(path_separator())[-1].split('.')[0]
-		self.responseDict["dbData"]=base64.b64encode(dbHnd.csvString(self.queryString))
+		self.responseDict["dbData"]=str_(base64.b64encode(bytes_(dbHnd.csvString(self.queryString))))
 
 		return self.responseDict
 
@@ -40,6 +41,6 @@ if __name__ == '__main__':
 	a=analysisDBUtils(mosaic.WebServerDataLocation+"/m40_0916_RbClPEG/eventMD-20161208-130302.sqlite", "select ProcessingStatus, BlockDepth, ResTime from metadata limit 5")
 	r=a.csv()
 
-	print r
-	print base64.b64decode(r['dbData'])
+	print(r)
+	print(base64.b64decode(r['dbData']))
 

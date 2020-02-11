@@ -46,12 +46,12 @@ class analysisHistogram:
 						'type': 'linear',
 						"titlefont": {
 										"family": 'Roboto, Helvetica',
-										"size": 16,
+										"size": '16',
 										"color": '#7f7f7f'
 									},
 									"tickfont": {
 										"family": 'Roboto, Helvetica',
-										"size": 16,
+										"size": '16',
 										"color": '#7f7f7f'
 									}
 					}
@@ -60,12 +60,12 @@ class analysisHistogram:
 						'type': 'linear',
 						"titlefont": {
 										"family": 'Roboto, Helvetica',
-										"size": 16,
+										"size": '16',
 										"color": '#7f7f7f'
 									},
 									"tickfont": {
 										"family": 'Roboto, Helvetica',
-										"size": 16,
+										"size": '16',
 										"color": '#7f7f7f'
 									}
 					}
@@ -76,7 +76,7 @@ class analysisHistogram:
 		layout['autosize']="True"
 
 		ydat, xdat = self._hist()
-		self.responseDict['data']=[plotlyWrapper.plotlyTrace(list(xdat), list(ydat), "Histogram")]
+		self.responseDict['data']=[plotlyWrapper.plotlyTrace(xdat.tolist(), ydat.tolist(), "Histogram")]
 		self.responseDict['layout']=layout
 		self.responseDict['options']={'displayLogo': "False"}
 
@@ -104,4 +104,4 @@ if __name__ == '__main__':
 			500
 		)
 
-	print a.analysisHistogram()
+	print(a.analysisHistogram())

@@ -39,7 +39,7 @@ from mosaic.utilities.resource_path import format_path
 import mosaic.utilities.mosaicLogging as mlog
 from  collections import deque
 from mosaic import commonExceptions
-import metaEventPartition
+from . import metaEventPartition
 
 __all__ = ["eventSegment"]
 
@@ -178,7 +178,7 @@ class eventSegment(metaEventPartition.metaEventPartition):
 					self.dataStart=self.globalDataIndex-len(self.preeventdat)-1
 				if self.eventstart:
 					#mean=abs(util.avg(self.preeventdat))
-                                        mean = self.meanOpenCurr
+					mean = self.meanOpenCurr
 					while(abs(t)<self.thrCurr):
 						t=self.currData.popleft()
 						self.eventdat.append(t)

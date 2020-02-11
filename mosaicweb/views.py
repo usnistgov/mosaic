@@ -6,6 +6,7 @@
 	:License:	See LICENSE.rst
 	:ChangeLog:
 	.. line-block::
+		05/24/19 	AB 	Python 3.7 port
 		04/13/18 	AB 	Support client initiated local server shutdown.
 		04/10/18 	AB 	Log debug information.
 		12/21/17 	AB 	Track active sessions.	
@@ -68,7 +69,7 @@ def validateSettings():
 		jsonSettings = json.loads(analysisSettings)
 
 		return jsonify( respondingURL="validate-settings", status="OK" ), 200
-	except ValueError, err:
+	except ValueError as err:
 		return jsonify( respondingURL="validate-settings", errType='ValueError', errSummary="Parse error", errText=str(err) ), 500
 
 @app.route('/processing-algorithm', methods=['POST'])
@@ -125,13 +126,13 @@ def newAnalysis():
 		
 
 		return jsonify(respondingURL='new-analysis', sessionID=sessionID, **ma.setupAnalysis() ), 200
-	except EmptyDataPipeError, err:
+	except EmptyDataPipeError as err:
 		gAnalysisSessions.pop(sessionID, None)
 		return jsonify( respondingURL='new-analysis', errType='EmptyDataPipeError', errSummary="End of data.", errText=str(err) ), 500
-	except FileNotFoundError, err:
+	except FileNotFoundError as err:
 		gAnalysisSessions.pop(sessionID, None)
 		return jsonify( respondingURL='new-analysis', errType='FileNotFoundError', errSummary="Files not found.", errText=str(err) ), 500
-	except InvalidPOSTRequest, err:
+	except InvalidPOSTRequest as err:
 		return jsonify( respondingURL='new-analysis', errType='InvalidPOSTRequest', errSummary="An invalid POST request was received.", errText=str(err) ), 500
 
 @app.route('/load-analysis', methods=['POST'])
@@ -164,9 +165,9 @@ def loadAnalysis():
 		gAnalysisSessions.addMOSAICAnalysisObject(sessionID, ma)
 
 		return jsonify(respondingURL='load-analysis', sessionID=sessionID ), 200
-	except InvalidPOSTRequest, err:
+	except InvalidPOSTRequest as err:
 		return jsonify( respondingURL='load-analysis', errType='InvalidPOSTRequest', errSummary="An invalid POST request was received.", errText=str(err) ), 500
-	except BaseException, err:
+	except BaseException as err:
 		return jsonify( respondingURL='load-analysis', errType='UnknownError', errSummary="'{0}' is not a valid database file.".format(db), errText=str(err) ), 500
 
 @app.route('/start-analysis', methods=['POST'])
@@ -237,14 +238,18 @@ def analysisHistogramPlot():
 		a=analysisHistogram.analysisHistogram(dbfile, qstr, bins, density)
 		ah=a.analysisHistogram()
 
-		return jsonify( respondingURL="analysis-histogram", analysisRunning=str(ma.analysisStatus), **ah ), 200
-	except sessionManager.SessionNotFoundError:
+		return jsonify( respondingURL="analysis-histogram", analysisRunning=str(ma.analysisStatus), **ah), 200
+	except sessionManager.SessionNotFoundError as err:
+		print(err)
 		return jsonify( respondingURL='analysis-histogram', errType='MissingSIDError', errSummary="A valid session ID was not found.", errText="A valid session ID was not found." ), 500
-	except KeyError, err:
+	except KeyError as err:
+		print(err)
 		return jsonify( respondingURL='analysis-histogram', errType='KeyError', errSummary="The key {0} is not permitted.".format(str(err)), errText="The key {0} was not found.".format(str(err)) ), 500
-	except OperationalError, err:
+	except OperationalError as err:
+		print(err)
 		return jsonify( respondingURL='analysis-histogram', errType='OperationalError', errSummary="Syntax error: {0}".format(str(err)), errText="Syntax error: {0}".format(str(err)) ), 500
-	except BaseException, err:
+	except BaseException as err:
+		print("BaseException ", err)
 		return jsonify( respondingURL='analysis-histogram', errType='UnknownError', errSummary="{0}".format(str(err)), errText="{0}".format(str(err)) ), 500
 
 @app.route('/analysis-contour', methods=['POST'])
@@ -268,11 +273,11 @@ def analysisContourPlot():
 		return jsonify( respondingURL="analysis-contour", analysisRunning=str(ma.analysisStatus), **a.analysisContour() ), 200
 	except sessionManager.SessionNotFoundError:
 		return jsonify( respondingURL='analysis-contour', errType='MissingSIDError', errSummary="A valid session ID was not found.", errText="A valid session ID was not found." ), 500
-	except KeyError, err:
+	except KeyError as err:
 		return jsonify( respondingURL='analysis-contour', errType='KeyError', errSummary="The key {0} was not found.".format(str(err)), errText="The key {0} was not found.".format(str(err)) ), 500
-	except OperationalError, err:
+	except OperationalError as err:
 		return jsonify( respondingURL='analysis-contour', errType='OperationalError', errSummary="Syntax error: {0}".format(str(err)), errText="Syntax error: {0}".format(str(err)) ), 500
-	except analysisContour.QuerySyntaxError, err:
+	except analysisContour.QuerySyntaxError as err:
 		return jsonify( respondingURL='analysis-contour', errType='QuerySyntaxError', errSummary="The submitted query is not allowed for contour plots.", errText="The submitted query is not allowed for contour plots." ), 500
 
 
@@ -325,7 +330,7 @@ def eventView():
 		a=analysisTimeSeries.analysisTimeSeries(dbfile, eventNumber, eventFilter)
 
 		return jsonify(respondingURL='event-view', **a.timeSeries()), 200
-	except (sessionManager.SessionNotFoundError, KeyError), err:
+	except (sessionManager.SessionNotFoundError, KeyError):
 		return jsonify( respondingURL='event-view', errType='MissingSIDError', errSummary="A valid session ID was not found.", errText="A valid session ID was not found." ), 500
 	except analysisTimeSeries.EmptyEventFilterError:
 		return jsonify( respondingURL='event-view', errType='EmptyEventFilterError', errSummary="At least one event type must be selected.", errText="At least one event type must be selected." ), 500
@@ -346,7 +351,7 @@ def analysisDatabaseCSV():
 		a=analysisDBUtils.analysisDBUtils(dbfile, "select * from metadata")
 
 		return jsonify(respondingURL='analysis-database-csv', **a.csv()), 200
-	except (sessionManager.SessionNotFoundError, KeyError), err:
+	except (sessionManager.SessionNotFoundError, KeyError):
 		return jsonify( respondingURL='analysis-database-csv', errType='MissingSIDError', errSummary="A valid session ID was not found.", errText="A valid session ID was not found." ), 500
 
 
@@ -482,7 +487,7 @@ def _shutdownServer():
 	if func is None:
 		raise RuntimeError('No servers found.')
 
-	for k, s in gAnalysisSessions.iteritems():
+	for k, s in gAnalysisSessions.items():
 		logger.info('Shutting down running analysis {0}'.format(k))
 		if s['analysisRunning']:
 			s['mosaicAnalysisObject'].stopAnalysis()

@@ -16,7 +16,7 @@
 		9/28/14		AB 	Initial version
 """
 import sys
-
+	
 import sqlite3
 import base64
 import struct
@@ -40,24 +40,24 @@ class data_record(dict):
 		in a sqlite3 DB.
 	"""
 	def __init__(self, data_label, data, data_t):
-		self.update( dict(zip( data_label, zip(data_t, data))) )
+		self.update( dict(list(zip( data_label, list(zip(data_t, data))))) )
 
-		self.dtypes=dict( zip(data_label, data_t) )
+		self.dtypes=dict( list(zip(data_label, data_t)) )
 
 	def __setitem__(self, key, val):
 		dat=val[1]
 
 		if val[0].endswith('_LIST'):
 			if val[0]=='REAL_LIST':
-				(packstr, bytes) = ('%sd', 8)
+				(packstr, nBytes) = ('%sd', 8)
 			elif val[0]=='INTEGER_LIST':
-				(packstr, bytes) = ('%si', 4)
+				(packstr, nBytes) = ('%si', 4)
 
-			if isinstance(val[1], unicode):
+			if isinstance(val[1], type('')) or isinstance(val[1], type(b'')):
 				decoded_data=base64.b64decode(val[1])
-				dat = list(struct.unpack( packstr % int(len(decoded_data)/bytes), decoded_data ))
+				dat = list(struct.unpack( packstr % int(len(decoded_data)/nBytes), decoded_data ))
 			else:
-				dat = base64.b64encode(struct.pack( packstr % len(val[1]), *val[1] ))
+				dat = base64.b64encode(struct.pack(packstr % len(val[1]), *val[1]))
 
 		dict.__setitem__(self, key, dat)
 
@@ -65,7 +65,7 @@ class data_record(dict):
 		return dict.__getitem__(self, key)
 
 	def update(self, *args, **kwargs):
-		for k, v in dict(*args, **kwargs).iteritems():
+		for k, v in dict(*args, **kwargs).items():
 			self[k] = v
 		
 class sqlite3MDIO(metaMDIO.metaMDIO):
@@ -196,7 +196,7 @@ class sqlite3MDIO(metaMDIO.metaMDIO):
 			
 			return list(settstr[0])[0]
 			# return base64.b64decode(list(settstr[0])[0])
-		except sqlite3.OperationalError, err:
+		except sqlite3.OperationalError as err:
 			raise
 		
 	def readAnalysisLog(self):
@@ -212,7 +212,7 @@ class sqlite3MDIO(metaMDIO.metaMDIO):
 			else:
 				return ""
 			# return base64.b64decode(list(settstr[0])[0])
-		except sqlite3.OperationalError, err:
+		except sqlite3.OperationalError as err:
 			raise
 
 
@@ -228,11 +228,11 @@ class sqlite3MDIO(metaMDIO.metaMDIO):
 			infolist=c.fetchall()[0]
 
 			infodict={}
-			for k,v in zip(infoheadings, infolist)[:-1]:
+			for k,v in list(zip(infoheadings, infolist))[:-1]:
 				infodict[k]=v
 
 			return infodict
-		except sqlite3.OperationalError, err:
+		except sqlite3.OperationalError as err:
 			raise
 
 
@@ -246,7 +246,7 @@ class sqlite3MDIO(metaMDIO.metaMDIO):
 			self.logger.debug(_d("{0}", query))
 
 			return c.fetchall()
-		except sqlite3.OperationalError, err:
+		except sqlite3.OperationalError as err:
 			raise
 
 	def queryDB(self, query):
@@ -262,7 +262,7 @@ class sqlite3MDIO(metaMDIO.metaMDIO):
 			c.execute(str(query))
 		
 			return [ self._decoderecord(colnames, colnames_t, rec) for rec in c.fetchall() ]
-		except sqlite3.OperationalError, err:
+		except sqlite3.OperationalError as err:
 			raise
 
 	def executeSQL(self, query):
@@ -273,7 +273,7 @@ class sqlite3MDIO(metaMDIO.metaMDIO):
 			c.execute(str(query))
 
 			return c.fetchall()
-		except sqlite3.OperationalError, err:
+		except sqlite3.OperationalError as err:
 			raise
 	def exportToCSV(self, query):
 		"""
@@ -415,24 +415,24 @@ class sqlite3MDIO(metaMDIO.metaMDIO):
 if __name__ == '__main__':
 	try:
 		c=sqlite3MDIO()
-		c.openDB(resource_path('data/eventMD-PEG28-ADEPT2State.sqlite'))
+		# c.openDB(resource_path('data/eventMD-PEG28-ADEPT2State.sqlite'))
+		c.openDB("/Volumes/GoogleDrive/My Drive/ReferenceData/POM_ph5_45_m120_6/eventMD-20191115-194009.sqlite")
 		c.logger.debug('test')
 
 		q=c.queryDB( "select TimeSeries from metadata limit 100, 200" )
-		print "Results:", len(q)
+		print("Results:", len(q))
 
-		print c.readSettings()
-		print c.readAnalysisLog()
-		print c.readAnalysisInfo()
+		print(c.readSettings())
+		print(c.readAnalysisLog())
+		print(c.readAnalysisInfo())
 		# print zip( c.mdColumnNames, c.mdColumnTypes )
-		print
+		print()
 		# print [ c for c in zip( c.mdColumnNames, c.mdColumnTypes ) if c[1] != 'REAL_LIST' ]
 
 		# c.exportToCSV( "select * from metadata" )
-		print c.csvString( "select ProcessingStatus, BlockDepth from metadata limit 5" )
+		print(c.csvString( "select ProcessingStatus, BlockDepth from metadata limit 5" ))
 
 		c.closeDB()
 		
 	except:
-		# c.closeDB()
 		raise

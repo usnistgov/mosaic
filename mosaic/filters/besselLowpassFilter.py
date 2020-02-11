@@ -3,11 +3,11 @@
 	Implementation of an 'N' order Bessel filter
 
 	:Created: 7/1/2013
- 	:Author: 	Arvind Balijepalli <arvind.balijepalli@nist.gov>
+	:Author: 	Arvind Balijepalli <arvind.balijepalli@nist.gov>
 	:License:	See LICENSE.TXT
 	:ChangeLog:
 	.. line-block::
-                11/2/16         KB      changed Bessel filter implementation to match expected rise time
+				11/2/16         KB      changed Bessel filter implementation to match expected rise time
 		9/27/16 	AB 	Control phase delay
 		9/13/15 	AB 	Updated logging to use mosaicLogFormat class
 		7/1/13		AB	Initial version
@@ -40,12 +40,12 @@ class besselLowpassFilter(metaIOFilter.metaIOFilter):
 		except KeyError:
 			self.logger.error( "ERROR: Missing mandatory arguments 'filterOrder' or 'filterCutoff'" )
 		try:	
-                        self.causal = kwargs['causal'] == "True"
-                except KeyError:
-                        self.causal = False
+			self.causal = kwargs['causal'] == "True"
+		except KeyError:
+			self.causal = False
 
-                if self.causal:
-                        raise NotImplementedError('Causal filter has not been implemented yet')
+		if self.causal:
+			raise NotImplementedError('Causal filter has not been implemented yet')
 
 	def filterData(self, icurr, Fs):
 		"""

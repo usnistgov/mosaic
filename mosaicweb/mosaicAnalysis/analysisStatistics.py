@@ -178,4 +178,4 @@ if __name__ == '__main__':
 	# a=analysisStatistics(mosaic.WebServerDataLocation+'/m130_3uM_A20C20_20141216_C2/eventMD-20170611-205213.sqlite')
 	a=analysisStatistics(mosaic.WebServerDataLocation+"/m40_0916_RbClPEG/eventMD-20161208-130302.sqlite")
 
-	print a.analysisStatistics()
+	print(a.analysisStatistics())

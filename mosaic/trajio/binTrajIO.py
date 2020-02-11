@@ -132,7 +132,7 @@ class binTrajIO(metaTrajIO.metaTrajIO):
 		if not hasattr(self, 'ColumnTypes'):
 			raise metaTrajIO.InsufficientArgumentsError("{0} requires the column types to be defined.".format(type(self).__name__))
 		else:
-			if type(self.ColumnTypes) is str or type(self.ColumnTypes) is unicode: 
+			if type(self.ColumnTypes) is str or type(self.ColumnTypes) is str: 
 				self.ColumnTypes=eval(str(self.ColumnTypes))
 		
 		if not hasattr(self, 'IonicCurrentColumn'):
@@ -145,7 +145,7 @@ class binTrajIO(metaTrajIO.metaTrajIO):
 
 		try:
 			self.IonicCurrentType=dict(self.ColumnTypes)[self.IonicCurrentColumn]
-		except KeyError, err:
+		except KeyError as err:
 			self.IonicCurrentColumn=self.ColumnTypes[0][0]
 			self.IonicCurrentType=self.ColumnTypes[0][1]
 
@@ -225,8 +225,8 @@ if __name__ == '__main__':
 		)
 
 	for i in range(100):
-		d=b.popdata(100000)
-		print len(d), d[0], d[-1], np.mean(d), os.path.basename(b.LastFileProcessed), b.ElapsedTimeSeconds
+		d=b.popdata(10000)
+		print(len(d), d[0], d[-1], np.mean(d), os.path.basename(b.LastFileProcessed), b.ElapsedTimeSeconds)
 
 
 

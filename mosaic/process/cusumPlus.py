@@ -5,7 +5,7 @@
 	analysis in favor of much faster fitting of single- and multi-level events.
 
 	:Created:	2/10/2015
- 	:Author: 	Kyle Briggs <kbrig035@uottawa.ca>
+	:Author: 	Kyle Briggs <kbrig035@uottawa.ca>
 	:License:	See LICENSE.TXT
 	:ChangeLog:             
 	.. line-block::
@@ -19,7 +19,7 @@
 				2/10/15		KB	Initial version
 """
 import mosaic.commonExceptions
-import metaEventProcessor
+import mosaic.process.metaEventProcessor as metaEventProcessor
 import mosaic.utilities.util as util
 import mosaic.utilities.mosaicLogging as mlog
 import mosaic.utilities.fit_funcs as fit_funcs
@@ -50,11 +50,11 @@ class cusumPlus(metaEventProcessor.metaEventProcessor):
 		CUSUM+ will detect jumps that are smaller than `StepSize`, but they will have to be sustained longer. Threshold can be thought of, very roughly, as proportional to the length of time a subevent must be sustained for it to be detected. The algorithm will adjust the actual threshold used on a per-event basis in order to minimize false positive detection of current jumps This algorithm is based on code used in OpenNanopore, which you can read about here: http://pubs.rsc.org/en/Content/ArticleLanding/2012/NR/c2nr30951c#!divAbstract
 
 
-                Some known issues with CUSUM+:
+				Some known issues with CUSUM+:
 
-                1. If the duration of a sub-event is shorter than than the MinLength parameter, CUSUM+ will be unable to detect it. CUSUM+ will not detect events within MinLength of a previous event.
-                2. CUSUM assumes an instantaneous transition between current states. As a result, if the RC rise time of the system is large, CUSUM+ can trigger and detect intermediate states during the change time. This can be avoided by choosing a number of samples to skip equal to about 2-5RC.
-                3. As a consequence of using a statistical t-test, CUSUM can have false positives. The algorithm has an adaptive threshold that tries to minimize the chances of this happening while maintaining good sensitivity (expected number of false positives within an event is less than 1).
+				1. If the duration of a sub-event is shorter than than the MinLength parameter, CUSUM+ will be unable to detect it. CUSUM+ will not detect events within MinLength of a previous event.
+				2. CUSUM assumes an instantaneous transition between current states. As a result, if the RC rise time of the system is large, CUSUM+ can trigger and detect intermediate states during the change time. This can be avoided by choosing a number of samples to skip equal to about 2-5RC.
+				3. As a consequence of using a statistical t-test, CUSUM can have false positives. The algorithm has an adaptive threshold that tries to minimize the chances of this happening while maintaining good sensitivity (expected number of false positives within an event is less than 1).
 
 
 		:Keyword Args:
@@ -217,7 +217,7 @@ class cusumPlus(metaEventProcessor.metaEventProcessor):
 	###########################################################################
 	# Local functions
 	###########################################################################
-	def __GetThreshold(self, ARL, sigma, mun):
+	def _GetThreshold(self, ARL, sigma, mun):
 		ARL = 2*ARL #double since we are doing two-sided CUSUM
 		f = lambda h: (np.exp(-2.0*mun*(h/sigma+1.166))-1.0+2.0*mun*(h/sigma+1.166))/(2.0*mun*mun)-ARL
 
@@ -236,20 +236,17 @@ class cusumPlus(metaEventProcessor.metaEventProcessor):
 				Threshold = opth.x[0]
 		return Threshold
 
-                        
-                                
-                
 	def __FitEvent(self):
 		try:
 			dt = 1000./self.Fs 	# time-step in ms.
 			edat=self.dataPolarity*np.asarray( self.eventData,  dtype='float64' ) #make data into an array and make it abs val
 
-			Threshold = self.__GetThreshold(len(edat),self.StepSize,-self.StepSize/2.0)
-                        
+			Threshold = self._GetThreshold(len(edat),self.StepSize,-self.StepSize/2.0)
+
 			# control numpy error reporting
 			np.seterr(invalid='ignore', over='ignore', under='ignore')
 
-                        #set up variables for the main CUSUM+ loop
+						#set up variables for the main CUSUM+ loop
 			
 			logp = 0 #instantaneous log-likelihood for positive jumps
 			logn = 0 #instantaneous log-likelihood for negative jumps
@@ -311,7 +308,7 @@ class cusumPlus(metaEventProcessor.metaEventProcessor):
 				while minstepflag == 0:
 					minstepflag = 1
 					currentlevels = [np.average(edat[int(edges[i]+self.MinLength):int(edges[i+1])]) for i in range(self.nStates)] #detect current levels during detected sub-events
-					
+
 					currentSTD = [np.std(edat[int(edges[i]+self.MinLength):int(edges[i+1])]) for i in range(self.nStates)]
 
 					toosmall = np.absolute(np.diff(currentlevels)) < self.StepSize*self.baseSD/2
@@ -335,8 +332,8 @@ class cusumPlus(metaEventProcessor.metaEventProcessor):
 			raise
 		except InvalidEvent:
 			self.rejectEvent('eInvalidEvent')
-		except:
-	 		self.rejectEvent('eUnknownError')
+		except BaseException:
+			self.rejectEvent('eUnknownError')
 
 
 	def __recordevent(self, cusum):
@@ -369,4 +366,5 @@ class cusumPlus(metaEventProcessor.metaEventProcessor):
 
 
 			if math.isnan(self.mdOpenChCurrent):
+				print(self.mdOpenChCurrent)
 				self.rejectEvent('eInvalidOpenChCurr')

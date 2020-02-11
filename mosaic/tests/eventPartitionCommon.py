@@ -5,7 +5,7 @@ from nose.tools import raises
 import mosaic
 import mosaic.settings as settings
 from mosaic.trajio.tsvTrajIO import *
-import testutil
+from . import testutil
 import mosaic.process.adept2State as a2s 
 
 class EventPartitionTest(object):

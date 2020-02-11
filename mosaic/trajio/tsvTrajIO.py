@@ -101,7 +101,7 @@ class tsvTrajIO(metaTrajIO.metaTrajIO):
 		r1=csv.reader(open(fname,'rU'), delimiter=self.separator)
 
 		# remove the file headers
-		if self.hasHeaders: r1.next()
+		if self.hasHeaders: next(r1)
 
 		# If the user explicitly set the sampling frequency,
 		# self.currCol is set to 0 (current in pA). Stuff data 
@@ -110,8 +110,8 @@ class tsvTrajIO(metaTrajIO.metaTrajIO):
 			return np.array( [ float(row[self.currCol]) for row in r1 ], dtype=np.float64)
 		else:
 			# Calculate the sampling frequency from the first two points
-			p1=r1.next()
-			p2=r1.next()
+			p1=next(r1)
+			p2=next(r1)
 
 			dt=float(p2[self.timeCol])-float(p1[self.timeCol])
 

@@ -23,7 +23,7 @@ class MDIOTest(object):
 	def runTestdatarecord(self, data_label, data, data_t):
 		d=sqlite3MDIO.data_record(data_label, data, data_t)
 
-		assert len(d.keys()) > 0
+		assert len(list(d.keys())) > 0
 
 	def runTestSQLQuery(self, dbname, q):
 		s=sqlite3MDIO.sqlite3MDIO()

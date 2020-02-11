@@ -73,8 +73,8 @@ class settings:
 		self.settingsDict=json.loads( self.migrateSettings(settingstring) )
 
 		try:
-			for s, d in __legacy_settings_heal__.iteritems():
-				for k, v in dict(d).iteritems():
+			for s, d in __legacy_settings_heal__.items():
+				for k, v in dict(d).items():
 					tempval=self.settingsDict[s][k]
 					del self.settingsDict[s][k]
 
@@ -91,7 +91,7 @@ class settings:
 	def migrateSettings(self, settingstring):
 		s=settingstring
 
-		for setting in __legacy_settings__.keys():
+		for setting in list(__legacy_settings__.keys()):
 			s=s.replace(setting, __legacy_settings__[setting])
 
 		return s
@@ -105,7 +105,7 @@ class settings:
 		"""
 		try:
 			return self.settingsDict[section]
-		except KeyError, AttributeError:
+		except KeyError as AttributeError:
 			return {}
 
 	@property

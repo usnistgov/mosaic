@@ -113,7 +113,6 @@ class mosaicDocs(Command):
 setup(
 	cmdclass={
 		'test'              : _mosaicUnitTests(Command), 
-		'nosetests'         : _mosaicUnitTests(Command), 
 		'mosaic_tests'      : _mosaicUnitTests(Command), 
 		'mosaic_docs'       : mosaicDocs, 
 		'mosaic_bin'        : mosaicBinaries, 
@@ -170,6 +169,7 @@ setup(
 			'DISCLAIMER.TXT',
 			'LICENSE.TXT'
 			],
+	# setup_requires=['nose>=1.0'],
 	install_requires=open('requirements.txt').read().splitlines(),
 	url=mosaic.DocumentationURL,
 	license=open('LICENSE.rst').read(),

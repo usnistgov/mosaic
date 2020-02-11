@@ -83,7 +83,7 @@ class waveletDenoiseFilter(metaIOFilter.metaIOFilter):
 		def _rigrsure(x, n):
 			sx2 = np.sort(np.abs(x))**2
 			risks = (n-(2*np.arange(1,n+1))+(np.cumsum(sx2)+np.arange(n-1,-1,-1)*sx2))/n
-			print risks
+			print(risks)
 			[risk,best] = np.min(risks)
 			return np.sqrt(sx2[best])
 
@@ -117,7 +117,7 @@ class waveletDenoiseFilter(metaIOFilter.metaIOFilter):
 					'minimaxi'	: _minimaxi
 			 	}[thtype]
 			return thalgo(dat, len(dat))
-		except KeyError, err:
+		except KeyError as err:
 			logger.warning( "WARNING: Thresholding algorithm '{0}' is not available. Using default threshold (sqtwolog).".format(thtype) )
 			# default
 			self.waveletThresholdSubType='sqtwolog'
@@ -158,7 +158,7 @@ if __name__ == '__main__':
 				sdOpenCurr='-1'
 			)
 	wavefilter.filterData(rawdat, 1000)
-	print wavefilter.formatsettings()
+	print(wavefilter.formatsettings())
 	np.savetxt(root+'DenoisedSym5Long/testEventPartition1_denoised.csv', np.asarray(wavefilter.filteredData), delimiter=",")
 	
 

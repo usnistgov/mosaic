@@ -66,13 +66,16 @@ class TrajIOTest(object):
 		return OpenCurrentDist(curr, 0.5)
 
 	def runTestCase(self, dattype, dirname):
+		print(dattype, dirname)
 		t=TrajIOTest._trajioHnd[dattype]
 		q=t[0](dirname=dirname, **t[1])
 
 		dat=q.popdata(100000)
+		print(dat)
 		current=self.currentStats(dat)
 		q._formatsettings()
 
+		print( current, TrajIOTest._refcurrent )
 		assert round(current[0],1)==round(TrajIOTest._refcurrent[0],1)
 		assert round(current[1],1)==round(TrajIOTest._refcurrent[1],1)
 
@@ -98,13 +101,13 @@ class TrajIOTest(object):
 	def runSetupErrorTestCase(self, dattype, sdict):
 		t=copy.deepcopy(TrajIOTest._trajioHnd[dattype])
 
-		print sdict
+		print(sdict)
 		t[0](**sdict)
 
 	def runSetupTestCase(self, dattype, sdict):
 		t=copy.deepcopy(TrajIOTest._trajioHnd[dattype])
 
-		for k in sdict.keys():
+		for k in list(sdict.keys()):
 			t[1][k]=sdict[k]
 
 		t[0](**t[1])
@@ -153,7 +156,7 @@ class TrajIOTest(object):
 	def runFuncTestCase(self, dattype, sdict, funcname, args, kwargs):
 		t=copy.deepcopy(TrajIOTest._trajioHnd[dattype])
 
-		for k in sdict.keys():
+		for k in list(sdict.keys()):
 			t[1][k]=sdict[k]
 
 		d=t[0](**t[1])
@@ -162,12 +165,12 @@ class TrajIOTest(object):
 	def runPropTestCase(self, dattype, sdict, propname):
 		t=copy.deepcopy(TrajIOTest._trajioHnd[dattype])
 
-		for k in sdict.keys():
+		for k in list(sdict.keys()):
 			t[1][k]=sdict[k]
 
 		d=t[0](**t[1])
 		
-		print propname, "=", getattr(d, propname)
+		print(propname, "=", getattr(d, propname))
 		assert len(str(getattr(d, propname))) > 0
 
 class TrajIO_TestSuite(TrajIOTest):

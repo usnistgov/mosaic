@@ -16,7 +16,7 @@ from mosaic.utilities.mosaicLogFormat import mosaic_property
 
 __all__ = ["metaIOFilter"]
 
-class metaIOFilter(object):
+class metaIOFilter(object, metaclass=ABCMeta):
 	"""
 		.. warning:: |metaclass|
 
@@ -32,7 +32,6 @@ class metaIOFilter(object):
 			- `filteredData` :		list of filtered and decimated data
 			- `filterFs` :			sampling frequency after filtering and decimation
 	"""
-	__metaclass__=ABCMeta
 
 	def __init__(self, **kwargs):
 		"""

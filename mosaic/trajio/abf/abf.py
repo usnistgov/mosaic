@@ -17,16 +17,21 @@ from numpy import memmap
 import re
 import datetime
 
-class struct_file(file):
+from mosaic.utilities.util import str_
+
+class struct_file:
+	def __init__(self, filename, mode):
+		self.fid=open(filename, mode)
+
 	def read_f(self, format , offset = None):
 		if offset is not None:
-			self.seek(offset)
-		return struct.unpack(format , self.read(struct.calcsize(format)))
+			self.fid.seek(offset)
+		return struct.unpack(format , self.fid.read(struct.calcsize(format)))
 
 	def write_f(self, format , offset = None , *args ):
 		if offset is not None:
-			self.seek(offset)
-		self.write( struct.pack( format , *args ) )
+			self.fid.seek(offset)
+		self.fid.write( struct.pack( format , *args ) )
 
 class InvalidModeError(Exception):
 	pass
@@ -95,7 +100,7 @@ def abfload_gp(filename):
 	# gap free mode
 	m = data.size%nbchannel
 	if m != 0 : data = data[:-m]
-	data = data.reshape( (data.size/nbchannel, nbchannel)).astype('f')
+	data = data.reshape( (int(data.size/nbchannel), nbchannel) ).astype('f')
 	if dt == dtype('i2'):
 		if version <2. :
 			reformat_integer_V1(data, nbchannel , header)
@@ -127,14 +132,15 @@ def read_header(filename):
 	fid = struct_file(filename,'rb')
 	
 	# version
-	fFileSignature =  fid.read(4)
+	fFileSignature =  str_(fid.fid.read(4))
+
 	if fFileSignature == 'ABF ' :
 		headerDescription = headerDescriptionV1
 	elif fFileSignature == 'ABF2' :
 		headerDescription = headerDescriptionV2
 	else :
 		return None
-		
+
 	# construct dict
 	header = { }
 	for key, offset , format in headerDescription :
@@ -144,6 +150,8 @@ def read_header(filename):
 		else :
 			header[key] = array(val)
 	
+	header['fFileSignature']=fFileSignature
+
 	# correction of version number and starttime
 	if fFileSignature == 'ABF ' :
 		header['lFileStartTime'] =  header['lFileStartTime'] +  header['nFileStartMillisecs']*.001
@@ -156,7 +164,7 @@ def read_header(filename):
 		# tags
 		listTag = [ ]
 		for i in range(header['lNumTagEntries']) :
-			fid.seek(header['lTagSectionPtr']+i*64)
+			fid.fid.seek(header['lTagSectionPtr']+i*64)
 			tag = { }
 			for key, format in TagInfoDescription :
 				val = fid.read_f(format )
@@ -183,8 +191,8 @@ def read_header(filename):
 		
 		# strings sections
 		# hack for reading channels names and units
-		fid.seek(sections['StringsSection']['uBlockIndex']*BLOCKSIZE)
-		bigString = fid.read(sections['StringsSection']['uBytes'])
+		fid.fid.seek(sections['StringsSection']['uBlockIndex']*BLOCKSIZE)
+		bigString = str_(fid.fid.read(sections['StringsSection']['uBytes']))
 		goodstart = bigString.lower().find('clampex')
 		if goodstart == -1 :
 			goodstart = bigString.lower().find('axoscope')
@@ -197,7 +205,7 @@ def read_header(filename):
 		header['listADCInfo'] = [ ]
 		for i in range(sections['ADCSection']['llNumEntries']) :
 			#  read ADCInfo
-			fid.seek(sections['ADCSection']['uBlockIndex']*\
+			fid.fid.seek(sections['ADCSection']['uBlockIndex']*\
 						BLOCKSIZE+sections['ADCSection']['uBytes']*i)
 			ADCInfo = { }
 			for key, format in ADCInfoDescription :
@@ -213,7 +221,7 @@ def read_header(filename):
 	
 		# protocol sections
 		protocol = { }
-		fid.seek(sections['ProtocolSection']['uBlockIndex']*BLOCKSIZE)
+		fid.fid.seek(sections['ProtocolSection']['uBlockIndex']*BLOCKSIZE)
 		for key, format in protocolInfoDescription :
 			val = fid.read_f(format )
 			if len(val) == 1:
@@ -225,7 +233,7 @@ def read_header(filename):
 		# tags
 		listTag = [ ]
 		for i in range(sections['TagSection']['llNumEntries']) :
-			fid.seek(sections['TagSection']['uBlockIndex']*\
+			fid.fid.seek(sections['TagSection']['uBlockIndex']*\
 						BLOCKSIZE+sections['TagSection']['uBytes']*i)
 			tag = { }
 			for key, format in TagInfoDescription :
@@ -239,7 +247,7 @@ def read_header(filename):
 		header['listTag'] = listTag
 			
 		
-	fid.close()
+	fid.fid.close()
 	
 	return header
 
@@ -468,10 +476,10 @@ TagInfoDescription = [
 	   ]
 
 if __name__ == '__main__':
-	f='/Users/arvind/Research/Experiments/jan_doublets/AS45_2 Kopie-e249-235_st.abf'
+	f='/Users/arvind/Google Drive/ReferenceData/3.5M_121712/m40mV/2012_12_17_0009.abf'
 
 	[freq, hdr, bandwidth, gain, data]=abfload_gp(f)
 
-	print freq, hdr, bandwidth, gain
+	print(freq, hdr, bandwidth, gain)
 	
-	print len(data)
+	print(len(data))

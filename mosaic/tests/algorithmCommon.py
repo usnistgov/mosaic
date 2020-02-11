@@ -1,4 +1,4 @@
-import testutil
+from . import testutil
 import copy
 import mosaic.commonExceptions
 from nose.tools import raises
@@ -95,10 +95,18 @@ class BaseMultiStateTest(object):
 	def runTestCase(self, datfile, prmfile, algoHnd):
 		self._setupTestCase(datfile, prmfile,algoHnd)
 
+		print(np.mean(self.dat))
+		print(self.prm)
+		print(self.Fs)
+		print(algoHnd)
+
 		testobj=self._setupTestObject(datfile, prmfile, algoHnd)
 		
 		testobj.processEvent()
 
+		print(testobj.mdProcessingStatus)
+		print(testobj._mdList())
+		
 		assert testobj.mdProcessingStatus == 'normal'
 		assert self.almostEqual( testobj.mdNStates, self.prm['n'], 1)
 		assert self.almostEqual( testobj.mdOpenChCurrent, self.prm['OpenChCurrent'], 1.0)

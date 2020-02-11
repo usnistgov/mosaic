@@ -19,7 +19,7 @@ __all__ = ["metaMDIO", "InsufficientArgumentsError"]
 class InsufficientArgumentsError(Exception):
 	pass
 
-class metaMDIO(object):
+class metaMDIO(object, metaclass=ABCMeta):
 	"""
 		.. warning:: |metaclass|
 
@@ -30,7 +30,6 @@ class metaMDIO(object):
 		:Properties:
 			- `dbColumnNames` : a list of database column names
 	"""
-	__metaclass__=ABCMeta
 
 	def __init__(self):
 		self.pid=os.getpid()
@@ -50,7 +49,7 @@ class metaMDIO(object):
 				- `colNames_t` :	list of data types for each column. 
 		"""
 		# start by setting all passed keyword arguments as class attributes
-		for (k,v) in kwargs.iteritems():
+		for (k,v) in kwargs.items():
 			setattr(self, k, v)
 
 		if not hasattr(self, 'dbPath'):

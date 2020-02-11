@@ -7,7 +7,7 @@ Chimera VC100 concatenated file format implementation of metaTrajIO. Read concat
 	:License:	See LICENSE.TXT
 	:ChangeLog:
 	.. line-block::
-                7/29/16         KB      Miscelleneous bugfixes
+		7/29/16         KB      Miscelleneous bugfixes
 		7/11/16		KB	Initial version
 """
 import struct
@@ -89,7 +89,7 @@ class chimeraTrajIO(metaTrajIO.metaTrajIO):
 		if not hasattr(self, 'ColumnTypes'):
 			raise metaTrajIO.InsufficientArgumentsError("{0} requires the column types to be defined.".format(type(self).__name__))
 		else:
-			if type(self.ColumnTypes) is str or type(self.ColumnTypes) is unicode: 
+			if type(self.ColumnTypes) is str or type(self.ColumnTypes) is str: 
 				self.ColumnTypes=eval_(self.ColumnTypes)
 		
 		if not hasattr(self, 'IonicCurrentColumn'):
@@ -100,11 +100,11 @@ class chimeraTrajIO(metaTrajIO.metaTrajIO):
 
 		try:
 			self.IonicCurrentType=dict(self.ColumnTypes)[self.IonicCurrentColumn]
-		except KeyError, err:
+		except KeyError as err:
 			self.IonicCurrentColumn=self.ColumnTypes[0][0]
 			self.IonicCurrentType=self.ColumnTypes[0][1]
 
-			print "IonicCurrentColumn {0} not found. Defaulting to {1}.".format(err, self.IonicCurrentColumn)
+			print("IonicCurrentColumn {0} not found. Defaulting to {1}.".format(err, self.IonicCurrentColumn))
 
 
 		if not hasattr(self, 'TIAgain'):
@@ -118,7 +118,7 @@ class chimeraTrajIO(metaTrajIO.metaTrajIO):
 			self.preADCgain=float(self.preADCgain)
 
 
-                if not hasattr(self, 'mVoffset'):
+		if not hasattr(self, 'mVoffset'):
 			raise metaTrajIO.InsufficientArgumentsError("{0} requires the mVoffset be specified as found in the appropriate .mat file.".format(type(self).__name__))
 		else:
 			self.mVoffset=float(self.mVoffset)
@@ -145,7 +145,7 @@ class chimeraTrajIO(metaTrajIO.metaTrajIO):
 		if not hasattr(self, 'Fs'):	
 			self.Fs=self.SamplingFrequency
 
-                self.chimeraLogger=mlog.mosaicLogging().getLogger(name=__name__)
+		self.chimeraLogger=mlog.mosaicLogging().getLogger(name=__name__)
 
 	def readdata(self, fname):
 		"""
@@ -191,16 +191,15 @@ class chimeraTrajIO(metaTrajIO.metaTrajIO):
 		"""
 			See :func:`mosaic.metaTrajIO.metaTrajIO.scaleData`.
 		"""
-
-                gain = self.TIAgain * self.preADCgain
-                bitmask = int((2**16 - 1) - (2**(16-self.ADCbits) - 1))
-                data = data & bitmask
-                data = self.ADCvref - 2*self.ADCvref*data.astype(float)/float(2**16)
-                data = -data/gain + self.pAoffset
+		gain = self.TIAgain * self.preADCgain
+		bitmask = int((2**16 - 1) - (2**(16-self.ADCbits) - 1))
+		data = data & bitmask
+		data = self.ADCvref - 2*self.ADCvref*data.astype(float)/float(2**16)
+		data = -data/gain + self.pAoffset
 		return np.array(data*1.0e12, dtype=np.float64)
 
 if __name__ == '__main__':
-	print "Main funcion not implemented for chimeraTrajIO"
+	print("Main funcion not implemented for chimeraTrajIO")
 
 
 
