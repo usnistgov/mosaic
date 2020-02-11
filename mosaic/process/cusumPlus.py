@@ -9,6 +9,7 @@
 	:License:	See LICENSE.TXT
 	:ChangeLog:             
 	.. line-block::
+				11/15/19    JR  Updated output: calculates adn includes blockade standard deviation; simplified tab in code
 				6/3/17		AB 	Updated docstring.
 				8/24/15 	AB 	Rename algorithm to CUSUM+   
 				3/20/15 	AB 	Added a new metadata column (mdStateResTime) that saves the residence time of each state to the database.
@@ -90,6 +91,7 @@ class cusumPlus(metaEventProcessor.metaEventProcessor):
 		self.mdNStates=-1
 
 		self.mdBlockDepth=[-1]
+		self.mdBlockSTD=[-1]
 
 		self.mdEventDelay=[-1]
 		self.mdStateResTime=[-1]
@@ -116,7 +118,7 @@ class cusumPlus(metaEventProcessor.metaEventProcessor):
 		except ValueError as err:
 			raise mosaic.commonExceptions.SettingsTypeError( err )
 
-                self.mdThreshold = self.MinThreshold
+		self.mdThreshold = self.MinThreshold
 
 	###########################################################################
 	# Interface functions implemented starting here
@@ -142,6 +144,7 @@ class cusumPlus(metaEventProcessor.metaEventProcessor):
 					self.mdNStates, 
 					self.mdCurrentStep,
 					self.mdBlockDepth,
+					self.mdBlockSTD,
 					self.mdEventStart,
 					self.mdEventEnd,
 					self.mdEventDelay,
@@ -159,6 +162,7 @@ class cusumPlus(metaEventProcessor.metaEventProcessor):
 					'TEXT', 
 					'REAL', 
 					'INTEGER',
+					'REAL_LIST',
 					'REAL_LIST',
 					'REAL_LIST',
 					'REAL',
@@ -180,6 +184,7 @@ class cusumPlus(metaEventProcessor.metaEventProcessor):
 					'NStates',
 					'CurrentStep',
 					'BlockDepth',
+					'BlockSTD',
 					'EventStart', 
 					'EventEnd', 
 					'EventDelay', 
@@ -212,24 +217,24 @@ class cusumPlus(metaEventProcessor.metaEventProcessor):
 	###########################################################################
 	# Local functions
 	###########################################################################
-        def __GetThreshold(self, ARL, sigma, mun):
-                ARL = 2*ARL #double since we are doing two-sided CUSUM
-                f = lambda h: (np.exp(-2.0*mun*(h/sigma+1.166))-1.0+2.0*mun*(h/sigma+1.166))/(2.0*mun*mun)-ARL
-                
-                if f(self.MinThreshold)*f(self.MaxThreshold) < 0: #if a root exists in the specified range
-                        opth, info, ier, mesg = fsolve(f,self.MaxThreshold,full_output=True)
-                        if ier==1: #fit success, return the root
-                                Threshold = opth[0]
-                        else: #fit failure, default to min
-                                Threshold = self.MinThreshold
-                else: #if no root exists, we use the min value
-                        f = lambda h: np.abs((np.exp(-2.0*mun*(h/sigma+1.166))-1.0+2.0*mun*(h/sigma+1.166))/(2.0*mun*mun)-ARL) #absolute value to minimize
-                        opth = minimize(f,self.MaxThreshold,bounds=((self.MinThreshold,self.MaxThreshold),)) #Find the min within the requested range
-                        if opth.success==False:
-                                Threshold = self.MinThreshold #Default to more sensitive
-                        else:
-                                Threshold = opth.x[0]
-                return Threshold
+	def __GetThreshold(self, ARL, sigma, mun):
+		ARL = 2*ARL #double since we are doing two-sided CUSUM
+		f = lambda h: (np.exp(-2.0*mun*(h/sigma+1.166))-1.0+2.0*mun*(h/sigma+1.166))/(2.0*mun*mun)-ARL
+
+		if f(self.MinThreshold)*f(self.MaxThreshold) < 0: #if a root exists in the specified range
+			opth, info, ier, mesg = fsolve(f,self.MaxThreshold,full_output=True)
+			if ier==1: #fit success, return the root
+			        Threshold = opth[0]
+			else: #fit failure, default to min
+				Threshold = self.MinThreshold
+		else: #if no root exists, we use the min value
+			f = lambda h: np.abs((np.exp(-2.0*mun*(h/sigma+1.166))-1.0+2.0*mun*(h/sigma+1.166))/(2.0*mun*mun)-ARL) #absolute value to minimize
+			opth = minimize(f,self.MaxThreshold,bounds=((self.MinThreshold,self.MaxThreshold),)) #Find the min within the requested range
+			if opth.success==False:
+			        Threshold = self.MinThreshold #Default to more sensitive
+			else:
+				Threshold = opth.x[0]
+		return Threshold
 
                         
                                 
@@ -262,64 +267,68 @@ class cusumPlus(metaEventProcessor.metaEventProcessor):
 			varM = edat[0]
 			varS = 0
 			mean = edat[0]
-                        while k < length-1: 
-                                k += 1
-                                varOldM = varM #algorithm to calculate running variance, details here: http://www.johndcook.com/blog/standard_deviation/
-                                varM = varM + (edat[k] - varM)/float(k+1-anchor)
-                                varS = varS + (edat[k] - varOldM) * (edat[k] - varM)
-                                variance = varS / float(k+1-anchor)
-                                mean = ((k-anchor) * mean + edat[k])/float(k+1-anchor)
-                                if (variance == 0):                 # with low-precision data sets it is possible that two adjacent values are equal, in which case there is zero variance for the two-vector of sample if this occurs next to a detected jump. This is very, very rare, but it does happen.
-                                        variance = self.baseSD*self.baseSD # in that case, we default to the local baseline variance, which is a good an estimate as any.
-                                logp = self.StepSize*self.baseSD/variance * (edat[k] - mean - self.StepSize*self.baseSD/2.) #instantaneous log-likelihood for current sample assuming local baseline has jumped in the positive direction
-                                logn = -self.StepSize*self.baseSD/variance * (edat[k] - mean + self.StepSize*self.baseSD/2.) #instantaneous log-likelihood for current sample assuming local baseline has jumped in the negative direction
-                                cpos[k] = cpos[k-1] + logp #accumulate positive log-likelihoods
-                                cneg[k] = cneg[k-1] + logn #accumulate negative log-likelihoods
-                                gpos[k] = max(gpos[k-1] + logp, 0) #accumulate or reset positive decision function 
-                                gneg[k] = max(gneg[k-1] + logn, 0) #accumulate or reset negative decision function
-                                if (gpos[k] > Threshold or gneg[k] > Threshold):
-                                        if (gpos[k] > Threshold): #significant positive jump detected
-                                                jump = anchor + np.argmin(cpos[anchor:k+1]) #find the location of the start of the jump
-                                                if jump - edges[self.nStates] > self.MinLength:
-                                                        edges = np.append(edges, jump)
-                                                        self.nStates += 1
-                                        if (gneg[k] > Threshold): #significant negative jump detected
-                                                jump = anchor + np.argmin(cneg[anchor:k+1])
-                                                if jump - edges[self.nStates] > self.MinLength:
-                                                        edges = np.append(edges, jump)
-                                                        self.nStates += 1
-                                        anchor = k
-                                        cpos[0:len(cpos)] = 0 #reset all decision arrays
-                                        cneg[0:len(cneg)] = 0
-                                        gpos[0:len(gpos)] = 0
-                                        gneg[0:len(gneg)] = 0
-                                        mean = edat[anchor]
-                                        varM = edat[anchor]
-                                        varS = 0
-                        edges = np.append(edges, len(edat)) #mark the end of the event as an edge
-                        self.nStates += 1
+			while k < length-1: 
+				k += 1
+				varOldM = varM #algorithm to calculate running variance, details here: http://www.johndcook.com/blog/standard_deviation/
+				varM = varM + (edat[k] - varM)/float(k+1-anchor)
+				varS = varS + (edat[k] - varOldM) * (edat[k] - varM)
+				variance = varS / float(k+1-anchor)
+				mean = ((k-anchor) * mean + edat[k])/float(k+1-anchor)
+				if (variance == 0):                 # with low-precision data sets it is possible that two adjacent values are equal, in which case there is zero variance for the two-vector of sample if this occurs next to a detected jump. This is very, very rare, but it does happen.
+					variance = self.baseSD*self.baseSD # in that case, we default to the local baseline variance, which is a good an estimate as any.
+				logp = self.StepSize*self.baseSD/variance * (edat[k] - mean - self.StepSize*self.baseSD/2.) #instantaneous log-likelihood for current sample assuming local baseline has jumped in the positive direction
+				logn = -self.StepSize*self.baseSD/variance * (edat[k] - mean + self.StepSize*self.baseSD/2.) #instantaneous log-likelihood for current sample assuming local baseline has jumped in the negative direction
+				cpos[k] = cpos[k-1] + logp #accumulate positive log-likelihoods
+				cneg[k] = cneg[k-1] + logn #accumulate negative log-likelihoods
+				gpos[k] = max(gpos[k-1] + logp, 0) #accumulate or reset positive decision function 
+				gneg[k] = max(gneg[k-1] + logn, 0) #accumulate or reset negative decision function
+				if (gpos[k] > Threshold or gneg[k] > Threshold):
+					if (gpos[k] > Threshold): #significant positive jump detected
+						jump = anchor + np.argmin(cpos[anchor:k+1]) #find the location of the start of the jump
+						if jump - edges[self.nStates] > self.MinLength:
+							edges = np.append(edges, jump)
+							self.nStates += 1
+					if (gneg[k] > Threshold): #significant negative jump detected
+						jump = anchor + np.argmin(cneg[anchor:k+1])
+						if jump - edges[self.nStates] > self.MinLength:
+							edges = np.append(edges, jump)
+							self.nStates += 1
+					anchor = k
+					cpos[0:len(cpos)] = 0 #reset all decision arrays
+					cneg[0:len(cneg)] = 0
+					gpos[0:len(gpos)] = 0
+					gneg[0:len(gneg)] = 0
+					mean = edat[anchor]
+					varM = edat[anchor]
+			varS = 0
+			edges = np.append(edges, len(edat)) #mark the end of the event as an edge
+			self.nStates += 1
 			cusum = dict()
 			if (self.nStates < 3):
-                                self.rejectEvent('eInvalidStates')
-                        else:
-                                minstepflag = 0
-                                while minstepflag == 0:
-                                        minstepflag = 1
-                                        currentlevels = [np.average(edat[int(edges[i]+self.MinLength):int(edges[i+1])]) for i in range(self.nStates)] #detect current levels during detected sub-events
-                                        toosmall = np.absolute(np.diff(currentlevels)) < self.StepSize*self.baseSD/2
-                                        for i in range(len(toosmall)):
-                                                if toosmall[i] == True:
-                                                        edges = np.delete(edges,i+1)
-                                                        minstepflag = 0
-                                                        self.nStates -= 1
-                                                        break
-                        if (self.nStates < 3):
-                                self.rejectEvent('eInvalidStates')
-                        else:
-                                cusum['CurrentLevels'] = currentlevels
-                                cusum['EventDelay'] = edges * dt #locations of sub-events in the data
-                                cusum['Threshold'] = Threshold #record the threshold used
-                                self.__recordevent(cusum)
+				self.rejectEvent('eInvalidStates')
+			else:
+				minstepflag = 0
+				while minstepflag == 0:
+					minstepflag = 1
+					currentlevels = [np.average(edat[int(edges[i]+self.MinLength):int(edges[i+1])]) for i in range(self.nStates)] #detect current levels during detected sub-events
+					
+					currentSTD = [np.std(edat[int(edges[i]+self.MinLength):int(edges[i+1])]) for i in range(self.nStates)]
+
+					toosmall = np.absolute(np.diff(currentlevels)) < self.StepSize*self.baseSD/2
+					for i in range(len(toosmall)):
+						if toosmall[i] == True:
+							edges = np.delete(edges,i+1)
+							minstepflag = 0
+							self.nStates -= 1
+							break
+			if (self.nStates < 3):
+				self.rejectEvent('eInvalidStates')
+			else:
+				cusum['CurrentLevels'] = currentlevels
+				cusum['CurrentSTD'] = currentSTD
+				cusum['EventDelay'] = edges * dt #locations of sub-events in the data
+				cusum['Threshold'] = Threshold #record the threshold used
+				self.__recordevent(cusum)
 
 		except KeyboardInterrupt:
 			self.rejectEvent('eFitUserStop')
@@ -336,12 +345,14 @@ class cusumPlus(metaEventProcessor.metaEventProcessor):
 		if self.nStates<3:
 			self.rejectEvent('eInvalidStates')
 		else:
-			self.mdOpenChCurrent 	        = 0.5*(cusum['CurrentLevels'][0] + cusum['CurrentLevels'][self.nStates-1]) #this assumes that the event returns to baseline after
+			self.mdOpenChCurrent 	= 0.5*(cusum['CurrentLevels'][0] + cusum['CurrentLevels'][self.nStates-1]) #this assumes that the event returns to baseline after
 			self.mdCurrentStep		= np.diff(np.hstack(([self.mdOpenChCurrent], cusum['CurrentLevels'][1:]))) #these current levels are relative to the open state
 			
 			self.mdNStates			= self.nStates - 1 #this does not count padding as separate states. Note also that states can be triggered inside the padding
 
 			self.mdBlockDepth 		= cusum['CurrentLevels'][1:-1]/self.mdOpenChCurrent #percentage blockage of each state
+
+			self.mdBlockSTD			= cusum['CurrentSTD'][1:-1]
 
 			self.mdEventDelay		= cusum['EventDelay'][1:-1] # first and last states (or baseline) are removed
 
@@ -354,7 +365,7 @@ class cusumPlus(metaEventProcessor.metaEventProcessor):
 
 			self.mdAbsEventStart	= self.mdEventStart + self.absDataStartIndex * dt
 
-			self.mdThreshold = cusum['Threshold']
+			self.mdThreshold 		= cusum['Threshold']
 
 
 			if math.isnan(self.mdOpenChCurrent):
