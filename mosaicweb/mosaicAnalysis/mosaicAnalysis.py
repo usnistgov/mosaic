@@ -18,6 +18,7 @@ import mosaic.apps.SingleChannelAnalysis as sca
 
 import mosaic.trajio.qdfTrajIO as qdf
 import mosaic.trajio.abfTrajIO as abf
+import mosaic.trajio.rhdTrajIO as rhd
 import mosaic.trajio.binTrajIO as bin
 
 import mosaic.partition.eventSegment as es
@@ -171,6 +172,9 @@ class mosaicAnalysis:
 			elif "abfTrajIO" in self.analysisSettingsDict.keys():
 				self.trajIO="abfTrajIO"
 				self.fileType='ABF'
+			elif "rhdTrajIO" in self.analysisSettingsDict.keys():
+				self.trajIO="rhdTrajIO"
+				self.fileType='RHD'
 			elif "binTrajIO" in self.analysisSettingsDict.keys():
 				self.trajIO="binTrajIO"
 				self.fileType='BIN'
@@ -307,17 +311,21 @@ class mosaicAnalysis:
 		nqdf = len(glob.glob(self.dataPath+'/*.qdf'))
 		nbin = len(glob.glob(self.dataPath+'/*.bin'))+len(glob.glob(self.dataPath+'/*.dat'))
 		nabf = len(glob.glob(self.dataPath+'/*.abf'))
+		nrhd = len(glob.glob(self.dataPath+'/*.rhd'))
 		
 		if nqdf > 0:
 			return "qdfTrajIO"
 		elif nabf > 0:
 			return "abfTrajIO"
+		elif nrhd > 0:
+			return "rhdTrajIO"
 		else:		#default
 			return "binTrajIO"
 
 	trajIOHandleLookup={
 		"qdfTrajIO":	qdf.qdfTrajIO,
 		"abfTrajIO":	abf.abfTrajIO,
+		"rhdTrajIO":	rhd.rhdTrajIO,
 		"binTrajIO":	bin.binTrajIO	
 	}
 	processHandleLookup={

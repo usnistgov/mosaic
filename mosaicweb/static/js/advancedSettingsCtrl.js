@@ -51,6 +51,9 @@ angular.module('mosaicApp')
 				} else if (factory.selectedFileType=='ABF') {
 					origTrajIO=orig.abfTrajIO;
 					trajIO=sett.abfTrajIO;
+				} else if (factory.selectedFileType=='RHD') {
+					origTrajIO=orig.rhdTrajIO;
+					trajIO=sett.rhdTrajIO;
 				} else if (factory.selectedFileType=='BIN') {
 					origTrajIO=orig.binTrajIO;
 					trajIO=sett.binTrajIO;

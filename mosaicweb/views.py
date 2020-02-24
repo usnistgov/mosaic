@@ -500,6 +500,7 @@ def _folderDesc(item):
 	nqdf = len(glob.glob(item+'/*.qdf'))
 	nbin = len(glob.glob(item+'/*.bin'))+len(glob.glob(item+'/*.dat'))
 	nabf = len(glob.glob(item+'/*.abf'))
+	nrhd = len(glob.glob(item+'/*.rhd'))
 	nsqlite = len(glob.glob(item+'/*.sqlite'))
 	#nfolders = len( [i for i in os.listdir(item) if os.path.isdir(item+'/'+i) ] )
 	nfolders=0
@@ -519,6 +520,8 @@ def _folderDesc(item):
 		returnString = "{0} BIN {1}".format(nbin, _fileLabel(nbin))
 	elif nabf > 0:
 		returnString = "{0} ABF {1}".format(nabf, _fileLabel(nabf))
+	elif nrhd > 0:
+		returnString = "{0} RHD {1}".format(nrhd, _fileLabel(nrhd))
 	elif nfolders==0:
 		returnString = "No data"
 	else:

@@ -10,7 +10,7 @@ angular.module('mosaicApp')
 		factory.trajPlot = {};
 		factory.trajPlotOriginalCurrent = [];
 
-		factory.ftypes = ["BIN", "ABF", "QDF"];
+		factory.ftypes = ["BIN", "ABF", "QDF", "RHD"];
 		factory.selectedFileType = "BIN";
 
 		factory.procAlgoTypes = [
@@ -230,6 +230,11 @@ angular.module('mosaicApp')
 					factory.end=settings.abfTrajIO.end;
 					factory.dcOffset=settings.abfTrajIO.dcOffset;
 					break;
+					case 'RHD':
+				factory.start=settings.rhdTrajIO.start;
+					factory.end=settings.rhdTrajIO.end;
+					factory.dcOffset=settings.rhdTrajIO.dcOffset;
+					break;
 				case 'BIN':
 					factory.start=settings.binTrajIO.start;
 					factory.end=settings.binTrajIO.end;
@@ -282,6 +287,11 @@ angular.module('mosaicApp')
 					settings.abfTrajIO.start=factory.start;
 					settings.abfTrajIO.end=factory.end;
 					settings.abfTrajIO.dcOffset;
+					break;
+				case 'RHD':
+					settings.rhdTrajIO.start=factory.start;
+					settings.rhdTrajIO.end=factory.end;
+					settings.rhdTrajIO.dcOffset;
 					break;
 				case 'BIN':
 					settings.binTrajIO.start=factory.start;
