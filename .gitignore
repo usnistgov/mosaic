@@ -67,3 +67,4 @@ conda-build/
 cover/
 travis-debug
 coverage.xml
+.eggs
