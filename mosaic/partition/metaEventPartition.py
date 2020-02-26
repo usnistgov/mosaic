@@ -7,6 +7,7 @@
 	:License:	See LICENSE.TXT
 	:ChangeLog:
 	.. line-block::
+		2/26/20		AB 	Fixed a bug that casued a crash when calculating the error rate when no events were presentin the data
 		4/19/19		AB 	Added an option (trackBaseline) to continuously track the opent channel baseline current during an analysis.
 		9/25/17 	AB 	Save unfiltered event padding by default.
 		3/25/17 	AB 	Allow an optional argument to pass a database name.
@@ -472,7 +473,10 @@ class metaEventPartition(object, metaclass=ABCMeta):
 		self.logger.info('\t\tTotal = {0}'.format(nTotal) )
 		self.logger.info('\t\tWarning = {0}'.format(nWarn) )	
 		self.logger.info('\t\tError = {0}'.format(nRejected) )
-		self.logger.info('\t\tError rate = {0} %'.format(100.*round(nRejected/float(nTotal),4)) )
+		try:
+			self.logger.info('\t\tError rate = {0} %'.format(100.*round(nRejected/float(nTotal),4)) )
+		except ZeroDivisionError:
+			self.logger.info('\t\tError rate = n/a' )
 
 		self.logger.info("[Settings]")
 
