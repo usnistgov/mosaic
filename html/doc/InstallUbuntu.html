@@ -2,21 +2,18 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
-    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>Install MOSAIC on Ubuntu(14.04) &#8212; MOSAIC 2.0b1 documentation</title>
+    <meta charset="utf-8" />
+    <title>Install MOSAIC on Ubuntu(14.04) &#8212; MOSAIC mweb2.0 documentation</title>
     <link rel="stylesheet" href="../_static/bootstrap-sphinx.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="../_static/style.css" type="text/css" />
-    <script type="text/javascript" src="../_static/documentation_options.js"></script>
-    <script type="text/javascript" src="../_static/jquery.js"></script>
-    <script type="text/javascript" src="../_static/underscore.js"></script>
-    <script type="text/javascript" src="../_static/doctools.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-    <script type="text/javascript" src="../_static/js/jquery-1.11.0.min.js"></script>
-    <script type="text/javascript" src="../_static/js/jquery-fix.js"></script>
-    <script type="text/javascript" src="../_static/bootstrap-3.3.7/js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="../_static/bootstrap-sphinx.js"></script>
+    <link rel="stylesheet" type="text/css" href="../_static/graphviz.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/style.css" />
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -25,9 +22,12 @@
 <meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
 <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
 <meta name="apple-mobile-web-app-capable" content="yes">
+<script type="text/javascript" src="../_static/js/jquery-1.11.0.min.js "></script>
+<script type="text/javascript" src="../_static/js/jquery-fix.js "></script>
+<script type="text/javascript" src="../_static/bootstrap-3.3.7/js/bootstrap.min.js "></script>
+<script type="text/javascript" src="../_static/bootstrap-sphinx.js "></script>
 
-	<script async type="text/javascript" id="_fed_an_ua_tag" src="https://dap.digitalgov.gov/Universal-Federated-Analytics-Min.js?agency=NIST&subagency=github&pua=UA-42404149-54&yt=true&exts=ppsx,pps,f90,sch,rtf,wrl,txz,m1v,xlsm,msi,xsd,f,tif,eps,mpg,xml,pl,xlt,c">
-	</script>	
+	<script async type="text/javascript" id="_fed_an_ua_tag" src="https://dap.digitalgov.gov/Universal-Federated-Analytics-Min.js?agency=DOC&subagency=NIST&pua=UA-66610693-1&yt=true&exts=ppsx,pps,f90,sch,rtf,wrl,txz,m1v,xlsm,msi,xsd,f,tif,eps,mpg,xml,pl,xlt,c"></script>	
 
 	<meta name="theme-color" content="#283593">
 
@@ -44,7 +44,7 @@
         </button>
         <a class="navbar-brand" href="../index.html"><span><img src="../_static/icon_48.png"></span>
            </a>
-        <span class="navbar-text navbar-version pull-left"><b>2.0b1</b></span>
+        <span class="navbar-text navbar-version pull-left"><b>mweb2.0</b></span>
       </div>
 
         <div class="collapse navbar-collapse nav-collapse">
@@ -109,7 +109,7 @@
 
 <div class="container">
   <div class="row">
-    <div class="col-md-12 content">
+    <div class="body col-md-12 content" role="main">
       
   <div class="section" id="install-projname-on-ubuntu-14-04">
 <span id="installubuntu"></span><h1>Install <em>MOSAIC</em> on Ubuntu(14.04)<a class="headerlink" href="#install-projname-on-ubuntu-14-04" title="Permalink to this headline">¶</a></h1>
@@ -117,8 +117,8 @@
 <p><strong>1. Prerequisites</strong></p>
 <p>Several prerequisites must be installed prior to building <em>MOSAIC</em> dependencies. This is easily accomplished in Ubuntu using the <cite>aptitude</cite> package manager.</p>
 <div class="admonition hint">
-<p class="first admonition-title">Hint</p>
-<p class="last"><cite>superuser</cite> privileges are needed when installing <em>MOSAIC</em> prerequisites.</p>
+<p class="admonition-title">Hint</p>
+<p><cite>superuser</cite> privileges are needed when installing <em>MOSAIC</em> prerequisites.</p>
 </div>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span>  sudo apt-get install python python-dev python-pip python-qt4
 <span class="go">   pkg-config freetype* gfortran liblapack-dev libblas-dev</span>
@@ -136,24 +136,24 @@
 </pre></div>
 </div>
 <div class="admonition hint">
-<p class="first admonition-title">Hint</p>
-<p class="last">Under Ubuntu, you may need install virtualenv and virtualenvwrapper as root. Simply prefix the command above with sudo.</p>
+<p class="admonition-title">Hint</p>
+<p>Under Ubuntu, you may need install virtualenv and virtualenvwrapper as root. Simply prefix the command above with sudo.</p>
 </div>
 <p>If you would like virtualenvwrapper to be available each time you open a new terminal window, add the line below to  ~/.bash_profile on OS X or ~/.bashrc on Linux.</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">source /usr/local/bin/virtualenvwrapper.sh</span>
 </pre></div>
 </div>
 <div class="admonition hint">
-<p class="first admonition-title">Hint</p>
-<p class="last">Depending on the process used to install <em>virtualenv</em>, the path to virtualenvwrapper.sh may vary. Find the approporiate path by running <code class="docutils literal notranslate"><span class="pre">$</span> <span class="pre">find</span> <span class="pre">/usr</span> <span class="pre">-name</span> <span class="pre">virtualenvwrapper.sh</span></code>. Adjust the line in your .bash_profile or .bashrc script accordingly.</p>
+<p class="admonition-title">Hint</p>
+<p>Depending on the process used to install <em>virtualenv</em>, the path to virtualenvwrapper.sh may vary. Find the approporiate path by running <code class="docutils literal notranslate"><span class="pre">$</span> <span class="pre">find</span> <span class="pre">/usr</span> <span class="pre">-name</span> <span class="pre">virtualenvwrapper.sh</span></code>. Adjust the line in your .bash_profile or .bashrc script accordingly.</p>
 </div>
 <p>Open a new shell to make the new virtual environment available. Now we are ready to create a virtual environment.  You can choose any name for your virtual environment, here we name it <em>MOSAIC</em>:</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span>  mkvirtualenv -p &lt;path to python&gt;/python MOSAIC
 </pre></div>
 </div>
 <div class="admonition hint">
-<p class="first admonition-title">Hint</p>
-<p class="last">We explicitly specify the Python installation to use. This is not mandatory, but is useful if you have multiple Python installations on your computer. The <cite>&lt;path to python&gt;</cite> may vary according to the specific version of python you wish to use. In most cases, this will be either <cite>/usr/local/bin/</cite> or <cite>/usr/bin</cite></p>
+<p class="admonition-title">Hint</p>
+<p>We explicitly specify the Python installation to use. This is not mandatory, but is useful if you have multiple Python installations on your computer. The <cite>&lt;path to python&gt;</cite> may vary according to the specific version of python you wish to use. In most cases, this will be either <cite>/usr/local/bin/</cite> or <cite>/usr/bin</cite></p>
 </div>
 <p><strong>3. Installing MOSAIC</strong></p>
 <p><strong>Install using Setuptools</strong></p>
@@ -162,45 +162,45 @@
 </pre></div>
 </div>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">Installing the graphical interface requires one to install <em>MOSAIC</em> from the source distribution as outlined below.</p>
+<p class="admonition-title">Note</p>
+<p>Installing the graphical interface requires one to install <em>MOSAIC</em> from the source distribution as outlined below.</p>
 </div>
 <p><strong>Install from a Downloaded Source Distribution</strong></p>
 <p>First we need to obtain the <em>MOSAIC</em> source code. For analyzing publication data, we recommend downloading the latest stable version of the source code (<a href="#id1"><span class="problematic" id="id2">`download source`_</span></a>). Alternatively, the latest development version can be downloaded from the <a href="#id3"><span class="problematic" id="id4">`MOSAIC page on Github`_</span></a>. Here we will show you how to set up <em>MOSAIC</em> from the latest stable release:</p>
 <ol class="arabic simple">
-<li>Download the latest release (<a href="#id5"><span class="problematic" id="id6">`download source`_</span></a>)</li>
-<li>Create a directory for the project source. In this case we will create a directory called MOSAIC, located in <code class="docutils literal notranslate"><span class="pre">~/projects/</span></code>, where ‘~’ is your home directory.</li>
+<li><p>Download the latest release (<a href="#id5"><span class="problematic" id="id6">`download source`_</span></a>)</p></li>
+<li><p>Create a directory for the project source. In this case we will create a directory called MOSAIC, located in <code class="docutils literal notranslate"><span class="pre">~/projects/</span></code>, where ‘~’ is your home directory.</p></li>
 </ol>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> mkdir ~/projects/MOSAIC
 </pre></div>
 </div>
 <ol class="arabic simple" start="3">
-<li>Navigate to the directory:</li>
+<li><p>Navigate to the directory:</p></li>
 </ol>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> <span class="nb">cd</span> ~/projects/MOSAIC
 </pre></div>
 </div>
 <ol class="arabic simple" start="4">
-<li>Extract the source into this folder.</li>
-<li>Make sure you are working in the virtual environment we set up in the previous step by typing:</li>
+<li><p>Extract the source into this folder.</p></li>
+<li><p>Make sure you are working in the virtual environment we set up in the previous step by typing:</p></li>
 </ol>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> workon MOSAIC
 </pre></div>
 </div>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">You will notice that (<em>MOSAIC</em>) now appears in front of the $ prompt in your shell. This inidicates that the virtual environment is active. We have employed this notation to indicate commands that should be run from inside the virtual environment.</p>
+<p class="admonition-title">Note</p>
+<p>You will notice that (<em>MOSAIC</em>) now appears in front of the $ prompt in your shell. This inidicates that the virtual environment is active. We have employed this notation to indicate commands that should be run from inside the virtual environment.</p>
 </div>
 <ol class="arabic simple" start="6">
-<li><em>MOSAIC</em> and its dependencies are built using setuptools. Navigate to ~/projects/MOSAIC/ and run the following:</li>
+<li><p><em>MOSAIC</em> and its dependencies are built using setuptools. Navigate to ~/projects/MOSAIC/ and run the following:</p></li>
 </ol>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">(MOSAIC)$</span> python setup.py mosaic_deps
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp gp-VirtualEnv">(MOSAIC)</span><span class="gp">$</span> python setup.py mosaic_deps
 </pre></div>
 </div>
 <ol class="arabic simple" start="7">
-<li>Finally, add the installation directory (~/projects/MOSAIC as set up previously) to your <cite>PYTHONPATH</cite> as shown below. This addition can be made permanent by adding the line below to your <cite>.bash_profile</cite> (OS X) or <cite>.bashrc</cite> (Ubuntu) script.</li>
+<li><p>Finally, add the installation directory (~/projects/MOSAIC as set up previously) to your <cite>PYTHONPATH</cite> as shown below. This addition can be made permanent by adding the line below to your <cite>.bash_profile</cite> (OS X) or <cite>.bashrc</cite> (Ubuntu) script.</p></li>
 </ol>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">(MOSAIC)$</span> <span class="nb">export</span> <span class="nv">PYTHONPATH</span><span class="o">=</span><span class="nv">$PYTHONPATH</span>:~/projects/MOSAIC
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp gp-VirtualEnv">(MOSAIC)</span><span class="gp">$</span> <span class="nb">export</span> <span class="nv">PYTHONPATH</span><span class="o">=</span><span class="nv">$PYTHONPATH</span>:~/projects/MOSAIC
 </pre></div>
 </div>
 <p><strong>4. Testing MOSAIC</strong></p>
@@ -229,7 +229,7 @@
       
     </p>
     <p>
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.4.<br/>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.4.3.<br/>
     </p>
   </div>
 </footer> -->

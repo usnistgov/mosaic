@@ -103,5 +103,5 @@ if __name__ == '__main__':
 	with open('platforms.html', 'w') as f:
 		f.write(htmlout)
 
-	print "Wrote platforms.html"
+	print("Wrote platforms.html")
 

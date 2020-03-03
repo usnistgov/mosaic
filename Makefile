@@ -52,8 +52,8 @@ clean:
 
 
 html:
-	jupyter nbconvert --config convert_notebooks.py --to rst
-	python move_notebooks.py
+# 	jupyter nbconvert --config convert_notebooks.py --to rst
+# 	python move_notebooks.py
 	$(SPHINXBUILD) -b html $(ALLSPHINXOPTS) $(BUILDDIR)/html
 	python download.py
 	# python utils.py

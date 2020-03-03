@@ -13,14 +13,14 @@ def enc(func):
 
 @enc
 def dl_osx(baseurl):
-	print "dl-osx: "+"{0}{1}/mosaic-{1}.{2}.dmg".format(baseurl, version, bld)
+	print("dl-osx: "+"{0}{1}/mosaic-{1}.{2}.dmg".format(baseurl, version, bld))
 	return "{0}{1}/mosaic-{1}.{2}.dmg".format(baseurl, version, bld)
 	# return "{0}1.2/mosaic-1.2.dmg".format(baseurl)
 
 
 @enc
 def dl_win(baseurl):
-	print "dl-win: "+"{0}{1}/mosaic-x64-{1}.{2}.zip".format(baseurl, version, bld)
+	print("dl-win: "+"{0}{1}/mosaic-x64-{1}.{2}.zip".format(baseurl, version, bld))
 	return "{0}{1}/mosaic-x64-{1}.{2}.zip".format(baseurl, version, bld)
 	# return "{0}1.2/mosaic-x64-1.2.zip".format(baseurl)
 
@@ -30,7 +30,7 @@ def readfile(fname):
 		return f.read()
 @enc
 def updateVers(verlist):
-	print "update-versions: "+verlist
+	print("update-versions: "+verlist)
 	return verlist
 
 updatejson="""{

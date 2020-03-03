@@ -2,21 +2,18 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
-    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>5. MOSAIC WEB &#8212; MOSAIC 2.0b1 documentation</title>
+    <meta charset="utf-8" />
+    <title>5. MOSAIC WEB &#8212; MOSAIC mweb2.0 documentation</title>
     <link rel="stylesheet" href="../_static/bootstrap-sphinx.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="../_static/style.css" type="text/css" />
-    <script type="text/javascript" src="../_static/documentation_options.js"></script>
-    <script type="text/javascript" src="../_static/jquery.js"></script>
-    <script type="text/javascript" src="../_static/underscore.js"></script>
-    <script type="text/javascript" src="../_static/doctools.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-    <script type="text/javascript" src="../_static/js/jquery-1.11.0.min.js"></script>
-    <script type="text/javascript" src="../_static/js/jquery-fix.js"></script>
-    <script type="text/javascript" src="../_static/bootstrap-3.3.7/js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="../_static/bootstrap-sphinx.js"></script>
+    <link rel="stylesheet" type="text/css" href="../_static/graphviz.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/style.css" />
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -27,9 +24,12 @@
 <meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
 <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
 <meta name="apple-mobile-web-app-capable" content="yes">
+<script type="text/javascript" src="../_static/js/jquery-1.11.0.min.js "></script>
+<script type="text/javascript" src="../_static/js/jquery-fix.js "></script>
+<script type="text/javascript" src="../_static/bootstrap-3.3.7/js/bootstrap.min.js "></script>
+<script type="text/javascript" src="../_static/bootstrap-sphinx.js "></script>
 
-	<script async type="text/javascript" id="_fed_an_ua_tag" src="https://dap.digitalgov.gov/Universal-Federated-Analytics-Min.js?agency=NIST&subagency=github&pua=UA-42404149-54&yt=true&exts=ppsx,pps,f90,sch,rtf,wrl,txz,m1v,xlsm,msi,xsd,f,tif,eps,mpg,xml,pl,xlt,c">
-	</script>	
+	<script async type="text/javascript" id="_fed_an_ua_tag" src="https://dap.digitalgov.gov/Universal-Federated-Analytics-Min.js?agency=DOC&subagency=NIST&pua=UA-66610693-1&yt=true&exts=ppsx,pps,f90,sch,rtf,wrl,txz,m1v,xlsm,msi,xsd,f,tif,eps,mpg,xml,pl,xlt,c"></script>	
 
 	<meta name="theme-color" content="#283593">
 
@@ -46,7 +46,7 @@
         </button>
         <a class="navbar-brand" href="../index.html"><span><img src="../_static/icon_48.png"></span>
            </a>
-        <span class="navbar-text navbar-version pull-left"><b>2.0b1</b></span>
+        <span class="navbar-text navbar-version pull-left"><b>mweb2.0</b></span>
       </div>
 
         <div class="collapse navbar-collapse nav-collapse">
@@ -111,10 +111,10 @@
 
 <div class="container">
   <div class="row">
-    <div class="col-md-12 content">
+    <div class="body col-md-12 content" role="main">
       
   <div class="section" id="projname-web">
-<span id="mosaicweb-page"></span><h1>5. <em>MOSAIC</em> WEB<a class="headerlink" href="#projname-web" title="Permalink to this headline">¶</a></h1>
+<span id="mosaicweb-page"></span><h1><span class="section-number">5. </span><em>MOSAIC</em> WEB<a class="headerlink" href="#projname-web" title="Permalink to this headline">¶</a></h1>
 <p><em>MOSAIC</em>’s web interface is designed to allow you to easily setup and run an analysis, or to visualize and analyze the results of previous experiments. It contains the most commonly used features of <em>MOSAIC</em>.  The web interface consists of a series of screens that allow you to set up and run an analysis. The interface keeps track of all analysis within the current session so it is easy to go back and compare data sets. The web interface is designed to allow you to easily run the most common use cases. For more complicated analysis, please refer to the <a class="reference internal" href="ScriptingandAdvancedFeatures.html#scripting-page"><span class="std std-ref">Scripting and Advanced Features</span></a> section.</p>
 <p><strong>Opening the Web Interface</strong></p>
 <p>The web interface can be run locally, allowing you to run a <em>MOSAIC</em> analysis from within any modern web browser. If you installed <em>MOSAIC</em> from a precomiled binary, you can start the web interface by double clicking the <em>MOSAIC</em> icon. Alternatively, if you compiled <em>MOSAIC</em> from source code, you can run the GUI from the terminal window – navigate to the installation directory and type:</p>
@@ -123,18 +123,18 @@
 </div>
 <p>This should start a local copy of the <em>MOSAIC</em> web server and open a new browser window that launches the web interface. Running servers can be accessed at anytime by opening a browser and entering <a class="reference external" href="http://localhost:5000">http://localhost:5000</a> in the adress bar.</p>
 <div class="section" id="interface-overview">
-<h2>5.1. Interface Overview<a class="headerlink" href="#interface-overview" title="Permalink to this headline">¶</a></h2>
+<h2><span class="section-number">5.1. </span>Interface Overview<a class="headerlink" href="#interface-overview" title="Permalink to this headline">¶</a></h2>
 <p>The main screen of the <em>MOSAIC</em> web interface is the starting point for running new analyses or reviewing previous runs.</p>
 <div class="figure align-center" id="id1">
 <a class="reference internal image-reference" href="../_images/mosaicMain-01.png"><img alt="../_images/mosaicMain-01.png" src="../_images/mosaicMain-01.png" style="width: 50%;" /></a>
-<p class="caption"><span class="caption-text">The main screen of the <em>MOSAIC</em> web interface allows new analyses to be set up or previous runs to be retrieved.</span></p>
+<p class="caption"><span class="caption-text">The main screen of the <em>MOSAIC</em> web interface allows new analyses to be set up or previous runs to be retrieved.</span><a class="headerlink" href="#id1" title="Permalink to this image">¶</a></p>
 </div>
 <div class="figure align-center">
 <a class="reference internal image-reference" href="../_images/mosaicLoadAnalysis.png"><img alt="../_images/mosaicLoadAnalysis.png" src="../_images/mosaicLoadAnalysis.png" style="width: 30%;" /></a>
 </div>
 </div>
 <div class="section" id="analysis-settings">
-<h2>5.2. Analysis Settings<a class="headerlink" href="#analysis-settings" title="Permalink to this headline">¶</a></h2>
+<h2><span class="section-number">5.2. </span>Analysis Settings<a class="headerlink" href="#analysis-settings" title="Permalink to this headline">¶</a></h2>
 <p>The analysis settings interface displays the data trajectory and allows one to set up and run an analysis. Below we present an overview of the different settings available on this screen. The numbered sections correspond to the numbers in the figure below.</p>
 <div class="figure align-center">
 <a class="reference internal image-reference" href="../_images/analysisSettings-01.png"><img alt="../_images/analysisSettings-01.png" src="../_images/analysisSettings-01.png" style="width: 60%;" /></a>
@@ -142,34 +142,34 @@
 <p><strong>1. Time-Series</strong></p>
 <p>This section of the analysis settings shows a segment of the data time series. The length of time-series displayed is determined by <em>BlockSize</em> parameter in #2.</p>
 <ul class="simple">
-<li><strong>Gray Dashed line:</strong> The gray dashed line in the time-series display indicates the mean baseline current (<span class="math notranslate nohighlight">\(\langle i_0\rangle\)</span>) as estimated in #3.</li>
-<li><strong>Solid Red line:</strong> The red line in the time-series indicates the threshold current set in #3.</li>
-<li><strong>Data Path:</strong> The location of the data filesand  currently being displayed is shown at the top of the window. If data from multiple files are loaded, the last filename is displayed.</li>
-<li><strong>Fs:</strong> The sampling frequency of the time-series data in kHz.</li>
+<li><p><strong>Gray Dashed line:</strong> The gray dashed line in the time-series display indicates the mean baseline current (<span class="math notranslate nohighlight">\(\langle i_0\rangle\)</span>) as estimated in #3.</p></li>
+<li><p><strong>Solid Red line:</strong> The red line in the time-series indicates the threshold current set in #3.</p></li>
+<li><p><strong>Data Path:</strong> The location of the data filesand  currently being displayed is shown at the top of the window. If data from multiple files are loaded, the last filename is displayed.</p></li>
+<li><p><strong>Fs:</strong> The sampling frequency of the time-series data in kHz.</p></li>
 </ul>
 <p><strong>2. Data File Settings</strong></p>
 <ul class="simple">
-<li><strong>File Type</strong>: The web interface is natively compatible with ABF, BIN or QDF Files. If the data path contains any of those file types this field is automatically populated.</li>
-<li><strong>DC Offset</strong>: If your measurement contains a systematic bias, it can be manually corrected by entering the DC offset here.</li>
-<li><strong>Start</strong> and <strong>End</strong>: These parameters allow you to analyze a range of your data. Choose the starting and ending times if you’d like to analyze a small time segement of your data. If both fields are left blank, all data will be analyzed. If the <em>End</em> field is left blank, the data segment from <em>Start</em> to the end of the data will be analyzed.</li>
+<li><p><strong>File Type</strong>: The web interface is natively compatible with ABF, BIN or QDF Files. If the data path contains any of those file types this field is automatically populated.</p></li>
+<li><p><strong>DC Offset</strong>: If your measurement contains a systematic bias, it can be manually corrected by entering the DC offset here.</p></li>
+<li><p><strong>Start</strong> and <strong>End</strong>: These parameters allow you to analyze a range of your data. Choose the starting and ending times if you’d like to analyze a small time segement of your data. If both fields are left blank, all data will be analyzed. If the <em>End</em> field is left blank, the data segment from <em>Start</em> to the end of the data will be analyzed.</p></li>
 </ul>
 <p><strong>3. Event Partition Control</strong></p>
 <ul class="simple">
-<li><strong>Partition Algorithm</strong>: Currently, the only event partitioning algorithm available is <em>CurrentThreshold</em>.</li>
-<li><strong>Block Size</strong>: Controls the amount of data used to determine the baseline. This setting also controls the amount of data shown in the trajectory viewer.</li>
-<li><span class="math notranslate nohighlight">\(\langle i_0\rangle\)</span>: Mean open channel current, in picoamperes (pA). This is shown using the gray dashed line in the time-series viewer (see #1). When <em>Auto</em> is selected, this input will be disabled.</li>
-<li><span class="math notranslate nohighlight">\(\sigma_{i_0}\)</span>: Standardard deviation of the open channel current noise in pA. This is expected noise level of your baseline. Typically one would set this to the measured standard deviation of the open channel current at the cutoff frequency. When <em>Auto</em> is selected, this input will be disabled.</li>
-<li><strong>Auto</strong>: Checking this box enables automatic dectection of <span class="math notranslate nohighlight">\(\langle i_0\rangle\)</span> and <span class="math notranslate nohighlight">\(\sigma_{i_0}\)</span>.</li>
-<li><strong>Threshold</strong>: The slider and correspnding text input can be used to set the current threshold used to determine the start of an event. This setting is used by the <em>CurrentThreshold</em> algorithm to perform an initial partition of the time-series into individual events.</li>
+<li><p><strong>Partition Algorithm</strong>: Currently, the only event partitioning algorithm available is <em>CurrentThreshold</em>.</p></li>
+<li><p><strong>Block Size</strong>: Controls the amount of data used to determine the baseline. This setting also controls the amount of data shown in the trajectory viewer.</p></li>
+<li><p><span class="math notranslate nohighlight">\(\langle i_0\rangle\)</span>: Mean open channel current, in picoamperes (pA). This is shown using the gray dashed line in the time-series viewer (see #1). When <em>Auto</em> is selected, this input will be disabled.</p></li>
+<li><p><span class="math notranslate nohighlight">\(\sigma_{i_0}\)</span>: Standardard deviation of the open channel current noise in pA. This is expected noise level of your baseline. Typically one would set this to the measured standard deviation of the open channel current at the cutoff frequency. When <em>Auto</em> is selected, this input will be disabled.</p></li>
+<li><p><strong>Auto</strong>: Checking this box enables automatic dectection of <span class="math notranslate nohighlight">\(\langle i_0\rangle\)</span> and <span class="math notranslate nohighlight">\(\sigma_{i_0}\)</span>.</p></li>
+<li><p><strong>Threshold</strong>: The slider and correspnding text input can be used to set the current threshold used to determine the start of an event. This setting is used by the <em>CurrentThreshold</em> algorithm to perform an initial partition of the time-series into individual events.</p></li>
 </ul>
 <p><strong>4.  Event Processing Setup</strong></p>
 <p><strong>Event Processing Algorithm</strong>: The GUI supports two event processing algorithms, i) <em>StepResponseAnalysis</em> and ii) <em>MultiStateAnalysis</em>. <em>StepResponseAnalysis</em> is the default analysis, and should be used with data sets with unimodal events. For events with mutliple states or steps the <em>MultiStateAnalysis</em> algorithm, which is capable of automatically analyzing events with <em>N</em> states, should be used. Note that <em>StepResponseAnalysis</em> is a restricted case of <em>MultiStateAnalysis</em> and is more computationally efficient to run if you have unimodal (or single states) data.</p>
 <ul class="simple">
-<li><strong>Write Events to Disk</strong>: When this box is checked, the data points for each partition events are written to the <a class="reference external" href="http://www.sqlite.org/">SQLite</a> database. When this is checked it is possible to view the individual fits of each  in the <em>Event Fits</em> panel.</li>
+<li><p><strong>Write Events to Disk</strong>: When this box is checked, the data points for each partition events are written to the <a class="reference external" href="http://www.sqlite.org/">SQLite</a> database. When this is checked it is possible to view the individual fits of each  in the <em>Event Fits</em> panel.</p></li>
 </ul>
 <div class="admonition hint">
-<p class="first admonition-title">Hint</p>
-<p class="last">When Write Events to Disk is checked, your database can become extremely large! This is because <em>MOSAIC</em> is effectively writing most of your time-series to the database. Note that the fit parameters are always written to the database.</p>
+<p class="admonition-title">Hint</p>
+<p>When Write Events to Disk is checked, your database can become extremely large! This is because <em>MOSAIC</em> is effectively writing most of your time-series to the database. Note that the fit parameters are always written to the database.</p>
 </div>
 <p><strong>5. Advanced Settings</strong></p>
 <p>This opens a dialog window to manually edit settings not otherwise accessible in the GUI. See the <a class="reference internal" href="settingsFile.html#settings-page"><span class="std std-ref">Settings File</span></a> section for further details.</p>
@@ -180,7 +180,7 @@
 <p>Use this button to either start the analysis when it has a <em>Play</em> symbol or to update and validate any settings when it displays a <em>Check Mark</em>.</p>
 </div>
 <div class="section" id="analysis-results">
-<h2>5.3. Analysis Results<a class="headerlink" href="#analysis-results" title="Permalink to this headline">¶</a></h2>
+<h2><span class="section-number">5.3. </span>Analysis Results<a class="headerlink" href="#analysis-results" title="Permalink to this headline">¶</a></h2>
 <div class="figure align-center">
 <a class="reference internal image-reference" href="../_images/analysisResultsContour-01.png"><img alt="../_images/analysisResultsContour-01.png" src="../_images/analysisResultsContour-01.png" style="width: 60%;" /></a>
 </div>
@@ -188,10 +188,10 @@
 <p><strong>Statistics</strong></p>
 <p>The <em>Statistics Window</em> is displayed when a new analysis is started and displays:</p>
 <ul class="simple">
-<li><strong>Events Processed</strong>: The number of events processed.</li>
-<li><strong>Processing Error</strong>: The processing error rate (i.e. the percentage of events for which fit has failed).</li>
-<li><strong>Capture Rate</strong>: An estimate of the mean capture rate.</li>
-<li><strong>Analysis Time</strong>: The amount of data processed (in seconds).</li>
+<li><p><strong>Events Processed</strong>: The number of events processed.</p></li>
+<li><p><strong>Processing Error</strong>: The processing error rate (i.e. the percentage of events for which fit has failed).</p></li>
+<li><p><strong>Capture Rate</strong>: An estimate of the mean capture rate.</p></li>
+<li><p><strong>Analysis Time</strong>: The amount of data processed (in seconds).</p></li>
 </ul>
 <p><strong>2. Results View</strong></p>
 <div class="figure align-center">
@@ -199,9 +199,9 @@
 </div>
 <p>This window shows the blockade depth histogram calculated from the meta-data output by <em>MOSAIC</em>.</p>
 <ul class="simple">
-<li><strong>Filter</strong>: The data displayed in the histogram can be restricted to events that fulfill specific user-defined criteria. For instance, the default filter <code class="docutils literal notranslate"><span class="pre">ResTime</span> <span class="pre">&gt;</span> <span class="pre">0.025</span></code> only includes events longer than 0.025 ms (or 25 <span class="math notranslate nohighlight">\(\mu s\)</span>). The GUI uses a <a class="reference external" href="http://en.wikipedia.org/wiki/SQL">SQL</a> <cite>select</cite> statement to restrict the events included in the histogram. The text in the <em>Filter</em> field represents the part of the query after the <cite>where</cite> clause, and allows the user to use standard <a class="reference external" href="http://en.wikipedia.org/wiki/SQL">SQL</a> syntax to narrow the results in the plot. See the <a class="reference internal" href="WorkingWithSQLite.html#working-with-sqlite-sec"><span class="std std-ref">Work with SQLite</span></a> section for details on <a class="reference external" href="http://en.wikipedia.org/wiki/SQL">SQL</a> syntax.</li>
-<li><strong>Bins</strong>: The number of bins in the histogram are defined here. By default, 500 bins are used, but the user can change this necessary.</li>
-<li><strong>Detect Peaks</strong>: Checking <em>Detect Peaks</em> enables a wavelet-based peak detection algorithm. The wavelet level slider controls the sensitivity of the peak detection. Sliding it to the right will decrease the number of peaks picked up. The peaks detected are represented with red dots. Mousing over the detected peaks cause the coordinates of the peak to be displayed in the lower right hand corner of the window. The detected peaks can also be exported to a CSV file from the file menu <code class="docutils literal notranslate"><span class="pre">File&gt;Save</span> <span class="pre">Histogram</span></code>.</li>
+<li><p><strong>Filter</strong>: The data displayed in the histogram can be restricted to events that fulfill specific user-defined criteria. For instance, the default filter <code class="docutils literal notranslate"><span class="pre">ResTime</span> <span class="pre">&gt;</span> <span class="pre">0.025</span></code> only includes events longer than 0.025 ms (or 25 <span class="math notranslate nohighlight">\(\mu s\)</span>). The GUI uses a <a class="reference external" href="http://en.wikipedia.org/wiki/SQL">SQL</a> <cite>select</cite> statement to restrict the events included in the histogram. The text in the <em>Filter</em> field represents the part of the query after the <cite>where</cite> clause, and allows the user to use standard <a class="reference external" href="http://en.wikipedia.org/wiki/SQL">SQL</a> syntax to narrow the results in the plot. See the <a class="reference internal" href="WorkingWithSQLite.html#working-with-sqlite-sec"><span class="std std-ref">Work with SQLite</span></a> section for details on <a class="reference external" href="http://en.wikipedia.org/wiki/SQL">SQL</a> syntax.</p></li>
+<li><p><strong>Bins</strong>: The number of bins in the histogram are defined here. By default, 500 bins are used, but the user can change this necessary.</p></li>
+<li><p><strong>Detect Peaks</strong>: Checking <em>Detect Peaks</em> enables a wavelet-based peak detection algorithm. The wavelet level slider controls the sensitivity of the peak detection. Sliding it to the right will decrease the number of peaks picked up. The peaks detected are represented with red dots. Mousing over the detected peaks cause the coordinates of the peak to be displayed in the lower right hand corner of the window. The detected peaks can also be exported to a CSV file from the file menu <code class="docutils literal notranslate"><span class="pre">File&gt;Save</span> <span class="pre">Histogram</span></code>.</p></li>
 </ul>
 <div class="figure align-center">
 <a class="reference internal image-reference" href="../_images/analysisResultsEventViewer-01.png"><img alt="../_images/analysisResultsEventViewer-01.png" src="../_images/analysisResultsEventViewer-01.png" style="width: 50%;" /></a>
@@ -222,7 +222,7 @@
       
     </p>
     <p>
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.4.<br/>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.4.3.<br/>
     </p>
   </div>
 </footer> -->

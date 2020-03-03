@@ -42,4 +42,4 @@ if __name__ == '__main__':
 		# str(mosaic.__version__)
 		f.write(generateUtilsJS("https://github.com/usnistgov/mosaic/releases/download", "1.0"))
 
-	print "Wrote utils.js"
+	print("Wrote utils.js")

@@ -96,9 +96,7 @@ def GenerateHeader():
 		    "priceCurrency": "USD"
 		  }
 		}
-		</script>
-    <script type="text/javascript" id="_fed_an_js_tag" src="https://www.nist.gov/sites/default/files/js/federated-analytics.all.min.js?agency=NIST&subagency=github&pua=UA-42404149-54&yt=true&exts=ppsx,pps,f90,sch,rtf,wrl,txz,m1v,xlsm,msi,xsd,f,tif,eps,mpg,xml,pl,xlt,c">
-    </script>
+		<script async type="text/javascript" id="_fed_an_ua_tag" src="https://dap.digitalgov.gov/Universal-Federated-Analytics-Min.js?agency=DOC&subagency=NIST&pua=UA-66610693-1&yt=true&exts=ppsx,pps,f90,sch,rtf,wrl,txz,m1v,xlsm,msi,xsd,f,tif,eps,mpg,xml,pl,xlt,c"></script>
   </head>
   
   <body ng-app="mosaicApp" layout="row" ng-controller="AppCtrl">
@@ -192,5 +190,5 @@ if __name__ == '__main__':
   with open('download.html', 'w') as f:
     f.write(htmlout)
 
-  print "Wrote download.html"
+  print("Wrote download.html")
 

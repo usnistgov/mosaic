@@ -2,21 +2,18 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
-    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>14.1.6. Event Processing &#8212; MOSAIC 2.0b1 documentation</title>
+    <meta charset="utf-8" />
+    <title>14.1.6. Event Processing &#8212; MOSAIC mweb2.0 documentation</title>
     <link rel="stylesheet" href="../_static/bootstrap-sphinx.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="../_static/style.css" type="text/css" />
-    <script type="text/javascript" src="../_static/documentation_options.js"></script>
-    <script type="text/javascript" src="../_static/jquery.js"></script>
-    <script type="text/javascript" src="../_static/underscore.js"></script>
-    <script type="text/javascript" src="../_static/doctools.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-    <script type="text/javascript" src="../_static/js/jquery-1.11.0.min.js"></script>
-    <script type="text/javascript" src="../_static/js/jquery-fix.js"></script>
-    <script type="text/javascript" src="../_static/bootstrap-3.3.7/js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="../_static/bootstrap-sphinx.js"></script>
+    <link rel="stylesheet" type="text/css" href="../_static/graphviz.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/style.css" />
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -27,9 +24,12 @@
 <meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
 <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
 <meta name="apple-mobile-web-app-capable" content="yes">
+<script type="text/javascript" src="../_static/js/jquery-1.11.0.min.js "></script>
+<script type="text/javascript" src="../_static/js/jquery-fix.js "></script>
+<script type="text/javascript" src="../_static/bootstrap-3.3.7/js/bootstrap.min.js "></script>
+<script type="text/javascript" src="../_static/bootstrap-sphinx.js "></script>
 
-	<script async type="text/javascript" id="_fed_an_ua_tag" src="https://dap.digitalgov.gov/Universal-Federated-Analytics-Min.js?agency=NIST&subagency=github&pua=UA-42404149-54&yt=true&exts=ppsx,pps,f90,sch,rtf,wrl,txz,m1v,xlsm,msi,xsd,f,tif,eps,mpg,xml,pl,xlt,c">
-	</script>	
+	<script async type="text/javascript" id="_fed_an_ua_tag" src="https://dap.digitalgov.gov/Universal-Federated-Analytics-Min.js?agency=DOC&subagency=NIST&pua=UA-66610693-1&yt=true&exts=ppsx,pps,f90,sch,rtf,wrl,txz,m1v,xlsm,msi,xsd,f,tif,eps,mpg,xml,pl,xlt,c"></script>	
 
 	<meta name="theme-color" content="#283593">
 
@@ -46,7 +46,7 @@
         </button>
         <a class="navbar-brand" href="../index.html"><span><img src="../_static/icon_48.png"></span>
            </a>
-        <span class="navbar-text navbar-version pull-left"><b>2.0b1</b></span>
+        <span class="navbar-text navbar-version pull-left"><b>mweb2.0</b></span>
       </div>
 
         <div class="collapse navbar-collapse nav-collapse">
@@ -111,31 +111,34 @@
 
 <div class="container">
   <div class="row">
-    <div class="col-md-12 content">
+    <div class="body col-md-12 content" role="main">
       
   <div class="section" id="event-processing">
-<h1>14.1.6. Event Processing<a class="headerlink" href="#event-processing" title="Permalink to this headline">¶</a></h1>
+<h1><span class="section-number">14.1.6. </span>Event Processing<a class="headerlink" href="#event-processing" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="mosaic-process-adept2state-module">
-<h2>14.1.6.1. mosaic.process.adept2State module<a class="headerlink" href="#mosaic-process-adept2state-module" title="Permalink to this headline">¶</a></h2>
-<img src="../_images/inheritance-f9da49088bb853f412d8f174eaf5a5bcb769c5ba.png" alt="Inheritance diagram of mosaic.process.adept2State" usemap="#inheritance1604056825" class="inheritance"/>
-<map id="inheritance1604056825" name="inheritance1604056825">
-<area shape="rect" id="node1" href="#mosaic.process.adept2State.adept2State" target="_top" title="Analyze an event that is characteristic of PEG blockades. This method includes system " alt="" coords="325,53,494,77"/>
-<area shape="rect" id="node2" href="mosaic.meta.html#mosaic.process.metaEventProcessor.metaEventProcessor" target="_top" title=".. warning:: |metaclass|" alt="" coords="5,53,277,77"/>
-</map><span class="target" id="module-mosaic.process.adept2State"></span><p>A class that extends metaEventProcessing to implement the step response algorithm from [Balijepalli:2014]</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Created:</th><td class="field-body">4/18/2013</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Author:</th><td class="field-body">Arvind Balijepalli &lt;<a class="reference external" href="mailto:arvind&#46;balijepalli&#37;&#52;&#48;nist&#46;gov">arvind<span>&#46;</span>balijepalli<span>&#64;</span>nist<span>&#46;</span>gov</a>&gt;</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">License:</th><td class="field-body">See LICENSE.TXT</td>
-</tr>
-<tr class="field-even field"><th class="field-name">ChangeLog:</th><td class="field-body"></td>
-</tr>
-</tbody>
-</table>
+<h2><span class="section-number">14.1.6.1. </span>mosaic.process.adept2State module<a class="headerlink" href="#mosaic-process-adept2state-module" title="Permalink to this headline">¶</a></h2>
+digraph inheritance1604056825 {
+rankdir=LR;
+size=&quot;8.0, 12.0&quot;;
+  &quot;adept2State.adept2State&quot; [URL=&quot;#mosaic.process.adept2State.adept2State&quot;,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5)&quot;,target=&quot;_top&quot;,tooltip=&quot;Analyze an event that is characteristic of PEG blockades. This method includes system &quot;];
+  &quot;metaEventProcessor.metaEventProcessor&quot; -&gt; &quot;adept2State.adept2State&quot; [arrowsize=0.5,style=&quot;setlinewidth(0.5)&quot;];
+  &quot;adept2State.datblock&quot; [fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5)&quot;,tooltip=&quot;Smart data block that holds time-series data and keeps track&quot;];
+  &quot;metaEventProcessor.metaEventProcessor&quot; [URL=&quot;mosaic.meta.html#mosaic.process.metaEventProcessor.metaEventProcessor&quot;,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5)&quot;,target=&quot;_top&quot;,tooltip=&quot;.. warning:: |metaclass|&quot;];
+}
+<span class="target" id="module-mosaic.process.adept2State"></span><p>A class that extends metaEventProcessing to implement the step response algorithm from <span class="bibtex" id="id1">[Balijepalli:2014]</span></p>
+<dl class="field-list simple">
+<dt class="field-odd">Created</dt>
+<dd class="field-odd"><p>4/18/2013</p>
+</dd>
+<dt class="field-even">Author</dt>
+<dd class="field-even"><p>Arvind Balijepalli &lt;<a class="reference external" href="mailto:arvind&#46;balijepalli&#37;&#52;&#48;nist&#46;gov">arvind<span>&#46;</span>balijepalli<span>&#64;</span>nist<span>&#46;</span>gov</a>&gt;</p>
+</dd>
+<dt class="field-odd">License</dt>
+<dd class="field-odd"><p>See LICENSE.TXT</p>
+</dd>
+<dt class="field-even">ChangeLog</dt>
+<dd class="field-even"><p></p></dd>
+</dl>
 <div class="line-block">
 <div class="line">06/28/16        AB      Upgrade lmfit to &gt; 0.9 (<a class="reference external" href="https://lmfit.github.io/lmfit-py/whatsnew.html#whatsnew-090-label">https://lmfit.github.io/lmfit-py/whatsnew.html#whatsnew-090-label</a>)</div>
 <div class="line">03/30/16        AB      Change UnlinkRCConst to LinkRCConst to avoid double negatives.</div>
@@ -161,7 +164,7 @@
 </div>
 <dl class="class">
 <dt id="mosaic.process.adept2State.adept2State">
-<em class="property">class </em><code class="descclassname">mosaic.process.adept2State.</code><code class="descname">adept2State</code><span class="sig-paren">(</span><em>icurr</em>, <em>icurrU</em>, <em>Fs</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/process/adept2State.html#adept2State"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mosaic.process.adept2State.adept2State" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">mosaic.process.adept2State.</code><code class="sig-name descname">adept2State</code><span class="sig-paren">(</span><em class="sig-param">icurr</em>, <em class="sig-param">icurrU</em>, <em class="sig-param">Fs</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/process/adept2State.html#adept2State"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mosaic.process.adept2State.adept2State" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="mosaic.meta.html#mosaic.process.metaEventProcessor.metaEventProcessor" title="mosaic.process.metaEventProcessor.metaEventProcessor"><code class="xref py py-class docutils literal notranslate"><span class="pre">mosaic.process.metaEventProcessor.metaEventProcessor</span></code></a></p>
 <p>Analyze an event that is characteristic of PEG blockades. This method includes system 
 information in the analysis, specifically the filtering effects (throught the RC constant)
@@ -169,40 +172,35 @@ of either amplifiers or the membrane/nanopore complex. The analysis generates se
 parameters that are stored as metadata including:</p>
 <blockquote>
 <div><ol class="arabic simple">
-<li>Blockade depth: the ratio of the open channel current to the blocked current</li>
-<li>Residence time: the time the molecule spends inside the pore</li>
-<li>Tau: the RC constant of the response to a step input (e.g. the entry or exit of the molecule into or out of the nanopore).</li>
+<li><p>Blockade depth: the ratio of the open channel current to the blocked current</p></li>
+<li><p>Residence time: the time the molecule spends inside the pore</p></li>
+<li><p>Tau: the RC constant of the response to a step input (e.g. the entry or exit of the molecule into or out of the nanopore).</p></li>
 </ol>
 </div></blockquote>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Keyword Args:</th><td class="field-body"><dl class="first docutils">
-<dt>In addition to <code class="xref py py-class docutils literal notranslate"><span class="pre">metaEventProcessor</span></code> args,</dt>
-<dd><ul class="first last simple">
-<li><cite>FitTol</cite> :            Tolerance value for the least squares algorithm that controls the convergence of the fit (Default: <cite>1e-7</cite>).</li>
-<li><cite>FitIters</cite> :          Maximum number of iterations before terminating the fit (Default: <cite>50000</cite>).</li>
-<li><cite>LinkRCConst</cite> :       When True, the RC constants associated with each state in the fit function are varied together. (Default: <cite>True</cite>)</li>
+<dl class="field-list simple">
+<dt class="field-odd">Keyword Args</dt>
+<dd class="field-odd"><dl class="simple">
+<dt>In addition to <code class="xref py py-class docutils literal notranslate"><span class="pre">metaEventProcessor</span></code> args,</dt><dd><ul class="simple">
+<li><p><cite>FitTol</cite> :            Tolerance value for the least squares algorithm that controls the convergence of the fit (Default: <cite>1e-7</cite>).</p></li>
+<li><p><cite>FitIters</cite> :          Maximum number of iterations before terminating the fit (Default: <cite>50000</cite>).</p></li>
+<li><p><cite>LinkRCConst</cite> :       When True, the RC constants associated with each state in the fit function are varied together. (Default: <cite>True</cite>)</p></li>
 </ul>
 </dd>
 </dl>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Errors:</th><td class="field-body"><p class="first last">When an event cannot be analyzed, the blockade depth, residence time and rise time are set to -1.</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Errors</dt>
+<dd class="field-even"><p>When an event cannot be analyzed, the blockade depth, residence time and rise time are set to -1.</p>
+</dd>
+</dl>
 <dl class="method">
 <dt id="mosaic.process.adept2State.adept2State.formatsettings">
-<code class="descname">formatsettings</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/process/adept2State.html#adept2State.formatsettings"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mosaic.process.adept2State.adept2State.formatsettings" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">formatsettings</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/process/adept2State.html#adept2State.formatsettings"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mosaic.process.adept2State.adept2State.formatsettings" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return a formatted string of settings for display</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="mosaic.process.adept2State.adept2State.mdAveragePropertiesList">
-<code class="descname">mdAveragePropertiesList</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/process/adept2State.html#adept2State.mdAveragePropertiesList"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mosaic.process.adept2State.adept2State.mdAveragePropertiesList" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">mdAveragePropertiesList</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/process/adept2State.html#adept2State.mdAveragePropertiesList"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mosaic.process.adept2State.adept2State.mdAveragePropertiesList" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return a list of meta-data properties that will be averaged 
 and displayed at the end of a run.</p>
 </dd></dl>
@@ -211,27 +209,29 @@ and displayed at the end of a run.</p>
 
 </div>
 <div class="section" id="mosaic-process-adept-module">
-<h2>14.1.6.2. mosaic.process.adept module<a class="headerlink" href="#mosaic-process-adept-module" title="Permalink to this headline">¶</a></h2>
-<img src="../_images/inheritance-0aefb4ddcee3ed6f1ee68928f16a8e4c50ce7985.png" alt="Inheritance diagram of mosaic.process.adept" usemap="#inheritance9935b48c28" class="inheritance"/>
-<map id="inheritance9935b48c28" name="inheritance9935b48c28">
-<area shape="rect" id="node1" href="#mosaic.process.adept.InvalidEvent" target="_top" title="adept.InvalidEvent" alt="" coords="76,53,207,77"/>
-<area shape="rect" id="node2" href="#mosaic.process.adept.adept" target="_top" title="Analyze a multi&#45;step event that contains two or more states. This method includes system " alt="" coords="325,5,417,29"/>
-<area shape="rect" id="node3" href="mosaic.meta.html#mosaic.process.metaEventProcessor.metaEventProcessor" target="_top" title=".. warning:: |metaclass|" alt="" coords="5,5,277,29"/>
-</map><span class="target" id="module-mosaic.process.adept"></span><p>Analyze a multi-step event</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Created:</th><td class="field-body">4/18/2013</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Author:</th><td class="field-body">Arvind Balijepalli &lt;<a class="reference external" href="mailto:arvind&#46;balijepalli&#37;&#52;&#48;nist&#46;gov">arvind<span>&#46;</span>balijepalli<span>&#64;</span>nist<span>&#46;</span>gov</a>&gt;</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">License:</th><td class="field-body">See LICENSE.TXT</td>
-</tr>
-<tr class="field-even field"><th class="field-name">ChangeLog:</th><td class="field-body"></td>
-</tr>
-</tbody>
-</table>
+<h2><span class="section-number">14.1.6.2. </span>mosaic.process.adept module<a class="headerlink" href="#mosaic-process-adept-module" title="Permalink to this headline">¶</a></h2>
+digraph inheritance9935b48c28 {
+rankdir=LR;
+size=&quot;8.0, 12.0&quot;;
+  &quot;adept.InvalidEvent&quot; [URL=&quot;#mosaic.process.adept.InvalidEvent&quot;,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5)&quot;,target=&quot;_top&quot;];
+  &quot;adept.adept&quot; [URL=&quot;#mosaic.process.adept.adept&quot;,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5)&quot;,target=&quot;_top&quot;,tooltip=&quot;Analyze a multi-step event that contains two or more states. This method includes system &quot;];
+  &quot;metaEventProcessor.metaEventProcessor&quot; -&gt; &quot;adept.adept&quot; [arrowsize=0.5,style=&quot;setlinewidth(0.5)&quot;];
+  &quot;metaEventProcessor.metaEventProcessor&quot; [URL=&quot;mosaic.meta.html#mosaic.process.metaEventProcessor.metaEventProcessor&quot;,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5)&quot;,target=&quot;_top&quot;,tooltip=&quot;.. warning:: |metaclass|&quot;];
+}
+<span class="target" id="module-mosaic.process.adept"></span><p>Analyze a multi-step event</p>
+<dl class="field-list simple">
+<dt class="field-odd">Created</dt>
+<dd class="field-odd"><p>4/18/2013</p>
+</dd>
+<dt class="field-even">Author</dt>
+<dd class="field-even"><p>Arvind Balijepalli &lt;<a class="reference external" href="mailto:arvind&#46;balijepalli&#37;&#52;&#48;nist&#46;gov">arvind<span>&#46;</span>balijepalli<span>&#64;</span>nist<span>&#46;</span>gov</a>&gt;</p>
+</dd>
+<dt class="field-odd">License</dt>
+<dd class="field-odd"><p>See LICENSE.TXT</p>
+</dd>
+<dt class="field-even">ChangeLog</dt>
+<dd class="field-even"><p></p></dd>
+</dl>
 <div class="line-block">
 <div class="line">06/28/16        AB      Upgrade lmfit to &gt; 0.9 (<a class="reference external" href="https://lmfit.github.io/lmfit-py/whatsnew.html#whatsnew-090-label">https://lmfit.github.io/lmfit-py/whatsnew.html#whatsnew-090-label</a>)</div>
 <div class="line">05/27/16        AB      Added warnings when the reduced chi squared is not a number and if the fit parameters are unchanged from the initial guess values.</div>
@@ -272,49 +272,44 @@ and displayed at the end of a run.</p>
 </div>
 <dl class="class">
 <dt id="mosaic.process.adept.adept">
-<em class="property">class </em><code class="descclassname">mosaic.process.adept.</code><code class="descname">adept</code><span class="sig-paren">(</span><em>icurr</em>, <em>icurrU</em>, <em>Fs</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/process/adept.html#adept"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mosaic.process.adept.adept" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">mosaic.process.adept.</code><code class="sig-name descname">adept</code><span class="sig-paren">(</span><em class="sig-param">icurr</em>, <em class="sig-param">icurrU</em>, <em class="sig-param">Fs</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/process/adept.html#adept"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mosaic.process.adept.adept" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="mosaic.meta.html#mosaic.process.metaEventProcessor.metaEventProcessor" title="mosaic.process.metaEventProcessor.metaEventProcessor"><code class="xref py py-class docutils literal notranslate"><span class="pre">mosaic.process.metaEventProcessor.metaEventProcessor</span></code></a></p>
 <p>Analyze a multi-step event that contains two or more states. This method includes system 
 information in the analysis, specifically the filtering effects (through the RC constant)
 of either amplifiers or the membrane/nanopore complex. The analysis generates several 
 parameters that are stored as metadata including:</p>
 <ol class="arabic simple">
-<li>Blockade depth: the ratio of the open channel current to the blocked current</li>
-<li>Residence time: the time the molecule spends inside the pore</li>
-<li>Tau: the RC constant  of the response to a step input (e.g. the entry or exit of the molecule into or out of the nanopore).</li>
+<li><p>Blockade depth: the ratio of the open channel current to the blocked current</p></li>
+<li><p>Residence time: the time the molecule spends inside the pore</p></li>
+<li><p>Tau: the RC constant  of the response to a step input (e.g. the entry or exit of the molecule into or out of the nanopore).</p></li>
 </ol>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Keyword Args:</th><td class="field-body"><dl class="first docutils">
-<dt>In addition to <code class="xref py py-class docutils literal notranslate"><span class="pre">metaEventProcessor</span></code> args,</dt>
-<dd><ul class="first last simple">
-<li><cite>StepSize</cite> :                  The multiple of the standard deviations considered significant to dtecting an event (default: 3.0).</li>
-<li><cite>MinStateLength</cite> :    minimum number of data points required to assign a state within an event (default: 4)</li>
-<li><cite>MaxEventLength</cite> :    maximum length (in data points) of events that will be processed (default: 10000)</li>
-<li><cite>FitTol</cite> :                    fit tolerance for convergence (default: 1.e-7)</li>
-<li><cite>FitIters</cite> :                  maximum fit iterations (default: 5000)</li>
-<li><cite>LinkRCConst</cite> :       When True, the RC constants associated with each state in the fit function are varied together. (Default: <cite>True</cite>)</li>
+<dl class="field-list simple">
+<dt class="field-odd">Keyword Args</dt>
+<dd class="field-odd"><dl class="simple">
+<dt>In addition to <code class="xref py py-class docutils literal notranslate"><span class="pre">metaEventProcessor</span></code> args,</dt><dd><ul class="simple">
+<li><p><cite>StepSize</cite> :                  The multiple of the standard deviations considered significant to dtecting an event (default: 3.0).</p></li>
+<li><p><cite>MinStateLength</cite> :    minimum number of data points required to assign a state within an event (default: 4)</p></li>
+<li><p><cite>MaxEventLength</cite> :    maximum length (in data points) of events that will be processed (default: 10000)</p></li>
+<li><p><cite>FitTol</cite> :                    fit tolerance for convergence (default: 1.e-7)</p></li>
+<li><p><cite>FitIters</cite> :                  maximum fit iterations (default: 5000)</p></li>
+<li><p><cite>LinkRCConst</cite> :       When True, the RC constants associated with each state in the fit function are varied together. (Default: <cite>True</cite>)</p></li>
 </ul>
 </dd>
 </dl>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Errors:</th><td class="field-body"><p class="first last">When an event cannot be analyzed, all metadata are set to -1.</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Errors</dt>
+<dd class="field-even"><p>When an event cannot be analyzed, all metadata are set to -1.</p>
+</dd>
+</dl>
 <dl class="method">
 <dt id="mosaic.process.adept.adept.formatsettings">
-<code class="descname">formatsettings</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/process/adept.html#adept.formatsettings"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mosaic.process.adept.adept.formatsettings" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">formatsettings</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/process/adept.html#adept.formatsettings"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mosaic.process.adept.adept.formatsettings" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return a formatted string of settings for display</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="mosaic.process.adept.adept.mdAveragePropertiesList">
-<code class="descname">mdAveragePropertiesList</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/process/adept.html#adept.mdAveragePropertiesList"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mosaic.process.adept.adept.mdAveragePropertiesList" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">mdAveragePropertiesList</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/process/adept.html#adept.mdAveragePropertiesList"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mosaic.process.adept.adept.mdAveragePropertiesList" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return a list of meta-data properties that will be averaged 
 and displayed at the end of a run.</p>
 </dd></dl>
@@ -323,36 +318,40 @@ and displayed at the end of a run.</p>
 
 <dl class="exception">
 <dt id="mosaic.process.adept.InvalidEvent">
-<em class="property">exception </em><code class="descclassname">mosaic.process.adept.</code><code class="descname">InvalidEvent</code><a class="reference internal" href="../_modules/mosaic/process/adept.html#InvalidEvent"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mosaic.process.adept.InvalidEvent" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">exceptions.Exception</span></code></p>
+<em class="property">exception </em><code class="sig-prename descclassname">mosaic.process.adept.</code><code class="sig-name descname">InvalidEvent</code><a class="reference internal" href="../_modules/mosaic/process/adept.html#InvalidEvent"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mosaic.process.adept.InvalidEvent" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/exceptions.html#Exception" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Exception</span></code></a></p>
 </dd></dl>
 
 </div>
 <div class="section" id="mosaic-process-cusumplus-module">
-<h2>14.1.6.3. mosaic.process.cusumPlus module<a class="headerlink" href="#mosaic-process-cusumplus-module" title="Permalink to this headline">¶</a></h2>
-<img src="../_images/inheritance-e02edae0cb5d5a19e95c19fd5fd414d365e7b380.png" alt="Inheritance diagram of mosaic.process.cusumPlus" usemap="#inheritance6c5c146ee6" class="inheritance"/>
-<map id="inheritance6c5c146ee6" name="inheritance6c5c146ee6">
-<area shape="rect" id="node1" href="#mosaic.process.cusumPlus.InvalidEvent" target="_top" title="cusumPlus.InvalidEvent" alt="" coords="60,101,223,125"/>
-<area shape="rect" id="node2" href="#mosaic.process.cusumPlus.cusumPlus" target="_top" title="CUSUM+ will detect jumps that are smaller than `StepSize`, but they will have to be sustained longer. Threshold can be thought of, very roughly, as proportional to the length of time a subevent must be sustained for it to be detected. The algorithm will adjust the actual threshold used on a per&#45;event basis in order to minimize false positive detection of current jumps This algorithm is based on code used in OpenNanopore, which you can read about here: http://pubs.rsc.org/en/Content/ArticleLanding/2012/NR/c2nr30951c#!divAbstract" alt="" coords="325,53,481,77"/>
-<area shape="rect" id="node3" href="mosaic.meta.html#mosaic.process.metaEventProcessor.metaEventProcessor" target="_top" title=".. warning:: |metaclass|" alt="" coords="5,53,277,77"/>
-</map><span class="target" id="module-mosaic.process.cusumPlus"></span><p>Analyze a multi-step event with the CUSUM+ algorithm. Implements a modified version of the CUSUM algorithm 
+<h2><span class="section-number">14.1.6.3. </span>mosaic.process.cusumPlus module<a class="headerlink" href="#mosaic-process-cusumplus-module" title="Permalink to this headline">¶</a></h2>
+digraph inheritance6c5c146ee6 {
+rankdir=LR;
+size=&quot;8.0, 12.0&quot;;
+  &quot;cusumPlus.InvalidEvent&quot; [URL=&quot;#mosaic.process.cusumPlus.InvalidEvent&quot;,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5)&quot;,target=&quot;_top&quot;];
+  &quot;cusumPlus.cusumPlus&quot; [URL=&quot;#mosaic.process.cusumPlus.cusumPlus&quot;,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5)&quot;,target=&quot;_top&quot;,tooltip=&quot;CUSUM+ will detect jumps that are smaller than `StepSize`, but they will have to be sustained longer. Threshold can be thought of, very roughly, as proportional to the length of time a subevent must be sustained for it to be detected. The algorithm will adjust the actual threshold used on a per-event basis in order to minimize false positive detection of current jumps This algorithm is based on code used in OpenNanopore, which you can read about here: http://pubs.rsc.org/en/Content/ArticleLanding/2012/NR/c2nr30951c#!divAbstract&quot;];
+  &quot;metaEventProcessor.metaEventProcessor&quot; -&gt; &quot;cusumPlus.cusumPlus&quot; [arrowsize=0.5,style=&quot;setlinewidth(0.5)&quot;];
+  &quot;cusumPlus.datblock&quot; [fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5)&quot;,tooltip=&quot;Smart data block that holds a time-series of data and keeps track&quot;];
+  &quot;metaEventProcessor.metaEventProcessor&quot; [URL=&quot;mosaic.meta.html#mosaic.process.metaEventProcessor.metaEventProcessor&quot;,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5)&quot;,target=&quot;_top&quot;,tooltip=&quot;.. warning:: |metaclass|&quot;];
+}
+<span class="target" id="module-mosaic.process.cusumPlus"></span><p>Analyze a multi-step event with the CUSUM+ algorithm. Implements a modified version of the CUSUM algorithm 
 (used by OpenNanopore for example) in MOSAIC. This approach sacrifices including system information in the 
 analysis in favor of much faster fitting of single- and multi-level events.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Created:</th><td class="field-body">2/10/2015</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Author:</th><td class="field-body">Kyle Briggs &lt;<a class="reference external" href="mailto:kbrig035&#37;&#52;&#48;uottawa&#46;ca">kbrig035<span>&#64;</span>uottawa<span>&#46;</span>ca</a>&gt;</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">License:</th><td class="field-body">See LICENSE.TXT</td>
-</tr>
-<tr class="field-even field"><th class="field-name">ChangeLog:</th><td class="field-body"></td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Created</dt>
+<dd class="field-odd"><p>2/10/2015</p>
+</dd>
+<dt class="field-even">Author</dt>
+<dd class="field-even"><p>Kyle Briggs &lt;<a class="reference external" href="mailto:kbrig035&#37;&#52;&#48;uottawa&#46;ca">kbrig035<span>&#64;</span>uottawa<span>&#46;</span>ca</a>&gt;</p>
+</dd>
+<dt class="field-odd">License</dt>
+<dd class="field-odd"><p>See LICENSE.TXT</p>
+</dd>
+<dt class="field-even">ChangeLog</dt>
+<dd class="field-even"><p></p></dd>
+</dl>
 <div class="line-block">
+<div class="line">11/15/19    JR  Updated output: calculates adn includes blockade standard deviation; simplified tab in code</div>
 <div class="line">6/3/17          AB      Updated docstring.</div>
 <div class="line">8/24/15         AB      Rename algorithm to CUSUM+</div>
 <div class="line">3/20/15         AB      Added a new metadata column (mdStateResTime) that saves the residence time of each state to the database.</div>
@@ -363,36 +362,33 @@ analysis in favor of much faster fitting of single- and multi-level events.</p>
 </div>
 <dl class="class">
 <dt id="mosaic.process.cusumPlus.cusumPlus">
-<em class="property">class </em><code class="descclassname">mosaic.process.cusumPlus.</code><code class="descname">cusumPlus</code><span class="sig-paren">(</span><em>icurr</em>, <em>icurrU</em>, <em>Fs</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/process/cusumPlus.html#cusumPlus"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mosaic.process.cusumPlus.cusumPlus" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">mosaic.process.cusumPlus.</code><code class="sig-name descname">cusumPlus</code><span class="sig-paren">(</span><em class="sig-param">icurr</em>, <em class="sig-param">icurrU</em>, <em class="sig-param">Fs</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/process/cusumPlus.html#cusumPlus"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mosaic.process.cusumPlus.cusumPlus" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="mosaic.meta.html#mosaic.process.metaEventProcessor.metaEventProcessor" title="mosaic.process.metaEventProcessor.metaEventProcessor"><code class="xref py py-class docutils literal notranslate"><span class="pre">mosaic.process.metaEventProcessor.metaEventProcessor</span></code></a></p>
 <p>CUSUM+ will detect jumps that are smaller than <cite>StepSize</cite>, but they will have to be sustained longer. Threshold can be thought of, very roughly, as proportional to the length of time a subevent must be sustained for it to be detected. The algorithm will adjust the actual threshold used on a per-event basis in order to minimize false positive detection of current jumps This algorithm is based on code used in OpenNanopore, which you can read about here: <a class="reference external" href="http://pubs.rsc.org/en/Content/ArticleLanding/2012/NR/c2nr30951c#!divAbstract">http://pubs.rsc.org/en/Content/ArticleLanding/2012/NR/c2nr30951c#!divAbstract</a></p>
-<p>Some known issues with CUSUM+:</p>
+<blockquote>
+<div><p>Some known issues with CUSUM+:</p>
 <ol class="arabic simple">
-<li>If the duration of a sub-event is shorter than than the MinLength parameter, CUSUM+ will be unable to detect it. CUSUM+ will not detect events within MinLength of a previous event.</li>
-<li>CUSUM assumes an instantaneous transition between current states. As a result, if the RC rise time of the system is large, CUSUM+ can trigger and detect intermediate states during the change time. This can be avoided by choosing a number of samples to skip equal to about 2-5RC.</li>
-<li>As a consequence of using a statistical t-test, CUSUM can have false positives. The algorithm has an adaptive threshold that tries to minimize the chances of this happening while maintaining good sensitivity (expected number of false positives within an event is less than 1).</li>
+<li><p>If the duration of a sub-event is shorter than than the MinLength parameter, CUSUM+ will be unable to detect it. CUSUM+ will not detect events within MinLength of a previous event.</p></li>
+<li><p>CUSUM assumes an instantaneous transition between current states. As a result, if the RC rise time of the system is large, CUSUM+ can trigger and detect intermediate states during the change time. This can be avoided by choosing a number of samples to skip equal to about 2-5RC.</p></li>
+<li><p>As a consequence of using a statistical t-test, CUSUM can have false positives. The algorithm has an adaptive threshold that tries to minimize the chances of this happening while maintaining good sensitivity (expected number of false positives within an event is less than 1).</p></li>
 </ol>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Keyword Args:</th><td class="field-body"><dl class="first docutils">
-<dt>In addition to <code class="xref py py-class docutils literal notranslate"><span class="pre">metaEventProcessor</span></code> args,</dt>
-<dd><ul class="first last simple">
-<li><cite>StepSize</cite> :                  The number of baseline standard deviations are considered significant (3 is usually a good starting point).</li>
-<li><cite>MinThreshold</cite> :              One of two sensitivity parameters (lower is more sensitive). A good starting point is to set <cite>MinThreshold</cite> equal to <cite>StepSize</cite>.</li>
-<li><cite>MaxThreshold</cite> :              One of two sensitivity parameters (lower is more sensitive). Set <cite>MaxThreshold</cite> about 3x higher than <cite>MinThreshold</cite>.</li>
-<li><cite>MinLength</cite> :                 The number of samples to skip after detecting a jump, in order to avoid triggering during the rise time and returning an artificially high number of states. This number of points is also skipped when averaging levels. About 4 times the RC constant of the system is a good starting value.</li>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Keyword Args</dt>
+<dd class="field-odd"><dl class="simple">
+<dt>In addition to <code class="xref py py-class docutils literal notranslate"><span class="pre">metaEventProcessor</span></code> args,</dt><dd><ul class="simple">
+<li><p><cite>StepSize</cite> :                  The number of baseline standard deviations are considered significant (3 is usually a good starting point).</p></li>
+<li><p><cite>MinThreshold</cite> :              One of two sensitivity parameters (lower is more sensitive). A good starting point is to set <cite>MinThreshold</cite> equal to <cite>StepSize</cite>.</p></li>
+<li><p><cite>MaxThreshold</cite> :              One of two sensitivity parameters (lower is more sensitive). Set <cite>MaxThreshold</cite> about 3x higher than <cite>MinThreshold</cite>.</p></li>
+<li><p><cite>MinLength</cite> :                 The number of samples to skip after detecting a jump, in order to avoid triggering during the rise time and returning an artificially high number of states. This number of points is also skipped when averaging levels. About 4 times the RC constant of the system is a good starting value.</p></li>
 </ul>
 </dd>
 </dl>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Errors:</th><td class="field-body"><p class="first last">When an event cannot be analyzed, all metadata are set to -1.</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Errors</dt>
+<dd class="field-even"><p>When an event cannot be analyzed, all metadata are set to -1.</p>
+</dd>
+</dl>
 <p>To use it requires four settings:</p>
 <div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="s2">&quot;cusumPlus&quot;</span><span class="o">:</span> <span class="p">{</span>
         <span class="s2">&quot;StepSize&quot;</span><span class="o">:</span> <span class="mf">3.0</span><span class="p">,</span> 
@@ -404,13 +400,13 @@ analysis in favor of much faster fitting of single- and multi-level events.</p>
 </div>
 <dl class="method">
 <dt id="mosaic.process.cusumPlus.cusumPlus.formatsettings">
-<code class="descname">formatsettings</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/process/cusumPlus.html#cusumPlus.formatsettings"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mosaic.process.cusumPlus.cusumPlus.formatsettings" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">formatsettings</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/process/cusumPlus.html#cusumPlus.formatsettings"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mosaic.process.cusumPlus.cusumPlus.formatsettings" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return a formatted string of settings for display</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="mosaic.process.cusumPlus.cusumPlus.mdAveragePropertiesList">
-<code class="descname">mdAveragePropertiesList</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/process/cusumPlus.html#cusumPlus.mdAveragePropertiesList"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mosaic.process.cusumPlus.cusumPlus.mdAveragePropertiesList" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">mdAveragePropertiesList</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/process/cusumPlus.html#cusumPlus.mdAveragePropertiesList"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mosaic.process.cusumPlus.cusumPlus.mdAveragePropertiesList" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return a list of meta-data properties that will be averaged 
 and displayed at the end of a run.</p>
 </dd></dl>
@@ -419,8 +415,8 @@ and displayed at the end of a run.</p>
 
 <dl class="exception">
 <dt id="mosaic.process.cusumPlus.InvalidEvent">
-<em class="property">exception </em><code class="descclassname">mosaic.process.cusumPlus.</code><code class="descname">InvalidEvent</code><a class="reference internal" href="../_modules/mosaic/process/cusumPlus.html#InvalidEvent"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mosaic.process.cusumPlus.InvalidEvent" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">exceptions.Exception</span></code></p>
+<em class="property">exception </em><code class="sig-prename descclassname">mosaic.process.cusumPlus.</code><code class="sig-name descname">InvalidEvent</code><a class="reference internal" href="../_modules/mosaic/process/cusumPlus.html#InvalidEvent"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mosaic.process.cusumPlus.InvalidEvent" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/exceptions.html#Exception" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Exception</span></code></a></p>
 </dd></dl>
 
 </div>
@@ -439,7 +435,7 @@ and displayed at the end of a run.</p>
       
     </p>
     <p>
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.4.<br/>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.4.3.<br/>
     </p>
   </div>
 </footer> -->
