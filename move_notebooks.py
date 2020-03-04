@@ -5,7 +5,7 @@ import shutil
 for g in glob.glob('*_files*'):
 	try:
 		shutil.rmtree( os.path.abspath( 'source/doc/'+g[:-6]+'_files' ) )
-	except OSError, err:
+	except OSError as err:
 		print(err)
 		pass
 

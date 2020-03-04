@@ -1,6 +1,6 @@
 digraph "Graphical Class Hierarchy"
 {
-  graph [ dpi = 600 ];
+  graph [ dpi = 1200 ];
   size="1,0.75";
   ratio="fill";
   edge [fontname="Helvetica",fontsize="20",labelfontname="Helvetica",labelfontsize="20"];

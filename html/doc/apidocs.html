@@ -116,9 +116,9 @@
   <div class="section" id="api-documentation">
 <span id="api-docs-page"></span><h1><span class="section-number">14. </span>API Documentation<a class="headerlink" href="#api-documentation" title="Permalink to this headline">¶</a></h1>
 <p><em>MOSAIC</em> is designed using object oriented tools, which makes it easy to extend. The API documentation provides class level descriptions of the different modules that can be used in customized code. Meta-Classes (<em>blue</em>) define interfaces to five key parts of MOSAIC: time-series IO (<code class="xref py py-class docutils literal notranslate"><span class="pre">metaTrajIO</span></code>), time-series filtering (<code class="xref py py-class docutils literal notranslate"><span class="pre">metaIOFilter</span></code>), analysis output (<code class="xref py py-class docutils literal notranslate"><span class="pre">metaMDIO</span></code>), event partition and segmenting (<code class="xref py py-class docutils literal notranslate"><span class="pre">metaEventPartition</span></code>), and event processing (<code class="xref py py-class docutils literal notranslate"><span class="pre">metaEventProcessor</span></code>). Sub-classing any of these meta classes and implementing their interface functions allows one to extend <em>MOSAIC</em>, while maintaining compatibility with other parts of the program. The diagram below shows the class inheritence in <em>MOSAIC</em>, with top-level classes in <em>gray</em>.</p>
-digraph &quot;Graphical Class Hierarchy&quot;
+<div class="graphviz"><img src="../_images/graphviz-9ab132e45d77f3d9facf595378e1712866ed2fce.png" alt="digraph &quot;Graphical Class Hierarchy&quot;
 {
-  graph [ dpi = 600 ];
+  graph [ dpi = 1200 ];
   size=&quot;1,0.75&quot;;
   ratio=&quot;fill&quot;;
   edge [fontname=&quot;Helvetica&quot;,fontsize=&quot;20&quot;,labelfontname=&quot;Helvetica&quot;,labelfontsize=&quot;20&quot;];
@@ -163,7 +163,7 @@ digraph &quot;Graphical Class Hierarchy&quot;
   Node19 [label=&quot;mosaic.tsvTrajIO.tsvTrajIO&quot;,height=0.2,width=0.4,color=&quot;black&quot;, fillcolor=&quot;white&quot;, style=&quot;filled&quot;];
   Node1 -&gt; Node20 [dir=&quot;back&quot;, width=1.0, penwidth=2.5,color=&quot;midnightblue&quot;,fontsize=&quot;20&quot;,style=&quot;solid&quot;,fontname=&quot;Helvetica&quot;];
   Node20 [label=&quot;mosaic.SingleChannelAnalysis.\lSingleChannelAnalysis&quot;,height=0.2,width=0.4,color=&quot;black&quot;, fillcolor=&quot;grey88&quot;, style=&quot;filled&quot;];
-}
+}" class="graphviz" /></div>
 <div class="section" id="projname-modules">
 <h2><span class="section-number">14.1. </span><em>MOSAIC</em> Modules<a class="headerlink" href="#projname-modules" title="Permalink to this headline">¶</a></h2>
 <div class="toctree-wrapper compound">
@@ -220,9 +220,9 @@ digraph &quot;Graphical Class Hierarchy&quot;
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../api-doc/mosaicscripts.html">14.1.9. MOSAIC Script Repository</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../api-doc/mosaicscripts.html#mosaicscripts-plots-timeseries-module">14.1.9.1. mosaicscripts.plots.timeseries module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../api-doc/mosaicscripts.html#mosaicscripts-plots-histogram-module">14.1.9.2. mosaicscripts.plots.histogram module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../api-doc/mosaicscripts.html#mosaicscripts-plots-contour-module">14.1.9.3. mosaicscripts.plots.contour module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api-doc/mosaicscripts.html#module-mosaicscripts.plots.timeseries">14.1.9.1. mosaicscripts.plots.timeseries module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api-doc/mosaicscripts.html#module-mosaicscripts.plots.histogram">14.1.9.2. mosaicscripts.plots.histogram module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api-doc/mosaicscripts.html#module-mosaicscripts.plots.contour">14.1.9.3. mosaicscripts.plots.contour module</a></li>
 </ul>
 </li>
 </ul>

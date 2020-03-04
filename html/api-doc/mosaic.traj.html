@@ -117,14 +117,11 @@
 <h1><span class="section-number">14.1.3. </span>Time-Series IO<a class="headerlink" href="#time-series-io" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="mosaic-trajio-abftrajio-module">
 <h2><span class="section-number">14.1.3.1. </span>mosaic.trajio.abfTrajIO module<a class="headerlink" href="#mosaic-trajio-abftrajio-module" title="Permalink to this headline">¶</a></h2>
-digraph inheritancef6219e35d8 {
-rankdir=LR;
-size=&quot;8.0, 12.0&quot;;
-  &quot;abfTrajIO.abfTrajIO&quot; [URL=&quot;../doc/settingsFile.html#mosaic.trajio.abfTrajIO.abfTrajIO&quot;,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5)&quot;,target=&quot;_top&quot;,tooltip=&quot;Read ABF1 and ABF2 file formats. Currently, only &quot;];
-  &quot;metaTrajIO.metaTrajIO&quot; -&gt; &quot;abfTrajIO.abfTrajIO&quot; [arrowsize=0.5,style=&quot;setlinewidth(0.5)&quot;];
-  &quot;metaTrajIO.metaTrajIO&quot; [URL=&quot;../doc/settingsFile.html#mosaic.trajio.metaTrajIO.metaTrajIO&quot;,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5)&quot;,target=&quot;_top&quot;,tooltip=&quot;.. warning:: |metaclass|&quot;];
-}
-<span class="target" id="module-mosaic.trajio.abfTrajIO"></span><p>A TrajIO class that supports ABF1 and ABF2 file formats via abf/abf.py. Currently, only
+<div class="graphviz"><img src="../_images/inheritance-472e2c53fcb2edb4252610737e07a41d464aae8c.png" alt="Inheritance diagram of mosaic.trajio.abfTrajIO" usemap="#inheritancef6219e35d8" class="inheritance graphviz" /></div>
+<map id="inheritancef6219e35d8" name="inheritancef6219e35d8">
+<area shape="rect" id="node1" href="../doc/settingsFile.html#mosaic.trajio.abfTrajIO.abfTrajIO" target="_top" title="Read ABF1 and ABF2 file formats. Currently, only " alt="" coords="211,5,346,29"/>
+<area shape="rect" id="node2" href="../doc/settingsFile.html#mosaic.trajio.metaTrajIO.metaTrajIO" target="_top" title=".. warning:: |metaclass|" alt="" coords="5,5,163,29"/>
+</map><span class="target" id="module-mosaic.trajio.abfTrajIO"></span><p>A TrajIO class that supports ABF1 and ABF2 file formats via abf/abf.py. Currently, only
 gap-free mode and single channel recordings are supported.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Created</dt>
@@ -195,14 +192,11 @@ Set a class attribute Fs with the sampling frequency in Hz.</p>
 </div>
 <div class="section" id="mosaic-trajio-qdftrajio-module">
 <h2><span class="section-number">14.1.3.2. </span>mosaic.trajio.qdfTrajIO module<a class="headerlink" href="#mosaic-trajio-qdftrajio-module" title="Permalink to this headline">¶</a></h2>
-digraph inheritance6b7c8f8a97 {
-rankdir=LR;
-size=&quot;8.0, 12.0&quot;;
-  &quot;metaTrajIO.metaTrajIO&quot; [URL=&quot;../doc/settingsFile.html#mosaic.trajio.metaTrajIO.metaTrajIO&quot;,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5)&quot;,target=&quot;_top&quot;,tooltip=&quot;.. warning:: |metaclass|&quot;];
-  &quot;qdfTrajIO.qdfTrajIO&quot; [URL=&quot;../doc/settingsFile.html#mosaic.trajio.qdfTrajIO.qdfTrajIO&quot;,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5)&quot;,target=&quot;_top&quot;,tooltip=&quot;Use the readqdf module from EBS to read individual QDF files.&quot;];
-  &quot;metaTrajIO.metaTrajIO&quot; -&gt; &quot;qdfTrajIO.qdfTrajIO&quot; [arrowsize=0.5,style=&quot;setlinewidth(0.5)&quot;];
-}
-<span class="target" id="module-mosaic.trajio.qdfTrajIO"></span><p>QDF implementation of metaTrajIO. Uses the readqdf module from EBS to 
+<div class="graphviz"><img src="../_images/inheritance-06cc4cd44241b8598a78deb9a7ca563564c64030.png" alt="Inheritance diagram of mosaic.trajio.qdfTrajIO" usemap="#inheritance6b7c8f8a97" class="inheritance graphviz" /></div>
+<map id="inheritance6b7c8f8a97" name="inheritance6b7c8f8a97">
+<area shape="rect" id="node1" href="../doc/settingsFile.html#mosaic.trajio.metaTrajIO.metaTrajIO" target="_top" title=".. warning:: |metaclass|" alt="" coords="5,5,163,29"/>
+<area shape="rect" id="node2" href="../doc/settingsFile.html#mosaic.trajio.qdfTrajIO.qdfTrajIO" target="_top" title="Use the readqdf module from EBS to read individual QDF files." alt="" coords="211,5,346,29"/>
+</map><span class="target" id="module-mosaic.trajio.qdfTrajIO"></span><p>QDF implementation of metaTrajIO. Uses the readqdf module from EBS to 
 read individual qdf files.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Created</dt>
@@ -292,15 +286,12 @@ Set a class attribute Fs with the sampling frequency in Hz.</p>
 </div>
 <div class="section" id="mosaic-trajio-bintrajio-module">
 <h2><span class="section-number">14.1.3.3. </span>mosaic.trajio.binTrajIO module<a class="headerlink" href="#mosaic-trajio-bintrajio-module" title="Permalink to this headline">¶</a></h2>
-digraph inheritance24256f9782 {
-rankdir=LR;
-size=&quot;8.0, 12.0&quot;;
-  &quot;binTrajIO.InvalidDataColumnError&quot; [URL=&quot;#mosaic.trajio.binTrajIO.InvalidDataColumnError&quot;,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5)&quot;,target=&quot;_top&quot;];
-  &quot;binTrajIO.binTrajIO&quot; [URL=&quot;../doc/settingsFile.html#mosaic.trajio.binTrajIO.binTrajIO&quot;,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5)&quot;,target=&quot;_top&quot;,tooltip=&quot;Read a file that contains interleaved binary data, ordered by column. Only a single &quot;];
-  &quot;metaTrajIO.metaTrajIO&quot; -&gt; &quot;binTrajIO.binTrajIO&quot; [arrowsize=0.5,style=&quot;setlinewidth(0.5)&quot;];
-  &quot;metaTrajIO.metaTrajIO&quot; [URL=&quot;../doc/settingsFile.html#mosaic.trajio.metaTrajIO.metaTrajIO&quot;,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5)&quot;,target=&quot;_top&quot;,tooltip=&quot;.. warning:: |metaclass|&quot;];
-}
-<span class="target" id="module-mosaic.trajio.binTrajIO"></span><p>Binary file implementation of metaTrajIO. Read raw binary files with specified record sizes</p>
+<div class="graphviz"><img src="../_images/inheritance-8e35355045138a7046a80a0321ab6dfd186ee259.png" alt="Inheritance diagram of mosaic.trajio.binTrajIO" usemap="#inheritance24256f9782" class="inheritance graphviz" /></div>
+<map id="inheritance24256f9782" name="inheritance24256f9782">
+<area shape="rect" id="node1" href="#mosaic.trajio.binTrajIO.InvalidDataColumnError" target="_top" title="binTrajIO.InvalidDataColumnError" alt="" coords="5,53,227,77"/>
+<area shape="rect" id="node2" href="../doc/settingsFile.html#mosaic.trajio.binTrajIO.binTrajIO" target="_top" title="Read a file that contains interleaved binary data, ordered by column. Only a single " alt="" coords="275,5,409,29"/>
+<area shape="rect" id="node3" href="../doc/settingsFile.html#mosaic.trajio.metaTrajIO.metaTrajIO" target="_top" title=".. warning:: |metaclass|" alt="" coords="37,5,195,29"/>
+</map><span class="target" id="module-mosaic.trajio.binTrajIO"></span><p>Binary file implementation of metaTrajIO. Read raw binary files with specified record sizes</p>
 <blockquote>
 <div><dl class="field-list simple">
 <dt class="field-odd">Created</dt>
@@ -468,15 +459,12 @@ attribute Fs with the sampling frequency in Hz.</p>
 </div>
 <div class="section" id="mosaic-trajio-chimeratrajio-module">
 <h2><span class="section-number">14.1.3.4. </span>mosaic.trajio.chimeraTrajIO module<a class="headerlink" href="#mosaic-trajio-chimeratrajio-module" title="Permalink to this headline">¶</a></h2>
-digraph inheritanceae9304eec5 {
-rankdir=LR;
-size=&quot;8.0, 12.0&quot;;
-  &quot;chimeraTrajIO.InvalidDataColumnError&quot; [URL=&quot;#mosaic.trajio.chimeraTrajIO.InvalidDataColumnError&quot;,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5)&quot;,target=&quot;_top&quot;];
-  &quot;chimeraTrajIO.chimeraTrajIO&quot; [URL=&quot;../doc/settingsFile.html#mosaic.trajio.chimeraTrajIO.chimeraTrajIO&quot;,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5)&quot;,target=&quot;_top&quot;,tooltip=&quot;Read a file generated by the Chimera VC100. The current in pA &quot;];
-  &quot;metaTrajIO.metaTrajIO&quot; -&gt; &quot;chimeraTrajIO.chimeraTrajIO&quot; [arrowsize=0.5,style=&quot;setlinewidth(0.5)&quot;];
-  &quot;metaTrajIO.metaTrajIO&quot; [URL=&quot;../doc/settingsFile.html#mosaic.trajio.metaTrajIO.metaTrajIO&quot;,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5)&quot;,target=&quot;_top&quot;,tooltip=&quot;.. warning:: |metaclass|&quot;];
-}
-<span class="target" id="module-mosaic.trajio.chimeraTrajIO"></span><p>Chimera VC100 concatenated file format implementation of metaTrajIO. Read concatenated chimera files with specified amplifier settings.</p>
+<div class="graphviz"><img src="../_images/inheritance-a3fecbd79175fde2e773a1455cf7996f947c1e61.png" alt="Inheritance diagram of mosaic.trajio.chimeraTrajIO" usemap="#inheritanceae9304eec5" class="inheritance graphviz" /></div>
+<map id="inheritanceae9304eec5" name="inheritanceae9304eec5">
+<area shape="rect" id="node1" href="#mosaic.trajio.chimeraTrajIO.InvalidDataColumnError" target="_top" title="chimeraTrajIO.InvalidDataColumnError" alt="" coords="5,53,257,77"/>
+<area shape="rect" id="node2" href="../doc/settingsFile.html#mosaic.trajio.chimeraTrajIO.chimeraTrajIO" target="_top" title="Read a file generated by the Chimera VC100. The current in pA " alt="" coords="305,5,498,29"/>
+<area shape="rect" id="node3" href="../doc/settingsFile.html#mosaic.trajio.metaTrajIO.metaTrajIO" target="_top" title=".. warning:: |metaclass|" alt="" coords="52,5,210,29"/>
+</map><span class="target" id="module-mosaic.trajio.chimeraTrajIO"></span><p>Chimera VC100 concatenated file format implementation of metaTrajIO. Read concatenated chimera files with specified amplifier settings.</p>
 <blockquote>
 <div><dl class="field-list simple">
 <dt class="field-odd">Created</dt>
@@ -596,14 +584,11 @@ attribute Fs with the sampling frequency in Hz.</p>
 </div>
 <div class="section" id="mosaic-trajio-tsvtrajio-module">
 <h2><span class="section-number">14.1.3.5. </span>mosaic.trajio.tsvTrajIO module<a class="headerlink" href="#mosaic-trajio-tsvtrajio-module" title="Permalink to this headline">¶</a></h2>
-digraph inheritance3cb00b4a80 {
-rankdir=LR;
-size=&quot;8.0, 12.0&quot;;
-  &quot;metaTrajIO.metaTrajIO&quot; [URL=&quot;../doc/settingsFile.html#mosaic.trajio.metaTrajIO.metaTrajIO&quot;,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5)&quot;,target=&quot;_top&quot;,tooltip=&quot;.. warning:: |metaclass|&quot;];
-  &quot;tsvTrajIO.tsvTrajIO&quot; [URL=&quot;../doc/settingsFile.html#mosaic.trajio.tsvTrajIO.tsvTrajIO&quot;,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5)&quot;,target=&quot;_top&quot;,tooltip=&quot;Read tab separated valued (TSV) files. &quot;];
-  &quot;metaTrajIO.metaTrajIO&quot; -&gt; &quot;tsvTrajIO.tsvTrajIO&quot; [arrowsize=0.5,style=&quot;setlinewidth(0.5)&quot;];
-}
-<span class="target" id="module-mosaic.trajio.tsvTrajIO"></span><p>An implementation of metaTrajIO that reads tab separated valued (TSV) files</p>
+<div class="graphviz"><img src="../_images/inheritance-ec7e5549443d2218337fc5c9e8d0f4265cc08c03.png" alt="Inheritance diagram of mosaic.trajio.tsvTrajIO" usemap="#inheritance3cb00b4a80" class="inheritance graphviz" /></div>
+<map id="inheritance3cb00b4a80" name="inheritance3cb00b4a80">
+<area shape="rect" id="node1" href="../doc/settingsFile.html#mosaic.trajio.metaTrajIO.metaTrajIO" target="_top" title=".. warning:: |metaclass|" alt="" coords="5,5,163,29"/>
+<area shape="rect" id="node2" href="../doc/settingsFile.html#mosaic.trajio.tsvTrajIO.tsvTrajIO" target="_top" title="Read tab separated valued (TSV) files. " alt="" coords="211,5,343,29"/>
+</map><span class="target" id="module-mosaic.trajio.tsvTrajIO"></span><p>An implementation of metaTrajIO that reads tab separated valued (TSV) files</p>
 <dl class="field-list simple">
 <dt class="field-odd">Created</dt>
 <dd class="field-odd"><p>7/31/2012</p>
