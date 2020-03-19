@@ -152,7 +152,8 @@ if __name__ == '__main__':
   url="https://github.com/usnistgov/mosaic/releases/download/v"
   vers=[
 
-    ("Version "+str(version), str(version), ".f98ae80", True),
+    ("Version 2.0b1", "2.0b1", ".f98ae80", True),
+    # ("Version "+str(version), str(version), ".f98ae80", True),
     ("Version 1.3.6", "1.3.6", ".0a2ea45", False),
     ("Version 1.3.5", "1.3.5", ".801e7e5", False),
     ("Version 1.3.4", "1.3.4", ".4932336", False),
