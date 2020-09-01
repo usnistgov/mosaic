@@ -175,6 +175,12 @@ __settings__="""
 		"start": 0.0,
 		"format" : "V"
 	},
+	"rhdTrajIO": {
+		"dcOffset": 0.0, 
+		"filter": "*.rhd", 
+		"start": 0.0,
+		"ChannelNumber" : 0
+	},
 	"binTrajIO": {
 		"AmplifierScale": "1.0", 
 		"AmplifierOffset": "0.0", 

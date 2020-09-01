@@ -68,7 +68,7 @@ def _mosaicUnitTests(base):
                 
                 testargs.extend(testList)
 
-                return nose.main(argv=testargs)
+                return nose.run(argv=testargs)
             except:
                 raise
 

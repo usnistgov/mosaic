@@ -393,6 +393,7 @@ class metaEventPartition(object, metaclass=ABCMeta):
 		if self.meanOpenCurr == -1. or self.sdOpenCurr == -1. or self.slopeOpenCurr == -1.:
 			[ self.meanOpenCurr, self.sdOpenCurr, self.slopeOpenCurr ] = self._openchanstats(self.trajDataObj.previewdata(self.nPoints))
 			
+			print(self.meanOpenCurr, self.sdOpenCurr, self.slopeOpenCurr)
 			self.AutomaticBaseline=True
 
 			self.logger.debug(_d("Automatic open channel stats: {0}, {1}, {2}", self.meanOpenCurr, self.sdOpenCurr, self.slopeOpenCurr))
