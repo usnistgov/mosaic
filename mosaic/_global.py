@@ -11,6 +11,7 @@ LogSizeBytes=int(2<<20) # 2 MB
 DocumentationURL='https://pages.nist.gov/mosaic/'
 
 # Options for MOSAIC Web
+WebHost=None
 WebServerPort=5000
 WebServerDataLocation=os.path.expanduser('~')
 WebServerMode='remote'

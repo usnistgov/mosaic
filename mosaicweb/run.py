@@ -6,4 +6,4 @@ import mosaic
 @registerLaunch("mweb")
 def startMOSAICWeb(newWindow=True):
 	webbrowser.open("http://localhost:{0}/".format(mosaic.WebServerPort), new=newWindow, autoraise=True)
-	app.run(port=mosaic.WebServerPort, debug=mosaic.DeveloperMode)
+	app.run(host=mosaic.WebHost, port=mosaic.WebServerPort, debug=mosaic.DeveloperMode)
