@@ -1,7 +1,15 @@
+import sys
+
 from ._version import __version__
 from ._version import __mweb_version__
 from ._version import __build__
-from ._global import *
+
+from mosaic.readGlobalSettings import readGlobalSettings
+
+mosaic_mod = sys.modules[__name__]
+for (k,v) in readGlobalSettings().items():
+	setattr(mosaic_mod, k, v)
+#from ._global import *
 
 import mosaic.utilities
 
@@ -37,8 +45,6 @@ import mosaic.apps.ConvertTrajIO
 import mosaic.apps.SingleChannelAnalysis
 
 from mosaic.utilities.mosaicLogging import mosaicExceptionHandler
-
-import sys
 
 sys.excepthook=mosaicExceptionHandler
 
