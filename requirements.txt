@@ -11,3 +11,4 @@ docutils==0.15.2
 flask==1.1.1
 coverage==4.5.4
 codecov==2.0.15
+gunicorn==20.0.4
