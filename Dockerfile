@@ -1,8 +1,8 @@
-FROM ubuntu:latest
-RUN mkdir -p /src/mosaic/
-COPY . /src/mosaic/
+FROM python:3.8-slim-buster
 WORKDIR /src/mosaic
-RUN apt-get update -y
-RUN apt-get install -y python3-pip python3-dev build-essential
-RUN pip3 install -r /src/mosaic/requirements.txt
-ENTRYPOINT ["python3", "/src/mosaic/runMOSAIC.py"]
+COPY . .
+RUN apt-get update -y \
+	&& apt-get install -y build-essential \
+	&& pip3 install -r requirements.txt \
+	&& apt-get purge -y --auto-remove build-essential
+ENTRYPOINT ["gunicorn", "-b 0.0.0.0:5000", "mosaicweb:app"]

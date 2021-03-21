@@ -50,9 +50,6 @@ stats_win.txt
 stats_win_kyle_ssnp.txt
 temp/
 data/eventMD-P28-bin.sqlite
-commit-hash
-version-hash
-mweb-version-hash
 mosaic/tests/testdata/*.sqlite
 doctrees
 latex
