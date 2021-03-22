@@ -5,4 +5,4 @@ RUN apt-get update -y \
 	&& apt-get install -y build-essential \
 	&& pip3 install -r requirements.txt \
 	&& apt-get purge -y --auto-remove build-essential
-ENTRYPOINT ["gunicorn", "-b 0.0.0.0:5000", "mosaicweb:app"]
+ENTRYPOINT ["python3", "runMOSAIC.py"]
