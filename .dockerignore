@@ -14,6 +14,7 @@ addons/mathematica/nanoporeAnalysis.nb
 bin/plot2d.py
 bin/test.py
 build/
+conda-build/
 data/.DS_Store
 data/2013_01_04_0002.abf
 data/MOSAICReferenceData.zip
@@ -41,8 +42,7 @@ msa.log
 msa_mac_arvind_ssnp.log
 msa_win.log
 msa_win_kyle_ssnp.log
-pyinstaller/build/
-pyinstaller/dist/
+pyinstaller/
 refdat.prof
 stats.txt
 stats_mac_arvind_ssnp.txt
@@ -53,10 +53,8 @@ data/eventMD-P28-bin.sqlite
 mosaic/tests/testdata/*.sqlite
 doctrees
 latex
-_nistpages/
 data/SingleChan-*.*sv
 data/SingleChan-*.bin
-pyinstaller/icon.*
 _testnotebooks/
 mosaic/utilities/.ga
 conda-build/

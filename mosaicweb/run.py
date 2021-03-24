@@ -23,7 +23,8 @@ class mosaicApplication(gunicorn.app.base.BaseApplication):
 @registerLaunch("mweb")
 def startMOSAICWeb(newWindow=True):
 	mosaicApp=mosaicApplication(mosaicweb.app, {
-			'bind' : '%s:%s' % (mosaic.WebHost, mosaic.WebServerPort)
+			'bind' 		: '%s:%s' % (mosaic.WebHost, mosaic.WebServerPort),
+			'workers'	: mosaic.WebServerWorkers
 		})
 	webbrowser.open("http://localhost:{0}/".format(mosaic.WebServerPort), new=newWindow, autoraise=True)
 	#app.run(host=mosaic.WebHost, port=mosaic.WebServerPort, debug=mosaic.DeveloperMode)
