@@ -6,7 +6,8 @@
 	"DocumentationURL"		:	"https://pages.nist.gov/mosaic/",
 	"WebHost"				:	"0.0.0.0",
 	"WebServerPort"			:	5000,
-	"WebServerDataLocation"	:	"/Volumes/GoogleDrive/",
-	"WebServerMode"			:	"local"
+	"WebServerWorkers"		:	1,
+	"WebServerDataLocation"	:	"/src/data",
+	"WebServerMode"			:	"remote"
 
 }
