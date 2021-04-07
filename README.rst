@@ -1,9 +1,13 @@
-.. image:: https://travis-ci.org/usnistgov/mosaic.svg?branch=devel-2.0
+.. image:: https://img.shields.io/travis/usnistgov/mosaic/devel-2.0.svg?label=linux
+    :target: https://travis-ci.org/usnistgov/mosaic
+.. image:: https://img.shields.io/travis/usnistgov/mosaic/devel-2.0.svg?label=macOS
     :target: https://travis-ci.org/usnistgov/mosaic
 .. image:: https://badge.fury.io/gh/usnistgov%2Fmosaic.svg
     :target: https://badge.fury.io/gh/usnistgov%2Fmosaic
 .. image:: https://codecov.io/gh/usnistgov/mosaic/branch/devel-2.0/graph/badge.svg
-  :target: https://codecov.io/gh/usnistgov/mosaic  
+  :target: https://codecov.io/gh/usnistgov/mosaic 
+.. image:: https://img.shields.io/pypi/v/mosaic-nist.svg
+  :target: https://pypi.org/project/mosaic-nist/ 
   
 MOSAIC: A modular single-molecule analysis interface
 =================================
