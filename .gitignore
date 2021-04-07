@@ -1,3 +1,4 @@
+GH_TOKEN.txt
 *.pyc
 *.pyo
 data/eventMD-2*sqlite
