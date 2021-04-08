@@ -24,6 +24,7 @@ class mosaicBinaries(Command):
 
 		if retval==0:
 			os.system('sh .scripts/pyinstaller-sh')
+			os.system('docker-compose build')
 
 class mosaicDependencies(Command):
 	description = "install MOSAIC dependencies."
