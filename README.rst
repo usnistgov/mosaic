@@ -8,6 +8,8 @@
   :target: https://codecov.io/gh/usnistgov/mosaic 
 .. image:: https://img.shields.io/pypi/v/mosaic-nist.svg
   :target: https://pypi.org/project/mosaic-nist/ 
+.. image:: https://img.shields.io/badge/dev-NIST-blue
+  :target: https://www.nist.gov
   
 MOSAIC: A modular single-molecule analysis interface
 =================================
