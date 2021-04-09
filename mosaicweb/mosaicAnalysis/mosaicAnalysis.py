@@ -6,6 +6,7 @@
 	:License:	See LICENSE.TXT
 	:ChangeLog:
 	.. line-block::
+		4/9/21		AB 	Delete additional dcOffset correction that caused the web UI to not display the proper trajectory.
 		3/19/17		AB 	Initial version
 """
 from mosaicgui import EBSStateFileDict
@@ -210,7 +211,7 @@ class mosaicAnalysis:
 			dt=(1/float(FsHz))*decimate
 			dataPolarity=float(np.sign(np.mean(tdat)))
 
-			ydat=((dataPolarity*tdat) - self.dcOffset)[::decimate]
+			ydat=(dataPolarity*tdat)[::decimate]
 			xdat=np.arange(self.start, self.start+self.blockSize, dt)
 
 			self._openChanStats(ydat)

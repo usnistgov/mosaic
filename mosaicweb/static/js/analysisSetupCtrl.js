@@ -63,9 +63,10 @@ angular.module('mosaicApp')
 		factory.getSetupData = function(url, params) {
 			var deferred = $q.defer();
 
+			//console.log(params)
 			mosaicUtilsFactory.post(url, params)
 				.then(function (response, status) {	// success
-					// console.log(response.data);
+					//console.log(response.data);
 
 					if (response.data.respondingURL=='new-analysis') {
 						factory.trajPlot=response.data.trajPlot;
@@ -281,7 +282,7 @@ angular.module('mosaicApp')
 				case 'ABF':
 					settings.abfTrajIO.start=factory.start;
 					settings.abfTrajIO.end=factory.end;
-					settings.abfTrajIO.dcOffset;
+					settings.abfTrajIO.dcOffset=factory.dcOffset;
 					break;
 				case 'BIN':
 					settings.binTrajIO.start=factory.start;
@@ -496,6 +497,7 @@ angular.module('mosaicApp')
 					// 'sessionID': $scope.mosaicConfigModel.sessionID
 				}
 			).then(function(response) {
+				//console.log(response);
 				$scope.newAnalysisForm.start.$setValidity("max", true);
 			}, function(error) {
 				if (error.data.errType = 'EmptyDataPipeError') {
