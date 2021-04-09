@@ -1,7 +1,12 @@
 Change Log
 ++++++++++++++++++++++++++++++++++++++++++
 
-**v2.0b2**
+**v2.1**
+
+- Fixed a bug with dcOffset correction that caused the web UI to not accurately display the trajectory.
+- Provide Docker images to allow cross-platfom installs
+
+**v2.0**
 
 - Fixed an issue where spurious events were detected that were contained entirely within the open channel current (see `#102 <https://github.com/usnistgov/mosaic/issues/102>`_).
 - Changed eval calls to safer `AST <https://docs.python.org/2/library/ast.html>`_-based versions within the core mosaic modules.
