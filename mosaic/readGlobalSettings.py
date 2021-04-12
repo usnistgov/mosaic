@@ -18,8 +18,8 @@ def readGlobalSettings():
 						"WebHost"				:	"0.0.0.0",
 						"WebServerPort"			:	5000,
 						"WebServerWorkers"		:	1,
-						"WebServerDataLocation"	:	"/",
-						"WebServerMode"			:	"remote"
+						"WebServerDataLocation"	:	"~",
+						"WebServerMode"			:	"local"
 
 					}
 				"""

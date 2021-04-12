@@ -2,31 +2,33 @@
 import sys
 from mosaic.utilities.resource_path import resource_path, format_path
 
-a = Analysis(['../runMOSAIC.py'],
-			 pathex=['..'], 		# resource_path('.settings')
-			 hiddenimports=[
-			 		'scipy.special._ufuncs_cxx', 
-			 		'pywt._extensions._cwt',
-			 		'email.mime.multipart',
-			 		'email.mime.message',
-					'email.mime.text',
-					'email.mime.image',
-					'email.mime.audio', 
-					'sqlalchemy.sql.default_comparator',
-					'jinja2'
-			 	],
-			 hookspath=None,
-			 runtime_hooks=None)
+a = Analysis(
+				['../runMOSAIC.py'],
+				pathex=['..'], 		# resource_path('.settings')
+				hiddenimports=[
+				 		'scipy.special._ufuncs_cxx', 
+				 		'pywt._extensions._cwt',
+				 		'email.mime.multipart',
+				 		'email.mime.message',
+						'email.mime.text',
+						'email.mime.image',
+						'email.mime.audio', 
+						'sqlalchemy.sql.default_comparator',
+						'jinja2',
+						'gunicorn.glogging',
+						'gunicorn.workers.sync'
+				 	],
+				datas = [ 
+					('../icons/*.png', 'icons'),
+					('../commit-hash', '.'),
+					('../version-hash', '.'),
+					('../mweb-version-hash', '.'),
+					('../mosaicweb/templates/index.html', 'mosaicweb/templates')
+				],
+				hookspath=None,
+				runtime_hooks=None
+			)
 
-a.datas += [ 
-				('icons/icon_100px.png', '../icons/icon_100px.png',  'DATA'),
-				('icons/error-128.png', '../icons/error-128.png',  'DATA'),
-				('icons/warning-128.png', '../icons/warning-128.png',  'DATA'),
-				('commit-hash', '../commit-hash', 'DATA'),
-				('version-hash', '../version-hash', 'DATA'),
-				('mweb-version-hash', '../mweb-version-hash', 'DATA'),
-				('mosaicweb/templates/index.html', '../mosaicweb/templates/index.html', 'DATA')
-			]
 pyz = PYZ(a.pure)
 # On OS X, collect data files and  build an application bundle
 if sys.platform=='darwin':

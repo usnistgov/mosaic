@@ -1,0 +1,45 @@
+#!/bin/sh
+
+plat=`uname`
+
+# Settings for pyinstaller build
+read -d '' globalSettings <<-"EOF"
+	{	\\n
+		\\t"DeveloperMode"			:	false,		\\n
+		\\t"CodeProfiling"			:	"summary",	\\n
+		\\t"LogProperties"			:	false,		\\n
+		\\t"LogSizeBytes"			:	16777216,	\\n
+		\\t"DocumentationURL"		:	"https://pages.nist.gov/mosaic/",	\\n
+		\\t"WebHost"				:	"0.0.0.0",	\\n
+		\\t"WebServerPort"			:	5000,	\\n
+		\\t"WebServerWorkers"		:	1,		\\n
+		\\t"WebServerDataLocation"	:	"~",	\\n
+		\\t"WebServerMode"			:	"local"	\\n
+	}
+EOF
+
+echo $globalSettings>mosaic/global.json
+sh .scripts/pyinstaller-sh
+
+if [ $plat == 'Darwin' ]; then
+	# Settings for docker build
+	read -d '' globalSettings <<-"EOF"
+		{	\\n
+			\\t"DeveloperMode"			:	false,		\\n
+			\\t"CodeProfiling"			:	"summary",	\\n
+			\\t"LogProperties"			:	false,		\\n
+			\\t"LogSizeBytes"			:	16777216,	\\n
+			\\t"DocumentationURL"		:	"https://pages.nist.gov/mosaic/",	\\n
+			\\t"WebHost"				:	"0.0.0.0",	\\n
+			\\t"WebServerPort"			:	5000,	\\n
+			\\t"WebServerWorkers"		:	1,		\\n
+			\\t"WebServerDataLocation"	:	"/src/data",	\\n
+			\\t"WebServerMode"			:	"remote"	\\n
+		}
+	EOF
+
+	echo $globalSettings>mosaic/global.json
+	docker-compose build
+fi
+
+git checkout mosaic/global.json

@@ -1,13 +1,12 @@
-{
-	"DeveloperMode"			:	false,
-	"CodeProfiling"			:	"summary",
-	"LogProperties"			:	false,
-	"LogSizeBytes"			:	16777216,
-	"DocumentationURL"		:	"https://pages.nist.gov/mosaic/",
-	"WebHost"				:	"0.0.0.0",
-	"WebServerPort"			:	5000,
-	"WebServerWorkers"		:	1,
-	"WebServerDataLocation"	:	"/src/data",
-	"WebServerMode"			:	"remote"
-
-}
+{ 
+ 	"DeveloperMode" : false, 
+ 	"CodeProfiling" : "summary", 
+ 	"LogProperties" : false, 
+ 	"LogSizeBytes" : 16777216, 
+ 	"DocumentationURL" : "https://pages.nist.gov/mosaic/", 
+ 	"WebHost" : "0.0.0.0", 
+ 	"WebServerPort" : 5000, 
+ 	"WebServerWorkers" : 1, 
+ 	"WebServerDataLocation" : "/src/data", 
+ 	"WebServerMode" : "remote" 
+ }
