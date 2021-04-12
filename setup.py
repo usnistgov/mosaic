@@ -23,8 +23,7 @@ class mosaicBinaries(Command):
 			retval = os.system("git checkout master")
 
 		if retval==0:
-			os.system('sh .scripts/pyinstaller-sh')
-			os.system('docker-compose build')
+			os.system('sh .scripts/buildMOSAICbin-sh')
 
 class mosaicDependencies(Command):
 	description = "install MOSAIC dependencies."
