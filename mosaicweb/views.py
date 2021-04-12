@@ -6,6 +6,7 @@
 	:License:	See LICENSE.rst
 	:ChangeLog:
 	.. line-block::
+		04/12/21	AB 	Fix shutdown behavior of local servers
 		05/24/19 	AB 	Python 3.7 port
 		04/13/18 	AB 	Support client initiated local server shutdown.
 		04/10/18 	AB 	Log debug information.
@@ -39,6 +40,8 @@ import json
 import glob
 import os
 import os.path
+import sys
+import errno
 import logging
 import numpy as np
 from sqlite3 import OperationalError
@@ -483,10 +486,6 @@ def _shutdownServer():
 
 	logger.info("Starting shutdown.")
 
-	func = request.environ.get('werkzeug.server.shutdown')
-	if func is None:
-		raise RuntimeError('No servers found.')
-
 	for k, s in gAnalysisSessions.items():
 		logger.info('Shutting down running analysis {0}'.format(k))
 		if s['analysisRunning']:
@@ -494,7 +493,7 @@ def _shutdownServer():
 		
 
 	logger.info("Shutdown complete.")
-	func()
+	sys.exit(errno.EINTR)
 
 def _folderDesc(item):
 	nqdf = len(glob.glob(item+'/*.qdf'))
