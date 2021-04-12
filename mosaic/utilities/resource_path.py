@@ -32,7 +32,8 @@ def resource_path(filename):
 				"mosaicgui/highlight-spec/python.json", 
 				"mosaicgui/highlight-spec/json.json",
 				"mosaicgui/highlight-spec/log.json",
-				"mosaic/utilities/.ga"
+				"mosaic/utilities/.ga",
+				"mosaic/global.json"
 			]
 
 	if filename in [ ".settings", "settings"]:

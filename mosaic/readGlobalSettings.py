@@ -1,9 +1,11 @@
 import json
 import sys
+import os.path
+from mosaic.utilities.resource_path import resource_path
 
 def readGlobalSettings():
 	try:
-		with open("mosaic/global.json", mode="r") as j_object:
+		with open( resource_path("mosaic/global.json"), mode="r") as j_object:
 			data = json.load(j_object)
 	except FileNotFoundError:
 		print("Global settings not found. Using default values")
@@ -24,6 +26,10 @@ def readGlobalSettings():
 					}
 				"""
 			)
+
+	# Handle special paths
+	if data["WebServerDataLocation"]=="~":
+		data["WebServerDataLocation"]=os.path.expanduser("~")
 
 	return data
 
