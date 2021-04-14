@@ -110,15 +110,44 @@ class mosaicDocs(Command):
 		else:
 			os.system("make -C _nistpages html latexpdf")
 
+class mosaicAddTag(Command):
+	description = "Add a Git tag"
+	user_options = [
+		('add=', 'a', "add a tag with the version number in semantic formatting, e.g., v1.0"),
+		('delete=', 'd', "delete a tag with the version number in semantic formatting, e.g., v1.0"),
+	]
+	def initialize_options(self):
+		self.add = None
+		self.delete = None
+
+	def finalize_options(self):
+		if self.add is None and self.delete is None:
+			raise AssertionError("Missing argument: either 'add' or 'delete' flags must be specified.")
+		
+	def run(self):
+		try:
+			if self.add is not None:
+				os.system("git tag -a mweb"+self.add+" -m '"+self.add+"'")
+				os.system("git tag -a "+self.add+" -m '"+self.add+"'")
+
+		
+			if self.delete is not None:
+				os.system("git tag -d mweb"+self.delete)
+				os.system("git tag -d "+self.delete)
+		except TypeError:
+			raise
+
+			
 setup(
 	cmdclass={
-		'test'              : _mosaicUnitTests(Command), 
-		'mosaic_tests'      : _mosaicUnitTests(Command), 
-		'mosaic_docs'       : mosaicDocs, 
-		'mosaic_bin'        : mosaicBinaries, 
-		'mosaic_deps'       : mosaicDependencies, 
-		'mosaic_docs_deps'  : mosaicDocumentationDependencies, 
-		'mosaic_addons'     : mosaicAddons
+		'test'				: _mosaicUnitTests(Command), 
+		'mosaic_tests'		: _mosaicUnitTests(Command), 
+		'mosaic_docs'		: mosaicDocs, 
+		'mosaic_bin'		: mosaicBinaries, 
+		'mosaic_deps'		: mosaicDependencies, 
+		'mosaic_docs_deps'	: mosaicDocumentationDependencies, 
+		'mosaic_addons'		: mosaicAddons,
+		'mosaic_tag'		: mosaicAddTag
 		},
 	name='mosaic-nist',
 	version=mosaic.__version__+'+'+mosaic.__build__,
