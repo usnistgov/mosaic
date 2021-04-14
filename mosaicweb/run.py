@@ -5,7 +5,9 @@ from mosaic.utilities.ga import registerLaunch
 import mosaic
 
 
-if not sys.platform.startswith('win'):
+if sys.platform.startswith('win'):
+	from mosaicweb import app
+else:
 	import gunicorn.app.base
 
 	class mosaicApplication(gunicorn.app.base.BaseApplication):
