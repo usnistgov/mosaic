@@ -1,4 +1,5 @@
 import webbrowser
+import sys
 import gunicorn.app.base
 import mosaicweb
 from mosaic.utilities.ga import registerLaunch
@@ -22,10 +23,16 @@ class mosaicApplication(gunicorn.app.base.BaseApplication):
 
 @registerLaunch("mweb")
 def startMOSAICWeb(newWindow=True):
-	mosaicApp=mosaicApplication(mosaicweb.app, {
-			'bind' 		: '%s:%s' % (mosaic.WebHost, mosaic.WebServerPort),
-			'workers'	: mosaic.WebServerWorkers
-		})
+	# Setup platform-dependent timing function
+	if sys.platform.startswith('win'):
+		app.run(host=mosaic.WebHost, port=mosaic.WebServerPort, debug=mosaic.DeveloperMode)
+	else:
+		mosaicApp=mosaicApplication(mosaicweb.app, {
+				'bind' 		: '%s:%s' % (mosaic.WebHost, mosaic.WebServerPort),
+				'workers'	: mosaic.WebServerWorkers
+			})
+		mosaicApp.run()
+
 	webbrowser.open("http://localhost:{0}/".format(mosaic.WebServerPort), new=newWindow, autoraise=True)
-	#app.run(host=mosaic.WebHost, port=mosaic.WebServerPort, debug=mosaic.DeveloperMode)
-	mosaicApp.run()
+	
+	

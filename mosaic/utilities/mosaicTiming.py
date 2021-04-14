@@ -6,6 +6,7 @@
 	:License:	See LICENSE.TXT
 	:ChangeLog:
 	.. line-block::
+		4/14/21		AB 	Windows fixes
 		6/17/16 	AB 	Only profile functions in DeveloperMode. Log timing output.
 		4/10/16		AB	Initial version
 """
@@ -67,11 +68,8 @@ class mosaicTiming:
 		else:
 			self.TimingEnabled=False
 
-		# Setup platform-dependent timing function
-		if sys.platform.startswith('win'):
-			self.timingFunc=time.clock
-		else:
-			self.timingFunc=time.time
+		
+		self.timingFunc=time.time
 		
 	def __enter__(self):
 		return self
