@@ -486,6 +486,12 @@ def _shutdownServer():
 
 	logger.info("Starting shutdown.")
 
+	if sys.platform.startswith('win'):
+		func = request.environ.get('werkzeug.server.shutdown')
+		if func is None:
+			raise RuntimeError('No servers found.')
+
+
 	for k, s in gAnalysisSessions.items():
 		logger.info('Shutting down running analysis {0}'.format(k))
 		if s['analysisRunning']:
@@ -493,7 +499,11 @@ def _shutdownServer():
 		
 
 	logger.info("Shutdown complete.")
-	sys.exit(errno.EINTR)
+	
+	if sys.platform.startswith('win'):
+		func()
+	else:
+		sys.exit(errno.EINTR)
 
 def _folderDesc(item):
 	nqdf = len(glob.glob(item+'/*.qdf'))
