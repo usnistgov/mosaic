@@ -5,6 +5,7 @@ Change Log
 
 - Fixed a bug with dcOffset correction that caused the web UI to not accurately display the trajectory.
 - Provide Docker images to allow cross-platfom installs
+- Bug fixes
 
 **v2.0**
 
