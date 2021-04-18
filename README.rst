@@ -4,10 +4,10 @@
     :target: https://travis-ci.org/usnistgov/mosaic
 .. image:: https://img.shields.io/github/v/release/usnistgov/mosaic
     :target: https://github.com/usnistgov/mosaic
-.. image:: https://codecov.io/gh/usnistgov/mosaic/branch/master/graph/badge.svg
-  :target: https://codecov.io/gh/usnistgov/mosaic 
 .. image:: https://img.shields.io/pypi/v/mosaic-nist.svg
-  :target: https://pypi.org/project/mosaic-nist/ 
+  :target: https://pypi.org/project/mosaic-nist/
+.. image:: https://codecov.io/gh/usnistgov/mosaic/branch/master/graph/badge.svg
+  :target: https://codecov.io/gh/usnistgov/mosaic  
 .. image:: https://img.shields.io/badge/dev-NIST-blue
   :target: https://www.nist.gov
   
