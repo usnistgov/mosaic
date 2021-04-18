@@ -2,8 +2,8 @@
     :target: https://travis-ci.org/usnistgov/mosaic
 .. image:: https://img.shields.io/travis/usnistgov/mosaic/master.svg?label=macOS
     :target: https://travis-ci.org/usnistgov/mosaic
-.. image:: https://badge.fury.io/gh/usnistgov%2Fmosaic.svg
-    :target: https://badge.fury.io/gh/usnistgov%2Fmosaic
+.. image:: https://img.shields.io/github/v/release/usnistgov/mosaic
+    :target: https://github.com/usnistgov/mosaic
 .. image:: https://codecov.io/gh/usnistgov/mosaic/branch/master/graph/badge.svg
   :target: https://codecov.io/gh/usnistgov/mosaic 
 .. image:: https://img.shields.io/pypi/v/mosaic-nist.svg
