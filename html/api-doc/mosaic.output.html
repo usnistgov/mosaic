@@ -1,19 +1,18 @@
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
   <head>
     <meta charset="utf-8" />
-    <title>14.1.7. Data Output &#8212; MOSAIC mweb2.0 documentation</title>
-    <link rel="stylesheet" href="../_static/bootstrap-sphinx.css" type="text/css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>14.1.7. Data Output &#8212; MOSAIC v2.1 documentation</title>
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/bootstrap-sphinx.css" type="text/css" />
     <link rel="stylesheet" type="text/css" href="../_static/graphviz.css" />
     <link rel="stylesheet" type="text/css" href="../_static/style.css" />
     <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
     <script src="../_static/jquery.js"></script>
     <script src="../_static/underscore.js"></script>
     <script src="../_static/doctools.js"></script>
-    <script src="../_static/language_data.js"></script>
-    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -46,7 +45,7 @@
         </button>
         <a class="navbar-brand" href="../index.html"><span><img src="../_static/icon_48.png"></span>
            </a>
-        <span class="navbar-text navbar-version pull-left"><b>mweb2.0</b></span>
+        <span class="navbar-text navbar-version pull-left"><b>v2.1</b></span>
       </div>
 
         <div class="collapse navbar-collapse nav-collapse">
@@ -117,7 +116,7 @@
 <h1><span class="section-number">14.1.7. </span>Data Output<a class="headerlink" href="#data-output" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="mosaic-mdio-sqlite3mdio-module">
 <h2><span class="section-number">14.1.7.1. </span>mosaic.mdio.sqlite3MDIO module<a class="headerlink" href="#mosaic-mdio-sqlite3mdio-module" title="Permalink to this headline">¶</a></h2>
-<div class="graphviz"><img src="../_images/inheritance-f2c754630d4fe1f6f5d6cc3e8a33bf80fe03acf2.png" alt="Inheritance diagram of mosaic.mdio.sqlite3MDIO" usemap="#inheritance299f813db9" class="inheritance graphviz" /></div>
+<div class="graphviz"><img src="../_images/inheritance-0c6bbce25df507444d39cfa887db985514c5a226.png" alt="Inheritance diagram of mosaic.mdio.sqlite3MDIO" usemap="#inheritance299f813db9" class="inheritance graphviz" /></div>
 <map id="inheritance299f813db9" name="inheritance299f813db9">
 <area shape="rect" id="node1" href="mosaic.meta.html#mosaic.mdio.metaMDIO.metaMDIO" target="_top" title=".. warning:: |metaclass|" alt="" coords="13,53,167,77"/>
 <area shape="rect" id="node3" href="#mosaic.mdio.sqlite3MDIO.sqlite3MDIO" target="_top" title="sqlite3MDIO.sqlite3MDIO" alt="" coords="223,53,395,77"/>
@@ -146,34 +145,50 @@
 <div class="line">11/9/14         AB  Implemented the analysis log I/O interface for sqlite3 databases.</div>
 <div class="line">9/28/14         AB      Initial version</div>
 </div>
-<dl class="class">
+<dl class="py class">
+<dt id="mosaic.mdio.sqlite3MDIO.data_record">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">mosaic.mdio.sqlite3MDIO.</span></code><code class="sig-name descname"><span class="pre">data_record</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data_label</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data_t</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/mdio/sqlite3MDIO.html#data_record"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mosaic.mdio.sqlite3MDIO.data_record" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code></a></p>
+<p>Smart data record structure that automatically encodes/decodes data for storage
+in a sqlite3 DB.</p>
+<dl class="py method">
+<dt id="mosaic.mdio.sqlite3MDIO.data_record.update">
+<code class="sig-name descname"><span class="pre">update</span></code><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param"><span class="pre">E</span></em>, <span class="optional">]</span><em class="sig-param"><span class="pre">**F</span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None.</span>&#160; <span class="pre">Update</span> <span class="pre">D</span> <span class="pre">from</span> <span class="pre">dict/iterable</span> <span class="pre">E</span> <span class="pre">and</span> <span class="pre">F.</span><a class="reference internal" href="../_modules/mosaic/mdio/sqlite3MDIO.html#data_record.update"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mosaic.mdio.sqlite3MDIO.data_record.update" title="Permalink to this definition">¶</a></dt>
+<dd><p>If E is present and has a .keys() method, then does:  for k in E: D[k] = E[k]
+If E is present and lacks a .keys() method, then does:  for k, v in E: D[k] = v
+In either case, this is followed by: for k in F:  D[k] = F[k]</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
 <dt id="mosaic.mdio.sqlite3MDIO.sqlite3MDIO">
-<em class="property">class </em><code class="sig-prename descclassname">mosaic.mdio.sqlite3MDIO.</code><code class="sig-name descname">sqlite3MDIO</code><a class="reference internal" href="../_modules/mosaic/mdio/sqlite3MDIO.html#sqlite3MDIO"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mosaic.mdio.sqlite3MDIO.sqlite3MDIO" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">mosaic.mdio.sqlite3MDIO.</span></code><code class="sig-name descname"><span class="pre">sqlite3MDIO</span></code><a class="reference internal" href="../_modules/mosaic/mdio/sqlite3MDIO.html#sqlite3MDIO"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mosaic.mdio.sqlite3MDIO.sqlite3MDIO" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="mosaic.meta.html#mosaic.mdio.metaMDIO.metaMDIO" title="mosaic.mdio.metaMDIO.metaMDIO"><code class="xref py py-class docutils literal notranslate"><span class="pre">mosaic.mdio.metaMDIO.metaMDIO</span></code></a></p>
-<dl class="method">
+<dl class="py method">
 <dt id="mosaic.mdio.sqlite3MDIO.sqlite3MDIO.closeDB">
-<code class="sig-name descname">closeDB</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/mdio/sqlite3MDIO.html#sqlite3MDIO.closeDB"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mosaic.mdio.sqlite3MDIO.sqlite3MDIO.closeDB" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">closeDB</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/mdio/sqlite3MDIO.html#sqlite3MDIO.closeDB"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mosaic.mdio.sqlite3MDIO.sqlite3MDIO.closeDB" title="Permalink to this definition">¶</a></dt>
 <dd><div class="admonition important">
 <p class="admonition-title">Important</p>
 <p><strong>Abstract method:</strong> This method must be implemented by a sub-class.</p>
 </div>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="mosaic.mdio.sqlite3MDIO.sqlite3MDIO.csvString">
-<code class="sig-name descname">csvString</code><span class="sig-paren">(</span><em class="sig-param">query</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/mdio/sqlite3MDIO.html#sqlite3MDIO.csvString"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mosaic.mdio.sqlite3MDIO.sqlite3MDIO.csvString" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">csvString</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">query</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/mdio/sqlite3MDIO.html#sqlite3MDIO.csvString"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mosaic.mdio.sqlite3MDIO.sqlite3MDIO.csvString" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return database records that match the specified query as a CSV formatted string.</p>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="mosaic.mdio.sqlite3MDIO.sqlite3MDIO.exportToCSV">
-<code class="sig-name descname">exportToCSV</code><span class="sig-paren">(</span><em class="sig-param">query</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/mdio/sqlite3MDIO.html#sqlite3MDIO.exportToCSV"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mosaic.mdio.sqlite3MDIO.sqlite3MDIO.exportToCSV" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">exportToCSV</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">query</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/mdio/sqlite3MDIO.html#sqlite3MDIO.exportToCSV"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mosaic.mdio.sqlite3MDIO.sqlite3MDIO.exportToCSV" title="Permalink to this definition">¶</a></dt>
 <dd><p>Export database records that match the specified query to a CSV flat file.</p>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="mosaic.mdio.sqlite3MDIO.sqlite3MDIO.queryDB">
-<code class="sig-name descname">queryDB</code><span class="sig-paren">(</span><em class="sig-param">query</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/mdio/sqlite3MDIO.html#sqlite3MDIO.queryDB"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mosaic.mdio.sqlite3MDIO.sqlite3MDIO.queryDB" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">queryDB</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">query</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/mdio/sqlite3MDIO.html#sqlite3MDIO.queryDB"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mosaic.mdio.sqlite3MDIO.sqlite3MDIO.queryDB" title="Permalink to this definition">¶</a></dt>
 <dd><div class="admonition important">
 <p class="admonition-title">Important</p>
 <p><strong>Abstract method:</strong> This method must be implemented by a sub-class.</p>
@@ -191,9 +206,9 @@
 </div>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="mosaic.mdio.sqlite3MDIO.sqlite3MDIO.readAnalysisInfo">
-<code class="sig-name descname">readAnalysisInfo</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/mdio/sqlite3MDIO.html#sqlite3MDIO.readAnalysisInfo"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mosaic.mdio.sqlite3MDIO.sqlite3MDIO.readAnalysisInfo" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">readAnalysisInfo</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/mdio/sqlite3MDIO.html#sqlite3MDIO.readAnalysisInfo"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mosaic.mdio.sqlite3MDIO.sqlite3MDIO.readAnalysisInfo" title="Permalink to this definition">¶</a></dt>
 <dd><div class="admonition important">
 <p class="admonition-title">Important</p>
 <p><strong>Abstract method:</strong> This method must be implemented by a sub-class.</p>
@@ -201,9 +216,9 @@
 <p>Read analysis information from the database.</p>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="mosaic.mdio.sqlite3MDIO.sqlite3MDIO.readAnalysisLog">
-<code class="sig-name descname">readAnalysisLog</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/mdio/sqlite3MDIO.html#sqlite3MDIO.readAnalysisLog"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mosaic.mdio.sqlite3MDIO.sqlite3MDIO.readAnalysisLog" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">readAnalysisLog</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/mdio/sqlite3MDIO.html#sqlite3MDIO.readAnalysisLog"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mosaic.mdio.sqlite3MDIO.sqlite3MDIO.readAnalysisLog" title="Permalink to this definition">¶</a></dt>
 <dd><div class="admonition important">
 <p class="admonition-title">Important</p>
 <p><strong>Abstract method:</strong> This method must be implemented by a sub-class.</p>
@@ -211,9 +226,9 @@
 <p>Read the analysis log from the database.</p>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="mosaic.mdio.sqlite3MDIO.sqlite3MDIO.readSettings">
-<code class="sig-name descname">readSettings</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/mdio/sqlite3MDIO.html#sqlite3MDIO.readSettings"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mosaic.mdio.sqlite3MDIO.sqlite3MDIO.readSettings" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">readSettings</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/mdio/sqlite3MDIO.html#sqlite3MDIO.readSettings"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mosaic.mdio.sqlite3MDIO.sqlite3MDIO.readSettings" title="Permalink to this definition">¶</a></dt>
 <dd><div class="admonition important">
 <p class="admonition-title">Important</p>
 <p><strong>Abstract method:</strong> This method must be implemented by a sub-class.</p>
@@ -221,9 +236,9 @@
 <p>Read JSON settings from the database.</p>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="mosaic.mdio.sqlite3MDIO.sqlite3MDIO.writeAnalysisInfo">
-<code class="sig-name descname">writeAnalysisInfo</code><span class="sig-paren">(</span><em class="sig-param">infolist</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/mdio/sqlite3MDIO.html#sqlite3MDIO.writeAnalysisInfo"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mosaic.mdio.sqlite3MDIO.sqlite3MDIO.writeAnalysisInfo" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">writeAnalysisInfo</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">infolist</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/mdio/sqlite3MDIO.html#sqlite3MDIO.writeAnalysisInfo"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mosaic.mdio.sqlite3MDIO.sqlite3MDIO.writeAnalysisInfo" title="Permalink to this definition">¶</a></dt>
 <dd><div class="admonition important">
 <p class="admonition-title">Important</p>
 <p><strong>Abstract method:</strong> This method must be implemented by a sub-class.</p>
@@ -246,9 +261,9 @@
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="mosaic.mdio.sqlite3MDIO.sqlite3MDIO.writeAnalysisLog">
-<code class="sig-name descname">writeAnalysisLog</code><span class="sig-paren">(</span><em class="sig-param">analysislog</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/mdio/sqlite3MDIO.html#sqlite3MDIO.writeAnalysisLog"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mosaic.mdio.sqlite3MDIO.sqlite3MDIO.writeAnalysisLog" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">writeAnalysisLog</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">analysislog</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/mdio/sqlite3MDIO.html#sqlite3MDIO.writeAnalysisLog"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mosaic.mdio.sqlite3MDIO.sqlite3MDIO.writeAnalysisLog" title="Permalink to this definition">¶</a></dt>
 <dd><div class="admonition important">
 <p class="admonition-title">Important</p>
 <p><strong>Abstract method:</strong> This method must be implemented by a sub-class.</p>
@@ -263,9 +278,9 @@
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="mosaic.mdio.sqlite3MDIO.sqlite3MDIO.writeRecord">
-<code class="sig-name descname">writeRecord</code><span class="sig-paren">(</span><em class="sig-param">data</em>, <em class="sig-param">table=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/mdio/sqlite3MDIO.html#sqlite3MDIO.writeRecord"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mosaic.mdio.sqlite3MDIO.sqlite3MDIO.writeRecord" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">writeRecord</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">table</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/mdio/sqlite3MDIO.html#sqlite3MDIO.writeRecord"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mosaic.mdio.sqlite3MDIO.sqlite3MDIO.writeRecord" title="Permalink to this definition">¶</a></dt>
 <dd><div class="admonition important">
 <p class="admonition-title">Important</p>
 <p><strong>Abstract method:</strong> This method must be implemented by a sub-class.</p>
@@ -275,9 +290,9 @@ is None. In this case sub-classes should fall back
 to writing data to a default table.</p>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="mosaic.mdio.sqlite3MDIO.sqlite3MDIO.writeSettings">
-<code class="sig-name descname">writeSettings</code><span class="sig-paren">(</span><em class="sig-param">settingsstring</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/mdio/sqlite3MDIO.html#sqlite3MDIO.writeSettings"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mosaic.mdio.sqlite3MDIO.sqlite3MDIO.writeSettings" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">writeSettings</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">settingsstring</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/mdio/sqlite3MDIO.html#sqlite3MDIO.writeSettings"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mosaic.mdio.sqlite3MDIO.sqlite3MDIO.writeSettings" title="Permalink to this definition">¶</a></dt>
 <dd><div class="admonition important">
 <p class="admonition-title">Important</p>
 <p><strong>Abstract method:</strong> This method must be implemented by a sub-class.</p>
@@ -290,22 +305,6 @@ to writing data to a default table.</p>
 </ul>
 </dd>
 </dl>
-</dd></dl>
-
-</dd></dl>
-
-<dl class="class">
-<dt id="mosaic.mdio.sqlite3MDIO.data_record">
-<em class="property">class </em><code class="sig-prename descclassname">mosaic.mdio.sqlite3MDIO.</code><code class="sig-name descname">data_record</code><span class="sig-paren">(</span><em class="sig-param">data_label</em>, <em class="sig-param">data</em>, <em class="sig-param">data_t</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/mdio/sqlite3MDIO.html#data_record"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mosaic.mdio.sqlite3MDIO.data_record" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code></a></p>
-<p>Smart data record structure that automatically encodes/decodes data for storage
-in a sqlite3 DB.</p>
-<dl class="method">
-<dt id="mosaic.mdio.sqlite3MDIO.data_record.update">
-<code class="sig-name descname">update</code><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param">E</em>, <span class="optional">]</span><em class="sig-param">**F</em><span class="sig-paren">)</span> &#x2192; None.  Update D from dict/iterable E and F.<a class="reference internal" href="../_modules/mosaic/mdio/sqlite3MDIO.html#data_record.update"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mosaic.mdio.sqlite3MDIO.data_record.update" title="Permalink to this definition">¶</a></dt>
-<dd><p>If E is present and has a .keys() method, then does:  for k in E: D[k] = E[k]
-If E is present and lacks a .keys() method, then does:  for k, v in E: D[k] = v
-In either case, this is followed by: for k in F:  D[k] = F[k]</p>
 </dd></dl>
 
 </dd></dl>
@@ -326,7 +325,7 @@ In either case, this is followed by: for k in F:  D[k] = F[k]</p>
       
     </p>
     <p>
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.4.3.<br/>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 3.5.4.<br/>
     </p>
   </div>
 </footer> -->

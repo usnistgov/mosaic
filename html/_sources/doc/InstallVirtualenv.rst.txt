@@ -33,3 +33,5 @@ Open a new shell to make the new virtual environment available. Now we are ready
 .. hint::
 	
 	We explicitly specify the Python installation to use. This is not mandatory, but is useful if you have multiple Python installations on your computer. The `<path to python>` may vary according to the specific version of python you wish to use. In most cases, this will be either `/usr/local/bin/` or `/usr/bin`
+
+.. include:: ../aliases.rst

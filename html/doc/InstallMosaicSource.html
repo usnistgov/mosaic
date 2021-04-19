@@ -1,19 +1,18 @@
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
   <head>
     <meta charset="utf-8" />
-    <title>&lt;no title&gt; &#8212; MOSAIC mweb2.0 documentation</title>
-    <link rel="stylesheet" href="../_static/bootstrap-sphinx.css" type="text/css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>&lt;no title&gt; &#8212; MOSAIC v2.1 documentation</title>
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/bootstrap-sphinx.css" type="text/css" />
     <link rel="stylesheet" type="text/css" href="../_static/graphviz.css" />
     <link rel="stylesheet" type="text/css" href="../_static/style.css" />
     <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
     <script src="../_static/jquery.js"></script>
     <script src="../_static/underscore.js"></script>
     <script src="../_static/doctools.js"></script>
-    <script src="../_static/language_data.js"></script>
-    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -44,7 +43,7 @@
         </button>
         <a class="navbar-brand" href="../index.html"><span><img src="../_static/icon_48.png"></span>
            </a>
-        <span class="navbar-text navbar-version pull-left"><b>mweb2.0</b></span>
+        <span class="navbar-text navbar-version pull-left"><b>v2.1</b></span>
       </div>
 
         <div class="collapse navbar-collapse nav-collapse">
@@ -121,25 +120,25 @@
 <p>Installing the graphical interface requires one to install <em>MOSAIC</em> from the source distribution as outlined below.</p>
 </div>
 <p><strong>Install from a Downloaded Source Distribution</strong></p>
-<p>First we need to obtain the <em>MOSAIC</em> source code. For analyzing publication data, we recommend downloading the latest stable version of the source code (<a href="#id1"><span class="problematic" id="id2">`download source`_</span></a>). Alternatively, the latest development version can be downloaded from the <a href="#id3"><span class="problematic" id="id4">`MOSAIC page on Github`_</span></a>. Here we will show you how to set up <em>MOSAIC</em> from the latest stable release:</p>
+<p>First we need to obtain the <em>MOSAIC</em> source code. For analyzing publication data, we recommend downloading the latest stable version of the source code (<a class="reference external" href="https://pages.nist.gov/mosaic/download.html">download source</a>). Alternatively, the latest development version can be downloaded from the <a class="reference external" href="https://github.com/usnistgov/mosaic">MOSAIC page on Github</a>. Here we will show you how to set up <em>MOSAIC</em> from the latest stable release:</p>
 <ol class="arabic simple">
-<li><p>Download the latest release (<a href="#id5"><span class="problematic" id="id6">`download source`_</span></a>)</p></li>
+<li><p>Download the latest release (<a class="reference external" href="https://pages.nist.gov/mosaic/download.html">download source</a>)</p></li>
 <li><p>Create a directory for the project source. In this case we will create a directory called MOSAIC, located in <code class="docutils literal notranslate"><span class="pre">~/projects/</span></code>, where ‘~’ is your home directory.</p></li>
 </ol>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> mkdir ~/projects/MOSAIC
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>mkdir ~/projects/MOSAIC
 </pre></div>
 </div>
 <ol class="arabic simple" start="3">
 <li><p>Navigate to the directory:</p></li>
 </ol>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> <span class="nb">cd</span> ~/projects/MOSAIC
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span><span class="nb">cd</span> ~/projects/MOSAIC
 </pre></div>
 </div>
 <ol class="arabic simple" start="4">
 <li><p>Extract the source into this folder.</p></li>
 <li><p>Make sure you are working in the virtual environment we set up in the previous step by typing:</p></li>
 </ol>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> workon MOSAIC
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>workon MOSAIC
 </pre></div>
 </div>
 <div class="admonition note">
@@ -149,13 +148,13 @@
 <ol class="arabic simple" start="6">
 <li><p><em>MOSAIC</em> and its dependencies are built using setuptools. Navigate to ~/projects/MOSAIC/ and run the following:</p></li>
 </ol>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp gp-VirtualEnv">(MOSAIC)</span><span class="gp">$</span> python setup.py mosaic_deps
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp gp-VirtualEnv">(MOSAIC)</span><span class="gp">$ </span>python setup.py mosaic_deps
 </pre></div>
 </div>
 <ol class="arabic simple" start="7">
 <li><p>Finally, add the installation directory (~/projects/MOSAIC as set up previously) to your <cite>PYTHONPATH</cite> as shown below. This addition can be made permanent by adding the line below to your <cite>.bash_profile</cite> (OS X) or <cite>.bashrc</cite> (Ubuntu) script.</p></li>
 </ol>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp gp-VirtualEnv">(MOSAIC)</span><span class="gp">$</span> <span class="nb">export</span> <span class="nv">PYTHONPATH</span><span class="o">=</span><span class="nv">$PYTHONPATH</span>:~/projects/MOSAIC
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp gp-VirtualEnv">(MOSAIC)</span><span class="gp">$ </span><span class="nb">export</span> <span class="nv">PYTHONPATH</span><span class="o">=</span><span class="nv">$PYTHONPATH</span>:~/projects/MOSAIC
 </pre></div>
 </div>
 
@@ -172,7 +171,7 @@
       
     </p>
     <p>
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.4.3.<br/>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 3.5.4.<br/>
     </p>
   </div>
 </footer> -->

@@ -1,19 +1,18 @@
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
   <head>
     <meta charset="utf-8" />
-    <title>14.1.6. Event Processing &#8212; MOSAIC mweb2.0 documentation</title>
-    <link rel="stylesheet" href="../_static/bootstrap-sphinx.css" type="text/css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>14.1.6. Event Processing &#8212; MOSAIC v2.1 documentation</title>
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/bootstrap-sphinx.css" type="text/css" />
     <link rel="stylesheet" type="text/css" href="../_static/graphviz.css" />
     <link rel="stylesheet" type="text/css" href="../_static/style.css" />
     <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
     <script src="../_static/jquery.js"></script>
     <script src="../_static/underscore.js"></script>
     <script src="../_static/doctools.js"></script>
-    <script src="../_static/language_data.js"></script>
-    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -46,7 +45,7 @@
         </button>
         <a class="navbar-brand" href="../index.html"><span><img src="../_static/icon_48.png"></span>
            </a>
-        <span class="navbar-text navbar-version pull-left"><b>mweb2.0</b></span>
+        <span class="navbar-text navbar-version pull-left"><b>v2.1</b></span>
       </div>
 
         <div class="collapse navbar-collapse nav-collapse">
@@ -117,7 +116,7 @@
 <h1><span class="section-number">14.1.6. </span>Event Processing<a class="headerlink" href="#event-processing" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="mosaic-process-adept2state-module">
 <h2><span class="section-number">14.1.6.1. </span>mosaic.process.adept2State module<a class="headerlink" href="#mosaic-process-adept2state-module" title="Permalink to this headline">¶</a></h2>
-<div class="graphviz"><img src="../_images/inheritance-f9da49088bb853f412d8f174eaf5a5bcb769c5ba.png" alt="Inheritance diagram of mosaic.process.adept2State" usemap="#inheritance1604056825" class="inheritance graphviz" /></div>
+<div class="graphviz"><img src="../_images/inheritance-4aa5038fab619396450ad965eb8f4b3c501c1e0f.png" alt="Inheritance diagram of mosaic.process.adept2State" usemap="#inheritance1604056825" class="inheritance graphviz" /></div>
 <map id="inheritance1604056825" name="inheritance1604056825">
 <area shape="rect" id="node1" href="#mosaic.process.adept2State.adept2State" target="_top" title="Analyze an event that is characteristic of PEG blockades. This method includes system " alt="" coords="325,53,494,77"/>
 <area shape="rect" id="node2" href="mosaic.meta.html#mosaic.process.metaEventProcessor.metaEventProcessor" target="_top" title=".. warning:: |metaclass|" alt="" coords="5,53,277,77"/>
@@ -158,9 +157,9 @@
 </div>
 <div class="line">4/18/13         AB      Initial version</div>
 </div>
-<dl class="class">
+<dl class="py class">
 <dt id="mosaic.process.adept2State.adept2State">
-<em class="property">class </em><code class="sig-prename descclassname">mosaic.process.adept2State.</code><code class="sig-name descname">adept2State</code><span class="sig-paren">(</span><em class="sig-param">icurr</em>, <em class="sig-param">icurrU</em>, <em class="sig-param">Fs</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/process/adept2State.html#adept2State"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mosaic.process.adept2State.adept2State" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">mosaic.process.adept2State.</span></code><code class="sig-name descname"><span class="pre">adept2State</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">icurr</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">icurrU</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Fs</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/process/adept2State.html#adept2State"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mosaic.process.adept2State.adept2State" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="mosaic.meta.html#mosaic.process.metaEventProcessor.metaEventProcessor" title="mosaic.process.metaEventProcessor.metaEventProcessor"><code class="xref py py-class docutils literal notranslate"><span class="pre">mosaic.process.metaEventProcessor.metaEventProcessor</span></code></a></p>
 <p>Analyze an event that is characteristic of PEG blockades. This method includes system 
 information in the analysis, specifically the filtering effects (throught the RC constant)
@@ -188,15 +187,15 @@ parameters that are stored as metadata including:</p>
 <dd class="field-even"><p>When an event cannot be analyzed, the blockade depth, residence time and rise time are set to -1.</p>
 </dd>
 </dl>
-<dl class="method">
+<dl class="py method">
 <dt id="mosaic.process.adept2State.adept2State.formatsettings">
-<code class="sig-name descname">formatsettings</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/process/adept2State.html#adept2State.formatsettings"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mosaic.process.adept2State.adept2State.formatsettings" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">formatsettings</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/process/adept2State.html#adept2State.formatsettings"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mosaic.process.adept2State.adept2State.formatsettings" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return a formatted string of settings for display</p>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="mosaic.process.adept2State.adept2State.mdAveragePropertiesList">
-<code class="sig-name descname">mdAveragePropertiesList</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/process/adept2State.html#adept2State.mdAveragePropertiesList"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mosaic.process.adept2State.adept2State.mdAveragePropertiesList" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">mdAveragePropertiesList</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/process/adept2State.html#adept2State.mdAveragePropertiesList"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mosaic.process.adept2State.adept2State.mdAveragePropertiesList" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return a list of meta-data properties that will be averaged 
 and displayed at the end of a run.</p>
 </dd></dl>
@@ -206,7 +205,7 @@ and displayed at the end of a run.</p>
 </div>
 <div class="section" id="mosaic-process-adept-module">
 <h2><span class="section-number">14.1.6.2. </span>mosaic.process.adept module<a class="headerlink" href="#mosaic-process-adept-module" title="Permalink to this headline">¶</a></h2>
-<div class="graphviz"><img src="../_images/inheritance-0aefb4ddcee3ed6f1ee68928f16a8e4c50ce7985.png" alt="Inheritance diagram of mosaic.process.adept" usemap="#inheritance9935b48c28" class="inheritance graphviz" /></div>
+<div class="graphviz"><img src="../_images/inheritance-9dbfde5ef0a9cb304a03705830b6c124cf89e7be.png" alt="Inheritance diagram of mosaic.process.adept" usemap="#inheritance9935b48c28" class="inheritance graphviz" /></div>
 <map id="inheritance9935b48c28" name="inheritance9935b48c28">
 <area shape="rect" id="node1" href="#mosaic.process.adept.InvalidEvent" target="_top" title="adept.InvalidEvent" alt="" coords="76,53,207,77"/>
 <area shape="rect" id="node2" href="#mosaic.process.adept.adept" target="_top" title="Analyze a multi&#45;step event that contains two or more states. This method includes system " alt="" coords="325,5,417,29"/>
@@ -263,9 +262,15 @@ and displayed at the end of a run.</p>
 <div class="line">5/17/14         AB  Modified md interface functions for metaMDIO support</div>
 <div class="line">9/26/13         AB      Initial version</div>
 </div>
-<dl class="class">
+<dl class="py exception">
+<dt id="mosaic.process.adept.InvalidEvent">
+<em class="property"><span class="pre">exception</span> </em><code class="sig-prename descclassname"><span class="pre">mosaic.process.adept.</span></code><code class="sig-name descname"><span class="pre">InvalidEvent</span></code><a class="reference internal" href="../_modules/mosaic/process/adept.html#InvalidEvent"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mosaic.process.adept.InvalidEvent" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/exceptions.html#Exception" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Exception</span></code></a></p>
+</dd></dl>
+
+<dl class="py class">
 <dt id="mosaic.process.adept.adept">
-<em class="property">class </em><code class="sig-prename descclassname">mosaic.process.adept.</code><code class="sig-name descname">adept</code><span class="sig-paren">(</span><em class="sig-param">icurr</em>, <em class="sig-param">icurrU</em>, <em class="sig-param">Fs</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/process/adept.html#adept"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mosaic.process.adept.adept" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">mosaic.process.adept.</span></code><code class="sig-name descname"><span class="pre">adept</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">icurr</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">icurrU</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Fs</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/process/adept.html#adept"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mosaic.process.adept.adept" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="mosaic.meta.html#mosaic.process.metaEventProcessor.metaEventProcessor" title="mosaic.process.metaEventProcessor.metaEventProcessor"><code class="xref py py-class docutils literal notranslate"><span class="pre">mosaic.process.metaEventProcessor.metaEventProcessor</span></code></a></p>
 <p>Analyze a multi-step event that contains two or more states. This method includes system 
 information in the analysis, specifically the filtering effects (through the RC constant)
@@ -294,31 +299,25 @@ parameters that are stored as metadata including:</p>
 <dd class="field-even"><p>When an event cannot be analyzed, all metadata are set to -1.</p>
 </dd>
 </dl>
-<dl class="method">
+<dl class="py method">
 <dt id="mosaic.process.adept.adept.formatsettings">
-<code class="sig-name descname">formatsettings</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/process/adept.html#adept.formatsettings"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mosaic.process.adept.adept.formatsettings" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">formatsettings</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/process/adept.html#adept.formatsettings"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mosaic.process.adept.adept.formatsettings" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return a formatted string of settings for display</p>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="mosaic.process.adept.adept.mdAveragePropertiesList">
-<code class="sig-name descname">mdAveragePropertiesList</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/process/adept.html#adept.mdAveragePropertiesList"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mosaic.process.adept.adept.mdAveragePropertiesList" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">mdAveragePropertiesList</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/process/adept.html#adept.mdAveragePropertiesList"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mosaic.process.adept.adept.mdAveragePropertiesList" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return a list of meta-data properties that will be averaged 
 and displayed at the end of a run.</p>
 </dd></dl>
 
 </dd></dl>
 
-<dl class="exception">
-<dt id="mosaic.process.adept.InvalidEvent">
-<em class="property">exception </em><code class="sig-prename descclassname">mosaic.process.adept.</code><code class="sig-name descname">InvalidEvent</code><a class="reference internal" href="../_modules/mosaic/process/adept.html#InvalidEvent"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mosaic.process.adept.InvalidEvent" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/exceptions.html#Exception" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Exception</span></code></a></p>
-</dd></dl>
-
 </div>
 <div class="section" id="mosaic-process-cusumplus-module">
 <h2><span class="section-number">14.1.6.3. </span>mosaic.process.cusumPlus module<a class="headerlink" href="#mosaic-process-cusumplus-module" title="Permalink to this headline">¶</a></h2>
-<div class="graphviz"><img src="../_images/inheritance-e02edae0cb5d5a19e95c19fd5fd414d365e7b380.png" alt="Inheritance diagram of mosaic.process.cusumPlus" usemap="#inheritance6c5c146ee6" class="inheritance graphviz" /></div>
+<div class="graphviz"><img src="../_images/inheritance-42d73f9da15a94a5c16c1fccf5a44bd73c1eb50a.png" alt="Inheritance diagram of mosaic.process.cusumPlus" usemap="#inheritance6c5c146ee6" class="inheritance graphviz" /></div>
 <map id="inheritance6c5c146ee6" name="inheritance6c5c146ee6">
 <area shape="rect" id="node1" href="#mosaic.process.cusumPlus.InvalidEvent" target="_top" title="cusumPlus.InvalidEvent" alt="" coords="60,101,223,125"/>
 <area shape="rect" id="node2" href="#mosaic.process.cusumPlus.cusumPlus" target="_top" title="CUSUM+ will detect jumps that are smaller than `StepSize`, but they will have to be sustained longer. Threshold can be thought of, very roughly, as proportional to the length of time a subevent must be sustained for it to be detected. The algorithm will adjust the actual threshold used on a per&#45;event basis in order to minimize false positive detection of current jumps This algorithm is based on code used in OpenNanopore, which you can read about here: http://pubs.rsc.org/en/Content/ArticleLanding/2012/NR/c2nr30951c#!divAbstract" alt="" coords="325,53,481,77"/>
@@ -349,9 +348,15 @@ analysis in favor of much faster fitting of single- and multi-level events.</p>
 <div class="line">2/12/15         AB      Updated metadata representation to be consistent with stepResponseAnalysis and multiStateAnalysis</div>
 <div class="line">2/10/15         KB      Initial version</div>
 </div>
-<dl class="class">
+<dl class="py exception">
+<dt id="mosaic.process.cusumPlus.InvalidEvent">
+<em class="property"><span class="pre">exception</span> </em><code class="sig-prename descclassname"><span class="pre">mosaic.process.cusumPlus.</span></code><code class="sig-name descname"><span class="pre">InvalidEvent</span></code><a class="reference internal" href="../_modules/mosaic/process/cusumPlus.html#InvalidEvent"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mosaic.process.cusumPlus.InvalidEvent" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/exceptions.html#Exception" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Exception</span></code></a></p>
+</dd></dl>
+
+<dl class="py class">
 <dt id="mosaic.process.cusumPlus.cusumPlus">
-<em class="property">class </em><code class="sig-prename descclassname">mosaic.process.cusumPlus.</code><code class="sig-name descname">cusumPlus</code><span class="sig-paren">(</span><em class="sig-param">icurr</em>, <em class="sig-param">icurrU</em>, <em class="sig-param">Fs</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/process/cusumPlus.html#cusumPlus"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mosaic.process.cusumPlus.cusumPlus" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">mosaic.process.cusumPlus.</span></code><code class="sig-name descname"><span class="pre">cusumPlus</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">icurr</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">icurrU</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Fs</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/process/cusumPlus.html#cusumPlus"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mosaic.process.cusumPlus.cusumPlus" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="mosaic.meta.html#mosaic.process.metaEventProcessor.metaEventProcessor" title="mosaic.process.metaEventProcessor.metaEventProcessor"><code class="xref py py-class docutils literal notranslate"><span class="pre">mosaic.process.metaEventProcessor.metaEventProcessor</span></code></a></p>
 <p>CUSUM+ will detect jumps that are smaller than <cite>StepSize</cite>, but they will have to be sustained longer. Threshold can be thought of, very roughly, as proportional to the length of time a subevent must be sustained for it to be detected. The algorithm will adjust the actual threshold used on a per-event basis in order to minimize false positive detection of current jumps This algorithm is based on code used in OpenNanopore, which you can read about here: <a class="reference external" href="http://pubs.rsc.org/en/Content/ArticleLanding/2012/NR/c2nr30951c#!divAbstract">http://pubs.rsc.org/en/Content/ArticleLanding/2012/NR/c2nr30951c#!divAbstract</a></p>
 <blockquote>
@@ -383,29 +388,23 @@ analysis in favor of much faster fitting of single- and multi-level events.</p>
         <span class="s2">&quot;StepSize&quot;</span><span class="o">:</span> <span class="mf">3.0</span><span class="p">,</span> 
         <span class="s2">&quot;MinThreshold&quot;</span><span class="o">:</span> <span class="mf">3.0</span><span class="p">,</span>
         <span class="s2">&quot;MaxThreshold&quot;</span><span class="o">:</span> <span class="mf">10.0</span><span class="p">,</span>
-        <span class="s2">&quot;MinLength&quot;</span> <span class="o">:</span> <span class="mi">10</span><span class="p">,</span>
+        <span class="s2">&quot;MinLength&quot;</span> <span class="o">:</span> <span class="mf">10</span><span class="p">,</span>
 <span class="p">}</span>
 </pre></div>
 </div>
-<dl class="method">
+<dl class="py method">
 <dt id="mosaic.process.cusumPlus.cusumPlus.formatsettings">
-<code class="sig-name descname">formatsettings</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/process/cusumPlus.html#cusumPlus.formatsettings"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mosaic.process.cusumPlus.cusumPlus.formatsettings" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">formatsettings</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/process/cusumPlus.html#cusumPlus.formatsettings"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mosaic.process.cusumPlus.cusumPlus.formatsettings" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return a formatted string of settings for display</p>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="mosaic.process.cusumPlus.cusumPlus.mdAveragePropertiesList">
-<code class="sig-name descname">mdAveragePropertiesList</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/process/cusumPlus.html#cusumPlus.mdAveragePropertiesList"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mosaic.process.cusumPlus.cusumPlus.mdAveragePropertiesList" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">mdAveragePropertiesList</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/process/cusumPlus.html#cusumPlus.mdAveragePropertiesList"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mosaic.process.cusumPlus.cusumPlus.mdAveragePropertiesList" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return a list of meta-data properties that will be averaged 
 and displayed at the end of a run.</p>
 </dd></dl>
 
-</dd></dl>
-
-<dl class="exception">
-<dt id="mosaic.process.cusumPlus.InvalidEvent">
-<em class="property">exception </em><code class="sig-prename descclassname">mosaic.process.cusumPlus.</code><code class="sig-name descname">InvalidEvent</code><a class="reference internal" href="../_modules/mosaic/process/cusumPlus.html#InvalidEvent"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mosaic.process.cusumPlus.InvalidEvent" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/exceptions.html#Exception" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Exception</span></code></a></p>
 </dd></dl>
 
 </div>
@@ -424,7 +423,7 @@ and displayed at the end of a run.</p>
       
     </p>
     <p>
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.4.3.<br/>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 3.5.4.<br/>
     </p>
   </div>
 </footer> -->

@@ -23,7 +23,7 @@ Next add the following to ~/.bashrc
 
 .. code-block:: console
 
- 	export PYTHONPATH=/usr/lib/python2.7/dist-packages
+ 	export PYTHONPATH=/usr/lib/python3.7/dist-packages
 
 
 **2. (Optional) Install and Setup Virtual Environment**
@@ -37,3 +37,4 @@ Next add the following to ~/.bashrc
 **4. Testing MOSAIC**
 
 .. include:: TestMosaicSource.rst   
+.. include:: ../aliases.rst

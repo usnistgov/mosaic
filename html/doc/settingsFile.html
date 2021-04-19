@@ -1,19 +1,18 @@
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
   <head>
     <meta charset="utf-8" />
-    <title>6. Settings File &#8212; MOSAIC mweb2.0 documentation</title>
-    <link rel="stylesheet" href="../_static/bootstrap-sphinx.css" type="text/css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>6. Settings File &#8212; MOSAIC v2.1 documentation</title>
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/bootstrap-sphinx.css" type="text/css" />
     <link rel="stylesheet" type="text/css" href="../_static/graphviz.css" />
     <link rel="stylesheet" type="text/css" href="../_static/style.css" />
     <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
     <script src="../_static/jquery.js"></script>
     <script src="../_static/underscore.js"></script>
     <script src="../_static/doctools.js"></script>
-    <script src="../_static/language_data.js"></script>
-    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -46,7 +45,7 @@
         </button>
         <a class="navbar-brand" href="../index.html"><span><img src="../_static/icon_48.png"></span>
            </a>
-        <span class="navbar-text navbar-version pull-left"><b>mweb2.0</b></span>
+        <span class="navbar-text navbar-version pull-left"><b>v2.1</b></span>
       </div>
 
         <div class="collapse navbar-collapse nav-collapse">
@@ -115,10 +114,10 @@
       
   <div class="section" id="settings-file">
 <span id="settings-page"></span><h1><span class="section-number">6. </span>Settings File<a class="headerlink" href="#settings-file" title="Permalink to this headline">¶</a></h1>
-<p><em>MOSAIC</em> stores its settings in the <a class="reference external" href="http://json.org/">JSON</a> format. When using the graphical interface, a settings file is generated automatically upon starting an analysis, or by clicking <em>Save Settings</em> in the <em>File menu</em>  (see <a class="reference internal" href="GraphicalInterface.html#gui-page"><span class="std std-ref">MOSAIC GUI</span></a>).</p>
+<p><em>MOSAIC</em> stores its settings in the <a class="reference external" href="https://json.org/">JSON</a> format. When using the graphical interface, a settings file is generated automatically upon starting an analysis, or by clicking <em>Save Settings</em> in the <em>File menu</em>  (see <a class="reference internal" href="GraphicalInterface.html#gui-page"><span class="std std-ref">MOSAIC GUI</span></a>).</p>
 <div class="section" id="settings-layout">
 <h2><span class="section-number">6.1. </span>Settings Layout<a class="headerlink" href="#settings-layout" title="Permalink to this headline">¶</a></h2>
-<p><a class="reference external" href="http://json.org/">JSON</a> is a human readable file format that consists of key-value pairs separated by sections. Each section in a JSON object consists of a section name and a list of string key-value pairs.</p>
+<p><a class="reference external" href="https://json.org/">JSON</a> is a human readable file format that consists of key-value pairs separated by sections. Each section in a JSON object consists of a section name and a list of string key-value pairs.</p>
 <div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
         <span class="s2">&quot;&lt;section name&gt;&quot;</span> <span class="o">:</span> <span class="p">{</span>
                 <span class="s2">&quot;key1&quot;</span> <span class="o">:</span> <span class="s2">&quot;value1&quot;</span><span class="p">,</span>
@@ -155,9 +154,9 @@
 <h2><span class="section-number">6.2. </span>Trajectory Settings<a class="headerlink" href="#trajectory-settings" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="common-settings-metatrajio">
 <h3><span class="section-number">6.2.1. </span>Common Settings (<code class="xref py py-class docutils literal notranslate"><span class="pre">metaTrajIO</span></code>)<a class="headerlink" href="#common-settings-metatrajio" title="Permalink to this headline">¶</a></h3>
-<dl class="class">
+<dl class="py class">
 <dt id="mosaic.trajio.metaTrajIO.metaTrajIO">
-<em class="property">class </em><code class="sig-prename descclassname">mosaic.trajio.metaTrajIO.</code><code class="sig-name descname">metaTrajIO</code><span class="sig-paren">(</span><em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/trajio/metaTrajIO.html#metaTrajIO"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mosaic.trajio.metaTrajIO.metaTrajIO" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">mosaic.trajio.metaTrajIO.</span></code><code class="sig-name descname"><span class="pre">metaTrajIO</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/trajio/metaTrajIO.html#metaTrajIO"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mosaic.trajio.metaTrajIO.metaTrajIO" title="Permalink to this definition">¶</a></dt>
 <dd><div class="admonition warning">
 <p class="admonition-title">Warning</p>
 <p>This metaclass must be sub-classed. All abstract methods within this metaclass must be implemented.</p>
@@ -202,9 +201,9 @@ the feedback resistance (Rfb) and feedback capacitance (Cfb) to be passed at ini
 </div>
 <div class="section" id="qdf-files-qdftrajio">
 <h3><span class="section-number">6.2.2. </span>QDF Files (<code class="xref py py-class docutils literal notranslate"><span class="pre">qdfTrajIO</span></code>)<a class="headerlink" href="#qdf-files-qdftrajio" title="Permalink to this headline">¶</a></h3>
-<dl class="class">
+<dl class="py class">
 <dt id="mosaic.trajio.qdfTrajIO.qdfTrajIO">
-<em class="property">class </em><code class="sig-prename descclassname">mosaic.trajio.qdfTrajIO.</code><code class="sig-name descname">qdfTrajIO</code><span class="sig-paren">(</span><em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/trajio/qdfTrajIO.html#qdfTrajIO"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mosaic.trajio.qdfTrajIO.qdfTrajIO" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">mosaic.trajio.qdfTrajIO.</span></code><code class="sig-name descname"><span class="pre">qdfTrajIO</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/trajio/qdfTrajIO.html#qdfTrajIO"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mosaic.trajio.qdfTrajIO.qdfTrajIO" title="Permalink to this definition">¶</a></dt>
 <dd><p>Use the readqdf module from EBS to read individual QDF files.</p>
 <p>In addition to <code class="xref py py-class docutils literal notranslate"><span class="pre">metaTrajIO</span></code> args, check if the 
 feedback resistance (<code class="docutils literal notranslate"><span class="pre">Rfb</span></code>) and feedback capacitance (<code class="docutils literal notranslate"><span class="pre">Cfb</span></code>)
@@ -245,9 +244,9 @@ the values for <code class="docutils literal notranslate"><span class="pre">Rfb<
 </div>
 <div class="section" id="abf-files-abftrajio">
 <h3><span class="section-number">6.2.3. </span>ABF Files (<code class="xref py py-class docutils literal notranslate"><span class="pre">abfTrajIO</span></code>)<a class="headerlink" href="#abf-files-abftrajio" title="Permalink to this headline">¶</a></h3>
-<dl class="class">
+<dl class="py class">
 <dt id="mosaic.trajio.abfTrajIO.abfTrajIO">
-<em class="property">class </em><code class="sig-prename descclassname">mosaic.trajio.abfTrajIO.</code><code class="sig-name descname">abfTrajIO</code><span class="sig-paren">(</span><em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/trajio/abfTrajIO.html#abfTrajIO"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mosaic.trajio.abfTrajIO.abfTrajIO" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">mosaic.trajio.abfTrajIO.</span></code><code class="sig-name descname"><span class="pre">abfTrajIO</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/trajio/abfTrajIO.html#abfTrajIO"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mosaic.trajio.abfTrajIO.abfTrajIO" title="Permalink to this definition">¶</a></dt>
 <dd><p>Read ABF1 and ABF2 file formats. Currently, only 
 gap-free mode and single channel recordings are supported.</p>
 <p>A typical settings section to read ABF files is shown below.</p>
@@ -271,9 +270,9 @@ gap-free mode and single channel recordings are supported.</p>
 </div>
 <div class="section" id="binary-files-bintrajio">
 <h3><span class="section-number">6.2.4. </span>Binary Files (<code class="xref py py-class docutils literal notranslate"><span class="pre">binTrajIO</span></code>)<a class="headerlink" href="#binary-files-bintrajio" title="Permalink to this headline">¶</a></h3>
-<dl class="class">
+<dl class="py class">
 <dt id="mosaic.trajio.binTrajIO.binTrajIO">
-<em class="property">class </em><code class="sig-prename descclassname">mosaic.trajio.binTrajIO.</code><code class="sig-name descname">binTrajIO</code><span class="sig-paren">(</span><em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/trajio/binTrajIO.html#binTrajIO"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mosaic.trajio.binTrajIO.binTrajIO" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">mosaic.trajio.binTrajIO.</span></code><code class="sig-name descname"><span class="pre">binTrajIO</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/trajio/binTrajIO.html#binTrajIO"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mosaic.trajio.binTrajIO.binTrajIO" title="Permalink to this definition">¶</a></dt>
 <dd><p>Read a file that contains interleaved binary data, ordered by column. Only a single 
 column that holds ionic current data is read. The current in pA 
 is returned after scaling by the amplifier scale factor (<code class="docutils literal notranslate"><span class="pre">AmplifierScale</span></code>) and 
@@ -311,7 +310,7 @@ defined above is:</p>
         <span class="s2">&quot;dcOffset&quot;</span><span class="o">:</span> <span class="s2">&quot;0.0&quot;</span><span class="p">,</span> 
         <span class="s2">&quot;filter&quot;</span><span class="o">:</span> <span class="s2">&quot;*.bin&quot;</span><span class="p">,</span> 
         <span class="s2">&quot;start&quot;</span><span class="o">:</span> <span class="s2">&quot;0.0&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;HeaderOffset&quot;</span><span class="o">:</span> <span class="mi">0</span> 
+        <span class="s2">&quot;HeaderOffset&quot;</span><span class="o">:</span> <span class="mf">0</span> 
 <span class="p">}</span>
 </pre></div>
 </div>
@@ -321,13 +320,13 @@ defined above is:</p>
 <blockquote>
 <div><div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="s2">&quot;binTrajIO&quot;</span><span class="o">:</span> <span class="p">{</span>
         <span class="s2">&quot;AmplifierOffset&quot;</span><span class="o">:</span> <span class="s2">&quot;0.0&quot;</span><span class="p">,</span> 
-        <span class="s2">&quot;SamplingFrequency&quot;</span><span class="o">:</span> <span class="mi">200000</span><span class="p">,</span> 
+        <span class="s2">&quot;SamplingFrequency&quot;</span><span class="o">:</span> <span class="mf">200000</span><span class="p">,</span> 
         <span class="s2">&quot;AmplifierScale&quot;</span><span class="o">:</span> <span class="s2">&quot;400./2**16&quot;</span><span class="p">,</span> 
         <span class="s2">&quot;ColumnTypes&quot;</span><span class="o">:</span> <span class="s2">&quot;[(&#39;curr_pA&#39;, &#39;&gt;i2&#39;)]&quot;</span><span class="p">,</span> 
         <span class="s2">&quot;dcOffset&quot;</span><span class="o">:</span> <span class="mf">0.0</span><span class="p">,</span> 
         <span class="s2">&quot;filter&quot;</span><span class="o">:</span> <span class="s2">&quot;*.dat&quot;</span><span class="p">,</span> 
         <span class="s2">&quot;start&quot;</span><span class="o">:</span> <span class="mf">0.0</span><span class="p">,</span> 
-        <span class="s2">&quot;HeaderOffset&quot;</span><span class="o">:</span> <span class="mi">512</span><span class="p">,</span> 
+        <span class="s2">&quot;HeaderOffset&quot;</span><span class="o">:</span> <span class="mf">512</span><span class="p">,</span> 
         <span class="s2">&quot;IonicCurrentColumn&quot;</span><span class="o">:</span> <span class="s2">&quot;curr_pA&quot;</span>
 <span class="p">}</span>
 </pre></div>
@@ -337,13 +336,13 @@ defined above is:</p>
 <blockquote>
 <div><div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="s2">&quot;binTrajIO&quot;</span><span class="o">:</span> <span class="p">{</span>
         <span class="s2">&quot;AmplifierOffset&quot;</span><span class="o">:</span> <span class="s2">&quot;0.0&quot;</span><span class="p">,</span> 
-        <span class="s2">&quot;SamplingFrequency&quot;</span><span class="o">:</span> <span class="mi">200000</span><span class="p">,</span> 
+        <span class="s2">&quot;SamplingFrequency&quot;</span><span class="o">:</span> <span class="mf">200000</span><span class="p">,</span> 
         <span class="s2">&quot;AmplifierScale&quot;</span><span class="o">:</span> <span class="s2">&quot;1.0&quot;</span><span class="p">,</span> 
         <span class="s2">&quot;ColumnTypes&quot;</span> <span class="o">:</span> <span class="s2">&quot;[(&#39;curr_pA&#39;, &#39;float64&#39;), (&#39;AD_V&#39;, &#39;int64&#39;)]&quot;</span><span class="p">,</span>
         <span class="s2">&quot;dcOffset&quot;</span><span class="o">:</span> <span class="mf">0.0</span><span class="p">,</span> 
         <span class="s2">&quot;filter&quot;</span><span class="o">:</span> <span class="s2">&quot;*.bin&quot;</span><span class="p">,</span> 
         <span class="s2">&quot;start&quot;</span><span class="o">:</span> <span class="mf">0.0</span><span class="p">,</span> 
-        <span class="s2">&quot;HeaderOffset&quot;</span><span class="o">:</span> <span class="mi">0</span><span class="p">,</span> 
+        <span class="s2">&quot;HeaderOffset&quot;</span><span class="o">:</span> <span class="mf">0</span><span class="p">,</span> 
         <span class="s2">&quot;IonicCurrentColumn&quot;</span><span class="o">:</span> <span class="s2">&quot;curr_pA&quot;</span>
 <span class="p">}</span>
 </pre></div>
@@ -375,9 +374,9 @@ defined above is:</p>
 </div>
 <div class="section" id="chimera-files-bintrajio">
 <h3><span class="section-number">6.2.5. </span>Chimera Files (<code class="xref py py-class docutils literal notranslate"><span class="pre">binTrajIO</span></code>)<a class="headerlink" href="#chimera-files-bintrajio" title="Permalink to this headline">¶</a></h3>
-<dl class="class">
+<dl class="py class">
 <dt id="mosaic.trajio.chimeraTrajIO.chimeraTrajIO">
-<em class="property">class </em><code class="sig-prename descclassname">mosaic.trajio.chimeraTrajIO.</code><code class="sig-name descname">chimeraTrajIO</code><span class="sig-paren">(</span><em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/trajio/chimeraTrajIO.html#chimeraTrajIO"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mosaic.trajio.chimeraTrajIO.chimeraTrajIO" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">mosaic.trajio.chimeraTrajIO.</span></code><code class="sig-name descname"><span class="pre">chimeraTrajIO</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/trajio/chimeraTrajIO.html#chimeraTrajIO"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mosaic.trajio.chimeraTrajIO.chimeraTrajIO" title="Permalink to this definition">¶</a></dt>
 <dd><p>Read a file generated by the Chimera VC100. The current in pA 
 is returned after scaling by the amplifier scale factors.</p>
 <dl class="field-list">
@@ -440,16 +439,16 @@ to enter these parameters.</p>
 </div>
 <div class="section" id="tsv-files-bintrajio">
 <h3><span class="section-number">6.2.6. </span>TSV Files (<code class="xref py py-class docutils literal notranslate"><span class="pre">binTrajIO</span></code>)<a class="headerlink" href="#tsv-files-bintrajio" title="Permalink to this headline">¶</a></h3>
-<dl class="class">
+<dl class="py class">
 <dt id="mosaic.trajio.tsvTrajIO.tsvTrajIO">
-<em class="property">class </em><code class="sig-prename descclassname">mosaic.trajio.tsvTrajIO.</code><code class="sig-name descname">tsvTrajIO</code><span class="sig-paren">(</span><em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/trajio/tsvTrajIO.html#tsvTrajIO"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mosaic.trajio.tsvTrajIO.tsvTrajIO" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">mosaic.trajio.tsvTrajIO.</span></code><code class="sig-name descname"><span class="pre">tsvTrajIO</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/trajio/tsvTrajIO.html#tsvTrajIO"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mosaic.trajio.tsvTrajIO.tsvTrajIO" title="Permalink to this definition">¶</a></dt>
 <dd><p>Read tab separated valued (TSV) files.</p>
 <dl class="field-list">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><dl>
 <dt>In addition to <code class="xref py py-class docutils literal notranslate"><span class="pre">metaTrajIO</span></code> args,</dt><dd><ul class="simple">
 <li><p><cite>headers</cite> :           If True, the first row is ignored (default: True)</p></li>
-<li><p><cite>separator</cite> : set the data separator (defualt: ‘””t’)</p></li>
+<li><p><cite>separator</cite> : set the data separator (defualt: ‘”&quot;t’)</p></li>
 <li><p><cite>scale</cite> : set the data scale (default: 1). For example to convert from  to pA set <code class="docutils literal notranslate"><span class="pre">scale=1e12</span></code>.</p></li>
 </ul>
 <dl class="simple">
@@ -476,7 +475,7 @@ is assumed with the listed default values.</p>
 </div>
 <div class="section" id="optimizing-settings">
 <span id="algorithm-settings-sec"></span><h2><span class="section-number">6.3. </span>Optimizing Settings<a class="headerlink" href="#optimizing-settings" title="Permalink to this headline">¶</a></h2>
-<p><em>MOSAIC</em> classes are controlled through the <a class="reference external" href="http://json.org/">JSON</a> settings files as defined above. In most cases, running <em>MOSAIC</em> through the GUI (see <a class="reference internal" href="GraphicalInterface.html#gui-page"><span class="std std-ref">MOSAIC GUI</span></a>) should generate satisfactory results. However, settings can be further optimized either by editing a file named <code class="docutils literal notranslate"><span class="pre">.settings</span></code> stored within the data directory, or by clicking on the <code class="docutils literal notranslate"><span class="pre">Advanced</span> <span class="pre">Settings</span></code> check-box in the <a class="reference internal" href="GraphicalInterface.html#analysis-setup"><span class="std std-ref">Panel A: Analysis Setup</span></a> section of the GUI.</p>
+<p><em>MOSAIC</em> classes are controlled through the <a class="reference external" href="https://json.org/">JSON</a> settings files as defined above. In most cases, running <em>MOSAIC</em> through the GUI (see <a class="reference internal" href="GraphicalInterface.html#gui-page"><span class="std std-ref">MOSAIC GUI</span></a>) should generate satisfactory results. However, settings can be further optimized either by editing a file named <code class="docutils literal notranslate"><span class="pre">.settings</span></code> stored within the data directory, or by clicking on the <code class="docutils literal notranslate"><span class="pre">Advanced</span> <span class="pre">Settings</span></code> check-box in the <a class="reference internal" href="GraphicalInterface.html#analysis-setup"><span class="std std-ref">Panel A: Analysis Setup</span></a> section of the GUI.</p>
 <div class="section" id="initial-event-detection-eventsegment">
 <span id="eventseg-settings-sec"></span><h3><span class="section-number">6.3.1. </span>Initial Event Detection (<code class="xref py py-class docutils literal notranslate"><span class="pre">eventSegment</span></code>)<a class="headerlink" href="#initial-event-detection-eventsegment" title="Permalink to this headline">¶</a></h3>
 <p>The first step when analyzing an ionic-current time series is to perform a quick partition to identify events. This is accomplished by overriding the <code class="xref py py-class docutils literal notranslate"><span class="pre">eventPartition</span></code> class. Currently, the only implementation of event partitioning is the <code class="xref py py-class docutils literal notranslate"><span class="pre">eventSegment</span></code> algorithm. This algorithm uses a thresholding technique to detect the start and end of an event. When an event is detected the ionic current time-series associated with that event is passed to a processing algorithm for fitting. Settings that can be passed to <code class="xref py py-class docutils literal notranslate"><span class="pre">eventSegment</span></code> are given below followed by their descriptions.</p>
@@ -549,7 +548,7 @@ is assumed with the listed default values.</p>
 </div>
 <div class="section" id="multi-state-identification-adept">
 <h3><span class="section-number">6.3.3. </span>Multi-State Identification  (<code class="xref py py-class docutils literal notranslate"><span class="pre">adept</span></code>)<a class="headerlink" href="#multi-state-identification-adept" title="Permalink to this headline">¶</a></h3>
-<p>For more complex signals with multiple states, the <a class="reference internal" href="multiState.html#multistate-page"><span class="std std-ref">ADEPT</span></a> algorithm yields better results. The settings passed to this algorithm (described below) are largely similar to <a class="reference internal" href="#stepresp-settings-sec"><span class="std std-ref">Two-State Identification  (adept2State)</span></a>.</p>
+<p>For more complex signals with multiple states, the <a class="reference internal" href="Algorithms.html#multistate-page"><span class="std std-ref">ADEPT</span></a> algorithm yields better results. The settings passed to this algorithm (described below) are largely similar to <a class="reference internal" href="#stepresp-settings-sec"><span class="std std-ref">Two-State Identification  (adept2State)</span></a>.</p>
 <div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="s2">&quot;adept&quot;</span> <span class="o">:</span> <span class="p">{</span>
         <span class="s2">&quot;FitTol&quot;</span>                        <span class="o">:</span> <span class="s2">&quot;1.e-7&quot;</span><span class="p">,</span>
         <span class="s2">&quot;FitIters&quot;</span>                      <span class="o">:</span> <span class="s2">&quot;50000&quot;</span><span class="p">,</span>
@@ -654,7 +653,7 @@ is assumed with the listed default values.</p>
       
     </p>
     <p>
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.4.3.<br/>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 3.5.4.<br/>
     </p>
   </div>
 </footer> -->

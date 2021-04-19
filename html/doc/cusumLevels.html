@@ -1,19 +1,18 @@
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
   <head>
     <meta charset="utf-8" />
-    <title>CUSUM+ &#8212; MOSAIC mweb2.0 documentation</title>
-    <link rel="stylesheet" href="../_static/bootstrap-sphinx.css" type="text/css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CUSUM+ &#8212; MOSAIC v2.1 documentation</title>
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/bootstrap-sphinx.css" type="text/css" />
     <link rel="stylesheet" type="text/css" href="../_static/graphviz.css" />
     <link rel="stylesheet" type="text/css" href="../_static/style.css" />
     <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
     <script src="../_static/jquery.js"></script>
     <script src="../_static/underscore.js"></script>
     <script src="../_static/doctools.js"></script>
-    <script src="../_static/language_data.js"></script>
-    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -44,7 +43,7 @@
         </button>
         <a class="navbar-brand" href="../index.html"><span><img src="../_static/icon_48.png"></span>
            </a>
-        <span class="navbar-text navbar-version pull-left"><b>mweb2.0</b></span>
+        <span class="navbar-text navbar-version pull-left"><b>v2.1</b></span>
       </div>
 
         <div class="collapse navbar-collapse nav-collapse">
@@ -113,7 +112,7 @@
       
   <div class="section" id="cusum">
 <span id="cusumlevel-page"></span><h1>CUSUM+<a class="headerlink" href="#cusum" title="Permalink to this headline">¶</a></h1>
-<p>The CUSUM algorithm (used by OpenNanopore for example) <span class="bibtex" id="id1">[Raillon:2012is]</span> is available in <em>MOSAIC</em>. In contrast with other algorithms available in <em>MOSAIC</em>, this approach does not leverage system information in the analysis. This however results in a faster estimation of single- and multi-level events, compared with <a class="reference internal" href="stepResponse.html#stepresponse-page"><span class="std std-ref">ADEPT 2-State</span></a> and <a class="reference internal" href="multiState.html#multistate-page"><span class="std std-ref">ADEPT</span></a>. You can read about the CUSUM algorithm <a class="reference external" href="http://pubs.rsc.org/en/Content/ArticleLanding/2012/NR/c2nr30951c#!divAbstract">here</a>.</p>
+<p>The CUSUM algorithm (used by OpenNanopore for example) <span class="bibtex" id="id1">[Raillon:2012is]</span> is available in <em>MOSAIC</em>. In contrast with other algorithms available in <em>MOSAIC</em>, this approach does not leverage system information in the analysis. This however results in a faster estimation of single- and multi-level events, compared with <a class="reference internal" href="stepResponse.html#stepresponse-page"><span class="std std-ref">ADEPT 2-State</span></a> and <a class="reference internal" href="Algorithms.html#multistate-page"><span class="std std-ref">ADEPT</span></a>. You can read about the CUSUM algorithm <a class="reference external" href="http://pubs.rsc.org/en/Content/ArticleLanding/2012/NR/c2nr30951c#!divAbstract">here</a>.</p>
 <p>Some known issues with CUSUM:</p>
 <blockquote>
 <div><ol class="arabic simple">
@@ -131,7 +130,7 @@
 </div>
 <div class="section" id="metadata-output">
 <h2>Metadata Output<a class="headerlink" href="#metadata-output" title="Permalink to this headline">¶</a></h2>
-<p>The <code class="xref py py-class docutils literal notranslate"><span class="pre">cusumPlus</span></code> algorithm outputs meta-data that characterizes every processed event. Similar to the <a class="reference internal" href="multiState.html#multistate-page"><span class="std std-ref">ADEPT</span></a> algorithm, this information is stored in a <a href="#id2"><span class="problematic" id="id3">SQLite_</span></a> database and is available for further processing (see <a class="reference internal" href="DatabaseStructure.html#database-page"><span class="std std-ref">Database Structure and Query Syntax</span></a>).</p>
+<p>The <code class="xref py py-class docutils literal notranslate"><span class="pre">cusumPlus</span></code> algorithm outputs meta-data that characterizes every processed event. Similar to the <a class="reference internal" href="Algorithms.html#multistate-page"><span class="std std-ref">ADEPT</span></a> algorithm, this information is stored in a <a href="#id2"><span class="problematic" id="id3">SQLite_</span></a> database and is available for further processing (see <a class="reference internal" href="DatabaseStructure.html#database-page"><span class="std std-ref">Database Structure and Query Syntax</span></a>).</p>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 23%" />
@@ -209,7 +208,7 @@
       
     </p>
     <p>
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.4.3.<br/>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 3.5.4.<br/>
     </p>
   </div>
 </footer> -->

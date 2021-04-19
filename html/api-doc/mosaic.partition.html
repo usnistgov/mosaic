@@ -1,19 +1,18 @@
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
   <head>
     <meta charset="utf-8" />
-    <title>14.1.5. Event Partition and Segment &#8212; MOSAIC mweb2.0 documentation</title>
-    <link rel="stylesheet" href="../_static/bootstrap-sphinx.css" type="text/css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>14.1.5. Event Partition and Segment &#8212; MOSAIC v2.1 documentation</title>
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/bootstrap-sphinx.css" type="text/css" />
     <link rel="stylesheet" type="text/css" href="../_static/graphviz.css" />
     <link rel="stylesheet" type="text/css" href="../_static/style.css" />
     <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
     <script src="../_static/jquery.js"></script>
     <script src="../_static/underscore.js"></script>
     <script src="../_static/doctools.js"></script>
-    <script src="../_static/language_data.js"></script>
-    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -46,7 +45,7 @@
         </button>
         <a class="navbar-brand" href="../index.html"><span><img src="../_static/icon_48.png"></span>
            </a>
-        <span class="navbar-text navbar-version pull-left"><b>mweb2.0</b></span>
+        <span class="navbar-text navbar-version pull-left"><b>v2.1</b></span>
       </div>
 
         <div class="collapse navbar-collapse nav-collapse">
@@ -117,7 +116,7 @@
 <h1><span class="section-number">14.1.5. </span>Event Partition and Segment<a class="headerlink" href="#event-partition-and-segment" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="mosaic-partition-eventsegment-module">
 <h2><span class="section-number">14.1.5.1. </span>mosaic.partition.eventSegment module<a class="headerlink" href="#mosaic-partition-eventsegment-module" title="Permalink to this headline">¶</a></h2>
-<div class="graphviz"><img src="../_images/inheritance-21b073f11943fd24a873150fb7bc3a11852d23e3.png" alt="Inheritance diagram of mosaic.partition.eventSegment" usemap="#inheritance96dd370ed1" class="inheritance graphviz" /></div>
+<div class="graphviz"><img src="../_images/inheritance-b61f044942f99155b99efe5ef344043bb3fdacf7.png" alt="Inheritance diagram of mosaic.partition.eventSegment" usemap="#inheritance96dd370ed1" class="inheritance graphviz" /></div>
 <map id="inheritance96dd370ed1" name="inheritance96dd370ed1">
 <area shape="rect" id="node1" href="#mosaic.partition.eventSegment.eventSegment" target="_top" title="Implement an event partitioning algorithm by sub&#45;classing the metaEventPartition class" alt="" coords="304,5,501,29"/>
 <area shape="rect" id="node2" href="mosaic.meta.html#mosaic.partition.metaEventPartition.metaEventPartition" target="_top" title=".. warning:: |metaclass|" alt="" coords="5,5,256,29"/>
@@ -172,9 +171,9 @@ to an implementation of eventProcessor</p>
 </div>
 <div class="line">7/17/12         AB      Initial version</div>
 </div>
-<dl class="class">
+<dl class="py class">
 <dt id="mosaic.partition.eventSegment.eventSegment">
-<em class="property">class </em><code class="sig-prename descclassname">mosaic.partition.eventSegment.</code><code class="sig-name descname">eventSegment</code><span class="sig-paren">(</span><em class="sig-param">trajDataObj</em>, <em class="sig-param">eventProcHnd</em>, <em class="sig-param">eventPartitionSettings</em>, <em class="sig-param">eventProcSettings</em>, <em class="sig-param">settingsString</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/partition/eventSegment.html#eventSegment"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mosaic.partition.eventSegment.eventSegment" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">mosaic.partition.eventSegment.</span></code><code class="sig-name descname"><span class="pre">eventSegment</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">trajDataObj</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">eventProcHnd</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">eventPartitionSettings</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">eventProcSettings</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">settingsString</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/partition/eventSegment.html#eventSegment"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mosaic.partition.eventSegment.eventSegment" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="mosaic.meta.html#mosaic.partition.metaEventPartition.metaEventPartition" title="mosaic.partition.metaEventPartition.metaEventPartition"><code class="xref py py-class docutils literal notranslate"><span class="pre">mosaic.partition.metaEventPartition.metaEventPartition</span></code></a></p>
 <p>Implement an event partitioning algorithm by sub-classing the metaEventPartition class</p>
 <dl class="field-list simple">
@@ -212,9 +211,9 @@ for windows with a size specified by this parameter. (default: 1 second)</p>
 </ul>
 </dd>
 </dl>
-<dl class="method">
+<dl class="py method">
 <dt id="mosaic.partition.eventSegment.eventSegment.formatoutputfiles">
-<code class="sig-name descname">formatoutputfiles</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/partition/eventSegment.html#eventSegment.formatoutputfiles"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mosaic.partition.eventSegment.eventSegment.formatoutputfiles" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">formatoutputfiles</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/partition/eventSegment.html#eventSegment.formatoutputfiles"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mosaic.partition.eventSegment.eventSegment.formatoutputfiles" title="Permalink to this definition">¶</a></dt>
 <dd><div class="admonition important">
 <p class="admonition-title">Important</p>
 <p><strong>Abstract method:</strong> This method must be implemented by a sub-class.</p>
@@ -222,15 +221,15 @@ for windows with a size specified by this parameter. (default: 1 second)</p>
 <p>Return a formatted string of output files.</p>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="mosaic.partition.eventSegment.eventSegment.formatsettings">
-<code class="sig-name descname">formatsettings</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/partition/eventSegment.html#eventSegment.formatsettings"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mosaic.partition.eventSegment.eventSegment.formatsettings" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">formatsettings</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/partition/eventSegment.html#eventSegment.formatsettings"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mosaic.partition.eventSegment.eventSegment.formatsettings" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return a formatted string of settings for display in the output log.</p>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="mosaic.partition.eventSegment.eventSegment.formatstats">
-<code class="sig-name descname">formatstats</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/partition/eventSegment.html#eventSegment.formatstats"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mosaic.partition.eventSegment.eventSegment.formatstats" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">formatstats</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/partition/eventSegment.html#eventSegment.formatstats"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mosaic.partition.eventSegment.eventSegment.formatstats" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return a formatted string of statistics for display in the output log.</p>
 </dd></dl>
 
@@ -252,7 +251,7 @@ for windows with a size specified by this parameter. (default: 1 second)</p>
       
     </p>
     <p>
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.4.3.<br/>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 3.5.4.<br/>
     </p>
   </div>
 </footer> -->

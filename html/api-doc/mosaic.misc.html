@@ -1,19 +1,18 @@
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
   <head>
     <meta charset="utf-8" />
-    <title>14.1.8. Miscellaneous &#8212; MOSAIC mweb2.0 documentation</title>
-    <link rel="stylesheet" href="../_static/bootstrap-sphinx.css" type="text/css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>14.1.8. Miscellaneous &#8212; MOSAIC v2.1 documentation</title>
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/bootstrap-sphinx.css" type="text/css" />
     <link rel="stylesheet" type="text/css" href="../_static/graphviz.css" />
     <link rel="stylesheet" type="text/css" href="../_static/style.css" />
     <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
     <script src="../_static/jquery.js"></script>
     <script src="../_static/underscore.js"></script>
     <script src="../_static/doctools.js"></script>
-    <script src="../_static/language_data.js"></script>
-    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -46,7 +45,7 @@
         </button>
         <a class="navbar-brand" href="../index.html"><span><img src="../_static/icon_48.png"></span>
            </a>
-        <span class="navbar-text navbar-version pull-left"><b>mweb2.0</b></span>
+        <span class="navbar-text navbar-version pull-left"><b>v2.1</b></span>
       </div>
 
         <div class="collapse navbar-collapse nav-collapse">
@@ -153,10 +152,10 @@
 </div>
 <div class="line">8/24/12         AB      Initial version</div>
 </div>
-<dl class="class">
+<dl class="py class">
 <dt id="mosaic.settings.settings">
-<em class="property">class </em><code class="sig-prename descclassname">mosaic.settings.</code><code class="sig-name descname">settings</code><span class="sig-paren">(</span><em class="sig-param">datpath</em>, <em class="sig-param">defaultwarn=True</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/settings.html#settings"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mosaic.settings.settings" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">mosaic.settings.</span></code><code class="sig-name descname"><span class="pre">settings</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">datpath</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">defaultwarn</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/settings.html#settings"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mosaic.settings.settings" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
 <p>Initialize a settings object.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Args</dt>
@@ -166,9 +165,9 @@
 </ul>
 </dd>
 </dl>
-<dl class="method">
+<dl class="py method">
 <dt id="mosaic.settings.settings.getSettings">
-<code class="sig-name descname">getSettings</code><span class="sig-paren">(</span><em class="sig-param">section</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/settings.html#settings.getSettings"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mosaic.settings.settings.getSettings" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">getSettings</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">section</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/settings.html#settings.getSettings"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mosaic.settings.settings.getSettings" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return settings for a specified section as a Python dict.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Args</dt>
@@ -203,9 +202,9 @@
 <div class="line">15/12/15        KB      Added error checking and limits to baseline calculations</div>
 <div class="line">10/30/14        AB      Initial version</div>
 </div>
-<dl class="function">
+<dl class="py function">
 <dt id="mosaic.utilities.ionic_current_stats.OpenCurrentDist">
-<code class="sig-prename descclassname">mosaic.utilities.ionic_current_stats.</code><code class="sig-name descname">OpenCurrentDist</code><span class="sig-paren">(</span><em class="sig-param">dat</em>, <em class="sig-param">limit</em>, <em class="sig-param">minBaseline=-1</em>, <em class="sig-param">maxBaseline=-1</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/utilities/ionic_current_stats.html#OpenCurrentDist"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mosaic.utilities.ionic_current_stats.OpenCurrentDist" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname"><span class="pre">mosaic.utilities.ionic_current_stats.</span></code><code class="sig-name descname"><span class="pre">OpenCurrentDist</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dat</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">limit</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">minBaseline</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-</span> <span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">maxBaseline</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-</span> <span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/utilities/ionic_current_stats.html#OpenCurrentDist"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mosaic.utilities.ionic_current_stats.OpenCurrentDist" title="Permalink to this definition">¶</a></dt>
 <dd><p>Calculate the mean and standard deviation of a time-series.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Args</dt>
@@ -221,56 +220,56 @@
 <div class="section" id="mosaic-utilities-util-module">
 <h2><span class="section-number">14.1.8.3. </span>mosaic.utilities.util module<a class="headerlink" href="#mosaic-utilities-util-module" title="Permalink to this headline">¶</a></h2>
 <span class="target" id="module-mosaic.utilities.util"></span><p>A collection of utility functions</p>
-<dl class="function">
+<dl class="py function">
 <dt id="mosaic.utilities.util.avg">
-<code class="sig-prename descclassname">mosaic.utilities.util.</code><code class="sig-name descname">avg</code><span class="sig-paren">(</span><em class="sig-param">dat</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/utilities/util.html#avg"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mosaic.utilities.util.avg" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname"><span class="pre">mosaic.utilities.util.</span></code><code class="sig-name descname"><span class="pre">avg</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dat</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/utilities/util.html#avg"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mosaic.utilities.util.avg" title="Permalink to this definition">¶</a></dt>
 <dd><p>Calculate the average of a list of reals</p>
 </dd></dl>
 
-<dl class="function">
-<dt id="mosaic.utilities.util.sd">
-<code class="sig-prename descclassname">mosaic.utilities.util.</code><code class="sig-name descname">sd</code><span class="sig-paren">(</span><em class="sig-param">dat</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/utilities/util.html#sd"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mosaic.utilities.util.sd" title="Permalink to this definition">¶</a></dt>
-<dd><p>Wrapper for numpy std</p>
+<dl class="py function">
+<dt id="mosaic.utilities.util.commonest">
+<code class="sig-prename descclassname"><span class="pre">mosaic.utilities.util.</span></code><code class="sig-name descname"><span class="pre">commonest</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dat</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/utilities/util.html#commonest"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mosaic.utilities.util.commonest" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the most common element in a list.</p>
 </dd></dl>
 
-<dl class="function">
+<dl class="py function">
+<dt id="mosaic.utilities.util.decimate">
+<code class="sig-prename descclassname"><span class="pre">mosaic.utilities.util.</span></code><code class="sig-name descname"><span class="pre">decimate</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dat</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">size</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/utilities/util.html#decimate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mosaic.utilities.util.decimate" title="Permalink to this definition">¶</a></dt>
+<dd><p>Decimate dat for a specified window size.</p>
+</dd></dl>
+
+<dl class="py function">
 <dt id="mosaic.utilities.util.filter">
-<code class="sig-prename descclassname">mosaic.utilities.util.</code><code class="sig-name descname">filter</code><span class="sig-paren">(</span><em class="sig-param">dat</em>, <em class="sig-param">windowSz</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/utilities/util.html#filter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mosaic.utilities.util.filter" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname"><span class="pre">mosaic.utilities.util.</span></code><code class="sig-name descname"><span class="pre">filter</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dat</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">windowSz</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/utilities/util.html#filter"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mosaic.utilities.util.filter" title="Permalink to this definition">¶</a></dt>
 <dd><p>Filter the data using a convolution. Returns an
 array of size len(dat)-windowSz+1 if dat is longer than 
 windowSz. If len(dat) &lt; windowSz, raise WindowSizeError</p>
 </dd></dl>
 
-<dl class="function">
+<dl class="py function">
+<dt id="mosaic.utilities.util.flat2">
+<code class="sig-prename descclassname"><span class="pre">mosaic.utilities.util.</span></code><code class="sig-name descname"><span class="pre">flat2</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dat</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/utilities/util.html#flat2"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mosaic.utilities.util.flat2" title="Permalink to this definition">¶</a></dt>
+<dd><p>Flatten a 2D array to a list</p>
+</dd></dl>
+
+<dl class="py function">
 <dt id="mosaic.utilities.util.partition">
-<code class="sig-prename descclassname">mosaic.utilities.util.</code><code class="sig-name descname">partition</code><span class="sig-paren">(</span><em class="sig-param">dat</em>, <em class="sig-param">size</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/utilities/util.html#partition"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mosaic.utilities.util.partition" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname"><span class="pre">mosaic.utilities.util.</span></code><code class="sig-name descname"><span class="pre">partition</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dat</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">size</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/utilities/util.html#partition"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mosaic.utilities.util.partition" title="Permalink to this definition">¶</a></dt>
 <dd><p>Partition a list into sub-lists, each of length size. If the number of elements
 in dat does not partition evenly, the last sub-list will have fewer elements.</p>
 </dd></dl>
 
-<dl class="function">
-<dt id="mosaic.utilities.util.decimate">
-<code class="sig-prename descclassname">mosaic.utilities.util.</code><code class="sig-name descname">decimate</code><span class="sig-paren">(</span><em class="sig-param">dat</em>, <em class="sig-param">size</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/utilities/util.html#decimate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mosaic.utilities.util.decimate" title="Permalink to this definition">¶</a></dt>
-<dd><p>Decimate dat for a specified window size.</p>
+<dl class="py function">
+<dt id="mosaic.utilities.util.sd">
+<code class="sig-prename descclassname"><span class="pre">mosaic.utilities.util.</span></code><code class="sig-name descname"><span class="pre">sd</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dat</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/utilities/util.html#sd"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mosaic.utilities.util.sd" title="Permalink to this definition">¶</a></dt>
+<dd><p>Wrapper for numpy std</p>
 </dd></dl>
 
-<dl class="function">
-<dt id="mosaic.utilities.util.commonest">
-<code class="sig-prename descclassname">mosaic.utilities.util.</code><code class="sig-name descname">commonest</code><span class="sig-paren">(</span><em class="sig-param">dat</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/utilities/util.html#commonest"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mosaic.utilities.util.commonest" title="Permalink to this definition">¶</a></dt>
-<dd><p>Return the most common element in a list.</p>
-</dd></dl>
-
-<dl class="function">
+<dl class="py function">
 <dt id="mosaic.utilities.util.selectS">
-<code class="sig-prename descclassname">mosaic.utilities.util.</code><code class="sig-name descname">selectS</code><span class="sig-paren">(</span><em class="sig-param">dat</em>, <em class="sig-param">nSigma</em>, <em class="sig-param">mu</em>, <em class="sig-param">sd</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/utilities/util.html#selectS"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mosaic.utilities.util.selectS" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname"><span class="pre">mosaic.utilities.util.</span></code><code class="sig-name descname"><span class="pre">selectS</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dat</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nSigma</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mu</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sd</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/utilities/util.html#selectS"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mosaic.utilities.util.selectS" title="Permalink to this definition">¶</a></dt>
 <dd><p>Select and return data from a list that lie within
 nSigma * SD of the mean.</p>
-</dd></dl>
-
-<dl class="function">
-<dt id="mosaic.utilities.util.flat2">
-<code class="sig-prename descclassname">mosaic.utilities.util.</code><code class="sig-name descname">flat2</code><span class="sig-paren">(</span><em class="sig-param">dat</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/utilities/util.html#flat2"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mosaic.utilities.util.flat2" title="Permalink to this definition">¶</a></dt>
-<dd><p>Flatten a 2D array to a list</p>
 </dd></dl>
 
 </div>
@@ -295,33 +294,9 @@ nSigma * SD of the mean.</p>
 <div class="line">06/13/16        AB      Remove mosaicLogFormat class</div>
 <div class="line">09/12/15        AB      Initial version</div>
 </div>
-<dl class="class">
-<dt id="mosaic.utilities.mosaicLogFormat.mosaic_property">
-<em class="property">class </em><code class="sig-prename descclassname">mosaic.utilities.mosaicLogFormat.</code><code class="sig-name descname">mosaic_property</code><span class="sig-paren">(</span><em class="sig-param">fget=None</em>, <em class="sig-param">fset=None</em>, <em class="sig-param">fdel=None</em>, <em class="sig-param">doc=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/utilities/mosaicLogFormat.html#mosaic_property"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mosaic.utilities.mosaicLogFormat.mosaic_property" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
-<p>Emulate Python property. Add support to the getter and setter methods to automatically log properties in debug mode.
-The new class can be used exactly as the built-in Python property class, for example as a decorator</p>
-<blockquote>
-<div><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">foo</span><span class="p">:</span>
-        <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="o">=</span><span class="mi">100</span>
-
-        <span class="nd">@mosaic_property</span>
-        <span class="k">def</span> <span class="nf">x</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-                <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">x</span>
-
-        <span class="nd">@x</span><span class="o">.</span><span class="n">setter</span>
-        <span class="k">def</span> <span class="nf">x</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">val</span><span class="p">):</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="o">=</span><span class="n">val</span>
-</pre></div>
-</div>
-</div></blockquote>
-<p>Adapted from: <a class="reference external" href="https://docs.python.org/2/howto/descriptor.html#properties">https://docs.python.org/2/howto/descriptor.html#properties</a>.</p>
-</dd></dl>
-
-<dl class="function">
+<dl class="py function">
 <dt id="mosaic.utilities.mosaicLogFormat._d">
-<code class="sig-prename descclassname">mosaic.utilities.mosaicLogFormat.</code><code class="sig-name descname">_d</code><span class="sig-paren">(</span><em class="sig-param">msg</em>, <em class="sig-param">*args</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/utilities/mosaicLogFormat.html#_d"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mosaic.utilities.mosaicLogFormat._d" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname"><span class="pre">mosaic.utilities.mosaicLogFormat.</span></code><code class="sig-name descname"><span class="pre">_d</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">msg</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/utilities/mosaicLogFormat.html#_d"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mosaic.utilities.mosaicLogFormat._d" title="Permalink to this definition">¶</a></dt>
 <dd><p>Format a debug log message. This function will automatically append calling function name and file/line number.</p>
 <dl class="field-list">
 <dt class="field-odd">Parameters</dt>
@@ -341,9 +316,9 @@ The new class can be used exactly as the built-in Python property class, for exa
 </dl>
 </dd></dl>
 
-<dl class="function">
+<dl class="py function">
 <dt id="mosaic.utilities.mosaicLogFormat._dprop">
-<code class="sig-prename descclassname">mosaic.utilities.mosaicLogFormat.</code><code class="sig-name descname">_dprop</code><span class="sig-paren">(</span><em class="sig-param">msg</em>, <em class="sig-param">*args</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/utilities/mosaicLogFormat.html#_dprop"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mosaic.utilities.mosaicLogFormat._dprop" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname"><span class="pre">mosaic.utilities.mosaicLogFormat.</span></code><code class="sig-name descname"><span class="pre">_dprop</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">msg</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/utilities/mosaicLogFormat.html#_dprop"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mosaic.utilities.mosaicLogFormat._dprop" title="Permalink to this definition">¶</a></dt>
 <dd><p>Format a debug log message for a class property. This function will automatically append calling function name and file/line number.</p>
 <dl class="field-list">
 <dt class="field-odd">Parameters</dt>
@@ -361,6 +336,30 @@ The new class can be used exactly as the built-in Python property class, for exa
 </div>
 </dd>
 </dl>
+</dd></dl>
+
+<dl class="py class">
+<dt id="mosaic.utilities.mosaicLogFormat.mosaic_property">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">mosaic.utilities.mosaicLogFormat.</span></code><code class="sig-name descname"><span class="pre">mosaic_property</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fget</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fset</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fdel</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">doc</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/utilities/mosaicLogFormat.html#mosaic_property"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mosaic.utilities.mosaicLogFormat.mosaic_property" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>Emulate Python property. Add support to the getter and setter methods to automatically log properties in debug mode.
+The new class can be used exactly as the built-in Python property class, for example as a decorator</p>
+<blockquote>
+<div><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">foo</span><span class="p">:</span>
+        <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="o">=</span><span class="mi">100</span>
+
+        <span class="nd">@mosaic_property</span>
+        <span class="k">def</span> <span class="nf">x</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+                <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">x</span>
+
+        <span class="nd">@x</span><span class="o">.</span><span class="n">setter</span>
+        <span class="k">def</span> <span class="nf">x</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">val</span><span class="p">):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="o">=</span><span class="n">val</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p>Adapted from: <a class="reference external" href="https://docs.python.org/2/howto/descriptor.html#properties">https://docs.python.org/2/howto/descriptor.html#properties</a>.</p>
 </dd></dl>
 
 </div>
@@ -384,15 +383,35 @@ The new class can be used exactly as the built-in Python property class, for exa
 <div class="line">5/30/16         AB      Strip whitespace from rotating file handler messages.</div>
 <div class="line">5/29/16         AB      Initial version</div>
 </div>
-<dl class="class">
+<dl class="py class">
+<dt id="mosaic.utilities.mosaicLogging.MessageFormatter">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">mosaic.utilities.mosaicLogging.</span></code><code class="sig-name descname"><span class="pre">MessageFormatter</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fmt</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">datefmt</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">style</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'%'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/utilities/mosaicLogging.html#MessageFormatter"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mosaic.utilities.mosaicLogging.MessageFormatter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/logging.html#logging.Formatter" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">logging.Formatter</span></code></a></p>
+<dl class="py method">
+<dt id="mosaic.utilities.mosaicLogging.MessageFormatter.format">
+<code class="sig-name descname"><span class="pre">format</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">record</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/utilities/mosaicLogging.html#MessageFormatter.format"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mosaic.utilities.mosaicLogging.MessageFormatter.format" title="Permalink to this definition">¶</a></dt>
+<dd><p>Format the specified record as text.</p>
+<p>The record’s attribute dictionary is used as the operand to a
+string formatting operation which yields the returned string.
+Before formatting the dictionary, a couple of preparatory steps
+are carried out. The message attribute of the record is computed
+using LogRecord.getMessage(). If the formatting string uses the
+time (as determined by a call to usesTime(), formatTime() is
+called to format the event time. If there is exception information,
+it is formatted using formatException() and appended to the message.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
 <dt id="mosaic.utilities.mosaicLogging.mosaicLogging">
-<em class="property">class </em><code class="sig-prename descclassname">mosaic.utilities.mosaicLogging.</code><code class="sig-name descname">mosaicLogging</code><span class="sig-paren">(</span><em class="sig-param">*args</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/utilities/mosaicLogging.html#mosaicLogging"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mosaic.utilities.mosaicLogging.mosaicLogging" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">mosaic.utilities.mosaicLogging.</span></code><code class="sig-name descname"><span class="pre">mosaicLogging</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/utilities/mosaicLogging.html#mosaicLogging"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mosaic.utilities.mosaicLogging.mosaicLogging" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
 <p>A custom logging class that uses the Python logging facility. Logs are automatically saved to a metaMDIO instance,
 and to a file log when DeveloperMode is active.</p>
-<dl class="method">
+<dl class="py method">
 <dt id="mosaic.utilities.mosaicLogging.mosaicLogging.getLogger">
-<em class="property">static </em><code class="sig-name descname">getLogger</code><span class="sig-paren">(</span><em class="sig-param">name=None</em>, <em class="sig-param">dbHnd=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/utilities/mosaicLogging.html#mosaicLogging.getLogger"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mosaic.utilities.mosaicLogging.mosaicLogging.getLogger" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">static</span> </em><code class="sig-name descname"><span class="pre">getLogger</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dbHnd</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/utilities/mosaicLogging.html#mosaicLogging.getLogger"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mosaic.utilities.mosaicLogging.mosaicLogging.getLogger" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get a logger instance.</p>
 <dl class="field-list">
 <dt class="field-odd">Parameters</dt>
@@ -410,26 +429,6 @@ and to a file log when DeveloperMode is active.</p>
 </div>
 </dd>
 </dl>
-</dd></dl>
-
-</dd></dl>
-
-<dl class="class">
-<dt id="mosaic.utilities.mosaicLogging.MessageFormatter">
-<em class="property">class </em><code class="sig-prename descclassname">mosaic.utilities.mosaicLogging.</code><code class="sig-name descname">MessageFormatter</code><span class="sig-paren">(</span><em class="sig-param">fmt=None</em>, <em class="sig-param">datefmt=None</em>, <em class="sig-param">style='%'</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/utilities/mosaicLogging.html#MessageFormatter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mosaic.utilities.mosaicLogging.MessageFormatter" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/logging.html#logging.Formatter" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">logging.Formatter</span></code></a></p>
-<dl class="method">
-<dt id="mosaic.utilities.mosaicLogging.MessageFormatter.format">
-<code class="sig-name descname">format</code><span class="sig-paren">(</span><em class="sig-param">record</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/utilities/mosaicLogging.html#MessageFormatter.format"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mosaic.utilities.mosaicLogging.MessageFormatter.format" title="Permalink to this definition">¶</a></dt>
-<dd><p>Format the specified record as text.</p>
-<p>The record’s attribute dictionary is used as the operand to a
-string formatting operation which yields the returned string.
-Before formatting the dictionary, a couple of preparatory steps
-are carried out. The message attribute of the record is computed
-using LogRecord.getMessage(). If the formatting string uses the
-time (as determined by a call to usesTime(), formatTime() is
-called to format the event time. If there is exception information,
-it is formatted using formatException() and appended to the message.</p>
 </dd></dl>
 
 </dd></dl>
@@ -452,17 +451,18 @@ it is formatted using formatException() and appended to the message.</p>
 <dd class="field-even"><p></p></dd>
 </dl>
 <div class="line-block">
+<div class="line">4/14/21         AB      Windows fixes</div>
 <div class="line">6/17/16         AB      Only profile functions in DeveloperMode. Log timing output.</div>
 <div class="line">4/10/16         AB      Initial version</div>
 </div>
-<dl class="class">
+<dl class="py class">
 <dt id="mosaic.utilities.mosaicTiming.mosaicTiming">
-<em class="property">class </em><code class="sig-prename descclassname">mosaic.utilities.mosaicTiming.</code><code class="sig-name descname">mosaicTiming</code><a class="reference internal" href="../_modules/mosaic/utilities/mosaicTiming.html#mosaicTiming"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mosaic.utilities.mosaicTiming.mosaicTiming" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">mosaic.utilities.mosaicTiming.</span></code><code class="sig-name descname"><span class="pre">mosaicTiming</span></code><a class="reference internal" href="../_modules/mosaic/utilities/mosaicTiming.html#mosaicTiming"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mosaic.utilities.mosaicTiming.mosaicTiming" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
 <p>Profile code by attaching an instance of this class to any function. All the methods in this class are valid for the function being profiled.</p>
-<dl class="method">
+<dl class="py method">
 <dt id="mosaic.utilities.mosaicTiming.mosaicTiming.FunctionTiming">
-<code class="sig-name descname">FunctionTiming</code><span class="sig-paren">(</span><em class="sig-param">func</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/utilities/mosaicTiming.html#mosaicTiming.FunctionTiming"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mosaic.utilities.mosaicTiming.mosaicTiming.FunctionTiming" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">FunctionTiming</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">func</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/utilities/mosaicTiming.html#mosaicTiming.FunctionTiming"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mosaic.utilities.mosaicTiming.mosaicTiming.FunctionTiming" title="Permalink to this definition">¶</a></dt>
 <dd><p>Pass the function to be profiled as an argument. Alternatively with python 2.4+, attach a decorator to the function being profiled.</p>
 <dl class="field-list">
 <dt class="field-odd">Parameters</dt>
@@ -485,27 +485,27 @@ it is formatted using formatException() and appended to the message.</p>
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="mosaic.utilities.mosaicTiming.mosaicTiming.PrintCurrentTime">
-<code class="sig-name descname">PrintCurrentTime</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/utilities/mosaicTiming.html#mosaicTiming.PrintCurrentTime"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mosaic.utilities.mosaicTiming.mosaicTiming.PrintCurrentTime" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">PrintCurrentTime</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/utilities/mosaicTiming.html#mosaicTiming.PrintCurrentTime"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mosaic.utilities.mosaicTiming.mosaicTiming.PrintCurrentTime" title="Permalink to this definition">¶</a></dt>
 <dd><p>Print timing results of the most recent function call</p>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="mosaic.utilities.mosaicTiming.mosaicTiming.PrintStatistics">
-<code class="sig-name descname">PrintStatistics</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/utilities/mosaicTiming.html#mosaicTiming.PrintStatistics"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mosaic.utilities.mosaicTiming.mosaicTiming.PrintStatistics" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">PrintStatistics</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/utilities/mosaicTiming.html#mosaicTiming.PrintStatistics"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mosaic.utilities.mosaicTiming.mosaicTiming.PrintStatistics" title="Permalink to this definition">¶</a></dt>
 <dd><p>Print average timing results of the function call</p>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="mosaic.utilities.mosaicTiming.mosaicTiming.Reset">
-<code class="sig-name descname">Reset</code><span class="sig-paren">(</span><em class="sig-param">funcname=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/utilities/mosaicTiming.html#mosaicTiming.Reset"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mosaic.utilities.mosaicTiming.mosaicTiming.Reset" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">Reset</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">funcname</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/utilities/mosaicTiming.html#mosaicTiming.Reset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mosaic.utilities.mosaicTiming.mosaicTiming.Reset" title="Permalink to this definition">¶</a></dt>
 <dd><p>Reset all profiling data collected for a specified function or all stored functions.</p>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="mosaic.utilities.mosaicTiming.mosaicTiming.time">
-<code class="sig-name descname">time</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/utilities/mosaicTiming.html#mosaicTiming.time"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mosaic.utilities.mosaicTiming.mosaicTiming.time" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">time</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/utilities/mosaicTiming.html#mosaicTiming.time"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mosaic.utilities.mosaicTiming.mosaicTiming.time" title="Permalink to this definition">¶</a></dt>
 <dd><p>A platform independent timing function.</p>
 </dd></dl>
 
@@ -556,7 +556,7 @@ it is formatted using formatException() and appended to the message.</p>
       
     </p>
     <p>
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.4.3.<br/>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 3.5.4.<br/>
     </p>
   </div>
 </footer> -->

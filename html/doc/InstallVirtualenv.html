@@ -1,19 +1,18 @@
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
   <head>
     <meta charset="utf-8" />
-    <title>&lt;no title&gt; &#8212; MOSAIC mweb2.0 documentation</title>
-    <link rel="stylesheet" href="../_static/bootstrap-sphinx.css" type="text/css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>&lt;no title&gt; &#8212; MOSAIC v2.1 documentation</title>
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/bootstrap-sphinx.css" type="text/css" />
     <link rel="stylesheet" type="text/css" href="../_static/graphviz.css" />
     <link rel="stylesheet" type="text/css" href="../_static/style.css" />
     <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
     <script src="../_static/jquery.js"></script>
     <script src="../_static/underscore.js"></script>
     <script src="../_static/doctools.js"></script>
-    <script src="../_static/language_data.js"></script>
-    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -44,7 +43,7 @@
         </button>
         <a class="navbar-brand" href="../index.html"><span><img src="../_static/icon_48.png"></span>
            </a>
-        <span class="navbar-text navbar-version pull-left"><b>mweb2.0</b></span>
+        <span class="navbar-text navbar-version pull-left"><b>v2.1</b></span>
       </div>
 
         <div class="collapse navbar-collapse nav-collapse">
@@ -114,7 +113,7 @@
   <p>It is generally a good practice to run <em>MOSAIC</em> from within a dedicated virtual environment. This minimizes conflicts with other installed programs. While we highly recommend this approach, it is not required to run <em>MOSAIC</em>. If you prefer to skip this, move on to the next step now.</p>
 <p>To setup a virtual environment, we need two different packages: <em>virtualenv</em>, which creates the virtual environments, and <em>virtualenvwrapper</em>, a wrapper for <em>virtualenv</em> that simplifies set up and use.</p>
 <p>To install these and set up the virtual enviroment wrapper, run the following in a shell:</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span>  pip install virtualenv virtualenvwrapper
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$  </span>pip install virtualenv virtualenvwrapper
 </pre></div>
 </div>
 <div class="admonition hint">
@@ -130,7 +129,7 @@
 <p>Depending on the process used to install <em>virtualenv</em>, the path to virtualenvwrapper.sh may vary. Find the approporiate path by running <code class="docutils literal notranslate"><span class="pre">$</span> <span class="pre">find</span> <span class="pre">/usr</span> <span class="pre">-name</span> <span class="pre">virtualenvwrapper.sh</span></code>. Adjust the line in your .bash_profile or .bashrc script accordingly.</p>
 </div>
 <p>Open a new shell to make the new virtual environment available. Now we are ready to create a virtual environment.  You can choose any name for your virtual environment, here we name it <em>MOSAIC</em>:</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span>  mkvirtualenv -p &lt;path to python&gt;/python MOSAIC
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$  </span>mkvirtualenv -p &lt;path to python&gt;/python MOSAIC
 </pre></div>
 </div>
 <div class="admonition hint">
@@ -151,7 +150,7 @@
       
     </p>
     <p>
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.4.3.<br/>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 3.5.4.<br/>
     </p>
   </div>
 </footer> -->

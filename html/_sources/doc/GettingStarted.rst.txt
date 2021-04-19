@@ -43,6 +43,9 @@ Source Installation
 		:ref:`installwin`
 
 
+.. _dockerinstall:
 
+Docker Installation
+---------------------------------------------------
 
 .. include:: ../aliases.rst

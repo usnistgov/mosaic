@@ -52,3 +52,5 @@ First we need to obtain the |projname| source code. For analyzing publication da
 .. code-block:: console
 
 	(MOSAIC)$ export PYTHONPATH=$PYTHONPATH:~/projects/MOSAIC
+
+.. include:: ../aliases.rst

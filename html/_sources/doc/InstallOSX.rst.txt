@@ -33,7 +33,7 @@ Restart the terminal to update your shell.
 **2. Installing brewed Python and other neccessary packages**
 
 
-|projname| is written in Python_ 2.7+ and utilizes a number of different packages and utilities. In the following we'll install a number of these (specifically, python, gcc, gfortran, qt, and pyQt4). With homebrew this is easy to do in one line! Run the following in the terminal:
+|projname| is written in Python_ and utilizes a number of different packages and utilities. In the following we'll install a number of these (specifically, python, gcc, gfortran, qt, and pyQt4). With homebrew this is easy to do in one line! Run the following in the terminal:
 
 .. code-block:: console
     
@@ -45,7 +45,7 @@ At this point, it is a good idea to update the PYTHONPATH environment variable i
 
 .. code-block:: console
   
-   $  export PYTHONPATH=$PYTHONPATH:/usr/local/lib/python2.7/site-packages
+   $  export PYTHONPATH=$PYTHONPATH:/usr/local/lib/python3.7/site-packages
 
 
 **3. (Optional) Install and Setup Virtual Environment**
@@ -59,4 +59,4 @@ At this point, it is a good idea to update the PYTHONPATH environment variable i
 **5. Testing MOSAIC**
 
 .. include:: TestMosaicSource.rst   
-
+.. include:: ../aliases.rst

@@ -46,7 +46,7 @@ extensions = [
 ]
 
 def setup(app):
-  app.add_stylesheet("style.css")
+  app.add_css_file("style.css")
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
@@ -61,8 +61,8 @@ source_suffix = '.rst'
 master_doc = 'index'
 
 # General information about the project.
-project = u'MOSAIC'
-copyright = u''
+project = 'MOSAIC'
+copyright = ''
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
@@ -70,7 +70,7 @@ copyright = u''
 #
 # The short X.Y version.
 with open( resource_path('version-hash'), 'r' ) as f:
-      version=f.read().strip()
+      version="v"+f.read().strip().lstrip('mweb')
 
 # The full version, including alpha/beta/rc tags.
 release = version
@@ -333,8 +333,8 @@ latex_elements = {
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
-  ('index', 'MOSAIC.tex', u'MOSAIC Manual',
-   ur'`', 'manual'),
+  ('index', 'MOSAIC.tex', 'MOSAIC Manual',
+   r'`', 'manual'),
 ]
 
 latex_additional_files = ['images/icon.png', 'images/nistlogo.pdf', 'LICENSE', 'DISCLAIMER', 'DEVELOPERS']
@@ -365,8 +365,8 @@ latex_use_parts = False
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    ('index', 'MOSAIC', u'MOSAIC Documentation',
-     [u'Arvind Balijepalli'], 1)
+    ('index', 'MOSAIC', 'MOSAIC Documentation',
+     ['Arvind Balijepalli'], 1)
 ]
 
 # If true, show URL addresses after external links.
@@ -379,8 +379,8 @@ man_pages = [
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-  ('index', 'MOSAIC', u'MOSAIC Documentation',
-   u'Arvind Balijepalli', 'MOSAIC', 'One line description of project.',
+  ('index', 'MOSAIC', 'MOSAIC Documentation',
+   'Arvind Balijepalli', 'MOSAIC', 'One line description of project.',
    'Miscellaneous'),
 ]
 
@@ -400,10 +400,10 @@ texinfo_documents = [
 # -- Options for Epub output ----------------------------------------------
 
 # Bibliographic Dublin Core info.
-epub_title = u'MOSAIC'
-epub_author = u'Arvind Balijepalli'
-epub_publisher = u'Arvind Balijepalli'
-epub_copyright = u''
+epub_title = 'MOSAIC'
+epub_author = 'Arvind Balijepalli'
+epub_publisher = 'Arvind Balijepalli'
+epub_copyright = ''
 
 # The basename for the epub file. It defaults to the project name.
 #epub_basename = u'MOSAIC'

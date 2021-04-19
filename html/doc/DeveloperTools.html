@@ -1,19 +1,18 @@
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
   <head>
     <meta charset="utf-8" />
-    <title>13. Developer Tools &#8212; MOSAIC mweb2.0 documentation</title>
-    <link rel="stylesheet" href="../_static/bootstrap-sphinx.css" type="text/css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>13. Developer Tools &#8212; MOSAIC v2.1 documentation</title>
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/bootstrap-sphinx.css" type="text/css" />
     <link rel="stylesheet" type="text/css" href="../_static/graphviz.css" />
     <link rel="stylesheet" type="text/css" href="../_static/style.css" />
     <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
     <script src="../_static/jquery.js"></script>
     <script src="../_static/underscore.js"></script>
     <script src="../_static/doctools.js"></script>
-    <script src="../_static/language_data.js"></script>
-    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -46,7 +45,7 @@
         </button>
         <a class="navbar-brand" href="../index.html"><span><img src="../_static/icon_48.png"></span>
            </a>
-        <span class="navbar-text navbar-version pull-left"><b>mweb2.0</b></span>
+        <span class="navbar-text navbar-version pull-left"><b>v2.1</b></span>
       </div>
 
         <div class="collapse navbar-collapse nav-collapse">
@@ -128,7 +127,7 @@
 </div>
 <div class="section" id="debug-logs">
 <h2><span class="section-number">13.1. </span>Debug Logs<a class="headerlink" href="#debug-logs" title="Permalink to this headline">¶</a></h2>
-<p>When <code class="docutils literal notranslate"><span class="pre">DeveloperMode</span></code> is active, logs are simultaneously saved the <a class="reference external" href="http://www.sqlite.org/">SQLite</a> database, the console, and to a file using the <a class="reference external" href="http://www.python.org/">Python</a> logging module as described below. Details of the logging module can be found  <a class="reference external" href="https://docs.python.org/2/library/logging.html">here</a>. The logging facility provides different classes of messages with increasing severity, ranging from <code class="docutils literal notranslate"><span class="pre">debug</span></code> to help trace problems with code, <code class="docutils literal notranslate"><span class="pre">info</span></code> to provide feedback, <code class="docutils literal notranslate"><span class="pre">warn</span></code> to generate warnings, and <code class="docutils literal notranslate"><span class="pre">error</span></code> for error messages.</p>
+<p>When <code class="docutils literal notranslate"><span class="pre">DeveloperMode</span></code> is active, logs are simultaneously saved the <a class="reference external" href="http://www.sqlite.org/">SQLite</a> database, the console, and to a file using the <a class="reference external" href="https://www.python.org/">Python</a> logging module as described below. Details of the logging module can be found  <a class="reference external" href="https://docs.python.org/2/library/logging.html">here</a>. The logging facility provides different classes of messages with increasing severity, ranging from <code class="docutils literal notranslate"><span class="pre">debug</span></code> to help trace problems with code, <code class="docutils literal notranslate"><span class="pre">info</span></code> to provide feedback, <code class="docutils literal notranslate"><span class="pre">warn</span></code> to generate warnings, and <code class="docutils literal notranslate"><span class="pre">error</span></code> for error messages.</p>
 <p>By default log messages in <em>MOSAIC</em> with a level of <code class="docutils literal notranslate"><span class="pre">info</span></code> and higher are saved to the console and to the <a class="reference external" href="http://www.sqlite.org/">SQLite</a> database. On the other hand, <code class="docutils literal notranslate"><span class="pre">debug</span></code> messages are saved to a log file (see table below for log file locations). Since <code class="docutils literal notranslate"><span class="pre">debug</span></code> output can be verbose, the log file size is limited to the <code class="docutils literal notranslate"><span class="pre">LogSizeBytes</span></code> attribute in <code class="docutils literal notranslate"><span class="pre">mosaic/_globals.py</span></code>. The default value for this attribute is 2 MB. The log file is implemented with a rotating file structure, where  only the previous five log files are saved to conserve disk space.</p>
 <table class="docutils align-default">
 <colgroup>
@@ -156,14 +155,14 @@
 </tbody>
 </table>
 <p>Log messages can be added by first creating a logger instance and then logging a message as seen in the code sample below. For debug logs, the helper functions <a class="reference internal" href="../api-doc/mosaic.misc.html#mosaic.utilities.mosaicLogFormat._d" title="mosaic.utilities.mosaicLogFormat._d"><code class="xref py py-func docutils literal notranslate"><span class="pre">_d()</span></code></a> or <a class="reference internal" href="../api-doc/mosaic.misc.html#mosaic.utilities.mosaicLogFormat._dprop" title="mosaic.utilities.mosaicLogFormat._dprop"><code class="xref py py-func docutils literal notranslate"><span class="pre">_dprop()</span></code></a>, defined in the <a class="reference internal" href="../api-doc/mosaic.misc.html#module-mosaic.utilities.mosaicLogFormat" title="mosaic.utilities.mosaicLogFormat"><code class="xref py py-mod docutils literal notranslate"><span class="pre">mosaicLogFormat</span></code></a> module should be used. The helper functions append stack information to debug logs, allowing users to trace the calling function and its location in the source code.</p>
-<div class="highlight-python notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
-2
-3
-4
-5
-6
-7
-8</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">mosaic.utilities.mosaicLogging</span> <span class="k">as</span> <span class="nn">mlog</span>
+<div class="highlight-python notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span>
+<span class="normal">4</span>
+<span class="normal">5</span>
+<span class="normal">6</span>
+<span class="normal">7</span>
+<span class="normal">8</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">mosaic.utilities.mosaicLogging</span> <span class="k">as</span> <span class="nn">mlog</span>
 <span class="kn">from</span> <span class="nn">mosaic.utilities.mosaicLogFormat</span> <span class="kn">import</span> <span class="n">_d</span>
 
 
@@ -196,23 +195,23 @@
 </div>
 <div class="section" id="function-timing-and-profiling">
 <h2><span class="section-number">13.2. </span>Function Timing and Profiling<a class="headerlink" href="#function-timing-and-profiling" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-python notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
- 2
- 3
- 4
- 5
- 6
- 7
- 8
- 9
-10
-11
-12
-13
-14
-15
-16
-17</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">mosaic.utilities.mosaicTiming</span> <span class="k">as</span> <span class="nn">mosaicTiming</span>
+<div class="highlight-python notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span>
+<span class="normal">14</span>
+<span class="normal">15</span>
+<span class="normal">16</span>
+<span class="normal">17</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">mosaic.utilities.mosaicTiming</span> <span class="k">as</span> <span class="nn">mosaicTiming</span>
 
 <span class="n">partitionTimer</span><span class="o">=</span><span class="n">mosaicTiming</span><span class="o">.</span><span class="n">mosaicTiming</span><span class="p">()</span>
 
@@ -231,16 +230,16 @@
                 <span class="o">...</span> <span class="o">...</span> <span class="o">...</span>
 </pre></div>
 </td></tr></table></div>
-<div class="highlight-python notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
- 2
- 3
- 4
- 5
- 6
- 7
- 8
- 9
-10</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">mosaic.utilities.mosaicTiming</span> <span class="k">as</span> <span class="nn">mosaicTiming</span>
+<div class="highlight-python notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">mosaic.utilities.mosaicTiming</span> <span class="k">as</span> <span class="nn">mosaicTiming</span>
 
 <span class="k">with</span> <span class="n">mosaicTiming</span><span class="o">.</span><span class="n">mosaicTiming</span><span class="p">()</span> <span class="k">as</span> <span class="n">funcTimer</span><span class="p">:</span>
         <span class="nd">@funcTimer</span><span class="o">.</span><span class="n">FunctionTiming</span>
@@ -273,7 +272,7 @@
       
     </p>
     <p>
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.4.3.<br/>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 3.5.4.<br/>
     </p>
   </div>
 </footer> -->

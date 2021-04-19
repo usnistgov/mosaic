@@ -7,23 +7,21 @@ In the following guide, we provide step-by-step instructions on setting up and r
 
 **1. Installing Anaconda**
 
-First we will install Anaconda_ to easily install the dependencies required by |projname|. Download the 64-bit Anaconda_ installer for Python 2.7 and use the graphical installer. 
+First we will install Anaconda_ to easily install the dependencies required by |projname|. Download the 64-bit Anaconda_ installer for Python 3.7 and use the graphical installer. 
 
-
-.. warning:: |projname| is not yet compatible with Python_ 3. Please ensure that you install Anaconda_ for Python_ 2.7
 
 
 **2. Installing MOSAIC dependencies within Anaconda**
 
 
-|projname| is written in Python_ 2.7 and utilizes a number of different packages and utilities. In the following we'll install a number of these (specifically, python, gcc, gfortran, qt, and pyQt4). With Anaconda_ this is easy to do.
+|projname| is written in Python_ and utilizes a number of different packages and utilities. In the following we'll install a number of these (specifically, python, gcc, gfortran, qt, and pyQt4). With Anaconda_ this is easy to do.
 
 
 First, we create a self-contained environment to host the |projname| installation. Open the Anaconda_ prompt (Start Menu-->Anaconda 2-->Anaconda Prompt) and type:
 
 .. code-block:: console
     
-  $  conda create -n mosaicENV python=2.7
+  $  conda create -n mosaicENV python=3.7
 
 Activate the new environment: 
 
@@ -71,4 +69,5 @@ Install the |projname| source by `cloning the Github <https://github.com/usnistg
 
 **4. Testing MOSAIC**
 
-.. include:: TestMosaicSource.rst   
+.. include:: TestMosaicSource.rst
+.. include:: ../aliases.rst
