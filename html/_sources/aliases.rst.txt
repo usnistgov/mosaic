@@ -23,4 +23,5 @@
 
 .. _download binaries: https://pages.nist.gov/mosaic/download.html
 .. _download source: https://pages.nist.gov/mosaic/download.html
+.. _docker packages: https://github.com/orgs/usnistgov/packages/container/package/mosaic
 .. _MOSAIC page on Github: https://github.com/usnistgov/mosaic

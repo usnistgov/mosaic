@@ -14,6 +14,7 @@
 
 import sys
 import os
+import string
 import mosaic
 from mosaic.utilities.resource_path import resource_path
 import sphinx_bootstrap_theme
@@ -33,16 +34,16 @@ sys.path.insert(0, os.path.abspath('../mosaic'))
 # ones.
 sys.path.append(os.path.abspath('_extensions'))
 extensions = [
-    'sphinx.ext.autodoc',
-    'sphinx.ext.doctest',
-    'sphinx.ext.intersphinx',
-    'sphinx.ext.mathjax',
-    'sphinx.ext.inheritance_diagram',
-    'sphinx.ext.graphviz',
-    'sphinx.ext.viewcode',
-    'sphinxcontrib.bibtex',
-    'sphinxcontrib.gist',
-    'sphinx.ext.githubpages'
+	'sphinx.ext.autodoc',
+	'sphinx.ext.doctest',
+	'sphinx.ext.intersphinx',
+	'sphinx.ext.mathjax',
+	'sphinx.ext.inheritance_diagram',
+	'sphinx.ext.graphviz',
+	'sphinx.ext.viewcode',
+	'sphinxcontrib.bibtex',
+	'sphinxcontrib.gist',
+	'sphinx.ext.githubpages'
 ]
 
 def setup(app):
@@ -70,7 +71,7 @@ copyright = ''
 #
 # The short X.Y version.
 with open( resource_path('version-hash'), 'r' ) as f:
-      version="v"+f.read().strip().lstrip('mweb')
+	  version="v"+f.read().strip().lstrip('mweb')
 
 # The full version, including alpha/beta/rc tags.
 release = version
@@ -126,12 +127,12 @@ rst_prolog = """
 """
 
 intersphinx_mapping = {
-    'python': ('http://docs.python.org/', None),
-    'numpy': ('http://docs.scipy.org/doc/numpy/', None),
-    'scipy': ('http://docs.scipy.org/doc/scipy/reference/', None),
-    'matplotlib': ('http://matplotlib.sourceforge.net/', None)
+	'python': ('http://docs.python.org/', None),
+	'numpy': ('http://docs.scipy.org/doc/numpy/', None),
+	'scipy': ('http://docs.scipy.org/doc/scipy/reference/', None),
+	'matplotlib': ('http://matplotlib.sourceforge.net/', None)
 }
-    
+	
 # -- Options for HTML output ----------------------------------------------
 
 # The theme to use for HTML and HTML Help pages.  See the documentation for
@@ -151,10 +152,10 @@ html_theme_options = {
   "bootstrap_version": "3",
 
   'navbar_links': [
-        ("Download PDF", "../latex/MOSAIC.pdf", True),
-        ("Mailing List", "doc/mailingList"),
-        ("Develop", "//github.com/usnistgov/mosaic", True),
-        ("Issue Tracker", "//github.com/usnistgov/mosaic/issues", True),
+		("Download PDF", "../latex/MOSAIC.pdf", True),
+		("Mailing List", "doc/mailingList"),
+		("Develop", "//github.com/usnistgov/mosaic", True),
+		("Issue Tracker", "//github.com/usnistgov/mosaic/issues", True),
    ],
 
    # Render the next and previous page links in navbar. (Default: true)
@@ -243,105 +244,19 @@ htmlhelp_basename = 'MOSAICdoc'
 
 # -- Options for LaTeX output ---------------------------------------------
 
-latex_elements = {
-# The paper size ('letterpaper' or 'a4paper').
-'papersize': 'letterpaper',
-
-# The font size ('10pt', '11pt' or '12pt').
-#'pointsize': '10pt',
-
-# Additional stuff for the LaTeX preamble.
-'fncychap': r"""
-    \usepackage[Sonny]{fncychap}
-""",
-'preamble': r"""
-    \usepackage{changepage}
-    \usepackage{graphicx}
-    \usepackage{hyperref}
-
-    \makeatletter
-    \renewcommand{\maketitle}{%
-    \let\spx@tempa\relax
-    \ifHy@pageanchor\def\spx@tempa{\Hy@pageanchortrue}\fi
-    \hypersetup{pageanchor=false}% avoid duplicate destination warnings
-      \begin{titlepage}%
-        \let\footnotesize\small
-        \let\footnoterule\relax
-        \par
-      \begingroup % for PDF information dictionary
-        \def\endgraf{ }\def\and{\& }%
-        \pdfstringdefDisableCommands{\def\\{, }}% overwrite hyperref setup
-        \hypersetup{pdfauthor={\@author}, pdftitle={\@title}}%
-      \endgroup
-      \begin{flushright}{%
-        \includegraphics[scale=0.8]{icon}\par
-        \vskip 3em%
-        {\rm\Huge\py@HeaderFamily \@title \par}%
-        {\em\LARGE\py@HeaderFamily \py@release\releaseinfo \par}
-        \vfill
-        \includegraphics[scale=0.75]{nistlogo}
-        %{\py@authoraddress \par}%
-    }%
-    \end{flushright}%\par
-        \@thanks
-      \end{titlepage}%
-      %\clearpage%
-      %\changepage{}{}{}{}{}{}{}{}{}
-      \vspace*{\fill}
-      {\py@authoraddress \par}
-      \clearpage
-      \vfill
-      \input LICENSE
-      \clearpage
-      \rule{\textwidth}{0.1pt}
-      \changepage{}{}{}{}{}{}{}{}{}
-      \input DISCLAIMER
-      \clearpage
-      \changepage{}{}{}{}{}{}{}{}{}
-      \input DEVELOPERS
-      \clearpage
-      \setcounter{footnote}{0}%
-      \let\thanks\relax\let\maketitle\relax
-      %\gdef\@thanks{}\gdef\@author{}\gdef\@title{}
-      \if@openright\cleardoublepage\else\clearpage\fi
-      \spx@tempa
-    }
-    \makeatother
-    
-    \authoraddress{\Large Questions/Suggestions\\
-    \\
-    \small Subscribe to our mailing list: visit \href{https://groups.google.com/a/list.nist.gov/group/mosaic/}{https://groups.google.com/a/list.nist.gov/group/mosaic/}.\\
-    Once subscribed, send messages by emailing \href{mailto:mosaic@list.nist.gov}{mosaic@list.nist.gov}.\\
-    To unsubscribe: email \href{mailto:mosaic+unsubscribe@list.nist.gov}{mosaic+unsubscribe@list.nist.gov}.\\
-    \\
-    \\
-    Report problems with MOSAIC using the issue tracker on GitHub\\
-    \href{https://github.com/usnistgov/mosaic/issues}{https://github.com/usnistgov/mosaic/issues}\\
-    \\
-    \\
-    \\
-    }
-
-    \ChNameVar{\fontsize{18}{20}\usefont{OT1}{phv}{m}{n}\selectfont} 
-    \ChNumVar{\fontsize{24}{28}\usefont{OT1}{ptm}{m}{n}\selectfont} 
-    \ChTitleVar{\huge\bfseries\rm}
-    \ChRuleWidth{1pt}
-""",
-}
-
 # Grouping the document tree into LaTeX files. List of tuples
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
   ('index', 'MOSAIC.tex', 'MOSAIC Manual',
-   r'`', 'manual'),
+   r'NIST', 'manual'),
 ]
 
 latex_additional_files = ['images/icon.png', 'images/nistlogo.pdf', 'LICENSE', 'DISCLAIMER', 'DEVELOPERS']
 
 # The name of an image file (relative to this directory) to place at the top of
 # the title page.
-# latex_logo=None
+latex_logo='images/icon.png'
 
 # For "manual" documents, if this is true, then toplevel headings are parts,
 # not chapters.
@@ -359,14 +274,79 @@ latex_use_parts = False
 # If false, no module index is generated.
 #latex_domain_indices = True
 
+latex_elements = {
+# The paper size ('letterpaper' or 'a4paper').
+'papersize': 'letterpaper',
+
+# The font size ('10pt', '11pt' or '12pt').
+'pointsize': '10pt',
+
+# Additional stuff for the LaTeX preamble.
+'fncychap': r"""
+	\usepackage[Sonny]{fncychap}
+""",
+'preamble': r"""
+	\usepackage{changepage}
+    \usepackage{graphicx}
+    \usepackage{hyperref}
+
+    \makeatletter
+    \renewcommand{\sphinxmaketitle}{
+	    \begin{titlepage}
+			\begingroup % for PDF information dictionary
+				\def\endgraf{ }\def\and{\& }%
+				\pdfstringdefDisableCommands{\def\\{, }}% overwrite hyperref setup
+				\hypersetup{pdfauthor={\@author}, pdftitle={\@title}}%
+			\endgroup
+			\begin{flushright}{ 
+				\includegraphics[scale=0.8]{icon.png}\par
+				\vskip 3em
+				\textbf{\LARGE \py@HeaderFamily \@title} \par
+				\textbf{\em\LARGE\py@HeaderFamily \py@release\releaseinfo} \par
+				\vfill
+				\date{}
+				\includegraphics[scale=1]{nistlogo.pdf}\par
+			}
+			\end{flushright}
+	    \end{titlepage}
+
+	    \clearpage
+	    \vspace*{\fill}
+		{\py@authoraddress \par}
+		\clearpage
+		\vfill
+		\input LICENSE
+		\clearpage
+		\input DISCLAIMER
+		\clearpage
+		\input DEVELOPERS
+		\clearpage
+		\setcounter{footnote}{0}
+    } 
+    \makeatother
+
+    \authoraddress{
+		\Large Questions/Suggestions\\
+		\hfill \break
+		\small Subscribe to our mailing list: visit \href{https://groups.google.com/a/list.nist.gov/group/mosaic/}{https://groups.google.com/a/list.nist.gov/group/mosaic/}.\\
+		Once subscribed, send messages by emailing \href{mailto:mosaic@list.nist.gov}{mosaic@list.nist.gov}.\\
+		To unsubscribe: email \href{mailto:mosaic+unsubscribe@list.nist.gov}{mosaic+unsubscribe@list.nist.gov}.\\
+		\hfill \break
+		Report problems with MOSAIC using the issue tracker on GitHub\\
+		\href{https://github.com/usnistgov/mosaic/issues}{https://github.com/usnistgov/mosaic/issues}\\		
+		\hfill \break
+		\hfill \break
+	}
+""",
+}
 
 # -- Options for manual page output ---------------------------------------
 
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    ('index', 'MOSAIC', 'MOSAIC Documentation',
-     ['Arvind Balijepalli'], 1)
+	('index', 'MOSAIC', 'MOSAIC Documentation',
+	 ['Arvind Balijepalli'], 1)
 ]
 
 # If true, show URL addresses after external links.
