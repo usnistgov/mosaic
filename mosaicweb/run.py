@@ -28,6 +28,8 @@ else:
 
 @registerLaunch("mweb")
 def startMOSAICWeb(newWindow=True):
+	webbrowser.open("http://localhost:{0}/".format(mosaic.WebServerPort), new=newWindow, autoraise=True)
+	
 	# Setup platform-dependent timing function
 	if sys.platform.startswith('win'):
 		app.run(host=mosaic.WebHost, port=mosaic.WebServerPort, debug=mosaic.DeveloperMode)
@@ -38,6 +40,5 @@ def startMOSAICWeb(newWindow=True):
 			})
 		mosaicApp.run()
 
-	webbrowser.open("http://localhost:{0}/".format(mosaic.WebServerPort), new=newWindow, autoraise=True)
 	
 	
