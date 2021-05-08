@@ -29,6 +29,7 @@ import mosaic.utilities.mosaicLogging as mlog
 from mosaic.utilities.util import eval_
 
 from mosaicweb.mosaicAnalysis import mosaicAnalysis, analysisStatistics, analysisTimeSeries, analysisHistogram, analysisContour, analysisDBUtils
+from mosaicweb.mosaicAnalysis.mosaicAnalysis import DataTypeNotSupportedError
 from mosaicweb.sessionManager import sessionManager
 from mosaicweb.utils.utils import gzipped
 
@@ -135,6 +136,9 @@ def newAnalysis():
 	except FileNotFoundError as err:
 		gAnalysisSessions.pop(sessionID, None)
 		return jsonify( respondingURL='new-analysis', errType='FileNotFoundError', errSummary="Files not found.", errText=str(err) ), 500
+	except DataTypeNotSupportedError as err:
+		gAnalysisSessions.pop(sessionID, None)
+		return jsonify( respondingURL='new-analysis', errType='DataTypeNotSupportedError', errSummary="The supplied data type is not supported.", errText=str(err) ), 500
 	except InvalidPOSTRequest as err:
 		return jsonify( respondingURL='new-analysis', errType='InvalidPOSTRequest', errSummary="An invalid POST request was received.", errText=str(err) ), 500
 
