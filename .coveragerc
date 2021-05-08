@@ -10,6 +10,14 @@ exclude_lines =
     if __name__ == .__main__.:
     pass
 omit=
+	mosaic/__init__.py
+	mosaic/process/__init__.py
+	mosaic/trajio/__init__.py
+	mosaic/trajio/abf/__init__.py
+	mosaic/trajio/qdf/__init__.py
+	mosaicweb/mosaicAnalysis/__init__.py
+	mosaicweb/plotlyUtils/__init__.py
+	mosaicweb/sessionManager/__init__.py
 	mosaicweb/utils/*.py
 	mosaicweb/views.py
 	mosaicweb/tests/*
