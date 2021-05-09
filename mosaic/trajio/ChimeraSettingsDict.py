@@ -11,15 +11,19 @@ Parse Chimera VC100 settings file for ADC parameters.
 		5/08/21     AB	Initial version
 """
 import csv
+import mosaic.utilities.mosaicLogging as mlog
 
 class ChimeraSettingsDict(dict):
 	def __init__(self, settingsFileName):
+		self.chimeraSettingsLogger=mlog.mosaicLogging().getLogger(name=__name__)
+
 		try:
 			with open(settingsFileName, 'r') as csvfile:
 				statereader = csv.reader(csvfile, delimiter='=', quotechar='|')
 				
 				[ self.update(self.extractParam(row)) for row in statereader if len(row) > 1 ]
-		except:
+		except FileNotFoundError as err:
+			self.chimeraSettingsLogger.error(err)
 			self.clear()
 
 		try:
@@ -28,7 +32,12 @@ class ChimeraSettingsDict(dict):
 			else:
 				self.clear()
 		except:
+			self.chimeraSettingsLogger.error("Invalid version number. Cannot verify valid Chimera settings.")
 			self.clear()
+
+		for key, value in self.items():
+			self.chimeraSettingsLogger.info("{0}  : {1}".format(key, value))
+
 
 	def __getitem__(self, key):
 		try:
@@ -36,7 +45,7 @@ class ChimeraSettingsDict(dict):
 
 			return val
 		except KeyError as err:
-			print("Key {0} was not found.".format(err))
+			self.chimeraSettingsLogger.error("Key {0} was not found.".format(err))
 
 	def pop(self, key, default):
 		try:
@@ -48,6 +57,11 @@ class ChimeraSettingsDict(dict):
 		try:
 			if line[0]=='__version__':
 				self.__version__=float(line[1])
+				self.chimeraSettingsLogger.info("Chimera settings version={0}".format(self.__version__))
+				return {}
+			if line[0]=='__header__':
+				self.__header__=line[1]
+				self.chimeraSettingsLogger.info("Chimera settings header={0}".format(self.__header__))
 				return {}
 		except:
 			return {}
