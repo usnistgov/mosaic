@@ -7,21 +7,24 @@ Parse Chimera VC100 settings file for ADC parameters.
 	:License:	See LICENSE.TXT
 	:ChangeLog:
 	.. line-block::
+		5/09/21		AB 	Add support for MAT settings file
 		5/08/21		AB 	Add a check to verify version entry to ensure it is a valid settings file.
 		5/08/21     AB	Initial version
 """
 import csv
+import scipy.io
 import mosaic.utilities.mosaicLogging as mlog
 
 class ChimeraSettingsDict(dict):
 	def __init__(self, settingsFileName):
 		self.chimeraSettingsLogger=mlog.mosaicLogging().getLogger(name=__name__)
+		self._setupSettingsKeys()
 
 		try:
-			with open(settingsFileName, 'r') as csvfile:
-				statereader = csv.reader(csvfile, delimiter='=', quotechar='|')
-				
-				[ self.update(self.extractParam(row)) for row in statereader if len(row) > 1 ]
+			if settingsFileName.split('/')[-1].split('.')[-1]=='mat':
+				self._readMATSettingsFile(settingsFileName)
+			else:
+				self._readTextSettingsFile(settingsFileName)
 		except FileNotFoundError as err:
 			self.chimeraSettingsLogger.error(err)
 			self.clear()
@@ -34,6 +37,9 @@ class ChimeraSettingsDict(dict):
 		except:
 			self.chimeraSettingsLogger.error("Invalid version number. Cannot verify valid Chimera settings.")
 			self.clear()
+
+		self["ColumnTypes"]=[('curr_pA', '<u2')]
+		self["IonicCurrentColumn"]="curr_pA"
 
 		for key, value in self.items():
 			self.chimeraSettingsLogger.info("{0}  : {1}".format(key, value))
@@ -68,10 +74,41 @@ class ChimeraSettingsDict(dict):
 
 		d=line[0].split('_')
 		if d[0]=='SETUP':
-			if d[1]=="ADCSAMPLERATE":
-				return {"SamplingFrequency": float(line[1])}
-			else:
-				return {d[1]: float(line[1])}
+			return {self.settingsKeys[d[1]] : float(line[1])}
 		else:
 			return {}
 	
+	def _readTextSettingsFile(self, settingsFileName):
+		with open(settingsFileName, 'r') as csvfile:
+			statereader = csv.reader(csvfile, delimiter='=', quotechar='|')
+			
+			[ self.update(self.extractParam(row)) for row in statereader if len(row) > 1 ]
+
+	def _readMATSettingsFile(self, settingsFileName):
+		sett=scipy.io.loadmat(settingsFileName)
+
+		try:
+			self.__version__=float(sett["__version__"])
+			self.chimeraSettingsLogger.info("Chimera settings version={0}".format(self.__version__))
+			self.__header__=str(sett["__header__"])
+			self.chimeraSettingsLogger.info("Chimera settings header={0}".format(self.__header__))
+
+			for key, val in sett.items():
+				if key.startswith("SETUP"):
+					self.update({ self.settingsKeys[key.split('_')[-1]] : float(val[0][0])})
+
+		except KeyError as err:
+			self.chimeraSettingsLogger.error("Key {0} was not found.".format(err))
+
+	def _setupSettingsKeys(self):
+		self.settingsKeys={
+			"ADCSAMPLERATE"	:	"SamplingFrequency",
+			"mVoffset"		:	"mVoffset",
+			"biasvoltage"	:	"biasvoltage",
+			"pAoffset"		:	"pAoffset",
+			"TIAgain"		:	"TIAgain",
+			"ADCVREF"		:	"ADCvref",
+			"ADCBITS"		:	"ADCbits",
+			"preADCgain"	:	"preADCgain"
+
+		}
