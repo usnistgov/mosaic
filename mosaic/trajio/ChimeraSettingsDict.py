@@ -14,10 +14,13 @@ import csv
 
 class ChimeraSettingsDict(dict):
 	def __init__(self, settingsFileName):
-		with open(settingsFileName, 'r') as csvfile:
-			statereader = csv.reader(csvfile, delimiter='=', quotechar='|')
-			
-			[ self.update(self.extractParam(row)) for row in statereader if len(row) > 1 ]
+		try:
+			with open(settingsFileName, 'r') as csvfile:
+				statereader = csv.reader(csvfile, delimiter='=', quotechar='|')
+				
+				[ self.update(self.extractParam(row)) for row in statereader if len(row) > 1 ]
+		except:
+			self.clear()
 
 		try:
 			if self.__version__>=1:
