@@ -20,6 +20,10 @@ class ChimeraSettingsDict(dict):
 		self.chimeraSettingsLogger=mlog.mosaicLogging().getLogger(name=__name__)
 		self._setupSettingsKeys()
 
+
+		self["ColumnTypes"]=[('curr_pA', '<u2')]
+		self["IonicCurrentColumn"]="curr_pA"
+		
 		try:
 			if settingsFileName.split('/')[-1].split('.')[-1]=='mat':
 				self._readMATSettingsFile(settingsFileName)
@@ -37,9 +41,6 @@ class ChimeraSettingsDict(dict):
 		except:
 			self.chimeraSettingsLogger.error("Invalid version number. Cannot verify valid Chimera settings.")
 			self.clear()
-
-		self["ColumnTypes"]=[('curr_pA', '<u2')]
-		self["IonicCurrentColumn"]="curr_pA"
 
 		for key, value in self.items():
 			self.chimeraSettingsLogger.info("{0}  : {1}".format(key, value))
