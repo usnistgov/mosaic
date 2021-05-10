@@ -95,7 +95,7 @@ class ChimeraSettingsDict(dict):
 
 			for key, val in sett.items():
 				if key.startswith("SETUP"):
-					self.update({ self.settingsKeys[key.split('_')[-1]] : float(val[0][0])})
+					self.update({ self.settingsKeys[key.split('_')[-1]] : val[0][0]})
 
 		except KeyError as err:
 			self.chimeraSettingsLogger.error("Key {0} was not found.".format(err))
