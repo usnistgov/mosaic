@@ -11,10 +11,12 @@ Chimera VC100 concatenated file format implementation of metaTrajIO. Read concat
 		7/11/16		KB	Initial version
 """
 import struct
+import glob
 
 import mosaic.trajio.metaTrajIO as metaTrajIO
 import mosaic.utilities.mosaicLogging as mlog
 from mosaic.utilities.util import eval_
+from mosaic.trajio.ChimeraSettingsDict import ChimeraSettingsDict as ChimeraSettingsDict
 
 import numpy as np
 
@@ -30,7 +32,7 @@ class chimeraTrajIO(metaTrajIO.metaTrajIO):
 
 		:Usage and Assumptions:
 
-				Binary data is in a single column. As of 7/11/16 can only be unsigned 16 bit integers and has only one column:
+				Binary data is in a single column of unsigned 16 bit integers:
 
 				The column layout is specified with the ``ColumnTypes`` parameter, which accepts a list of tuples. 
 
@@ -83,6 +85,15 @@ class chimeraTrajIO(metaTrajIO.metaTrajIO):
 				None
 	"""
 	def _init(self, **kwargs):
+		self.chimeraLogger=mlog.mosaicLogging().getLogger(name=__name__)
+
+		# Check if a MAT or txt file exists in the data directory and override any settings with values from the file
+		chimeraSettings=self._updateChimeraSettings()
+		if len(chimeraSettings)>0:
+			self.chimeraLogger.info("Valid Chimera settings file found. Overriding values in MOSAIC settings file.")
+			for k,v in chimeraSettings.items():
+				setattr(self, k, v)
+
 		if not hasattr(self, 'SamplingFrequency'):
 			raise metaTrajIO.InsufficientArgumentsError("{0} requires the sampling rate in Hz to be defined.".format(type(self).__name__))
 
@@ -145,8 +156,6 @@ class chimeraTrajIO(metaTrajIO.metaTrajIO):
 		if not hasattr(self, 'Fs'):	
 			self.Fs=self.SamplingFrequency
 
-		self.chimeraLogger=mlog.mosaicLogging().getLogger(name=__name__)
-
 	def readdata(self, fname):
 		"""
 			Return raw data from a single data file. Set a class 
@@ -197,6 +206,19 @@ class chimeraTrajIO(metaTrajIO.metaTrajIO):
 		data = self.ADCvref - 2*self.ADCvref*data.astype(float)/float(2**16)
 		data = -data/gain + self.pAoffset
 		return np.array(data*1.0e12, dtype=np.float64)
+
+	def _updateChimeraSettings(self):
+		sfile=glob.glob(self.datPath+"/*.mat")
+		if len(sfile)>0:
+			return ChimeraSettingsDict(sfile[0])
+		else:
+			sfile=glob.glob(self.datPath+"/*.txt")
+			if len(sfile)>0:
+				return ChimeraSettingsDict(sfile[0])
+			else:
+				return {}
+
+
 
 if __name__ == '__main__':
 	print("Main funcion not implemented for chimeraTrajIO")
