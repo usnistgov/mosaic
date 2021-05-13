@@ -501,7 +501,8 @@ class metaTrajIO(object, metaclass=ABCMeta):
 
 		"""
 		try:
-			return self.dataFiles.pop(0)
+			self.currentFilename=self.dataFiles.pop(0)
+			return self.currentFilename
 		except IndexError:
 			if self.nearEndOfData:
 				self.Stop()
