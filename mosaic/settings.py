@@ -7,6 +7,7 @@
 	:License:	See LICENSE.TXT
 	:ChangeLog:
 	.. line-block::
+		5/13/21		AB 	Include chimeraTrajio in default settings.
 		4/19/19		AB 	Added an option (trackBaseline) to continuously track the opent channel baseline current during an analysis.
 		9/22/17 	AB 	Removed the filterEventPadding option to eventSegment.
 		7/15/17 	AB 	Add the filterEventPadding option to eventSegment.
@@ -184,6 +185,11 @@ __settings__="""
 		"IonicCurrentColumn" : "curr_pA",
 		"dcOffset": "0.0", 
 		"filter": "*.bin", 
+		"start": "0.0"
+	},
+	"chimeraTrajIO": {
+		"dcOffset": "0.0", 
+		"filter": "*.log", 
 		"start": "0.0"
 	},
 	"tsvTrajIO": {
