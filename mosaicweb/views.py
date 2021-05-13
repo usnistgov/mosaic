@@ -6,6 +6,7 @@
 	:License:	See LICENSE.rst
 	:ChangeLog:
 	.. line-block::
+		05/13/21	AB 	Implement support for Chimera VC100 files.
 		04/12/21	AB 	Fix shutdown behavior of local servers
 		05/24/19 	AB 	Python 3.7 port
 		04/13/18 	AB 	Support client initiated local server shutdown.
@@ -513,6 +514,7 @@ def _folderDesc(item):
 	nqdf = len(glob.glob(item+'/*.qdf'))
 	nbin = len(glob.glob(item+'/*.bin'))+len(glob.glob(item+'/*.dat'))
 	nabf = len(glob.glob(item+'/*.abf'))
+	nchi = len(glob.glob(item+'/*.mat'))
 	nsqlite = len(glob.glob(item+'/*.sqlite'))
 	#nfolders = len( [i for i in os.listdir(item) if os.path.isdir(item+'/'+i) ] )
 	nfolders=0
@@ -532,6 +534,8 @@ def _folderDesc(item):
 		returnString = "{0} BIN {1}".format(nbin, _fileLabel(nbin))
 	elif nabf > 0:
 		returnString = "{0} ABF {1}".format(nabf, _fileLabel(nabf))
+	elif nchi > 0:
+		returnString = "{0} Chimera VC100 {1}".format(nchi, _fileLabel(nchi))
 	elif nfolders==0:
 		returnString = "No data"
 	else:
