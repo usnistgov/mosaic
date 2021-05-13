@@ -117,9 +117,7 @@ class chimeraTrajIO(metaTrajIO.metaTrajIO):
 		self.chimeraLogger.info( '\t\tmVoffset = \'{0}\''.format(self.mVoffset) )
 		self.chimeraLogger.info( '\t\tADCvref = \'{0}\''.format(self.ADCvref) )
 		self.chimeraLogger.info( '\t\tADCbits = \'{0}\''.format(self.ADCbits) )
-		self.chimeraLogger.info( '\t\tpAoffset = \'{0}\''.format(self.pAoffset) )
-		self.chimeraLogger.info( '\t\tData type = \'{0}\''.format(self.IonicCurrentType) )
-		
+		self.chimeraLogger.info( '\t\tpAoffset = \'{0}\''.format(self.pAoffset) )		
 
 	def readBinaryFile(self, fname):
 		return np.memmap(fname, dtype=self.ColumnTypes, mode='r', offset=self.HeaderOffset)[self.IonicCurrentColumn]

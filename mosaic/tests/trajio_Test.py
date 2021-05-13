@@ -46,16 +46,7 @@ class TrajIOTest(object):
 			    	}
 			  	),
 		'chi' :	( chimeraTrajIO.chimeraTrajIO, {
-						"TIAgain" : 100000000,
-						"preADCgain" : 1.305,
-						"SamplingFrequency" : 50000,
-						"ColumnTypes" : "[('curr_pA', '<u2')]",
-						"IonicCurrentColumn" : "curr_pA",
-						"mVoffset": -0.2776,
-						"pAoffset": 2.0e-10,
-						"ADCvref": 2.5,
-						"ADCbits": 14,
-						"filter": "SingleChan-0001_1.bin", 
+						"filter": "Chimera.log", 
 						"start": 0.0,
 						"HeaderOffset": 0
 					}
@@ -229,3 +220,4 @@ class TrajIO_TestSuite(TrajIOTest):
 if __name__ == '__main__':
 	t=TrajIOTest()
 	t.runTestCase('bin', 'mosaic/tests/testdata/')
+	t.runTestCaseChimera('chi', 'mosaic/tests/testdata/')
