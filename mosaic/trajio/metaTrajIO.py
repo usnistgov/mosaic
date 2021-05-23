@@ -52,6 +52,8 @@ class EmptyDataPipeError(Exception):
 	pass
 class FileNotFoundError(Exception):
 	pass
+class InsufficientDataError(Exception):
+	pass
 
 trajTimer=mtime.mosaicTiming()
 
@@ -297,13 +299,14 @@ class metaTrajIO(object, metaclass=ABCMeta):
 
 		try:
 			# Get the elements to return: index to (index+n)
-			t=self.currDataPipe[self.currDataIdx:self.currDataIdx+n]-self.dcOffset
+			t=self.currDataPipe[self.currDataIdx:self.currDataIdx+int(n)]-self.dcOffset
 			
-			if len(t) < n: raise IndexError
+			if len(t) < n: 
+				raise InsufficientDataError
 
 			# If the required data points were obtained, update the queue and global indices
-			self.currDataIdx+=n
-			self.globalDataIndex+=n
+			self.currDataIdx+=int(n)
+			self.globalDataIndex+=int(n)
 			
 			# delete them from the pipe if the index exceeds 1 million
 			if self.currDataIdx>1000000:
@@ -313,10 +316,10 @@ class metaTrajIO(object, metaclass=ABCMeta):
 
 			# return the popped data
 			return t
-		except IndexError as err:
+		except InsufficientDataError as err:
 			if self.nearEndOfData>0:
-				self.currDataIdx+=n
-				self.globalDataIndex+=n
+				self.currDataIdx+=int(n)
+				self.globalDataIndex+=int(n)
 				
 				self.nearEndOfData+=1
 
@@ -350,16 +353,17 @@ class metaTrajIO(object, metaclass=ABCMeta):
 
 		try:
 			# Get the elements to return
-			t=self.currDataPipe[self.currDataIdx:self.currDataIdx+n]-self.dcOffset
-			if len(t) < n: raise IndexError 
+			t=self.currDataPipe[self.currDataIdx:self.currDataIdx+int(n)]-self.dcOffset
+			if len(t) < int(n): 
+				raise InsufficientDataError 
 				
 			return t
-		except IndexError as err:
+		except InsufficientDataError as err:
 			if self.nearEndOfData>0:
 				return t
 			else:
 				self._appenddata()
-				return self.previewdata(n)
+				return self.previewdata(int(n))
 
 
 	def formatsettings(self):
@@ -408,9 +412,9 @@ class metaTrajIO(object, metaclass=ABCMeta):
 		except (StopIteration, AttributeError, TypeError):
 			# Read a new data file to get more data
 			fname=self.popfnames()
-
 			if fname:
 				self.processedFilenames.extend([[fname, self.fileFormat, os.path.getmtime(fname)]])
+				self.logger.info( "Processing file {0}.".format(fname) )
 				self.rawData=self.readdata( fname )
 				self.dataGenerator=self._createGenerator()
 				self._appenddata()

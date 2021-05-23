@@ -69,13 +69,7 @@ class chimeraTrajIO(metaTrajIO.metaTrajIO):
 		self.HeaderOffset=0
 
 		# Check if a MAT or txt file exists in the data directory and override any settings with values from the file
-		chimeraSettings=self._updateChimeraSettings()
-		if len(chimeraSettings)>0:
-			self.chimeraLogger.info("Valid Chimera settings file found. Overriding values in MOSAIC settings file.")
-			for k,v in chimeraSettings.items():
-				setattr(self, k, v)
-		else:
-			raise metaTrajIO.InsufficientArgumentsError("A valid Chimera settings file was not found in the data directory.")
+		self._updateChimeraSettings()
 
 		# additional meta data
 		self.fileFormat='bin'
@@ -102,7 +96,16 @@ class chimeraTrajIO(metaTrajIO.metaTrajIO):
 				None
 		"""
 		self._updateChimeraSettings()
-		return self.readBinaryFile(fname)
+
+		data=np.memmap(fname, dtype=self.ColumnTypes, mode='r', offset=self.HeaderOffset)[self.IonicCurrentColumn]
+
+		gain = self.TIAgain * self.preADCgain
+		bitmask = int((2**16 - 1) - (2**(16-self.ADCbits) - 1))
+		data = data & bitmask
+		data = self.ADCvref - 2*self.ADCvref*data.astype(float)/float(2**16)
+		data = -data/gain + self.pAoffset
+
+		return np.array(data*1.0e12, dtype=np.float64)
 		
 	def _formatsettings(self):
 		"""
@@ -119,23 +122,24 @@ class chimeraTrajIO(metaTrajIO.metaTrajIO):
 		self.chimeraLogger.info( '\t\tADCbits = \'{0}\''.format(self.ADCbits) )
 		self.chimeraLogger.info( '\t\tpAoffset = \'{0}\''.format(self.pAoffset) )		
 
-	def readBinaryFile(self, fname):
-		return np.memmap(fname, dtype=self.ColumnTypes, mode='r', offset=self.HeaderOffset)[self.IonicCurrentColumn]
-		
-	def scaleData(self, data):
-		"""
-			See :func:`mosaic.metaTrajIO.metaTrajIO.scaleData`.
-		"""
-		gain = self.TIAgain * self.preADCgain
-		bitmask = int((2**16 - 1) - (2**(16-self.ADCbits) - 1))
-		data = data & bitmask
-		data = self.ADCvref - 2*self.ADCvref*data.astype(float)/float(2**16)
-		data = -data/gain + self.pAoffset
-		return np.array(data*1.0e12, dtype=np.float64)
 
 	def _updateChimeraSettings(self):
 		settFile=self.currentFilename[:-3]+"mat"
-		return ChimeraSettingsDict(settFile)
+
+		chimeraSettings=ChimeraSettingsDict(settFile)
+		if len(chimeraSettings)>0:
+			self.chimeraLogger.info("Valid Chimera settings file found. Overriding values in MOSAIC settings file.")
+
+			# set the sampling frequency in Hz.
+			# If the Fs attribute doesn't exist set it
+			if hasattr(self, 'Fs'):	
+				if self.Fs!=chimeraSettings["SamplingFrequency"]:
+					raise metaTrajIO.SamplingRateChangedError("The sampling rate in the data file '{0}' has changed.".format(fname))
+			else:
+				for k,v in chimeraSettings.items():
+					setattr(self, k, v)
+		else:
+			raise metaTrajIO.InsufficientArgumentsError("A valid Chimera settings file was not found in the data directory.")
 
 
 if __name__ == '__main__':
