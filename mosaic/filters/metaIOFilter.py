@@ -73,6 +73,15 @@ class metaIOFilter(object, metaclass=ABCMeta):
 		"""
 		pass
 
+	@abstractmethod
+	def _filterCutoffFrequency(self):
+		"""
+			.. important:: |abstractmethod|
+
+			Return the filter cutoff frequency in Hz
+		"""
+		pass
+
 	@mosaic_property
 	def filteredData(self):
 		"""
@@ -86,6 +95,6 @@ class metaIOFilter(object, metaclass=ABCMeta):
 		"""
 			Return the sampling frequency of filtered data.
 		"""
-		return self.Fs/self.decimate
+		return self._filterCutoffFrequency()/self.decimate
 
 
