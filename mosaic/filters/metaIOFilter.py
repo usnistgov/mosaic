@@ -95,6 +95,6 @@ class metaIOFilter(object, metaclass=ABCMeta):
 		"""
 			Return the sampling frequency of filtered data.
 		"""
-		return self._filterCutoffFrequency()/self.decimate
+		return self.Fs/self.decimate
 
 
