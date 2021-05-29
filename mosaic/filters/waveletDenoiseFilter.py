@@ -136,6 +136,9 @@ class waveletDenoiseFilter(metaIOFilter.metaIOFilter):
 		self.logger.info( '\t\tWavelet threshold sub-type = {0}'.format(self.waveletThresholdSubType) )
 		self.logger.info( '\t\tDecimation = {0}'.format(self.decimate) )
 
+	def _filterCutoffFrequency(self):
+		return self.Fs
+		
 if __name__ == '__main__':
 	import csv
 	from os.path import expanduser

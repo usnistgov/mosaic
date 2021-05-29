@@ -61,3 +61,6 @@ class convolutionFilter(metaIOFilter.metaIOFilter):
 		self.logger.info( '\t\tFilter coefficients = {0}'.format(self.filterCoeff) )
 		self.logger.info( '\t\tDecimation = {0}'.format(self.decimate) )
 		
+	def _filterCutoffFrequency(self):
+		return self.Fs
+		
