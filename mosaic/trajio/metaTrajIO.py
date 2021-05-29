@@ -106,6 +106,8 @@ class metaTrajIO(object, metaclass=ABCMeta):
 		self.CHUNKSIZE=10000
 		self.dataGenerator=None
 
+		self.logger=mlog.mosaicLogging().getLogger(name=__name__)
+
 		# start by setting all passed keyword arguments as class attributes
 		for (k,v) in kwargs.items():
 			setattr(self, k, v)
@@ -149,6 +151,7 @@ class metaTrajIO(object, metaclass=ABCMeta):
 
 		# setup data filtering
 		if hasattr(self, 'datafilter'):
+			self.logger.info("Data filtering active.")
 			self.dataFilter=True
 			self.dataFilterObj=self._setupDataFilter()
 		else:
@@ -187,8 +190,6 @@ class metaTrajIO(object, metaclass=ABCMeta):
 		# A list that holds the names of processed files.
 		self.processedFilenames=[]
 
-		self.logger=mlog.mosaicLogging().getLogger(name=__name__)
-
 		# Call sub-class init
 		self._init(**kwargs)
 
@@ -209,12 +210,12 @@ class metaTrajIO(object, metaclass=ABCMeta):
 		if not self.initPipe:
 			self._initPipe()
 
-		if not self.dataFilter:
-			self.logger.debug(_dprop("Sampling frequency {0}", self.Fs))
-			return self.Fs
-		else:
+		if self.dataFilter:
 			self.logger.debug(_dprop("Sampling frequency {0} ({1})", self.dataFilterObj.filterFs, type(self.dataFilterObj).__name__))
 			return self.dataFilterObj.filterFs
+		else:
+			self.logger.debug(_dprop("Sampling frequency {0}", self.Fs))
+			return self.Fs
 
 	@mosaic_property
 	def ElapsedTimeSeconds(self):
@@ -560,7 +561,9 @@ class metaTrajIO(object, metaclass=ABCMeta):
 
 	def _buildFileList(self, dirname, filter):
 		flist=set(glob.glob(format_path(dirname+"/"+filter)))
+
 		for ignorefilter in ignorelist:
 			flist=flist-set(glob.glob(format_path(dirname+"/"+ignorefilter)))
-		return list(flist)
+
+		return sorted(list(flist))
 
