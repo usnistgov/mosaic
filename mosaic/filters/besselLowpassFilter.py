@@ -47,6 +47,8 @@ class besselLowpassFilter(metaIOFilter.metaIOFilter):
 		if self.causal:
 			raise NotImplementedError('Causal filter has not been implemented yet')
 
+		self.filterInit=False
+
 	def filterData(self, icurr, Fs):
 		"""
 			Denoise an ionic current time-series and store it in self.eventData
@@ -58,23 +60,26 @@ class besselLowpassFilter(metaIOFilter.metaIOFilter):
 		self.eventData=icurr
 		self.Fs=Fs
 
-		#pad the data with 10x the transient time at both ends to manually eliminate edge effects of the filter
-		#for some reason I can't get good results using the pad method in filtfilt so manual it is
-		#this means there may be some numerical artefacts but they should be well below the level of noise
-		
-		padding = int(10 * self.Fs/float(self.filterCutoff))
-		paddedsignal = np.pad(self.eventData,pad_width=padding,mode='edge')
-		
-		b, a=sig.bessel(
-							N=self.filterOrder, 
-							Wn=(self.filterCutoff/(float(self.Fs)/2.0)), 
-							btype='lowpass', 
+		if not self.filterInit:
+				self.b, self.a=sig.bessel(
+							N=int(self.filterOrder), 
+							Wn=float(self.filterCutoff/(float(self.Fs)/2.0)), 
+							btype='lowpass',
 							analog=False, 
 							output='ba',
 							norm='mag'
 						)
+				self.filterInit=True
 
-		self.eventData=sig.filtfilt(b, a, paddedsignal, padtype=None, method='pad')[padding:-padding]
+		#pad the data with 10x the transient time at both ends to manually eliminate edge effects of the filter
+		#for some reason I can't get good results using the pad method in filtfilt so manual it is
+		#this means there may be some numerical artefacts but they should be well below the level of noise
+
+		padding = int(10 * self.Fs/float(self.filterCutoff))
+		paddedsignal = np.pad(self.eventData,pad_width=padding,mode='edge')
+		
+
+		self.eventData=sig.filtfilt(self.b, self.a, paddedsignal, padtype=None, method='pad')[padding:-padding]
 
 	def formatsettings(self):
 		"""
@@ -86,4 +91,7 @@ class besselLowpassFilter(metaIOFilter.metaIOFilter):
 		self.logger.info( '\t\tFilter order = {0}'.format(self.filterOrder) )
 		self.logger.info( '\t\tFilter cutoff = {0} kHz'.format(self.filterCutoff*1e-3) )
 		self.logger.info( '\t\tDecimation = {0}'.format(self.decimate) )
+		
+	def _filterCutoffFrequency(self):
+		return self.filterCutoff
 		
