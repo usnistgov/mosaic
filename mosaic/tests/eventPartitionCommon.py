@@ -44,7 +44,7 @@ class EventPartitionTest(object):
 
 		testobj.Stop()
 
-		for f in glob.glob('mosaic/tests/testdata/*.sqlite'):
+		for f in glob.glob(self.datapath+'/*.sqlite'):
 			os.remove(f)
 
 	@raises(mosaic.commonExceptions.SettingsTypeError)
