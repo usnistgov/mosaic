@@ -302,7 +302,7 @@ class metaTrajIO(object, metaclass=ABCMeta):
 			# Get the elements to return: index to (index+n)
 			t=self.currDataPipe[self.currDataIdx:self.currDataIdx+int(n)]-self.dcOffset
 			
-			if len(t) < n: 
+			if len(t) < int(n): 
 				raise InsufficientDataError
 
 			# If the required data points were obtained, update the queue and global indices
@@ -415,7 +415,6 @@ class metaTrajIO(object, metaclass=ABCMeta):
 			fname=self.popfnames()
 			if fname:
 				self.processedFilenames.extend([[fname, self.fileFormat, os.path.getmtime(fname)]])
-				self.logger.info( "Processing file {0}.".format(fname) )
 				self.rawData=self.readdata( fname )
 				self.dataGenerator=self._createGenerator()
 				self._appenddata()
