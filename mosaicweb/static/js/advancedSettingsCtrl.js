@@ -67,6 +67,19 @@ angular.module('mosaicApp')
 					factory.controlsUpdateFlag = false;
 				};
 
+				if ( orig.hasOwnProperty('besselLowpassFilter') != sett.hasOwnProperty('besselLowpassFilter') ) {
+					factory.controlsUpdateFlag = true;
+				} else {
+					if( 	orig.besselLowpassFilter.decimate != sett.besselLowpassFilter.decimate 
+						||	orig.besselLowpassFilter.filterCutoff != sett.besselLowpassFilter.filterCutoff
+						||	orig.besselLowpassFilter.filterOrder != sett.besselLowpassFilter.filterOrder 
+					) {
+						factory.controlsUpdateFlag = true;
+					} else {
+						factory.controlsUpdateFlag = false;
+					};
+				};
+
 				factory.procAlgoLocalChanges = factory.procAlgoChanged(orig, sett);
 			};
 

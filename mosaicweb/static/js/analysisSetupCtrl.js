@@ -224,6 +224,12 @@ angular.module('mosaicApp')
 		factory.updateTrajIO = function() {
 			var settings = factory.analysisSettings;
 
+			if ( settings.hasOwnProperty('besselLowpassFilter') ) {
+				factory.lowpassFilter=true;
+			} else {
+				factory.lowpassFilter=false;
+			};
+
 			switch(factory.selectedFileType) {
 				case 'QDF':
 					factory.start=settings.qdfTrajIO.start;
