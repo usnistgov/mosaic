@@ -544,13 +544,15 @@ class metaTrajIO(object, metaclass=ABCMeta):
 				self.popdata( int((self.startIndex-1)%self.CHUNKSIZE) )
 
 	def _setupDataFilter(self):
-		filtsettings=settings.settings( self.datPath ).getSettings(self.datafilter.__name__)
+		filtername=str(self.datafilter.__name__.split('.')[-1])
+		filtsettings=settings.settings( self.datPath ).getSettings(filtername)
 		if filtsettings=={}:
 			self.logger.warning("WARNING: No settings found for '{0}'. Data filtering is disabled".format(str(self.datafilter.__name__)))
 			self.dataFilter=False
-			return
 
-		return self.datafilter(**filtsettings)
+			return
+		else:
+			return self.datafilter(**filtsettings)
 
 	def _createGenerator(self):
 		i=0
