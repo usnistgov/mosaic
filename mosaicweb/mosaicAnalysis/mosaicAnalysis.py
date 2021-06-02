@@ -20,6 +20,9 @@ import mosaic.apps.SingleChannelAnalysis as sca
 import mosaic.trajio.qdfTrajIO as qdf
 import mosaic.trajio.abfTrajIO as abf
 import mosaic.trajio.binTrajIO as bin
+import mosaic.trajio.chimeraTrajIO as chi
+
+import mosaic.filters.besselLowpassFilter as besselLowpassFilter
 
 import mosaic.partition.eventSegment as es
 
@@ -59,6 +62,7 @@ class mosaicAnalysis:
 		self.processingAlgorithm=''
 
 		self.trajIOHandle=None
+		self.dataFilter=False
 		self.partitionHandle=es.eventSegment
 		self.processHandle=None
 
@@ -97,10 +101,15 @@ class mosaicAnalysis:
 
 			self._writeSettings()
 
+			if self.dataFilter:
+				filterHnd=besselLowpassFilter.besselLowpassFilter
+			else:
+				filterHnd=None
+
 			self.analysisObject=sca.SingleChannelAnalysis(
 				self.dataPath,
 				self.trajIOHandle,
-				None,
+				filterHnd,
 				self.partitionHandle,
 				self.processHandle,
 				dbFilename=fname
@@ -175,6 +184,9 @@ class mosaicAnalysis:
 			elif "binTrajIO" in self.analysisSettingsDict.keys():
 				self.trajIO="binTrajIO"
 				self.fileType='BIN'
+			elif "chimeraTrajIO" in self.analysisSettingsDict.keys():
+				self.trajIO="chimeraTrajIO"
+				self.fileType='CHI'
 			else:
 				raise DataTypeNotSupportedError("The supplied data type is not supported.")
 
@@ -187,7 +199,13 @@ class mosaicAnalysis:
 
 			self.blockSize=float(self.analysisSettingsDict['eventSegment']['blockSizeSec'])
 
-			self.trajIOObject=self.trajIOHandle(dirname=self.dataPath, **trajIOSettings)
+			if "besselLowpassFilter" in self.analysisSettingsDict.keys():
+				self.dataFilter=True
+				self.trajIOObject=self.trajIOHandle(dirname=self.dataPath, datafilter=besselLowpassFilter.besselLowpassFilter, **trajIOSettings)
+			else:
+				self.dataFilter=False
+				self.trajIOObject=self.trajIOHandle(dirname=self.dataPath, **trajIOSettings)
+
 		except:
 			raise
 
@@ -205,6 +223,11 @@ class mosaicAnalysis:
 		try:
 			FsHz=self.trajIOObject.FsHz
 			
+			if self.dataFilter:
+				self.returnMessageJSON["dataFilter"]=1 
+			else:
+				self.returnMessageJSON["dataFilter"]=0
+
 			tdat = self.trajIOObject.popdata(int(self.blockSize*FsHz))
 			decimate=self._calculateDecimation(len(tdat))
 			
@@ -308,18 +331,22 @@ class mosaicAnalysis:
 		nqdf = len(glob.glob(self.dataPath+'/*.qdf'))
 		nbin = len(glob.glob(self.dataPath+'/*.bin'))+len(glob.glob(self.dataPath+'/*.dat'))
 		nabf = len(glob.glob(self.dataPath+'/*.abf'))
+		nchi = len(glob.glob(self.dataPath+'/*.mat'))
 		
 		if nqdf > 0:
 			return "qdfTrajIO"
 		elif nabf > 0:
 			return "abfTrajIO"
+		elif nchi > 0:
+			return "chimeraTrajIO"
 		else:		#default
 			return "binTrajIO"
 
 	trajIOHandleLookup={
-		"qdfTrajIO":	qdf.qdfTrajIO,
-		"abfTrajIO":	abf.abfTrajIO,
-		"binTrajIO":	bin.binTrajIO	
+		"qdfTrajIO":		qdf.qdfTrajIO,
+		"abfTrajIO":		abf.abfTrajIO,
+		"binTrajIO":		bin.binTrajIO,
+		"chimeraTrajIO":	chi.chimeraTrajIO	
 	}
 	processHandleLookup={
 		"adept":		adept.adept,

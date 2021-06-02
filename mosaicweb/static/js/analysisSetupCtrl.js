@@ -10,7 +10,7 @@ angular.module('mosaicApp')
 		factory.trajPlot = {};
 		factory.trajPlotOriginalCurrent = [];
 
-		factory.ftypes = ["BIN", "ABF", "QDF"];
+		factory.ftypes = ["BIN", "ABF", "QDF", "CHI"];
 		factory.selectedFileType = "BIN";
 
 		factory.procAlgoTypes = [
@@ -54,6 +54,8 @@ angular.module('mosaicApp')
 		factory.FsKHz = 0;
 		factory.baselineTracking = false;
 
+		factory.lowpassFilter = false;
+
 		factory.controlsUpdating = false;
 		factory.controlEnabled = false;
 		factory.modelInit = false;
@@ -86,6 +88,8 @@ angular.module('mosaicApp')
 						factory.dataPath=response.data.dataPath;
 						
 						factory.FsKHz=response.data.FsHz/1000.;
+
+						factory.lowpassFilter=response.data.dataFilter ? true: false;
 
 						factory.analysisSettings=angular.fromJson(response.data.settingsString);
 
@@ -236,6 +240,11 @@ angular.module('mosaicApp')
 					factory.end=settings.binTrajIO.end;
 					factory.dcOffset=settings.binTrajIO.dcOffset;
 					break;
+				case 'CHI':
+					factory.start=settings.chimeraTrajIO.start;
+					factory.end=settings.chimeraTrajIO.end;
+					factory.dcOffset=settings.chimeraTrajIO.dcOffset;
+					break;
 				default:
 					factory.start=0.0;
 					factory.end='';
@@ -288,6 +297,10 @@ angular.module('mosaicApp')
 					settings.binTrajIO.start=factory.start;
 					settings.binTrajIO.end=factory.end;
 					settings.binTrajIO.dcOffset=factory.dcOffset;
+				case 'CHI':
+					settings.chimeraTrajIO.start=factory.start;
+					settings.chimeraTrajIO.end=factory.end;
+					settings.chimeraTrajIO.dcOffset=factory.dcOffset;
 					break;
 				default:
 					settings.abfTrajIO.start=0.0;

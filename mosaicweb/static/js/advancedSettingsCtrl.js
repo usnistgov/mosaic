@@ -54,6 +54,9 @@ angular.module('mosaicApp')
 				} else if (factory.selectedFileType=='BIN') {
 					origTrajIO=orig.binTrajIO;
 					trajIO=sett.binTrajIO;
+				} else if (factory.selectedFileType=='CHI') {
+					origTrajIO=orig.chimeraTrajIO;
+					trajIO=sett.chimeraTrajIO;
 				};
 
 				if ( 	orig.eventSegment.blockSizeSec != sett.eventSegment.blockSizeSec 

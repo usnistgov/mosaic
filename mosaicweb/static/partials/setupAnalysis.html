@@ -106,7 +106,10 @@
 						<input type="number" min="0" step="1" ng-model="model.FsKHz" name="FsKHz" ng-disabled="true">
 					</md-input-container>
 					<md-icon md-font-set="regular-font">kHz</md-icon>
-					<span flex="40"></span>
+					<span flex="20"></span>
+					<md-switch class="md-primary" md-no-ink aria-label="Lowpass filter active" ng-model="model.lowpassFilter" name="lowpassFilter" ng-disabled="true">
+							Lowpass Filter
+					</md-switch>
 				</div>
 			</md-content>
 
