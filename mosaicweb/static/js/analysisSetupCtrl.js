@@ -9,7 +9,13 @@ angular.module('mosaicApp')
 		factory.analysisSettings = {};
 		factory.trajPlot = {};
 		factory.trajPlotOriginalCurrent = [];
+		factory.lowpassFilterSettings = {
+			filterCutoff 	: 0,
+			filterOrder		: 4,
+			decimate		: 1
+		};
 
+		factory.availableFilterOrder = [2,4,5,6]
 		factory.ftypes = ["BIN", "ABF", "QDF", "CHI"];
 		factory.selectedFileType = "BIN";
 
@@ -185,6 +191,7 @@ angular.module('mosaicApp')
 			factory.updateBaselineTracking();
 			factory.updateCurrThresholdpA();
 			factory.updateTrajIO();
+			factory.updateLPFilters();
 			factory.procAlgorithmFromSettings();
 
 			factory.writeEventTS=factory.analysisSettings.eventSegment.writeEventTS ? true : false;
@@ -224,12 +231,6 @@ angular.module('mosaicApp')
 		factory.updateTrajIO = function() {
 			var settings = factory.analysisSettings;
 
-			if ( settings.hasOwnProperty('besselLowpassFilter') ) {
-				factory.lowpassFilter=true;
-			} else {
-				factory.lowpassFilter=false;
-			};
-
 			switch(factory.selectedFileType) {
 				case 'QDF':
 					factory.start=settings.qdfTrajIO.start;
@@ -259,6 +260,17 @@ angular.module('mosaicApp')
 
 			if (factory.end==-1) {
 				factory.end=null;
+			};
+		};
+
+		factory.updateLPFilters = function() {
+			var settings = factory.analysisSettings;
+
+			if ( settings.hasOwnProperty('besselLowpassFilter') ) {
+				factory.lowpassFilter=true;
+				factory.lowpassFilterSettings=settings.besselLowpassFilter
+			} else {
+				factory.lowpassFilter=false;
 			};
 		};
 

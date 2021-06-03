@@ -106,15 +106,7 @@
 						<input type="number" min="0" step="1" ng-model="model.FsKHz" name="FsKHz" ng-disabled="true">
 					</md-input-container>
 					<md-icon md-font-set="regular-font">kHz</md-icon>
-					<span flex="5"></span>
-					<md-switch class="md-primary" md-no-ink aria-label="Lowpass filter active (activate in Advanced Settings)" ng-model="model.lowpassFilter" name="lowpassFilter" ng-disabled="true">
-							Lowpass Filter
-					</md-switch>
-					<span flex="0"></span>
-					<md-button class="md-icon-button" href="https://pages.nist.gov/mosaic/html/api-doc/mosaic.filter.html#mosaic-filters-bessellowpassfilter-module" target="_blank">
-							<md-tooltip md-direction="left">Setup filtering using Advanced Settings</md-tooltip>
-							<md-icon md-font-set="material-icons md-24">help</md-icon>
-					</md-button>
+					<span flex="40"></span>
 				</div>
 			</md-content>
 
@@ -252,30 +244,83 @@
 			</md-content>
 		</div>
 
-		<md-content md-whiteframe="2" layout="column" style="margin: 8px; padding:8px;" flex-gt-sm ng-disabled="mosaicConfigModel.analysisRunning">
-			<md-subheader class="md-primary" style="margin: 0; padding:0">
-				<div layout="row" flex>
-						<p flex="70">Event Processing Settings</p>
-						<span flex="30"></span>
-						<md-button class="md-icon-button" href="https://pages.nist.gov/mosaic//html/doc/Algorithms.html" target="_blank">
-							<md-tooltip md-direction="left">Event Processing Algorithms Documentation</md-tooltip>
+		<div layout-gt-sm="row" layout="column">
+			<md-content md-whiteframe="2" style="margin: 8px; padding:8px;" flex-gt-sm="40">
+				<md-subheader class="md-primary" style="margin: 0; padding:0">
+					<div layout="row" flex>
+						<p flex="70">Bessel Lowpass Filter Settings</p>
+						<span flex="20"></span>
+						<md-button class="md-icon-button" href="https://pages.nist.gov/mosaic/html/api-doc/mosaic.filter.html#mosaic-filters-bessellowpassfilter-module" target="_blank">
+							<md-tooltip md-direction="left">Bessel Lowpass Filter Settings Documentation</md-tooltip>
 							<md-icon md-font-set="material-icons md-24">help</md-icon>
 						</md-button>
 					</div>
-			</md-subheader>
-			<div layout="row" style="margin: 2px; padding:2px">
-				<md-input-container flex="35">
-					<label>Processing Algorithm</label>
-					<md-select ng-model="model.selectedProcAlgoType" name="selectedProcAlgoType" md-selected-text="getProcAlgoType()" ng-disabled="mosaicConfigModel.analysisRunning">
-						<md-optgroup label="Processing Algorithms">
-							<md-option ng-value="procAlgoType" ng-repeat="procAlgoType in ::model.procAlgoTypes">{{procAlgoType.name}}</md-option>
-						</md-optgroup>
-					</md-select>
-				</md-input-container>
-			
-				<span flex></span>
+				</md-subheader>
 
-			</div>
-		</md-content>
+				<div layout="column" style="margin:6px; padding:6px">
+					<md-content class="md-whiteframe" style="margin: 0; padding: 0">
+						<md-switch class="md-primary" md-no-ink aria-label="Lowpass filter active (activate in Advanced Settings)" ng-model="model.lowpassFilter" name="lowpassFilter" ng-disabled="false">
+							Enable Lowpass Filter
+						</md-switch>
+					</md-content>
+				</div>
+
+				<div layout="row" style="margin: 2px; padding:2px">
+					<md-input-container class="md-block">
+							<label>Filter Cutoff Frequency</label>
+							<input ng-model="model.lowpassFilterSettings.filterCutoff" tabindex="0" style="color: #696969; font-size: 14px;" aria-label="Filter Cutoff Frequency" ng-disabled="!model.lowpassFilter"></input>
+							<md-icon md-font-set="regular-font">Hz</md-icon>
+						</md-input-container>
+										
+					<span flex="5"></span>
+
+				</div>
+
+				<div layout="row" style="margin: 2px; padding:2px">
+					<md-input-container flex="40">
+						<label>Filter Order</label>
+						<md-select ng-model="model.selectedFileType" md-selected-text="model.lowpassFilterSettings.filterOrder" ng-disabled="!model.lowpassFilter">
+							<md-optgroup label="Filter Order">
+								<md-option ng-value="order" ng-repeat="order in ::model.availableFilterOrder">{{order}}</md-option>
+							</md-optgroup>
+						</md-select>
+					</md-input-container>
+
+					<span flex="5"></span>
+
+					<md-input-container class="md-block">
+							<label>Decimation</label>
+							<input ng-model="model.lowpassFilterSettings.decimate" tabindex="0" style="color: #696969; font-size: 14px;" aria-label="Data Path" ng-disabled="!model.lowpassFilter"></input>
+					</md-input-container>
+					
+				</div>
+			</md-content>
+
+			<md-content md-whiteframe="2" layout="column" style="margin: 8px; padding:8px;" flex-gt-sm ng-disabled="mosaicConfigModel.analysisRunning">
+				<md-subheader class="md-primary" style="margin: 0; padding:0">
+					<div layout="row" flex>
+							<p flex="70">Event Processing Settings</p>
+							<span flex="30"></span>
+							<md-button class="md-icon-button" href="https://pages.nist.gov/mosaic//html/doc/Algorithms.html" target="_blank">
+								<md-tooltip md-direction="left">Event Processing Algorithms Documentation</md-tooltip>
+								<md-icon md-font-set="material-icons md-24">help</md-icon>
+							</md-button>
+						</div>
+				</md-subheader>
+				<div layout="row" style="margin: 2px; padding:2px">
+					<md-input-container flex="35">
+						<label>Processing Algorithm</label>
+						<md-select ng-model="model.selectedProcAlgoType" name="selectedProcAlgoType" md-selected-text="getProcAlgoType()" ng-disabled="mosaicConfigModel.analysisRunning">
+							<md-optgroup label="Processing Algorithms">
+								<md-option ng-value="procAlgoType" ng-repeat="procAlgoType in ::model.procAlgoTypes">{{procAlgoType.name}}</md-option>
+							</md-optgroup>
+						</md-select>
+					</md-input-container>
+				
+					<span flex></span>
+
+				</div>
+			</md-content>
+		</div>
 	</form>
 </md-content>
