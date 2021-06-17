@@ -3,8 +3,9 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>11. Advanced Analysis &#8212; MOSAIC v2.1 documentation</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>11. Advanced Analysis &#8212; MOSAIC vr2.1 documentation</title>
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <link rel="stylesheet" href="../_static/bootstrap-sphinx.css" type="text/css" />
     <link rel="stylesheet" type="text/css" href="../_static/graphviz.css" />
@@ -46,7 +47,7 @@
         </button>
         <a class="navbar-brand" href="../index.html"><span><img src="../_static/icon_48.png"></span>
            </a>
-        <span class="navbar-text navbar-version pull-left"><b>v2.1</b></span>
+        <span class="navbar-text navbar-version pull-left"><b>vr2.1</b></span>
       </div>
 
         <div class="collapse navbar-collapse nav-collapse">
@@ -113,10 +114,10 @@
   <div class="row">
     <div class="body col-md-12 content" role="main">
       
-  <div class="section" id="advanced-analysis">
+  <section id="advanced-analysis">
 <span id="plotting-page"></span><h1><span class="section-number">11. </span>Advanced Analysis<a class="headerlink" href="#advanced-analysis" title="Permalink to this headline">¶</a></h1>
 <p>We provide packaged functions for advanced analysis such as calculating the capture rate of molecules, determining the residene time, etc as described below.</p>
-<div class="section" id="capture-rate">
+<section id="capture-rate">
 <h2><span class="section-number">11.1. </span>Capture Rate<a class="headerlink" href="#capture-rate" title="Permalink to this headline">¶</a></h2>
 <p>Estimate the capture rate of molecules partitioning into a nanopore.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">:</span><span class="n">Created</span><span class="p">:</span>    <span class="mi">12</span><span class="o">/</span><span class="mi">27</span><span class="o">/</span><span class="mi">2015</span>
@@ -131,7 +132,7 @@
 <span class="kn">from</span> <span class="nn">mosaicscripts.analysis.kinetics</span> <span class="kn">import</span> <span class="n">CaptureRate</span>
 </pre></div>
 </div>
-<div class="section" id="wrapper-function-to-estimate-the-capture-rate">
+<section id="wrapper-function-to-estimate-the-capture-rate">
 <h3><span class="section-number">11.1.1. </span>Wrapper Function to Estimate the Capture Rate<a class="headerlink" href="#wrapper-function-to-estimate-the-capture-rate" title="Permalink to this headline">¶</a></h3>
 <p>The capture rate can be estimated directly by calling the
 <code class="docutils literal notranslate"><span class="pre">CaptureRate</span></code> function in <code class="docutils literal notranslate"><span class="pre">mosaicscripts.analysis.kinetics</span></code>. The
@@ -150,8 +151,8 @@ function returns a list with two elements: the capture rate
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">array</span><span class="p">([</span> <span class="mf">27.9</span><span class="p">,</span>   <span class="mf">0.2</span><span class="p">])</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="capture-rate-details">
+</section>
+<section id="capture-rate-details">
 <h3><span class="section-number">11.1.2. </span>Capture Rate Details<a class="headerlink" href="#capture-rate-details" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">scipy.optimize</span> <span class="kn">import</span> <span class="n">curve_fit</span>
 <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
@@ -261,9 +262,9 @@ optimal fit parameters.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">array</span><span class="p">([</span> <span class="mf">27.9</span><span class="p">])</span>
 </pre></div>
 </div>
-</div>
-</div>
-</div>
+</section>
+</section>
+</section>
 
 
     </div>
@@ -292,7 +293,7 @@ optimal fit parameters.</p>
 			<tr>
 				<td align="left">
 					<a href="Developers.html"><small><em>MOSAIC Developers</em></small></a> |
-					<a href="http://www.nist.gov/pml/div683/grp06/abalijepalli.cfm"><small><em>Contact</em></small></a> |
+					<a href="https://www.nist.gov/people/arvind-balijepalli"><small><em>Contact</em></small></a> |
 					<a href="Disclaimer.html"><small><em>Terms of Use</em></small></a>
 				</td>
 			<!-- </tr>

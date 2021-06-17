@@ -3,8 +3,9 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Matlab &#8212; MOSAIC v2.1 documentation</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>Matlab &#8212; MOSAIC vr2.1 documentation</title>
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <link rel="stylesheet" href="../_static/bootstrap-sphinx.css" type="text/css" />
     <link rel="stylesheet" type="text/css" href="../_static/graphviz.css" />
@@ -43,7 +44,7 @@
         </button>
         <a class="navbar-brand" href="../index.html"><span><img src="../_static/icon_48.png"></span>
            </a>
-        <span class="navbar-text navbar-version pull-left"><b>v2.1</b></span>
+        <span class="navbar-text navbar-version pull-left"><b>vr2.1</b></span>
       </div>
 
         <div class="collapse navbar-collapse nav-collapse">
@@ -110,17 +111,17 @@
   <div class="row">
     <div class="body col-md-12 content" role="main">
       
-  <div class="section" id="matlab">
+  <section id="matlab">
 <span id="matlab-addons-sec"></span><h1>Matlab<a class="headerlink" href="#matlab" title="Permalink to this headline">¶</a></h1>
 <p>The SQLite database output by MOSAIC can be further processed using <a class="reference external" href="https://www.mathworks.com/products/matlab/">MATLAB</a>.  The data can then be stored in an array in the <a class="reference external" href="https://www.mathworks.com/products/matlab/">MATLAB</a> Workspace, and then manipulated as desired.</p>
 <p>The features, of opening, querying, and storing as an array, are made available in the <a class="reference external" href="https://www.mathworks.com/products/matlab/">MATLAB</a> script openandquery.m. The script does not use the <a class="reference external" href="https://www.mathworks.com/products/matlab/">MATLAB</a> Database Manager GUI, a part of the Database Toolbox, which requires a paid license.  Instead, an open-source alternative, <a class="reference external" href="https://sourceforge.net/projects/mksqlite/">mksqlite</a>, an interface between <a class="reference external" href="https://www.mathworks.com/products/matlab/">MATLAB</a> and <a class="reference external" href="http://www.sqlite.org/">SQLite</a> is used.</p>
 <p>This section of the manual provides information on how to set up the mksqlite- package for use with <a class="reference external" href="https://www.mathworks.com/products/matlab/">MATLAB</a>, and how to use the openandquery.m script.</p>
 <p>All code has been successfully tested with MATLAB 2013a, MATLAB 2014a, G++ 4.7 in Ubuntu 14.04 LTS, and Windows Visual C++ 2010.  Also, <a class="reference external" href="http://www.sqlite.org/">SQLite</a> must be installed prior to performing the following steps.</p>
-<div class="section" id="mksqlite-documentation">
+<section id="mksqlite-documentation">
 <h2>mksqlite Documentation<a class="headerlink" href="#mksqlite-documentation" title="Permalink to this headline">¶</a></h2>
 <p>Information about <a class="reference external" href="https://sourceforge.net/projects/mksqlite/">mksqlite</a>, such as function calls and examples, is available in the MKSQLITE: A <a class="reference external" href="https://www.mathworks.com/products/matlab/">MATLAB</a> Interface to SQLite documentation.</p>
-</div>
-<div class="section" id="installing-mksqlite-in-ubuntu-14-04-lts">
+</section>
+<section id="installing-mksqlite-in-ubuntu-14-04-lts">
 <h2>Installing mksqlite in Ubuntu 14.04 LTS<a class="headerlink" href="#installing-mksqlite-in-ubuntu-14-04-lts" title="Permalink to this headline">¶</a></h2>
 <p>Download the latest <a class="reference external" href="https://sourceforge.net/projects/mksqlite/">mksqlite</a> source files from <a class="reference external" href="http://sourceforge.net/projects/mksqlite/files/">SourceForge</a>
 Unzip the files to a folder, and note the path to that folder (e.g., /home/mksqlitefolder)
@@ -133,12 +134,12 @@ If the build proceeds without errors, you will first see the notification “com
 <p>GCC/G++ Version (in Linux)</p>
 <p>You may have to install a version of GCC/G++ that is compatible with with your specific MATLAB release.  If so, check out the linked discussion thread on MATLAB Central on how to <a class="reference external" href="http://www.mathworks.com/matlabcentral/answers/137228-setup-mex-compiler-for-r2014a-for-linux">set up a MEX Compiler</a>.</p>
 </div>
-</div>
-<div class="section" id="installing-mksqlite-in-windows-7">
+</section>
+<section id="installing-mksqlite-in-windows-7">
 <h2>Installing mksqlite in Windows 7<a class="headerlink" href="#installing-mksqlite-in-windows-7" title="Permalink to this headline">¶</a></h2>
 <p>The installation steps are essentially the same as for Ubuntu, except a different compiler (e.g, contained in Windows SDK 7) may instead have to be installed.  If the SDK installer say it cannot proceed, quit the installation, uninstall previous instances of Microsoft Visual C++ 2010, and then install Windows SDK 7 again.</p>
-</div>
-<div class="section" id="opening-querying-and-closing-the-mosaic-output-database">
+</section>
+<section id="opening-querying-and-closing-the-mosaic-output-database">
 <h2>Opening, Querying, and Closing the MOSAIC Output Database<a class="headerlink" href="#opening-querying-and-closing-the-mosaic-output-database" title="Permalink to this headline">¶</a></h2>
 <p>The MATLAB script openandquery.m contains all of the commands to:
 Open a MOSAIC database (e.g., eventMD-PEG29-Reference.sqlite)
@@ -149,8 +150,8 @@ Convert the structure into a multi-dimensional array, that can be easily manipul
 <p>Two changes must be made to the openandquery m-file by the end-user:
 The path to the database file must be changed for each database you wish to access.  An example path in Linux would be /home/Data/eventMD-PEG29-Reference.sqlite, and in Windows C:\Data\eventMD-PEG29-Reference.sqlite.
 The query string can be changed as needed.  More information about queries in available in the <a class="reference internal" href="DatabaseStructure.html#database-page"><span class="std std-ref">Database Structure and Query Syntax</span></a> section.</p>
-</div>
-<div class="section" id="example">
+</section>
+<section id="example">
 <h2>Example<a class="headerlink" href="#example" title="Permalink to this headline">¶</a></h2>
 <p>The reference database file provided with MOSAIC is <em>eventMD-PEG29-Reference.sqlite</em>, located in the data folder of the source code root directory.  This database contains the results of an analysis performed using the <em>adept2State</em> and consists of the data fields:</p>
 <div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nx">recIDX</span><span class="p">,</span> <span class="nx">ProcessingStatus</span><span class="p">,</span> <span class="nx">OpenChCurrent</span><span class="p">,</span> <span class="nx">BlockedCurrent</span><span class="p">,</span> <span class="nx">EventStart</span><span class="p">,</span> <span class="nx">EventEnd</span><span class="p">,</span> <span class="nx">BlockDepth</span><span class="p">,</span> <span class="nx">ResTime</span><span class="p">,</span> <span class="nx">RCConstant</span><span class="p">,</span> <span class="nx">AbsEventStart</span><span class="p">,</span> <span class="nx">ReducedChiSquared</span><span class="p">,</span> <span class="nx">and</span> <span class="nx">TimeSeries</span><span class="p">}</span>
@@ -168,9 +169,9 @@ The query string can be changed as needed.  More information about queries in av
 <div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="n">querytemp</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">mksqlite</span><span class="p">(</span><span class="s">&#39;select AbsEventStart, BlockDepth from metadata&#39;</span><span class="p">);</span><span class="w"></span>
 </pre></div>
 </div>
-<p>No other changes are required.  Run the script.  The queried data are stored in the variable data, seen in the MATLAB Workspace (with value 418x2 double).  This variable is a 2-column matrix.  The first column contains all 418 data elements of the field AbsEventStart, and the second column contains all elements of the field BlockDepth. Note that the query above can be replaced with any standard SQL query as outlined in the <a class="reference internal" href="DatabaseStructure.html#working-with-sqlite-sec"><span class="std std-ref">Work with SQLite</span></a> section.</p>
-</div>
-</div>
+<p>No other changes are required.  Run the script.  The queried data are stored in the variable data, seen in the MATLAB Workspace (with value 418x2 double).  This variable is a 2-column matrix.  The first column contains all 418 data elements of the field AbsEventStart, and the second column contains all elements of the field BlockDepth. Note that the query above can be replaced with any standard SQL query as outlined in the <a class="reference internal" href="WorkingWithSQLite.html#working-with-sqlite-sec"><span class="std std-ref">Work with SQLite</span></a> section.</p>
+</section>
+</section>
 
 
     </div>
@@ -199,7 +200,7 @@ The query string can be changed as needed.  More information about queries in av
 			<tr>
 				<td align="left">
 					<a href="Developers.html"><small><em>MOSAIC Developers</em></small></a> |
-					<a href="http://www.nist.gov/pml/div683/grp06/abalijepalli.cfm"><small><em>Contact</em></small></a> |
+					<a href="https://www.nist.gov/people/arvind-balijepalli"><small><em>Contact</em></small></a> |
 					<a href="Disclaimer.html"><small><em>Terms of Use</em></small></a>
 				</td>
 			<!-- </tr>

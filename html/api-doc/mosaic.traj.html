@@ -3,8 +3,9 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>14.1.3. Time-Series IO &#8212; MOSAIC v2.1 documentation</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>14.1.3. Time-Series IO &#8212; MOSAIC vr2.1 documentation</title>
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <link rel="stylesheet" href="../_static/bootstrap-sphinx.css" type="text/css" />
     <link rel="stylesheet" type="text/css" href="../_static/graphviz.css" />
@@ -45,7 +46,7 @@
         </button>
         <a class="navbar-brand" href="../index.html"><span><img src="../_static/icon_48.png"></span>
            </a>
-        <span class="navbar-text navbar-version pull-left"><b>v2.1</b></span>
+        <span class="navbar-text navbar-version pull-left"><b>vr2.1</b></span>
       </div>
 
         <div class="collapse navbar-collapse nav-collapse">
@@ -112,9 +113,9 @@
   <div class="row">
     <div class="body col-md-12 content" role="main">
       
-  <div class="section" id="time-series-io">
+  <section id="time-series-io">
 <h1><span class="section-number">14.1.3. </span>Time-Series IO<a class="headerlink" href="#time-series-io" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="mosaic-trajio-abftrajio-module">
+<section id="mosaic-trajio-abftrajio-module">
 <h2><span class="section-number">14.1.3.1. </span>mosaic.trajio.abfTrajIO module<a class="headerlink" href="#mosaic-trajio-abftrajio-module" title="Permalink to this headline">¶</a></h2>
 <div class="graphviz"><img src="../_images/inheritance-a5cbe57a4de7be08f4418135314d8a13e433b919.png" alt="Inheritance diagram of mosaic.trajio.abfTrajIO" usemap="#inheritancef6219e35d8" class="inheritance graphviz" /></div>
 <map id="inheritancef6219e35d8" name="inheritancef6219e35d8">
@@ -188,8 +189,8 @@ Set a class attribute Fs with the sampling frequency in Hz.</p>
 
 </dd></dl>
 
-</div>
-<div class="section" id="mosaic-trajio-qdftrajio-module">
+</section>
+<section id="mosaic-trajio-qdftrajio-module">
 <h2><span class="section-number">14.1.3.2. </span>mosaic.trajio.qdfTrajIO module<a class="headerlink" href="#mosaic-trajio-qdftrajio-module" title="Permalink to this headline">¶</a></h2>
 <div class="graphviz"><img src="../_images/inheritance-464d38d0a54e2a145ced3a6d4894a5471f9f51d3.png" alt="Inheritance diagram of mosaic.trajio.qdfTrajIO" usemap="#inheritance6b7c8f8a97" class="inheritance graphviz" /></div>
 <map id="inheritance6b7c8f8a97" name="inheritance6b7c8f8a97">
@@ -282,8 +283,8 @@ Set a class attribute Fs with the sampling frequency in Hz.</p>
 
 </dd></dl>
 
-</div>
-<div class="section" id="mosaic-trajio-bintrajio-module">
+</section>
+<section id="mosaic-trajio-bintrajio-module">
 <h2><span class="section-number">14.1.3.3. </span>mosaic.trajio.binTrajIO module<a class="headerlink" href="#mosaic-trajio-bintrajio-module" title="Permalink to this headline">¶</a></h2>
 <div class="graphviz"><img src="../_images/inheritance-91d28f5358a1fca24210d46a7d88527bd79b32c9.png" alt="Inheritance diagram of mosaic.trajio.binTrajIO" usemap="#inheritance24256f9782" class="inheritance graphviz" /></div>
 <map id="inheritance24256f9782" name="inheritance24256f9782">
@@ -455,8 +456,8 @@ attribute Fs with the sampling frequency in Hz.</p>
 
 </dd></dl>
 
-</div>
-<div class="section" id="mosaic-trajio-chimeratrajio-module">
+</section>
+<section id="mosaic-trajio-chimeratrajio-module">
 <h2><span class="section-number">14.1.3.4. </span>mosaic.trajio.chimeraTrajIO module<a class="headerlink" href="#mosaic-trajio-chimeratrajio-module" title="Permalink to this headline">¶</a></h2>
 <div class="graphviz"><img src="../_images/inheritance-6cafd78309d2e45586dbc4a2d4baa4d3b8219ff3.png" alt="Inheritance diagram of mosaic.trajio.chimeraTrajIO" usemap="#inheritanceae9304eec5" class="inheritance graphviz" /></div>
 <map id="inheritanceae9304eec5" name="inheritanceae9304eec5">
@@ -479,7 +480,8 @@ attribute Fs with the sampling frequency in Hz.</p>
 <dd class="field-even"><p></p></dd>
 </dl>
 <div class="line-block">
-<div class="line">7/29/16         KB      Miscelleneous bugfixes</div>
+<div class="line">5/12/21         AB      Update Chimera settings from MAT files generated during data collection.</div>
+<div class="line">7/29/16         KB  Miscelleneous bugfixes</div>
 <div class="line">7/11/16         KB      Initial version</div>
 </div>
 </div></blockquote>
@@ -497,7 +499,7 @@ attribute Fs with the sampling frequency in Hz.</p>
 is returned after scaling by the amplifier scale factors.</p>
 <dl class="field-list">
 <dt class="field-odd">Usage and Assumptions</dt>
-<dd class="field-odd"><p>Binary data is in a single column. As of 7/11/16 can only be unsigned 16 bit integers and has only one column:</p>
+<dd class="field-odd"><p>Binary data is in a single column of unsigned 16 bit integers:</p>
 <p>The column layout is specified with the <code class="docutils literal notranslate"><span class="pre">ColumnTypes</span></code> parameter, which accepts a list of tuples.</p>
 <blockquote>
 <div><p>[(‘curr_pA’, ‘&lt;u2’)]</p>
@@ -505,21 +507,9 @@ is returned after scaling by the amplifier scale factors.</p>
 <p>The option is left in in case of future changes to the platform, but can be left alone in the settings file for now.
 The first element of each tuple is an arbitrary text label and the second element is 
 a valid <a class="reference external" href="http://docs.scipy.org/doc/numpy/user/basics.types.html">Numpy type</a>.</p>
-<p>Chimera gain settings are used to convert the integers stored by the ADC to current values.
-The following block provides an example. Parameters can be found in the .mat files output by the VC100.</p>
-<p>IMPORTANT: This setup assumes that all files that match <cite>filter</cite> have the same ADC settings.
-Future versions could imlement reading of the matching .mat files to remove the necessity
-to enter these parameters.</p>
+<p>Chimera gain settings are used to convert the integers stored by the ADC to current values. 
+These values are automatically read in from matched MAT files generated by the Chimera software.</p>
 <div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="s2">&quot;chimeraTrajIO&quot;</span><span class="o">:</span> <span class="p">{</span>
-        <span class="s2">&quot;TIAgain&quot;</span> <span class="o">:</span> <span class="s2">&quot;100000000&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;preADCgain&quot;</span> <span class="o">:</span> <span class="s2">&quot;1.305&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;SamplingFrequency&quot;</span> <span class="o">:</span> <span class="s2">&quot;4166666.66667&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;ColumnTypes&quot;</span> <span class="o">:</span> <span class="s2">&quot;[(&#39;curr_pA&#39;, &#39;&lt;u2&#39;)]&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;IonicCurrentColumn&quot;</span> <span class="o">:</span> <span class="s2">&quot;curr_pA&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;mVoffset&quot;</span><span class="o">:</span> <span class="s2">&quot;-0.2776&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;pAoffset&quot;</span><span class="o">:</span> <span class="s2">&quot;2.0e-10&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;ADCvref&quot;</span><span class="o">:</span> <span class="s2">&quot;2.5&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;ADCbits&quot;</span><span class="o">:</span> <span class="s2">&quot;14&quot;</span><span class="p">,</span>
         <span class="s2">&quot;filter&quot;</span><span class="o">:</span> <span class="s2">&quot;*.log&quot;</span><span class="p">,</span> 
         <span class="s2">&quot;start&quot;</span><span class="o">:</span> <span class="s2">&quot;0.0&quot;</span><span class="p">,</span>
         <span class="s2">&quot;HeaderOffset&quot;</span><span class="o">:</span> <span class="s2">&quot;0&quot;</span>
@@ -531,14 +521,6 @@ to enter these parameters.</p>
 <dd class="field-even"><p>In addition to <code class="xref py py-class docutils literal notranslate"><span class="pre">metaTrajIO</span></code> args,</p>
 <blockquote>
 <div><ul class="simple">
-<li><p><cite>SamplingFrequency</cite> : Sampling rate of data in the file in Hz.</p></li>
-<li><p><cite>ColumnTypes</cite> :       A list of tuples with column names and types (see <a class="reference external" href="http://docs.scipy.org/doc/numpy/user/basics.types.html">Numpy types</a>). Note only integer and floating point numbers are supported.</p></li>
-<li><p><cite>IonicCurrentColumn</cite>: Column name that holds ionic current data.</p></li>
-<li><p><cite>mVoffset</cite> :          voltage offset of ADC</p></li>
-<li><p><cite>ADCvref</cite> :           voltage reference point for ADC</p></li>
-<li><p><cite>ADCbits</cite> :           amplifier scale precision in bits</p></li>
-<li><p><cite>TIAgain</cite> :           Feedback resistor value.</p></li>
-<li><p><cite>preADCgain</cite> :        analog gain before ADC</p></li>
 <li><p><cite>HeaderOffset</cite> :      Ignore first <em>n</em> bytes of the file for header (currently fixed at: 0 bytes).</p></li>
 </ul>
 </div></blockquote>
@@ -572,16 +554,10 @@ attribute Fs with the sampling frequency in Hz.</p>
 </dl>
 </dd></dl>
 
-<dl class="py method">
-<dt id="mosaic.trajio.chimeraTrajIO.chimeraTrajIO.scaleData">
-<code class="sig-name descname"><span class="pre">scaleData</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/trajio/chimeraTrajIO.html#chimeraTrajIO.scaleData"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mosaic.trajio.chimeraTrajIO.chimeraTrajIO.scaleData" title="Permalink to this definition">¶</a></dt>
-<dd><p>See <code class="xref py py-func docutils literal notranslate"><span class="pre">mosaic.metaTrajIO.metaTrajIO.scaleData()</span></code>.</p>
 </dd></dl>
 
-</dd></dl>
-
-</div>
-<div class="section" id="mosaic-trajio-tsvtrajio-module">
+</section>
+<section id="mosaic-trajio-tsvtrajio-module">
 <h2><span class="section-number">14.1.3.5. </span>mosaic.trajio.tsvTrajIO module<a class="headerlink" href="#mosaic-trajio-tsvtrajio-module" title="Permalink to this headline">¶</a></h2>
 <div class="graphviz"><img src="../_images/inheritance-d8ee1a23bc739bcb6ad64e7099a3275743d4401f.png" alt="Inheritance diagram of mosaic.trajio.tsvTrajIO" usemap="#inheritance3cb00b4a80" class="inheritance graphviz" /></div>
 <map id="inheritance3cb00b4a80" name="inheritance3cb00b4a80">
@@ -702,8 +678,8 @@ Set/update a class attribute Fs with the sampling frequency in Hz.</p>
 
 </dd></dl>
 
-</div>
-</div>
+</section>
+</section>
 
 
     </div>
@@ -732,7 +708,7 @@ Set/update a class attribute Fs with the sampling frequency in Hz.</p>
 			<tr>
 				<td align="left">
 					<a href="../doc/Developers.html"><small><em>MOSAIC Developers</em></small></a> |
-					<a href="http://www.nist.gov/pml/div683/grp06/abalijepalli.cfm"><small><em>Contact</em></small></a> |
+					<a href="https://www.nist.gov/people/arvind-balijepalli"><small><em>Contact</em></small></a> |
 					<a href="../doc/Disclaimer.html"><small><em>Terms of Use</em></small></a>
 				</td>
 			<!-- </tr>

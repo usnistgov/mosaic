@@ -4,7 +4,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>mosaic.trajio.metaTrajIO &#8212; MOSAIC v2.1 documentation</title>
+    <title>mosaic.trajio.metaTrajIO &#8212; MOSAIC vr2.1 documentation</title>
     <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
     <link rel="stylesheet" href="../../../_static/bootstrap-sphinx.css" type="text/css" />
     <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css" />
@@ -43,7 +43,7 @@
         </button>
         <a class="navbar-brand" href="../../../index.html"><span><img src="../../../_static/icon_48.png"></span>
            </a>
-        <span class="navbar-text navbar-version pull-left"><b>v2.1</b></span>
+        <span class="navbar-text navbar-version pull-left"><b>vr2.1</b></span>
       </div>
 
         <div class="collapse navbar-collapse nav-collapse">
@@ -120,6 +120,7 @@
 <span class="sd">	:License:	See LICENSE.TXT	</span>
 <span class="sd">	:ChangeLog:</span>
 <span class="sd">	.. line-block::</span>
+<span class="sd">		6/10/21 	AB 	Allow filter settings to be passed as keyword argument.</span>
 <span class="sd">		4/13/17 	AB 	Negative end values enable runnning an analysis on all available data.</span>
 <span class="sd">		7/29/16 	AB 	Add additional filtering when constructing a list of data files to process.</span>
 <span class="sd">		1/27/17 	AB 	Perform a lexical sort of input data files</span>
@@ -165,6 +166,8 @@
 	<span class="k">pass</span>
 <span class="k">class</span> <span class="nc">FileNotFoundError</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
 	<span class="k">pass</span>
+<span class="k">class</span> <span class="nc">InsufficientDataError</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
+	<span class="k">pass</span>
 
 <span class="n">trajTimer</span><span class="o">=</span><span class="n">mtime</span><span class="o">.</span><span class="n">mosaicTiming</span><span class="p">()</span>
 
@@ -194,6 +197,7 @@
 <span class="sd">				- `end` : 			Data end point in seconds.</span>
 <span class="sd">				- `datafilter` :	Handle to the algorithm to use to filter the data. If no algorithm is specified, datafilter	is None and no filtering is performed.</span>
 <span class="sd">				- `dcOffset` :		Subtract a DC offset from the ionic current data.</span>
+<span class="sd">				- `filtersettings`:	Dict containing low pass filter settings (optional: if not provided filter settings will be loaded from the settings file. If no settings are found, `datafilter` will be turned off.)</span>
 <span class="sd">		</span>
 
 <span class="sd">			:Properties:</span>
@@ -216,6 +220,8 @@
 <span class="sd">		&quot;&quot;&quot;</span>
 		<span class="bp">self</span><span class="o">.</span><span class="n">CHUNKSIZE</span><span class="o">=</span><span class="mi">10000</span>
 		<span class="bp">self</span><span class="o">.</span><span class="n">dataGenerator</span><span class="o">=</span><span class="kc">None</span>
+
+		<span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">=</span><span class="n">mlog</span><span class="o">.</span><span class="n">mosaicLogging</span><span class="p">()</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="vm">__name__</span><span class="p">)</span>
 
 		<span class="c1"># start by setting all passed keyword arguments as class attributes</span>
 		<span class="k">for</span> <span class="p">(</span><span class="n">k</span><span class="p">,</span><span class="n">v</span><span class="p">)</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
@@ -260,6 +266,7 @@
 
 		<span class="c1"># setup data filtering</span>
 		<span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;datafilter&#39;</span><span class="p">):</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Data filtering active.&quot;</span><span class="p">)</span>
 			<span class="bp">self</span><span class="o">.</span><span class="n">dataFilter</span><span class="o">=</span><span class="kc">True</span>
 			<span class="bp">self</span><span class="o">.</span><span class="n">dataFilterObj</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_setupDataFilter</span><span class="p">()</span>
 		<span class="k">else</span><span class="p">:</span>
@@ -298,8 +305,6 @@
 		<span class="c1"># A list that holds the names of processed files.</span>
 		<span class="bp">self</span><span class="o">.</span><span class="n">processedFilenames</span><span class="o">=</span><span class="p">[]</span>
 
-		<span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">=</span><span class="n">mlog</span><span class="o">.</span><span class="n">mosaicLogging</span><span class="p">()</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="vm">__name__</span><span class="p">)</span>
-
 		<span class="c1"># Call sub-class init</span>
 		<span class="bp">self</span><span class="o">.</span><span class="n">_init</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
 
@@ -320,12 +325,12 @@
 		<span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">initPipe</span><span class="p">:</span>
 			<span class="bp">self</span><span class="o">.</span><span class="n">_initPipe</span><span class="p">()</span>
 
-		<span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">dataFilter</span><span class="p">:</span>
-			<span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="n">_dprop</span><span class="p">(</span><span class="s2">&quot;Sampling frequency </span><span class="si">{0}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">Fs</span><span class="p">))</span>
-			<span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">Fs</span>
-		<span class="k">else</span><span class="p">:</span>
+		<span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">dataFilter</span><span class="p">:</span>
 			<span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="n">_dprop</span><span class="p">(</span><span class="s2">&quot;Sampling frequency </span><span class="si">{0}</span><span class="s2"> (</span><span class="si">{1}</span><span class="s2">)&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">dataFilterObj</span><span class="o">.</span><span class="n">filterFs</span><span class="p">,</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dataFilterObj</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="p">))</span>
 			<span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">dataFilterObj</span><span class="o">.</span><span class="n">filterFs</span>
+		<span class="k">else</span><span class="p">:</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="n">_dprop</span><span class="p">(</span><span class="s2">&quot;Sampling frequency </span><span class="si">{0}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">Fs</span><span class="p">))</span>
+			<span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">Fs</span>
 
 	<span class="nd">@mosaic_property</span>
 	<span class="k">def</span> <span class="nf">ElapsedTimeSeconds</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -410,13 +415,14 @@
 
 		<span class="k">try</span><span class="p">:</span>
 			<span class="c1"># Get the elements to return: index to (index+n)</span>
-			<span class="n">t</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">currDataPipe</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">currDataIdx</span><span class="p">:</span><span class="bp">self</span><span class="o">.</span><span class="n">currDataIdx</span><span class="o">+</span><span class="n">n</span><span class="p">]</span><span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">dcOffset</span>
+			<span class="n">t</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">currDataPipe</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">currDataIdx</span><span class="p">:</span><span class="bp">self</span><span class="o">.</span><span class="n">currDataIdx</span><span class="o">+</span><span class="nb">int</span><span class="p">(</span><span class="n">n</span><span class="p">)]</span><span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">dcOffset</span>
 			
-			<span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">t</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">n</span><span class="p">:</span> <span class="k">raise</span> <span class="ne">IndexError</span>
+			<span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">t</span><span class="p">)</span> <span class="o">&lt;</span> <span class="nb">int</span><span class="p">(</span><span class="n">n</span><span class="p">):</span> 
+				<span class="k">raise</span> <span class="n">InsufficientDataError</span>
 
 			<span class="c1"># If the required data points were obtained, update the queue and global indices</span>
-			<span class="bp">self</span><span class="o">.</span><span class="n">currDataIdx</span><span class="o">+=</span><span class="n">n</span>
-			<span class="bp">self</span><span class="o">.</span><span class="n">globalDataIndex</span><span class="o">+=</span><span class="n">n</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">currDataIdx</span><span class="o">+=</span><span class="nb">int</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">globalDataIndex</span><span class="o">+=</span><span class="nb">int</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
 			
 			<span class="c1"># delete them from the pipe if the index exceeds 1 million</span>
 			<span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">currDataIdx</span><span class="o">&gt;</span><span class="mi">1000000</span><span class="p">:</span>
@@ -426,10 +432,10 @@
 
 			<span class="c1"># return the popped data</span>
 			<span class="k">return</span> <span class="n">t</span>
-		<span class="k">except</span> <span class="ne">IndexError</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
+		<span class="k">except</span> <span class="n">InsufficientDataError</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
 			<span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">nearEndOfData</span><span class="o">&gt;</span><span class="mi">0</span><span class="p">:</span>
-				<span class="bp">self</span><span class="o">.</span><span class="n">currDataIdx</span><span class="o">+=</span><span class="n">n</span>
-				<span class="bp">self</span><span class="o">.</span><span class="n">globalDataIndex</span><span class="o">+=</span><span class="n">n</span>
+				<span class="bp">self</span><span class="o">.</span><span class="n">currDataIdx</span><span class="o">+=</span><span class="nb">int</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+				<span class="bp">self</span><span class="o">.</span><span class="n">globalDataIndex</span><span class="o">+=</span><span class="nb">int</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
 				
 				<span class="bp">self</span><span class="o">.</span><span class="n">nearEndOfData</span><span class="o">+=</span><span class="mi">1</span>
 
@@ -463,16 +469,17 @@
 
 		<span class="k">try</span><span class="p">:</span>
 			<span class="c1"># Get the elements to return</span>
-			<span class="n">t</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">currDataPipe</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">currDataIdx</span><span class="p">:</span><span class="bp">self</span><span class="o">.</span><span class="n">currDataIdx</span><span class="o">+</span><span class="n">n</span><span class="p">]</span><span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">dcOffset</span>
-			<span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">t</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">n</span><span class="p">:</span> <span class="k">raise</span> <span class="ne">IndexError</span> 
+			<span class="n">t</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">currDataPipe</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">currDataIdx</span><span class="p">:</span><span class="bp">self</span><span class="o">.</span><span class="n">currDataIdx</span><span class="o">+</span><span class="nb">int</span><span class="p">(</span><span class="n">n</span><span class="p">)]</span><span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">dcOffset</span>
+			<span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">t</span><span class="p">)</span> <span class="o">&lt;</span> <span class="nb">int</span><span class="p">(</span><span class="n">n</span><span class="p">):</span> 
+				<span class="k">raise</span> <span class="n">InsufficientDataError</span> 
 				
 			<span class="k">return</span> <span class="n">t</span>
-		<span class="k">except</span> <span class="ne">IndexError</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
+		<span class="k">except</span> <span class="n">InsufficientDataError</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
 			<span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">nearEndOfData</span><span class="o">&gt;</span><span class="mi">0</span><span class="p">:</span>
 				<span class="k">return</span> <span class="n">t</span>
 			<span class="k">else</span><span class="p">:</span>
 				<span class="bp">self</span><span class="o">.</span><span class="n">_appenddata</span><span class="p">()</span>
-				<span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">previewdata</span><span class="p">(</span><span class="n">n</span><span class="p">)</span></div>
+				<span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">previewdata</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">n</span><span class="p">))</span></div>
 
 
 <div class="viewcode-block" id="metaTrajIO.formatsettings"><a class="viewcode-back" href="../../../api-doc/mosaic.meta.html#mosaic.trajio.metaTrajIO.metaTrajIO.formatsettings">[docs]</a>	<span class="k">def</span> <span class="nf">formatsettings</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -521,7 +528,6 @@
 		<span class="k">except</span> <span class="p">(</span><span class="ne">StopIteration</span><span class="p">,</span> <span class="ne">AttributeError</span><span class="p">,</span> <span class="ne">TypeError</span><span class="p">):</span>
 			<span class="c1"># Read a new data file to get more data</span>
 			<span class="n">fname</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">popfnames</span><span class="p">()</span>
-
 			<span class="k">if</span> <span class="n">fname</span><span class="p">:</span>
 				<span class="bp">self</span><span class="o">.</span><span class="n">processedFilenames</span><span class="o">.</span><span class="n">extend</span><span class="p">([[</span><span class="n">fname</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">fileFormat</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">getmtime</span><span class="p">(</span><span class="n">fname</span><span class="p">)]])</span>
 				<span class="bp">self</span><span class="o">.</span><span class="n">rawData</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">readdata</span><span class="p">(</span> <span class="n">fname</span> <span class="p">)</span>
@@ -614,7 +620,8 @@
 
 <span class="sd">		&quot;&quot;&quot;</span>
 		<span class="k">try</span><span class="p">:</span>
-			<span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">dataFiles</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">currentFilename</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">dataFiles</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+			<span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">currentFilename</span>
 		<span class="k">except</span> <span class="ne">IndexError</span><span class="p">:</span>
 			<span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">nearEndOfData</span><span class="p">:</span>
 				<span class="bp">self</span><span class="o">.</span><span class="n">Stop</span><span class="p">()</span>
@@ -652,13 +659,19 @@
 				<span class="bp">self</span><span class="o">.</span><span class="n">popdata</span><span class="p">(</span> <span class="nb">int</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">startIndex</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">%</span><span class="bp">self</span><span class="o">.</span><span class="n">CHUNKSIZE</span><span class="p">)</span> <span class="p">)</span>
 
 	<span class="k">def</span> <span class="nf">_setupDataFilter</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-		<span class="n">filtsettings</span><span class="o">=</span><span class="n">settings</span><span class="o">.</span><span class="n">settings</span><span class="p">(</span> <span class="bp">self</span><span class="o">.</span><span class="n">datPath</span> <span class="p">)</span><span class="o">.</span><span class="n">getSettings</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">datafilter</span><span class="o">.</span><span class="vm">__name__</span><span class="p">)</span>
+		<span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;filtersettings&#39;</span><span class="p">):</span>
+			<span class="n">filtsettings</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">filtersettings</span>
+		<span class="k">else</span><span class="p">:</span>
+			<span class="n">filtername</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">datafilter</span><span class="o">.</span><span class="vm">__name__</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+			<span class="n">filtsettings</span><span class="o">=</span><span class="n">settings</span><span class="o">.</span><span class="n">settings</span><span class="p">(</span> <span class="bp">self</span><span class="o">.</span><span class="n">datPath</span> <span class="p">)</span><span class="o">.</span><span class="n">getSettings</span><span class="p">(</span><span class="n">filtername</span><span class="p">)</span>
+		
 		<span class="k">if</span> <span class="n">filtsettings</span><span class="o">==</span><span class="p">{}:</span>
 			<span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;WARNING: No settings found for &#39;</span><span class="si">{0}</span><span class="s2">&#39;. Data filtering is disabled&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">datafilter</span><span class="o">.</span><span class="vm">__name__</span><span class="p">)))</span>
 			<span class="bp">self</span><span class="o">.</span><span class="n">dataFilter</span><span class="o">=</span><span class="kc">False</span>
-			<span class="k">return</span>
 
-		<span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">datafilter</span><span class="p">(</span><span class="o">**</span><span class="n">filtsettings</span><span class="p">)</span>
+			<span class="k">return</span>
+		<span class="k">else</span><span class="p">:</span>
+			<span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">datafilter</span><span class="p">(</span><span class="o">**</span><span class="n">filtsettings</span><span class="p">)</span>
 
 	<span class="k">def</span> <span class="nf">_createGenerator</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 		<span class="n">i</span><span class="o">=</span><span class="mi">0</span>
@@ -668,9 +681,11 @@
 
 	<span class="k">def</span> <span class="nf">_buildFileList</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dirname</span><span class="p">,</span> <span class="nb">filter</span><span class="p">):</span>
 		<span class="n">flist</span><span class="o">=</span><span class="nb">set</span><span class="p">(</span><span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="n">format_path</span><span class="p">(</span><span class="n">dirname</span><span class="o">+</span><span class="s2">&quot;/&quot;</span><span class="o">+</span><span class="nb">filter</span><span class="p">)))</span>
+
 		<span class="k">for</span> <span class="n">ignorefilter</span> <span class="ow">in</span> <span class="n">ignorelist</span><span class="p">:</span>
 			<span class="n">flist</span><span class="o">=</span><span class="n">flist</span><span class="o">-</span><span class="nb">set</span><span class="p">(</span><span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="n">format_path</span><span class="p">(</span><span class="n">dirname</span><span class="o">+</span><span class="s2">&quot;/&quot;</span><span class="o">+</span><span class="n">ignorefilter</span><span class="p">)))</span>
-		<span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="n">flist</span><span class="p">)</span></div>
+
+		<span class="k">return</span> <span class="nb">sorted</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">flist</span><span class="p">))</span></div>
 
 </pre></div>
 
@@ -700,7 +715,7 @@
 			<tr>
 				<td align="left">
 					<a href="../../../doc/Developers.html"><small><em>MOSAIC Developers</em></small></a> |
-					<a href="http://www.nist.gov/pml/div683/grp06/abalijepalli.cfm"><small><em>Contact</em></small></a> |
+					<a href="https://www.nist.gov/people/arvind-balijepalli"><small><em>Contact</em></small></a> |
 					<a href="../../../doc/Disclaimer.html"><small><em>Terms of Use</em></small></a>
 				</td>
 			<!-- </tr>

@@ -4,7 +4,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>mosaic.filters.besselLowpassFilter &#8212; MOSAIC v2.1 documentation</title>
+    <title>mosaic.filters.besselLowpassFilter &#8212; MOSAIC vr2.1 documentation</title>
     <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
     <link rel="stylesheet" href="../../../_static/bootstrap-sphinx.css" type="text/css" />
     <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css" />
@@ -43,7 +43,7 @@
         </button>
         <a class="navbar-brand" href="../../../index.html"><span><img src="../../../_static/icon_48.png"></span>
            </a>
-        <span class="navbar-text navbar-version pull-left"><b>v2.1</b></span>
+        <span class="navbar-text navbar-version pull-left"><b>vr2.1</b></span>
       </div>
 
         <div class="collapse navbar-collapse nav-collapse">
@@ -160,6 +160,8 @@
 		<span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">causal</span><span class="p">:</span>
 			<span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s1">&#39;Causal filter has not been implemented yet&#39;</span><span class="p">)</span>
 
+		<span class="bp">self</span><span class="o">.</span><span class="n">filterInit</span><span class="o">=</span><span class="kc">False</span>
+
 <div class="viewcode-block" id="besselLowpassFilter.filterData"><a class="viewcode-back" href="../../../api-doc/mosaic.filter.html#mosaic.filters.besselLowpassFilter.besselLowpassFilter.filterData">[docs]</a>	<span class="k">def</span> <span class="nf">filterData</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">icurr</span><span class="p">,</span> <span class="n">Fs</span><span class="p">):</span>
 		<span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">			Denoise an ionic current time-series and store it in self.eventData</span>
@@ -171,23 +173,26 @@
 		<span class="bp">self</span><span class="o">.</span><span class="n">eventData</span><span class="o">=</span><span class="n">icurr</span>
 		<span class="bp">self</span><span class="o">.</span><span class="n">Fs</span><span class="o">=</span><span class="n">Fs</span>
 
-		<span class="c1">#pad the data with 10x the transient time at both ends to manually eliminate edge effects of the filter</span>
-		<span class="c1">#for some reason I can&#39;t get good results using the pad method in filtfilt so manual it is</span>
-		<span class="c1">#this means there may be some numerical artefacts but they should be well below the level of noise</span>
-		
-		<span class="n">padding</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="mi">10</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">Fs</span><span class="o">/</span><span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">filterCutoff</span><span class="p">))</span>
-		<span class="n">paddedsignal</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">pad</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">eventData</span><span class="p">,</span><span class="n">pad_width</span><span class="o">=</span><span class="n">padding</span><span class="p">,</span><span class="n">mode</span><span class="o">=</span><span class="s1">&#39;edge&#39;</span><span class="p">)</span>
-		
-		<span class="n">b</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">sig</span><span class="o">.</span><span class="n">bessel</span><span class="p">(</span>
-							<span class="n">N</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">filterOrder</span><span class="p">,</span> 
-							<span class="n">Wn</span><span class="o">=</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">filterCutoff</span><span class="o">/</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">Fs</span><span class="p">)</span><span class="o">/</span><span class="mf">2.0</span><span class="p">)),</span> 
-							<span class="n">btype</span><span class="o">=</span><span class="s1">&#39;lowpass&#39;</span><span class="p">,</span> 
+		<span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">filterInit</span><span class="p">:</span>
+				<span class="bp">self</span><span class="o">.</span><span class="n">b</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">a</span><span class="o">=</span><span class="n">sig</span><span class="o">.</span><span class="n">bessel</span><span class="p">(</span>
+							<span class="n">N</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">filterOrder</span><span class="p">),</span> 
+							<span class="n">Wn</span><span class="o">=</span><span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">filterCutoff</span><span class="o">/</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">Fs</span><span class="p">)</span><span class="o">/</span><span class="mf">2.0</span><span class="p">)),</span> 
+							<span class="n">btype</span><span class="o">=</span><span class="s1">&#39;lowpass&#39;</span><span class="p">,</span>
 							<span class="n">analog</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> 
 							<span class="n">output</span><span class="o">=</span><span class="s1">&#39;ba&#39;</span><span class="p">,</span>
 							<span class="n">norm</span><span class="o">=</span><span class="s1">&#39;mag&#39;</span>
 						<span class="p">)</span>
+				<span class="bp">self</span><span class="o">.</span><span class="n">filterInit</span><span class="o">=</span><span class="kc">True</span>
 
-		<span class="bp">self</span><span class="o">.</span><span class="n">eventData</span><span class="o">=</span><span class="n">sig</span><span class="o">.</span><span class="n">filtfilt</span><span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">paddedsignal</span><span class="p">,</span> <span class="n">padtype</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;pad&#39;</span><span class="p">)[</span><span class="n">padding</span><span class="p">:</span><span class="o">-</span><span class="n">padding</span><span class="p">]</span></div>
+		<span class="c1">#pad the data with 10x the transient time at both ends to manually eliminate edge effects of the filter</span>
+		<span class="c1">#for some reason I can&#39;t get good results using the pad method in filtfilt so manual it is</span>
+		<span class="c1">#this means there may be some numerical artefacts but they should be well below the level of noise</span>
+
+		<span class="n">padding</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="mi">10</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">Fs</span><span class="o">/</span><span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">filterCutoff</span><span class="p">))</span>
+		<span class="n">paddedsignal</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">pad</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">eventData</span><span class="p">,</span><span class="n">pad_width</span><span class="o">=</span><span class="n">padding</span><span class="p">,</span><span class="n">mode</span><span class="o">=</span><span class="s1">&#39;edge&#39;</span><span class="p">)</span>
+		
+
+		<span class="bp">self</span><span class="o">.</span><span class="n">eventData</span><span class="o">=</span><span class="n">sig</span><span class="o">.</span><span class="n">filtfilt</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">b</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">a</span><span class="p">,</span> <span class="n">paddedsignal</span><span class="p">,</span> <span class="n">padtype</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;pad&#39;</span><span class="p">)[</span><span class="n">padding</span><span class="p">:</span><span class="o">-</span><span class="n">padding</span><span class="p">]</span></div>
 
 <div class="viewcode-block" id="besselLowpassFilter.formatsettings"><a class="viewcode-back" href="../../../api-doc/mosaic.filter.html#mosaic.filters.besselLowpassFilter.besselLowpassFilter.formatsettings">[docs]</a>	<span class="k">def</span> <span class="nf">formatsettings</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 		<span class="sd">&quot;&quot;&quot;</span>
@@ -198,7 +203,10 @@
 		<span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span> <span class="s1">&#39;</span><span class="se">\t\t</span><span class="s1">Filter type = </span><span class="si">{0}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="p">)</span> <span class="p">)</span>
 		<span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span> <span class="s1">&#39;</span><span class="se">\t\t</span><span class="s1">Filter order = </span><span class="si">{0}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">filterOrder</span><span class="p">)</span> <span class="p">)</span>
 		<span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span> <span class="s1">&#39;</span><span class="se">\t\t</span><span class="s1">Filter cutoff = </span><span class="si">{0}</span><span class="s1"> kHz&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">filterCutoff</span><span class="o">*</span><span class="mf">1e-3</span><span class="p">)</span> <span class="p">)</span>
-		<span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span> <span class="s1">&#39;</span><span class="se">\t\t</span><span class="s1">Decimation = </span><span class="si">{0}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">decimate</span><span class="p">)</span> <span class="p">)</span></div></div>
+		<span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span> <span class="s1">&#39;</span><span class="se">\t\t</span><span class="s1">Decimation = </span><span class="si">{0}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">decimate</span><span class="p">)</span> <span class="p">)</span></div>
+		
+	<span class="k">def</span> <span class="nf">_filterCutoffFrequency</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+		<span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">filterCutoff</span></div>
 		
 </pre></div>
 
@@ -228,7 +236,7 @@
 			<tr>
 				<td align="left">
 					<a href="../../../doc/Developers.html"><small><em>MOSAIC Developers</em></small></a> |
-					<a href="http://www.nist.gov/pml/div683/grp06/abalijepalli.cfm"><small><em>Contact</em></small></a> |
+					<a href="https://www.nist.gov/people/arvind-balijepalli"><small><em>Contact</em></small></a> |
 					<a href="../../../doc/Disclaimer.html"><small><em>Terms of Use</em></small></a>
 				</td>
 			<!-- </tr>

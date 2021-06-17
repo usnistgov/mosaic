@@ -3,8 +3,9 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>9. Extend MOSAIC &#8212; MOSAIC v2.1 documentation</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>9. Extend MOSAIC &#8212; MOSAIC vr2.1 documentation</title>
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <link rel="stylesheet" href="../_static/bootstrap-sphinx.css" type="text/css" />
     <link rel="stylesheet" type="text/css" href="../_static/graphviz.css" />
@@ -45,7 +46,7 @@
         </button>
         <a class="navbar-brand" href="../index.html"><span><img src="../_static/icon_48.png"></span>
            </a>
-        <span class="navbar-text navbar-version pull-left"><b>v2.1</b></span>
+        <span class="navbar-text navbar-version pull-left"><b>vr2.1</b></span>
       </div>
 
         <div class="collapse navbar-collapse nav-collapse">
@@ -112,10 +113,10 @@
   <div class="row">
     <div class="body col-md-12 content" role="main">
       
-  <div class="section" id="extend-projname">
+  <section id="extend-projname">
 <span id="extend-page"></span><h1><span class="section-number">9. </span>Extend <em>MOSAIC</em><a class="headerlink" href="#extend-projname" title="Permalink to this headline">¶</a></h1>
 <p><em>MOSAIC</em> was designed from the start using object oriented tools, which makes it easy to extend. <a class="reference internal" href="../api-doc/mosaic.meta.html#api-metaclass-page"><span class="std std-ref">Meta-Classes</span></a> define interfaces to five key parts of <em>MOSAIC</em>: time-series IO (<code class="xref py py-class docutils literal notranslate"><span class="pre">metaTrajIO</span></code>), time-series filtering (<code class="xref py py-class docutils literal notranslate"><span class="pre">metaIOFilter</span></code>), analysis output (<code class="xref py py-class docutils literal notranslate"><span class="pre">metaMDIO</span></code>), event partition and segmenting (<code class="xref py py-class docutils literal notranslate"><span class="pre">metaEventPartition</span></code>), and event processing (<code class="xref py py-class docutils literal notranslate"><span class="pre">metaEventProcessor</span></code>). Sub-classing any of these meta classes and implementing their  interface functions allows one to extend <em>MOSAIC</em> while maintaining compatibility with other parts of the program. We highlight these capabilities via two examples. In the first example, we show how one can extend <code class="xref py py-class docutils literal notranslate"><span class="pre">metaTrajIO</span></code> to read arbitrary binary files. In the second example, we implement a new top-level class that converts files to the comma separated value (CSV) format.</p>
-<div class="section" id="read-arbitrary-binary-data-files">
+<section id="read-arbitrary-binary-data-files">
 <h2><span class="section-number">9.1. </span>Read Arbitrary Binary Data Files<a class="headerlink" href="#read-arbitrary-binary-data-files" title="Permalink to this headline">¶</a></h2>
 <p>In this first example, we implement a class that can read an arbitrary binary data file and make its data available via the interface functions in <code class="xref py py-class docutils literal notranslate"><span class="pre">metaTrajIO</span></code>. This allows the newly implemented binary data to be used across <em>MOSAIC</em>. A complete listing of the code used in this example (<code class="xref py py-class docutils literal notranslate"><span class="pre">binTrajIO</span></code>) is available in the API documentation.</p>
 <p>The new binary IO class is implemented by sub-classing <code class="xref py py-class docutils literal notranslate"><span class="pre">metaTrajIO</span></code> as shown in the listing below.</p>
@@ -181,8 +182,8 @@
 <span class="p">}</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="define-top-level-functionality">
+</section>
+<section id="define-top-level-functionality">
 <h2><span class="section-number">9.2. </span>Define Top-Level Functionality<a class="headerlink" href="#define-top-level-functionality" title="Permalink to this headline">¶</a></h2>
 <p>New functionality can be added to <em>MOSAIC</em> by combining other parts of the code. One way of accomplishing this is by defining new top-level functionality as shown in the following example. We define a new class that converts data from one of the supported data formats to comma separated text files (CSV). A complete listing of the <code class="xref py py-class docutils literal notranslate"><span class="pre">ConvertToCSV</span></code> class in this example is available in the API documentation.</p>
 <p>The <em>__init__</em> function of <code class="xref py py-class docutils literal notranslate"><span class="pre">ConvertToCSV</span></code> class accepts two arguments: a trajIO object and the location to save the converted files. If the output directory is not specified, the data is saved in the same folder as the input data. The data conversion is performed by the <code class="xref py py-meth docutils literal notranslate"><span class="pre">Convert()</span></code> function, which saves the data in blocks controlled by the <em>blockSize</em> parameter. <code class="xref py py-meth docutils literal notranslate"><span class="pre">Convert()</span></code> saves each block to a new CSV file, named with the filename of the input data followed by an integer number (see the API documentation for <code class="xref py py-meth docutils literal notranslate"><span class="pre">_filename()</span></code> for additional details).</p>
@@ -232,8 +233,8 @@
 </pre></div>
 </div>
 <p>Finally, the <code class="xref py py-class docutils literal notranslate"><span class="pre">ConvertToCSV</span></code> class can be further extended to output arbitrary binary files in place of CSV by the simple extension shown below.</p>
-<script src="https://gist.github.com/abalijepalli/975148996058ee10d4d7.js">&nbsp;</script></div>
-</div>
+<script src="https://gist.github.com/abalijepalli/975148996058ee10d4d7.js">&nbsp;</script></section>
+</section>
 
 
     </div>
@@ -262,7 +263,7 @@
 			<tr>
 				<td align="left">
 					<a href="Developers.html"><small><em>MOSAIC Developers</em></small></a> |
-					<a href="http://www.nist.gov/pml/div683/grp06/abalijepalli.cfm"><small><em>Contact</em></small></a> |
+					<a href="https://www.nist.gov/people/arvind-balijepalli"><small><em>Contact</em></small></a> |
 					<a href="Disclaimer.html"><small><em>Terms of Use</em></small></a>
 				</td>
 			<!-- </tr>

@@ -3,8 +3,9 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>5. MOSAIC WEB &#8212; MOSAIC v2.1 documentation</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>5. MOSAIC WEB &#8212; MOSAIC vr2.1 documentation</title>
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <link rel="stylesheet" href="../_static/bootstrap-sphinx.css" type="text/css" />
     <link rel="stylesheet" type="text/css" href="../_static/graphviz.css" />
@@ -46,7 +47,7 @@
         </button>
         <a class="navbar-brand" href="../index.html"><span><img src="../_static/icon_48.png"></span>
            </a>
-        <span class="navbar-text navbar-version pull-left"><b>v2.1</b></span>
+        <span class="navbar-text navbar-version pull-left"><b>vr2.1</b></span>
       </div>
 
         <div class="collapse navbar-collapse nav-collapse">
@@ -113,7 +114,7 @@
   <div class="row">
     <div class="body col-md-12 content" role="main">
       
-  <div class="section" id="projname-web">
+  <section id="projname-web">
 <span id="mosaicweb-page"></span><h1><span class="section-number">5. </span><em>MOSAIC</em> WEB<a class="headerlink" href="#projname-web" title="Permalink to this headline">¶</a></h1>
 <p><em>MOSAIC</em>’s web interface is designed to allow you to easily setup and run an analysis, or to visualize and analyze the results of previous experiments. It contains the most commonly used features of <em>MOSAIC</em>.  The web interface consists of a series of screens that allow you to set up and run an analysis. The interface keeps track of all analysis within the current session so it is easy to go back and compare data sets. The web interface is designed to allow you to easily run the most common use cases. For more complicated analysis, please refer to the <a class="reference internal" href="ScriptingandAdvancedFeatures.html#scripting-page"><span class="std std-ref">Scripting and Advanced Features</span></a> section.</p>
 <p><strong>Opening the Web Interface</strong></p>
@@ -122,23 +123,25 @@
 </pre></div>
 </div>
 <p>This should start a local copy of the <em>MOSAIC</em> web server and open a new browser window that launches the web interface. Running servers can be accessed at anytime by opening a browser and entering <a class="reference external" href="http://localhost:5000">http://localhost:5000</a> in the adress bar.</p>
-<div class="section" id="interface-overview">
+<section id="interface-overview">
 <h2><span class="section-number">5.1. </span>Interface Overview<a class="headerlink" href="#interface-overview" title="Permalink to this headline">¶</a></h2>
 <p>The main screen of the <em>MOSAIC</em> web interface is the starting point for running new analyses or reviewing previous runs.</p>
-<div class="figure align-center" id="id1">
+<figure class="align-center" id="id1">
 <a class="reference internal image-reference" href="../_images/mosaicMain-01.png"><img alt="../_images/mosaicMain-01.png" src="../_images/mosaicMain-01.png" style="width: 50%;" /></a>
-<p class="caption"><span class="caption-text">The main screen of the <em>MOSAIC</em> web interface allows new analyses to be set up or previous runs to be retrieved.</span><a class="headerlink" href="#id1" title="Permalink to this image">¶</a></p>
-</div>
-<div class="figure align-center">
+<figcaption>
+<p><span class="caption-text">The main screen of the <em>MOSAIC</em> web interface allows new analyses to be set up or previous runs to be retrieved.</span><a class="headerlink" href="#id1" title="Permalink to this image">¶</a></p>
+</figcaption>
+</figure>
+<figure class="align-center">
 <a class="reference internal image-reference" href="../_images/mosaicLoadAnalysis.png"><img alt="../_images/mosaicLoadAnalysis.png" src="../_images/mosaicLoadAnalysis.png" style="width: 30%;" /></a>
-</div>
-</div>
-<div class="section" id="analysis-settings">
+</figure>
+</section>
+<section id="analysis-settings">
 <h2><span class="section-number">5.2. </span>Analysis Settings<a class="headerlink" href="#analysis-settings" title="Permalink to this headline">¶</a></h2>
 <p>The analysis settings interface displays the data trajectory and allows one to set up and run an analysis. Below we present an overview of the different settings available on this screen. The numbered sections correspond to the numbers in the figure below.</p>
-<div class="figure align-center">
+<figure class="align-center">
 <a class="reference internal image-reference" href="../_images/analysisSettings-01.png"><img alt="../_images/analysisSettings-01.png" src="../_images/analysisSettings-01.png" style="width: 60%;" /></a>
-</div>
+</figure>
 <p><strong>1. Time-Series</strong></p>
 <p>This section of the analysis settings shows a segment of the data time series. The length of time-series displayed is determined by <em>BlockSize</em> parameter in #2.</p>
 <ul class="simple">
@@ -173,17 +176,17 @@
 </div>
 <p><strong>5. Advanced Settings</strong></p>
 <p>This opens a dialog window to manually edit settings not otherwise accessible in the GUI. See the <a class="reference internal" href="settingsFile.html#settings-page"><span class="std std-ref">Settings File</span></a> section for further details.</p>
-<div class="figure align-center">
+<figure class="align-center">
 <a class="reference internal image-reference" href="../_images/analysisAdvancedSettings.png"><img alt="../_images/analysisAdvancedSettings.png" src="../_images/analysisAdvancedSettings.png" style="width: 30%;" /></a>
-</div>
+</figure>
 <p><strong>6. Start Analysis/Update Settings</strong></p>
 <p>Use this button to either start the analysis when it has a <em>Play</em> symbol or to update and validate any settings when it displays a <em>Check Mark</em>.</p>
-</div>
-<div class="section" id="analysis-results">
+</section>
+<section id="analysis-results">
 <h2><span class="section-number">5.3. </span>Analysis Results<a class="headerlink" href="#analysis-results" title="Permalink to this headline">¶</a></h2>
-<div class="figure align-center">
+<figure class="align-center">
 <a class="reference internal image-reference" href="../_images/analysisResultsContour-01.png"><img alt="../_images/analysisResultsContour-01.png" src="../_images/analysisResultsContour-01.png" style="width: 60%;" /></a>
-</div>
+</figure>
 <p><strong>1. Analysis Control</strong></p>
 <p><strong>Statistics</strong></p>
 <p>The <em>Statistics Window</em> is displayed when a new analysis is started and displays:</p>
@@ -194,20 +197,20 @@
 <li><p><strong>Analysis Time</strong>: The amount of data processed (in seconds).</p></li>
 </ul>
 <p><strong>2. Results View</strong></p>
-<div class="figure align-center">
+<figure class="align-center">
 <a class="reference internal image-reference" href="../_images/analysisResultPanels-01.png"><img alt="../_images/analysisResultPanels-01.png" src="../_images/analysisResultPanels-01.png" style="width: 90%;" /></a>
-</div>
+</figure>
 <p>This window shows the blockade depth histogram calculated from the meta-data output by <em>MOSAIC</em>.</p>
 <ul class="simple">
-<li><p><strong>Filter</strong>: The data displayed in the histogram can be restricted to events that fulfill specific user-defined criteria. For instance, the default filter <code class="docutils literal notranslate"><span class="pre">ResTime</span> <span class="pre">&gt;</span> <span class="pre">0.025</span></code> only includes events longer than 0.025 ms (or 25 <span class="math notranslate nohighlight">\(\mu s\)</span>). The GUI uses a <a class="reference external" href="https://en.wikipedia.org/wiki/SQL">SQL</a> <cite>select</cite> statement to restrict the events included in the histogram. The text in the <em>Filter</em> field represents the part of the query after the <cite>where</cite> clause, and allows the user to use standard <a class="reference external" href="https://en.wikipedia.org/wiki/SQL">SQL</a> syntax to narrow the results in the plot. See the <a class="reference internal" href="DatabaseStructure.html#working-with-sqlite-sec"><span class="std std-ref">Work with SQLite</span></a> section for details on <a class="reference external" href="https://en.wikipedia.org/wiki/SQL">SQL</a> syntax.</p></li>
+<li><p><strong>Filter</strong>: The data displayed in the histogram can be restricted to events that fulfill specific user-defined criteria. For instance, the default filter <code class="docutils literal notranslate"><span class="pre">ResTime</span> <span class="pre">&gt;</span> <span class="pre">0.025</span></code> only includes events longer than 0.025 ms (or 25 <span class="math notranslate nohighlight">\(\mu s\)</span>). The GUI uses a <a class="reference external" href="https://en.wikipedia.org/wiki/SQL">SQL</a> <cite>select</cite> statement to restrict the events included in the histogram. The text in the <em>Filter</em> field represents the part of the query after the <cite>where</cite> clause, and allows the user to use standard <a class="reference external" href="https://en.wikipedia.org/wiki/SQL">SQL</a> syntax to narrow the results in the plot. See the <a class="reference internal" href="WorkingWithSQLite.html#working-with-sqlite-sec"><span class="std std-ref">Work with SQLite</span></a> section for details on <a class="reference external" href="https://en.wikipedia.org/wiki/SQL">SQL</a> syntax.</p></li>
 <li><p><strong>Bins</strong>: The number of bins in the histogram are defined here. By default, 500 bins are used, but the user can change this necessary.</p></li>
 <li><p><strong>Detect Peaks</strong>: Checking <em>Detect Peaks</em> enables a wavelet-based peak detection algorithm. The wavelet level slider controls the sensitivity of the peak detection. Sliding it to the right will decrease the number of peaks picked up. The peaks detected are represented with red dots. Mousing over the detected peaks cause the coordinates of the peak to be displayed in the lower right hand corner of the window. The detected peaks can also be exported to a CSV file from the file menu <code class="docutils literal notranslate"><span class="pre">File&gt;Save</span> <span class="pre">Histogram</span></code>.</p></li>
 </ul>
-<div class="figure align-center">
+<figure class="align-center">
 <a class="reference internal image-reference" href="../_images/analysisResultsEventViewer-01.png"><img alt="../_images/analysisResultsEventViewer-01.png" src="../_images/analysisResultsEventViewer-01.png" style="width: 50%;" /></a>
-</div>
-</div>
-</div>
+</figure>
+</section>
+</section>
 
 
     </div>
@@ -236,7 +239,7 @@
 			<tr>
 				<td align="left">
 					<a href="Developers.html"><small><em>MOSAIC Developers</em></small></a> |
-					<a href="http://www.nist.gov/pml/div683/grp06/abalijepalli.cfm"><small><em>Contact</em></small></a> |
+					<a href="https://www.nist.gov/people/arvind-balijepalli"><small><em>Contact</em></small></a> |
 					<a href="Disclaimer.html"><small><em>Terms of Use</em></small></a>
 				</td>
 			<!-- </tr>

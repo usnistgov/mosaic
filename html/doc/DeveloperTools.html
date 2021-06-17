@@ -3,8 +3,9 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>13. Developer Tools &#8212; MOSAIC v2.1 documentation</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>13. Developer Tools &#8212; MOSAIC vr2.1 documentation</title>
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <link rel="stylesheet" href="../_static/bootstrap-sphinx.css" type="text/css" />
     <link rel="stylesheet" type="text/css" href="../_static/graphviz.css" />
@@ -45,7 +46,7 @@
         </button>
         <a class="navbar-brand" href="../index.html"><span><img src="../_static/icon_48.png"></span>
            </a>
-        <span class="navbar-text navbar-version pull-left"><b>v2.1</b></span>
+        <span class="navbar-text navbar-version pull-left"><b>vr2.1</b></span>
       </div>
 
         <div class="collapse navbar-collapse nav-collapse">
@@ -112,7 +113,7 @@
   <div class="row">
     <div class="body col-md-12 content" role="main">
       
-  <div class="section" id="developer-tools">
+  <section id="developer-tools">
 <span id="developer-tools-page"></span><h1><span class="section-number">13. </span>Developer Tools<a class="headerlink" href="#developer-tools" title="Permalink to this headline">¶</a></h1>
 <p>We provide several tools to simplify developing and extending <em>MOSAIC</em> including debug information logging and function timing and profiling tools. Developer settings can be modified from <code class="docutils literal notranslate"><span class="pre">mosaic/_globals.py</span></code>. The master switch to turn on developer mode is the <code class="docutils literal notranslate"><span class="pre">DeveloperMode</span></code> attribute. <strong>NOTE:</strong> When <code class="docutils literal notranslate"><span class="pre">DeveloperMode=False</span></code>, all remaining attributes in <code class="docutils literal notranslate"><span class="pre">mosaic/_globals.py</span></code> are ignored.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Control global settings</span>
@@ -125,7 +126,7 @@
 <span class="n">LogSizeBytes</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="mi">2</span><span class="o">&lt;&lt;</span><span class="mi">20</span><span class="p">)</span>         <span class="c1"># 2 MB</span>
 </pre></div>
 </div>
-<div class="section" id="debug-logs">
+<section id="debug-logs">
 <h2><span class="section-number">13.1. </span>Debug Logs<a class="headerlink" href="#debug-logs" title="Permalink to this headline">¶</a></h2>
 <p>When <code class="docutils literal notranslate"><span class="pre">DeveloperMode</span></code> is active, logs are simultaneously saved the <a class="reference external" href="http://www.sqlite.org/">SQLite</a> database, the console, and to a file using the <a class="reference external" href="https://www.python.org/">Python</a> logging module as described below. Details of the logging module can be found  <a class="reference external" href="https://docs.python.org/2/library/logging.html">here</a>. The logging facility provides different classes of messages with increasing severity, ranging from <code class="docutils literal notranslate"><span class="pre">debug</span></code> to help trace problems with code, <code class="docutils literal notranslate"><span class="pre">info</span></code> to provide feedback, <code class="docutils literal notranslate"><span class="pre">warn</span></code> to generate warnings, and <code class="docutils literal notranslate"><span class="pre">error</span></code> for error messages.</p>
 <p>By default log messages in <em>MOSAIC</em> with a level of <code class="docutils literal notranslate"><span class="pre">info</span></code> and higher are saved to the console and to the <a class="reference external" href="http://www.sqlite.org/">SQLite</a> database. On the other hand, <code class="docutils literal notranslate"><span class="pre">debug</span></code> messages are saved to a log file (see table below for log file locations). Since <code class="docutils literal notranslate"><span class="pre">debug</span></code> output can be verbose, the log file size is limited to the <code class="docutils literal notranslate"><span class="pre">LogSizeBytes</span></code> attribute in <code class="docutils literal notranslate"><span class="pre">mosaic/_globals.py</span></code>. The default value for this attribute is 2 MB. The log file is implemented with a rotating file structure, where  only the previous five log files are saved to conserve disk space.</p>
@@ -172,9 +173,9 @@
 <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="n">_d</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{0}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">queryString</span><span class="p">))</span>
 </pre></div>
 </td></tr></table></div>
-<div class="figure align-center">
+<figure class="align-center">
 <a class="reference internal image-reference" href="../_images/DevelLog.png"><img alt="../_images/DevelLog.png" src="../_images/DevelLog.png" style="width: 75%;" /></a>
-</div>
+</figure>
 <p>The above code results in the following log message.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="mi">2016</span><span class="o">-</span><span class="mi">06</span><span class="o">-</span><span class="mi">18</span> <span class="mi">12</span><span class="p">:</span><span class="mi">58</span><span class="p">:</span><span class="mi">11</span> <span class="n">DEBUG</span>    <span class="n">mosaic</span><span class="o">.</span><span class="n">sqlite3MDIO</span><span class="p">:</span>
         <span class="n">select</span> <span class="n">ProcessingStatus</span><span class="p">,</span> <span class="n">TimeSeries</span><span class="p">,</span> <span class="n">RCConstant</span><span class="p">,</span> <span class="n">EventDelay</span><span class="p">,</span> <span class="n">CurrentStep</span><span class="p">,</span> <span class="n">OpenChCurrent</span> <span class="kn">from</span> <span class="nn">metadata</span> <span class="n">limit</span> <span class="mi">10000</span>
@@ -192,8 +193,8 @@
         <span class="ne">NotImplementedError</span><span class="p">:</span> <span class="n">Feature</span> <span class="ow">not</span> <span class="n">implemented</span><span class="o">.</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="function-timing-and-profiling">
+</section>
+<section id="function-timing-and-profiling">
 <h2><span class="section-number">13.2. </span>Function Timing and Profiling<a class="headerlink" href="#function-timing-and-profiling" title="Permalink to this headline">¶</a></h2>
 <div class="highlight-python notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal"> 1</span>
 <span class="normal"> 2</span>
@@ -256,8 +257,8 @@
         <span class="p">(</span><span class="n">PrintStatistics</span><span class="p">:</span><span class="n">Stop</span><span class="p">:</span><span class="n">mosaic</span><span class="o">/</span><span class="n">metaEventPartition</span><span class="o">.</span><span class="n">py</span><span class="p">:</span><span class="mi">171</span><span class="p">)</span>
 </pre></div>
 </div>
-</div>
-</div>
+</section>
+</section>
 
 
     </div>
@@ -286,7 +287,7 @@
 			<tr>
 				<td align="left">
 					<a href="Developers.html"><small><em>MOSAIC Developers</em></small></a> |
-					<a href="http://www.nist.gov/pml/div683/grp06/abalijepalli.cfm"><small><em>Contact</em></small></a> |
+					<a href="https://www.nist.gov/people/arvind-balijepalli"><small><em>Contact</em></small></a> |
 					<a href="Disclaimer.html"><small><em>Terms of Use</em></small></a>
 				</td>
 			<!-- </tr>
