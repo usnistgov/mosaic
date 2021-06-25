@@ -55,6 +55,7 @@ logger=logging.getLogger(name="mwebserver")
 
 gAnalysisSessions=sessionManager.sessionManager()
 gStartTime=time.time()
+gDataLocation=mosaic.WebServerDataLocation
 
 @app.route("/")
 def index():
@@ -97,7 +98,7 @@ def processingAlgorithm():
 @gzipped
 @registerLaunch("new_analysis_mweb")
 def newAnalysis():
-	global gAnalysisSessions
+	global gAnalysisSessions, gDataLocation
 	# logger=mlog.mosaicLogging().getLogger(name=__name__)
 
 	try:
@@ -105,21 +106,23 @@ def newAnalysis():
 		params = dict(request.get_json())
 
 		dataPath = params.get('dataPath', None)
+		dataFilter = params.get('dataFilter', False)
 		settingsString = params.get('settingsString', None)
 		sessionID=params.get('sessionID', None)
 
 		if dataPath and not settingsString:		# brand new session
 			# print "brand new session: ", dataPath, settingsString, sessionID	
-			logger.info("/new-analysis: "+format_path(mosaic.WebServerDataLocation+'/'+dataPath))
+			logger.info("/new-analysis: "+format_path(gDataLocation+'/'+dataPath))
 
 			sessionID=gAnalysisSessions.newSession()
-			ma=mosaicAnalysis.mosaicAnalysis( format_path(mosaic.WebServerDataLocation+'/'+dataPath), sessionID) 
+			ma=mosaicAnalysis.mosaicAnalysis( format_path(gDataLocation+'/'+dataPath), sessionID, dataFilter=dataFilter ) 
 
-			gAnalysisSessions.addDataPath(sessionID, format_path(mosaic.WebServerDataLocation+'/'+dataPath) )
+			gAnalysisSessions.addDataPath(sessionID, format_path(gDataLocation+'/'+dataPath) )
 			gAnalysisSessions.addMOSAICAnalysisObject(sessionID, ma)
 		elif sessionID and settingsString:	# update settings
 			# print "update settings: ", dataPath, settingsString, sessionID
 			ma=gAnalysisSessions.getSessionAttribute(sessionID, 'mosaicAnalysisObject')
+			ma.dataFilter=dataFilter
 			ma.updateSettings(settingsString)
 
 			gAnalysisSessions.addSettingsString(sessionID, ma.analysisSettingsDict)
@@ -147,13 +150,13 @@ def newAnalysis():
 @gzipped
 @registerLaunch("load_analysis_mweb")
 def loadAnalysis():
-	global gAnalysisSessions
+	global gAnalysisSessions, gDataLocation
 
 	try:
 		params = dict(request.get_json())
 		db=params.get('databaseFile', None)
 
-		databaseFile = format_path(mosaic.WebServerDataLocation+'/'+db )
+		databaseFile = format_path(gDataLocation+'/'+db )
 		if not databaseFile:
 			raise InvalidPOSTRequest("Missing required parameter 'databaseFile'")
 
@@ -307,7 +310,7 @@ def analysisStats():
 
 @app.route('/analysis-log', methods=['POST'])
 def analysisLog():
-	global gAnalysisSessions
+	global gAnalysisSessions, gDataLocation
 
 	try:
 		params = dict(request.get_json())
@@ -315,7 +318,7 @@ def analysisLog():
 		sessionID=params['sessionID']
 		dbfile=gAnalysisSessions.getSessionAttribute(sessionID, 'databaseFile')
 
-		logstr=(rawQuery(dbfile, "select logstring from analysislog")[0][0]).replace(str(mosaic.WebServerDataLocation), "<Data Root>")
+		logstr=(rawQuery(dbfile, "select logstring from analysislog")[0][0]).replace(str(gDataLocation), "<Data Root>")
 
 		return jsonify(respondingURL='analysis-log', logText=logstr), 200
 	except (sessionManager.SessionNotFoundError, KeyError):
@@ -374,16 +377,16 @@ def pollAnalysisStatus():
 
 @app.route('/list-data-folders', methods=['POST'])
 def listDataFolders():
-	# logger=mlog.mosaicLogging().getLogger(name=__name__)
+	global gDataLocation
 
 	params = dict(request.get_json())
 
 	level=params.get('level', 'Data Root')
 	if level == 'Data Root':
-		folder=mosaic.WebServerDataLocation
+		folder=gDataLocation
 		logger.info("/list-data-folders: "+folder)
 	else:
-		folder=format_path(mosaic.WebServerDataLocation+'/'+level+'/')
+		folder=format_path(gDataLocation+'/'+level+'/')
 		logger.info("/list-data-folders: "+folder)
 		
 
@@ -393,7 +396,7 @@ def listDataFolders():
 		itemAttr={}
 		if os.path.isdir(item):
 			itemAttr['name']=os.path.relpath(item, folder)
-			itemAttr['relpath']=os.path.relpath(item, format_path(mosaic.WebServerDataLocation) )
+			itemAttr['relpath']=os.path.relpath(item, format_path(gDataLocation) )
 			itemAttr['desc']=_folderDesc(item)
 			itemAttr['modified']=time.strftime('%m/%d/%Y, %I:%M %p', time.localtime(os.path.getmtime(item)))
 
@@ -403,15 +406,17 @@ def listDataFolders():
 
 @app.route('/list-database-files', methods=['POST'])
 def listDatabaseFiles():
+	global gDataLocation
+	
 	params = dict(request.get_json())
 
 	level=params.get('level', 'Data Root')
 	logger.info("/list-database-files: "+str(level))
 	if level == 'Data Root':
-		folder=mosaic.WebServerDataLocation
+		folder=gDataLocation
 		logger.info("/list-database-files: "+folder)
 	else:
-		folder=format_path(mosaic.WebServerDataLocation+'/'+level+'/')
+		folder=format_path(gDataLocation+'/'+level+'/')
 		logger.info("/list-database-files: "+folder)
 
 	fileList=[]
@@ -420,7 +425,7 @@ def listDatabaseFiles():
 		itemAttr={}
 		if os.path.isdir(item):
 			itemAttr['name']=os.path.relpath(item, folder)
-			itemAttr['relpath']=os.path.relpath(item, format_path(mosaic.WebServerDataLocation) )
+			itemAttr['relpath']=os.path.relpath(item, format_path(gDataLocation) )
 			itemAttr['desc']=_folderDesc(item)
 			itemAttr['modified']=time.strftime('%m/%d/%Y, %I:%M %p', time.localtime(os.path.getmtime(item)))
 
@@ -428,7 +433,7 @@ def listDatabaseFiles():
 		else:
 			if _fileExtension(item)==".sqlite":
 				itemAttr['name']=os.path.relpath(item, folder)
-				itemAttr['relpath']=os.path.relpath(item, format_path(mosaic.WebServerDataLocation) )
+				itemAttr['relpath']=os.path.relpath(item, format_path(gDataLocation) )
 				itemAttr['desc']="SQLite database, {0}".format(_fileSize(item))
 				itemAttr['modified']=time.strftime('%m/%d/%Y, %I:%M %p', time.localtime(os.path.getmtime(item)))
 
