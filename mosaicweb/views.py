@@ -407,7 +407,7 @@ def listDataFolders():
 @app.route('/list-database-files', methods=['POST'])
 def listDatabaseFiles():
 	global gDataLocation
-	
+
 	params = dict(request.get_json())
 
 	level=params.get('level', 'Data Root')
@@ -455,6 +455,8 @@ def listActiveSessions():
 
 @app.route('/initialization', methods=['POST'])
 def initialization():
+	global gDataLocation
+
 	ga_cache=format_path(tempfile.gettempdir()+'/.ga')
 
 	params = dict(request.get_json())
@@ -481,7 +483,10 @@ def initialization():
 	else:
 		gauimode="False"
 
-	return jsonify( respondingURL="initialization", appAnalytics=gaenable, showAnalyticsOptions=gauimode, serverMode=mosaic.WebServerMode), 200
+	if mosaic.WebServerMode=='local':
+		return jsonify( respondingURL="initialization", appAnalytics=gaenable, showAnalyticsOptions=gauimode, serverMode=mosaic.WebServerMode, dataPath=gDataLocation), 200
+	else:
+		return jsonify( respondingURL="initialization", appAnalytics=gaenable, showAnalyticsOptions=gauimode, serverMode=mosaic.WebServerMode, dataPath=""), 200
 
 @app.route('/quit-local-server', methods=['POST'])
 def quitLocalServer():
