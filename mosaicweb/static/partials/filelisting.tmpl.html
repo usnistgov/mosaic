@@ -35,6 +35,10 @@
 		</md-dialog-content>
 
 		<md-dialog-actions layout="row">
+			<md-button ng-click="setDataPath()" style="color:#696969;" ng-show="mosaicConfigModel.serverMode=='local'">
+				Change Data Path
+			</md-button>
+			<span flex></span>
 			<md-button ng-click="cancel()" style="color:#696969;">
 				Cancel
 			</md-button>

@@ -82,8 +82,9 @@ angular.module('mosaicApp')
 			return factory;
 		}
 	)
-	.controller('fileListingCtrl', function($scope, $mdDialog, FileListingFactory) {
+	.controller('fileListingCtrl', function($scope, $mdDialog, mosaicConfigFactory, FileListingFactory, DataPathFactory) {
 			$scope.model = FileListingFactory;
+			$scope.mosaicConfigModel=mosaicConfigFactory;
 
 			$scope.hide = function() {
 				$mdDialog.hide({
@@ -124,4 +125,21 @@ angular.module('mosaicApp')
 			$scope.selectItem = function(index) {
 				$scope.model.selectedIndex=index;
 			};
+
+			$scope.setDataPath = function(ev) {
+				$mdDialog.show({
+					controller: 'dataPathCtrl',
+					templateUrl: 'static/partials/datapath.tmpl.html',
+					parent: angular.element(document.body),
+					targetEvent: ev,
+					clickOutsideToClose:true,
+					fullscreen: $scope.customFullscreen // Only for -xs, -sm breakpoints.
+				})
+				.then(function(response) {
+					
+				}, function() {
+					$scope.AnalysisLoading = false;
+				});
+			};
+
 	});
