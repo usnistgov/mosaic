@@ -1,0 +1,39 @@
+<md-dialog flex="50" aria-label="Data Path" >
+	<form name="dataPath">
+		<md-toolbar>
+			<div class="md-toolbar-tools md-whiteframe">
+				<h3><em>Set Data Path</em></h3>
+				<span flex></span>
+				<md-button class="md-icon-button" ng-click="cancel()">
+					<md-icon md-font-set="material-icons md-24">close</md-icon>
+				</md-button>
+			</div>
+		</md-toolbar>
+		<md-dialog-content>
+			<div layout="row" style="margin-left:6px; padding-bottom:0">
+				<form name="dataPathForm">
+					<md-input-container class="md-block" flex>
+						<label>Data Path</label>
+						<input ng-model="model.newDataPath" tabindex="0" style="color: #696969; font-size: 14px;" aria-label="Data Path"></input>
+					</md-input-container>
+					<!-- <md-button class="md-primary" type="button" style="padding:0; margin-top:4px;">
+						<input type="file" style="opacity: 0; position: absolute;" webkitdirectory directory multiple file-browser />
+						Choose
+					</md-button> -->
+				</form>
+			</div>
+		</md-dialog-content>
+
+		<md-dialog-actions layout="row">
+			<p md-colors="{color:'warn'}" style="font-size: 12px;">{{model.errorString}}</p>
+			<span flex></span>
+			<md-button ng-click="cancel()" style="color:#696969;">
+				Cancel
+			</md-button>
+			<md-button class="md-primary" type="submit" ng-disabled="model.newDataPath==model.dataPath"
+				ng-click="changePath()" style="margin-right:16px;">
+				Change
+			</md-button>
+		</md-dialog-actions>
+	</form>
+</md-dialog>
