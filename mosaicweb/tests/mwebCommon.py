@@ -4,9 +4,6 @@ import mosaic
 from mosaicweb import app
 from mosaic.utilities.util import eval_
 
-
-mosaic.WebServerDataLocation=mosaic.__path__[0]+"/.."
-
 class mwebSimpleCommonTest(unittest.TestCase):
 	def setUp(self):
 		pass
@@ -18,6 +15,7 @@ class mwebCommonTest(unittest.TestCase):
 	def setUp(self):
 		self.app = app.test_client()
 		self.app.testing = True 
+		self._post( '/set-data-path', dict( dataPath=mosaic.__path__[0]+"/.." )) 
 
 	def tearDown(self):
 		pass

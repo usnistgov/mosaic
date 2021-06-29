@@ -113,7 +113,7 @@ class Status_TestSuite(mwebSimpleCommonTest):
 		self.assertGreater(len(res["dbData"]), 0)
 
 	def test_mosaicAnalysisSetup(self):
-		ma=self._setupAnalysis(settingsString=open(mosaic.WebServerDataLocation+"/data/.settings", 'r').read())
+		ma=self._setupAnalysis(settingsString=open(mosaic.__path__[0]+"/.."+"/data/.settings", 'r').read())
 
 		self.assertEqual(ma.defaultSettings, False)
 
@@ -131,7 +131,7 @@ class Status_TestSuite(mwebSimpleCommonTest):
 		self.assertEqual(ma.defaultSettings, True)
 
 	def test_runAnalysis(self):
-		ma=self._setupAnalysis(settingsString=open(mosaic.WebServerDataLocation+"/data/.settings", 'r').read())
+		ma=self._setupAnalysis(settingsString=open(mosaic.__path__[0]+"/.."+"/data/.settings", 'r').read())
 
 		ma.runAnalysis()
 
@@ -195,9 +195,9 @@ class Status_TestSuite(mwebSimpleCommonTest):
 
 	def _setupAnalysis(self, **kwargs):
 		try:
-			ma=mosaicAnalysis.mosaicAnalysis(mosaic.WebServerDataLocation+"/data/", "session", kwargs["settingsString"])
+			ma=mosaicAnalysis.mosaicAnalysis(mosaic.__path__[0]+"/.."+"/data/", "session", kwargs["settingsString"])
 		except:
-			ma=mosaicAnalysis.mosaicAnalysis(mosaic.WebServerDataLocation+"/data/", "session") 
+			ma=mosaicAnalysis.mosaicAnalysis(mosaic.__path__[0]+"/.."+"/data/", "session") 
 		
 		self.assertEqual(ma.analysisStatus, False)
 		self.assertEqual(ma.returnMessageJSON, { 
