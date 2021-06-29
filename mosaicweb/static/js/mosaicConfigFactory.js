@@ -8,6 +8,7 @@ angular.module('mosaicApp')
 			factory.analysisRunning = false;
 			factory.newDataAvailable = false;
 			factory.serverMode = 'local';
+			factory.dataPath = "";
 			
 			return factory;
 		}

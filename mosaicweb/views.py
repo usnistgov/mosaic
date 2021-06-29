@@ -453,6 +453,33 @@ def listActiveSessions():
 		}
 	return jsonify( respondingURL='list-active-sessions', sessions=sessions ), 200
 
+@app.route('/get-data-path', methods=['POST'])
+def getDataPath():
+	global gDataLocation
+
+	if mosaic.WebServerMode=='local':
+		return jsonify( respondingURL="get-data-path", serverMode=mosaic.WebServerMode, dataPath=gDataLocation), 200
+	else:
+		return jsonify( respondingURL="get-data-path", serverMode=mosaic.WebServerMode, dataPath=""), 200
+
+@app.route('/set-data-path', methods=['POST'])
+def setDataPath():
+	global gDataLocation
+
+	params = dict(request.get_json())
+
+	tPath=params.get("dataPath", "")
+
+	if mosaic.WebServerMode=='local':
+		if os.path.exists(tPath):
+			gDataLocation=tPath
+			return jsonify( respondingURL="get-data-path", serverMode=mosaic.WebServerMode, dataPath=gDataLocation), 200
+		else:
+			return jsonify( respondingURL="get-data-path", dataPath=gDataLocation, errType='InvalidPathError', errSummary="Invalid path.", errText="The specified path is invalid."), 500
+	else:
+		return jsonify( respondingURL="get-data-path", serverMode=mosaic.WebServerMode, dataPath=""), 200
+
+
 @app.route('/initialization', methods=['POST'])
 def initialization():
 	global gDataLocation

@@ -95,7 +95,7 @@ angular.module('mosaicApp')
 						
 						factory.FsKHz=response.data.FsHz/1000.;
 
-						factory.lowpassFilter=response.data.dataFilter ? true: false;
+						//factory.lowpassFilter=response.data.dataFilter ? true: false;
 
 						factory.analysisSettings=angular.fromJson(response.data.settingsString);
 
@@ -267,7 +267,6 @@ angular.module('mosaicApp')
 			var settings = factory.analysisSettings;
 
 			if ( settings.hasOwnProperty('besselLowpassFilter') ) {
-				factory.lowpassFilter=true;
 				factory.lowpassFilterSettings=settings.besselLowpassFilter
 			} else {
 				factory.lowpassFilter=false;
@@ -524,7 +523,8 @@ angular.module('mosaicApp')
 			$scope.model.getSetupData("/new-analysis",
 				{
 					'settingsString': JSON.stringify($scope.model.analysisSettings),
-					'dataPath': $scope.model.dataPath
+					'dataPath': $scope.model.dataPath,
+					'dataFilter': $scope.model.lowpassFilter
 					// 'sessionID': $scope.mosaicConfigModel.sessionID
 				}
 			).then(function(response) {

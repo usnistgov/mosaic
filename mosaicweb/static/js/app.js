@@ -79,7 +79,7 @@ angular.module('mosaicApp', ['ngRoute', 'ngMaterial', 'ngMessages', 'ngAnimate',
 	}
 )
 .controller('AppCtrl', 
-	function($scope, $mdDialog, $mdMenu, $http, $location, $window, $q, $timeout, $document, mosaicConfigFactory, mosaicUtilsFactory, analysisSetupFactory, AnalysisFactory, FileListingFactory) {
+	function($scope, $mdDialog, $mdMenu, $http, $location, $window, $q, $timeout, $document, mosaicConfigFactory, mosaicUtilsFactory, analysisSetupFactory, AnalysisFactory, FileListingFactory, DataPathFactory) {
 		$scope.location = $location;
 
 		$scope.customFullscreen = true;
@@ -130,6 +130,8 @@ angular.module('mosaicApp', ['ngRoute', 'ngMaterial', 'ngMessages', 'ngAnimate',
 				$scope.showAnalyticsOptions = response.data.showAnalyticsOptions == "True" ? true : false;
 
 				mosaicConfigFactory.serverMode = response.data.serverMode;
+				mosaicConfigFactory.dataPath = response.data.dataPath;
+
 			}, function(error) {
 				$scope.AnalysisLoading = false;	
 				console.log(error);
@@ -240,6 +242,22 @@ angular.module('mosaicApp', ['ngRoute', 'ngMaterial', 'ngMessages', 'ngAnimate',
 			);			
 		};
 
+		$scope.setDataPath = function(ev) {
+			$mdDialog.show({
+				controller: 'dataPathCtrl',
+				templateUrl: 'static/partials/datapath.tmpl.html',
+				parent: angular.element(document.body),
+				targetEvent: ev,
+				clickOutsideToClose:true,
+				fullscreen: $scope.customFullscreen // Only for -xs, -sm breakpoints.
+			})
+			.then(function(response) {
+				
+			}, function() {
+				$scope.AnalysisLoading = false;
+			});
+		};
+
 		$scope.showConfirmDialog = function(title, content, okText, cancelText ) {
 			var deferred = $q.defer();
 
@@ -261,4 +279,3 @@ angular.module('mosaicApp', ['ngRoute', 'ngMaterial', 'ngMessages', 'ngAnimate',
 		// init
 		$scope.initializationPost({});
 	});
-		
