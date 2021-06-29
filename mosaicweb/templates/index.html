@@ -110,6 +110,12 @@
 							<md-icon md-font-set="material-icons md-24" ng-hide="appAnalytics" style="padding-left: 16px; color: white;">check</md-icon>
 						</md-button>
 					</md-menu-item>
+					<md-menu-item ng-click="$mdMenu.hide()" ng-show="mosaicConfigModel.serverMode=='local'">
+						<md-button ng-click="setDataPath()">
+							<md-icon md-font-set="material-icons md-24">library_add</md-icon>
+							<p class="md-primary">Set Data Path</p>
+						</md-button>
+					</md-menu-item>
 					<md-menu-item ng-click="$mdMenu.hide()">
 						<md-button ng-click="aboutMosaic()">
 							<md-icon md-font-set="material-icons md-24">info</md-icon>
@@ -149,6 +155,7 @@
 		<script src="/static/js/analysisSetupCtrl.js"></script>
 		<script src="/static/js/advancedSettingsCtrl.js"></script>
 		<script src="/static/js/fileListingCtrl.js"></script>
+		<script src="/static/js/dataPathCtrl.js"></script>
 		<script src="/static/js/analysisStatisticsCtrl.js"></script>
 		<script src="/static/js/eventViewerCtrl.js"></script>
 		<script src="/static/js/mosaicUtilsFactory.js"></script>
