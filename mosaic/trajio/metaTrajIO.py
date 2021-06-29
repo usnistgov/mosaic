@@ -7,6 +7,7 @@
 	:License:	See LICENSE.TXT	
 	:ChangeLog:
 	.. line-block::
+		6/10/21 	AB 	Allow filter settings to be passed as keyword argument.
 		4/13/17 	AB 	Negative end values enable runnning an analysis on all available data.
 		7/29/16 	AB 	Add additional filtering when constructing a list of data files to process.
 		1/27/17 	AB 	Perform a lexical sort of input data files
@@ -83,6 +84,7 @@ class metaTrajIO(object, metaclass=ABCMeta):
 				- `end` : 			Data end point in seconds.
 				- `datafilter` :	Handle to the algorithm to use to filter the data. If no algorithm is specified, datafilter	is None and no filtering is performed.
 				- `dcOffset` :		Subtract a DC offset from the ionic current data.
+				- `filtersettings`:	Dict containing low pass filter settings (optional: if not provided filter settings will be loaded from the settings file. If no settings are found, `datafilter` will be turned off.)
 		
 
 			:Properties:
@@ -544,8 +546,12 @@ class metaTrajIO(object, metaclass=ABCMeta):
 				self.popdata( int((self.startIndex-1)%self.CHUNKSIZE) )
 
 	def _setupDataFilter(self):
-		filtername=str(self.datafilter.__name__.split('.')[-1])
-		filtsettings=settings.settings( self.datPath ).getSettings(filtername)
+		if hasattr(self, 'filtersettings'):
+			filtsettings=self.filtersettings
+		else:
+			filtername=str(self.datafilter.__name__.split('.')[-1])
+			filtsettings=settings.settings( self.datPath ).getSettings(filtername)
+		
 		if filtsettings=={}:
 			self.logger.warning("WARNING: No settings found for '{0}'. Data filtering is disabled".format(str(self.datafilter.__name__)))
 			self.dataFilter=False
