@@ -39,6 +39,7 @@ import glob
 import json
 import numpy as np
 import pprint
+import gc
 
 class DataTypeNotSupportedError(Exception):
 	pass
@@ -62,7 +63,12 @@ class mosaicAnalysis:
 		self.processingAlgorithm=''
 
 		self.trajIOHandle=None
-		self.dataFilter=False
+		
+		try:
+			self.dataFilter=kwargs['dataFilter']
+		except:
+			self.dataFilter=False
+
 		self.partitionHandle=es.eventSegment
 		self.processHandle=None
 
@@ -140,6 +146,7 @@ class mosaicAnalysis:
 		self._loadSettings(settingsString=settingsString)
 
 	def _writeSettings(self):
+		print(self.analysisSettingsDict)
 		with open(self.dataPath+"/.settings", 'w') as f:
 			f.write( json.dumps(self.analysisSettingsDict, indent=4) )
 
@@ -199,11 +206,18 @@ class mosaicAnalysis:
 
 			self.blockSize=float(self.analysisSettingsDict['eventSegment']['blockSizeSec'])
 
-			if "besselLowpassFilter" in self.analysisSettingsDict.keys():
-				self.dataFilter=True
-				self.trajIOObject=self.trajIOHandle(dirname=self.dataPath, datafilter=besselLowpassFilter.besselLowpassFilter, **trajIOSettings)
+			if self.dataFilter:
+				if "besselLowpassFilter" in self.analysisSettingsDict.keys():
+					self.trajIOObject=self.trajIOHandle(
+								dirname=self.dataPath, 
+								datafilter=besselLowpassFilter.besselLowpassFilter, 
+								filtersettings=self.analysisSettingsDict["besselLowpassFilter"], 
+								**trajIOSettings
+							)
+				else:
+					self.datafilter=False
+					self.trajIOObject=self.trajIOHandle(dirname=self.dataPath, **trajIOSettings)
 			else:
-				self.dataFilter=False
 				self.trajIOObject=self.trajIOHandle(dirname=self.dataPath, **trajIOSettings)
 
 		except:
