@@ -1,6 +1,7 @@
 # -*- mode: python -*-
 import sys
 from mosaic.utilities.resource_path import resource_path, format_path
+sys.setrecursionlimit(5000)
 
 a = Analysis(
 				['../runMOSAIC.py'],
