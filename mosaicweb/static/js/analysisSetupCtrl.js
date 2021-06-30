@@ -323,7 +323,11 @@ angular.module('mosaicApp')
 					settings.abfTrajIO.start=0.0;
 					settings.abfTrajIO.dcOffset=0.0
 			};
-			
+
+			if (factory.lowpassFilter) {
+				settings.besselLowpassFilter=factory.lowpassFilterSettings;
+			};
+			// console.log(settings)
 		};
 
 		factory.getSettingsString = function() {
@@ -520,6 +524,7 @@ angular.module('mosaicApp')
 
 		$scope.updateControls = function() {
 			$scope.model.reconcileSettings();
+			// console.log($scope.model.analysisSettings)
 			$scope.model.getSetupData("/new-analysis",
 				{
 					'settingsString': JSON.stringify($scope.model.analysisSettings),
