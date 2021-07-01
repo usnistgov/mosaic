@@ -32,7 +32,37 @@ The main screen of the |projname| web interface is the starting point for runnin
 
 
 .. figure:: ../images/mosaicweb/mosaicLoadAnalysis.png
-  :width: 30 %
+  :width: 50 %
+  :align: center
+
+
+Data Source Path
+------------------
+
+The path of the data source can be changed when |projname| is run in local mode, i.e., when it is run entirely on a local machine. This is the default configuration of the pre-compiled binaries. When running |projname| from source it can be enabled by editing the global.json file.
+
+The data source path can be edited when starting a new analysis or loading a previous analysis by clicking the CHANGE DATA PATH button shown in the figure below. 
+
+.. figure:: ../images/mosaicweb/mosaicLoadAnalysisDataPath.png
+  :width: 50 %
+  :align: center
+
+The setting can also be accessed from the overflow menu at the top right and then clicking Set Data Path as seen from the figure below.
+
+.. figure:: ../images/mosaicweb/mosaicSetDataPath.png
+  :width: 60 %
+  :align: center
+
+The new source data path can be entered in the resulting dialog. Click CHANGE to save the new path.
+
+.. figure:: ../images/mosaicweb/DataPathDialog.png
+  :width: 50 %
+  :align: center
+
+If the new path is invalid, an error message will be displayed and the path will not be updated as seen below.
+
+.. figure:: ../images/mosaicweb/DataPathError.png
+  :width: 50 %
   :align: center
 
 
