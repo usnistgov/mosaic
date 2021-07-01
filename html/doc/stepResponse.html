@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>ADEPT 2-State &#8212; MOSAIC v2.2 documentation</title>
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/bootstrap-sphinx.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/graphviz.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/style.css" />
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+
+<meta charset='utf-8'>
+<meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
+<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
+<meta name="apple-mobile-web-app-capable" content="yes">
+<script type="text/javascript" src="../_static/js/jquery-1.11.0.min.js "></script>
+<script type="text/javascript" src="../_static/js/jquery-fix.js "></script>
+<script type="text/javascript" src="../_static/bootstrap-3.3.7/js/bootstrap.min.js "></script>
+<script type="text/javascript" src="../_static/bootstrap-sphinx.js "></script>
+
+	<script async type="text/javascript" id="_fed_an_ua_tag" src="https://dap.digitalgov.gov/Universal-Federated-Analytics-Min.js?agency=DOC&subagency=NIST&pua=UA-66610693-1&yt=true&exts=ppsx,pps,f90,sch,rtf,wrl,txz,m1v,xlsm,msi,xsd,f,tif,eps,mpg,xml,pl,xlt,c"></script>	
+
+	<meta name="theme-color" content="#283593">
+
+  </head><body>
+
+  <div id="navbar" class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="../index.html"><span><img src="../_static/icon_48.png"></span>
+           </a>
+        <span class="navbar-text navbar-version pull-left"><b>v2.2</b></span>
+      </div>
+
+        <div class="collapse navbar-collapse nav-collapse">
+          <ul class="nav navbar-nav">
+            
+                <li><a href="../../latex/MOSAIC.pdf">Download PDF</a></li>
+                <li><a href="mailingList.html">Mailing List</a></li>
+                <li><a href="//github.com/usnistgov/mosaic">Develop</a></li>
+                <li><a href="//github.com/usnistgov/mosaic/issues">Issue Tracker</a></li>
+            
+            
+              <li class="dropdown globaltoc-container">
+  <a role="button"
+     id="dLabelGlobalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="../index.html">Contents <b class="caret"></b></a>
+  <ul class="dropdown-menu globaltoc"
+      role="menu"
+      aria-labelledby="dLabelGlobalToc"><ul>
+<li class="toctree-l1"><a class="reference internal" href="Introduction.html">1. Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Algorithms.html">2. Data Processing Algorithms in <em>MOSAIC</em></a></li>
+<li class="toctree-l1"><a class="reference internal" href="GettingStarted.html">3. Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="GraphicalInterface.html">4. <em>MOSAIC</em> GUI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="WebInterface.html">5. <em>MOSAIC</em> WEB</a></li>
+<li class="toctree-l1"><a class="reference internal" href="settingsFile.html">6. Settings File</a></li>
+<li class="toctree-l1"><a class="reference internal" href="DatabaseStructure.html">7. Database Structure and Query Syntax</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ScriptingandAdvancedFeatures.html">8. Scripting and Advanced Features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Extend.html">9. Extend <em>MOSAIC</em></a></li>
+<li class="toctree-l1"><a class="reference internal" href="PublicationFigures.html">10. Publication Quality Figures</a></li>
+<li class="toctree-l1"><a class="reference internal" href="AdvancedAnalysis.html">11. Advanced Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Addons.html">12. Addons</a></li>
+<li class="toctree-l1"><a class="reference internal" href="DeveloperTools.html">13. Developer Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="apidocs.html">14. API Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="References.html">15. Bibliography</a></li>
+</ul>
+</ul>
+</li>
+              
+            
+            
+            
+            
+            
+              <li class="hidden-sm"></li>
+            
+          </ul>
+
+          
+            
+<form class="navbar-form navbar-right" action="../search.html" method="get">
+ <div class="form-group">
+  <input type="text" name="q" class="form-control" placeholder="Search" />
+ </div>
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+          
+        </div>
+    </div>
+  </div>
+
+<div class="container">
+  <div class="row">
+    <div class="body col-md-12 content" role="main">
+      
+  <section id="adept-2-state">
+<span id="stepresponse-page"></span><h1>ADEPT 2-State<a class="headerlink" href="#adept-2-state" title="Permalink to this headline">¶</a></h1>
+<p>This algorithm limits the generalized algorithm for state-detection <span class="bibtex" id="id1">[Balijepalli:2014ft]</span> to cases with a single state as seen in the figure below. This simplified approach speeds up the analysis considerably and is appropriate to use for many applications, for example the detection of PEG, small molecules, DNA homopolymers, etc. The <code class="xref py py-class docutils literal notranslate"><span class="pre">adept2State</span></code> class uses a simplified form of the expression for the ionic current across a nanopore as shown below. Settings that control the fit are defined through the settings file and are described in more detail in the <a class="reference internal" href="settingsFile.html#algorithm-settings-sec"><span class="std std-ref">Optimizing Settings</span></a> section. This functional form is fit to a time-series from a single event to recover optimal parameters for the mdoel.</p>
+<div class="math notranslate nohighlight">
+\[i(t)=i_0 + a \left[ \left(e^{-(t+\mu_1)/\tau} -1\right) H\left(t-\mu_1\right)  + \left(1- e^{-(t+\mu_2)/\tau} \right)H\left(t-\mu_2\right) \right]\]</div>
+<p>This simplification speeds up the analysis for two state events like the PEG event in the figure below. The figure shows the results of the fit (or meta-data) superimposed on the time-series of a single event.</p>
+<figure class="align-center">
+<a class="reference internal image-reference" href="../_images/StepResponse.png"><img alt="../_images/StepResponse.png" src="../_images/StepResponse.png" style="width: 50%;" /></a>
+</figure>
+<section id="algorithm-settings">
+<h2>Algorithm Settings<a class="headerlink" href="#algorithm-settings" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="metadata-output">
+<h2>Metadata Output<a class="headerlink" href="#metadata-output" title="Permalink to this headline">¶</a></h2>
+<p>Meta-data for individual events generated by <code class="xref py py-class docutils literal notranslate"><span class="pre">adept2State</span></code> can be queried using <a class="reference external" href="http://www.sqlite.org/">SQLite</a> as described in the <a class="reference internal" href="DatabaseStructure.html#database-page"><span class="std std-ref">Database Structure and Query Syntax</span></a> section. A list of meta-data stored by the step response algorithm is given below.</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 28%" />
+<col style="width: 25%" />
+<col style="width: 46%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p><strong>Column Name</strong></p></th>
+<th class="head"><p><strong>Column Type</strong></p></th>
+<th class="head"><p><strong>Description</strong></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>recIDX</p>
+<p>ProcessingStatus</p>
+<p>OpenChCurrent</p>
+<p>BlockedCurrent</p>
+<p>EventStart</p>
+<p>EventEnd</p>
+<p>BlockDepth</p>
+<p>ResTime</p>
+<p>RCConstant1</p>
+<p>RCConstant2</p>
+<p>AbsEventStart</p>
+<p>ReducedChiSquared</p>
+<p>ProcessTime</p>
+<p>TimeSeries</p>
+</td>
+<td><p>INTEGER</p>
+<p>TEXT</p>
+<p>REAL</p>
+<p>REAL</p>
+<p>REAL</p>
+<p>REAL</p>
+<p>REAL</p>
+<p>REAL</p>
+<p>REAL</p>
+<p>REAL</p>
+<p>REAL</p>
+<p>REAL</p>
+<p>REAL</p>
+<p>REAL_LIST</p>
+</td>
+<td><p>Record index.</p>
+<p>Status of the analysis.</p>
+<p>Open channel current in pA.</p>
+<p>Blocked state current in pA.</p>
+<p>Event start in ms.</p>
+<p>Event end in ms.</p>
+<p>BlockedCurrent/OpenChCurrent.</p>
+<p>EventEnd-EventStart in ms.</p>
+<p>Downstroke RC constant in ms.</p>
+<p>Upstroke RC constant in ms.</p>
+<p>Global event start time in ms.</p>
+<p>Reduced Chi-squared of fit.</p>
+<p>Event processing time in ms.</p>
+<p>(OPTIONAL) Event time-series.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+
+
+    </div>
+      
+  </div>
+</div>
+<!-- 
+<footer class="footer">
+  <div class="container">
+    <p class="pull-right">
+      <a href="#">Back to top</a>
+      
+    </p>
+    <p>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 3.5.4.<br/>
+    </p>
+  </div>
+</footer> -->
+<script type="text/javascript"
+	src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<div class="footer" style="vertical-align: center" align="center">
+		<table width="90%" style="vertical-align: center">
+			<col width=40%>
+			<col width=60%>
+			<tr>
+				<td align="left">
+					<a href="Developers.html"><small><em>MOSAIC Developers</em></small></a> |
+					<a href="https://www.nist.gov/people/arvind-balijepalli"><small><em>Contact</em></small></a> |
+					<a href="Disclaimer.html"><small><em>Terms of Use</em></small></a>
+				</td>
+			<!-- </tr>
+			<tr> -->
+				<td align="right">
+					<a target="_blank" href="http://www.nist.gov/public_affairs/privacy.cfm#privpolicy"><small>Privacy Policy</small></a> |
+					<a target="_blank" href="http://www.nist.gov/public_affairs/privacy.cfm#secnot"><small>Security Notice</small></a> |
+					<a href="http://www.nist.gov/public_affairs/privacy.cfm#accesstate"><small>Accessibility Statement</small></a> |
+					<a target="_blank" href="mailto:data@nist.gov?subject=Feedback%20on%20Web%20Site%20Template"><small>Send feedback</small></a>
+					<br/>
+				</td>
+			</tr>
+		</table>
+
+		<br />
+		<a href="http://www.nist.gov/"><small><em>National Institute of Standards and Technology</em></small></a>
+		<!-- <a href="http://www.nist.gov"><img src="_static/nist_logo.png" width="30%" alt="National Institute of Standards and Technology"></a> -->
+
+</div>
+
+  </body>
+</html>

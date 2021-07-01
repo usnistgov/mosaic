@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>14.1.7. Data Output &#8212; MOSAIC v2.2 documentation</title>
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/bootstrap-sphinx.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/graphviz.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/style.css" />
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="14.1.8. Miscellaneous" href="mosaic.misc.html" />
+    <link rel="prev" title="14.1.6. Event Processing" href="mosaic.processing.html" />
+
+<meta charset='utf-8'>
+<meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
+<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
+<meta name="apple-mobile-web-app-capable" content="yes">
+<script type="text/javascript" src="../_static/js/jquery-1.11.0.min.js "></script>
+<script type="text/javascript" src="../_static/js/jquery-fix.js "></script>
+<script type="text/javascript" src="../_static/bootstrap-3.3.7/js/bootstrap.min.js "></script>
+<script type="text/javascript" src="../_static/bootstrap-sphinx.js "></script>
+
+	<script async type="text/javascript" id="_fed_an_ua_tag" src="https://dap.digitalgov.gov/Universal-Federated-Analytics-Min.js?agency=DOC&subagency=NIST&pua=UA-66610693-1&yt=true&exts=ppsx,pps,f90,sch,rtf,wrl,txz,m1v,xlsm,msi,xsd,f,tif,eps,mpg,xml,pl,xlt,c"></script>	
+
+	<meta name="theme-color" content="#283593">
+
+  </head><body>
+
+  <div id="navbar" class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="../index.html"><span><img src="../_static/icon_48.png"></span>
+           </a>
+        <span class="navbar-text navbar-version pull-left"><b>v2.2</b></span>
+      </div>
+
+        <div class="collapse navbar-collapse nav-collapse">
+          <ul class="nav navbar-nav">
+            
+                <li><a href="../../latex/MOSAIC.pdf">Download PDF</a></li>
+                <li><a href="../doc/mailingList.html">Mailing List</a></li>
+                <li><a href="//github.com/usnistgov/mosaic">Develop</a></li>
+                <li><a href="//github.com/usnistgov/mosaic/issues">Issue Tracker</a></li>
+            
+            
+              <li class="dropdown globaltoc-container">
+  <a role="button"
+     id="dLabelGlobalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="../index.html">Contents <b class="caret"></b></a>
+  <ul class="dropdown-menu globaltoc"
+      role="menu"
+      aria-labelledby="dLabelGlobalToc"><ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../doc/Introduction.html">1. Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../doc/Algorithms.html">2. Data Processing Algorithms in <em>MOSAIC</em></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../doc/GettingStarted.html">3. Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../doc/GraphicalInterface.html">4. <em>MOSAIC</em> GUI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../doc/WebInterface.html">5. <em>MOSAIC</em> WEB</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../doc/settingsFile.html">6. Settings File</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../doc/DatabaseStructure.html">7. Database Structure and Query Syntax</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../doc/ScriptingandAdvancedFeatures.html">8. Scripting and Advanced Features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../doc/Extend.html">9. Extend <em>MOSAIC</em></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../doc/PublicationFigures.html">10. Publication Quality Figures</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../doc/AdvancedAnalysis.html">11. Advanced Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../doc/Addons.html">12. Addons</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../doc/DeveloperTools.html">13. Developer Tools</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../doc/apidocs.html">14. API Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../doc/References.html">15. Bibliography</a></li>
+</ul>
+</ul>
+</li>
+              
+            
+            
+            
+            
+            
+              <li class="hidden-sm"></li>
+            
+          </ul>
+
+          
+            
+<form class="navbar-form navbar-right" action="../search.html" method="get">
+ <div class="form-group">
+  <input type="text" name="q" class="form-control" placeholder="Search" />
+ </div>
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+          
+        </div>
+    </div>
+  </div>
+
+<div class="container">
+  <div class="row">
+    <div class="body col-md-12 content" role="main">
+      
+  <section id="data-output">
+<h1><span class="section-number">14.1.7. </span>Data Output<a class="headerlink" href="#data-output" title="Permalink to this headline">¶</a></h1>
+<section id="mosaic-mdio-sqlite3mdio-module">
+<h2><span class="section-number">14.1.7.1. </span>mosaic.mdio.sqlite3MDIO module<a class="headerlink" href="#mosaic-mdio-sqlite3mdio-module" title="Permalink to this headline">¶</a></h2>
+<div class="graphviz"><img src="../_images/inheritance-0c6bbce25df507444d39cfa887db985514c5a226.png" alt="Inheritance diagram of mosaic.mdio.sqlite3MDIO" usemap="#inheritance299f813db9" class="inheritance graphviz" /></div>
+<map id="inheritance299f813db9" name="inheritance299f813db9">
+<area shape="rect" id="node1" href="mosaic.meta.html#mosaic.mdio.metaMDIO.metaMDIO" target="_top" title=".. warning:: |metaclass|" alt="" coords="11,55,166,80"/>
+<area shape="rect" id="node3" href="#mosaic.mdio.sqlite3MDIO.sqlite3MDIO" target="_top" title="sqlite3MDIO.sqlite3MDIO" alt="" coords="220,55,392,80"/>
+<area shape="rect" id="node2" href="#mosaic.mdio.sqlite3MDIO.data_record" target="_top" title="Smart data record structure that automatically encodes/decodes data for storage" alt="" coords="5,5,172,31"/>
+</map><span class="target" id="module-mosaic.mdio.sqlite3MDIO"></span><p>A class that extends metaMDIO to implement SQLite support for metadata storage.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Created</dt>
+<dd class="field-odd"><p>9/28/2014</p>
+</dd>
+<dt class="field-even">Author</dt>
+<dd class="field-even"><p>Arvind Balijepalli &lt;<a class="reference external" href="mailto:arvind&#46;balijepalli&#37;&#52;&#48;nist&#46;gov">arvind<span>&#46;</span>balijepalli<span>&#64;</span>nist<span>&#46;</span>gov</a>&gt;</p>
+</dd>
+<dt class="field-odd">License</dt>
+<dd class="field-odd"><p>See LICENSE.TXT</p>
+</dd>
+<dt class="field-even">ChangeLog</dt>
+<dd class="field-even"><p></p></dd>
+</dl>
+<div class="line-block">
+<div class="line">3/25/17         AB      Allow an optional argument to pass a database name.</div>
+<div class="line">12/6/15         AB      Add sampling frequency to analysis info table</div>
+<div class="line">8/5/15          AB      Added a function to export database tables to CSV</div>
+<div class="line">8/5/15          AB      Misc bug fixes</div>
+<div class="line">4/1/15          AB      Added an estimate of data length to the DB</div>
+<div class="line">3/23/15         AB      Added a raw query function that does not automatically decode column data.</div>
+<div class="line">11/9/14         AB  Implemented the analysis log I/O interface for sqlite3 databases.</div>
+<div class="line">9/28/14         AB      Initial version</div>
+</div>
+<dl class="py class">
+<dt id="mosaic.mdio.sqlite3MDIO.data_record">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">mosaic.mdio.sqlite3MDIO.</span></code><code class="sig-name descname"><span class="pre">data_record</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data_label</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data_t</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/mdio/sqlite3MDIO.html#data_record"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mosaic.mdio.sqlite3MDIO.data_record" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code></a></p>
+<p>Smart data record structure that automatically encodes/decodes data for storage
+in a sqlite3 DB.</p>
+<dl class="py method">
+<dt id="mosaic.mdio.sqlite3MDIO.data_record.update">
+<code class="sig-name descname"><span class="pre">update</span></code><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param"><span class="pre">E</span></em>, <span class="optional">]</span><em class="sig-param"><span class="pre">**F</span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None.</span>&#160; <span class="pre">Update</span> <span class="pre">D</span> <span class="pre">from</span> <span class="pre">dict/iterable</span> <span class="pre">E</span> <span class="pre">and</span> <span class="pre">F.</span><a class="reference internal" href="../_modules/mosaic/mdio/sqlite3MDIO.html#data_record.update"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mosaic.mdio.sqlite3MDIO.data_record.update" title="Permalink to this definition">¶</a></dt>
+<dd><p>If E is present and has a .keys() method, then does:  for k in E: D[k] = E[k]
+If E is present and lacks a .keys() method, then does:  for k, v in E: D[k] = v
+In either case, this is followed by: for k in F:  D[k] = F[k]</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="mosaic.mdio.sqlite3MDIO.sqlite3MDIO">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">mosaic.mdio.sqlite3MDIO.</span></code><code class="sig-name descname"><span class="pre">sqlite3MDIO</span></code><a class="reference internal" href="../_modules/mosaic/mdio/sqlite3MDIO.html#sqlite3MDIO"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mosaic.mdio.sqlite3MDIO.sqlite3MDIO" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="mosaic.meta.html#mosaic.mdio.metaMDIO.metaMDIO" title="mosaic.mdio.metaMDIO.metaMDIO"><code class="xref py py-class docutils literal notranslate"><span class="pre">mosaic.mdio.metaMDIO.metaMDIO</span></code></a></p>
+<dl class="py method">
+<dt id="mosaic.mdio.sqlite3MDIO.sqlite3MDIO.closeDB">
+<code class="sig-name descname"><span class="pre">closeDB</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/mdio/sqlite3MDIO.html#sqlite3MDIO.closeDB"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mosaic.mdio.sqlite3MDIO.sqlite3MDIO.closeDB" title="Permalink to this definition">¶</a></dt>
+<dd><div class="admonition important">
+<p class="admonition-title">Important</p>
+<p><strong>Abstract method:</strong> This method must be implemented by a sub-class.</p>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt id="mosaic.mdio.sqlite3MDIO.sqlite3MDIO.csvString">
+<code class="sig-name descname"><span class="pre">csvString</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">query</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/mdio/sqlite3MDIO.html#sqlite3MDIO.csvString"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mosaic.mdio.sqlite3MDIO.sqlite3MDIO.csvString" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return database records that match the specified query as a CSV formatted string.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="mosaic.mdio.sqlite3MDIO.sqlite3MDIO.exportToCSV">
+<code class="sig-name descname"><span class="pre">exportToCSV</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">query</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/mdio/sqlite3MDIO.html#sqlite3MDIO.exportToCSV"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mosaic.mdio.sqlite3MDIO.sqlite3MDIO.exportToCSV" title="Permalink to this definition">¶</a></dt>
+<dd><p>Export database records that match the specified query to a CSV flat file.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="mosaic.mdio.sqlite3MDIO.sqlite3MDIO.queryDB">
+<code class="sig-name descname"><span class="pre">queryDB</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">query</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/mdio/sqlite3MDIO.html#sqlite3MDIO.queryDB"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mosaic.mdio.sqlite3MDIO.sqlite3MDIO.queryDB" title="Permalink to this definition">¶</a></dt>
+<dd><div class="admonition important">
+<p class="admonition-title">Important</p>
+<p><strong>Abstract method:</strong> This method must be implemented by a sub-class.</p>
+</div>
+<p>Query a database. 
+:Parameters:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><cite>query</cite> : query string</p></li>
+</ul>
+</div></blockquote>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p>See specific implementations of metaMDIO for query syntax.</p>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt id="mosaic.mdio.sqlite3MDIO.sqlite3MDIO.readAnalysisInfo">
+<code class="sig-name descname"><span class="pre">readAnalysisInfo</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/mdio/sqlite3MDIO.html#sqlite3MDIO.readAnalysisInfo"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mosaic.mdio.sqlite3MDIO.sqlite3MDIO.readAnalysisInfo" title="Permalink to this definition">¶</a></dt>
+<dd><div class="admonition important">
+<p class="admonition-title">Important</p>
+<p><strong>Abstract method:</strong> This method must be implemented by a sub-class.</p>
+</div>
+<p>Read analysis information from the database.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="mosaic.mdio.sqlite3MDIO.sqlite3MDIO.readAnalysisLog">
+<code class="sig-name descname"><span class="pre">readAnalysisLog</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/mdio/sqlite3MDIO.html#sqlite3MDIO.readAnalysisLog"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mosaic.mdio.sqlite3MDIO.sqlite3MDIO.readAnalysisLog" title="Permalink to this definition">¶</a></dt>
+<dd><div class="admonition important">
+<p class="admonition-title">Important</p>
+<p><strong>Abstract method:</strong> This method must be implemented by a sub-class.</p>
+</div>
+<p>Read the analysis log from the database.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="mosaic.mdio.sqlite3MDIO.sqlite3MDIO.readSettings">
+<code class="sig-name descname"><span class="pre">readSettings</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/mdio/sqlite3MDIO.html#sqlite3MDIO.readSettings"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mosaic.mdio.sqlite3MDIO.sqlite3MDIO.readSettings" title="Permalink to this definition">¶</a></dt>
+<dd><div class="admonition important">
+<p class="admonition-title">Important</p>
+<p><strong>Abstract method:</strong> This method must be implemented by a sub-class.</p>
+</div>
+<p>Read JSON settings from the database.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="mosaic.mdio.sqlite3MDIO.sqlite3MDIO.writeAnalysisInfo">
+<code class="sig-name descname"><span class="pre">writeAnalysisInfo</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">infolist</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/mdio/sqlite3MDIO.html#sqlite3MDIO.writeAnalysisInfo"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mosaic.mdio.sqlite3MDIO.sqlite3MDIO.writeAnalysisInfo" title="Permalink to this definition">¶</a></dt>
+<dd><div class="admonition important">
+<p class="admonition-title">Important</p>
+<p><strong>Abstract method:</strong> This method must be implemented by a sub-class.</p>
+</div>
+<p>Write analysis information to the database. Note that subsequent calls to this method will overwrite the analysis inoformation entry in the table.</p>
+<dl class="field-list">
+<dt class="field-odd">Args</dt>
+<dd class="field-odd"><ul>
+<li><dl>
+<dt><cite>infolist</cite><span class="classifier">A list of strings in the following order [ datPath, dataType, partitionAlgorithm, processingAlgorithm, filteringAlgorithm].</span></dt><dd><p><cite>datPath</cite>                               : full path to the data directory</p>
+<p><cite>dataType</cite>                              : type of data processed (e.g. ABF, QDF, etc.)</p>
+<p><cite>partitionAlgorithm</cite>    : name of partition algorithm (e.g. eventSegment)</p>
+<p><cite>processingAlgorithm</cite>   : name of event processing algorithm (e.g. multStateAnalysis)</p>
+<p><cite>filteringAlgorithm</cite>    : name of filtering algorithm (e.g. waveletDenoiseFilter) or None if no filtering was performed.</p>
+</dd>
+</dl>
+</li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="mosaic.mdio.sqlite3MDIO.sqlite3MDIO.writeAnalysisLog">
+<code class="sig-name descname"><span class="pre">writeAnalysisLog</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">analysislog</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/mdio/sqlite3MDIO.html#sqlite3MDIO.writeAnalysisLog"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mosaic.mdio.sqlite3MDIO.sqlite3MDIO.writeAnalysisLog" title="Permalink to this definition">¶</a></dt>
+<dd><div class="admonition important">
+<p class="admonition-title">Important</p>
+<p><strong>Abstract method:</strong> This method must be implemented by a sub-class.</p>
+</div>
+<p>Write the analysis log string to the database. Note that subsequent calls to this method will overwrite the analysis log entry.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Args</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><cite>analysislog</cite> :       analysis log string to save</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="mosaic.mdio.sqlite3MDIO.sqlite3MDIO.writeRecord">
+<code class="sig-name descname"><span class="pre">writeRecord</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">table</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/mdio/sqlite3MDIO.html#sqlite3MDIO.writeRecord"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mosaic.mdio.sqlite3MDIO.sqlite3MDIO.writeRecord" title="Permalink to this definition">¶</a></dt>
+<dd><div class="admonition important">
+<p class="admonition-title">Important</p>
+<p><strong>Abstract method:</strong> This method must be implemented by a sub-class.</p>
+</div>
+<p>Write data to a specified table. By default table 
+is None. In this case sub-classes should fall back 
+to writing data to a default table.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="mosaic.mdio.sqlite3MDIO.sqlite3MDIO.writeSettings">
+<code class="sig-name descname"><span class="pre">writeSettings</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">settingsstring</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/mdio/sqlite3MDIO.html#sqlite3MDIO.writeSettings"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mosaic.mdio.sqlite3MDIO.sqlite3MDIO.writeSettings" title="Permalink to this definition">¶</a></dt>
+<dd><div class="admonition important">
+<p class="admonition-title">Important</p>
+<p><strong>Abstract method:</strong> This method must be implemented by a sub-class.</p>
+</div>
+<p>Write the settings JSON object to the database.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Args</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><cite>settingsstring</cite> : a <a href="#id1"><span class="problematic" id="id2">JSON_</span></a> formatted settings string.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+</section>
+
+
+    </div>
+      
+  </div>
+</div>
+<!-- 
+<footer class="footer">
+  <div class="container">
+    <p class="pull-right">
+      <a href="#">Back to top</a>
+      
+    </p>
+    <p>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 3.5.4.<br/>
+    </p>
+  </div>
+</footer> -->
+<script type="text/javascript"
+	src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<div class="footer" style="vertical-align: center" align="center">
+		<table width="90%" style="vertical-align: center">
+			<col width=40%>
+			<col width=60%>
+			<tr>
+				<td align="left">
+					<a href="../doc/Developers.html"><small><em>MOSAIC Developers</em></small></a> |
+					<a href="https://www.nist.gov/people/arvind-balijepalli"><small><em>Contact</em></small></a> |
+					<a href="../doc/Disclaimer.html"><small><em>Terms of Use</em></small></a>
+				</td>
+			<!-- </tr>
+			<tr> -->
+				<td align="right">
+					<a target="_blank" href="http://www.nist.gov/public_affairs/privacy.cfm#privpolicy"><small>Privacy Policy</small></a> |
+					<a target="_blank" href="http://www.nist.gov/public_affairs/privacy.cfm#secnot"><small>Security Notice</small></a> |
+					<a href="http://www.nist.gov/public_affairs/privacy.cfm#accesstate"><small>Accessibility Statement</small></a> |
+					<a target="_blank" href="mailto:data@nist.gov?subject=Feedback%20on%20Web%20Site%20Template"><small>Send feedback</small></a>
+					<br/>
+				</td>
+			</tr>
+		</table>
+
+		<br />
+		<a href="http://www.nist.gov/"><small><em>National Institute of Standards and Technology</em></small></a>
+		<!-- <a href="http://www.nist.gov"><img src="_static/nist_logo.png" width="30%" alt="National Institute of Standards and Technology"></a> -->
+
+</div>
+
+  </body>
+</html>

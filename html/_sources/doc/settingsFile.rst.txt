@@ -1,0 +1,287 @@
+.. _settings-page:
+
+Settings File
+=================================
+
+
+|projname| stores its settings in the JSON_ format. When using the graphical interface, a settings file is generated automatically upon starting an analysis, or by clicking *Save Settings* in the *File menu*  (see :ref:`gui-page`).
+
+Settings Layout
+---------------------------------------------
+
+JSON_ is a human readable file format that consists of key-value pairs separated by sections. Each section in a JSON object consists of a section name and a list of string key-value pairs. 
+
+.. sourcecode:: javascript
+
+	{
+		"<section name>" : {
+			"key1" : "value1",
+			"key2" : "value2",
+			...
+		}
+
+	}
+
+|projname| settings define a new section for each class, with key-value pairs corresponding to class attributes that are set upon initialization. This is illustrated below for the adept2State class. The *adept2State* section in the settings file holds parameters corresponding to the :class:`~mosaic.adept2State` class. Note that that the section name in the settings file is identical to the corresponding class name. Three parameters are then defined within the section that control the behavior of the class.
+
+.. sourcecode:: javascript
+
+	{
+		"adept2State" : {
+			"FitTol"			: "1.e-7",
+			"FitIters"			: "50000",
+			"BlockRejectRatio"		: "0.9"
+		}
+	}
+
+Finally, :class:`~mosaic.adept2State` is initialized by defining class attributes corresponding to the key-value pairs in the settings file.
+
+.. sourcecode:: python
+	
+	try:
+			self.FitTol=float(self.settingsDict.pop("FitTol", 1.e-7))
+			self.FitIters=int(self.settingsDict.pop("FitIters", 5000))
+
+			self.BlockRejectRatio=float(self.settingsDict.pop("BlockRejectRatio", 0.8))
+		
+	except ValueError as err:
+		raise commonExceptions.SettingsTypeError( err )
+
+
+Trajectory Settings
+---------------------------------------------
+
+Common Settings (:class:`~mosaic.metaTrajIO.metaTrajIO`)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.. autoclass:: mosaic.trajio.metaTrajIO.metaTrajIO
+    :no-members:
+
+
+QDF Files (:class:`~mosaic.qdfTrajIO.qdfTrajIO`)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.. autoclass:: mosaic.trajio.qdfTrajIO.qdfTrajIO
+    :no-members:
+
+
+ABF Files (:class:`~mosaic.abfTrajIO.abfTrajIO`)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.. autoclass:: mosaic.trajio.abfTrajIO.abfTrajIO
+    :no-members:
+
+
+Binary Files (:class:`~mosaic.binTrajIO.binTrajIO`)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.. autoclass:: mosaic.trajio.binTrajIO.binTrajIO
+    :no-members:
+
+Chimera Files (:class:`~mosaic.chimeraTrajIO.binTrajIO`)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.. autoclass:: mosaic.trajio.chimeraTrajIO.chimeraTrajIO
+    :no-members:
+
+TSV Files (:class:`~mosaic.tsvTrajIO.binTrajIO`)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.. autoclass:: mosaic.trajio.tsvTrajIO.tsvTrajIO
+    :no-members:
+
+.. _algorithm-settings-sec:
+
+Optimizing Settings
+---------------------------------------------
+
+|projname| classes are controlled through the JSON_ settings files as defined above. In most cases, running |projname| through the GUI (see :ref:`gui-page`) should generate satisfactory results. However, settings can be further optimized either by editing a file named ``.settings`` stored within the data directory, or by clicking on the ``Advanced Settings`` check-box in the :ref:`Analysis-Setup` section of the GUI.
+
+.. _eventseg-settings-sec:
+
+Initial Event Detection (:class:`~mosaic.eventSegment.eventSegment`)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+The first step when analyzing an ionic-current time series is to perform a quick partition to identify events. This is accomplished by overriding the :class:`~mosaic.eventPartition.eventPartition` class. Currently, the only implementation of event partitioning is the :class:`~mosaic.eventSegment.eventSegment` algorithm. This algorithm uses a thresholding technique to detect the start and end of an event. When an event is detected the ionic current time-series associated with that event is passed to a processing algorithm for fitting. Settings that can be passed to :class:`~mosaic.eventSegment.eventSegment` are given below followed by their descriptions.
+
+
+.. sourcecode:: javascript
+
+
+	"eventSegment" : {
+		"blockSizeSec" 			: "0.5",
+		"eventPad" 			: "50",
+		"minEventLength" 		: "5",
+		"eventThreshold" 		: "6.0",
+		"driftThreshold" 		: "999.0",
+		"maxDriftRate" 			: "999.0",
+		"meanOpenCurr"			: "-1",
+		"sdOpenCurr"			: "-1",
+		"slopeOpenCurr"			: "-1",
+		"writeEventTS"			: "1",
+		"parallelProc"			: "0",
+		"reserveNCPU"			: "2"
+	}
+
+
+.. tabularcolumns:: p{4cm}p{12cm}
+
++-------------------+----------------------------------------------------------------------------------------+
+|  **Setting**      | **Description**                                                                        |
++===================+========================================================================================+
+| blockSizeSec      | Time-series length (in sec) for block operations.                                      |
+|                   |                                                                                        |
+| eventPad          | Pad an event with the specified number of points.                                      |
+|                   |                                                                                        | 
+| minEventLength    | Discard events with fewer than the specfied points.                                    |
+|                   |                                                                                        | 
+| eventThreshold    | Event detection threshold.                                                             |
+|                   |                                                                                        | 
+| meanOpenCurr      | Set the mean open channel current (i0) in pA. -1 computes i0 automatically.            |
+|                   |                                                                                        | 
+| sdOpenCurr        | Set the open channel std. dev. in pA. -1 computes SD automatically.                    |
+|                   |                                                                                        | 
+| slopeOpenCurr     | Set the open channel drift in pA/ms. -1 automatically computes the slope.              |
+|                   |                                                                                        | 
+| driftThreshold    | Aborts the analysis when the open channel drift exceeds the specified value.           |
+|                   |                                                                                        | 
+| maxDriftRate      | Aborts the analysis when the open channel slope exceeds the specified value (pA/ms).   |
+|                   |                                                                                        | 
+| writeEventTS      | Write the event time-series to the output database.                                    |
+|                   |                                                                                        | 
+| parallelProc      | Enable parallel processing.                                                            |
+|                   |                                                                                        | 
+| reserveNCPU       | Use N-reserveNCPU for parallel processing.                                             |
+|                   |                                                                                        | 
++-------------------+----------------------------------------------------------------------------------------+
+
+
+.. _stepresp-settings-sec:
+
+Two-State Identification  (:class:`~mosaic.adept2State.adept2State`)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Once the time-series is partitioned, individual events are processed by a processing algorithm. For simple event patterns (e.g. homopolymers of DNA, PEG, etc.), one can use the :ref:`stepresponse-page` algorithm. Settings that can be passed to this algorithm are below, followed by their descriptions. For a vast majority of cases, the settings below can be used without modification.
+
+.. sourcecode:: javascript
+
+	"adept2State" : {
+		"FitTol"			: "1.e-7",
+		"FitIters"			: "50000"
+	}
+
+.. tabularcolumns:: p{4cm}p{12cm}
+
++-------------------+----------------------------------------------------------------------------------------+
+|  **Setting**      | **Description**                                                                        |
++===================+========================================================================================+
+| FitTol            | Controls the convergence criteria for the least squares fitting algorithm.             |
+|                   |                                                                                        |
+| FitIters          | Maximum iterations passed to the least squares fitting algorithm.                      |
+|                   |                                                                                        | 
++-------------------+----------------------------------------------------------------------------------------|  
+
+
+Multi-State Identification  (:class:`~mosaic.adept.adept`)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+For more complex signals with multiple states, the :ref:`multistate-page` algorithm yields better results. The settings passed to this algorithm (described below) are largely similar to :ref:`stepresp-settings-sec`. 
+
+.. sourcecode:: javascript
+	:emphasize-lines: 4
+
+	"adept" : {
+		"FitTol"			: "1.e-7",
+		"FitIters"			: "50000",
+		"InitThreshold"			: "3.0"
+	}
+
+.. tabularcolumns:: p{4cm}p{12cm}
+
++-------------------+----------------------------------------------------------------------------------------+
+|  **Setting**      | **Description**                                                                        |
++===================+========================================================================================+
+| FitTol            | Controls the convergence criteria for the least squares fitting algorithm.             |
+|                   |                                                                                        |
+| FitIters          | Maximum iterations passed to the least squares fitting algorithm.                      |
+|                   |                                                                                        | 
+| InitThreshold     | Threshold used to identify the states in a multi-state event.                          |
+|                   |                                                                                        | 
++-------------------+----------------------------------------------------------------------------------------|  
+
+.. hint:: The parameter ``InitThreshold`` is used for preliminary state identification within multi-state events. As a rule of thumb, this value should be set to roughly half that of ``eventThreshold`` in the :ref:`eventseg-settings-sec` section. However, the final value may be adjusted further for optimal results.
+
+Default Settings
+---------------------------------------------
+
+.. sourcecode:: javascript
+
+	{
+		"eventSegment" : {
+			"blockSizeSec" 			: "0.5",
+			"eventPad" 				: "50",
+			"minEventLength" 		: "5",
+			"eventThreshold" 		: "6.0",
+			"driftThreshold" 		: "999.0",
+			"maxDriftRate" 			: "999.0",
+			"meanOpenCurr"			: "-1",
+			"sdOpenCurr"			: "-1",
+			"slopeOpenCurr"			: "-1",
+			"writeEventTS"			: "1",
+			"parallelProc"			: "0",
+			"reserveNCPU"			: "2"
+		},
+		"singleStepEvent" : {
+			"binSize" 				: "1.0",
+			"histPad" 				: "10",
+			"maxFitIters"			: "5000",
+			"a12Ratio" 				: "1.e4",
+			"minEvntTime" 			: "10.e-6",
+			"minDataPad" 			: "75"
+		},
+		"adept2State" : {
+			"FitTol"				: "1.e-7",
+			"FitIters"				: "50000"
+		},
+		"adept" : {
+	                "FitTol"		: "1.e-7",
+	                "FitIters"		: "50000",
+	                "InitThreshold"	: "3.0"
+	     },
+	     "cusumPlus": {
+        			"StepSize"		: 3.0, 
+        			"Threshold"		: 3.0
+    	}, 
+		"besselLowpassFilter" : {
+			"filterOrder"			: "6",
+			"filterCutoff"			: "10000",
+			"decimate"				: "1"	
+		},
+		"waveletDenoiseFilter" : {
+			"wavelet"				: "sym5",
+			"level"					: "5",
+			"thresholdType"			: "soft",
+			"thresholdSubType"		: "sqtwolog"
+		},
+		"abfTrajIO" : {
+			"filter"				: "*.abf", 
+			"start"					: 0.0, 
+			"dcOffset"				: 0.0
+		},
+		"qdfTrajIO": {
+			"Rfb": 9.1e+12, 
+			"Cfb": 1.07e-12, 
+			"dcOffset": 0.0, 
+			"filter": "*.qdf", 
+			"start": 0.0
+		},
+		"binTrajIO": {
+			"AmplifierScale": "1.0", 
+			"AmplifierOffset": "0.0", 
+			"SamplingFrequency": "50000",
+			"HeaderOffset": "0",
+			"ColumnTypes": "[('curr_pA', 'float64')]",
+			"IonicCurrentColumn" : "curr_pA",
+			"dcOffset": "0.0", 
+			"filter": "*.bin", 
+			"start": "0.0"
+		}
+	}
+
+
+.. include:: ../aliases.rst
+

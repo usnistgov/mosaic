@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>Work with SQLite &#8212; MOSAIC v2.2 documentation</title>
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/bootstrap-sphinx.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/graphviz.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/style.css" />
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+
+<meta charset='utf-8'>
+<meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
+<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
+<meta name="apple-mobile-web-app-capable" content="yes">
+<script type="text/javascript" src="../_static/js/jquery-1.11.0.min.js "></script>
+<script type="text/javascript" src="../_static/js/jquery-fix.js "></script>
+<script type="text/javascript" src="../_static/bootstrap-3.3.7/js/bootstrap.min.js "></script>
+<script type="text/javascript" src="../_static/bootstrap-sphinx.js "></script>
+
+	<script async type="text/javascript" id="_fed_an_ua_tag" src="https://dap.digitalgov.gov/Universal-Federated-Analytics-Min.js?agency=DOC&subagency=NIST&pua=UA-66610693-1&yt=true&exts=ppsx,pps,f90,sch,rtf,wrl,txz,m1v,xlsm,msi,xsd,f,tif,eps,mpg,xml,pl,xlt,c"></script>	
+
+	<meta name="theme-color" content="#283593">
+
+  </head><body>
+
+  <div id="navbar" class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="../index.html"><span><img src="../_static/icon_48.png"></span>
+           </a>
+        <span class="navbar-text navbar-version pull-left"><b>v2.2</b></span>
+      </div>
+
+        <div class="collapse navbar-collapse nav-collapse">
+          <ul class="nav navbar-nav">
+            
+                <li><a href="../../latex/MOSAIC.pdf">Download PDF</a></li>
+                <li><a href="mailingList.html">Mailing List</a></li>
+                <li><a href="//github.com/usnistgov/mosaic">Develop</a></li>
+                <li><a href="//github.com/usnistgov/mosaic/issues">Issue Tracker</a></li>
+            
+            
+              <li class="dropdown globaltoc-container">
+  <a role="button"
+     id="dLabelGlobalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="../index.html">Contents <b class="caret"></b></a>
+  <ul class="dropdown-menu globaltoc"
+      role="menu"
+      aria-labelledby="dLabelGlobalToc"><ul>
+<li class="toctree-l1"><a class="reference internal" href="Introduction.html">1. Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Algorithms.html">2. Data Processing Algorithms in <em>MOSAIC</em></a></li>
+<li class="toctree-l1"><a class="reference internal" href="GettingStarted.html">3. Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="GraphicalInterface.html">4. <em>MOSAIC</em> GUI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="WebInterface.html">5. <em>MOSAIC</em> WEB</a></li>
+<li class="toctree-l1"><a class="reference internal" href="settingsFile.html">6. Settings File</a></li>
+<li class="toctree-l1"><a class="reference internal" href="DatabaseStructure.html">7. Database Structure and Query Syntax</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ScriptingandAdvancedFeatures.html">8. Scripting and Advanced Features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Extend.html">9. Extend <em>MOSAIC</em></a></li>
+<li class="toctree-l1"><a class="reference internal" href="PublicationFigures.html">10. Publication Quality Figures</a></li>
+<li class="toctree-l1"><a class="reference internal" href="AdvancedAnalysis.html">11. Advanced Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Addons.html">12. Addons</a></li>
+<li class="toctree-l1"><a class="reference internal" href="DeveloperTools.html">13. Developer Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="apidocs.html">14. API Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="References.html">15. Bibliography</a></li>
+</ul>
+</ul>
+</li>
+              
+            
+            
+            
+            
+            
+              <li class="hidden-sm"></li>
+            
+          </ul>
+
+          
+            
+<form class="navbar-form navbar-right" action="../search.html" method="get">
+ <div class="form-group">
+  <input type="text" name="q" class="form-control" placeholder="Search" />
+ </div>
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+          
+        </div>
+    </div>
+  </div>
+
+<div class="container">
+  <div class="row">
+    <div class="body col-md-12 content" role="main">
+      
+  <section id="work-with-sqlite">
+<span id="working-with-sqlite-sec"></span><h1>Work with SQLite<a class="headerlink" href="#work-with-sqlite" title="Permalink to this headline">¶</a></h1>
+<p><em>MOSAIC</em> stores the output of an analysis in a SQLite database as described in the <a class="reference internal" href="DatabaseStructure.html#database-page"><span class="std std-ref">Database Structure and Query Syntax</span></a> section. Interacting with the data through the <a class="reference external" href="http://en.wikipedia.org/wiki/SQL">Structured Query Language (SQL)</a> is a flexible approach to further analyze or plot the output. Here we provide a few detailed examples of the common ways in which the output of <em>MOSAIC</em> can be queried for further processing. While this section is not a comprehensive SQL tutorial, it provides common use cases to allow you to get started.</p>
+<p>One way to retrieve data from a <a href="#id1"><span class="problematic" id="id2">SQLite_</span></a> database is to use the <em>select</em> command. In its simplest form, a <em>select</em> query can return the entire contents of a table using the syntax below. The statement below selects all columns <em>(select *)</em> from the table specified by <em>&lt;tablename&gt;</em>.</p>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">select</span> <span class="o">*</span> <span class="k">from</span> <span class="o">&lt;</span><span class="n">tablename</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+<p>The power of SQL lies in its ability to restrict results to match specific criteria. This is accomplished with the <em>where</em> clause described next. SQL queries can be very fast event for large databases. It is often desirable to only include events that were successfully fit in a plot or other analysis. All <span class="xref std std-ref">eventprocess-page</span> algorithms implemented in <em>MOSAIC</em> store a <em>ProcessingStatus</em> column in the output database. This enables one to easily query events that were successfully processed. This is easily accomplished with the query below, which returns all columns for events that were successfully processed (<em>ProcessingStatus=normal</em>).</p>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">select</span> <span class="o">*</span> <span class="k">from</span> <span class="n">metadata</span> <span class="k">where</span> <span class="n">ProcessingStatus</span><span class="o">=</span><span class="s1">&#39;normal&#39;</span>
+</pre></div>
+</div>
+<p>It is not always necessary to retrieve every column for events that fit a certain criteria. For example, <span class="xref std std-ref">gui-blockdepth-sec</span> in the GUI displays a histogram of the blockade depths that match a user specified criteria. This is accomplished within the GUI by a query similar to the one shown below. There are two important differences between the query below and previous examples: i) by replacing * with <em>BlockDepth</em>, we only retrieve the <em>BlockDepth</em> column for events that meet the criteria specified after the <em>where</em> clause, and ii) selection criteria specified after where can be compound statements or even nested as seen in the examples below.</p>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">select</span> <span class="n">BlockDepth</span> <span class="k">from</span> <span class="n">metadata</span> <span class="k">where</span> <span class="n">ProcessingStatus</span><span class="o">=</span><span class="s1">&#39;normal&#39;</span> <span class="k">and</span> <span class="n">ResTime</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">.</span><span class="mi">2</span>
+</pre></div>
+</div>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">select</span> <span class="n">BlockDepth</span> <span class="k">from</span> <span class="n">metadata</span> <span class="k">where</span> <span class="n">ProcessingStatus</span><span class="o">=</span><span class="s1">&#39;normal&#39;</span> <span class="k">and</span> <span class="n">ResTime</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">.</span><span class="mi">2</span>
+<span class="k">and</span> <span class="n">BlockDepth</span> <span class="k">between</span> <span class="mi">0</span><span class="p">.</span><span class="mi">1</span> <span class="k">and</span> <span class="mi">0</span><span class="p">.</span><span class="mi">5</span>
+</pre></div>
+</div>
+<p>Multiple columns can be retrieved from a table by providing a comma separated list of column names after the <em>select</em> clause. As in previous cases, only events that meet a specified criteria are returned. The results can be ordered using <em>order</em>. In this example we sort the results in ascending order by the <em>AbsEventStart</em> column.</p>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">select</span> <span class="n">BlockDepth</span><span class="p">,</span> <span class="n">ResTime</span><span class="p">,</span> <span class="n">AbsEventStart</span> <span class="k">from</span> <span class="n">metadata</span> <span class="k">where</span> <span class="n">ProcessingStatus</span><span class="o">=</span><span class="s1">&#39;normal&#39;</span>
+<span class="k">order</span> <span class="k">by</span> <span class="n">AbsEventStart</span> <span class="k">ASC</span>
+</pre></div>
+</div>
+<p>Finally, SQL allows the number of results returned to be limited using the <em>limit</em> clause. In this example, we limit the query results to the first 500 rows that meet our criteria.</p>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">select</span> <span class="n">AbsEventStart</span> <span class="k">from</span> <span class="n">metadata</span> <span class="k">where</span> <span class="n">ProcessingStatus</span><span class="o">=</span><span class="s1">&#39;normal&#39;</span>
+<span class="k">order</span> <span class="k">by</span> <span class="n">AbsEventStart</span> <span class="k">ASC</span> <span class="k">limit</span> <span class="mi">500</span>
+</pre></div>
+</div>
+</section>
+
+
+    </div>
+      
+  </div>
+</div>
+<!-- 
+<footer class="footer">
+  <div class="container">
+    <p class="pull-right">
+      <a href="#">Back to top</a>
+      
+    </p>
+    <p>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 3.5.4.<br/>
+    </p>
+  </div>
+</footer> -->
+<script type="text/javascript"
+	src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<div class="footer" style="vertical-align: center" align="center">
+		<table width="90%" style="vertical-align: center">
+			<col width=40%>
+			<col width=60%>
+			<tr>
+				<td align="left">
+					<a href="Developers.html"><small><em>MOSAIC Developers</em></small></a> |
+					<a href="https://www.nist.gov/people/arvind-balijepalli"><small><em>Contact</em></small></a> |
+					<a href="Disclaimer.html"><small><em>Terms of Use</em></small></a>
+				</td>
+			<!-- </tr>
+			<tr> -->
+				<td align="right">
+					<a target="_blank" href="http://www.nist.gov/public_affairs/privacy.cfm#privpolicy"><small>Privacy Policy</small></a> |
+					<a target="_blank" href="http://www.nist.gov/public_affairs/privacy.cfm#secnot"><small>Security Notice</small></a> |
+					<a href="http://www.nist.gov/public_affairs/privacy.cfm#accesstate"><small>Accessibility Statement</small></a> |
+					<a target="_blank" href="mailto:data@nist.gov?subject=Feedback%20on%20Web%20Site%20Template"><small>Send feedback</small></a>
+					<br/>
+				</td>
+			</tr>
+		</table>
+
+		<br />
+		<a href="http://www.nist.gov/"><small><em>National Institute of Standards and Technology</em></small></a>
+		<!-- <a href="http://www.nist.gov"><img src="_static/nist_logo.png" width="30%" alt="National Institute of Standards and Technology"></a> -->
+
+</div>
+
+  </body>
+</html>

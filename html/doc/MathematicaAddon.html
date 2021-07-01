@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>Mathematica &#8212; MOSAIC v2.2 documentation</title>
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/bootstrap-sphinx.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/graphviz.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/style.css" />
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+
+<meta charset='utf-8'>
+<meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
+<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
+<meta name="apple-mobile-web-app-capable" content="yes">
+<script type="text/javascript" src="../_static/js/jquery-1.11.0.min.js "></script>
+<script type="text/javascript" src="../_static/js/jquery-fix.js "></script>
+<script type="text/javascript" src="../_static/bootstrap-3.3.7/js/bootstrap.min.js "></script>
+<script type="text/javascript" src="../_static/bootstrap-sphinx.js "></script>
+
+	<script async type="text/javascript" id="_fed_an_ua_tag" src="https://dap.digitalgov.gov/Universal-Federated-Analytics-Min.js?agency=DOC&subagency=NIST&pua=UA-66610693-1&yt=true&exts=ppsx,pps,f90,sch,rtf,wrl,txz,m1v,xlsm,msi,xsd,f,tif,eps,mpg,xml,pl,xlt,c"></script>	
+
+	<meta name="theme-color" content="#283593">
+
+  </head><body>
+
+  <div id="navbar" class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="../index.html"><span><img src="../_static/icon_48.png"></span>
+           </a>
+        <span class="navbar-text navbar-version pull-left"><b>v2.2</b></span>
+      </div>
+
+        <div class="collapse navbar-collapse nav-collapse">
+          <ul class="nav navbar-nav">
+            
+                <li><a href="../../latex/MOSAIC.pdf">Download PDF</a></li>
+                <li><a href="mailingList.html">Mailing List</a></li>
+                <li><a href="//github.com/usnistgov/mosaic">Develop</a></li>
+                <li><a href="//github.com/usnistgov/mosaic/issues">Issue Tracker</a></li>
+            
+            
+              <li class="dropdown globaltoc-container">
+  <a role="button"
+     id="dLabelGlobalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="../index.html">Contents <b class="caret"></b></a>
+  <ul class="dropdown-menu globaltoc"
+      role="menu"
+      aria-labelledby="dLabelGlobalToc"><ul>
+<li class="toctree-l1"><a class="reference internal" href="Introduction.html">1. Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Algorithms.html">2. Data Processing Algorithms in <em>MOSAIC</em></a></li>
+<li class="toctree-l1"><a class="reference internal" href="GettingStarted.html">3. Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="GraphicalInterface.html">4. <em>MOSAIC</em> GUI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="WebInterface.html">5. <em>MOSAIC</em> WEB</a></li>
+<li class="toctree-l1"><a class="reference internal" href="settingsFile.html">6. Settings File</a></li>
+<li class="toctree-l1"><a class="reference internal" href="DatabaseStructure.html">7. Database Structure and Query Syntax</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ScriptingandAdvancedFeatures.html">8. Scripting and Advanced Features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Extend.html">9. Extend <em>MOSAIC</em></a></li>
+<li class="toctree-l1"><a class="reference internal" href="PublicationFigures.html">10. Publication Quality Figures</a></li>
+<li class="toctree-l1"><a class="reference internal" href="AdvancedAnalysis.html">11. Advanced Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Addons.html">12. Addons</a></li>
+<li class="toctree-l1"><a class="reference internal" href="DeveloperTools.html">13. Developer Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="apidocs.html">14. API Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="References.html">15. Bibliography</a></li>
+</ul>
+</ul>
+</li>
+              
+            
+            
+            
+            
+            
+              <li class="hidden-sm"></li>
+            
+          </ul>
+
+          
+            
+<form class="navbar-form navbar-right" action="../search.html" method="get">
+ <div class="form-group">
+  <input type="text" name="q" class="form-control" placeholder="Search" />
+ </div>
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+          
+        </div>
+    </div>
+  </div>
+
+<div class="container">
+  <div class="row">
+    <div class="body col-md-12 content" role="main">
+      
+  <section id="mathematica">
+<span id="mathematica-addons-sec"></span><h1>Mathematica<a class="headerlink" href="#mathematica" title="Permalink to this headline">¶</a></h1>
+<section id="installation">
+<h2>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h2>
+<p>The analysis output generated by <em>MOSAIC</em> can be imported into <a class="reference external" href="https://www.wolfram.com/mathematica/">Mathematica</a> for further processing. This accomplished with two packages: the low level <a class="reference internal" href="#mathematicamosaicutilssec"><span class="std std-ref">MosaicUtils</span></a> and <a class="reference internal" href="#mathematica-mosaicanalysis-sec"><span class="std std-ref">MosaicAnalysis</span></a>, which contains additional analysis routines. The addon package must first be installed to one of the locations in the <a class="reference external" href="https://www.wolfram.com/mathematica/">Mathematica</a> path. Alternatively, the required package files can be installed to the <em>Applications</em> folder using <em>setuptools</em> on Mac OS X and Linux by issuing the command below in the root folder of the <em>MOSAIC</em> code. Instructions for installing the package files for Windows are available <a class="reference external" href="http://reference.wolfram.com/language/tutorial/ConfigurationFiles.html">here</a>.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">python setup.py mosaic_addons --mathematica</span>
+</pre></div>
+</div>
+</section>
+<section id="mosaicutils">
+<span id="mathematicamosaicutilssec"></span><h2>MosaicUtils<a class="headerlink" href="#mosaicutils" title="Permalink to this headline">¶</a></h2>
+<p><em>MosaicUtils</em> provides low level functions to interact with a database output by <em>MOSAIC</em>. <em>MosaicUtils</em> can use a native Mathematica (<strong>slower, default</strong>) or Python (<strong>faster, but experimental</strong>) backend to query databases output by <em>MOSAIC</em>.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>To select the Python backend, please call the <em>SetQueryBackend</em> function as described below. If you use a virtual environment with Python, please call the <em>SetVirtualEnv</em> function after you install this addon.</p>
+</div>
+<p><strong>SetQueryBackend</strong>[<em>backend</em>]</p>
+<dl class="field-list simple">
+<dt class="field-odd">Args</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><cite>backend</cite> :   select the <em>Mathematica</em> (default) or <em>Python</em> (faster, experimental) backend to run SQLite queries.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+<p><strong>ReadQueryBackend</strong>[]</p>
+<dl class="field-list simple">
+<dt class="field-odd">Args</dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><ul class="simple">
+<li><p>The <em>backend</em> used to run SQLite queries.</p></li>
+</ul>
+</dd>
+</dl>
+<p><strong>SetVirtualEnv</strong>[<em>virtualenv</em>]</p>
+<dl class="field-list simple">
+<dt class="field-odd">Args</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><cite>virtualenv</cite> :        name of the virtual environment configured for use with MOSAIC</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+<p><strong>PrintMDKeys</strong>[<em>dbfile</em>]</p>
+<p>Returns a list of column headings from the <em>metadata</em> table.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Args</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><cite>dbfile</cite> :    full path to the database file</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A list of column names in the table <em>metadata</em>.</p>
+</dd>
+</dl>
+<p><strong>PrintMDTypes</strong>[<em>dbfile</em>]</p>
+<p>Returns a list of column types from the <em>metadata</em> table.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Args</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><cite>dbfile</cite> :    full path to the database file</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A list of column types in the table <em>metadata</em>.</p>
+</dd>
+</dl>
+<p><strong>QueryDB</strong>[<em>dbfile</em>, <em>query</em>]</p>
+<p>Queries the <em>metadata</em> table using the supplied SQL query.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Args</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><cite>dbfile</cite> :    full path to the database file</p></li>
+<li><p><cite>query</cite>  :    a SQL query</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A nested list of query results.</p>
+</dd>
+</dl>
+<p><strong>PlotEvents</strong>[<em>dbfile</em>, <em>FsKHz</em>, <em>nEvents</em>]</p>
+<p>Plot the event-time series if stored in the database (see the <a class="reference internal" href="settingsFile.html#settings-page"><span class="std std-ref">Settings File</span></a> section for details on saving time-series to the analysis output).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Args</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><cite>dbfile</cite> :    full path to the database file</p></li>
+<li><p><cite>FsKHz</cite>  :    sampling frequency in kHz.</p></li>
+<li><p><cite>nEvents</cite> :   (optional) limit the plot to the first <code class="docutils literal notranslate"><span class="pre">n</span></code> entries in the database</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A dynamic object that allows the user to browse event time-series and fits.</p>
+</dd>
+</dl>
+<p><strong>GetAnalysisAlgorithm</strong>[<em>db</em>]</p>
+<p>Returns the analysis algorithm used to process the current data set.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Args</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><cite>db</cite>  :               full path to a database file</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Algorithm used to analyze data.</p>
+</dd>
+</dl>
+<p><strong>MosaicUtils Examples</strong></p>
+<p>Once installed as described above, <em>MosaicUtils</em> must be imported as shown below.</p>
+<div class="highlight-mathematica notranslate"><div class="highlight"><pre><span></span><span class="n">In</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">=</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="nn">MosaicUtils`</span><span class="w"></span>
+</pre></div>
+</div>
+<p><a class="reference external" href="https://en.wikipedia.org/wiki/SQL">SQL</a> queries require the exact column names when querying data from a table (see <a class="reference internal" href="DatabaseStructure.html#database-page"><span class="std std-ref">Database Structure and Query Syntax</span></a>). Column names in the <em>metadata</em> table, which stores the main results from the analaysis can be retrieved using the <em>PrintMDKeys</em> function as shown below. In this example, the column names returned correspond to an analysis performed using the <em>adept2State</em> algorithm.</p>
+<div class="highlight-mathematica notranslate"><div class="highlight"><pre><span></span><span class="n">In</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">=</span><span class="w"> </span><span class="n">PrintMDKeys</span><span class="p">[</span><span class="s">&quot;&lt;mosaicroot&gt;/data/eventMD-PEG29-Reference.sqlite&quot;</span><span class="p">]</span><span class="w"></span>
+
+<span class="n">Out</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="s">&quot;recIDX&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;ProcessingStatus&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;OpenChCurrent&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">        </span><span class="s">&quot;BlockedCurrent&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;EventStart&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;EventEnd&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">        </span><span class="s">&quot;BlockDepth&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;ResTime&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;RCConstant&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;AbsEventStart&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">        </span><span class="s">&quot;ReducedChiSquared&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;TimeSeries&quot;</span><span class="w"></span>
+<span class="w">        </span><span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+<p>The <em>MosaicUtils</em> package allows the output of <em>MOSAIC</em> to be queried just like from Python. This accomplished using the <em>QueryDB</em> function. In the example below, we retrieve a column that returns the start time of the first 10 entries in the <em>metadata</em> table that have their <em>ProcessingStatus</em> set to <em>normal</em>. The results are then returned in a standard list. Note that <em>QueryDB</em> accepts a standard <a class="reference external" href="https://en.wikipedia.org/wiki/SQL">SQL</a> query as described in more detail in the <a class="reference internal" href="DatabaseStructure.html#database-page"><span class="std std-ref">Database Structure and Query Syntax</span></a> section.</p>
+<div class="highlight-mathematica notranslate"><div class="highlight"><pre><span></span><span class="n">In</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span><span class="o">=</span><span class="w"> </span><span class="n">QueryDB</span><span class="p">[</span><span class="w"></span>
+<span class="w">        </span><span class="s">&quot;&lt;mosaicroot&gt;/data/eventMD-PEG29-Reference.sqlite&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">        </span><span class="s">&quot;select AbsEventStart from metadata where ProcessingStatus=&#39;normal&#39; limit 10&quot;</span><span class="w"></span>
+<span class="w">        </span><span class="p">]</span><span class="w"></span>
+
+<span class="n">Out</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="p">{</span><span class="mf">1.84376</span><span class="p">},</span><span class="w"> </span><span class="p">{</span><span class="mf">4.54439</span><span class="p">},</span><span class="w"> </span><span class="p">{</span><span class="mf">5.26933</span><span class="p">},</span><span class="w"> </span><span class="p">{</span><span class="mf">6.01253</span><span class="p">},</span><span class="w"> </span><span class="p">{</span><span class="mf">6.80369</span><span class="p">},</span><span class="w"></span>
+<span class="w">        </span><span class="p">{</span><span class="mf">8.48988</span><span class="p">},</span><span class="w"> </span><span class="p">{</span><span class="mf">10.841</span><span class="p">},</span><span class="w"> </span><span class="p">{</span><span class="mf">11.2246</span><span class="p">},</span><span class="w"> </span><span class="p">{</span><span class="mf">13.2892</span><span class="p">},</span><span class="w"> </span><span class="p">{</span><span class="mf">16.3983</span><span class="p">}</span><span class="w"></span>
+<span class="w">        </span><span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+<p>Finally, the addon package allows us to plot individual events if time-series data was stored in the database. This is accomplished using the <em>PlotEvents</em> function, and provides a convenient tool to visually inspect the output of a <em>MOSAIC</em> analysis. In the example below, we inspect the events stored in the reference PEG28 data set included with <em>MOSAIC</em>. <em>PlotEvents</em> returns a dynamic object that allows the user to inspect all the events in a database. An event that was properly characterized by the code is plotted with <em>blue</em> markers (<em>left</em>). The plot is overlaid with the optimized fit function (<em>black</em>) and an idealized pulse (<em>red dashed</em>). Events that were not properly fit are plotted with <em>red</em> markers (<em>right</em>).</p>
+<div class="highlight-mathematica notranslate"><div class="highlight"><pre><span></span><span class="n">In</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span><span class="o">=</span><span class="w"> </span><span class="n">PlotEvents</span><span class="p">[</span><span class="s">&quot;&lt;mosaicroot&gt;/data/eventMD-PEG29-Reference.sqlite&quot;</span><span class="p">,</span><span class="w"> </span><span class="mi">500</span><span class="p">]</span><span class="w"></span>
+</pre></div>
+</div>
+<figure class="align-left">
+<a class="reference internal image-reference" href="../_images/mathematica-PlotEvents.png"><img alt="../_images/mathematica-PlotEvents.png" src="../_images/mathematica-PlotEvents.png" style="width: 90%;" /></a>
+</figure>
+</section>
+<section id="mosaicanalysis">
+<span id="mathematica-mosaicanalysis-sec"></span><h2>MosaicAnalysis<a class="headerlink" href="#mosaicanalysis" title="Permalink to this headline">¶</a></h2>
+<p><em>MosaicAnalysis</em> builds on the <em>MosaicUtils</em> package and provides basic analysis functions such as estimating the capture rate of molecules partitioning into a channel, or the mean residence time. Additionally, new functionality can be created by combining the functions defined below.</p>
+<p><strong>ScaledSingleExponentialFit</strong>[<em>hist</em>, <em>lambda</em>, <em>lambda0</em>]</p>
+<p>Scale the histogram with the number of counts in the first bin. Fit a single exponential of the form <cite>a exp(-t/tau)</cite> to the scaled histogram.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Args</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><cite>hist</cite>        : a histogram with format {{bin1, counts1}, {bin2, counts2}, …, {binN,countsN}}</p></li>
+<li><p><cite>lambda</cite>      : parameter of the distribution. This symbol must be passed from the calling function.</p></li>
+<li><p><cite>lambda0</cite>     : initial guess for <cite>lambda</cite>.</p></li>
+</ul>
+</dd>
+</dl>
+<p><strong>PlotScaledSingleExponentialFit</strong>[<em>hist</em>, <em>ftfunc</em>, <em>plotopts</em>]</p>
+<dl class="field-list simple">
+<dt class="field-odd">Args</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><cite>hist</cite>        : a histogram with format {{bin1, counts1}, {bin2, counts2}, …, {binN,countsN}}</p></li>
+<li><p><cite>ftfunc</cite>      : an optimized fit, defined as a virtual function.</p></li>
+<li><p><cite>plotopts</cite>: a list of options to control the plot output.</p></li>
+</ul>
+</dd>
+</dl>
+<p><strong>CaptureRate</strong>[<em>arrtimes</em>, <em>stime</em>, <em>etime</em>, <em>nbins</em>, <em>plotopts</em>]</p>
+<p>Estimate the capture rate of molecules by a channel by analyzing the arrival times of individual molecules. The arrival times of a stochastic process follow a single exponential distribution. This function first calculate a histogram of arrival times and then fits a single exponential function to the data.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Args</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><cite>arrtimes</cite> : a list of absolute start times (<em>AbsEventStart</em>) queried from a database.</p></li>
+<li><p><cite>stime</cite>    : lower limit of the arrival times distribution</p></li>
+<li><p><cite>etime</cite>    : upper limit of the arrival times distribution</p></li>
+<li><p><cite>nbins</cite>        : number of bins</p></li>
+<li><p><cite>plotopts</cite> : a list of options to control the plot output.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The mean capture rate, a plot of the underlying distribution of arrival times, the arrival times distribution and the optimized fit function.</p>
+</dd>
+</dl>
+<p><strong>ArrivalTimes</strong>[<em>abseventstart</em>]</p>
+<p>Calculate the arrival times from a list of the absolute start time of each event in a data set.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Args</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><cite>abseventstart</cite>       : a list of absolute start times (<em>AbsEventStart</em>) queried from a database.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A list of arrival times.</p>
+</dd>
+</dl>
+<p><strong>MosaicAnalysis Examples</strong></p>
+<div class="highlight-mathematica notranslate"><div class="highlight"><pre><span></span><span class="n">In</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">=</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="nn">MosaicUtils`</span><span class="w"></span>
+<span class="n">In</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">=</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="nn">MosaicAnalysis`</span><span class="w"></span>
+</pre></div>
+</div>
+<p>In the following example, we estimate the capture rate of PEG28 from the reference data set included with the <em>MOSAIC</em> source. The first argument fo <em>CaptureRate</em> is a list of the absolute start time of each event in the database. This data can be obtained using the query shown below. The remaining arguments to <em>CaptureRate</em> define the parameters of the arrival times distribution, the lower and upper limit of the arrival times and the number of bins. The function returns the mean capture rate and standard error, a plot that shows the underlying arrival times distribution, raw data used to generate the capture rate histogram, and a pure best-fit function.</p>
+<div class="highlight-mathematica notranslate"><div class="highlight"><pre><span></span>In[3]= CaptureRate[
+        QueryDB[
+        &quot;&lt;mosaicroot&gt;/data/eventMD-PEG29-Reference.sqlite&quot;,
+        &quot;select AbsEventStart from metadata where
+                ProcessingStatus=&#39;normal&#39; and ResTime &gt; 0.01&quot;
+        ], 0.0, 0.05, 50
+]
+</pre></div>
+</div>
+<figure class="align-left">
+<a class="reference internal image-reference" href="../_images/mathematica-CaptureRate.png"><img alt="../_images/mathematica-CaptureRate.png" src="../_images/mathematica-CaptureRate.png" style="width: 50%;" /></a>
+</figure>
+<p>The capture rate plot above can be formatted by supplying the optional <cite>plotopts</cite> argument, which uses standard <a class="reference external" href="https://www.wolfram.com/mathematica/">Mathematica</a> plot options, as seen in the example below.  This is particulary helpful to customize the output of the plot,, for example for publication ready graphics.</p>
+<div class="highlight-mathematica notranslate"><div class="highlight"><pre><span></span>       In[4]= CaptureRate[
+               QueryDB[
+               &quot;&lt;mosaicroot&gt;/data/eventMD-PEG29-Reference.sqlite&quot;,
+               &quot;select AbsEventStart from metadata where
+                       ProcessingStatus=&#39;normal&#39; and ResTime &gt; 0.01&quot;
+               ], 0.0, 0.05, 50,
+               {Frame -&gt; True, FrameLabel -&gt; {Style[&quot;t (ms)&quot;, 16], &quot;&quot;},
+FrameTicks -&gt; {{{0.05, 0.1, 0.5, 1}, None}, {{0.005, 0.015, 0.025},
+   None}}, FrameTicksStyle -&gt; 14, PlotStyle -&gt; {Black, Thick},
+ImageSize -&gt; 400}
+       ]
+</pre></div>
+</div>
+<figure class="align-left">
+<a class="reference internal image-reference" href="../_images/mathematica-CaptureRate-Formatted.png"><img alt="../_images/mathematica-CaptureRate-Formatted.png" src="../_images/mathematica-CaptureRate-Formatted.png" style="width: 50%;" /></a>
+</figure>
+</section>
+</section>
+
+
+    </div>
+      
+  </div>
+</div>
+<!-- 
+<footer class="footer">
+  <div class="container">
+    <p class="pull-right">
+      <a href="#">Back to top</a>
+      
+    </p>
+    <p>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 3.5.4.<br/>
+    </p>
+  </div>
+</footer> -->
+<script type="text/javascript"
+	src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<div class="footer" style="vertical-align: center" align="center">
+		<table width="90%" style="vertical-align: center">
+			<col width=40%>
+			<col width=60%>
+			<tr>
+				<td align="left">
+					<a href="Developers.html"><small><em>MOSAIC Developers</em></small></a> |
+					<a href="https://www.nist.gov/people/arvind-balijepalli"><small><em>Contact</em></small></a> |
+					<a href="Disclaimer.html"><small><em>Terms of Use</em></small></a>
+				</td>
+			<!-- </tr>
+			<tr> -->
+				<td align="right">
+					<a target="_blank" href="http://www.nist.gov/public_affairs/privacy.cfm#privpolicy"><small>Privacy Policy</small></a> |
+					<a target="_blank" href="http://www.nist.gov/public_affairs/privacy.cfm#secnot"><small>Security Notice</small></a> |
+					<a href="http://www.nist.gov/public_affairs/privacy.cfm#accesstate"><small>Accessibility Statement</small></a> |
+					<a target="_blank" href="mailto:data@nist.gov?subject=Feedback%20on%20Web%20Site%20Template"><small>Send feedback</small></a>
+					<br/>
+				</td>
+			</tr>
+		</table>
+
+		<br />
+		<a href="http://www.nist.gov/"><small><em>National Institute of Standards and Technology</em></small></a>
+		<!-- <a href="http://www.nist.gov"><img src="_static/nist_logo.png" width="30%" alt="National Institute of Standards and Technology"></a> -->
+
+</div>
+
+  </body>
+</html>

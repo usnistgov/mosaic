@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>5. MOSAIC WEB &#8212; MOSAIC v2.2 documentation</title>
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/bootstrap-sphinx.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/graphviz.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/style.css" />
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="6. Settings File" href="settingsFile.html" />
+    <link rel="prev" title="4. MOSAIC GUI" href="GraphicalInterface.html" />
+
+<meta charset='utf-8'>
+<meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
+<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
+<meta name="apple-mobile-web-app-capable" content="yes">
+<script type="text/javascript" src="../_static/js/jquery-1.11.0.min.js "></script>
+<script type="text/javascript" src="../_static/js/jquery-fix.js "></script>
+<script type="text/javascript" src="../_static/bootstrap-3.3.7/js/bootstrap.min.js "></script>
+<script type="text/javascript" src="../_static/bootstrap-sphinx.js "></script>
+
+	<script async type="text/javascript" id="_fed_an_ua_tag" src="https://dap.digitalgov.gov/Universal-Federated-Analytics-Min.js?agency=DOC&subagency=NIST&pua=UA-66610693-1&yt=true&exts=ppsx,pps,f90,sch,rtf,wrl,txz,m1v,xlsm,msi,xsd,f,tif,eps,mpg,xml,pl,xlt,c"></script>	
+
+	<meta name="theme-color" content="#283593">
+
+  </head><body>
+
+  <div id="navbar" class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="../index.html"><span><img src="../_static/icon_48.png"></span>
+           </a>
+        <span class="navbar-text navbar-version pull-left"><b>v2.2</b></span>
+      </div>
+
+        <div class="collapse navbar-collapse nav-collapse">
+          <ul class="nav navbar-nav">
+            
+                <li><a href="../../latex/MOSAIC.pdf">Download PDF</a></li>
+                <li><a href="mailingList.html">Mailing List</a></li>
+                <li><a href="//github.com/usnistgov/mosaic">Develop</a></li>
+                <li><a href="//github.com/usnistgov/mosaic/issues">Issue Tracker</a></li>
+            
+            
+              <li class="dropdown globaltoc-container">
+  <a role="button"
+     id="dLabelGlobalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="../index.html">Contents <b class="caret"></b></a>
+  <ul class="dropdown-menu globaltoc"
+      role="menu"
+      aria-labelledby="dLabelGlobalToc"><ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="Introduction.html">1. Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Algorithms.html">2. Data Processing Algorithms in <em>MOSAIC</em></a></li>
+<li class="toctree-l1"><a class="reference internal" href="GettingStarted.html">3. Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="GraphicalInterface.html">4. <em>MOSAIC</em> GUI</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">5. <em>MOSAIC</em> WEB</a></li>
+<li class="toctree-l1"><a class="reference internal" href="settingsFile.html">6. Settings File</a></li>
+<li class="toctree-l1"><a class="reference internal" href="DatabaseStructure.html">7. Database Structure and Query Syntax</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ScriptingandAdvancedFeatures.html">8. Scripting and Advanced Features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Extend.html">9. Extend <em>MOSAIC</em></a></li>
+<li class="toctree-l1"><a class="reference internal" href="PublicationFigures.html">10. Publication Quality Figures</a></li>
+<li class="toctree-l1"><a class="reference internal" href="AdvancedAnalysis.html">11. Advanced Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Addons.html">12. Addons</a></li>
+<li class="toctree-l1"><a class="reference internal" href="DeveloperTools.html">13. Developer Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="apidocs.html">14. API Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="References.html">15. Bibliography</a></li>
+</ul>
+</ul>
+</li>
+              
+            
+            
+            
+            
+            
+              <li class="hidden-sm"></li>
+            
+          </ul>
+
+          
+            
+<form class="navbar-form navbar-right" action="../search.html" method="get">
+ <div class="form-group">
+  <input type="text" name="q" class="form-control" placeholder="Search" />
+ </div>
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+          
+        </div>
+    </div>
+  </div>
+
+<div class="container">
+  <div class="row">
+    <div class="body col-md-12 content" role="main">
+      
+  <section id="projname-web">
+<span id="mosaicweb-page"></span><h1><span class="section-number">5. </span><em>MOSAIC</em> WEB<a class="headerlink" href="#projname-web" title="Permalink to this headline">¶</a></h1>
+<p><em>MOSAIC</em>’s web interface is designed to allow you to easily setup and run an analysis, or to visualize and analyze the results of previous experiments. It contains the most commonly used features of <em>MOSAIC</em>.  The web interface consists of a series of screens that allow you to set up and run an analysis. The interface keeps track of all analysis within the current session so it is easy to go back and compare data sets. The web interface is designed to allow you to easily run the most common use cases. For more complicated analysis, please refer to the <a class="reference internal" href="ScriptingandAdvancedFeatures.html#scripting-page"><span class="std std-ref">Scripting and Advanced Features</span></a> section.</p>
+<p><strong>Opening the Web Interface</strong></p>
+<p>The web interface can be run locally, allowing you to run a <em>MOSAIC</em> analysis from within any modern web browser. If you installed <em>MOSAIC</em> from a precomiled binary, you can start the web interface by double clicking the <em>MOSAIC</em> icon. Alternatively, if you compiled <em>MOSAIC</em> from source code, you can run the GUI from the terminal window – navigate to the installation directory and type:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">python runMOSAIC</span>
+</pre></div>
+</div>
+<p>This should start a local copy of the <em>MOSAIC</em> web server and open a new browser window that launches the web interface. Running servers can be accessed at anytime by opening a browser and entering <a class="reference external" href="http://localhost:5000">http://localhost:5000</a> in the adress bar.</p>
+<section id="interface-overview">
+<h2><span class="section-number">5.1. </span>Interface Overview<a class="headerlink" href="#interface-overview" title="Permalink to this headline">¶</a></h2>
+<p>The main screen of the <em>MOSAIC</em> web interface is the starting point for running new analyses or reviewing previous runs.</p>
+<figure class="align-center" id="id1">
+<a class="reference internal image-reference" href="../_images/mosaicMain-01.png"><img alt="../_images/mosaicMain-01.png" src="../_images/mosaicMain-01.png" style="width: 50%;" /></a>
+<figcaption>
+<p><span class="caption-text">The main screen of the <em>MOSAIC</em> web interface allows new analyses to be set up or previous runs to be retrieved.</span><a class="headerlink" href="#id1" title="Permalink to this image">¶</a></p>
+</figcaption>
+</figure>
+<figure class="align-center">
+<a class="reference internal image-reference" href="../_images/mosaicLoadAnalysis.png"><img alt="../_images/mosaicLoadAnalysis.png" src="../_images/mosaicLoadAnalysis.png" style="width: 30%;" /></a>
+</figure>
+</section>
+<section id="analysis-settings">
+<h2><span class="section-number">5.2. </span>Analysis Settings<a class="headerlink" href="#analysis-settings" title="Permalink to this headline">¶</a></h2>
+<p>The analysis settings interface displays the data trajectory and allows one to set up and run an analysis. Below we present an overview of the different settings available on this screen. The numbered sections correspond to the numbers in the figure below.</p>
+<figure class="align-center">
+<a class="reference internal image-reference" href="../_images/analysisSettings-01.png"><img alt="../_images/analysisSettings-01.png" src="../_images/analysisSettings-01.png" style="width: 60%;" /></a>
+</figure>
+<p><strong>1. Time-Series</strong></p>
+<p>This section of the analysis settings shows a segment of the data time series. The length of time-series displayed is determined by <em>BlockSize</em> parameter in #2.</p>
+<ul class="simple">
+<li><p><strong>Gray Dashed line:</strong> The gray dashed line in the time-series display indicates the mean baseline current (<span class="math notranslate nohighlight">\(\langle i_0\rangle\)</span>) as estimated in #3.</p></li>
+<li><p><strong>Solid Red line:</strong> The red line in the time-series indicates the threshold current set in #3.</p></li>
+<li><p><strong>Data Path:</strong> The location of the data filesand  currently being displayed is shown at the top of the window. If data from multiple files are loaded, the last filename is displayed.</p></li>
+<li><p><strong>Fs:</strong> The sampling frequency of the time-series data in kHz.</p></li>
+</ul>
+<p><strong>2. Data File Settings</strong></p>
+<ul class="simple">
+<li><p><strong>File Type</strong>: The web interface is natively compatible with ABF, BIN or QDF Files. If the data path contains any of those file types this field is automatically populated.</p></li>
+<li><p><strong>DC Offset</strong>: If your measurement contains a systematic bias, it can be manually corrected by entering the DC offset here.</p></li>
+<li><p><strong>Start</strong> and <strong>End</strong>: These parameters allow you to analyze a range of your data. Choose the starting and ending times if you’d like to analyze a small time segement of your data. If both fields are left blank, all data will be analyzed. If the <em>End</em> field is left blank, the data segment from <em>Start</em> to the end of the data will be analyzed.</p></li>
+</ul>
+<p><strong>3. Event Partition Control</strong></p>
+<ul class="simple">
+<li><p><strong>Partition Algorithm</strong>: Currently, the only event partitioning algorithm available is <em>CurrentThreshold</em>.</p></li>
+<li><p><strong>Block Size</strong>: Controls the amount of data used to determine the baseline. This setting also controls the amount of data shown in the trajectory viewer.</p></li>
+<li><p><span class="math notranslate nohighlight">\(\langle i_0\rangle\)</span>: Mean open channel current, in picoamperes (pA). This is shown using the gray dashed line in the time-series viewer (see #1). When <em>Auto</em> is selected, this input will be disabled.</p></li>
+<li><p><span class="math notranslate nohighlight">\(\sigma_{i_0}\)</span>: Standardard deviation of the open channel current noise in pA. This is expected noise level of your baseline. Typically one would set this to the measured standard deviation of the open channel current at the cutoff frequency. When <em>Auto</em> is selected, this input will be disabled.</p></li>
+<li><p><strong>Auto</strong>: Checking this box enables automatic dectection of <span class="math notranslate nohighlight">\(\langle i_0\rangle\)</span> and <span class="math notranslate nohighlight">\(\sigma_{i_0}\)</span>.</p></li>
+<li><p><strong>Threshold</strong>: The slider and correspnding text input can be used to set the current threshold used to determine the start of an event. This setting is used by the <em>CurrentThreshold</em> algorithm to perform an initial partition of the time-series into individual events.</p></li>
+</ul>
+<p><strong>4.  Event Processing Setup</strong></p>
+<p><strong>Event Processing Algorithm</strong>: The GUI supports two event processing algorithms, i) <em>StepResponseAnalysis</em> and ii) <em>MultiStateAnalysis</em>. <em>StepResponseAnalysis</em> is the default analysis, and should be used with data sets with unimodal events. For events with mutliple states or steps the <em>MultiStateAnalysis</em> algorithm, which is capable of automatically analyzing events with <em>N</em> states, should be used. Note that <em>StepResponseAnalysis</em> is a restricted case of <em>MultiStateAnalysis</em> and is more computationally efficient to run if you have unimodal (or single states) data.</p>
+<ul class="simple">
+<li><p><strong>Write Events to Disk</strong>: When this box is checked, the data points for each partition events are written to the <a class="reference external" href="http://www.sqlite.org/">SQLite</a> database. When this is checked it is possible to view the individual fits of each  in the <em>Event Fits</em> panel.</p></li>
+</ul>
+<div class="admonition hint">
+<p class="admonition-title">Hint</p>
+<p>When Write Events to Disk is checked, your database can become extremely large! This is because <em>MOSAIC</em> is effectively writing most of your time-series to the database. Note that the fit parameters are always written to the database.</p>
+</div>
+<p><strong>5. Advanced Settings</strong></p>
+<p>This opens a dialog window to manually edit settings not otherwise accessible in the GUI. See the <a class="reference internal" href="settingsFile.html#settings-page"><span class="std std-ref">Settings File</span></a> section for further details.</p>
+<figure class="align-center">
+<a class="reference internal image-reference" href="../_images/analysisAdvancedSettings.png"><img alt="../_images/analysisAdvancedSettings.png" src="../_images/analysisAdvancedSettings.png" style="width: 30%;" /></a>
+</figure>
+<p><strong>6. Start Analysis/Update Settings</strong></p>
+<p>Use this button to either start the analysis when it has a <em>Play</em> symbol or to update and validate any settings when it displays a <em>Check Mark</em>.</p>
+</section>
+<section id="analysis-results">
+<h2><span class="section-number">5.3. </span>Analysis Results<a class="headerlink" href="#analysis-results" title="Permalink to this headline">¶</a></h2>
+<figure class="align-center">
+<a class="reference internal image-reference" href="../_images/analysisResultsContour-01.png"><img alt="../_images/analysisResultsContour-01.png" src="../_images/analysisResultsContour-01.png" style="width: 60%;" /></a>
+</figure>
+<p><strong>1. Analysis Control</strong></p>
+<p><strong>Statistics</strong></p>
+<p>The <em>Statistics Window</em> is displayed when a new analysis is started and displays:</p>
+<ul class="simple">
+<li><p><strong>Events Processed</strong>: The number of events processed.</p></li>
+<li><p><strong>Processing Error</strong>: The processing error rate (i.e. the percentage of events for which fit has failed).</p></li>
+<li><p><strong>Capture Rate</strong>: An estimate of the mean capture rate.</p></li>
+<li><p><strong>Analysis Time</strong>: The amount of data processed (in seconds).</p></li>
+</ul>
+<p><strong>2. Results View</strong></p>
+<figure class="align-center">
+<a class="reference internal image-reference" href="../_images/analysisResultPanels-01.png"><img alt="../_images/analysisResultPanels-01.png" src="../_images/analysisResultPanels-01.png" style="width: 90%;" /></a>
+</figure>
+<p>This window shows the blockade depth histogram calculated from the meta-data output by <em>MOSAIC</em>.</p>
+<ul class="simple">
+<li><p><strong>Filter</strong>: The data displayed in the histogram can be restricted to events that fulfill specific user-defined criteria. For instance, the default filter <code class="docutils literal notranslate"><span class="pre">ResTime</span> <span class="pre">&gt;</span> <span class="pre">0.025</span></code> only includes events longer than 0.025 ms (or 25 <span class="math notranslate nohighlight">\(\mu s\)</span>). The GUI uses a <a class="reference external" href="https://en.wikipedia.org/wiki/SQL">SQL</a> <cite>select</cite> statement to restrict the events included in the histogram. The text in the <em>Filter</em> field represents the part of the query after the <cite>where</cite> clause, and allows the user to use standard <a class="reference external" href="https://en.wikipedia.org/wiki/SQL">SQL</a> syntax to narrow the results in the plot. See the <a class="reference internal" href="WorkingWithSQLite.html#working-with-sqlite-sec"><span class="std std-ref">Work with SQLite</span></a> section for details on <a class="reference external" href="https://en.wikipedia.org/wiki/SQL">SQL</a> syntax.</p></li>
+<li><p><strong>Bins</strong>: The number of bins in the histogram are defined here. By default, 500 bins are used, but the user can change this necessary.</p></li>
+<li><p><strong>Detect Peaks</strong>: Checking <em>Detect Peaks</em> enables a wavelet-based peak detection algorithm. The wavelet level slider controls the sensitivity of the peak detection. Sliding it to the right will decrease the number of peaks picked up. The peaks detected are represented with red dots. Mousing over the detected peaks cause the coordinates of the peak to be displayed in the lower right hand corner of the window. The detected peaks can also be exported to a CSV file from the file menu <code class="docutils literal notranslate"><span class="pre">File&gt;Save</span> <span class="pre">Histogram</span></code>.</p></li>
+</ul>
+<figure class="align-center">
+<a class="reference internal image-reference" href="../_images/analysisResultsEventViewer-01.png"><img alt="../_images/analysisResultsEventViewer-01.png" src="../_images/analysisResultsEventViewer-01.png" style="width: 50%;" /></a>
+</figure>
+</section>
+</section>
+
+
+    </div>
+      
+  </div>
+</div>
+<!-- 
+<footer class="footer">
+  <div class="container">
+    <p class="pull-right">
+      <a href="#">Back to top</a>
+      
+    </p>
+    <p>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 3.5.4.<br/>
+    </p>
+  </div>
+</footer> -->
+<script type="text/javascript"
+	src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<div class="footer" style="vertical-align: center" align="center">
+		<table width="90%" style="vertical-align: center">
+			<col width=40%>
+			<col width=60%>
+			<tr>
+				<td align="left">
+					<a href="Developers.html"><small><em>MOSAIC Developers</em></small></a> |
+					<a href="https://www.nist.gov/people/arvind-balijepalli"><small><em>Contact</em></small></a> |
+					<a href="Disclaimer.html"><small><em>Terms of Use</em></small></a>
+				</td>
+			<!-- </tr>
+			<tr> -->
+				<td align="right">
+					<a target="_blank" href="http://www.nist.gov/public_affairs/privacy.cfm#privpolicy"><small>Privacy Policy</small></a> |
+					<a target="_blank" href="http://www.nist.gov/public_affairs/privacy.cfm#secnot"><small>Security Notice</small></a> |
+					<a href="http://www.nist.gov/public_affairs/privacy.cfm#accesstate"><small>Accessibility Statement</small></a> |
+					<a target="_blank" href="mailto:data@nist.gov?subject=Feedback%20on%20Web%20Site%20Template"><small>Send feedback</small></a>
+					<br/>
+				</td>
+			</tr>
+		</table>
+
+		<br />
+		<a href="http://www.nist.gov/"><small><em>National Institute of Standards and Technology</em></small></a>
+		<!-- <a href="http://www.nist.gov"><img src="_static/nist_logo.png" width="30%" alt="National Institute of Standards and Technology"></a> -->
+
+</div>
+
+  </body>
+</html>

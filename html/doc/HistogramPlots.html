@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>Basic Histogram Plots &#8212; MOSAIC v2.2 documentation</title>
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/bootstrap-sphinx.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/graphviz.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/style.css" />
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+
+<meta charset='utf-8'>
+<meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
+<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
+<meta name="apple-mobile-web-app-capable" content="yes">
+<script type="text/javascript" src="../_static/js/jquery-1.11.0.min.js "></script>
+<script type="text/javascript" src="../_static/js/jquery-fix.js "></script>
+<script type="text/javascript" src="../_static/bootstrap-3.3.7/js/bootstrap.min.js "></script>
+<script type="text/javascript" src="../_static/bootstrap-sphinx.js "></script>
+
+	<script async type="text/javascript" id="_fed_an_ua_tag" src="https://dap.digitalgov.gov/Universal-Federated-Analytics-Min.js?agency=DOC&subagency=NIST&pua=UA-66610693-1&yt=true&exts=ppsx,pps,f90,sch,rtf,wrl,txz,m1v,xlsm,msi,xsd,f,tif,eps,mpg,xml,pl,xlt,c"></script>	
+
+	<meta name="theme-color" content="#283593">
+
+  </head><body>
+
+  <div id="navbar" class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="../index.html"><span><img src="../_static/icon_48.png"></span>
+           </a>
+        <span class="navbar-text navbar-version pull-left"><b>v2.2</b></span>
+      </div>
+
+        <div class="collapse navbar-collapse nav-collapse">
+          <ul class="nav navbar-nav">
+            
+                <li><a href="../../latex/MOSAIC.pdf">Download PDF</a></li>
+                <li><a href="mailingList.html">Mailing List</a></li>
+                <li><a href="//github.com/usnistgov/mosaic">Develop</a></li>
+                <li><a href="//github.com/usnistgov/mosaic/issues">Issue Tracker</a></li>
+            
+            
+              <li class="dropdown globaltoc-container">
+  <a role="button"
+     id="dLabelGlobalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="../index.html">Contents <b class="caret"></b></a>
+  <ul class="dropdown-menu globaltoc"
+      role="menu"
+      aria-labelledby="dLabelGlobalToc"><ul>
+<li class="toctree-l1"><a class="reference internal" href="Introduction.html">1. Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Algorithms.html">2. Data Processing Algorithms in <em>MOSAIC</em></a></li>
+<li class="toctree-l1"><a class="reference internal" href="GettingStarted.html">3. Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="GraphicalInterface.html">4. <em>MOSAIC</em> GUI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="WebInterface.html">5. <em>MOSAIC</em> WEB</a></li>
+<li class="toctree-l1"><a class="reference internal" href="settingsFile.html">6. Settings File</a></li>
+<li class="toctree-l1"><a class="reference internal" href="DatabaseStructure.html">7. Database Structure and Query Syntax</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ScriptingandAdvancedFeatures.html">8. Scripting and Advanced Features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Extend.html">9. Extend <em>MOSAIC</em></a></li>
+<li class="toctree-l1"><a class="reference internal" href="PublicationFigures.html">10. Publication Quality Figures</a></li>
+<li class="toctree-l1"><a class="reference internal" href="AdvancedAnalysis.html">11. Advanced Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Addons.html">12. Addons</a></li>
+<li class="toctree-l1"><a class="reference internal" href="DeveloperTools.html">13. Developer Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="apidocs.html">14. API Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="References.html">15. Bibliography</a></li>
+</ul>
+</ul>
+</li>
+              
+            
+            
+            
+            
+            
+              <li class="hidden-sm"></li>
+            
+          </ul>
+
+          
+            
+<form class="navbar-form navbar-right" action="../search.html" method="get">
+ <div class="form-group">
+  <input type="text" name="q" class="form-control" placeholder="Search" />
+ </div>
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+          
+        </div>
+    </div>
+  </div>
+
+<div class="container">
+  <div class="row">
+    <div class="body col-md-12 content" role="main">
+      
+  <p><em>Generate publication quality histogram plots using the
+mosaicscripts.plot.histogram module.</em></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">:</span><span class="n">Created</span><span class="p">:</span>   <span class="mi">12</span><span class="o">/</span><span class="mi">14</span><span class="o">/</span><span class="mi">2015</span>
+<span class="p">:</span><span class="n">Author</span><span class="p">:</span>    <span class="n">Arvind</span> <span class="n">Balijepalli</span> <span class="o">&lt;</span><span class="n">arvind</span><span class="o">.</span><span class="n">balijepalli</span><span class="nd">@nist</span><span class="o">.</span><span class="n">gov</span><span class="o">&gt;</span>
+<span class="p">:</span><span class="n">License</span><span class="p">:</span>   <span class="n">See</span> <span class="n">LICENSE</span><span class="o">.</span><span class="n">TXT</span>
+<span class="p">:</span><span class="n">ChangeLog</span><span class="p">:</span>
+    <span class="mi">01</span><span class="o">/</span><span class="mi">09</span><span class="o">/</span><span class="mi">16</span>         <span class="n">AB</span>    <span class="n">Added</span> <span class="n">a</span> <span class="n">plot</span> <span class="n">overlay</span> <span class="n">example</span><span class="o">.</span>
+    <span class="mi">12</span><span class="o">/</span><span class="mi">14</span><span class="o">/</span><span class="mi">15</span>        <span class="n">AB</span>  <span class="n">Initial</span> <span class="n">version</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">scipy.optimize</span> <span class="kn">import</span> <span class="n">curve_fit</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">mosaicscripts.plots.histogram</span> <span class="k">as</span> <span class="nn">histogram</span>
+<span class="kn">from</span> <span class="nn">mosaic.utilities.sqlQuery</span> <span class="kn">import</span> <span class="n">query</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">q</span><span class="o">=</span><span class="s2">&quot;select BlockDepth from metadata where ProcessingStatus=&#39;normal&#39; and ResTime &gt; 0.25 and BlockDepth between 0.3 and 0.4&quot;</span>
+</pre></div>
+</div>
+<section id="basic-histogram-plots">
+<h1>Basic Histogram Plots<a class="headerlink" href="#basic-histogram-plots" title="Permalink to this headline">¶</a></h1>
+<p>Plots are generated using the
+<code class="docutils literal notranslate"><span class="pre">mosaicscripts.plots.histogram.histogram_plot()</span></code> function. See the
+<a class="reference external" href="../mosaicscripts/plots/histogram.py">histogram module</a> for
+additional details.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">histogram</span><span class="o">.</span><span class="n">histogram_plot</span><span class="p">(</span>
+                            <span class="n">query</span><span class="p">(</span><span class="s2">&quot;../data/eventMD-P28-bin.sqlite&quot;</span><span class="p">,</span> <span class="n">q</span><span class="p">),</span>
+                            <span class="mi">100</span><span class="p">,</span>
+                            <span class="p">(</span><span class="mf">0.3</span><span class="p">,</span> <span class="mf">0.4</span><span class="p">),</span>
+                            <span class="n">xticks</span><span class="o">=</span> <span class="p">(</span><span class="mf">0.3</span><span class="p">,</span><span class="mf">0.35</span><span class="p">,</span><span class="mf">0.4</span><span class="p">),</span>
+                            <span class="n">yticks</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">500</span><span class="p">,</span><span class="mi">1000</span><span class="p">,</span><span class="mi">1500</span><span class="p">),</span>
+                            <span class="n">xlabel</span><span class="o">=</span><span class="sa">r</span><span class="s2">&quot;&lt;i&gt;/&lt;i$_0$&gt;&quot;</span><span class="p">,</span>
+                            <span class="n">ylabel</span><span class="o">=</span><span class="sa">r</span><span class="s2">&quot;Counts&quot;</span>
+                    <span class="p">)</span>
+</pre></div>
+</div>
+<img alt="../_images/HistogramPlots_5_0.png" src="../_images/HistogramPlots_5_0.png" />
+<p>To plot the probability density, supply the argument <code class="docutils literal notranslate"><span class="pre">density</span></code>=True
+as shown below.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">histogram</span><span class="o">.</span><span class="n">histogram_plot</span><span class="p">(</span>
+                            <span class="n">query</span><span class="p">(</span><span class="s2">&quot;../data/eventMD-P28-bin.sqlite&quot;</span><span class="p">,</span> <span class="n">q</span><span class="p">),</span>
+                            <span class="mi">100</span><span class="p">,</span>
+                            <span class="p">(</span><span class="mf">0.3</span><span class="p">,</span> <span class="mf">0.4</span><span class="p">),</span>
+                            <span class="n">xticks</span><span class="o">=</span> <span class="p">(</span><span class="mf">0.3</span><span class="p">,</span><span class="mf">0.35</span><span class="p">,</span><span class="mf">0.4</span><span class="p">),</span>
+                            <span class="n">yticks</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">50</span><span class="p">,</span><span class="mi">100</span><span class="p">),</span>
+                            <span class="n">xlabel</span><span class="o">=</span><span class="sa">r</span><span class="s2">&quot;&lt;i&gt;/&lt;i$_0$&gt;&quot;</span><span class="p">,</span>
+                            <span class="n">ylabel</span><span class="o">=</span><span class="sa">r</span><span class="s2">&quot;Density&quot;</span><span class="p">,</span>
+                <span class="n">density</span><span class="o">=</span><span class="kc">True</span>
+                    <span class="p">)</span>
+</pre></div>
+</div>
+<img alt="../_images/HistogramPlots_7_0.png" src="../_images/HistogramPlots_7_0.png" />
+</section>
+<section id="custom-styles">
+<h1>Custom Styles<a class="headerlink" href="#custom-styles" title="Permalink to this headline">¶</a></h1>
+<p>The fill transperancy can be controlled with the <code class="docutils literal notranslate"><span class="pre">fill_alpha</span></code>
+argument. When set to <code class="docutils literal notranslate"><span class="pre">1</span></code>, it results in a filled plot as seen below.
+To turn off filling, simply set <code class="docutils literal notranslate"><span class="pre">fill_alpha</span></code>=0</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">histogram</span><span class="o">.</span><span class="n">histogram_plot</span><span class="p">(</span>
+                            <span class="n">query</span><span class="p">(</span><span class="s2">&quot;../data/eventMD-P28-bin.sqlite&quot;</span><span class="p">,</span> <span class="n">q</span><span class="p">),</span>
+                            <span class="mi">100</span><span class="p">,</span>
+                            <span class="p">(</span><span class="mf">0.3</span><span class="p">,</span> <span class="mf">0.4</span><span class="p">),</span>
+                            <span class="n">xticks</span><span class="o">=</span> <span class="p">(</span><span class="mf">0.3</span><span class="p">,</span><span class="mf">0.35</span><span class="p">,</span><span class="mf">0.4</span><span class="p">),</span>
+                            <span class="n">yticks</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">500</span><span class="p">,</span><span class="mi">1000</span><span class="p">,</span><span class="mi">1500</span><span class="p">),</span>
+                            <span class="n">xlabel</span><span class="o">=</span><span class="sa">r</span><span class="s2">&quot;&lt;i&gt;/&lt;i$_0$&gt;&quot;</span><span class="p">,</span>
+                            <span class="n">ylabel</span><span class="o">=</span><span class="sa">r</span><span class="s2">&quot;Counts&quot;</span><span class="p">,</span>
+                <span class="n">fill_alpha</span><span class="o">=</span><span class="mi">1</span>
+                    <span class="p">)</span>
+</pre></div>
+</div>
+<img alt="../_images/HistogramPlots_9_0.png" src="../_images/HistogramPlots_9_0.png" />
+<p>Matplotlib plotting directies can be supplied to <code class="docutils literal notranslate"><span class="pre">histogram_plot()</span></code>
+using the <code class="docutils literal notranslate"><span class="pre">advanced_opts</span></code> argument. See the <a class="reference external" href="http://matplotlib.org/api/pyplot_api.html#matplotlib.pyplot.plot">Matplotlib plot
+documentation</a>
+for additional details. In the example below, the plot linewidth is set
+to 1.5 points.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">histogram</span><span class="o">.</span><span class="n">histogram_plot</span><span class="p">(</span>
+                            <span class="n">query</span><span class="p">(</span><span class="s2">&quot;../data/eventMD-P28-bin.sqlite&quot;</span><span class="p">,</span> <span class="n">q</span><span class="p">),</span>
+                            <span class="mi">100</span><span class="p">,</span>
+                            <span class="p">(</span><span class="mf">0.3</span><span class="p">,</span> <span class="mf">0.4</span><span class="p">),</span>
+                            <span class="n">xticks</span><span class="o">=</span> <span class="p">(</span><span class="mf">0.3</span><span class="p">,</span><span class="mf">0.35</span><span class="p">,</span><span class="mf">0.4</span><span class="p">),</span>
+                            <span class="n">yticks</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">500</span><span class="p">,</span><span class="mi">1000</span><span class="p">,</span><span class="mi">1500</span><span class="p">),</span>
+                            <span class="n">xlabel</span><span class="o">=</span><span class="sa">r</span><span class="s2">&quot;&lt;i&gt;/&lt;i$_0$&gt;&quot;</span><span class="p">,</span>
+                            <span class="n">ylabel</span><span class="o">=</span><span class="sa">r</span><span class="s2">&quot;Counts&quot;</span><span class="p">,</span>
+                <span class="n">color</span><span class="o">=</span><span class="s1">&#39;purple&#39;</span><span class="p">,</span>
+                <span class="n">dpi</span><span class="o">=</span><span class="mi">600</span><span class="p">,</span>
+                <span class="n">fill_alpha</span><span class="o">=</span><span class="mf">0.15</span><span class="p">,</span>
+                <span class="n">advanced_opts</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;linewidth&#39;</span><span class="p">:</span> <span class="mf">1.5</span><span class="p">}</span>
+                    <span class="p">)</span>
+</pre></div>
+</div>
+<img alt="../_images/HistogramPlots_11_0.png" src="../_images/HistogramPlots_11_0.png" />
+<p>The example below shows more advanced styling. Circular markers can be
+placed at the center of each bin using the <a class="reference external" href="http://matplotlib.org/api/pyplot_api.html#matplotlib.pyplot.plot">Matplotlib marker
+keywords</a>.</p>
+<p>Finally, images can be saved by supplying the <code class="docutils literal notranslate"><span class="pre">figname</span></code> argument as
+seen in the example below. Optionally, the figure resolution can be set
+with the <code class="docutils literal notranslate"><span class="pre">dpi</span></code> argument.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">histogram</span><span class="o">.</span><span class="n">histogram_plot</span><span class="p">(</span>
+                            <span class="n">query</span><span class="p">(</span><span class="s2">&quot;../data/eventMD-P28-bin.sqlite&quot;</span><span class="p">,</span> <span class="n">q</span><span class="p">),</span>
+                            <span class="mi">100</span><span class="p">,</span>
+                            <span class="p">(</span><span class="mf">0.3</span><span class="p">,</span> <span class="mf">0.4</span><span class="p">),</span>
+                            <span class="n">xticks</span><span class="o">=</span> <span class="p">(</span><span class="mf">0.3</span><span class="p">,</span><span class="mf">0.35</span><span class="p">,</span><span class="mf">0.4</span><span class="p">),</span>
+                            <span class="n">yticks</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">500</span><span class="p">,</span><span class="mi">1000</span><span class="p">,</span><span class="mi">1500</span><span class="p">),</span>
+                            <span class="n">figname</span><span class="o">=</span><span class="s2">&quot;histogram.png&quot;</span><span class="p">,</span>
+                            <span class="n">xlabel</span><span class="o">=</span><span class="sa">r</span><span class="s2">&quot;&lt;i&gt;/&lt;i$_0$&gt;&quot;</span><span class="p">,</span>
+                            <span class="n">ylabel</span><span class="o">=</span><span class="sa">r</span><span class="s2">&quot;Counts&quot;</span><span class="p">,</span>
+                <span class="n">color</span><span class="o">=</span><span class="s1">&#39;#EB771A&#39;</span><span class="p">,</span>
+                <span class="n">dpi</span><span class="o">=</span><span class="mi">600</span><span class="p">,</span>
+                <span class="n">fill_alpha</span><span class="o">=</span><span class="mf">0.15</span><span class="p">,</span>
+                <span class="n">advanced_opts</span><span class="o">=</span><span class="p">{</span>
+                            <span class="s1">&#39;marker&#39;</span><span class="p">:</span> <span class="s1">&#39;o&#39;</span><span class="p">,</span>
+                            <span class="s1">&#39;markersize&#39;</span><span class="p">:</span> <span class="mi">6</span><span class="p">,</span>
+                            <span class="s1">&#39;markeredgecolor&#39;</span> <span class="p">:</span> <span class="s1">&#39;#EB771A&#39;</span><span class="p">,</span>
+                            <span class="s1">&#39;markeredgewidth&#39;</span> <span class="p">:</span> <span class="mf">0.75</span><span class="p">,</span>
+                            <span class="s1">&#39;markerfacecolor&#39;</span><span class="p">:</span> <span class="s1">&#39;none&#39;</span><span class="p">,</span>
+                            <span class="s1">&#39;linewidth&#39;</span><span class="p">:</span> <span class="mf">1.</span>
+                        <span class="p">}</span>
+                    <span class="p">)</span>
+</pre></div>
+</div>
+<img alt="../_images/HistogramPlots_13_0.png" src="../_images/HistogramPlots_13_0.png" />
+</section>
+<section id="advanced-analysis-and-plot-overlays">
+<h1>Advanced Analysis and Plot Overlays<a class="headerlink" href="#advanced-analysis-and-plot-overlays" title="Permalink to this headline">¶</a></h1>
+<p>The <code class="docutils literal notranslate"><span class="pre">mosaicscripts.plots.histogram.histogram_plot()</span></code> function allows
+one to overlay additional curves on top of the histogram data. This is
+useful, for example, to fit the histogram to a known functional form.
+Below we describe, how to fit the histogram data to a sum of two
+Gaussians.</p>
+<p>First we must define the fit function as shown below. We sum two
+Gaussians of the form:
+<span class="math notranslate nohighlight">\(a_1 exp(-(x-\mu_1)^2/2\sigma_1^2)+a_2 exp(-(x-\mu_2)^2/2\sigma_2^2)\)</span>,
+where <span class="math notranslate nohighlight">\(x\)</span> is the independent variable, <span class="math notranslate nohighlight">\(\mu\)</span> is the mean of
+the distribution, <span class="math notranslate nohighlight">\(\sigma\)</span> is the standard deviation, <span class="math notranslate nohighlight">\(a\)</span> is
+the amplitude and the subscripts denote the peak number.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">gauss_sum_fit</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">a1</span><span class="p">,</span> <span class="n">mu1</span><span class="p">,</span> <span class="n">sigma1</span><span class="p">,</span> <span class="n">a2</span><span class="p">,</span> <span class="n">mu2</span><span class="p">,</span> <span class="n">sigma2</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">a1</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="p">(</span><span class="n">x</span><span class="o">-</span><span class="n">mu1</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="o">/</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">sigma1</span><span class="o">**</span><span class="mi">2</span><span class="p">))</span> <span class="o">+</span> <span class="n">a2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="p">(</span><span class="n">x</span><span class="o">-</span><span class="n">mu2</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="o">/</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">sigma2</span><span class="o">**</span><span class="mi">2</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>Next, we call the <code class="docutils literal notranslate"><span class="pre">histogram_plot</span></code> function as before. Note however
+there are two additional options we must provide to enable us to add the
+peak fits to the plot. The first is <code class="docutils literal notranslate"><span class="pre">show=False</span></code>, which suppresses
+plotting the histogram to allow additional plots to be added to the
+figure (see the <a class="reference external" href="http://matplotlib.org/api/pyplot_api.html#matplotlib.pyplot.show">Matplotlib
+documentation</a>
+for details), and the second is <code class="docutils literal notranslate"><span class="pre">return_histogram=True</span></code>, which returns
+the raw histogram data that we fit to.</p>
+<p>Next, we perform the least squares fit using the <a class="reference external" href="http://docs.scipy.org/doc/scipy-0.16.0/reference/generated/scipy.optimize.curve_fit.html">Scipy
+curve_fit</a>
+function. The optimized parameters and covariance are stored in <code class="docutils literal notranslate"><span class="pre">popt</span></code>
+and <code class="docutils literal notranslate"><span class="pre">pcov</span></code> respectively.</p>
+<p>Finally, we plot the fit function and call
+<a class="reference external" href="http://matplotlib.org/api/pyplot_api.html#matplotlib.pyplot.show">show()</a>
+to display the figure.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">hist</span><span class="p">,</span><span class="n">bins</span><span class="o">=</span><span class="n">histogram</span><span class="o">.</span><span class="n">histogram_plot</span><span class="p">(</span>
+                            <span class="n">query</span><span class="p">(</span><span class="s2">&quot;../data/eventMD-P28-bin.sqlite&quot;</span><span class="p">,</span> <span class="n">q</span><span class="p">),</span>
+                            <span class="mi">75</span><span class="p">,</span>
+                            <span class="p">(</span><span class="mf">0.3</span><span class="p">,</span> <span class="mf">0.4</span><span class="p">),</span>
+                            <span class="n">xticks</span><span class="o">=</span> <span class="p">(</span><span class="mf">0.3</span><span class="p">,</span><span class="mf">0.325</span><span class="p">,</span><span class="mf">0.35</span><span class="p">,</span><span class="mf">0.375</span><span class="p">,</span><span class="mf">0.4</span><span class="p">),</span>
+                            <span class="n">yticks</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">500</span><span class="p">,</span><span class="mi">1000</span><span class="p">,</span><span class="mi">1500</span><span class="p">),</span>
+                            <span class="n">figname</span><span class="o">=</span><span class="s2">&quot;histogram.png&quot;</span><span class="p">,</span>
+                            <span class="n">xlabel</span><span class="o">=</span><span class="sa">r</span><span class="s2">&quot;&lt;i&gt;/&lt;i$_0$&gt;&quot;</span><span class="p">,</span>
+                            <span class="n">ylabel</span><span class="o">=</span><span class="sa">r</span><span class="s2">&quot;Counts&quot;</span><span class="p">,</span>
+                            <span class="n">fill_alpha</span><span class="o">=</span><span class="mf">0.</span><span class="p">,</span>
+                            <span class="n">show</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                            <span class="n">return_histogram</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                            <span class="n">advanced_opts</span><span class="o">=</span><span class="p">{</span>
+                                <span class="s1">&#39;marker&#39;</span><span class="p">:</span> <span class="s1">&#39;o&#39;</span><span class="p">,</span>
+                                <span class="s1">&#39;markersize&#39;</span><span class="p">:</span> <span class="mi">6</span><span class="p">,</span>
+                                <span class="s1">&#39;markeredgecolor&#39;</span> <span class="p">:</span> <span class="s1">&#39;#002A63&#39;</span><span class="p">,</span>
+                                <span class="s1">&#39;markeredgewidth&#39;</span> <span class="p">:</span> <span class="mf">0.75</span><span class="p">,</span>
+                                <span class="s1">&#39;markerfacecolor&#39;</span><span class="p">:</span> <span class="s1">&#39;none&#39;</span><span class="p">,</span>
+                                <span class="s1">&#39;linewidth&#39;</span><span class="p">:</span> <span class="mf">0.</span>
+                        <span class="p">}</span>
+        <span class="p">)</span>
+
+<span class="n">popt</span><span class="p">,</span><span class="n">pcov</span><span class="o">=</span><span class="n">curve_fit</span><span class="p">(</span><span class="n">gauss_sum_fit</span><span class="p">,</span> <span class="n">bins</span><span class="p">,</span> <span class="n">hist</span><span class="p">,</span> <span class="p">[</span><span class="mi">1200</span><span class="p">,</span> <span class="mf">0.34</span><span class="p">,</span><span class="mf">0.003</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mf">0.36</span><span class="p">,</span><span class="mf">0.003</span><span class="p">])</span>
+
+<span class="n">xdat</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mf">0.3</span><span class="p">,</span> <span class="mf">0.4</span><span class="p">,</span><span class="mf">0.0005</span><span class="p">)</span>
+<span class="n">ydat</span><span class="o">=</span><span class="n">gauss_sum_fit</span><span class="p">(</span><span class="n">xdat</span><span class="p">,</span> <span class="o">*</span><span class="n">popt</span><span class="p">)</span>
+
+<span class="n">histogram</span><span class="o">.</span><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xdat</span><span class="p">,</span> <span class="n">ydat</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;#002A63&quot;</span><span class="p">)</span>
+<span class="n">histogram</span><span class="o">.</span><span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+<img alt="../_images/HistogramPlots_17_0.png" src="../_images/HistogramPlots_17_0.png" />
+<p>The <code class="docutils literal notranslate"><span class="pre">popt</span></code> variable holds the optimized fit parameters, stored in the
+order defined by the <code class="docutils literal notranslate"><span class="pre">gauss_sum_fit</span></code> above. We can extract these
+values from this list. For example, the peak positions can be retrieved
+as shown below.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">popt</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">popt</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="mf">0.33733498827022712</span><span class="p">,</span> <span class="mf">0.3559240351776794</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+
+
+    </div>
+      
+  </div>
+</div>
+<!-- 
+<footer class="footer">
+  <div class="container">
+    <p class="pull-right">
+      <a href="#">Back to top</a>
+      
+    </p>
+    <p>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 3.5.4.<br/>
+    </p>
+  </div>
+</footer> -->
+<script type="text/javascript"
+	src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<div class="footer" style="vertical-align: center" align="center">
+		<table width="90%" style="vertical-align: center">
+			<col width=40%>
+			<col width=60%>
+			<tr>
+				<td align="left">
+					<a href="Developers.html"><small><em>MOSAIC Developers</em></small></a> |
+					<a href="https://www.nist.gov/people/arvind-balijepalli"><small><em>Contact</em></small></a> |
+					<a href="Disclaimer.html"><small><em>Terms of Use</em></small></a>
+				</td>
+			<!-- </tr>
+			<tr> -->
+				<td align="right">
+					<a target="_blank" href="http://www.nist.gov/public_affairs/privacy.cfm#privpolicy"><small>Privacy Policy</small></a> |
+					<a target="_blank" href="http://www.nist.gov/public_affairs/privacy.cfm#secnot"><small>Security Notice</small></a> |
+					<a href="http://www.nist.gov/public_affairs/privacy.cfm#accesstate"><small>Accessibility Statement</small></a> |
+					<a target="_blank" href="mailto:data@nist.gov?subject=Feedback%20on%20Web%20Site%20Template"><small>Send feedback</small></a>
+					<br/>
+				</td>
+			</tr>
+		</table>
+
+		<br />
+		<a href="http://www.nist.gov/"><small><em>National Institute of Standards and Technology</em></small></a>
+		<!-- <a href="http://www.nist.gov"><img src="_static/nist_logo.png" width="30%" alt="National Institute of Standards and Technology"></a> -->
+
+</div>
+
+  </body>
+</html>

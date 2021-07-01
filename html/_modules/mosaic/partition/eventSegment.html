@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>mosaic.partition.eventSegment &#8212; MOSAIC v2.2 documentation</title>
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/bootstrap-sphinx.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/style.css" />
+    <script id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+    <script src="../../../_static/jquery.js"></script>
+    <script src="../../../_static/underscore.js"></script>
+    <script src="../../../_static/doctools.js"></script>
+    <link rel="shortcut icon" href="../../../_static/favicon.ico"/>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+
+<meta charset='utf-8'>
+<meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
+<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
+<meta name="apple-mobile-web-app-capable" content="yes">
+<script type="text/javascript" src="../../../_static/js/jquery-1.11.0.min.js "></script>
+<script type="text/javascript" src="../../../_static/js/jquery-fix.js "></script>
+<script type="text/javascript" src="../../../_static/bootstrap-3.3.7/js/bootstrap.min.js "></script>
+<script type="text/javascript" src="../../../_static/bootstrap-sphinx.js "></script>
+
+	<script async type="text/javascript" id="_fed_an_ua_tag" src="https://dap.digitalgov.gov/Universal-Federated-Analytics-Min.js?agency=DOC&subagency=NIST&pua=UA-66610693-1&yt=true&exts=ppsx,pps,f90,sch,rtf,wrl,txz,m1v,xlsm,msi,xsd,f,tif,eps,mpg,xml,pl,xlt,c"></script>	
+
+	<meta name="theme-color" content="#283593">
+
+  </head><body>
+
+  <div id="navbar" class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="../../../index.html"><span><img src="../../../_static/icon_48.png"></span>
+           </a>
+        <span class="navbar-text navbar-version pull-left"><b>v2.2</b></span>
+      </div>
+
+        <div class="collapse navbar-collapse nav-collapse">
+          <ul class="nav navbar-nav">
+            
+                <li><a href="../../../../latex/MOSAIC.pdf">Download PDF</a></li>
+                <li><a href="../../../doc/mailingList.html">Mailing List</a></li>
+                <li><a href="//github.com/usnistgov/mosaic">Develop</a></li>
+                <li><a href="//github.com/usnistgov/mosaic/issues">Issue Tracker</a></li>
+            
+            
+              <li class="dropdown globaltoc-container">
+  <a role="button"
+     id="dLabelGlobalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="../../../index.html">Contents <b class="caret"></b></a>
+  <ul class="dropdown-menu globaltoc"
+      role="menu"
+      aria-labelledby="dLabelGlobalToc"><ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../doc/Introduction.html">1. Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../doc/Algorithms.html">2. Data Processing Algorithms in <em>MOSAIC</em></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../doc/GettingStarted.html">3. Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../doc/GraphicalInterface.html">4. <em>MOSAIC</em> GUI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../doc/WebInterface.html">5. <em>MOSAIC</em> WEB</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../doc/settingsFile.html">6. Settings File</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../doc/DatabaseStructure.html">7. Database Structure and Query Syntax</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../doc/ScriptingandAdvancedFeatures.html">8. Scripting and Advanced Features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../doc/Extend.html">9. Extend <em>MOSAIC</em></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../doc/PublicationFigures.html">10. Publication Quality Figures</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../doc/AdvancedAnalysis.html">11. Advanced Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../doc/Addons.html">12. Addons</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../doc/DeveloperTools.html">13. Developer Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../doc/apidocs.html">14. API Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../doc/References.html">15. Bibliography</a></li>
+</ul>
+</ul>
+</li>
+              
+            
+            
+            
+            
+            
+              <li class="hidden-sm"></li>
+            
+          </ul>
+
+          
+            
+<form class="navbar-form navbar-right" action="../../../search.html" method="get">
+ <div class="form-group">
+  <input type="text" name="q" class="form-control" placeholder="Search" />
+ </div>
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+          
+        </div>
+    </div>
+  </div>
+
+<div class="container">
+  <div class="row">
+    <div class="body col-md-12 content" role="main">
+      
+  <h1>Source code for mosaic.partition.eventSegment</h1><div class="highlight"><pre>
+<span></span><span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">	Partition a trajectory into individual events and pass each event </span>
+<span class="sd">	to an implementation of eventProcessor</span>
+
+<span class="sd">	:Created:	7/17/2012</span>
+<span class="sd"> 	:Author: 	Arvind Balijepalli &lt;arvind.balijepalli@nist.gov&gt;</span>
+<span class="sd">	:License:	See LICENSE.TXT</span>
+<span class="sd">	:ChangeLog:</span>
+<span class="sd">	.. line-block::</span>
+<span class="sd">		10/28/18	AB 	Fix spurious shallow events as outlined in https://github.com/usnistgov/mosaic/issues/102</span>
+<span class="sd">		9/25/17 	AB 	Save unfiltered event padding by default.</span>
+<span class="sd">		1/18/17 	AB 	Fix pre event baseline.</span>
+<span class="sd">		6/17/16 	AB 	Log function timing in developer mode.</span>
+<span class="sd">		5/17/14		AB  Delete plotting support</span>
+<span class="sd">		5/17/14		AB  Add metaMDIO support for meta-data and time-series storage</span>
+<span class="sd">		2/14/14		AB 	Pass absdatidx argument to event processing to track absolute time of </span>
+<span class="sd">						event start for capture rate estimation.</span>
+<span class="sd">		6/22/13		AB 	Use plotting hooks in metaEventPartition to plot blockade depth histogram in </span>
+<span class="sd">						real-time using matplotlib.</span>
+<span class="sd">		4/22/13		AB 	Rewrote this class as an implementation of the base class metaEventPartition.</span>
+<span class="sd">						Included event processing parallelization using ZMQ.</span>
+<span class="sd">		9/26/12		AB  Allowed automatic open channel state calculation to be overridden.</span>
+<span class="sd">						To do this the settings &quot;meanOpenCurr&quot;,&quot;sdOpenCurr&quot; and &quot;slopeOpenCurr&quot;</span>
+<span class="sd">						must be set manually. If all three settings are absent or </span>
+<span class="sd">						set to 01, they are autuomatically estimated.</span>
+<span class="sd">						Added &quot;writeEventTS&quot; boolean setting to control whether raw</span>
+<span class="sd">						events are written to file. Default is ON (1)</span>
+<span class="sd">		8/24/12		AB 	Settings are now read from a settings file that</span>
+<span class="sd">						is located either with the data or in the working directory </span>
+<span class="sd">						that the program is run from. Each class that relies on the </span>
+<span class="sd">						settings file will fallback to default values if the file</span>
+<span class="sd">						is not found.</span>
+<span class="sd">		7/17/12		AB	Initial version</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">import</span> <span class="nn">mosaic.utilities.util</span> <span class="k">as</span> <span class="nn">util</span>
+<span class="kn">import</span> <span class="nn">mosaic.utilities.mosaicLogFormat</span> <span class="k">as</span> <span class="nn">log</span>
+<span class="kn">from</span> <span class="nn">mosaic.utilities.resource_path</span> <span class="kn">import</span> <span class="n">format_path</span>
+<span class="kn">import</span> <span class="nn">mosaic.utilities.mosaicLogging</span> <span class="k">as</span> <span class="nn">mlog</span>
+<span class="kn">from</span>  <span class="nn">collections</span> <span class="kn">import</span> <span class="n">deque</span>
+<span class="kn">from</span> <span class="nn">mosaic</span> <span class="kn">import</span> <span class="n">commonExceptions</span>
+<span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">metaEventPartition</span>
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;eventSegment&quot;</span><span class="p">]</span>
+
+<div class="viewcode-block" id="eventSegment"><a class="viewcode-back" href="../../../api-doc/mosaic.partition.html#mosaic.partition.eventSegment.eventSegment">[docs]</a><span class="k">class</span> <span class="nc">eventSegment</span><span class="p">(</span><span class="n">metaEventPartition</span><span class="o">.</span><span class="n">metaEventPartition</span><span class="p">):</span>
+	<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">		Implement an event partitioning algorithm by sub-classing the metaEventPartition class</span>
+
+<span class="sd">		:Settings: In addition to the parameters described in :class:`~mosaic.metaEventPartition`, the following parameters from are read from the settings file (.settings in the data path or current working directory):</span>
+
+<span class="sd">			- `blockSizeSec` :	Functions that perform block processing use this value to set the size of </span>
+<span class="sd">							their windows in seconds. For example, open channel conductance is processed</span>
+<span class="sd">							for windows with a size specified by this parameter. (default: 1 second)</span>
+<span class="sd">			- `eventPad` :		Number of points to include before and after a detected event. (default: 500)</span>
+<span class="sd">			- `minEventLength` :	Minimum number points in the blocked state to qualify as an event (default: 5)</span>
+<span class="sd">			- `eventThreshold` :	Threshold, number of SD away from the open channel mean. If the abs(curr) is less</span>
+<span class="sd">							than &#39;abs(mean)-(eventThreshold*SD)&#39; a new event is registered (default: 6)</span>
+<span class="sd">			- `meanOpenCurr` :	Explicitly set mean open channel current. (pA) (default: -1, to </span>
+<span class="sd">							calculate automatically)</span>
+<span class="sd">			- `sdOpenCurr` :		Explicitly set open channel current SD. (pA) (default: -1, to </span>
+<span class="sd">							calculate automatically)</span>
+<span class="sd">			- `slopeOpenCurr` :	Explicitly set open channel current slope. (default: -1, to </span>
+<span class="sd">							calculate automatically)</span>
+<span class="sd">	&quot;&quot;&quot;</span>
+	<span class="k">def</span> <span class="nf">_init</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">trajDataObj</span><span class="p">,</span> <span class="n">eventProcHnd</span><span class="p">,</span> <span class="n">eventPartitionSettings</span><span class="p">,</span> <span class="n">eventProcSettings</span><span class="p">):</span>
+		<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">			Segment a trajectory</span>
+<span class="sd">		&quot;&quot;&quot;</span>
+		<span class="c1"># parse algorithm specific settings from the settings dict</span>
+		<span class="k">try</span><span class="p">:</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">blockSizeSec</span><span class="o">=</span><span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">settingsDict</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;blockSizeSec&quot;</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">))</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">eventPad</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">settingsDict</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;eventPad&quot;</span><span class="p">,</span> <span class="mi">500</span><span class="p">))</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">minEventLength</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">settingsDict</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;minEventLength&quot;</span><span class="p">,</span><span class="mi">5</span><span class="p">))</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">maxEventLength</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">settingsDict</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;maxEventLength&quot;</span><span class="p">,</span><span class="mi">1000000</span><span class="p">))</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">eventThreshold</span><span class="o">=</span><span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">settingsDict</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;eventThreshold&quot;</span><span class="p">,</span><span class="mf">6.0</span><span class="p">))</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">meanOpenCurr</span><span class="o">=</span><span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">settingsDict</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;meanOpenCurr&quot;</span><span class="p">,</span><span class="o">-</span><span class="mf">1.</span><span class="p">))</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">sdOpenCurr</span><span class="o">=</span><span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">settingsDict</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;sdOpenCurr&quot;</span><span class="p">,</span><span class="o">-</span><span class="mf">1.</span><span class="p">))</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">slopeOpenCurr</span><span class="o">=</span><span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">settingsDict</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;slopeOpenCurr&quot;</span><span class="p">,</span><span class="o">-</span><span class="mf">1.</span><span class="p">))</span>
+		<span class="k">except</span> <span class="ne">ValueError</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
+			<span class="k">raise</span> <span class="n">commonExceptions</span><span class="o">.</span><span class="n">SettingsTypeError</span><span class="p">(</span> <span class="n">err</span> <span class="p">)</span>
+
+		<span class="c1"># Calculate the threshold current from eventThreshold.</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">thrCurr</span><span class="o">=</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">meanOpenCurr</span><span class="p">)</span><span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">eventThreshold</span><span class="o">*</span><span class="nb">abs</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sdOpenCurr</span><span class="p">))</span>
+
+		<span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">driftThreshold</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">maxDriftRate</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">enableCheckDrift</span><span class="o">=</span><span class="kc">False</span>
+		<span class="k">else</span><span class="p">:</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">enableCheckDrift</span><span class="o">=</span><span class="kc">True</span>
+
+
+		<span class="c1">#### Vars for event partition ####</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">esLogger</span><span class="o">=</span><span class="n">mlog</span><span class="o">.</span><span class="n">mosaicLogging</span><span class="p">()</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="vm">__name__</span><span class="p">,</span> <span class="n">dbHnd</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">mdioDBHnd</span><span class="p">)</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">eventstart</span><span class="o">=</span><span class="kc">False</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">eventdat</span><span class="o">=</span><span class="p">[]</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">preeventdat</span><span class="o">=</span><span class="n">deque</span><span class="p">(</span><span class="n">maxlen</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">eventPad</span><span class="p">)</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">eventcount</span><span class="o">=</span><span class="mi">0</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">eventprocessedcount</span><span class="o">=</span><span class="mi">0</span>
+	
+	<span class="k">def</span> <span class="nf">_stop</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+		<span class="k">pass</span>
+
+<div class="viewcode-block" id="eventSegment.formatsettings"><a class="viewcode-back" href="../../../api-doc/mosaic.partition.html#mosaic.partition.eventSegment.eventSegment.formatsettings">[docs]</a>	<span class="k">def</span> <span class="nf">formatsettings</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+		<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">			Return a formatted string of settings for display in the output log.</span>
+<span class="sd">		&quot;&quot;&quot;</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">esLogger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span> <span class="s1">&#39;</span><span class="se">\t</span><span class="s1">Event segment settings:&#39;</span> <span class="p">)</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">esLogger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span> <span class="s1">&#39;</span><span class="se">\t\t</span><span class="s1">Window size for block operations = </span><span class="si">{0}</span><span class="s1"> s&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">blockSizeSec</span><span class="p">)</span> <span class="p">)</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">esLogger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span> <span class="s1">&#39;</span><span class="se">\t\t</span><span class="s1">Event padding = </span><span class="si">{0}</span><span class="s1"> points&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">eventPad</span><span class="p">)</span> <span class="p">)</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">esLogger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span> <span class="s1">&#39;</span><span class="se">\t\t</span><span class="s1">Min. event rejection length = </span><span class="si">{0}</span><span class="s1"> points&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">minEventLength</span><span class="p">)</span> <span class="p">)</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">esLogger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span> <span class="s1">&#39;</span><span class="se">\t\t</span><span class="s1">Event trigger threshold = </span><span class="si">{0:5.2f}</span><span class="s1"> * SD&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">eventThreshold</span><span class="p">)</span> <span class="p">)</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">esLogger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span> <span class="s1">&#39;</span><span class="se">\t\t</span><span class="s1">Drift error threshold = </span><span class="si">{0}</span><span class="s1"> * SD&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">driftThreshold</span><span class="p">)</span> <span class="p">)</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">esLogger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span> <span class="s1">&#39;</span><span class="se">\t\t</span><span class="s1">Drift rate error threshold = </span><span class="si">{0}</span><span class="s1"> pA/s&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">maxDriftRate</span><span class="p">)</span> <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="eventSegment.formatstats"><a class="viewcode-back" href="../../../api-doc/mosaic.partition.html#mosaic.partition.eventSegment.eventSegment.formatstats">[docs]</a>	<span class="k">def</span> <span class="nf">formatstats</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+		<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">			Return a formatted string of statistics for display in the output log.</span>
+<span class="sd">		&quot;&quot;&quot;</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">esLogger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\t</span><span class="s1">Baseline open channel conductance:&#39;</span><span class="p">)</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">esLogger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\t\t</span><span class="s1">Mean	= </span><span class="si">{0}</span><span class="s1"> pA&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span> <span class="nb">round</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">meanOpenCurr</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span> <span class="p">))</span> 
+		<span class="bp">self</span><span class="o">.</span><span class="n">esLogger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\t\t</span><span class="s1">SD	= </span><span class="si">{0}</span><span class="s1"> pA&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span> <span class="nb">round</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sdOpenCurr</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span> <span class="p">)</span> <span class="p">)</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">esLogger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\t\t</span><span class="s1">Slope 	= </span><span class="si">{0}</span><span class="s1"> pA/s&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span> <span class="nb">round</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">slopeOpenCurr</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span> <span class="p">)</span> <span class="p">)</span>
+		
+		<span class="bp">self</span><span class="o">.</span><span class="n">esLogger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\t</span><span class="s1">Event segment stats:&#39;</span><span class="p">)</span>
+
+
+		<span class="bp">self</span><span class="o">.</span><span class="n">esLogger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\t\t</span><span class="s1">Open channel drift (max) = </span><span class="si">{0}</span><span class="s1"> * SD&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="nb">round</span><span class="p">((</span><span class="nb">abs</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">meanOpenCurr</span><span class="p">)</span><span class="o">-</span><span class="nb">abs</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">maxDrift</span><span class="p">))</span><span class="o">/</span><span class="bp">self</span><span class="o">.</span><span class="n">sdOpenCurr</span><span class="p">,</span><span class="mi">2</span><span class="p">))))</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">esLogger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\t\t</span><span class="s1">Open channel drift rate (min/max) = (</span><span class="si">{0}</span><span class="s1">/</span><span class="si">{1}</span><span class="s1">) pA/s&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">minDriftR</span><span class="p">,</span><span class="mi">2</span><span class="p">),</span> <span class="nb">round</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">maxDriftR</span><span class="p">)))</span></div>
+
+<div class="viewcode-block" id="eventSegment.formatoutputfiles"><a class="viewcode-back" href="../../../api-doc/mosaic.partition.html#mosaic.partition.eventSegment.eventSegment.formatoutputfiles">[docs]</a>	<span class="k">def</span> <span class="nf">formatoutputfiles</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">esLogger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;[Output]&#39;</span><span class="p">)</span>
+		<span class="c1"># self.esLogger.info(&#39;\tOutput path = \&#39;{0}\&#39;&#39;.format(self.trajDataObj.datPath))</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">esLogger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\t</span><span class="s1">Event database = </span><span class="se">\&#39;</span><span class="si">{0}</span><span class="se">\&#39;</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">mdioDBHnd</span><span class="o">.</span><span class="n">dbFilename</span><span class="p">)</span> <span class="p">)</span>
+		<span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">writeEventTS</span><span class="p">:</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">esLogger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\t</span><span class="s1">Event time-series = ***enabled***&#39;</span><span class="p">)</span>
+		<span class="k">else</span><span class="p">:</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">esLogger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\t</span><span class="s1">Event time-series = ***disabled***&#39;</span><span class="p">)</span></div>
+
+
+	<span class="c1">#################################################################</span>
+	<span class="c1"># Interface functions</span>
+	<span class="c1">#################################################################</span>
+	<span class="sd">&quot;&quot;&quot;#@profile&quot;&quot;&quot;</span>
+	<span class="nd">@metaEventPartition</span><span class="o">.</span><span class="n">partitionTimer</span><span class="o">.</span><span class="n">FunctionTiming</span>
+	<span class="k">def</span> <span class="nf">_eventsegment</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+		<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">			Cut up a trajectory into individual events. This algorithm uses</span>
+<span class="sd">			simple thresholding. By working with absolute values of currents,</span>
+<span class="sd">			we handle positive and negative potentials without switches. When the</span>
+<span class="sd">			current drops below &#39;thrCurr&#39;, mark the start of the event. When the current</span>
+<span class="sd">			returns to the baseline (obtained by averaging the open channel current</span>
+<span class="sd">			immediately preceeding the start of the event), mark the event end. Pad </span>
+<span class="sd">			the event by &#39;eventPad&#39; points and hand off to the event processing algorithm.</span>
+<span class="sd">		&quot;&quot;&quot;</span>
+		<span class="k">try</span><span class="p">:</span>
+			<span class="n">skipflag</span> <span class="o">=</span> <span class="kc">False</span>
+			<span class="k">while</span><span class="p">(</span><span class="mi">1</span><span class="p">):</span>
+				<span class="k">while</span> <span class="p">(</span><span class="n">skipflag</span> <span class="o">==</span> <span class="kc">True</span><span class="p">):</span> <span class="c1">#if we are in a clogged state or a very long event, skip data until we reach good baseline again</span>
+					<span class="n">t</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">currData</span><span class="o">.</span><span class="n">popleft</span><span class="p">()</span>
+					<span class="bp">self</span><span class="o">.</span><span class="n">globalDataIndex</span><span class="o">+=</span><span class="mi">1</span>
+					<span class="k">if</span> <span class="nb">abs</span><span class="p">(</span><span class="n">t</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">meanOpenCurr</span><span class="p">:</span>
+						<span class="n">skipflag</span> <span class="o">=</span> <span class="kc">False</span>
+
+				<span class="n">t</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">currData</span><span class="o">.</span><span class="n">popleft</span><span class="p">()</span>
+				<span class="bp">self</span><span class="o">.</span><span class="n">globalDataIndex</span><span class="o">+=</span><span class="mi">1</span>
+
+				<span class="c1"># store the latest point in a fixed buffer</span>
+				<span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">eventstart</span><span class="p">:</span>
+					<span class="bp">self</span><span class="o">.</span><span class="n">preeventdat</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">t</span><span class="p">)</span>
+				
+				<span class="c1"># Mark the start of the event</span>
+				<span class="k">if</span> <span class="nb">abs</span><span class="p">(</span><span class="n">t</span><span class="p">)</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">thrCurr</span><span class="p">:</span>
+					<span class="c1">#print &quot;event&quot;,</span>
+					<span class="bp">self</span><span class="o">.</span><span class="n">eventstart</span><span class="o">=</span><span class="kc">True</span>
+					<span class="bp">self</span><span class="o">.</span><span class="n">eventdat</span><span class="o">=</span><span class="p">[]</span>
+					<span class="bp">self</span><span class="o">.</span><span class="n">eventdat</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">t</span><span class="p">)</span>
+					<span class="bp">self</span><span class="o">.</span><span class="n">dataStart</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">globalDataIndex</span><span class="o">-</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">preeventdat</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span>
+				<span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">eventstart</span><span class="p">:</span>
+					<span class="c1">#mean=abs(util.avg(self.preeventdat))</span>
+					<span class="n">mean</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">meanOpenCurr</span>
+					<span class="k">while</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">t</span><span class="p">)</span><span class="o">&lt;</span><span class="bp">self</span><span class="o">.</span><span class="n">thrCurr</span><span class="p">):</span>
+						<span class="n">t</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">currData</span><span class="o">.</span><span class="n">popleft</span><span class="p">()</span>
+						<span class="bp">self</span><span class="o">.</span><span class="n">eventdat</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">t</span><span class="p">)</span>
+						<span class="bp">self</span><span class="o">.</span><span class="n">globalDataIndex</span><span class="o">+=</span><span class="mi">1</span>
+						<span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">eventdat</span><span class="p">)</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">maxEventLength</span><span class="p">:</span>
+							<span class="n">skipflag</span> <span class="o">=</span> <span class="kc">True</span>
+							<span class="k">break</span>
+
+					<span class="c1"># end of event. Reset the flag</span>
+					<span class="bp">self</span><span class="o">.</span><span class="n">eventstart</span><span class="o">=</span><span class="kc">False</span>
+					
+					<span class="c1"># Check if there are enough data points to pad the event. If not pop more.</span>
+					<span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">currData</span><span class="p">)</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">eventPad</span><span class="p">:</span>
+						<span class="bp">self</span><span class="o">.</span><span class="n">currData</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">trajDataObj</span><span class="o">.</span><span class="n">popdata</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">nPoints</span><span class="p">)))</span>
+
+					
+					<span class="c1"># Cleanup event pad data before adding it to the event. We look for:</span>
+					<span class="c1"># 1. the start of a second event</span>
+					<span class="c1"># 2. Outliers</span>
+					<span class="c1"># The threshold for accepting a point is eventThreshold/2.0</span>
+					<span class="n">eventpaddat</span> <span class="o">=</span> <span class="n">util</span><span class="o">.</span><span class="n">selectS</span><span class="p">(</span> 
+							<span class="p">[</span> <span class="bp">self</span><span class="o">.</span><span class="n">currData</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">eventPad</span><span class="p">)</span> <span class="p">],</span>
+							<span class="bp">self</span><span class="o">.</span><span class="n">eventThreshold</span><span class="o">/</span><span class="mf">1.0</span><span class="p">,</span>
+							<span class="bp">self</span><span class="o">.</span><span class="n">meanOpenCurr</span><span class="p">,</span> 
+							<span class="bp">self</span><span class="o">.</span><span class="n">sdOpenCurr</span>
+						<span class="p">)</span>		
+					<span class="c1"># unfiltered padding.			</span>
+					<span class="n">eventpaddatU</span> <span class="o">=</span> <span class="p">[</span> <span class="bp">self</span><span class="o">.</span><span class="n">currData</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">eventPad</span><span class="p">)</span> <span class="p">]</span>
+		
+					<span class="c1"># print self.trajDataObj.FsHz, self.windowOpenCurrentMean, self.sdOpenCurr, self.slopeOpenCurr, len(self.eventdat)</span>
+					<span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">eventdat</span><span class="p">)</span><span class="o">&gt;=</span><span class="bp">self</span><span class="o">.</span><span class="n">minEventLength</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">eventdat</span><span class="p">)</span><span class="o">&lt;</span><span class="bp">self</span><span class="o">.</span><span class="n">maxEventLength</span><span class="p">:</span>
+						<span class="bp">self</span><span class="o">.</span><span class="n">eventcount</span><span class="o">+=</span><span class="mi">1</span>
+						<span class="c1"># print &quot;i=&quot;, self.eventcount</span>
+						<span class="c1">#sys.stderr.write(&#39;event mean curr={0:0.2f}, len(preeventdat)={1}\n&#39;.format(sum(self.eventdat)/len(self.eventdat),len(self.preeventdat)))</span>
+						<span class="c1">#print list(self.preeventdat) + self.eventdat + [ self.currData[i] for i in range(self.eventPad) ]</span>
+						<span class="c1">#print &quot;ecount=&quot;, self.eventcount, self.eventProcHnd</span>
+						<span class="c1"># print &quot;eventProcSettings&quot;, self.eventProcSettingsDict</span>
+						<span class="bp">self</span><span class="o">.</span><span class="n">_processEvent</span><span class="p">(</span>
+							 <span class="bp">self</span><span class="o">.</span><span class="n">eventProcHnd</span><span class="p">(</span>
+								<span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">preeventdat</span><span class="p">)[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">eventdat</span> <span class="o">+</span> <span class="n">eventpaddat</span><span class="p">,</span> 
+								<span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">preeventdat</span><span class="p">)[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">eventdat</span> <span class="o">+</span> <span class="n">eventpaddatU</span><span class="p">,</span> 
+								<span class="bp">self</span><span class="o">.</span><span class="n">FsHz</span><span class="p">,</span>
+								<span class="n">eventstart</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">preeventdat</span><span class="p">)</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span>						<span class="c1"># event start point</span>
+								<span class="n">eventend</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">preeventdat</span><span class="p">)</span><span class="o">+</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">eventdat</span><span class="p">)</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span>	<span class="c1"># event end point</span>
+								<span class="n">baselinestats</span><span class="o">=</span><span class="p">[</span> <span class="bp">self</span><span class="o">.</span><span class="n">meanOpenCurr</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">sdOpenCurr</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">slopeOpenCurr</span> <span class="p">],</span>
+								<span class="n">algosettingsdict</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">eventProcSettingsDict</span><span class="o">.</span><span class="n">copy</span><span class="p">(),</span>
+								<span class="n">savets</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">writeEventTS</span><span class="p">,</span>
+								<span class="n">absdatidx</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">dataStart</span>
+							<span class="p">)</span>
+						<span class="p">)</span>
+	
+					<span class="bp">self</span><span class="o">.</span><span class="n">preeventdat</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+		<span class="k">except</span> <span class="ne">IndexError</span><span class="p">:</span>
+			<span class="k">return</span></div>
+
+	<span class="c1"># def __roundufloat(self, uf):</span>
+	<span class="c1"># 	u=uncertainties</span>
+	<span class="c1"># 	return u.ufloat(( round( u.nominal_value(uf), 4), round( u.std_dev(uf), 4) ))</span>
+</pre></div>
+
+    </div>
+      
+  </div>
+</div>
+<!-- 
+<footer class="footer">
+  <div class="container">
+    <p class="pull-right">
+      <a href="#">Back to top</a>
+      
+    </p>
+    <p>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 3.5.4.<br/>
+    </p>
+  </div>
+</footer> -->
+<script type="text/javascript"
+	src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<div class="footer" style="vertical-align: center" align="center">
+		<table width="90%" style="vertical-align: center">
+			<col width=40%>
+			<col width=60%>
+			<tr>
+				<td align="left">
+					<a href="../../../doc/Developers.html"><small><em>MOSAIC Developers</em></small></a> |
+					<a href="https://www.nist.gov/people/arvind-balijepalli"><small><em>Contact</em></small></a> |
+					<a href="../../../doc/Disclaimer.html"><small><em>Terms of Use</em></small></a>
+				</td>
+			<!-- </tr>
+			<tr> -->
+				<td align="right">
+					<a target="_blank" href="http://www.nist.gov/public_affairs/privacy.cfm#privpolicy"><small>Privacy Policy</small></a> |
+					<a target="_blank" href="http://www.nist.gov/public_affairs/privacy.cfm#secnot"><small>Security Notice</small></a> |
+					<a href="http://www.nist.gov/public_affairs/privacy.cfm#accesstate"><small>Accessibility Statement</small></a> |
+					<a target="_blank" href="mailto:data@nist.gov?subject=Feedback%20on%20Web%20Site%20Template"><small>Send feedback</small></a>
+					<br/>
+				</td>
+			</tr>
+		</table>
+
+		<br />
+		<a href="http://www.nist.gov/"><small><em>National Institute of Standards and Technology</em></small></a>
+		<!-- <a href="http://www.nist.gov"><img src="_static/nist_logo.png" width="30%" alt="National Institute of Standards and Technology"></a> -->
+
+</div>
+
+  </body>
+</html>

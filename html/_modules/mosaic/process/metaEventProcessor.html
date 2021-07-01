@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>mosaic.process.metaEventProcessor &#8212; MOSAIC v2.2 documentation</title>
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/bootstrap-sphinx.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/style.css" />
+    <script id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+    <script src="../../../_static/jquery.js"></script>
+    <script src="../../../_static/underscore.js"></script>
+    <script src="../../../_static/doctools.js"></script>
+    <link rel="shortcut icon" href="../../../_static/favicon.ico"/>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+
+<meta charset='utf-8'>
+<meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
+<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
+<meta name="apple-mobile-web-app-capable" content="yes">
+<script type="text/javascript" src="../../../_static/js/jquery-1.11.0.min.js "></script>
+<script type="text/javascript" src="../../../_static/js/jquery-fix.js "></script>
+<script type="text/javascript" src="../../../_static/bootstrap-3.3.7/js/bootstrap.min.js "></script>
+<script type="text/javascript" src="../../../_static/bootstrap-sphinx.js "></script>
+
+	<script async type="text/javascript" id="_fed_an_ua_tag" src="https://dap.digitalgov.gov/Universal-Federated-Analytics-Min.js?agency=DOC&subagency=NIST&pua=UA-66610693-1&yt=true&exts=ppsx,pps,f90,sch,rtf,wrl,txz,m1v,xlsm,msi,xsd,f,tif,eps,mpg,xml,pl,xlt,c"></script>	
+
+	<meta name="theme-color" content="#283593">
+
+  </head><body>
+
+  <div id="navbar" class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="../../../index.html"><span><img src="../../../_static/icon_48.png"></span>
+           </a>
+        <span class="navbar-text navbar-version pull-left"><b>v2.2</b></span>
+      </div>
+
+        <div class="collapse navbar-collapse nav-collapse">
+          <ul class="nav navbar-nav">
+            
+                <li><a href="../../../../latex/MOSAIC.pdf">Download PDF</a></li>
+                <li><a href="../../../doc/mailingList.html">Mailing List</a></li>
+                <li><a href="//github.com/usnistgov/mosaic">Develop</a></li>
+                <li><a href="//github.com/usnistgov/mosaic/issues">Issue Tracker</a></li>
+            
+            
+              <li class="dropdown globaltoc-container">
+  <a role="button"
+     id="dLabelGlobalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="../../../index.html">Contents <b class="caret"></b></a>
+  <ul class="dropdown-menu globaltoc"
+      role="menu"
+      aria-labelledby="dLabelGlobalToc"><ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../doc/Introduction.html">1. Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../doc/Algorithms.html">2. Data Processing Algorithms in <em>MOSAIC</em></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../doc/GettingStarted.html">3. Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../doc/GraphicalInterface.html">4. <em>MOSAIC</em> GUI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../doc/WebInterface.html">5. <em>MOSAIC</em> WEB</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../doc/settingsFile.html">6. Settings File</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../doc/DatabaseStructure.html">7. Database Structure and Query Syntax</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../doc/ScriptingandAdvancedFeatures.html">8. Scripting and Advanced Features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../doc/Extend.html">9. Extend <em>MOSAIC</em></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../doc/PublicationFigures.html">10. Publication Quality Figures</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../doc/AdvancedAnalysis.html">11. Advanced Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../doc/Addons.html">12. Addons</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../doc/DeveloperTools.html">13. Developer Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../doc/apidocs.html">14. API Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../doc/References.html">15. Bibliography</a></li>
+</ul>
+</ul>
+</li>
+              
+            
+            
+            
+            
+            
+              <li class="hidden-sm"></li>
+            
+          </ul>
+
+          
+            
+<form class="navbar-form navbar-right" action="../../../search.html" method="get">
+ <div class="form-group">
+  <input type="text" name="q" class="form-control" placeholder="Search" />
+ </div>
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+          
+        </div>
+    </div>
+  </div>
+
+<div class="container">
+  <div class="row">
+    <div class="body col-md-12 content" role="main">
+      
+  <h1>Source code for mosaic.process.metaEventProcessor</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot; </span>
+<span class="sd">	A meta class that defines the interface for event processing functions. The class object stores the </span>
+<span class="sd">	raw data for the event as well as meta-data after processing individual events. The meta-data is</span>
+<span class="sd">	defined by specfic implementations of this class.</span>
+
+<span class="sd">	:Created:	7/16/2012</span>
+<span class="sd"> 	:Author: 	Arvind Balijepalli &lt;arvind.balijepalli@nist.gov&gt;</span>
+<span class="sd">	:License:	See LICENSE.TXT</span>
+<span class="sd">	:ChangeLog:</span>
+<span class="sd">	.. line-block::</span>
+<span class="sd">		9/22/17 	AB 	Add a parameter to save unfiltered event padding.</span>
+<span class="sd">		8/3/16		JF	Fixed missing dependency (time)</span>
+<span class="sd">		5/27/16 	AB 	Add a flagEvent function that should be used to set a non-critical warning status.</span>
+<span class="sd">		5/26/16 	AB 	If developer mode is enabled (in mosaic/_global), metadata is not set to -1 when an error occurs.</span>
+<span class="sd">		3/30/16 	AB 	Fixed function timing resolution on Windows</span>
+<span class="sd">		8/30/14		AB 	Added a timeout/retry to handle DB locked error.</span>
+<span class="sd">		5/17/14		AB  Add metaMDIO support for meta-data and time-series storage</span>
+<span class="sd">		2/16/14		AB 	Define new kwarg, absdatidx to allow capture rate estimation.</span>
+<span class="sd">		6/28/13		AB 	Added a new keyword argument &#39;savets&#39;. When set to False, the event time-series</span>
+<span class="sd">						is set to None. This can save a lot of memory when handling large data sets. </span>
+<span class="sd">		7/16/12		AB	Initial version</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">from</span> <span class="nn">abc</span> <span class="kn">import</span> <span class="n">ABCMeta</span><span class="p">,</span> <span class="n">abstractmethod</span>
+<span class="kn">import</span> <span class="nn">types</span>
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">import</span> <span class="nn">mosaic.utilities.mosaicTiming</span> <span class="k">as</span> <span class="nn">mosaicTiming</span>
+<span class="kn">import</span> <span class="nn">mosaic.utilities.mosaicLogging</span> <span class="k">as</span> <span class="nn">mlog</span>
+<span class="kn">import</span> <span class="nn">sqlite3</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">mosaic</span>
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;metaEventProcessor&quot;</span><span class="p">,</span> <span class="s2">&quot;MissingMDIOError&quot;</span><span class="p">]</span>
+
+<span class="c1"># custom errors</span>
+<span class="k">class</span> <span class="nc">MissingMDIOError</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
+	<span class="k">pass</span>
+
+<div class="viewcode-block" id="metaEventProcessor"><a class="viewcode-back" href="../../../api-doc/mosaic.meta.html#mosaic.process.metaEventProcessor.metaEventProcessor">[docs]</a><span class="k">class</span> <span class="nc">metaEventProcessor</span><span class="p">(</span><span class="nb">object</span><span class="p">,</span> <span class="n">metaclass</span><span class="o">=</span><span class="n">ABCMeta</span><span class="p">):</span>
+	<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">		.. warning:: |metaclass|</span>
+
+<span class="sd">		Defines the interface for specific event processing algorithms. Each event processing</span>
+<span class="sd">		algorithm must sub-class metaEventProcessor and implement the following abstract</span>
+<span class="sd">		functions:</span>
+<span class="sd">			- `processEvent` : 	process raw event data and populate event meta-data. Store each </span>
+<span class="sd">							piece of processed event data in a class attribute starting with &#39;md&#39;.</span>
+<span class="sd">							For example, the blockade depth meta-data can be defined as &#39;mdBlockadeDepth&#39;</span>
+<span class="sd">			- `printMetadata` :	print meta-data set by event processing in a human readable format.</span>
+
+<span class="sd">		:Parameters:</span>
+<span class="sd">				- `icurr` :				ionic current in pA</span>
+<span class="sd">				- `icurrU`:				ionic current in pA with unfiltered event padding</span>
+<span class="sd">				- `Fs` :				sampling frequency in Hz</span>
+
+<span class="sd">		:Keyword Args:</span>
+<span class="sd">				- `eventstart` :		the event start point</span>
+<span class="sd">				- `eventend` :			the event end point</span>
+<span class="sd">				- `baselinestats` : 	baseline conductance statistics: a list of [mean, sd, slope] for the baseline current</span>
+<span class="sd">				- `algosettingsdict` : 	settings for event processing algorithm as a dictionary</span>
+<span class="sd">				- `absdatidx` :			index of data start. This arg can allow arrival time estimation.</span>
+<span class="sd">				- `datafilehnd` :		reference to an metaMDIO object for meta-data IO</span>
+<span class="sd">	&quot;&quot;&quot;</span>
+
+	<span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">icurr</span><span class="p">,</span> <span class="n">icurrU</span><span class="p">,</span> <span class="n">Fs</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+		<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">			Store a ref to the raw event data.</span>
+<span class="sd">			</span>
+<span class="sd">		&quot;&quot;&quot;</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">eventData</span><span class="o">=</span><span class="n">icurr</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">eventDataU</span><span class="o">=</span><span class="n">icurrU</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">Fs</span><span class="o">=</span><span class="n">Fs</span>
+
+		<span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">=</span><span class="n">mlog</span><span class="o">.</span><span class="n">mosaicLogging</span><span class="p">()</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="vm">__name__</span><span class="p">)</span>
+
+		<span class="c1"># Will throw a key error if not passed</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">eStartEstimate</span><span class="o">=</span><span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;eventstart&#39;</span><span class="p">]</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">eEndEstimate</span><span class="o">=</span><span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;eventend&#39;</span><span class="p">]</span>
+
+		<span class="bp">self</span><span class="o">.</span><span class="n">settingsDict</span><span class="o">=</span><span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;algosettingsdict&#39;</span><span class="p">]</span>
+
+		<span class="bp">self</span><span class="o">.</span><span class="n">absDataStartIndex</span><span class="o">=</span><span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;absdatidx&#39;</span><span class="p">]</span>
+
+		<span class="p">[</span> <span class="bp">self</span><span class="o">.</span><span class="n">baseMean</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">baseSD</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">baseSlope</span> <span class="p">]</span><span class="o">=</span><span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;baselinestats&#39;</span><span class="p">]</span>
+
+		<span class="bp">self</span><span class="o">.</span><span class="n">saveTS</span><span class="o">=</span><span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;savets&#39;</span><span class="p">]</span>
+		
+		<span class="c1"># Optional args. If dataFileHnd is not passed at init, it must be set later</span>
+		<span class="c1"># If not set before WriteEvent is called, it will result in a MissingMDIOError</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">dataFileHnd</span><span class="o">=</span><span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;datafilehnd&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+		<span class="c1"># self.dataFileHnd=kwargs[&#39;datafileHnd&#39;]</span>
+
+		<span class="c1"># meta-data attrs that are common to all event processing</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">mdProcessingStatus</span><span class="o">=</span><span class="s1">&#39;normal&#39;</span>
+
+		<span class="c1"># Setup function timing</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">timingObj</span><span class="o">=</span><span class="n">mosaicTiming</span><span class="o">.</span><span class="n">mosaicTiming</span><span class="p">()</span>
+
+		<span class="bp">self</span><span class="o">.</span><span class="n">mdEventProcessTime</span><span class="o">=</span><span class="mf">0.0</span>
+		<span class="c1"># print self.settingsDict</span>
+		<span class="c1"># Call sub-class initialization</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">_init</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+<div class="viewcode-block" id="metaEventProcessor.processEvent"><a class="viewcode-back" href="../../../api-doc/mosaic.meta.html#mosaic.process.metaEventProcessor.metaEventProcessor.processEvent">[docs]</a>	<span class="k">def</span> <span class="nf">processEvent</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+		<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">			This is the equivalent of a pure virtual function in C++. </span>
+<span class="sd">		&quot;&quot;&quot;</span>
+		<span class="n">start_time</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">timingObj</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+
+		<span class="bp">self</span><span class="o">.</span><span class="n">dataPolarity</span><span class="o">=</span><span class="nb">float</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sign</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">eventData</span><span class="p">)))</span>
+
+		<span class="bp">self</span><span class="o">.</span><span class="n">_processEvent</span><span class="p">()</span>
+
+		<span class="bp">self</span><span class="o">.</span><span class="n">mdEventProcessTime</span><span class="o">=</span><span class="mf">1000.</span><span class="o">*</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">timingObj</span><span class="o">.</span><span class="n">time</span><span class="p">()</span><span class="o">-</span><span class="n">start_time</span><span class="p">)</span>
+
+		<span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">saveTS</span><span class="p">:</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">eventData</span><span class="o">=</span><span class="p">[]</span>
+
+		<span class="bp">self</span><span class="o">.</span><span class="n">writeEvent</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="metaEventProcessor._init"><a class="viewcode-back" href="../../../api-doc/mosaic.meta.html#mosaic.process.metaEventProcessor.metaEventProcessor._init">[docs]</a>	<span class="nd">@abstractmethod</span>
+	<span class="k">def</span> <span class="nf">_init</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+		<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">			.. important:: |abstractmethod|</span>
+<span class="sd">		&quot;&quot;&quot;</span>
+		<span class="k">pass</span></div>
+
+<div class="viewcode-block" id="metaEventProcessor._processEvent"><a class="viewcode-back" href="../../../api-doc/mosaic.meta.html#mosaic.process.metaEventProcessor.metaEventProcessor._processEvent">[docs]</a>	<span class="nd">@abstractmethod</span>
+	<span class="k">def</span> <span class="nf">_processEvent</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+		<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">			.. important:: |abstractmethod|</span>
+<span class="sd">		&quot;&quot;&quot;</span>
+		<span class="k">pass</span></div>
+
+<div class="viewcode-block" id="metaEventProcessor._mdList"><a class="viewcode-back" href="../../../api-doc/mosaic.meta.html#mosaic.process.metaEventProcessor.metaEventProcessor._mdList">[docs]</a>	<span class="nd">@abstractmethod</span>
+	<span class="k">def</span> <span class="nf">_mdList</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+		<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">			.. important:: |abstractmethod|</span>
+
+<span class="sd">			Return a list of meta-data set by event processing.  				</span>
+<span class="sd">		&quot;&quot;&quot;</span>
+		<span class="k">pass</span></div>
+	
+<div class="viewcode-block" id="metaEventProcessor._mdHeadings"><a class="viewcode-back" href="../../../api-doc/mosaic.meta.html#mosaic.process.metaEventProcessor.metaEventProcessor._mdHeadings">[docs]</a>	<span class="nd">@abstractmethod</span>
+	<span class="k">def</span> <span class="nf">_mdHeadings</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+		<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">			.. important:: |abstractmethod|</span>
+
+<span class="sd">			Return a list of meta-data tags for display purposes.</span>
+<span class="sd">		&quot;&quot;&quot;</span>
+		<span class="k">pass</span></div>
+
+<div class="viewcode-block" id="metaEventProcessor._mdHeadingDataType"><a class="viewcode-back" href="../../../api-doc/mosaic.meta.html#mosaic.process.metaEventProcessor.metaEventProcessor._mdHeadingDataType">[docs]</a>	<span class="nd">@abstractmethod</span>
+	<span class="k">def</span> <span class="nf">_mdHeadingDataType</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+		<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">			.. important:: |abstractmethod|</span>
+
+<span class="sd">			Return a list of meta-data tags data types.</span>
+<span class="sd">		&quot;&quot;&quot;</span>
+		<span class="k">pass</span></div>
+
+<div class="viewcode-block" id="metaEventProcessor.mdAveragePropertiesList"><a class="viewcode-back" href="../../../api-doc/mosaic.meta.html#mosaic.process.metaEventProcessor.metaEventProcessor.mdAveragePropertiesList">[docs]</a>	<span class="nd">@abstractmethod</span>
+	<span class="k">def</span> <span class="nf">mdAveragePropertiesList</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+		<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">			.. important:: |abstractmethod|</span>
+
+<span class="sd">			Return a list of meta-data properties that will be averaged </span>
+<span class="sd">			and displayed at the end of a run. This function must be overridden</span>
+<span class="sd">			by sub-classes of metaEventProcessor. As a failsafe, an empty list</span>
+<span class="sd">			is returned.</span>
+<span class="sd">		&quot;&quot;&quot;</span>
+		<span class="k">pass</span></div>
+		<span class="c1">#return []</span>
+
+<div class="viewcode-block" id="metaEventProcessor.mdHeadings"><a class="viewcode-back" href="../../../api-doc/mosaic.meta.html#mosaic.process.metaEventProcessor.metaEventProcessor.mdHeadings">[docs]</a>	<span class="k">def</span> <span class="nf">mdHeadings</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+		<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">			Return a list of meta-data tags for display purposes.</span>
+<span class="sd">		&quot;&quot;&quot;</span>
+		<span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_mdHeadings</span><span class="p">()</span><span class="o">+</span><span class="p">[</span><span class="s1">&#39;ProcessTime&#39;</span><span class="p">,</span> <span class="s1">&#39;TimeSeries&#39;</span><span class="p">]</span></div>
+
+<div class="viewcode-block" id="metaEventProcessor.mdHeadingDataType"><a class="viewcode-back" href="../../../api-doc/mosaic.meta.html#mosaic.process.metaEventProcessor.metaEventProcessor.mdHeadingDataType">[docs]</a>	<span class="k">def</span> <span class="nf">mdHeadingDataType</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+		<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">			Return a list of meta-data tags data types.</span>
+<span class="sd">		&quot;&quot;&quot;</span>
+		<span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_mdHeadingDataType</span><span class="p">()</span><span class="o">+</span><span class="p">[</span><span class="s1">&#39;REAL&#39;</span><span class="p">,</span> <span class="s1">&#39;REAL_LIST&#39;</span><span class="p">]</span></div>
+
+
+<div class="viewcode-block" id="metaEventProcessor.flagEvent"><a class="viewcode-back" href="../../../api-doc/mosaic.meta.html#mosaic.process.metaEventProcessor.metaEventProcessor.flagEvent">[docs]</a>	<span class="k">def</span> <span class="nf">flagEvent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">status</span><span class="p">):</span>
+		<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">			Set a warning status that starts with &#39;w&#39; for non-critical errors. </span>
+<span class="sd">			Metadata for these events is preserved and the user can be warned (e.g., in the GUI.)</span>
+
+<span class="sd">		&quot;&quot;&quot;</span>
+		<span class="c1"># Trigger if this is the first warning i.e. status == normal</span>
+		<span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">mdProcessingStatus</span><span class="o">==</span><span class="s1">&#39;normal&#39;</span><span class="p">:</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">mdProcessingStatus</span><span class="o">=</span><span class="n">status</span></div>
+
+<div class="viewcode-block" id="metaEventProcessor.rejectEvent"><a class="viewcode-back" href="../../../api-doc/mosaic.meta.html#mosaic.process.metaEventProcessor.metaEventProcessor.rejectEvent">[docs]</a>	<span class="k">def</span> <span class="nf">rejectEvent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">status</span><span class="p">):</span>
+		<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">			Set an event as rejected if it doesn&#39;t pass tests in processing.</span>
+<span class="sd">			The status is assigned to mdProcessingStatus.</span>
+<span class="sd">		&quot;&quot;&quot;</span>
+		<span class="c1"># Only reject events if this is the first error i.e. status == normal</span>
+		<span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">mdProcessingStatus</span><span class="o">==</span><span class="s1">&#39;normal&#39;</span><span class="p">:</span>
+			<span class="k">if</span> <span class="ow">not</span> <span class="n">mosaic</span><span class="o">.</span><span class="n">DeveloperMode</span><span class="p">:</span>
+				<span class="c1"># set all meta data to -1</span>
+				<span class="p">[</span> <span class="bp">self</span><span class="o">.</span><span class="n">_setRejectMetadata</span><span class="p">(</span><span class="n">mdHead</span><span class="p">)</span> <span class="k">for</span> <span class="n">mdHead</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="vm">__dict__</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span> <span class="k">if</span> <span class="n">mdHead</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;md&#39;</span><span class="p">)</span><span class="o">==</span><span class="kc">True</span> <span class="p">]</span>
+			<span class="c1"># set processing status to status</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">mdProcessingStatus</span><span class="o">=</span><span class="n">status</span></div>
+
+<div class="viewcode-block" id="metaEventProcessor.writeEvent"><a class="viewcode-back" href="../../../api-doc/mosaic.meta.html#mosaic.process.metaEventProcessor.metaEventProcessor.writeEvent">[docs]</a>	<span class="k">def</span> <span class="nf">writeEvent</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+		<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">			Write event meta data to a metaMDIO object.</span>
+<span class="sd">		&quot;&quot;&quot;</span>
+		<span class="k">try</span><span class="p">:</span>
+			<span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">dataFileHnd</span><span class="p">:</span>
+				<span class="bp">self</span><span class="o">.</span><span class="n">dataFileHnd</span><span class="o">.</span><span class="n">writeRecord</span><span class="p">(</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_mdList</span><span class="p">())</span><span class="o">+</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">mdEventProcessTime</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">eventDataU</span><span class="p">]</span> <span class="p">)</span>
+		<span class="k">except</span> <span class="n">sqlite3</span><span class="o">.</span><span class="n">OperationalError</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
+			<span class="c1"># If the db is locked, wait 1 s and try again.</span>
+			<span class="nb">print</span><span class="p">(</span><span class="n">err</span><span class="p">)</span>
+			<span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">writeEvent</span><span class="p">()</span></div>
+		<span class="c1"># else:</span>
+		<span class="c1"># 	raise MissingMDIOError(&quot;Meta-data I/O object not initialized.&quot;)</span>
+
+	<span class="c1">###########################################################################</span>
+	<span class="c1"># Local functions</span>
+	<span class="c1">###########################################################################</span>
+	<span class="k">def</span> <span class="nf">_setRejectMetadata</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">metadata</span><span class="p">):</span>
+		<span class="k">try</span><span class="p">:</span>
+			<span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">metadata</span><span class="p">))</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+				<span class="nb">setattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">metadata</span><span class="p">,</span> <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+		<span class="k">except</span> <span class="ne">TypeError</span><span class="p">:</span>
+			<span class="nb">setattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">metadata</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+
+	<span class="k">def</span> <span class="nf">__mdformat</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dat</span><span class="p">):</span>
+		<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">			Round a float to 3 decimal places. Leave ints and strings unchanged</span>
+<span class="sd">		&quot;&quot;&quot;</span>
+		<span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">dat</span><span class="p">)</span> <span class="ow">is</span> <span class="nb">float</span><span class="p">:</span>
+			<span class="k">return</span> <span class="nb">round</span><span class="p">(</span><span class="n">dat</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+		<span class="k">else</span><span class="p">:</span>
+			<span class="k">return</span> <span class="n">dat</span></div>
+</pre></div>
+
+    </div>
+      
+  </div>
+</div>
+<!-- 
+<footer class="footer">
+  <div class="container">
+    <p class="pull-right">
+      <a href="#">Back to top</a>
+      
+    </p>
+    <p>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 3.5.4.<br/>
+    </p>
+  </div>
+</footer> -->
+<script type="text/javascript"
+	src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<div class="footer" style="vertical-align: center" align="center">
+		<table width="90%" style="vertical-align: center">
+			<col width=40%>
+			<col width=60%>
+			<tr>
+				<td align="left">
+					<a href="../../../doc/Developers.html"><small><em>MOSAIC Developers</em></small></a> |
+					<a href="https://www.nist.gov/people/arvind-balijepalli"><small><em>Contact</em></small></a> |
+					<a href="../../../doc/Disclaimer.html"><small><em>Terms of Use</em></small></a>
+				</td>
+			<!-- </tr>
+			<tr> -->
+				<td align="right">
+					<a target="_blank" href="http://www.nist.gov/public_affairs/privacy.cfm#privpolicy"><small>Privacy Policy</small></a> |
+					<a target="_blank" href="http://www.nist.gov/public_affairs/privacy.cfm#secnot"><small>Security Notice</small></a> |
+					<a href="http://www.nist.gov/public_affairs/privacy.cfm#accesstate"><small>Accessibility Statement</small></a> |
+					<a target="_blank" href="mailto:data@nist.gov?subject=Feedback%20on%20Web%20Site%20Template"><small>Send feedback</small></a>
+					<br/>
+				</td>
+			</tr>
+		</table>
+
+		<br />
+		<a href="http://www.nist.gov/"><small><em>National Institute of Standards and Technology</em></small></a>
+		<!-- <a href="http://www.nist.gov"><img src="_static/nist_logo.png" width="30%" alt="National Institute of Standards and Technology"></a> -->
+
+</div>
+
+  </body>
+</html>

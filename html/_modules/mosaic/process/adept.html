@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>mosaic.process.adept &#8212; MOSAIC v2.2 documentation</title>
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/bootstrap-sphinx.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/style.css" />
+    <script id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+    <script src="../../../_static/jquery.js"></script>
+    <script src="../../../_static/underscore.js"></script>
+    <script src="../../../_static/doctools.js"></script>
+    <link rel="shortcut icon" href="../../../_static/favicon.ico"/>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+
+<meta charset='utf-8'>
+<meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
+<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
+<meta name="apple-mobile-web-app-capable" content="yes">
+<script type="text/javascript" src="../../../_static/js/jquery-1.11.0.min.js "></script>
+<script type="text/javascript" src="../../../_static/js/jquery-fix.js "></script>
+<script type="text/javascript" src="../../../_static/bootstrap-3.3.7/js/bootstrap.min.js "></script>
+<script type="text/javascript" src="../../../_static/bootstrap-sphinx.js "></script>
+
+	<script async type="text/javascript" id="_fed_an_ua_tag" src="https://dap.digitalgov.gov/Universal-Federated-Analytics-Min.js?agency=DOC&subagency=NIST&pua=UA-66610693-1&yt=true&exts=ppsx,pps,f90,sch,rtf,wrl,txz,m1v,xlsm,msi,xsd,f,tif,eps,mpg,xml,pl,xlt,c"></script>	
+
+	<meta name="theme-color" content="#283593">
+
+  </head><body>
+
+  <div id="navbar" class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="../../../index.html"><span><img src="../../../_static/icon_48.png"></span>
+           </a>
+        <span class="navbar-text navbar-version pull-left"><b>v2.2</b></span>
+      </div>
+
+        <div class="collapse navbar-collapse nav-collapse">
+          <ul class="nav navbar-nav">
+            
+                <li><a href="../../../../latex/MOSAIC.pdf">Download PDF</a></li>
+                <li><a href="../../../doc/mailingList.html">Mailing List</a></li>
+                <li><a href="//github.com/usnistgov/mosaic">Develop</a></li>
+                <li><a href="//github.com/usnistgov/mosaic/issues">Issue Tracker</a></li>
+            
+            
+              <li class="dropdown globaltoc-container">
+  <a role="button"
+     id="dLabelGlobalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="../../../index.html">Contents <b class="caret"></b></a>
+  <ul class="dropdown-menu globaltoc"
+      role="menu"
+      aria-labelledby="dLabelGlobalToc"><ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../doc/Introduction.html">1. Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../doc/Algorithms.html">2. Data Processing Algorithms in <em>MOSAIC</em></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../doc/GettingStarted.html">3. Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../doc/GraphicalInterface.html">4. <em>MOSAIC</em> GUI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../doc/WebInterface.html">5. <em>MOSAIC</em> WEB</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../doc/settingsFile.html">6. Settings File</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../doc/DatabaseStructure.html">7. Database Structure and Query Syntax</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../doc/ScriptingandAdvancedFeatures.html">8. Scripting and Advanced Features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../doc/Extend.html">9. Extend <em>MOSAIC</em></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../doc/PublicationFigures.html">10. Publication Quality Figures</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../doc/AdvancedAnalysis.html">11. Advanced Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../doc/Addons.html">12. Addons</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../doc/DeveloperTools.html">13. Developer Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../doc/apidocs.html">14. API Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../doc/References.html">15. Bibliography</a></li>
+</ul>
+</ul>
+</li>
+              
+            
+            
+            
+            
+            
+              <li class="hidden-sm"></li>
+            
+          </ul>
+
+          
+            
+<form class="navbar-form navbar-right" action="../../../search.html" method="get">
+ <div class="form-group">
+  <input type="text" name="q" class="form-control" placeholder="Search" />
+ </div>
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+          
+        </div>
+    </div>
+  </div>
+
+<div class="container">
+  <div class="row">
+    <div class="body col-md-12 content" role="main">
+      
+  <h1>Source code for mosaic.process.adept</h1><div class="highlight"><pre>
+<span></span><span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">	Analyze a multi-step event </span>
+
+<span class="sd">	:Created:	4/18/2013</span>
+<span class="sd"> 	:Author: 	Arvind Balijepalli &lt;arvind.balijepalli@nist.gov&gt;</span>
+<span class="sd">	:License:	See LICENSE.TXT</span>
+<span class="sd">	:ChangeLog:</span>
+<span class="sd">	.. line-block::</span>
+<span class="sd">		06/28/16 	AB 	Upgrade lmfit to &gt; 0.9 (https://lmfit.github.io/lmfit-py/whatsnew.html#whatsnew-090-label)</span>
+<span class="sd">		05/27/16 	AB 	Added warnings when the reduced chi squared is not a number and if the fit parameters are unchanged from the initial guess values.</span>
+<span class="sd">		05/22/16    JF  Added new test to reject BD &lt; 0 or BD &gt; 1, improved readability of error tests.</span>
+<span class="sd">		03/30/16 	AB 	Change UnlinkRCConst to LinkRCConst to avoid double negatives.</span>
+<span class="sd">		3/16/16 	AB 	Migrate InitThreshold setting to CUSUM StepSize.</span>
+<span class="sd">		2/22/16 	AB 	Use CUSUM to estimate intial guesses in ADEPT for long events.</span>
+<span class="sd">		2/20/16 	AB 	Format settings log.</span>
+<span class="sd">		12/09/15 	KB 	Added Windows specific optimizations</span>
+<span class="sd">		8/24/15 	AB 	Rename algorithm to ADEPT.</span>
+<span class="sd">		8/02/15		JF	Added a new test to reject RC Constants &lt;=0</span>
+<span class="sd">		4/12/15 	AB 	Refactored code to improve reusability.</span>
+<span class="sd">		3/20/15 	AB 	Added a maximum event length setting (MaxEventLength) that automatically rejects events longer than the specified value.</span>
+<span class="sd">		3/20/15 	AB 	Added a new metadata column (mdStateResTime) that saves the residence time of each state to the database.</span>
+<span class="sd">		3/6/15 		AB 	Added a new test for negative event delays</span>
+<span class="sd">		3/6/15 		JF	Added MinStateLength to output log</span>
+<span class="sd">		3/5/15 		AB 	Updated initial state determination to include a minumum state length parameter (MinStateLength).</span>
+<span class="sd">						Initial state estimates now utilize gradient information for improved state identification.</span>
+<span class="sd">		1/7/15		AB  Save the number of states in an event to the DB using the mdNStates column</span>
+<span class="sd">		12/31/14 	AB 	Changed multi-state function to include a separate tau for </span>
+<span class="sd">						each state following Balijepalli et al, ACS Nano 2014.</span>
+<span class="sd">		12/30/14	JF	Removed min/max constraint on tau</span>
+<span class="sd">		11/7/14 	AB 	Error codes describing event rejection are now more specific.</span>
+<span class="sd">		11/6/14 	AB 	Fixed a bug in the event fitting logic that prevents the</span>
+<span class="sd">						analysis of long states.</span>
+<span class="sd">		8/21/14		AB 	Added AbsEventStart and BlockDepth (constructed from mdCurrentStep</span>
+<span class="sd">						and mdOpenChCurrent) metadata.</span>
+<span class="sd">		5/17/14		AB  Modified md interface functions for metaMDIO support</span>
+<span class="sd">		9/26/13		AB	Initial version</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">import</span> <span class="nn">mosaic.commonExceptions</span>
+<span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">metaEventProcessor</span>
+<span class="kn">import</span> <span class="nn">mosaic.utilities.util</span> <span class="k">as</span> <span class="nn">util</span>
+<span class="kn">import</span> <span class="nn">mosaic.utilities.mosaicLogging</span> <span class="k">as</span> <span class="nn">mlog</span>
+<span class="kn">import</span> <span class="nn">mosaic.utilities.fit_funcs</span> <span class="k">as</span> <span class="nn">fit_funcs</span>
+<span class="kn">import</span> <span class="nn">mosaic.process.cusumPlus</span> <span class="k">as</span> <span class="nn">cusum</span>
+<span class="kn">import</span> <span class="nn">mosaic.settings</span>
+
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">math</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">scipy.optimize</span>
+<span class="kn">from</span> <span class="nn">scipy.optimize</span> <span class="kn">import</span> <span class="n">curve_fit</span>
+
+<span class="kn">from</span> <span class="nn">lmfit</span> <span class="kn">import</span> <span class="n">minimize</span><span class="p">,</span> <span class="n">Parameters</span><span class="p">,</span> <span class="n">Parameter</span><span class="p">,</span> <span class="n">report_errors</span><span class="p">,</span> <span class="n">Minimizer</span>
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;adept&quot;</span><span class="p">,</span> <span class="s2">&quot;InvalidEvent&quot;</span><span class="p">]</span>
+
+<div class="viewcode-block" id="InvalidEvent"><a class="viewcode-back" href="../../../api-doc/mosaic.processing.html#mosaic.process.adept.InvalidEvent">[docs]</a><span class="k">class</span> <span class="nc">InvalidEvent</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
+	<span class="k">pass</span></div>
+
+<div class="viewcode-block" id="adept"><a class="viewcode-back" href="../../../api-doc/mosaic.processing.html#mosaic.process.adept.adept">[docs]</a><span class="k">class</span> <span class="nc">adept</span><span class="p">(</span><span class="n">metaEventProcessor</span><span class="o">.</span><span class="n">metaEventProcessor</span><span class="p">):</span>
+	<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">		Analyze a multi-step event that contains two or more states. This method includes system </span>
+<span class="sd">		information in the analysis, specifically the filtering effects (through the RC constant)</span>
+<span class="sd">		of either amplifiers or the membrane/nanopore complex. The analysis generates several </span>
+<span class="sd">		parameters that are stored as metadata including:</span>
+<span class="sd">			</span>
+<span class="sd">		1. Blockade depth: the ratio of the open channel current to the blocked current</span>
+<span class="sd">		2. Residence time: the time the molecule spends inside the pore</span>
+<span class="sd">		3. Tau: the RC constant  of the response to a step input (e.g. the entry or exit of the molecule into or out of the nanopore).</span>
+
+<span class="sd">		:Keyword Args:</span>
+<span class="sd">			In addition to :class:`~mosaic.metaEventProcessor.metaEventProcessor` args,</span>
+<span class="sd">				- `StepSize` :			The multiple of the standard deviations considered significant to dtecting an event (default: 3.0).</span>
+<span class="sd">				- `MinStateLength` : 	minimum number of data points required to assign a state within an event (default: 4)</span>
+<span class="sd">				- `MaxEventLength` :	maximum length (in data points) of events that will be processed (default: 10000)</span>
+<span class="sd">				- `FitTol` :			fit tolerance for convergence (default: 1.e-7)</span>
+<span class="sd">				- `FitIters` :			maximum fit iterations (default: 5000)</span>
+<span class="sd">				- `LinkRCConst` :	When True, the RC constants associated with each state in the fit function are varied together. (Default: `True`)</span>
+
+<span class="sd">		:Errors:</span>
+
+<span class="sd">			When an event cannot be analyzed, all metadata are set to -1.</span>
+
+
+<span class="sd">	&quot;&quot;&quot;</span>
+	<span class="k">def</span> <span class="nf">_init</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+		<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">			Initialize the single step analysis class.</span>
+<span class="sd">		&quot;&quot;&quot;</span>
+		<span class="c1"># initialize the object&#39;s metadata (to -1) as class attributes</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">mdOpenChCurrent</span><span class="o">=-</span><span class="mi">1</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">mdCurrentStep</span><span class="o">=</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+
+		<span class="bp">self</span><span class="o">.</span><span class="n">mdNStates</span><span class="o">=-</span><span class="mi">1</span>
+
+		<span class="bp">self</span><span class="o">.</span><span class="n">mdBlockDepth</span><span class="o">=</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+
+		<span class="bp">self</span><span class="o">.</span><span class="n">mdEventDelay</span><span class="o">=</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">mdStateResTime</span><span class="o">=</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+
+		<span class="bp">self</span><span class="o">.</span><span class="n">mdEventStart</span><span class="o">=-</span><span class="mi">1</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">mdEventEnd</span><span class="o">=-</span><span class="mi">1</span>
+		
+		<span class="bp">self</span><span class="o">.</span><span class="n">mdResTime</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+
+		<span class="bp">self</span><span class="o">.</span><span class="n">mdRCConst</span><span class="o">=</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+
+		<span class="bp">self</span><span class="o">.</span><span class="n">mdAbsEventStart</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+
+		<span class="bp">self</span><span class="o">.</span><span class="n">mdRedChiSq</span><span class="o">=-</span><span class="mi">1</span>
+
+		<span class="bp">self</span><span class="o">.</span><span class="n">nStates</span><span class="o">=-</span><span class="mi">1</span>
+
+		<span class="bp">self</span><span class="o">.</span><span class="n">adeptLogger</span><span class="o">=</span><span class="n">mlog</span><span class="o">.</span><span class="n">mosaicLogging</span><span class="p">()</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+		<span class="c1"># Settings for single step event processing</span>
+		<span class="c1"># settings for gaussian fits</span>
+		<span class="k">try</span><span class="p">:</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">FitTol</span><span class="o">=</span><span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">settingsDict</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;FitTol&quot;</span><span class="p">,</span> <span class="mf">1.e-7</span><span class="p">))</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">FitIters</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">settingsDict</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;FitIters&quot;</span><span class="p">,</span> <span class="mi">5000</span><span class="p">))</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">StepSize</span><span class="o">=</span><span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">settingsDict</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;StepSize&quot;</span><span class="p">,</span> <span class="mf">3.0</span><span class="p">))</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">MinStateLength</span><span class="o">=</span><span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">settingsDict</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;MinStateLength&quot;</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">MaxEventLength</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">settingsDict</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;MaxEventLength&quot;</span><span class="p">,</span> <span class="mi">10000</span><span class="p">))</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">LinkRCConst</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">settingsDict</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;LinkRCConst&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+
+			<span class="c1"># initThr=float(self.settingsDict[&quot;InitThreshold&quot;])</span>
+			<span class="c1"># if initThr:</span>
+			<span class="c1"># 	print &quot;Warning: InitThreshold is deprecated. Please use StepSize instead (see the docs for additional information). StepSize set to {0}&quot;.format(3.0*initThr)</span>
+			<span class="c1"># 	self.StepSize=3.0*initThr</span>
+
+		<span class="k">except</span> <span class="ne">ValueError</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
+			<span class="k">raise</span> <span class="n">mosaic</span><span class="o">.</span><span class="n">commonExceptions</span><span class="o">.</span><span class="n">SettingsTypeError</span><span class="p">(</span> <span class="n">err</span> <span class="p">)</span>
+		<span class="c1"># except KeyError:</span>
+		<span class="c1"># 	pass</span>
+
+
+	<span class="c1">###########################################################################</span>
+	<span class="c1"># Interface functions implemented starting here</span>
+	<span class="c1">###########################################################################</span>
+	<span class="k">def</span> <span class="nf">_processEvent</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+		<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">			This function implements the core logic to analyze one single step-event.</span>
+<span class="sd">		&quot;&quot;&quot;</span>
+		<span class="k">try</span><span class="p">:</span>
+			<span class="k">if</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">eEndEstimate</span><span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">eStartEstimate</span><span class="p">)</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">MaxEventLength</span><span class="p">:</span>
+				<span class="bp">self</span><span class="o">.</span><span class="n">rejectEvent</span><span class="p">(</span><span class="s2">&quot;eMaxLength&quot;</span><span class="p">)</span>
+			<span class="k">else</span><span class="p">:</span>
+				<span class="c1"># Correct the time-series data for polarity</span>
+				<span class="n">edat</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">dataPolarity</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span> <span class="bp">self</span><span class="o">.</span><span class="n">eventData</span><span class="p">,</span>  <span class="n">dtype</span><span class="o">=</span><span class="s1">&#39;float64&#39;</span> <span class="p">)</span>
+
+				<span class="c1"># estimate initial guess for events</span>
+				<span class="n">initguess</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_cusumInitGuess</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">eventData</span><span class="p">)</span>
+				
+				<span class="bp">self</span><span class="o">.</span><span class="n">fitevent</span><span class="p">(</span><span class="n">edat</span><span class="p">,</span> <span class="n">initguess</span><span class="p">)</span>
+		<span class="k">except</span> <span class="n">InvalidEvent</span><span class="p">:</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">rejectEvent</span><span class="p">(</span><span class="s1">&#39;eInvalidEvent&#39;</span><span class="p">)</span>
+		<span class="k">except</span><span class="p">:</span>
+			<span class="k">raise</span>
+
+	<span class="k">def</span> <span class="nf">_mdList</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+		<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">			Return a list of meta-data from the analysis of single step events. We explicitly</span>
+<span class="sd">			control the order of the data to keep formatting consistent. 				</span>
+<span class="sd">		&quot;&quot;&quot;</span>
+		<span class="k">return</span> <span class="p">[</span>
+					<span class="bp">self</span><span class="o">.</span><span class="n">mdProcessingStatus</span><span class="p">,</span> 
+					<span class="bp">self</span><span class="o">.</span><span class="n">mdOpenChCurrent</span><span class="p">,</span>
+					<span class="bp">self</span><span class="o">.</span><span class="n">mdNStates</span><span class="p">,</span> 
+					<span class="bp">self</span><span class="o">.</span><span class="n">mdCurrentStep</span><span class="p">,</span>
+					<span class="bp">self</span><span class="o">.</span><span class="n">mdBlockDepth</span><span class="p">,</span>
+					<span class="bp">self</span><span class="o">.</span><span class="n">mdEventStart</span><span class="p">,</span>
+					<span class="bp">self</span><span class="o">.</span><span class="n">mdEventEnd</span><span class="p">,</span>
+					<span class="bp">self</span><span class="o">.</span><span class="n">mdEventDelay</span><span class="p">,</span>
+					<span class="bp">self</span><span class="o">.</span><span class="n">mdStateResTime</span><span class="p">,</span>
+					<span class="bp">self</span><span class="o">.</span><span class="n">mdResTime</span><span class="p">,</span>
+					<span class="bp">self</span><span class="o">.</span><span class="n">mdRCConst</span><span class="p">,</span>
+					<span class="bp">self</span><span class="o">.</span><span class="n">mdAbsEventStart</span><span class="p">,</span>
+					<span class="bp">self</span><span class="o">.</span><span class="n">mdRedChiSq</span>
+				<span class="p">]</span>
+		
+	<span class="k">def</span> <span class="nf">_mdHeadingDataType</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+		<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">			Return a list of meta-data tags data types.</span>
+<span class="sd">		&quot;&quot;&quot;</span>
+		<span class="k">return</span> <span class="p">[</span>
+					<span class="s1">&#39;TEXT&#39;</span><span class="p">,</span> 
+					<span class="s1">&#39;REAL&#39;</span><span class="p">,</span> 
+					<span class="s1">&#39;INTEGER&#39;</span><span class="p">,</span>
+					<span class="s1">&#39;REAL_LIST&#39;</span><span class="p">,</span>
+					<span class="s1">&#39;REAL_LIST&#39;</span><span class="p">,</span>
+					<span class="s1">&#39;REAL&#39;</span><span class="p">,</span>
+					<span class="s1">&#39;REAL&#39;</span><span class="p">,</span>
+					<span class="s1">&#39;REAL_LIST&#39;</span><span class="p">,</span>
+					<span class="s1">&#39;REAL_LIST&#39;</span><span class="p">,</span>
+					<span class="s1">&#39;REAL&#39;</span><span class="p">,</span>
+					<span class="s1">&#39;REAL_LIST&#39;</span><span class="p">,</span>
+					<span class="s1">&#39;REAL&#39;</span><span class="p">,</span>
+					<span class="s1">&#39;REAL&#39;</span>
+				<span class="p">]</span>
+
+	<span class="k">def</span> <span class="nf">_mdHeadings</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+		<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">			Explicity set the metadata to print out.</span>
+<span class="sd">		&quot;&quot;&quot;</span>
+		<span class="k">return</span> <span class="p">[</span>
+					<span class="s1">&#39;ProcessingStatus&#39;</span><span class="p">,</span> 
+					<span class="s1">&#39;OpenChCurrent&#39;</span><span class="p">,</span> 
+					<span class="s1">&#39;NStates&#39;</span><span class="p">,</span>
+					<span class="s1">&#39;CurrentStep&#39;</span><span class="p">,</span>
+					<span class="s1">&#39;BlockDepth&#39;</span><span class="p">,</span>
+					<span class="s1">&#39;EventStart&#39;</span><span class="p">,</span> 
+					<span class="s1">&#39;EventEnd&#39;</span><span class="p">,</span> 
+					<span class="s1">&#39;EventDelay&#39;</span><span class="p">,</span> 
+					<span class="s1">&#39;StateResTime&#39;</span><span class="p">,</span> 
+					<span class="s1">&#39;ResTime&#39;</span><span class="p">,</span> 
+					<span class="s1">&#39;RCConstant&#39;</span><span class="p">,</span> 
+					<span class="s1">&#39;AbsEventStart&#39;</span><span class="p">,</span>
+					<span class="s1">&#39;ReducedChiSquared&#39;</span> 
+				<span class="p">]</span>
+
+<div class="viewcode-block" id="adept.mdAveragePropertiesList"><a class="viewcode-back" href="../../../api-doc/mosaic.processing.html#mosaic.process.adept.adept.mdAveragePropertiesList">[docs]</a>	<span class="k">def</span> <span class="nf">mdAveragePropertiesList</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+		<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">			Return a list of meta-data properties that will be averaged </span>
+<span class="sd">			and displayed at the end of a run. </span>
+<span class="sd">		&quot;&quot;&quot;</span>
+		<span class="k">pass</span></div>
+
+<div class="viewcode-block" id="adept.formatsettings"><a class="viewcode-back" href="../../../api-doc/mosaic.processing.html#mosaic.process.adept.adept.formatsettings">[docs]</a>	<span class="k">def</span> <span class="nf">formatsettings</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+		<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">			Return a formatted string of settings for display</span>
+<span class="sd">		&quot;&quot;&quot;</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">adeptLogger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span> <span class="s1">&#39;</span><span class="se">\t</span><span class="s1">Event processing settings:&#39;</span> <span class="p">)</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">adeptLogger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span> <span class="s1">&#39;</span><span class="se">\t\t</span><span class="s1">Algorithm = ADEPT&#39;</span> <span class="p">)</span>
+		
+		<span class="bp">self</span><span class="o">.</span><span class="n">adeptLogger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span> <span class="s1">&#39;</span><span class="se">\t\t</span><span class="s1">Max. iterations  = </span><span class="si">{0}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">FitIters</span><span class="p">)</span> <span class="p">)</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">adeptLogger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span> <span class="s1">&#39;</span><span class="se">\t\t</span><span class="s1">Fit tolerance (rel. err in leastsq)  = </span><span class="si">{0}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">FitTol</span><span class="p">)</span> <span class="p">)</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">adeptLogger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span> <span class="s1">&#39;</span><span class="se">\t\t</span><span class="s1">Link RC constants = </span><span class="si">{0}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">bool</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">LinkRCConst</span><span class="p">))</span> <span class="p">)</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">adeptLogger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span> <span class="s1">&#39;</span><span class="se">\t\t</span><span class="s1">Initial partition step size  = </span><span class="si">{0}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">StepSize</span><span class="p">)</span> <span class="p">)</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">adeptLogger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span> <span class="s1">&#39;</span><span class="se">\t\t</span><span class="s1">Min. State Length = </span><span class="si">{0}</span><span class="s1"> samples&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">MinStateLength</span><span class="p">)</span> <span class="p">)</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">adeptLogger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span> <span class="s1">&#39;</span><span class="se">\t\t</span><span class="s1">Max. Event Length = </span><span class="si">{0}</span><span class="s1"> samples&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">MaxEventLength</span><span class="p">))</span></div>
+
+	<span class="c1">###########################################################################</span>
+	<span class="c1"># Local functions</span>
+	<span class="c1">###########################################################################</span>
+	<span class="k">def</span> <span class="nf">fitevent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">edat</span><span class="p">,</span> <span class="n">initguess</span><span class="p">):</span>
+		<span class="k">try</span><span class="p">:</span>
+			<span class="n">dt</span> <span class="o">=</span> <span class="mf">1000.</span><span class="o">/</span><span class="bp">self</span><span class="o">.</span><span class="n">Fs</span> 	<span class="c1"># time-step in ms.</span>
+
+			<span class="c1"># control numpy error reporting</span>
+			<span class="n">np</span><span class="o">.</span><span class="n">seterr</span><span class="p">(</span><span class="n">invalid</span><span class="o">=</span><span class="s1">&#39;ignore&#39;</span><span class="p">,</span> <span class="n">over</span><span class="o">=</span><span class="s1">&#39;ignore&#39;</span><span class="p">,</span> <span class="n">under</span><span class="o">=</span><span class="s1">&#39;ignore&#39;</span><span class="p">)</span>
+
+			<span class="n">ts</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span> <span class="n">t</span><span class="o">*</span><span class="n">dt</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">edat</span><span class="p">))</span> <span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="s1">&#39;float64&#39;</span><span class="p">)</span>
+
+			<span class="bp">self</span><span class="o">.</span><span class="n">nStates</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">initguess</span><span class="p">)</span>
+			<span class="n">initRCConst</span><span class="o">=</span><span class="n">dt</span><span class="o">*</span><span class="mf">5.</span>
+
+			<span class="c1"># setup fit params</span>
+			<span class="n">params</span><span class="o">=</span><span class="n">Parameters</span><span class="p">()</span>
+
+			<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">initguess</span><span class="p">)):</span>
+				<span class="n">params</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">),</span> <span class="n">value</span><span class="o">=</span><span class="n">initguess</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span> 
+				<span class="n">params</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="s1">&#39;mu&#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">),</span> <span class="n">value</span><span class="o">=</span><span class="n">initguess</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">1</span><span class="p">])</span> 
+				<span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">LinkRCConst</span><span class="p">:</span>				
+					<span class="k">if</span> <span class="n">i</span><span class="o">==</span><span class="mi">0</span><span class="p">:</span>
+						<span class="n">params</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="s1">&#39;tau&#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">),</span> <span class="n">value</span><span class="o">=</span><span class="n">initRCConst</span><span class="p">)</span>
+					<span class="k">else</span><span class="p">:</span>
+						<span class="n">params</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="s1">&#39;tau&#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">),</span> <span class="n">value</span><span class="o">=</span><span class="n">initRCConst</span><span class="p">,</span> <span class="n">expr</span><span class="o">=</span><span class="s1">&#39;tau0&#39;</span><span class="p">)</span>
+				<span class="k">else</span><span class="p">:</span>
+					<span class="n">params</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="s1">&#39;tau&#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">),</span> <span class="n">value</span><span class="o">=</span><span class="n">initRCConst</span><span class="p">)</span>
+
+			<span class="n">params</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">baseMean</span> <span class="p">)</span>
+			
+
+			<span class="n">igdict</span><span class="o">=</span><span class="n">params</span><span class="o">.</span><span class="n">valuesdict</span><span class="p">()</span>
+
+			<span class="nb">print</span><span class="p">(</span><span class="n">params</span><span class="p">)</span>
+			<span class="n">optfit</span><span class="o">=</span><span class="n">Minimizer</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_objfunc</span><span class="p">,</span> <span class="n">params</span><span class="p">,</span> <span class="n">fcn_args</span><span class="o">=</span><span class="p">(</span><span class="n">ts</span><span class="p">,</span><span class="n">edat</span><span class="p">,))</span>
+			<span class="n">optfit</span><span class="o">.</span><span class="n">prepare_fit</span><span class="p">()</span>
+			<span class="n">result</span><span class="o">=</span><span class="n">optfit</span><span class="o">.</span><span class="n">leastsq</span><span class="p">(</span><span class="n">xtol</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">FitTol</span><span class="p">,</span><span class="n">ftol</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">FitTol</span><span class="p">,</span><span class="n">maxfev</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">FitIters</span><span class="p">)</span>
+
+			<span class="k">if</span> <span class="n">result</span><span class="o">.</span><span class="n">success</span><span class="p">:</span>
+				<span class="n">tt</span><span class="o">=</span><span class="p">[</span><span class="n">init</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">init</span><span class="p">,</span> <span class="n">final</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">igdict</span><span class="o">.</span><span class="n">items</span><span class="p">()),</span> <span class="nb">list</span><span class="p">((</span><span class="n">result</span><span class="o">.</span><span class="n">params</span><span class="o">.</span><span class="n">valuesdict</span><span class="p">())</span><span class="o">.</span><span class="n">items</span><span class="p">()))</span> <span class="k">if</span> <span class="n">init</span><span class="o">==</span><span class="n">final</span><span class="p">]</span>
+				<span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">tt</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+					<span class="bp">self</span><span class="o">.</span><span class="n">flagEvent</span><span class="p">(</span><span class="s1">&#39;wInitGuessUnchanged&#39;</span><span class="p">)</span>
+
+				<span class="bp">self</span><span class="o">.</span><span class="n">_recordevent</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+			<span class="k">else</span><span class="p">:</span>
+				<span class="c1">#print optfit.message, optfit.lmdif_message</span>
+				<span class="bp">self</span><span class="o">.</span><span class="n">rejectEvent</span><span class="p">(</span><span class="s1">&#39;eFitConvergence&#39;</span><span class="p">)</span>
+		<span class="k">except</span> <span class="ne">KeyboardInterrupt</span><span class="p">:</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">rejectEvent</span><span class="p">(</span><span class="s1">&#39;eFitUserStop&#39;</span><span class="p">)</span>
+			<span class="k">raise</span>
+		<span class="k">except</span> <span class="n">InvalidEvent</span><span class="p">:</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">rejectEvent</span><span class="p">(</span><span class="s1">&#39;eInvalidEvent&#39;</span><span class="p">)</span>
+		<span class="k">except</span> <span class="ne">BaseException</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
+			<span class="nb">print</span><span class="p">(</span><span class="n">err</span><span class="p">)</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">rejectEvent</span><span class="p">(</span><span class="s1">&#39;eFitFailure&#39;</span><span class="p">)</span>
+
+	<span class="k">def</span> <span class="nf">_objfunc</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">params</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+		<span class="sd">&quot;&quot;&quot; model parameters for multistate blockade &quot;&quot;&quot;</span>
+		<span class="k">try</span><span class="p">:</span>
+			<span class="n">b</span> <span class="o">=</span> <span class="n">params</span><span class="p">[</span><span class="s1">&#39;b&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value</span>
+			<span class="n">tau</span> <span class="o">=</span> <span class="p">[</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;tau&#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">)]</span><span class="o">.</span><span class="n">value</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">nStates</span><span class="p">)]</span>
+			<span class="n">a</span><span class="o">=</span><span class="p">[</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;a&#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">)]</span><span class="o">.</span><span class="n">value</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">nStates</span><span class="p">)]</span>
+			<span class="n">mu</span><span class="o">=</span><span class="p">[</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;mu&#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">)]</span><span class="o">.</span><span class="n">value</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">nStates</span><span class="p">)]</span>
+
+			<span class="n">model</span> <span class="o">=</span> <span class="n">fit_funcs</span><span class="o">.</span><span class="n">multiStateFunc</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">tau</span><span class="p">,</span> <span class="n">mu</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">nStates</span><span class="p">)</span>
+			<span class="k">return</span> <span class="n">model</span> <span class="o">-</span> <span class="n">data</span>
+		<span class="k">except</span> <span class="ne">KeyboardInterrupt</span><span class="p">:</span>
+			<span class="k">raise</span>
+			
+	<span class="k">def</span> <span class="nf">_recordevent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">optfit</span><span class="p">):</span>
+		<span class="n">dt</span> <span class="o">=</span> <span class="mf">1000.</span><span class="o">/</span><span class="bp">self</span><span class="o">.</span><span class="n">Fs</span> 	<span class="c1"># time-step in ms.</span>
+
+		<span class="k">try</span><span class="p">:</span>
+			<span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">nStates</span><span class="o">&lt;</span><span class="mi">2</span><span class="p">:</span>
+				<span class="bp">self</span><span class="o">.</span><span class="n">rejectEvent</span><span class="p">(</span><span class="s1">&#39;eInvalidStates&#39;</span><span class="p">)</span>
+			<span class="k">elif</span> <span class="n">optfit</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;mu0&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value</span> <span class="o">&lt;</span> <span class="mf">0.0</span> <span class="ow">or</span> <span class="n">optfit</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;mu&#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">nStates</span><span class="o">-</span><span class="mi">1</span><span class="p">)]</span><span class="o">.</span><span class="n">value</span> <span class="o">&lt;</span> <span class="mf">0.0</span><span class="p">:</span>
+				<span class="bp">self</span><span class="o">.</span><span class="n">rejectEvent</span><span class="p">(</span><span class="s1">&#39;eInvalidResTime&#39;</span><span class="p">)</span>
+			<span class="c1"># The start of the event is set past the length of the data</span>
+			<span class="k">elif</span> <span class="n">optfit</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;mu&#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">nStates</span><span class="o">-</span><span class="mi">1</span><span class="p">)]</span><span class="o">.</span><span class="n">value</span> <span class="o">&gt;</span> <span class="p">(</span><span class="mf">1000.</span><span class="o">/</span><span class="bp">self</span><span class="o">.</span><span class="n">Fs</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">eventData</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">):</span>
+				<span class="bp">self</span><span class="o">.</span><span class="n">rejectEvent</span><span class="p">(</span><span class="s1">&#39;eInvalidStartTime&#39;</span><span class="p">)</span>
+			<span class="k">else</span><span class="p">:</span>
+				<span class="bp">self</span><span class="o">.</span><span class="n">mdOpenChCurrent</span> 	<span class="o">=</span> <span class="n">optfit</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;b&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value</span> 
+				<span class="bp">self</span><span class="o">.</span><span class="n">mdCurrentStep</span>		<span class="o">=</span> <span class="p">[</span> <span class="n">optfit</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;a&#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">)]</span><span class="o">.</span><span class="n">value</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">nStates</span><span class="p">)</span> <span class="p">]</span>
+				
+				<span class="bp">self</span><span class="o">.</span><span class="n">mdNStates</span>			<span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">nStates</span>
+
+				<span class="bp">self</span><span class="o">.</span><span class="n">mdBlockDepth</span> 		<span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">cumsum</span><span class="p">(</span> <span class="bp">self</span><span class="o">.</span><span class="n">mdCurrentStep</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="p">)</span><span class="o">/</span><span class="bp">self</span><span class="o">.</span><span class="n">mdOpenChCurrent</span> <span class="o">+</span> <span class="mi">1</span>
+
+				<span class="bp">self</span><span class="o">.</span><span class="n">mdEventDelay</span>		<span class="o">=</span> <span class="p">[</span> <span class="n">optfit</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;mu&#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">)]</span><span class="o">.</span><span class="n">value</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">nStates</span><span class="p">)</span> <span class="p">]</span>
+
+				<span class="bp">self</span><span class="o">.</span><span class="n">mdStateResTime</span> 	<span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">diff</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">mdEventDelay</span><span class="p">)</span>
+
+				<span class="bp">self</span><span class="o">.</span><span class="n">mdEventStart</span>		<span class="o">=</span> <span class="n">optfit</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;mu0&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value</span>
+				<span class="bp">self</span><span class="o">.</span><span class="n">mdEventEnd</span>			<span class="o">=</span> <span class="n">optfit</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;mu&#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">nStates</span><span class="o">-</span><span class="mi">1</span><span class="p">)]</span><span class="o">.</span><span class="n">value</span>
+				<span class="bp">self</span><span class="o">.</span><span class="n">mdRCConst</span>			<span class="o">=</span> <span class="p">[</span> <span class="n">optfit</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;tau&#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">)]</span><span class="o">.</span><span class="n">value</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">nStates</span><span class="p">)</span> <span class="p">]</span>
+
+				<span class="bp">self</span><span class="o">.</span><span class="n">mdResTime</span>			<span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mdEventEnd</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">mdEventStart</span>
+
+				<span class="bp">self</span><span class="o">.</span><span class="n">mdAbsEventStart</span>	<span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mdEventStart</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">absDataStartIndex</span> <span class="o">*</span> <span class="n">dt</span>
+				
+				<span class="bp">self</span><span class="o">.</span><span class="n">mdRedChiSq</span>			<span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">optfit</span><span class="o">.</span><span class="n">residual</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="o">/</span><span class="bp">self</span><span class="o">.</span><span class="n">baseSD</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span><span class="o">/</span><span class="n">optfit</span><span class="o">.</span><span class="n">nfree</span>
+					
+				<span class="k">if</span> <span class="n">math</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">mdRedChiSq</span><span class="p">):</span>
+					<span class="c1"># print &quot;wInvalidRedChiSq&quot;</span>
+					<span class="bp">self</span><span class="o">.</span><span class="n">flagEvent</span><span class="p">(</span><span class="s1">&#39;wInvalidRedChiSq&#39;</span><span class="p">)</span>	
+
+				<span class="k">if</span> <span class="p">((</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">mdBlockDepth</span><span class="p">)</span><span class="o">&lt;</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">all</span><span class="p">()</span> <span class="ow">or</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">mdBlockDepth</span><span class="p">)</span><span class="o">&gt;</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">all</span><span class="p">()):</span>
+					<span class="bp">self</span><span class="o">.</span><span class="n">rejectEvent</span><span class="p">(</span><span class="s1">&#39;eInvalidBlockDepth&#39;</span><span class="p">)</span>
+				<span class="k">if</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">mdStateResTime</span><span class="p">)</span><span class="o">&lt;</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">all</span><span class="p">():</span>
+					<span class="bp">self</span><span class="o">.</span><span class="n">rejectEvent</span><span class="p">(</span><span class="s1">&#39;eNegativeEventDelay&#39;</span><span class="p">)</span>
+				<span class="k">elif</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">mdRCConst</span><span class="p">)</span><span class="o">&lt;</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">all</span><span class="p">():</span>
+					<span class="bp">self</span><span class="o">.</span><span class="n">rejectEvent</span><span class="p">(</span><span class="s1">&#39;eInvalidRCConst&#39;</span><span class="p">)</span>
+
+		<span class="k">except</span><span class="p">:</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">rejectEvent</span><span class="p">(</span><span class="s1">&#39;eInvalidEvent&#39;</span><span class="p">)</span>
+
+	<span class="k">def</span> <span class="nf">_cusumInitGuess</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">edat</span><span class="p">):</span>
+		<span class="n">cusumSettings</span><span class="o">=</span><span class="p">{}</span>
+		<span class="n">cusumSettings</span><span class="p">[</span><span class="s2">&quot;MinThreshold&quot;</span><span class="p">]</span><span class="o">=</span><span class="mf">0.1</span>
+		<span class="n">cusumSettings</span><span class="p">[</span><span class="s2">&quot;MaxThreshold&quot;</span><span class="p">]</span><span class="o">=</span><span class="mf">100.</span>
+		<span class="n">cusumSettings</span><span class="p">[</span><span class="s2">&quot;StepSize&quot;</span><span class="p">]</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">StepSize</span>
+		<span class="n">cusumSettings</span><span class="p">[</span><span class="s2">&quot;MinLength&quot;</span><span class="p">]</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">MinStateLength</span>
+
+		<span class="c1"># print cusumSettings</span>
+
+		<span class="n">cusumObj</span><span class="o">=</span><span class="n">cusum</span><span class="o">.</span><span class="n">cusumPlus</span><span class="p">(</span>
+				<span class="n">edat</span><span class="p">,</span>
+				<span class="n">edat</span><span class="p">,</span> 
+				<span class="bp">self</span><span class="o">.</span><span class="n">Fs</span><span class="p">,</span>
+				<span class="n">eventstart</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">eStartEstimate</span><span class="p">,</span>						<span class="c1"># event start point</span>
+				<span class="n">eventend</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">eEndEstimate</span><span class="p">,</span>							<span class="c1"># event end point</span>
+				<span class="n">baselinestats</span><span class="o">=</span><span class="p">[</span> <span class="bp">self</span><span class="o">.</span><span class="n">baseMean</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">baseSD</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">baseSlope</span> <span class="p">],</span>
+				<span class="n">algosettingsdict</span><span class="o">=</span><span class="n">cusumSettings</span><span class="o">.</span><span class="n">copy</span><span class="p">(),</span>
+				<span class="n">savets</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+				<span class="n">absdatidx</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">absDataStartIndex</span><span class="p">,</span>
+				<span class="n">datafilehnd</span><span class="o">=</span><span class="kc">None</span>
+			<span class="p">)</span>
+		<span class="n">cusumObj</span><span class="o">.</span><span class="n">processEvent</span><span class="p">()</span>
+
+		<span class="k">if</span> <span class="n">cusumObj</span><span class="o">.</span><span class="n">mdProcessingStatus</span> <span class="o">!=</span> <span class="s2">&quot;normal&quot;</span><span class="p">:</span>
+			<span class="c1"># raise InvalidEvent</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">rejectEvent</span><span class="p">(</span><span class="n">cusumObj</span><span class="o">.</span><span class="n">mdProcessingStatus</span><span class="o">+</span><span class="s2">&quot;_init&quot;</span><span class="p">)</span>
+		<span class="k">else</span><span class="p">:</span>
+			<span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">cusumObj</span><span class="o">.</span><span class="n">mdCurrentStep</span><span class="p">,</span> <span class="n">cusumObj</span><span class="o">.</span><span class="n">mdEventDelay</span><span class="p">))</span></div>
+
+
+</pre></div>
+
+    </div>
+      
+  </div>
+</div>
+<!-- 
+<footer class="footer">
+  <div class="container">
+    <p class="pull-right">
+      <a href="#">Back to top</a>
+      
+    </p>
+    <p>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 3.5.4.<br/>
+    </p>
+  </div>
+</footer> -->
+<script type="text/javascript"
+	src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<div class="footer" style="vertical-align: center" align="center">
+		<table width="90%" style="vertical-align: center">
+			<col width=40%>
+			<col width=60%>
+			<tr>
+				<td align="left">
+					<a href="../../../doc/Developers.html"><small><em>MOSAIC Developers</em></small></a> |
+					<a href="https://www.nist.gov/people/arvind-balijepalli"><small><em>Contact</em></small></a> |
+					<a href="../../../doc/Disclaimer.html"><small><em>Terms of Use</em></small></a>
+				</td>
+			<!-- </tr>
+			<tr> -->
+				<td align="right">
+					<a target="_blank" href="http://www.nist.gov/public_affairs/privacy.cfm#privpolicy"><small>Privacy Policy</small></a> |
+					<a target="_blank" href="http://www.nist.gov/public_affairs/privacy.cfm#secnot"><small>Security Notice</small></a> |
+					<a href="http://www.nist.gov/public_affairs/privacy.cfm#accesstate"><small>Accessibility Statement</small></a> |
+					<a target="_blank" href="mailto:data@nist.gov?subject=Feedback%20on%20Web%20Site%20Template"><small>Send feedback</small></a>
+					<br/>
+				</td>
+			</tr>
+		</table>
+
+		<br />
+		<a href="http://www.nist.gov/"><small><em>National Institute of Standards and Technology</em></small></a>
+		<!-- <a href="http://www.nist.gov"><img src="_static/nist_logo.png" width="30%" alt="National Institute of Standards and Technology"></a> -->
+
+</div>
+
+  </body>
+</html>
