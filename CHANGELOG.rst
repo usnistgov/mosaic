@@ -1,6 +1,11 @@
 Change Log
 ++++++++++++++++++++++++++++++++++++++++++
 
+**v2.2**
+
+- Updated web UI to allow lowpass filtering (BesselLowpassFilter).
+- Allow data source path to be changed from web UI when running in local mode (issue #109).
+
 **v2.1**
 
 - Fixed a bug with dcOffset correction that caused the web UI to not accurately display the trajectory.
