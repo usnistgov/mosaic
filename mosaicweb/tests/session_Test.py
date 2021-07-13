@@ -6,6 +6,7 @@ from mosaicweb.tests.mwebCommon import mwebCommonTest
 
 class Session_TestSuite(mwebCommonTest):
 	def test_newAnalysis(self):
+		self._post( '/set-data-path', dict( dataPath=mosaic.__path__[0]+"/.." )) 
 		result=self._post( '/new-analysis', dict( dataPath="data/" ) )
 
 		self.assertBaseline("new-analysis", result)
