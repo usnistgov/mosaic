@@ -4,7 +4,7 @@ Change Log
 **v2.2**
 
 - Updated web UI to allow lowpass filtering (BesselLowpassFilter).
-- Allow data source path to be changed from web UI when running in local mode (issue #109).
+- Allow data source path to be changed from web UI when running in local mode (issue `#109 <https://github.com/usnistgov/mosaic/issues/109>`_).
 
 **v2.1**
 
