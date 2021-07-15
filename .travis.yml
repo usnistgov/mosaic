@@ -9,12 +9,6 @@ matrix:
       language: shell
       python: 3.7
 
-jobs:
-  allow_failures:
-    - os: osx
-
-sudo: false
-
 notifications:
   email: 
     on_failure: always
