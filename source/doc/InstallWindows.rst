@@ -45,7 +45,7 @@ Install all the dependencies by typing:
   			cython=0.29 
   			pandas=0.20.3 
   			nose=1.3.7 
-  			numpy=1.11.1 
+  			numpy=1.11.1 o 
   			scipy=0.18.1 
   			docutils=0.14 
   			flask=0.12.2 

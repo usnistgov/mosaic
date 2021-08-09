@@ -127,13 +127,60 @@
 <span id="sourceinstall"></span><h2><span class="section-number">3.2. </span>Source Installation<a class="headerlink" href="#source-installation" title="Permalink to this headline">¶</a></h2>
 <p>Install <em>MOSAIC</em> from source following the instructions for your platform below.</p>
 <blockquote>
-<div><p><a class="reference internal" href="InstallOSX.html#installosx"><span class="std std-ref">Install MOSAIC on Mac OS X</span></a></p>
-<p><a class="reference internal" href="InstallUbuntu.html#installubuntu"><span class="std std-ref">Install MOSAIC on Ubuntu(14.04)</span></a></p>
-<p><a class="reference internal" href="InstallWindows.html#installwin"><span class="std std-ref">Install MOSAIC on Windows</span></a></p>
+<div><p><a class="reference internal" href="#installosx"><span class="std std-ref">Install MOSAIC on Mac OS X</span></a></p>
+<p><a class="reference internal" href="#installubuntu"><span class="std std-ref">Install MOSAIC on Ubuntu(14.04)</span></a></p>
+<p><a class="reference internal" href="#installwin"><span class="std std-ref">Install MOSAIC on Windows</span></a></p>
 </div></blockquote>
 </section>
 <section id="docker-installation">
 <span id="dockerinstall"></span><h2><span class="section-number">3.3. </span>Docker Installation<a class="headerlink" href="#docker-installation" title="Permalink to this headline">¶</a></h2>
+<p><em>MOSAIC</em> can be installed using <a class="reference external" href="https://www.docker.com/products/docker-desktop/">Docker Desktop</a>. This may be desirable in many cases because it provides a consistent experience across all operating systems. Installing <em>MOSAIC</em> using Docker is relatively straightforward and requires only a few steps as described below.</p>
+<p><strong>1. Install Docker Desktop</strong></p>
+<p>Download and install <a class="reference external" href="https://www.docker.com/products/docker-desktop/">Docker Desktop</a>. Follow instructions for either <a class="reference external" href="https://docs.docker.com/docker-for-windows/install/">Windows</a> or <a class="reference external" href="https://docs.docker.com/docker-for-mac/install/">Mac OS X</a> installation.</p>
+<p><strong>2. Create a configuration file</strong></p>
+<p>Copy the text below and paste into a file called <code class="docutils literal notranslate"><span class="pre">docker-compose.yml.</span></code></p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The filename and extension should be <code class="docutils literal notranslate"><span class="pre">docker-compose.yml.</span></code></p>
+</div>
+<p>Modify the data path and log file paths under the <code class="docutils literal notranslate"><span class="pre">volumes</span></code> line appropriately for your PC.</p>
+<p>Also note the version number in the <code class="docutils literal notranslate"><span class="pre">image</span></code> line.</p>
+<p>Place the <code class="docutils literal notranslate"><span class="pre">docker-compose.yml</span></code> anywhere on your PC.</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">version</span><span class="p">:</span> <span class="s">&#39;3&#39;</span>
+<span class="nt">services</span><span class="p">:</span>
+<span class="nt">mosaic</span><span class="p">:</span>
+  <span class="nt">image</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">ghcr.io/usnistgov/mosaic:v2.2</span>
+  <span class="nt">ports</span><span class="p">:</span>
+      <span class="p p-Indicator">-</span> <span class="s">&quot;5000:5000&quot;</span>
+  <span class="nt">volumes</span><span class="p">:</span>
+      <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">C:\\Users\\arvind\\Desktop:/src/data</span>
+      <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">C:\\Users\\arvind\\Desktop:/var/logs</span>
+</pre></div>
+</div>
+<p><strong>3. Run MOSAIC using Docker</strong></p>
+<p>Open the <code class="docutils literal notranslate"><span class="pre">Command</span> <span class="pre">Prompt</span></code> in Windows or <code class="docutils literal notranslate"><span class="pre">Terminal</span></code> on Mac OS.</p>
+<div class="admonition hint">
+<p class="admonition-title">Hint</p>
+<p>You can launch the <code class="docutils literal notranslate"><span class="pre">Command</span> <span class="pre">Prompt</span></code> by typing <code class="docutils literal notranslate"><span class="pre">cmd</span></code> in the search bar on Windows.</p>
+</div>
+<p>In the <code class="docutils literal notranslate"><span class="pre">Command</span> <span class="pre">Prompt</span></code>, navigate to the directory that you placed the <code class="docutils literal notranslate"><span class="pre">docker-compose.yml</span></code> file. For example if you place the file at <code class="docutils literal notranslate"><span class="pre">C:\\Users\\arvind\Desktop</span></code> then type:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">c:</span>
+<span class="go">cd Users\arvind\Desktop</span>
+</pre></div>
+</div>
+<p>Run the Docker <em>MOSAIC</em> image by typing:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">docker compose up</span>
+</pre></div>
+</div>
+<p>You should see Docker download the image file and start <em>MOSAIC</em> similar to the figure below</p>
+<figure class="align-center">
+<a class="reference internal image-reference" href="../_images/Docker_CMD.png"><img alt="../_images/Docker_CMD.png" src="../_images/Docker_CMD.png" style="width: 85%;" /></a>
+</figure>
+<p><strong>4. Run MOSAIC Web UI</strong></p>
+<p>Open a browser and type <code class="docutils literal notranslate"><span class="pre">localhost:5000</span></code> in the address bar. This should load the MOSAIC web UI as shown below.</p>
+<figure class="align-center">
+<a class="reference internal image-reference" href="../_images/Docker_Browser.png"><img alt="../_images/Docker_Browser.png" src="../_images/Docker_Browser.png" style="width: 85%;" /></a>
+</figure>
 </section>
 </section>
 

@@ -20,6 +20,7 @@
 .. _SQLite driver for IGOR: https://www.ch-werner.de/sqliteodbc/
 .. _Homebrew: https://brew.sh/
 .. _mksqlite: https://sourceforge.net/projects/mksqlite/
+.. _Docker Desktop: https://www.docker.com/products/docker-desktop/
 
 .. _download binaries: https://pages.nist.gov/mosaic/download.html
 .. _download source: https://pages.nist.gov/mosaic/download.html
