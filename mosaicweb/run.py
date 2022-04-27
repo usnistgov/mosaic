@@ -28,17 +28,32 @@ else:
 
 @registerLaunch("mweb")
 def startMOSAICWeb(newWindow=True):
-	webbrowser.open("http://localhost:{0}/".format(mosaic.WebServerPort), new=newWindow, autoraise=True)
+	if mosaic.DeveloperMode:
+		WebServerPort=mosaic.WebServerPort
+	else:
+		WebServerPort=getAvailablePort()
+
+	webbrowser.open("http://localhost:{0}/".format(WebServerPort), new=newWindow, autoraise=True)
 	
 	# Setup platform-dependent timing function
 	if sys.platform.startswith('win'):
-		app.run(host=mosaic.WebHost, port=mosaic.WebServerPort, debug=mosaic.DeveloperMode)
+		app.run(host=mosaic.WebHost, port=WebServerPort, debug=mosaic.DeveloperMode)
 	else:
 		mosaicApp=mosaicApplication(mosaicweb.app, {
-				'bind' 		: '%s:%s' % (mosaic.WebHost, mosaic.WebServerPort),
+				'bind' 		: '%s:%s' % (mosaic.WebHost, WebServerPort),
 				'workers'	: mosaic.WebServerWorkers
 			})
 		mosaicApp.run()
 
+	
+def getAvailablePort():
+	from socket import socket
+
+	with socket() as s:
+		s.bind(('',0))
+
+		port=s.getsockname()[1]
+
+	return port
 	
 	
