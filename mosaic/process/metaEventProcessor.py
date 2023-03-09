@@ -204,6 +204,7 @@ class metaEventProcessor(object, metaclass=ABCMeta):
 			if not mosaic.DeveloperMode:
 				# set all meta data to -1
 				[ self._setRejectMetadata(mdHead) for mdHead in list(self.__dict__.keys()) if mdHead.startswith('md')==True ]
+			
 			# set processing status to status
 			self.mdProcessingStatus=status
 

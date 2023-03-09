@@ -28,10 +28,10 @@ else:
 
 @registerLaunch("mweb")
 def startMOSAICWeb(newWindow=True):
-	if mosaic.DeveloperMode:
-		WebServerPort=mosaic.WebServerPort
-	else:
-		WebServerPort=getAvailablePort()
+	#if mosaic.DeveloperMode:
+	WebServerPort=mosaic.WebServerPort
+	#else:
+	#	WebServerPort=getAvailablePort()
 
 	webbrowser.open("http://localhost:{0}/".format(WebServerPort), new=newWindow, autoraise=True)
 	

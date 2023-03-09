@@ -1,5 +1,5 @@
 import mosaic.utilities.mosaicLogging as mlog 
-import nose
+import nose2
 
 def _mosaicUnitTests(base):
     class mosaicUnitTests(base):
@@ -68,7 +68,7 @@ def _mosaicUnitTests(base):
                 
                 testargs.extend(testList)
 
-                return nose.main(argv=testargs)
+                return nose2.main(argv=testargs)
             except:
                 raise
 

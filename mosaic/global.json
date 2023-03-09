@@ -8,5 +8,5 @@
  	"WebServerPort" : 5000, 
  	"WebServerWorkers" : 1, 
  	"WebServerDataLocation" : "/src/data", 
- 	"WebServerMode" : "remote" 
+ 	"WebServerMode" : "local" 
  }

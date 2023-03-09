@@ -2,7 +2,6 @@ from setuptools import setup, Command
 import mosaic
 import os
 import sys
-import nose
 from tests.mosaicUnitTests import _mosaicUnitTests
 
 class mosaicBinaries(Command):

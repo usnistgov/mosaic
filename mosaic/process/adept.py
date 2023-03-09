@@ -51,7 +51,7 @@ import numpy as np
 import scipy.optimize
 from scipy.optimize import curve_fit
 
-from lmfit import minimize, Parameters, Parameter, report_errors, Minimizer
+from lmfit import minimize, Parameters, Parameter, Minimizer
 
 __all__ = ["adept", "InvalidEvent"]
 
