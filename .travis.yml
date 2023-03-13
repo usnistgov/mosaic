@@ -2,6 +2,7 @@
 matrix:
   include:
     - os: linux
+      dist: jammy
       language: python
       python: 3.10.9
     - os: osx
