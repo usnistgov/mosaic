@@ -93,7 +93,7 @@ class analysisHistogram:
 		xmin=np.min(x)
 		xmax=np.max(x)
 
-		return np.array(np.histogram(x, bins=self.numBins, density=self.density))
+		return np.array(np.histogram(x, bins=self.numBins, density=self.density), dtype=object)
 
 if __name__ == '__main__':
 	import mosaic

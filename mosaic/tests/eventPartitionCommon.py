@@ -1,7 +1,7 @@
 import json
 import glob
 import os
-from nose.tools import raises
+import pytest
 import mosaic
 import mosaic.settings as settings
 from mosaic.trajio.tsvTrajIO import *
@@ -9,7 +9,7 @@ from . import testutil
 import mosaic.process.adept2State as a2s 
 
 class EventPartitionTest(object):
-	def setUp(self):
+	def __init__(self):
 		self.datapath = 'mosaic/tests/testdata'
 
 	def runTestCase(self, datfile, prmfile, eventPartHnd, parallel):
@@ -47,21 +47,22 @@ class EventPartitionTest(object):
 		for f in glob.glob(self.datapath+'/*.sqlite'):
 			os.remove(f)
 
-	@raises(mosaic.commonExceptions.SettingsTypeError)
 	def runTestError(self, datfile, param, eventPartHnd, parallel):
-		dat=tsvTrajIO(fnames=[datfile], Fs=50000, separator=',')
+		with pytest.raises(mosaic.commonExceptions.SettingsTypeError):
 
-		sett = (settings.settings('.', defaultwarn=False).settingsDict)
+			dat=tsvTrajIO(fnames=[datfile], Fs=50000, separator=',')
 
-		epartsettings = sett[eventPartHnd.__name__]
+			sett = (settings.settings('.', defaultwarn=False).settingsDict)
 
-		epartsettings[param] = 'param'
+			epartsettings = sett[eventPartHnd.__name__]
 
-		testobj=eventPartHnd(
-							dat, 
-							a2s.adept2State, 
-							epartsettings,
-							sett["adept2State"],
-							json.dumps(sett, indent=4)
-						)
+			epartsettings[param] = 'param'
+
+			testobj=eventPartHnd(
+								dat, 
+								a2s.adept2State, 
+								epartsettings,
+								sett["adept2State"],
+								json.dumps(sett, indent=4)
+							)
 		

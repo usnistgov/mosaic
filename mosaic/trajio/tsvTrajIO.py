@@ -98,7 +98,7 @@ class tsvTrajIO(metaTrajIO.metaTrajIO):
 	def __readtsv(self, fname):
 		"""
 		"""
-		r1=csv.reader(open(fname,'rU'), delimiter=self.separator)
+		r1=csv.reader(open(fname,'r'), delimiter=self.separator)
 
 		# remove the file headers
 		if self.hasHeaders: next(r1)

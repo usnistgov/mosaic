@@ -1,7 +1,7 @@
 from . import testutil
 import copy
 import mosaic.commonExceptions
-from nose.tools import raises
+import pytest
 import mosaic.settings as settings
 import numpy as np
 
@@ -46,13 +46,13 @@ class Base2StateTest(object):
 		assert round(self.testobj.mdBlockDepth,1) == 1.0-abs(self.prm['a']) 
 		assert round(self.testobj.mdResTime,1) == (self.prm['tau2']-self.prm['tau1'])/1000. 
 
-	@raises(mosaic.commonExceptions.SettingsTypeError)
 	def runTestError(self, datfile, prmfile, algoHnd, param):
-		self._setupTestCase(datfile, prmfile,algoHnd)
+		with pytest.raises( (mosaic.commonExceptions.SettingsTypeError) ):
+			self._setupTestCase(datfile, prmfile,algoHnd)
 
-		self.sett[param]="param"
+			self.sett[param]="param"
 
-		self.testobj=self._setupTestObject(datfile, prmfile, algoHnd)
+			self.testobj=self._setupTestObject(datfile, prmfile, algoHnd)
 
 class BaseMultiStateTest(object):
 	def almostEqual(self, a, b, tol):
@@ -111,13 +111,13 @@ class BaseMultiStateTest(object):
 		assert self.almostEqual( testobj.mdNStates, self.prm['n'], 1)
 		assert self.almostEqual( testobj.mdOpenChCurrent, self.prm['OpenChCurrent'], 1.0)
 
-	@raises(mosaic.commonExceptions.SettingsTypeError)
 	def runTestError(self, datfile, prmfile, algoHnd, param):
-		self._setupTestCase(datfile, prmfile,algoHnd)
+		with pytest.raises( mosaic.commonExceptions.SettingsTypeError ):
+			self._setupTestCase(datfile, prmfile,algoHnd)
 
-		self.sett[param]="param"
+			self.sett[param]="param"
 
-		testobj=self._setupTestObject(datfile, prmfile, algoHnd)
+			testobj=self._setupTestObject(datfile, prmfile, algoHnd)
 
 	def runTestAttr(self, datfile, prmfile, algoHnd):
 		self._setupTestCase(datfile, prmfile,algoHnd)

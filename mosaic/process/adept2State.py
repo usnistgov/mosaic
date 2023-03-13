@@ -249,7 +249,7 @@ class adept2State(metaEventProcessor.metaEventProcessor):
 			optfit=Minimizer(self.__objfunc, params, fcn_args=(ts,edat,))
 			optfit.prepare_fit()
 
-			result=optfit.leastsq(xtol=self.FitTol,ftol=self.FitTol,maxfev=self.FitIters)
+			result=optfit.leastsq(xtol=self.FitTol,ftol=self.FitTol,max_nfev=self.FitIters)
 
 			# print optfit.params['b'].value, optfit.params['b'].value - optfit.params['a'].value, optfit.params['mu1'].value, optfit.params['mu2'].value
 			if result.success:

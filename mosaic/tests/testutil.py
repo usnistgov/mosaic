@@ -19,7 +19,7 @@ param_t={
 
 
 def readcsv(fname):
-	r1=csv.reader(open(fname,'rU'), delimiter=',')
+	r1=csv.reader(open(fname,'r'), delimiter=',')
 
 	p1=next(r1)
 	p2=next(r1)
@@ -34,7 +34,7 @@ def readcsv(fname):
 	return [Fs, dat]
 
 def readparams(fname):
-	r1=csv.reader(open(fname,'rU'), delimiter=',')
+	r1=csv.reader(open(fname,'r'), delimiter=',')
 
 	dat=[]
 	dat.extend([ row for row in r1 ])

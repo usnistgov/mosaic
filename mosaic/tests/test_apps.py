@@ -1,4 +1,5 @@
 import time
+import pytest
 import mosaic.apps.SingleChannelAnalysis
 import mosaic.partition.eventSegment as es
 import mosaic.process.adept2State as adept2State
@@ -8,9 +9,6 @@ from mosaic.filters.besselLowpassFilter import *
 from mosaic.filters.waveletDenoiseFilter import *
 
 class EventPartitionTest(object):
-	def setUp(self):
-		pass
-
 	def setupTestCase(self):
 		self.appObj=mosaic.apps.SingleChannelAnalysis.SingleChannelAnalysis(
 			'data/',
@@ -34,14 +32,15 @@ class EventPartitionTest(object):
 
 		assert type(self.appObj)==mosaic.apps.SingleChannelAnalysis.SingleChannelAnalysis
 
-class EventPartitionSingle_TestSuite(EventPartitionTest):
-	def test_singleChannelAppSetup(self):
-		yield self.runTestSetup
+@pytest.fixture
+def EventPartitionTestObject():
+	return EventPartitionTest()
 
-	# def test_singleChannelAppSetupRun(self):
-	# 	yield self.runTest, False
 
-	def test_singleChannelAppSetupRunFork(self):
-		yield self.runTest, True
+def test_singleChannelAppSetup(EventPartitionTestObject):
+	EventPartitionTestObject.runTestSetup()
+
+def test_singleChannelAppSetupRunFork(EventPartitionTestObject):
+	EventPartitionTestObject.runTest(True)
 
 

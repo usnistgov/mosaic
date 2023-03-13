@@ -276,7 +276,7 @@ class adept(metaEventProcessor.metaEventProcessor):
 			print(params)
 			optfit=Minimizer(self._objfunc, params, fcn_args=(ts,edat,))
 			optfit.prepare_fit()
-			result=optfit.leastsq(xtol=self.FitTol,ftol=self.FitTol,maxfev=self.FitIters)
+			result=optfit.leastsq(xtol=self.FitTol,ftol=self.FitTol,max_nfev=self.FitIters)
 
 			if result.success:
 				tt=[init[0] for init, final in zip(list(igdict.items()), list((result.params.valuesdict()).items())) if init==final]

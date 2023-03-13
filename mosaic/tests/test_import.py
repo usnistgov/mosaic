@@ -1,22 +1,31 @@
+import pytest
+import importlib
 import mosaic.utilities.mosaicLogging as mlog 
 
-class ModuleImportTest(object):
-	log=mlog.mosaicLogging().getLogger(__name__)
-	
-	def runTestCase(self, modulename):
-		module=__import__(modulename)
+class moduleImportTest(object):
+	def __init__(self, modulename):
+		self.modulename=modulename
 
-		ModuleImportTest.log.debug("import "+modulename)
+	def testImport(self):
+		log=mlog.mosaicLogging().getLogger(__name__)
+		
+		module=importlib.__import__(self.modulename)
 
-		for submod in modulename.split('.')[1:]:
+		log.debug("import "+self.modulename)
+
+		for submod in self.modulename.split('.')[1:]:
 			module=getattr(module, submod)
-			ModuleImportTest.log.debug("import "+submod)
+			log.debug("import "+submod)
 
 		return
-		
-class ModuleImport_TestSuite(ModuleImportTest):
-	def test_moduleImport(self):
-		moduleList=[
+
+@pytest.fixture
+def moduleList(request):
+	return moduleImportTest(request.param)
+
+@pytest.mark.parametrize(
+	'moduleList', 
+	(
 		'mosaic',
 		'mosaic._version', 
 		'mosaic.apps.SingleChannelAnalysis',	
@@ -51,27 +60,9 @@ class ModuleImport_TestSuite(ModuleImportTest):
 		'mosaic.utilities.mosaicTiming',
 		'mosaic.utilities.util',
 		'mosaic.utilities.mosaicLogging'
-		# 'mosaicgui',
-		# 'mosaicgui.EBSStateFileDict',
-		# 'mosaicgui.autocompleteedit',
-		# 'mosaicgui.mosaicGUI',
-		# 'mosaicgui.sqlQueryWorker',
-		# 'mosaicgui.datamodel', 
-		# 'mosaicgui.mplwidget',
-		# 'mosaicgui.mosaicSyntaxHighlight',
-		# 'mosaicgui.updateService',
-		# 'mosaicgui.analysisWorker',
-		# 'mosaicgui.datapathedit',
-		# 'mosaicgui.settingsview',
-		# 'mosaicgui.aboutdialog.aboutdialog',
-		# 'mosaicgui.advancedsettings.advancedsettings',
-		# 'mosaicgui.blockdepthview.blockdepthview',
-		# 'mosaicgui.consolelog.consolelog',
-		# 'mosaicgui.csvexportview.csvexportview',
-		# 'mosaicgui.fiteventsview.fiteventsview',
-		# 'mosaicgui.statisticsview.statisticsview',
-		# 'mosaicgui.trajview.trajview'
-		]
+	), 
+	indirect=True)
 
-		for module in moduleList:
-			yield self.runTestCase, module
+def test_ImportModule(moduleList):
+	assert moduleList.testImport() == None
+
