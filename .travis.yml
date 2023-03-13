@@ -37,6 +37,5 @@ install:
   - travis_wait travis_retry pip3 install -r requirements.txt --upgrade
 
 script: 
-  - python3 setup.py nosetests
-  - codecov
+  - pytest
   
