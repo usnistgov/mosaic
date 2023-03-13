@@ -4,11 +4,11 @@ lmfit==1.1.0
 uncertainties==3.1.7
 PyWavelets==1.4.1
 pytest==7.2.2
+coverage==6.5.0
+pytest-cov==4.0.0
 pyinstaller==5.6.2
 numpy==1.23.5
 scipy==1.9.3
 docutils==0.19
 flask==2.2.2
-coverage==6.5.0
-codecov==2.1.12
 gunicorn==20.1.0
