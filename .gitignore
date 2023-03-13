@@ -65,6 +65,7 @@ _testnotebooks/
 mosaic/utilities/.ga
 conda-build/
 .coverage
+.coverage.*
 cover/
 travis-debug
 coverage.xml
