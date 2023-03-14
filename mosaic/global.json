@@ -5,8 +5,8 @@
  	"LogSizeBytes" : 16777216, 
  	"DocumentationURL" : "https://pages.nist.gov/mosaic/", 
  	"WebHost" : "0.0.0.0", 
- 	"WebServerPort" : 5000, 
+ 	"WebServerPort" : 50000, 
  	"WebServerWorkers" : 1, 
  	"WebServerDataLocation" : "/src/data", 
- 	"WebServerMode" : "local" 
+ 	"WebServerMode" : "remote" 
  }
