@@ -7,6 +7,7 @@
 	:License:	See LICENSE.TXT
 	:ChangeLog:
 	.. line-block::
+		3/20/23		AB 	Add support for pyabf
 		5/13/21		AB 	Include chimeraTrajio in default settings.
 		4/19/19		AB 	Added an option (trackBaseline) to continuously track the opent channel baseline current during an analysis.
 		9/22/17 	AB 	Removed the filterEventPadding option to eventSegment.
@@ -166,7 +167,9 @@ __settings__="""
 	"abfTrajIO" : {
 		"filter"				: "*.abf", 
 		"start"					: 0.0, 
-		"dcOffset"				: 0.0
+		"dcOffset"				: 0.0,
+		"sweepNumber"			: 0,
+		"channel"				: 0
 	},
 	"qdfTrajIO": {
 		"Rfb": 9.1e+12, 

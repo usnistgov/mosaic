@@ -8,13 +8,14 @@
 	:License:	See LICENSE.TXT
 	:ChangeLog:
 	.. line-block::
+		03/20/23 	AB  Use pyabf to read ABF files.
 		9/13/15 	AB 	Updated logging to use mosaicLogFormat class
 		3/28/15 	AB 	Updated file read code to match new metaTrajIO API.
 		5/23/13		AB	Initial version
 
 """
+import pyabf
 import mosaic.trajio.metaTrajIO as metaTrajIO
-import mosaic.trajio.abf.abf as abf
 import mosaic.utilities.mosaicLogging as mlog
 
 import numpy as np
@@ -33,7 +34,9 @@ class abfTrajIO(metaTrajIO.metaTrajIO):
 			"abfTrajIO" : {
 	                "filter"                        : "*.abf",
 	                "start"                         : 0.0,
-	                "dcOffset"                      : 0.0
+	                "dcOffset"                      : 0.0,
+	                "sweepNumber"					: 0,
+	                "channel"						: 0
 	        	}
         
 
@@ -61,23 +64,32 @@ class abfTrajIO(metaTrajIO.metaTrajIO):
 
 				- `SamplingRateChangedError` : if the sampling rate for any data file differs from previous
 		"""
-		[freq, self.fileFormat, self.bandwidth, self.gain, dat] = abf.abfload_gp(fname)
+		if not hasattr(self, 'sweepNumber') or not hasattr(self, 'channel'):
+			self.sweepNumber=0
+			self.channel=0
+
+		# additional meta data
+		self.fileFormat='abf'
+
+		abf=pyabf.ABF(fname)
 	
-		# set the sampling frequency in Hz. The times are in ms.
+		abf.setSweep(sweepNumber=self.sweepNumber, channel=self.channel)
+
 		# If the Fs attribute doesn't exist set it
 		if not hasattr(self, 'Fs'):	
-			self.Fs=freq
+			self.Fs=abf.dataRate
 		# else check if it s the same as before
 		else:
-			if self.Fs!=freq:
+			if self.Fs!=abf.dataRate:
 				raise metaTrajIO.SamplingRateChangedError("The sampling rate in the data file '{0}' has changed.".format(f))
 
-		return dat
+		return abf.sweepY
 
 	def _formatsettings(self):
 		"""
 			Log settings strings
 		"""
 		self.abfLogger.info( 'Lowpass filter = {0} kHz'.format(self.bandwidth*0.001) )
-		self.abfLogger.info( 'Signal gain = {0}'.format(self.gain) )
+		self.abfLogger.info( 'Sweep number = {0}'.format(self.sweepNumber) )
+		self.abfLogger.info( 'Channel = {0}'.format(self.channel) )
 
