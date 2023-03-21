@@ -72,8 +72,8 @@ class abfTrajIO(metaTrajIO.metaTrajIO):
 		self.fileFormat='abf'
 
 		abf=pyabf.ABF(fname)
-	
 		abf.setSweep(sweepNumber=self.sweepNumber, channel=self.channel)
+		scale=self._currentScale(abf)
 
 		# If the Fs attribute doesn't exist set it
 		if not hasattr(self, 'Fs'):	
@@ -83,13 +83,16 @@ class abfTrajIO(metaTrajIO.metaTrajIO):
 			if self.Fs!=abf.dataRate:
 				raise metaTrajIO.SamplingRateChangedError("The sampling rate in the data file '{0}' has changed.".format(f))
 
-		return abf.sweepY
+		return abf.sweepY*scale
 
 	def _formatsettings(self):
 		"""
 			Log settings strings
 		"""
-		self.abfLogger.info( 'Lowpass filter = {0} kHz'.format(self.bandwidth*0.001) )
 		self.abfLogger.info( 'Sweep number = {0}'.format(self.sweepNumber) )
 		self.abfLogger.info( 'Channel = {0}'.format(self.channel) )
+
+	def _currentScale(self, abf):
+		if "pA" in abf.sweepLabelY or "pA" in abf.sweepUnitsY: return 1
+		if "nA" in abf.sweepLabelY or "nA" in abf.sweepUnitsY: return 1000
 
