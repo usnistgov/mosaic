@@ -23,9 +23,8 @@ class moduleImportTest(object):
 def moduleList(request):
 	return moduleImportTest(request.param)
 
-@pytest.mark.parametrize(
-	'moduleList', 
-	(
+def modList():
+	return (
 		'mosaic',
 		'mosaic._version', 
 		'mosaic.apps.SingleChannelAnalysis',	
@@ -60,9 +59,11 @@ def moduleList(request):
 		'mosaic.utilities.mosaicTiming',
 		'mosaic.utilities.util',
 		'mosaic.utilities.mosaicLogging'
-	), 
+	)
+	
+@pytest.mark.parametrize(
+	'moduleList', 
+	modList(), 
 	indirect=True)
-
 def test_ImportModule(moduleList):
 	assert moduleList.testImport() == None
-

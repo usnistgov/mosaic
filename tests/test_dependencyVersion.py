@@ -27,11 +27,9 @@ def dependencyList():
 def dependencyFixture(request):
     return dependencyVersion(request.param)
 
-deplist=dependencyList()
-
 @pytest.mark.parametrize(
     'dependencyFixture',
-    deplist,
+    dependencyList(),
     indirect=True)
 def test_DependencyVersion(dependencyFixture):
     assert dependencyFixture.dependencyVersionTest() == _v.parse(importlib.metadata.version(dependencyFixture.packagename))
