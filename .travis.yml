@@ -39,4 +39,5 @@ install:
 
 script: 
   - pytest
+  - codecov
   
