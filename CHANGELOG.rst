@@ -1,6 +1,10 @@
 Change Log
 ++++++++++++++++++++++++++++++++++++++++++
 
+**v2.4**
+- Maintenance release to update dependencies, unit testing frameworks and streamline setuptools installation.
+- Resolves `#110 <https://github.com/usnistgov/mosaic/issues/110>`_, `#111 <https://github.com/usnistgov/mosaic/issues/111>`_, `#112 <https://github.com/usnistgov/mosaic/issues/112>`_ and `#116 <https://github.com/usnistgov/mosaic/issues/116>`_, 
+
 **v2.2**
 
 - Updated web UI to allow lowpass filtering (BesselLowpassFilter).
