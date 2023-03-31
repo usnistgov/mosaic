@@ -21,6 +21,7 @@ omit=
 	mosaicweb/utils/*.py
 	mosaicweb/views.py
 	mosaicweb/tests/*
+	mosaicweb/runTest.py
 	mosaic/mosaicSetup.py
 	mosaic/commonExceptions.py 
 	mosaic/trajio/abfTrajIO.py 
