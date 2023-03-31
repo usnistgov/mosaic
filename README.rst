@@ -1,7 +1,7 @@
 .. image:: https://img.shields.io/travis/usnistgov/mosaic/master.svg?label=linux
-		:target: https://travis-ci.org/github/usnistgov/mosaic
+		:target: https://travis-ci.com/github/usnistgov/mosaic
 .. image:: https://img.shields.io/travis/usnistgov/mosaic/master.svg?label=macOS
-		:target: https://travis-ci.org/github/usnistgov/mosaic
+		:target: https://travis-ci.com/github/usnistgov/mosaic
 .. image:: https://img.shields.io/github/v/release/usnistgov/mosaic
 		:target: https://github.com/usnistgov/mosaic
 .. image:: https://img.shields.io/pypi/v/mosaic-nist.svg
