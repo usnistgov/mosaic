@@ -146,7 +146,7 @@ class mosaicAnalysis:
 		self._loadSettings(settingsString=settingsString)
 
 	def _writeSettings(self):
-		print(self.analysisSettingsDict)
+		#print(self.analysisSettingsDict)
 		with open(self.dataPath+"/.settings", 'w') as f:
 			f.write( json.dumps(self.analysisSettingsDict, indent=4) )
 
