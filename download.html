@@ -53,6 +53,15 @@
 		}
     </script>
 		<script async type="text/javascript" id="_fed_an_ua_tag" src="https://dap.digitalgov.gov/Universal-Federated-Analytics-Min.js?agency=DOC&subagency=NIST&pua=UA-66610693-1&yt=true&exts=ppsx,pps,f90,sch,rtf,wrl,txz,m1v,xlsm,msi,xsd,f,tif,eps,mpg,xml,pl,xlt,c"></script>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-RJSMY46M5C"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-RJSMY46M5C');
+    </script>
   </head>
   
   <body ng-app="mosaicApp" layout="row" ng-controller="AppCtrl">
@@ -97,6 +106,38 @@
             <div flex="10" flex-sm="20"><img src="assets/img/icon100px.png" width="50%"></img></div>
             <div flex><h2>Downloads</h2></div>
           </div>
+  
+    <md-list>
+            <md-subheader class="md-no-sticky"><h3>Version 2.4</h3></md-subheader>
+    
+      <md-list-item class="md-1-line">
+              <div flex class="md-list-item-text download-links" layout="row">
+                <div flex><a href="https://github.com/usnistgov/mosaic/releases/download/v2.4/mosaic-2.4+501bb9d.dmg"><h4>mosaic-v2.4+501bb9d.dmg</h4></a></div>
+                <div flex><h4>Mac OS X, 10.8+</h4></div>
+              </div>
+            </md-list-item>
+
+            <md-list-item class="md-1-line">
+              <div flex class="md-list-item-text download-links" layout="row">
+                <div flex><a href="https://github.com/usnistgov/mosaic/releases/download/v2.4/mosaic-x64-2.4+501bb9d.zip"><h4>mosaic-x64-2.4+501bb9d.zip</h4></a></div>
+                <div flex><h4>Windows, 64-bit</h4></div>
+              </div>
+            </md-list-item>
+    
+      <md-list-item class="md-1-line">
+              <div flex class="md-list-item-text download-links" layout="row">
+                <div flex><a href="https://github.com/usnistgov/mosaic/releases/download/v2.4/mosaic-nist-2.4+501bb9d.tar.gz"><h4>mosaic-nist-2.4+501bb9d.tar.gz</h4></a></div>
+                <div flex><h4>MOSAIC Source</h4></div>
+              </div>
+            </md-list-item>
+            <md-list-item class="md-1-line">
+              <div flex class="md-list-item-text download-links" layout="row">
+                <div flex><a href="https://github.com/usnistgov/mosaic/releases/download/v1.0/MOSAICReferenceData.zip"><h4>mosaic-reference-data.zip</h4></a></div>
+                <div flex><h4>MOSAIC Reference Data</h4></div>
+              </div>
+            </md-list-item>
+      <md-divider ></md-divider>
+        </md-list>
   
     <md-list>
             <md-subheader class="md-no-sticky"><h3>Version 2.2</h3></md-subheader>

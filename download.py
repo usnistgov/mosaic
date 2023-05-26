@@ -98,6 +98,15 @@ def GenerateHeader():
 		}
     </script>
 		<script async type="text/javascript" id="_fed_an_ua_tag" src="https://dap.digitalgov.gov/Universal-Federated-Analytics-Min.js?agency=DOC&subagency=NIST&pua=UA-66610693-1&yt=true&exts=ppsx,pps,f90,sch,rtf,wrl,txz,m1v,xlsm,msi,xsd,f,tif,eps,mpg,xml,pl,xlt,c"></script>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-RJSMY46M5C"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-RJSMY46M5C');
+    </script>
   </head>
   
   <body ng-app="mosaicApp" layout="row" ng-controller="AppCtrl">
@@ -152,7 +161,8 @@ if __name__ == '__main__':
   url="https://github.com/usnistgov/mosaic/releases/download/v"
   vers=[
 
-    ("Version 2.2", "2.2", "+06ecb7a", True),
+    ("Version 2.4", "2.4", "+501bb9d", True),
+    ("Version 2.2", "2.2", "+06ecb7a", False),
     ("Version 2.1", "2.1", "+2f0cf5a", False),
     ("Version 2.0b1", "2.0b1", ".f98ae80", False),
     # ("Version "+str(version), str(version), ".f98ae80", True),
