@@ -42,7 +42,7 @@ extensions = [
 	'sphinx.ext.graphviz',
 	'sphinx.ext.viewcode',
 	'sphinxcontrib.bibtex',
-	'sphinxcontrib.gist',
+	#'sphinxcontrib.gist',
 	'sphinx.ext.githubpages'
 ]
 
@@ -64,6 +64,8 @@ master_doc = 'index'
 # General information about the project.
 project = 'MOSAIC'
 copyright = ''
+
+bibtex_bibfiles = 'source/refs.bib'
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the

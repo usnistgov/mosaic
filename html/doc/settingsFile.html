@@ -1,20 +1,19 @@
 <!DOCTYPE html>
 
-<html>
+<html lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
-    <title>6. Settings File &#8212; MOSAIC v2.2 documentation</title>
-    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="../_static/bootstrap-sphinx.css" type="text/css" />
+    <title>6. Settings File &#8212; MOSAIC v2.4 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/bootstrap-sphinx.css" />
     <link rel="stylesheet" type="text/css" href="../_static/graphviz.css" />
     <link rel="stylesheet" type="text/css" href="../_static/style.css" />
-    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-    <script src="../_static/jquery.js"></script>
-    <script src="../_static/underscore.js"></script>
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
     <script src="../_static/doctools.js"></script>
-    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <script src="../_static/sphinx_highlight.js"></script>
+    <link rel="icon" href="../_static/favicon.ico"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="7. Database Structure and Query Syntax" href="DatabaseStructure.html" />
@@ -24,13 +23,22 @@
 <meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
 <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
 <meta name="apple-mobile-web-app-capable" content="yes">
-<script type="text/javascript" src="../_static/js/jquery-1.11.0.min.js "></script>
-<script type="text/javascript" src="../_static/js/jquery-fix.js "></script>
-<script type="text/javascript" src="../_static/bootstrap-3.3.7/js/bootstrap.min.js "></script>
-<script type="text/javascript" src="../_static/bootstrap-sphinx.js "></script>
+<script type="text/javascript" src="../_static/js/jquery-1.12.4.min.js"></script>
+<script type="text/javascript" src="../_static/js/jquery-fix.js"></script>
+<script type="text/javascript" src="../_static/bootstrap-3.4.1/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="../_static/bootstrap-sphinx.js"></script>
 
 	<script async type="text/javascript" id="_fed_an_ua_tag" src="https://dap.digitalgov.gov/Universal-Federated-Analytics-Min.js?agency=DOC&subagency=NIST&pua=UA-66610693-1&yt=true&exts=ppsx,pps,f90,sch,rtf,wrl,txz,m1v,xlsm,msi,xsd,f,tif,eps,mpg,xml,pl,xlt,c"></script>	
 
+	<!-- Google tag (gtag.js) -->
+	<script async src="https://www.googletagmanager.com/gtag/js?id=G-RJSMY46M5C"></script>
+	<script>
+	  window.dataLayer = window.dataLayer || [];
+	  function gtag(){dataLayer.push(arguments);}
+	  gtag('js', new Date());
+
+	  gtag('config', 'G-RJSMY46M5C');
+	</script>
 	<meta name="theme-color" content="#283593">
 
   </head><body>
@@ -44,9 +52,9 @@
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </button>
-        <a class="navbar-brand" href="../index.html"><span><img src="../_static/icon_48.png"></span>
+        <a class="navbar-brand" href="../index.html">
            </a>
-        <span class="navbar-text navbar-version pull-left"><b>v2.2</b></span>
+        <span class="navbar-text navbar-version pull-left"><b>v2.4</b></span>
       </div>
 
         <div class="collapse navbar-collapse nav-collapse">
@@ -114,28 +122,28 @@
     <div class="body col-md-12 content" role="main">
       
   <section id="settings-file">
-<span id="settings-page"></span><h1><span class="section-number">6. </span>Settings File<a class="headerlink" href="#settings-file" title="Permalink to this headline">¶</a></h1>
+<span id="settings-page"></span><h1><span class="section-number">6. </span>Settings File<a class="headerlink" href="#settings-file" title="Permalink to this heading">¶</a></h1>
 <p><em>MOSAIC</em> stores its settings in the <a class="reference external" href="https://json.org/">JSON</a> format. When using the graphical interface, a settings file is generated automatically upon starting an analysis, or by clicking <em>Save Settings</em> in the <em>File menu</em>  (see <a class="reference internal" href="GraphicalInterface.html#gui-page"><span class="std std-ref">MOSAIC GUI</span></a>).</p>
 <section id="settings-layout">
-<h2><span class="section-number">6.1. </span>Settings Layout<a class="headerlink" href="#settings-layout" title="Permalink to this headline">¶</a></h2>
+<h2><span class="section-number">6.1. </span>Settings Layout<a class="headerlink" href="#settings-layout" title="Permalink to this heading">¶</a></h2>
 <p><a class="reference external" href="https://json.org/">JSON</a> is a human readable file format that consists of key-value pairs separated by sections. Each section in a JSON object consists of a section name and a list of string key-value pairs.</p>
 <div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
-        <span class="s2">&quot;&lt;section name&gt;&quot;</span> <span class="o">:</span> <span class="p">{</span>
-                <span class="s2">&quot;key1&quot;</span> <span class="o">:</span> <span class="s2">&quot;value1&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;key2&quot;</span> <span class="o">:</span> <span class="s2">&quot;value2&quot;</span><span class="p">,</span>
-                <span class="p">...</span>
-        <span class="p">}</span>
+<span class="w">        </span><span class="s2">&quot;&lt;section name&gt;&quot;</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="s2">&quot;key1&quot;</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;value1&quot;</span><span class="p">,</span>
+<span class="w">                </span><span class="s2">&quot;key2&quot;</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;value2&quot;</span><span class="p">,</span>
+<span class="w">                </span><span class="p">...</span>
+<span class="w">        </span><span class="p">}</span>
 
 <span class="p">}</span>
 </pre></div>
 </div>
 <p><em>MOSAIC</em> settings define a new section for each class, with key-value pairs corresponding to class attributes that are set upon initialization. This is illustrated below for the adept2State class. The <em>adept2State</em> section in the settings file holds parameters corresponding to the <code class="xref py py-class docutils literal notranslate"><span class="pre">adept2State</span></code> class. Note that that the section name in the settings file is identical to the corresponding class name. Three parameters are then defined within the section that control the behavior of the class.</p>
 <div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
-        <span class="s2">&quot;adept2State&quot;</span> <span class="o">:</span> <span class="p">{</span>
-                <span class="s2">&quot;FitTol&quot;</span>                        <span class="o">:</span> <span class="s2">&quot;1.e-7&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;FitIters&quot;</span>                      <span class="o">:</span> <span class="s2">&quot;50000&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;BlockRejectRatio&quot;</span>              <span class="o">:</span> <span class="s2">&quot;0.9&quot;</span>
-        <span class="p">}</span>
+<span class="w">        </span><span class="s2">&quot;adept2State&quot;</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="s2">&quot;FitTol&quot;</span><span class="w">                        </span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;1.e-7&quot;</span><span class="p">,</span>
+<span class="w">                </span><span class="s2">&quot;FitIters&quot;</span><span class="w">                      </span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;50000&quot;</span><span class="p">,</span>
+<span class="w">                </span><span class="s2">&quot;BlockRejectRatio&quot;</span><span class="w">              </span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;0.9&quot;</span>
+<span class="w">        </span><span class="p">}</span>
 <span class="p">}</span>
 </pre></div>
 </div>
@@ -152,12 +160,12 @@
 </div>
 </section>
 <section id="trajectory-settings">
-<h2><span class="section-number">6.2. </span>Trajectory Settings<a class="headerlink" href="#trajectory-settings" title="Permalink to this headline">¶</a></h2>
+<h2><span class="section-number">6.2. </span>Trajectory Settings<a class="headerlink" href="#trajectory-settings" title="Permalink to this heading">¶</a></h2>
 <section id="common-settings-metatrajio">
-<h3><span class="section-number">6.2.1. </span>Common Settings (<code class="xref py py-class docutils literal notranslate"><span class="pre">metaTrajIO</span></code>)<a class="headerlink" href="#common-settings-metatrajio" title="Permalink to this headline">¶</a></h3>
+<h3><span class="section-number">6.2.1. </span>Common Settings (<code class="xref py py-class docutils literal notranslate"><span class="pre">metaTrajIO</span></code>)<a class="headerlink" href="#common-settings-metatrajio" title="Permalink to this heading">¶</a></h3>
 <dl class="py class">
-<dt id="mosaic.trajio.metaTrajIO.metaTrajIO">
-<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">mosaic.trajio.metaTrajIO.</span></code><code class="sig-name descname"><span class="pre">metaTrajIO</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/trajio/metaTrajIO.html#metaTrajIO"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mosaic.trajio.metaTrajIO.metaTrajIO" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mosaic.trajio.metaTrajIO.metaTrajIO">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mosaic.trajio.metaTrajIO.</span></span><span class="sig-name descname"><span class="pre">metaTrajIO</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/trajio/metaTrajIO.html#metaTrajIO"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mosaic.trajio.metaTrajIO.metaTrajIO" title="Permalink to this definition">¶</a></dt>
 <dd><div class="admonition warning">
 <p class="admonition-title">Warning</p>
 <p>This metaclass must be sub-classed. All abstract methods within this metaclass must be implemented.</p>
@@ -169,7 +177,7 @@ the definition of additional arguments. See the documentation of those classes
 for what those may be. For example, the qdfTrajIO implementation of metaTrajIO also requires
 the feedback resistance (Rfb) and feedback capacitance (Cfb) to be passed at initialization.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><cite>dirname</cite> :           all files from a directory (‘&lt;full path to data directory&gt;’)</p></li>
 <li><p><cite>nfiles</cite> :            if requesting N files (in addition to dirname) from a specified directory</p></li>
@@ -182,14 +190,14 @@ the feedback resistance (Rfb) and feedback capacitance (Cfb) to be passed at ini
 <li><p><cite>filtersettings</cite>:     Dict containing low pass filter settings (optional: if not provided filter settings will be loaded from the settings file. If no settings are found, <cite>datafilter</cite> will be turned off.)</p></li>
 </ul>
 </dd>
-<dt class="field-even">Properties</dt>
+<dt class="field-even">Properties<span class="colon">:</span></dt>
 <dd class="field-even"><ul class="simple">
 <li><p><cite>FsHz</cite> :                                      sampling frequency in Hz. If the data was decimated, this property will hold the sampling frequency after decimation.</p></li>
 <li><p><cite>LastFileProcessed</cite> :         return the data file that was last processed.</p></li>
 <li><p><cite>ElapsedTimeSeconds</cite> :        return the analysis time in sec.</p></li>
 </ul>
 </dd>
-<dt class="field-odd">Errors</dt>
+<dt class="field-odd">Errors<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><cite>IncompatibleArgumentsError</cite> :        when conflicting arguments are used.</p></li>
 <li><p><cite>EmptyDataPipeError</cite> :                        when out of data.</p></li>
@@ -202,27 +210,27 @@ the feedback resistance (Rfb) and feedback capacitance (Cfb) to be passed at ini
 
 </section>
 <section id="qdf-files-qdftrajio">
-<h3><span class="section-number">6.2.2. </span>QDF Files (<code class="xref py py-class docutils literal notranslate"><span class="pre">qdfTrajIO</span></code>)<a class="headerlink" href="#qdf-files-qdftrajio" title="Permalink to this headline">¶</a></h3>
+<h3><span class="section-number">6.2.2. </span>QDF Files (<code class="xref py py-class docutils literal notranslate"><span class="pre">qdfTrajIO</span></code>)<a class="headerlink" href="#qdf-files-qdftrajio" title="Permalink to this heading">¶</a></h3>
 <dl class="py class">
-<dt id="mosaic.trajio.qdfTrajIO.qdfTrajIO">
-<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">mosaic.trajio.qdfTrajIO.</span></code><code class="sig-name descname"><span class="pre">qdfTrajIO</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/trajio/qdfTrajIO.html#qdfTrajIO"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mosaic.trajio.qdfTrajIO.qdfTrajIO" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mosaic.trajio.qdfTrajIO.qdfTrajIO">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mosaic.trajio.qdfTrajIO.</span></span><span class="sig-name descname"><span class="pre">qdfTrajIO</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/trajio/qdfTrajIO.html#qdfTrajIO"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mosaic.trajio.qdfTrajIO.qdfTrajIO" title="Permalink to this definition">¶</a></dt>
 <dd><p>Use the readqdf module from EBS to read individual QDF files.</p>
 <p>In addition to <code class="xref py py-class docutils literal notranslate"><span class="pre">metaTrajIO</span></code> args, check if the 
 feedback resistance (<code class="docutils literal notranslate"><span class="pre">Rfb</span></code>) and feedback capacitance (<code class="docutils literal notranslate"><span class="pre">Cfb</span></code>)
 are defined to convert qdf binary data into pA.</p>
 <p>A typical settings section to read QDF files is shown below. Note, that
 the values for <code class="docutils literal notranslate"><span class="pre">Rfb</span></code> and <code class="docutils literal notranslate"><span class="pre">Cfb</span></code> are specific to the amplifier used.</p>
-<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="s2">&quot;qdfTrajIO&quot;</span><span class="o">:</span> <span class="p">{</span>
-<span class="s2">&quot;Rfb&quot;</span>                           <span class="o">:</span> <span class="mf">9.1e+12</span><span class="p">,</span>
-<span class="s2">&quot;Cfb&quot;</span>                           <span class="o">:</span> <span class="mf">1.07e-12</span><span class="p">,</span>
-<span class="s2">&quot;dcOffset&quot;</span>                      <span class="o">:</span> <span class="mf">0.0</span><span class="p">,</span>
-<span class="s2">&quot;filter&quot;</span>                        <span class="o">:</span> <span class="s2">&quot;*.qdf&quot;</span><span class="p">,</span>
-<span class="s2">&quot;start&quot;</span>                         <span class="o">:</span> <span class="mf">0.0</span>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="s2">&quot;qdfTrajIO&quot;</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
+<span class="s2">&quot;Rfb&quot;</span><span class="w">                           </span><span class="o">:</span><span class="w"> </span><span class="mf">9.1e+12</span><span class="p">,</span>
+<span class="s2">&quot;Cfb&quot;</span><span class="w">                           </span><span class="o">:</span><span class="w"> </span><span class="mf">1.07e-12</span><span class="p">,</span>
+<span class="s2">&quot;dcOffset&quot;</span><span class="w">                      </span><span class="o">:</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span>
+<span class="s2">&quot;filter&quot;</span><span class="w">                        </span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;*.qdf&quot;</span><span class="p">,</span>
+<span class="s2">&quot;start&quot;</span><span class="w">                         </span><span class="o">:</span><span class="w"> </span><span class="mf">0.0</span>
 <span class="p">}</span>
 </pre></div>
 </div>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><dl class="simple">
 <dt>In addition to metaTrajIO.__init__ args,</dt><dd><ul class="simple">
 <li><p><cite>Rfb</cite> :               feedback resistance of amplifier</p></li>
@@ -232,10 +240,10 @@ the values for <code class="docutils literal notranslate"><span class="pre">Rfb<
 </dd>
 </dl>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>None</p>
 </dd>
-<dt class="field-odd">Errors</dt>
+<dt class="field-odd">Errors<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><cite>InsufficientArgumentsError</cite> : if the mandatory arguments <code class="docutils literal notranslate"><span class="pre">Rfb</span></code> and <code class="docutils literal notranslate"><span class="pre">Cfb</span></code> are not set.</p></li>
 </ul>
@@ -245,22 +253,24 @@ the values for <code class="docutils literal notranslate"><span class="pre">Rfb<
 
 </section>
 <section id="abf-files-abftrajio">
-<h3><span class="section-number">6.2.3. </span>ABF Files (<code class="xref py py-class docutils literal notranslate"><span class="pre">abfTrajIO</span></code>)<a class="headerlink" href="#abf-files-abftrajio" title="Permalink to this headline">¶</a></h3>
+<h3><span class="section-number">6.2.3. </span>ABF Files (<code class="xref py py-class docutils literal notranslate"><span class="pre">abfTrajIO</span></code>)<a class="headerlink" href="#abf-files-abftrajio" title="Permalink to this heading">¶</a></h3>
 <dl class="py class">
-<dt id="mosaic.trajio.abfTrajIO.abfTrajIO">
-<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">mosaic.trajio.abfTrajIO.</span></code><code class="sig-name descname"><span class="pre">abfTrajIO</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/trajio/abfTrajIO.html#abfTrajIO"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mosaic.trajio.abfTrajIO.abfTrajIO" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mosaic.trajio.abfTrajIO.abfTrajIO">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mosaic.trajio.abfTrajIO.</span></span><span class="sig-name descname"><span class="pre">abfTrajIO</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/trajio/abfTrajIO.html#abfTrajIO"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mosaic.trajio.abfTrajIO.abfTrajIO" title="Permalink to this definition">¶</a></dt>
 <dd><p>Read ABF1 and ABF2 file formats. Currently, only 
 gap-free mode and single channel recordings are supported.</p>
 <p>A typical settings section to read ABF files is shown below.</p>
-<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="s2">&quot;abfTrajIO&quot;</span> <span class="o">:</span> <span class="p">{</span>
-<span class="s2">&quot;filter&quot;</span>                        <span class="o">:</span> <span class="s2">&quot;*.abf&quot;</span><span class="p">,</span>
-<span class="s2">&quot;start&quot;</span>                         <span class="o">:</span> <span class="mf">0.0</span><span class="p">,</span>
-<span class="s2">&quot;dcOffset&quot;</span>                      <span class="o">:</span> <span class="mf">0.0</span>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="s2">&quot;abfTrajIO&quot;</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
+<span class="s2">&quot;filter&quot;</span><span class="w">                        </span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;*.abf&quot;</span><span class="p">,</span>
+<span class="s2">&quot;start&quot;</span><span class="w">                         </span><span class="o">:</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span>
+<span class="s2">&quot;dcOffset&quot;</span><span class="w">                      </span><span class="o">:</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span>
+<span class="s2">&quot;sweepNumber&quot;</span><span class="w">                                   </span><span class="o">:</span><span class="w"> </span><span class="mf">0</span><span class="p">,</span>
+<span class="s2">&quot;channel&quot;</span><span class="w">                                               </span><span class="o">:</span><span class="w"> </span><span class="mf">0</span>
 <span class="p">}</span>
 </pre></div>
 </div>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><dl class="simple">
 <dt>In addition to <code class="xref py py-class docutils literal notranslate"><span class="pre">metaTrajIO</span></code> args,</dt><dd><p>None</p>
 </dd>
@@ -271,16 +281,16 @@ gap-free mode and single channel recordings are supported.</p>
 
 </section>
 <section id="binary-files-bintrajio">
-<h3><span class="section-number">6.2.4. </span>Binary Files (<code class="xref py py-class docutils literal notranslate"><span class="pre">binTrajIO</span></code>)<a class="headerlink" href="#binary-files-bintrajio" title="Permalink to this headline">¶</a></h3>
+<h3><span class="section-number">6.2.4. </span>Binary Files (<code class="xref py py-class docutils literal notranslate"><span class="pre">binTrajIO</span></code>)<a class="headerlink" href="#binary-files-bintrajio" title="Permalink to this heading">¶</a></h3>
 <dl class="py class">
-<dt id="mosaic.trajio.binTrajIO.binTrajIO">
-<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">mosaic.trajio.binTrajIO.</span></code><code class="sig-name descname"><span class="pre">binTrajIO</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/trajio/binTrajIO.html#binTrajIO"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mosaic.trajio.binTrajIO.binTrajIO" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mosaic.trajio.binTrajIO.binTrajIO">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mosaic.trajio.binTrajIO.</span></span><span class="sig-name descname"><span class="pre">binTrajIO</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/trajio/binTrajIO.html#binTrajIO"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mosaic.trajio.binTrajIO.binTrajIO" title="Permalink to this definition">¶</a></dt>
 <dd><p>Read a file that contains interleaved binary data, ordered by column. Only a single 
 column that holds ionic current data is read. The current in pA 
 is returned after scaling by the amplifier scale factor (<code class="docutils literal notranslate"><span class="pre">AmplifierScale</span></code>) and 
 removing any offsets (<code class="docutils literal notranslate"><span class="pre">AmplifierOffset</span></code>) if provided.</p>
 <dl class="field-list">
-<dt class="field-odd">Usage and Assumptions</dt>
+<dt class="field-odd">Usage and Assumptions<span class="colon">:</span></dt>
 <dd class="field-odd"><p>Binary data is interleaved by column. For three columns (<em>a</em>, <em>b</em>, and <em>c</em>) and <em>N</em> rows, 
 binary data is assumed to be of the form:</p>
 <blockquote>
@@ -303,55 +313,55 @@ the A/D to a current.</p>
 <p>Assuming that we use a floating point representation of the ionic current, and
 a sampling rate of 50 kHz, a settings section that will read the binary file format 
 defined above is:</p>
-<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="s2">&quot;binTrajIO&quot;</span><span class="o">:</span> <span class="p">{</span>
-        <span class="s2">&quot;AmplifierScale&quot;</span> <span class="o">:</span> <span class="s2">&quot;1&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;AmplifierOffset&quot;</span> <span class="o">:</span> <span class="s2">&quot;0&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;SamplingFrequency&quot;</span> <span class="o">:</span> <span class="s2">&quot;50000&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;ColumnTypes&quot;</span> <span class="o">:</span> <span class="s2">&quot;[(&#39;curr_pA&#39;, &#39;float64&#39;), (&#39;AD_V&#39;, &#39;int16&#39;), (&#39;index&#39;, &#39;int16&#39;)]&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;IonicCurrentColumn&quot;</span> <span class="o">:</span> <span class="s2">&quot;curr_pA&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;dcOffset&quot;</span><span class="o">:</span> <span class="s2">&quot;0.0&quot;</span><span class="p">,</span> 
-        <span class="s2">&quot;filter&quot;</span><span class="o">:</span> <span class="s2">&quot;*.bin&quot;</span><span class="p">,</span> 
-        <span class="s2">&quot;start&quot;</span><span class="o">:</span> <span class="s2">&quot;0.0&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;HeaderOffset&quot;</span><span class="o">:</span> <span class="mf">0</span> 
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="s2">&quot;binTrajIO&quot;</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="s2">&quot;AmplifierScale&quot;</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;1&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="s2">&quot;AmplifierOffset&quot;</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;0&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="s2">&quot;SamplingFrequency&quot;</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;50000&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="s2">&quot;ColumnTypes&quot;</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;[(&#39;curr_pA&#39;, &#39;float64&#39;), (&#39;AD_V&#39;, &#39;int16&#39;), (&#39;index&#39;, &#39;int16&#39;)]&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="s2">&quot;IonicCurrentColumn&quot;</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;curr_pA&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="s2">&quot;dcOffset&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;0.0&quot;</span><span class="p">,</span><span class="w"> </span>
+<span class="w">        </span><span class="s2">&quot;filter&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;*.bin&quot;</span><span class="p">,</span><span class="w"> </span>
+<span class="w">        </span><span class="s2">&quot;start&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;0.0&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="s2">&quot;HeaderOffset&quot;</span><span class="o">:</span><span class="w"> </span><span class="mf">0</span><span class="w"> </span>
 <span class="p">}</span>
 </pre></div>
 </div>
 </dd>
-<dt class="field-even">Settings Examples</dt>
+<dt class="field-even">Settings Examples<span class="colon">:</span></dt>
 <dd class="field-even"><p>Read 16-bit signed integers (big endian) with a 512 byte header offset. Set the amplifier scale to 400 pA, sampling rate to 200 kHz.</p>
 <blockquote>
-<div><div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="s2">&quot;binTrajIO&quot;</span><span class="o">:</span> <span class="p">{</span>
-        <span class="s2">&quot;AmplifierOffset&quot;</span><span class="o">:</span> <span class="s2">&quot;0.0&quot;</span><span class="p">,</span> 
-        <span class="s2">&quot;SamplingFrequency&quot;</span><span class="o">:</span> <span class="mf">200000</span><span class="p">,</span> 
-        <span class="s2">&quot;AmplifierScale&quot;</span><span class="o">:</span> <span class="s2">&quot;400./2**16&quot;</span><span class="p">,</span> 
-        <span class="s2">&quot;ColumnTypes&quot;</span><span class="o">:</span> <span class="s2">&quot;[(&#39;curr_pA&#39;, &#39;&gt;i2&#39;)]&quot;</span><span class="p">,</span> 
-        <span class="s2">&quot;dcOffset&quot;</span><span class="o">:</span> <span class="mf">0.0</span><span class="p">,</span> 
-        <span class="s2">&quot;filter&quot;</span><span class="o">:</span> <span class="s2">&quot;*.dat&quot;</span><span class="p">,</span> 
-        <span class="s2">&quot;start&quot;</span><span class="o">:</span> <span class="mf">0.0</span><span class="p">,</span> 
-        <span class="s2">&quot;HeaderOffset&quot;</span><span class="o">:</span> <span class="mf">512</span><span class="p">,</span> 
-        <span class="s2">&quot;IonicCurrentColumn&quot;</span><span class="o">:</span> <span class="s2">&quot;curr_pA&quot;</span>
+<div><div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="s2">&quot;binTrajIO&quot;</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="s2">&quot;AmplifierOffset&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;0.0&quot;</span><span class="p">,</span><span class="w"> </span>
+<span class="w">        </span><span class="s2">&quot;SamplingFrequency&quot;</span><span class="o">:</span><span class="w"> </span><span class="mf">200000</span><span class="p">,</span><span class="w"> </span>
+<span class="w">        </span><span class="s2">&quot;AmplifierScale&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;400./2**16&quot;</span><span class="p">,</span><span class="w"> </span>
+<span class="w">        </span><span class="s2">&quot;ColumnTypes&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;[(&#39;curr_pA&#39;, &#39;&gt;i2&#39;)]&quot;</span><span class="p">,</span><span class="w"> </span>
+<span class="w">        </span><span class="s2">&quot;dcOffset&quot;</span><span class="o">:</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span>
+<span class="w">        </span><span class="s2">&quot;filter&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;*.dat&quot;</span><span class="p">,</span><span class="w"> </span>
+<span class="w">        </span><span class="s2">&quot;start&quot;</span><span class="o">:</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span>
+<span class="w">        </span><span class="s2">&quot;HeaderOffset&quot;</span><span class="o">:</span><span class="w"> </span><span class="mf">512</span><span class="p">,</span><span class="w"> </span>
+<span class="w">        </span><span class="s2">&quot;IonicCurrentColumn&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;curr_pA&quot;</span>
 <span class="p">}</span>
 </pre></div>
 </div>
 </div></blockquote>
 <p>Read a two-column file: 64-bit floating point and 64-bit integers, and no header offset. Set the amplifier scale to 1 and sampling rate to 200 kHz.</p>
 <blockquote>
-<div><div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="s2">&quot;binTrajIO&quot;</span><span class="o">:</span> <span class="p">{</span>
-        <span class="s2">&quot;AmplifierOffset&quot;</span><span class="o">:</span> <span class="s2">&quot;0.0&quot;</span><span class="p">,</span> 
-        <span class="s2">&quot;SamplingFrequency&quot;</span><span class="o">:</span> <span class="mf">200000</span><span class="p">,</span> 
-        <span class="s2">&quot;AmplifierScale&quot;</span><span class="o">:</span> <span class="s2">&quot;1.0&quot;</span><span class="p">,</span> 
-        <span class="s2">&quot;ColumnTypes&quot;</span> <span class="o">:</span> <span class="s2">&quot;[(&#39;curr_pA&#39;, &#39;float64&#39;), (&#39;AD_V&#39;, &#39;int64&#39;)]&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;dcOffset&quot;</span><span class="o">:</span> <span class="mf">0.0</span><span class="p">,</span> 
-        <span class="s2">&quot;filter&quot;</span><span class="o">:</span> <span class="s2">&quot;*.bin&quot;</span><span class="p">,</span> 
-        <span class="s2">&quot;start&quot;</span><span class="o">:</span> <span class="mf">0.0</span><span class="p">,</span> 
-        <span class="s2">&quot;HeaderOffset&quot;</span><span class="o">:</span> <span class="mf">0</span><span class="p">,</span> 
-        <span class="s2">&quot;IonicCurrentColumn&quot;</span><span class="o">:</span> <span class="s2">&quot;curr_pA&quot;</span>
+<div><div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="s2">&quot;binTrajIO&quot;</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="s2">&quot;AmplifierOffset&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;0.0&quot;</span><span class="p">,</span><span class="w"> </span>
+<span class="w">        </span><span class="s2">&quot;SamplingFrequency&quot;</span><span class="o">:</span><span class="w"> </span><span class="mf">200000</span><span class="p">,</span><span class="w"> </span>
+<span class="w">        </span><span class="s2">&quot;AmplifierScale&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;1.0&quot;</span><span class="p">,</span><span class="w"> </span>
+<span class="w">        </span><span class="s2">&quot;ColumnTypes&quot;</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;[(&#39;curr_pA&#39;, &#39;float64&#39;), (&#39;AD_V&#39;, &#39;int64&#39;)]&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="s2">&quot;dcOffset&quot;</span><span class="o">:</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span>
+<span class="w">        </span><span class="s2">&quot;filter&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;*.bin&quot;</span><span class="p">,</span><span class="w"> </span>
+<span class="w">        </span><span class="s2">&quot;start&quot;</span><span class="o">:</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span>
+<span class="w">        </span><span class="s2">&quot;HeaderOffset&quot;</span><span class="o">:</span><span class="w"> </span><span class="mf">0</span><span class="p">,</span><span class="w"> </span>
+<span class="w">        </span><span class="s2">&quot;IonicCurrentColumn&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;curr_pA&quot;</span>
 <span class="p">}</span>
 </pre></div>
 </div>
 </div></blockquote>
 </dd>
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><dl class="simple">
 <dt>In addition to <code class="xref py py-class docutils literal notranslate"><span class="pre">metaTrajIO</span></code> args,</dt><dd><ul class="simple">
 <li><p><cite>AmplifierScale</cite> :            Full scale of amplifier (pA/2^nbits) that varies with the gain (default: 1.0).</p></li>
@@ -364,10 +374,10 @@ defined above is:</p>
 </dd>
 </dl>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>None</p>
 </dd>
-<dt class="field-odd">Errors</dt>
+<dt class="field-odd">Errors<span class="colon">:</span></dt>
 <dd class="field-odd"><p>None</p>
 </dd>
 </dl>
@@ -375,14 +385,14 @@ defined above is:</p>
 
 </section>
 <section id="chimera-files-bintrajio">
-<h3><span class="section-number">6.2.5. </span>Chimera Files (<code class="xref py py-class docutils literal notranslate"><span class="pre">binTrajIO</span></code>)<a class="headerlink" href="#chimera-files-bintrajio" title="Permalink to this headline">¶</a></h3>
+<h3><span class="section-number">6.2.5. </span>Chimera Files (<code class="xref py py-class docutils literal notranslate"><span class="pre">binTrajIO</span></code>)<a class="headerlink" href="#chimera-files-bintrajio" title="Permalink to this heading">¶</a></h3>
 <dl class="py class">
-<dt id="mosaic.trajio.chimeraTrajIO.chimeraTrajIO">
-<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">mosaic.trajio.chimeraTrajIO.</span></code><code class="sig-name descname"><span class="pre">chimeraTrajIO</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/trajio/chimeraTrajIO.html#chimeraTrajIO"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mosaic.trajio.chimeraTrajIO.chimeraTrajIO" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mosaic.trajio.chimeraTrajIO.chimeraTrajIO">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mosaic.trajio.chimeraTrajIO.</span></span><span class="sig-name descname"><span class="pre">chimeraTrajIO</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/trajio/chimeraTrajIO.html#chimeraTrajIO"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mosaic.trajio.chimeraTrajIO.chimeraTrajIO" title="Permalink to this definition">¶</a></dt>
 <dd><p>Read a file generated by the Chimera VC100. The current in pA 
 is returned after scaling by the amplifier scale factors.</p>
 <dl class="field-list">
-<dt class="field-odd">Usage and Assumptions</dt>
+<dt class="field-odd">Usage and Assumptions<span class="colon">:</span></dt>
 <dd class="field-odd"><p>Binary data is in a single column of unsigned 16 bit integers:</p>
 <p>The column layout is specified with the <code class="docutils literal notranslate"><span class="pre">ColumnTypes</span></code> parameter, which accepts a list of tuples.</p>
 <blockquote>
@@ -393,15 +403,15 @@ The first element of each tuple is an arbitrary text label and the second elemen
 a valid <a class="reference external" href="http://docs.scipy.org/doc/numpy/user/basics.types.html">Numpy type</a>.</p>
 <p>Chimera gain settings are used to convert the integers stored by the ADC to current values. 
 These values are automatically read in from matched MAT files generated by the Chimera software.</p>
-<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="s2">&quot;chimeraTrajIO&quot;</span><span class="o">:</span> <span class="p">{</span>
-        <span class="s2">&quot;filter&quot;</span><span class="o">:</span> <span class="s2">&quot;*.log&quot;</span><span class="p">,</span> 
-        <span class="s2">&quot;start&quot;</span><span class="o">:</span> <span class="s2">&quot;0.0&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;HeaderOffset&quot;</span><span class="o">:</span> <span class="s2">&quot;0&quot;</span>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="s2">&quot;chimeraTrajIO&quot;</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="s2">&quot;filter&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;*.log&quot;</span><span class="p">,</span><span class="w"> </span>
+<span class="w">        </span><span class="s2">&quot;start&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;0.0&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="s2">&quot;HeaderOffset&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;0&quot;</span>
 <span class="p">}</span>
 </pre></div>
 </div>
 </dd>
-<dt class="field-even">Parameters</dt>
+<dt class="field-even">Parameters<span class="colon">:</span></dt>
 <dd class="field-even"><p>In addition to <code class="xref py py-class docutils literal notranslate"><span class="pre">metaTrajIO</span></code> args,</p>
 <blockquote>
 <div><ul class="simple">
@@ -409,10 +419,10 @@ These values are automatically read in from matched MAT files generated by the C
 </ul>
 </div></blockquote>
 </dd>
-<dt class="field-odd">Returns</dt>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
 <dd class="field-odd"><p>None</p>
 </dd>
-<dt class="field-even">Errors</dt>
+<dt class="field-even">Errors<span class="colon">:</span></dt>
 <dd class="field-even"><p>None</p>
 </dd>
 </dl>
@@ -420,13 +430,13 @@ These values are automatically read in from matched MAT files generated by the C
 
 </section>
 <section id="tsv-files-bintrajio">
-<h3><span class="section-number">6.2.6. </span>TSV Files (<code class="xref py py-class docutils literal notranslate"><span class="pre">binTrajIO</span></code>)<a class="headerlink" href="#tsv-files-bintrajio" title="Permalink to this headline">¶</a></h3>
+<h3><span class="section-number">6.2.6. </span>TSV Files (<code class="xref py py-class docutils literal notranslate"><span class="pre">binTrajIO</span></code>)<a class="headerlink" href="#tsv-files-bintrajio" title="Permalink to this heading">¶</a></h3>
 <dl class="py class">
-<dt id="mosaic.trajio.tsvTrajIO.tsvTrajIO">
-<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">mosaic.trajio.tsvTrajIO.</span></code><code class="sig-name descname"><span class="pre">tsvTrajIO</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/trajio/tsvTrajIO.html#tsvTrajIO"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mosaic.trajio.tsvTrajIO.tsvTrajIO" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mosaic.trajio.tsvTrajIO.tsvTrajIO">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mosaic.trajio.tsvTrajIO.</span></span><span class="sig-name descname"><span class="pre">tsvTrajIO</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/trajio/tsvTrajIO.html#tsvTrajIO"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mosaic.trajio.tsvTrajIO.tsvTrajIO" title="Permalink to this definition">¶</a></dt>
 <dd><p>Read tab separated valued (TSV) files.</p>
 <dl class="field-list">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><dl>
 <dt>In addition to <code class="xref py py-class docutils literal notranslate"><span class="pre">metaTrajIO</span></code> args,</dt><dd><ul class="simple">
 <li><p><cite>headers</cite> :           If True, the first row is ignored (default: True)</p></li>
@@ -456,32 +466,28 @@ is assumed with the listed default values.</p>
 </section>
 </section>
 <section id="optimizing-settings">
-<span id="algorithm-settings-sec"></span><h2><span class="section-number">6.3. </span>Optimizing Settings<a class="headerlink" href="#optimizing-settings" title="Permalink to this headline">¶</a></h2>
+<span id="algorithm-settings-sec"></span><h2><span class="section-number">6.3. </span>Optimizing Settings<a class="headerlink" href="#optimizing-settings" title="Permalink to this heading">¶</a></h2>
 <p><em>MOSAIC</em> classes are controlled through the <a class="reference external" href="https://json.org/">JSON</a> settings files as defined above. In most cases, running <em>MOSAIC</em> through the GUI (see <a class="reference internal" href="GraphicalInterface.html#gui-page"><span class="std std-ref">MOSAIC GUI</span></a>) should generate satisfactory results. However, settings can be further optimized either by editing a file named <code class="docutils literal notranslate"><span class="pre">.settings</span></code> stored within the data directory, or by clicking on the <code class="docutils literal notranslate"><span class="pre">Advanced</span> <span class="pre">Settings</span></code> check-box in the <a class="reference internal" href="GraphicalInterface.html#analysis-setup"><span class="std std-ref">Panel A: Analysis Setup</span></a> section of the GUI.</p>
 <section id="initial-event-detection-eventsegment">
-<span id="eventseg-settings-sec"></span><h3><span class="section-number">6.3.1. </span>Initial Event Detection (<code class="xref py py-class docutils literal notranslate"><span class="pre">eventSegment</span></code>)<a class="headerlink" href="#initial-event-detection-eventsegment" title="Permalink to this headline">¶</a></h3>
+<span id="eventseg-settings-sec"></span><h3><span class="section-number">6.3.1. </span>Initial Event Detection (<code class="xref py py-class docutils literal notranslate"><span class="pre">eventSegment</span></code>)<a class="headerlink" href="#initial-event-detection-eventsegment" title="Permalink to this heading">¶</a></h3>
 <p>The first step when analyzing an ionic-current time series is to perform a quick partition to identify events. This is accomplished by overriding the <code class="xref py py-class docutils literal notranslate"><span class="pre">eventPartition</span></code> class. Currently, the only implementation of event partitioning is the <code class="xref py py-class docutils literal notranslate"><span class="pre">eventSegment</span></code> algorithm. This algorithm uses a thresholding technique to detect the start and end of an event. When an event is detected the ionic current time-series associated with that event is passed to a processing algorithm for fitting. Settings that can be passed to <code class="xref py py-class docutils literal notranslate"><span class="pre">eventSegment</span></code> are given below followed by their descriptions.</p>
-<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="s2">&quot;eventSegment&quot;</span> <span class="o">:</span> <span class="p">{</span>
-        <span class="s2">&quot;blockSizeSec&quot;</span>                  <span class="o">:</span> <span class="s2">&quot;0.5&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;eventPad&quot;</span>                      <span class="o">:</span> <span class="s2">&quot;50&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;minEventLength&quot;</span>                <span class="o">:</span> <span class="s2">&quot;5&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;eventThreshold&quot;</span>                <span class="o">:</span> <span class="s2">&quot;6.0&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;driftThreshold&quot;</span>                <span class="o">:</span> <span class="s2">&quot;999.0&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;maxDriftRate&quot;</span>                  <span class="o">:</span> <span class="s2">&quot;999.0&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;meanOpenCurr&quot;</span>                  <span class="o">:</span> <span class="s2">&quot;-1&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;sdOpenCurr&quot;</span>                    <span class="o">:</span> <span class="s2">&quot;-1&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;slopeOpenCurr&quot;</span>                 <span class="o">:</span> <span class="s2">&quot;-1&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;writeEventTS&quot;</span>                  <span class="o">:</span> <span class="s2">&quot;1&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;parallelProc&quot;</span>                  <span class="o">:</span> <span class="s2">&quot;0&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;reserveNCPU&quot;</span>                   <span class="o">:</span> <span class="s2">&quot;2&quot;</span>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="s2">&quot;eventSegment&quot;</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="s2">&quot;blockSizeSec&quot;</span><span class="w">                  </span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;0.5&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="s2">&quot;eventPad&quot;</span><span class="w">                      </span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;50&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="s2">&quot;minEventLength&quot;</span><span class="w">                </span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;5&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="s2">&quot;eventThreshold&quot;</span><span class="w">                </span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;6.0&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="s2">&quot;driftThreshold&quot;</span><span class="w">                </span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;999.0&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="s2">&quot;maxDriftRate&quot;</span><span class="w">                  </span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;999.0&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="s2">&quot;meanOpenCurr&quot;</span><span class="w">                  </span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;-1&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="s2">&quot;sdOpenCurr&quot;</span><span class="w">                    </span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;-1&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="s2">&quot;slopeOpenCurr&quot;</span><span class="w">                 </span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;-1&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="s2">&quot;writeEventTS&quot;</span><span class="w">                  </span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;1&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="s2">&quot;parallelProc&quot;</span><span class="w">                  </span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;0&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="s2">&quot;reserveNCPU&quot;</span><span class="w">                   </span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;2&quot;</span>
 <span class="p">}</span>
 </pre></div>
 </div>
 <table class="docutils align-default">
-<colgroup>
-<col style="width: 18%" />
-<col style="width: 82%" />
-</colgroup>
 <thead>
 <tr class="row-odd"><th class="head"><p><strong>Setting</strong></p></th>
 <th class="head"><p><strong>Description</strong></p></th>
@@ -519,22 +525,22 @@ is assumed with the listed default values.</p>
 </table>
 </section>
 <section id="two-state-identification-adept2state">
-<span id="stepresp-settings-sec"></span><h3><span class="section-number">6.3.2. </span>Two-State Identification  (<code class="xref py py-class docutils literal notranslate"><span class="pre">adept2State</span></code>)<a class="headerlink" href="#two-state-identification-adept2state" title="Permalink to this headline">¶</a></h3>
+<span id="stepresp-settings-sec"></span><h3><span class="section-number">6.3.2. </span>Two-State Identification  (<code class="xref py py-class docutils literal notranslate"><span class="pre">adept2State</span></code>)<a class="headerlink" href="#two-state-identification-adept2state" title="Permalink to this heading">¶</a></h3>
 <p>Once the time-series is partitioned, individual events are processed by a processing algorithm. For simple event patterns (e.g. homopolymers of DNA, PEG, etc.), one can use the <a class="reference internal" href="stepResponse.html#stepresponse-page"><span class="std std-ref">ADEPT 2-State</span></a> algorithm. Settings that can be passed to this algorithm are below, followed by their descriptions. For a vast majority of cases, the settings below can be used without modification.</p>
-<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="s2">&quot;adept2State&quot;</span> <span class="o">:</span> <span class="p">{</span>
-        <span class="s2">&quot;FitTol&quot;</span>                        <span class="o">:</span> <span class="s2">&quot;1.e-7&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;FitIters&quot;</span>                      <span class="o">:</span> <span class="s2">&quot;50000&quot;</span>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="s2">&quot;adept2State&quot;</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="s2">&quot;FitTol&quot;</span><span class="w">                        </span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;1.e-7&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="s2">&quot;FitIters&quot;</span><span class="w">                      </span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;50000&quot;</span>
 <span class="p">}</span>
 </pre></div>
 </div>
 </section>
 <section id="multi-state-identification-adept">
-<h3><span class="section-number">6.3.3. </span>Multi-State Identification  (<code class="xref py py-class docutils literal notranslate"><span class="pre">adept</span></code>)<a class="headerlink" href="#multi-state-identification-adept" title="Permalink to this headline">¶</a></h3>
-<p>For more complex signals with multiple states, the <a class="reference internal" href="Algorithms.html#multistate-page"><span class="std std-ref">ADEPT</span></a> algorithm yields better results. The settings passed to this algorithm (described below) are largely similar to <a class="reference internal" href="#stepresp-settings-sec"><span class="std std-ref">Two-State Identification  (adept2State)</span></a>.</p>
-<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="s2">&quot;adept&quot;</span> <span class="o">:</span> <span class="p">{</span>
-        <span class="s2">&quot;FitTol&quot;</span>                        <span class="o">:</span> <span class="s2">&quot;1.e-7&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;FitIters&quot;</span>                      <span class="o">:</span> <span class="s2">&quot;50000&quot;</span><span class="p">,</span>
-<span class="hll">        <span class="s2">&quot;InitThreshold&quot;</span>                 <span class="o">:</span> <span class="s2">&quot;3.0&quot;</span>
+<h3><span class="section-number">6.3.3. </span>Multi-State Identification  (<code class="xref py py-class docutils literal notranslate"><span class="pre">adept</span></code>)<a class="headerlink" href="#multi-state-identification-adept" title="Permalink to this heading">¶</a></h3>
+<p>For more complex signals with multiple states, the <a class="reference internal" href="multiState.html#multistate-page"><span class="std std-ref">ADEPT</span></a> algorithm yields better results. The settings passed to this algorithm (described below) are largely similar to <a class="reference internal" href="#stepresp-settings-sec"><span class="std std-ref">Two-State Identification  (adept2State)</span></a>.</p>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="s2">&quot;adept&quot;</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="s2">&quot;FitTol&quot;</span><span class="w">                        </span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;1.e-7&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="s2">&quot;FitIters&quot;</span><span class="w">                      </span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;50000&quot;</span><span class="p">,</span>
+<span class="hll"><span class="w">        </span><span class="s2">&quot;InitThreshold&quot;</span><span class="w">                 </span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;3.0&quot;</span>
 </span><span class="p">}</span>
 </pre></div>
 </div>
@@ -545,77 +551,77 @@ is assumed with the listed default values.</p>
 </section>
 </section>
 <section id="default-settings">
-<h2><span class="section-number">6.4. </span>Default Settings<a class="headerlink" href="#default-settings" title="Permalink to this headline">¶</a></h2>
+<h2><span class="section-number">6.4. </span>Default Settings<a class="headerlink" href="#default-settings" title="Permalink to this heading">¶</a></h2>
 <div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
-        <span class="s2">&quot;eventSegment&quot;</span> <span class="o">:</span> <span class="p">{</span>
-                <span class="s2">&quot;blockSizeSec&quot;</span>                  <span class="o">:</span> <span class="s2">&quot;0.5&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;eventPad&quot;</span>                              <span class="o">:</span> <span class="s2">&quot;50&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;minEventLength&quot;</span>                <span class="o">:</span> <span class="s2">&quot;5&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;eventThreshold&quot;</span>                <span class="o">:</span> <span class="s2">&quot;6.0&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;driftThreshold&quot;</span>                <span class="o">:</span> <span class="s2">&quot;999.0&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;maxDriftRate&quot;</span>                  <span class="o">:</span> <span class="s2">&quot;999.0&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;meanOpenCurr&quot;</span>                  <span class="o">:</span> <span class="s2">&quot;-1&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;sdOpenCurr&quot;</span>                    <span class="o">:</span> <span class="s2">&quot;-1&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;slopeOpenCurr&quot;</span>                 <span class="o">:</span> <span class="s2">&quot;-1&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;writeEventTS&quot;</span>                  <span class="o">:</span> <span class="s2">&quot;1&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;parallelProc&quot;</span>                  <span class="o">:</span> <span class="s2">&quot;0&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;reserveNCPU&quot;</span>                   <span class="o">:</span> <span class="s2">&quot;2&quot;</span>
-        <span class="p">},</span>
-        <span class="s2">&quot;singleStepEvent&quot;</span> <span class="o">:</span> <span class="p">{</span>
-                <span class="s2">&quot;binSize&quot;</span>                               <span class="o">:</span> <span class="s2">&quot;1.0&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;histPad&quot;</span>                               <span class="o">:</span> <span class="s2">&quot;10&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;maxFitIters&quot;</span>                   <span class="o">:</span> <span class="s2">&quot;5000&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;a12Ratio&quot;</span>                              <span class="o">:</span> <span class="s2">&quot;1.e4&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;minEvntTime&quot;</span>                   <span class="o">:</span> <span class="s2">&quot;10.e-6&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;minDataPad&quot;</span>                    <span class="o">:</span> <span class="s2">&quot;75&quot;</span>
-        <span class="p">},</span>
-        <span class="s2">&quot;adept2State&quot;</span> <span class="o">:</span> <span class="p">{</span>
-                <span class="s2">&quot;FitTol&quot;</span>                                <span class="o">:</span> <span class="s2">&quot;1.e-7&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;FitIters&quot;</span>                              <span class="o">:</span> <span class="s2">&quot;50000&quot;</span>
-        <span class="p">},</span>
-        <span class="s2">&quot;adept&quot;</span> <span class="o">:</span> <span class="p">{</span>
-                <span class="s2">&quot;FitTol&quot;</span>                <span class="o">:</span> <span class="s2">&quot;1.e-7&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;FitIters&quot;</span>              <span class="o">:</span> <span class="s2">&quot;50000&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;InitThreshold&quot;</span> <span class="o">:</span> <span class="s2">&quot;3.0&quot;</span>
-     <span class="p">},</span>
-     <span class="s2">&quot;cusumPlus&quot;</span><span class="o">:</span> <span class="p">{</span>
-                        <span class="s2">&quot;StepSize&quot;</span>              <span class="o">:</span> <span class="mf">3.0</span><span class="p">,</span>
-                        <span class="s2">&quot;Threshold&quot;</span>             <span class="o">:</span> <span class="mf">3.0</span>
+<span class="w">        </span><span class="s2">&quot;eventSegment&quot;</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="s2">&quot;blockSizeSec&quot;</span><span class="w">                  </span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;0.5&quot;</span><span class="p">,</span>
+<span class="w">                </span><span class="s2">&quot;eventPad&quot;</span><span class="w">                              </span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;50&quot;</span><span class="p">,</span>
+<span class="w">                </span><span class="s2">&quot;minEventLength&quot;</span><span class="w">                </span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;5&quot;</span><span class="p">,</span>
+<span class="w">                </span><span class="s2">&quot;eventThreshold&quot;</span><span class="w">                </span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;6.0&quot;</span><span class="p">,</span>
+<span class="w">                </span><span class="s2">&quot;driftThreshold&quot;</span><span class="w">                </span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;999.0&quot;</span><span class="p">,</span>
+<span class="w">                </span><span class="s2">&quot;maxDriftRate&quot;</span><span class="w">                  </span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;999.0&quot;</span><span class="p">,</span>
+<span class="w">                </span><span class="s2">&quot;meanOpenCurr&quot;</span><span class="w">                  </span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;-1&quot;</span><span class="p">,</span>
+<span class="w">                </span><span class="s2">&quot;sdOpenCurr&quot;</span><span class="w">                    </span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;-1&quot;</span><span class="p">,</span>
+<span class="w">                </span><span class="s2">&quot;slopeOpenCurr&quot;</span><span class="w">                 </span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;-1&quot;</span><span class="p">,</span>
+<span class="w">                </span><span class="s2">&quot;writeEventTS&quot;</span><span class="w">                  </span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;1&quot;</span><span class="p">,</span>
+<span class="w">                </span><span class="s2">&quot;parallelProc&quot;</span><span class="w">                  </span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;0&quot;</span><span class="p">,</span>
+<span class="w">                </span><span class="s2">&quot;reserveNCPU&quot;</span><span class="w">                   </span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;2&quot;</span>
+<span class="w">        </span><span class="p">},</span>
+<span class="w">        </span><span class="s2">&quot;singleStepEvent&quot;</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="s2">&quot;binSize&quot;</span><span class="w">                               </span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;1.0&quot;</span><span class="p">,</span>
+<span class="w">                </span><span class="s2">&quot;histPad&quot;</span><span class="w">                               </span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;10&quot;</span><span class="p">,</span>
+<span class="w">                </span><span class="s2">&quot;maxFitIters&quot;</span><span class="w">                   </span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;5000&quot;</span><span class="p">,</span>
+<span class="w">                </span><span class="s2">&quot;a12Ratio&quot;</span><span class="w">                              </span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;1.e4&quot;</span><span class="p">,</span>
+<span class="w">                </span><span class="s2">&quot;minEvntTime&quot;</span><span class="w">                   </span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;10.e-6&quot;</span><span class="p">,</span>
+<span class="w">                </span><span class="s2">&quot;minDataPad&quot;</span><span class="w">                    </span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;75&quot;</span>
+<span class="w">        </span><span class="p">},</span>
+<span class="w">        </span><span class="s2">&quot;adept2State&quot;</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="s2">&quot;FitTol&quot;</span><span class="w">                                </span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;1.e-7&quot;</span><span class="p">,</span>
+<span class="w">                </span><span class="s2">&quot;FitIters&quot;</span><span class="w">                              </span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;50000&quot;</span>
+<span class="w">        </span><span class="p">},</span>
+<span class="w">        </span><span class="s2">&quot;adept&quot;</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="s2">&quot;FitTol&quot;</span><span class="w">                </span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;1.e-7&quot;</span><span class="p">,</span>
+<span class="w">                </span><span class="s2">&quot;FitIters&quot;</span><span class="w">              </span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;50000&quot;</span><span class="p">,</span>
+<span class="w">                </span><span class="s2">&quot;InitThreshold&quot;</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;3.0&quot;</span>
+<span class="w">     </span><span class="p">},</span>
+<span class="w">     </span><span class="s2">&quot;cusumPlus&quot;</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                        </span><span class="s2">&quot;StepSize&quot;</span><span class="w">              </span><span class="o">:</span><span class="w"> </span><span class="mf">3.0</span><span class="p">,</span>
+<span class="w">                        </span><span class="s2">&quot;Threshold&quot;</span><span class="w">             </span><span class="o">:</span><span class="w"> </span><span class="mf">3.0</span>
 <span class="p">},</span>
-        <span class="s2">&quot;besselLowpassFilter&quot;</span> <span class="o">:</span> <span class="p">{</span>
-                <span class="s2">&quot;filterOrder&quot;</span>                   <span class="o">:</span> <span class="s2">&quot;6&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;filterCutoff&quot;</span>                  <span class="o">:</span> <span class="s2">&quot;10000&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;decimate&quot;</span>                              <span class="o">:</span> <span class="s2">&quot;1&quot;</span>
-        <span class="p">},</span>
-        <span class="s2">&quot;waveletDenoiseFilter&quot;</span> <span class="o">:</span> <span class="p">{</span>
-                <span class="s2">&quot;wavelet&quot;</span>                               <span class="o">:</span> <span class="s2">&quot;sym5&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;level&quot;</span>                                 <span class="o">:</span> <span class="s2">&quot;5&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;thresholdType&quot;</span>                 <span class="o">:</span> <span class="s2">&quot;soft&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;thresholdSubType&quot;</span>              <span class="o">:</span> <span class="s2">&quot;sqtwolog&quot;</span>
-        <span class="p">},</span>
-        <span class="s2">&quot;abfTrajIO&quot;</span> <span class="o">:</span> <span class="p">{</span>
-                <span class="s2">&quot;filter&quot;</span>                                <span class="o">:</span> <span class="s2">&quot;*.abf&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;start&quot;</span>                                 <span class="o">:</span> <span class="mf">0.0</span><span class="p">,</span>
-                <span class="s2">&quot;dcOffset&quot;</span>                              <span class="o">:</span> <span class="mf">0.0</span>
-        <span class="p">},</span>
-        <span class="s2">&quot;qdfTrajIO&quot;</span><span class="o">:</span> <span class="p">{</span>
-                <span class="s2">&quot;Rfb&quot;</span><span class="o">:</span> <span class="mf">9.1e+12</span><span class="p">,</span>
-                <span class="s2">&quot;Cfb&quot;</span><span class="o">:</span> <span class="mf">1.07e-12</span><span class="p">,</span>
-                <span class="s2">&quot;dcOffset&quot;</span><span class="o">:</span> <span class="mf">0.0</span><span class="p">,</span>
-                <span class="s2">&quot;filter&quot;</span><span class="o">:</span> <span class="s2">&quot;*.qdf&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;start&quot;</span><span class="o">:</span> <span class="mf">0.0</span>
-        <span class="p">},</span>
-        <span class="s2">&quot;binTrajIO&quot;</span><span class="o">:</span> <span class="p">{</span>
-                <span class="s2">&quot;AmplifierScale&quot;</span><span class="o">:</span> <span class="s2">&quot;1.0&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;AmplifierOffset&quot;</span><span class="o">:</span> <span class="s2">&quot;0.0&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;SamplingFrequency&quot;</span><span class="o">:</span> <span class="s2">&quot;50000&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;HeaderOffset&quot;</span><span class="o">:</span> <span class="s2">&quot;0&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;ColumnTypes&quot;</span><span class="o">:</span> <span class="s2">&quot;[(&#39;curr_pA&#39;, &#39;float64&#39;)]&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;IonicCurrentColumn&quot;</span> <span class="o">:</span> <span class="s2">&quot;curr_pA&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;dcOffset&quot;</span><span class="o">:</span> <span class="s2">&quot;0.0&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;filter&quot;</span><span class="o">:</span> <span class="s2">&quot;*.bin&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;start&quot;</span><span class="o">:</span> <span class="s2">&quot;0.0&quot;</span>
-        <span class="p">}</span>
+<span class="w">        </span><span class="s2">&quot;besselLowpassFilter&quot;</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="s2">&quot;filterOrder&quot;</span><span class="w">                   </span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;6&quot;</span><span class="p">,</span>
+<span class="w">                </span><span class="s2">&quot;filterCutoff&quot;</span><span class="w">                  </span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;10000&quot;</span><span class="p">,</span>
+<span class="w">                </span><span class="s2">&quot;decimate&quot;</span><span class="w">                              </span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;1&quot;</span>
+<span class="w">        </span><span class="p">},</span>
+<span class="w">        </span><span class="s2">&quot;waveletDenoiseFilter&quot;</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="s2">&quot;wavelet&quot;</span><span class="w">                               </span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;sym5&quot;</span><span class="p">,</span>
+<span class="w">                </span><span class="s2">&quot;level&quot;</span><span class="w">                                 </span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;5&quot;</span><span class="p">,</span>
+<span class="w">                </span><span class="s2">&quot;thresholdType&quot;</span><span class="w">                 </span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;soft&quot;</span><span class="p">,</span>
+<span class="w">                </span><span class="s2">&quot;thresholdSubType&quot;</span><span class="w">              </span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;sqtwolog&quot;</span>
+<span class="w">        </span><span class="p">},</span>
+<span class="w">        </span><span class="s2">&quot;abfTrajIO&quot;</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="s2">&quot;filter&quot;</span><span class="w">                                </span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;*.abf&quot;</span><span class="p">,</span>
+<span class="w">                </span><span class="s2">&quot;start&quot;</span><span class="w">                                 </span><span class="o">:</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span>
+<span class="w">                </span><span class="s2">&quot;dcOffset&quot;</span><span class="w">                              </span><span class="o">:</span><span class="w"> </span><span class="mf">0.0</span>
+<span class="w">        </span><span class="p">},</span>
+<span class="w">        </span><span class="s2">&quot;qdfTrajIO&quot;</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="s2">&quot;Rfb&quot;</span><span class="o">:</span><span class="w"> </span><span class="mf">9.1e+12</span><span class="p">,</span>
+<span class="w">                </span><span class="s2">&quot;Cfb&quot;</span><span class="o">:</span><span class="w"> </span><span class="mf">1.07e-12</span><span class="p">,</span>
+<span class="w">                </span><span class="s2">&quot;dcOffset&quot;</span><span class="o">:</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span>
+<span class="w">                </span><span class="s2">&quot;filter&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;*.qdf&quot;</span><span class="p">,</span>
+<span class="w">                </span><span class="s2">&quot;start&quot;</span><span class="o">:</span><span class="w"> </span><span class="mf">0.0</span>
+<span class="w">        </span><span class="p">},</span>
+<span class="w">        </span><span class="s2">&quot;binTrajIO&quot;</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="s2">&quot;AmplifierScale&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;1.0&quot;</span><span class="p">,</span>
+<span class="w">                </span><span class="s2">&quot;AmplifierOffset&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;0.0&quot;</span><span class="p">,</span>
+<span class="w">                </span><span class="s2">&quot;SamplingFrequency&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;50000&quot;</span><span class="p">,</span>
+<span class="w">                </span><span class="s2">&quot;HeaderOffset&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;0&quot;</span><span class="p">,</span>
+<span class="w">                </span><span class="s2">&quot;ColumnTypes&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;[(&#39;curr_pA&#39;, &#39;float64&#39;)]&quot;</span><span class="p">,</span>
+<span class="w">                </span><span class="s2">&quot;IonicCurrentColumn&quot;</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;curr_pA&quot;</span><span class="p">,</span>
+<span class="w">                </span><span class="s2">&quot;dcOffset&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;0.0&quot;</span><span class="p">,</span>
+<span class="w">                </span><span class="s2">&quot;filter&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;*.bin&quot;</span><span class="p">,</span>
+<span class="w">                </span><span class="s2">&quot;start&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;0.0&quot;</span>
+<span class="w">        </span><span class="p">}</span>
 <span class="p">}</span>
 </pre></div>
 </div>
@@ -635,7 +641,7 @@ is assumed with the listed default values.</p>
       
     </p>
     <p>
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 3.5.4.<br/>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 7.0.0.<br/>
     </p>
   </div>
 </footer> -->

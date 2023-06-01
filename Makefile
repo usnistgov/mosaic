@@ -52,12 +52,12 @@ clean:
 
 
 html:
-	jupyter nbconvert --config convert_notebooks.py --to rst
-	python move_notebooks.py
+	#jupyter nbconvert --config convert_notebooks.py --to rst
+	#python move_notebooks.py
 	$(SPHINXBUILD) -b html $(ALLSPHINXOPTS) $(BUILDDIR)/html
 	python download.py
 	python utils.py
-# 	python generate_update_file.py
+	#python generate_update_file.py
 	python generate_sitemap.py
 	@echo
 	@echo "Build finished. The HTML pages are in $(BUILDDIR)/html."

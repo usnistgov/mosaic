@@ -1,19 +1,18 @@
 <!DOCTYPE html>
 
-<html>
+<html lang="en">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>mosaic.trajio.metaTrajIO &#8212; MOSAIC v2.2 documentation</title>
-    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="../../../_static/bootstrap-sphinx.css" type="text/css" />
+    <title>mosaic.trajio.metaTrajIO &#8212; MOSAIC v2.4 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/bootstrap-sphinx.css" />
     <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css" />
     <link rel="stylesheet" type="text/css" href="../../../_static/style.css" />
-    <script id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
-    <script src="../../../_static/jquery.js"></script>
-    <script src="../../../_static/underscore.js"></script>
+    <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
     <script src="../../../_static/doctools.js"></script>
-    <link rel="shortcut icon" href="../../../_static/favicon.ico"/>
+    <script src="../../../_static/sphinx_highlight.js"></script>
+    <link rel="icon" href="../../../_static/favicon.ico"/>
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" />
 
@@ -21,13 +20,22 @@
 <meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
 <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
 <meta name="apple-mobile-web-app-capable" content="yes">
-<script type="text/javascript" src="../../../_static/js/jquery-1.11.0.min.js "></script>
-<script type="text/javascript" src="../../../_static/js/jquery-fix.js "></script>
-<script type="text/javascript" src="../../../_static/bootstrap-3.3.7/js/bootstrap.min.js "></script>
-<script type="text/javascript" src="../../../_static/bootstrap-sphinx.js "></script>
+<script type="text/javascript" src="../../../_static/js/jquery-1.12.4.min.js"></script>
+<script type="text/javascript" src="../../../_static/js/jquery-fix.js"></script>
+<script type="text/javascript" src="../../../_static/bootstrap-3.4.1/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="../../../_static/bootstrap-sphinx.js"></script>
 
 	<script async type="text/javascript" id="_fed_an_ua_tag" src="https://dap.digitalgov.gov/Universal-Federated-Analytics-Min.js?agency=DOC&subagency=NIST&pua=UA-66610693-1&yt=true&exts=ppsx,pps,f90,sch,rtf,wrl,txz,m1v,xlsm,msi,xsd,f,tif,eps,mpg,xml,pl,xlt,c"></script>	
 
+	<!-- Google tag (gtag.js) -->
+	<script async src="https://www.googletagmanager.com/gtag/js?id=G-RJSMY46M5C"></script>
+	<script>
+	  window.dataLayer = window.dataLayer || [];
+	  function gtag(){dataLayer.push(arguments);}
+	  gtag('js', new Date());
+
+	  gtag('config', 'G-RJSMY46M5C');
+	</script>
 	<meta name="theme-color" content="#283593">
 
   </head><body>
@@ -41,9 +49,9 @@
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </button>
-        <a class="navbar-brand" href="../../../index.html"><span><img src="../../../_static/icon_48.png"></span>
+        <a class="navbar-brand" href="../../../index.html">
            </a>
-        <span class="navbar-text navbar-version pull-left"><b>v2.2</b></span>
+        <span class="navbar-text navbar-version pull-left"><b>v2.4</b></span>
       </div>
 
         <div class="collapse navbar-collapse nav-collapse">
@@ -177,7 +185,7 @@
 	<span class="p">]</span>
 
 <div class="viewcode-block" id="metaTrajIO"><a class="viewcode-back" href="../../../doc/settingsFile.html#mosaic.trajio.metaTrajIO.metaTrajIO">[docs]</a><span class="k">class</span> <span class="nc">metaTrajIO</span><span class="p">(</span><span class="nb">object</span><span class="p">,</span> <span class="n">metaclass</span><span class="o">=</span><span class="n">ABCMeta</span><span class="p">):</span>
-	<span class="sd">&quot;&quot;&quot;</span>
+<span class="w">	</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">			.. warning:: |metaclass|</span>
 
 <span class="sd">			Initialize a TrajIO object. The object can load all the data in a directory,</span>
@@ -216,7 +224,7 @@
 <span class="sd">	&quot;&quot;&quot;</span>
 
 	<span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-		<span class="sd">&quot;&quot;&quot;</span>
+<span class="w">		</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">		&quot;&quot;&quot;</span>
 		<span class="bp">self</span><span class="o">.</span><span class="n">CHUNKSIZE</span><span class="o">=</span><span class="mi">10000</span>
 		<span class="bp">self</span><span class="o">.</span><span class="n">dataGenerator</span><span class="o">=</span><span class="kc">None</span>
@@ -317,7 +325,7 @@
 	<span class="c1">#################################################################</span>
 	<span class="nd">@property</span>
 	<span class="k">def</span> <span class="nf">FsHz</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-		<span class="sd">&quot;&quot;&quot;</span>
+<span class="w">		</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">			.. important:: |property|</span>
 
 <span class="sd">			Return the sampling frequency in Hz.</span>
@@ -334,7 +342,7 @@
 
 	<span class="nd">@mosaic_property</span>
 	<span class="k">def</span> <span class="nf">ElapsedTimeSeconds</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-		<span class="sd">&quot;&quot;&quot;</span>
+<span class="w">		</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">			.. important:: |property|</span>
 
 <span class="sd">			Return the elapsed time in the time-series in seconds.</span>
@@ -353,7 +361,7 @@
 
 	<span class="nd">@mosaic_property</span> 
 	<span class="k">def</span> <span class="nf">LastFileProcessed</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-		<span class="sd">&quot;&quot;&quot;</span>
+<span class="w">		</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">			.. important:: |property|</span>
 <span class="sd">			</span>
 <span class="sd">			Return the last data file that was processed</span>
@@ -362,7 +370,7 @@
 
 	<span class="nd">@mosaic_property</span> 
 	<span class="k">def</span> <span class="nf">ProcessedFiles</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-		<span class="sd">&quot;&quot;&quot;</span>
+<span class="w">		</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">			.. important:: |property|</span>
 
 <span class="sd">			Return a list of processed data filenames.</span>
@@ -371,7 +379,7 @@
 
 	<span class="nd">@mosaic_property</span> 
 	<span class="k">def</span> <span class="nf">DataLengthSec</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-		<span class="sd">&quot;&quot;&quot;</span>
+<span class="w">		</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">			.. important:: |property|</span>
 
 <span class="sd">			Return the approximate length of data that will be processed. If the data are in multiple files,</span>
@@ -384,7 +392,7 @@
 
 	<span class="nd">@trajTimer</span><span class="o">.</span><span class="n">FunctionTiming</span>
 	<span class="k">def</span> <span class="nf">popdata</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
-		<span class="sd">&quot;&quot;&quot;</span>
+<span class="w">		</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">			Pop data points from self.currDataPipe. This function uses recursion </span>
 <span class="sd">			to automatically read data files when the queue length is shorter</span>
 <span class="sd">			than the requested data points. When all data files are read, an</span>
@@ -445,7 +453,7 @@
 				<span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">popdata</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
 				
 <div class="viewcode-block" id="metaTrajIO.previewdata"><a class="viewcode-back" href="../../../api-doc/mosaic.meta.html#mosaic.trajio.metaTrajIO.metaTrajIO.previewdata">[docs]</a>	<span class="k">def</span> <span class="nf">previewdata</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
-		<span class="sd">&quot;&quot;&quot;</span>
+<span class="w">		</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">			Preview data points in self.currDataPipe. This function is identical in </span>
 <span class="sd">			behavior to popdata, except it does not remove data point from the queue.</span>
 <span class="sd">			Like popdata, it uses recursion to automatically read data files </span>
@@ -483,7 +491,7 @@
 
 
 <div class="viewcode-block" id="metaTrajIO.formatsettings"><a class="viewcode-back" href="../../../api-doc/mosaic.meta.html#mosaic.trajio.metaTrajIO.metaTrajIO.formatsettings">[docs]</a>	<span class="k">def</span> <span class="nf">formatsettings</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-		<span class="sd">&quot;&quot;&quot;</span>
+<span class="w">		</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">			Return a formatted string of settings for display</span>
 <span class="sd">		&quot;&quot;&quot;</span>
 		<span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span> <span class="s1">&#39;</span><span class="se">\t</span><span class="s1">Trajectory I/O settings:&#39;</span> <span class="p">)</span>
@@ -506,7 +514,7 @@
 	<span class="c1"># Should not be called from external classes</span>
 	<span class="c1">#################################################################</span>
 	<span class="k">def</span> <span class="nf">_appenddata</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-		<span class="sd">&quot;&quot;&quot;</span>
+<span class="w">		</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">			Read the specified data file(s) and append its data to the data pipeline. Set </span>
 <span class="sd">			a class property FsHz with the sampling frequency in Hz.</span>
 
@@ -535,7 +543,7 @@
 				<span class="bp">self</span><span class="o">.</span><span class="n">_appenddata</span><span class="p">()</span>
 		
 <div class="viewcode-block" id="metaTrajIO.scaleData"><a class="viewcode-back" href="../../../api-doc/mosaic.meta.html#mosaic.trajio.metaTrajIO.metaTrajIO.scaleData">[docs]</a>	<span class="k">def</span> <span class="nf">scaleData</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
-		<span class="sd">&quot;&quot;&quot;</span>
+<span class="w">		</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">			.. important:: |interfacemethod|</span>
 
 <span class="sd">			Scale the raw data loaded with :func:`~mosaic.metaTrajIO.metaTrajIO.readdata`. Note this function will not necessarily receive the entire data array loaded with :func:`~mosaic.metaTrajIO.metaTrajIO.readdata`. Transformations must be able to process partial data chunks.</span>
@@ -565,14 +573,14 @@
 
 <div class="viewcode-block" id="metaTrajIO._formatsettings"><a class="viewcode-back" href="../../../api-doc/mosaic.meta.html#mosaic.trajio.metaTrajIO.metaTrajIO._formatsettings">[docs]</a>	<span class="nd">@abstractmethod</span>
 	<span class="k">def</span> <span class="nf">_formatsettings</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-		<span class="sd">&quot;&quot;&quot;</span>
+<span class="w">		</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">			Log settings strings</span>
 <span class="sd">		&quot;&quot;&quot;</span>
 		<span class="k">pass</span></div>
 		
 <div class="viewcode-block" id="metaTrajIO._init"><a class="viewcode-back" href="../../../api-doc/mosaic.meta.html#mosaic.trajio.metaTrajIO.metaTrajIO._init">[docs]</a>	<span class="nd">@abstractmethod</span>
 	<span class="k">def</span> <span class="nf">_init</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-		<span class="sd">&quot;&quot;&quot;</span>
+<span class="w">		</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">			.. important:: |abstractmethod|</span>
 
 <span class="sd">			This function is called at the end of the class constructor to perform additional initialization specific to the algorithm being implemented. The arguments to this function are identical to those passed to the class constructor.</span>
@@ -581,7 +589,7 @@
 
 <div class="viewcode-block" id="metaTrajIO.readdata"><a class="viewcode-back" href="../../../api-doc/mosaic.meta.html#mosaic.trajio.metaTrajIO.metaTrajIO.readdata">[docs]</a>	<span class="nd">@abstractmethod</span>
 	<span class="k">def</span> <span class="nf">readdata</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fname</span><span class="p">):</span>
-		<span class="sd">&quot;&quot;&quot;</span>
+<span class="w">		</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">			.. important:: |abstractmethod|</span>
 
 <span class="sd">			Return raw data from a single data file. Set a class </span>
@@ -602,7 +610,7 @@
 		<span class="k">pass</span></div>
 
 <div class="viewcode-block" id="metaTrajIO.popfnames"><a class="viewcode-back" href="../../../api-doc/mosaic.meta.html#mosaic.trajio.metaTrajIO.metaTrajIO.popfnames">[docs]</a>	<span class="k">def</span> <span class="nf">popfnames</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-		<span class="sd">&quot;&quot;&quot;</span>
+<span class="w">		</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">			Pop a single filename from the start of ``self.dataFiles``. If ``self.dataFiles`` is empty,</span>
 <span class="sd">			raise an ``EmptyDataPipeError`` error. </span>
 
@@ -701,7 +709,7 @@
       
     </p>
     <p>
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 3.5.4.<br/>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 7.0.0.<br/>
     </p>
   </div>
 </footer> -->

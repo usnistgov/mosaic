@@ -1,21 +1,20 @@
 <!DOCTYPE html>
 
-<html>
+<html lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
-    <title>5. MOSAIC WEB &#8212; MOSAIC v2.2 documentation</title>
-    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="../_static/bootstrap-sphinx.css" type="text/css" />
+    <title>5. MOSAIC WEB &#8212; MOSAIC v2.4 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/bootstrap-sphinx.css" />
     <link rel="stylesheet" type="text/css" href="../_static/graphviz.css" />
     <link rel="stylesheet" type="text/css" href="../_static/style.css" />
-    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-    <script src="../_static/jquery.js"></script>
-    <script src="../_static/underscore.js"></script>
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
     <script src="../_static/doctools.js"></script>
-    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
-    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <script src="../_static/sphinx_highlight.js"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <link rel="icon" href="../_static/favicon.ico"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="6. Settings File" href="settingsFile.html" />
@@ -25,13 +24,22 @@
 <meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
 <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
 <meta name="apple-mobile-web-app-capable" content="yes">
-<script type="text/javascript" src="../_static/js/jquery-1.11.0.min.js "></script>
-<script type="text/javascript" src="../_static/js/jquery-fix.js "></script>
-<script type="text/javascript" src="../_static/bootstrap-3.3.7/js/bootstrap.min.js "></script>
-<script type="text/javascript" src="../_static/bootstrap-sphinx.js "></script>
+<script type="text/javascript" src="../_static/js/jquery-1.12.4.min.js"></script>
+<script type="text/javascript" src="../_static/js/jquery-fix.js"></script>
+<script type="text/javascript" src="../_static/bootstrap-3.4.1/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="../_static/bootstrap-sphinx.js"></script>
 
 	<script async type="text/javascript" id="_fed_an_ua_tag" src="https://dap.digitalgov.gov/Universal-Federated-Analytics-Min.js?agency=DOC&subagency=NIST&pua=UA-66610693-1&yt=true&exts=ppsx,pps,f90,sch,rtf,wrl,txz,m1v,xlsm,msi,xsd,f,tif,eps,mpg,xml,pl,xlt,c"></script>	
 
+	<!-- Google tag (gtag.js) -->
+	<script async src="https://www.googletagmanager.com/gtag/js?id=G-RJSMY46M5C"></script>
+	<script>
+	  window.dataLayer = window.dataLayer || [];
+	  function gtag(){dataLayer.push(arguments);}
+	  gtag('js', new Date());
+
+	  gtag('config', 'G-RJSMY46M5C');
+	</script>
 	<meta name="theme-color" content="#283593">
 
   </head><body>
@@ -45,9 +53,9 @@
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </button>
-        <a class="navbar-brand" href="../index.html"><span><img src="../_static/icon_48.png"></span>
+        <a class="navbar-brand" href="../index.html">
            </a>
-        <span class="navbar-text navbar-version pull-left"><b>v2.2</b></span>
+        <span class="navbar-text navbar-version pull-left"><b>v2.4</b></span>
       </div>
 
         <div class="collapse navbar-collapse nav-collapse">
@@ -115,7 +123,7 @@
     <div class="body col-md-12 content" role="main">
       
   <section id="projname-web">
-<span id="mosaicweb-page"></span><h1><span class="section-number">5. </span><em>MOSAIC</em> WEB<a class="headerlink" href="#projname-web" title="Permalink to this headline">¶</a></h1>
+<span id="mosaicweb-page"></span><h1><span class="section-number">5. </span><em>MOSAIC</em> WEB<a class="headerlink" href="#projname-web" title="Permalink to this heading">¶</a></h1>
 <p><em>MOSAIC</em>’s web interface is designed to allow you to easily setup and run an analysis, or to visualize and analyze the results of previous experiments. It contains the most commonly used features of <em>MOSAIC</em>.  The web interface consists of a series of screens that allow you to set up and run an analysis. The interface keeps track of all analysis within the current session so it is easy to go back and compare data sets. The web interface is designed to allow you to easily run the most common use cases. For more complicated analysis, please refer to the <a class="reference internal" href="ScriptingandAdvancedFeatures.html#scripting-page"><span class="std std-ref">Scripting and Advanced Features</span></a> section.</p>
 <p><strong>Opening the Web Interface</strong></p>
 <p>The web interface can be run locally, allowing you to run a <em>MOSAIC</em> analysis from within any modern web browser. If you installed <em>MOSAIC</em> from a precomiled binary, you can start the web interface by double clicking the <em>MOSAIC</em> icon. Alternatively, if you compiled <em>MOSAIC</em> from source code, you can run the GUI from the terminal window – navigate to the installation directory and type:</p>
@@ -124,7 +132,7 @@
 </div>
 <p>This should start a local copy of the <em>MOSAIC</em> web server and open a new browser window that launches the web interface. Running servers can be accessed at anytime by opening a browser and entering <a class="reference external" href="http://localhost:5000">http://localhost:5000</a> in the adress bar.</p>
 <section id="interface-overview">
-<h2><span class="section-number">5.1. </span>Interface Overview<a class="headerlink" href="#interface-overview" title="Permalink to this headline">¶</a></h2>
+<h2><span class="section-number">5.1. </span>Interface Overview<a class="headerlink" href="#interface-overview" title="Permalink to this heading">¶</a></h2>
 <p>The main screen of the <em>MOSAIC</em> web interface is the starting point for running new analyses or reviewing previous runs.</p>
 <figure class="align-center" id="id1">
 <a class="reference internal image-reference" href="../_images/mosaicMain-01.png"><img alt="../_images/mosaicMain-01.png" src="../_images/mosaicMain-01.png" style="width: 50%;" /></a>
@@ -137,7 +145,7 @@
 </figure>
 </section>
 <section id="data-source-path">
-<h2><span class="section-number">5.2. </span>Data Source Path<a class="headerlink" href="#data-source-path" title="Permalink to this headline">¶</a></h2>
+<h2><span class="section-number">5.2. </span>Data Source Path<a class="headerlink" href="#data-source-path" title="Permalink to this heading">¶</a></h2>
 <p>The path of the data source can be changed when <em>MOSAIC</em> is run in local mode, i.e., when it is run entirely on a local machine. This is the default configuration of the pre-compiled binaries. When running <em>MOSAIC</em> from source it can be enabled by editing the global.json file.</p>
 <p>The data source path can be edited when starting a new analysis or loading a previous analysis by clicking the CHANGE DATA PATH button shown in the figure below.</p>
 <figure class="align-center">
@@ -157,7 +165,7 @@
 </figure>
 </section>
 <section id="analysis-settings">
-<h2><span class="section-number">5.3. </span>Analysis Settings<a class="headerlink" href="#analysis-settings" title="Permalink to this headline">¶</a></h2>
+<h2><span class="section-number">5.3. </span>Analysis Settings<a class="headerlink" href="#analysis-settings" title="Permalink to this heading">¶</a></h2>
 <p>The analysis settings interface displays the data trajectory and allows one to set up and run an analysis. Below we present an overview of the different settings available on this screen. The numbered sections correspond to the numbers in the figure below.</p>
 <figure class="align-center">
 <a class="reference internal image-reference" href="../_images/analysisSettings-01.png"><img alt="../_images/analysisSettings-01.png" src="../_images/analysisSettings-01.png" style="width: 60%;" /></a>
@@ -203,7 +211,7 @@
 <p>Use this button to either start the analysis when it has a <em>Play</em> symbol or to update and validate any settings when it displays a <em>Check Mark</em>.</p>
 </section>
 <section id="analysis-results">
-<h2><span class="section-number">5.4. </span>Analysis Results<a class="headerlink" href="#analysis-results" title="Permalink to this headline">¶</a></h2>
+<h2><span class="section-number">5.4. </span>Analysis Results<a class="headerlink" href="#analysis-results" title="Permalink to this heading">¶</a></h2>
 <figure class="align-center">
 <a class="reference internal image-reference" href="../_images/analysisResultsContour-01.png"><img alt="../_images/analysisResultsContour-01.png" src="../_images/analysisResultsContour-01.png" style="width: 60%;" /></a>
 </figure>
@@ -222,7 +230,7 @@
 </figure>
 <p>This window shows the blockade depth histogram calculated from the meta-data output by <em>MOSAIC</em>.</p>
 <ul class="simple">
-<li><p><strong>Filter</strong>: The data displayed in the histogram can be restricted to events that fulfill specific user-defined criteria. For instance, the default filter <code class="docutils literal notranslate"><span class="pre">ResTime</span> <span class="pre">&gt;</span> <span class="pre">0.025</span></code> only includes events longer than 0.025 ms (or 25 <span class="math notranslate nohighlight">\(\mu s\)</span>). The GUI uses a <a class="reference external" href="https://en.wikipedia.org/wiki/SQL">SQL</a> <cite>select</cite> statement to restrict the events included in the histogram. The text in the <em>Filter</em> field represents the part of the query after the <cite>where</cite> clause, and allows the user to use standard <a class="reference external" href="https://en.wikipedia.org/wiki/SQL">SQL</a> syntax to narrow the results in the plot. See the <a class="reference internal" href="DatabaseStructure.html#working-with-sqlite-sec"><span class="std std-ref">Work with SQLite</span></a> section for details on <a class="reference external" href="https://en.wikipedia.org/wiki/SQL">SQL</a> syntax.</p></li>
+<li><p><strong>Filter</strong>: The data displayed in the histogram can be restricted to events that fulfill specific user-defined criteria. For instance, the default filter <code class="docutils literal notranslate"><span class="pre">ResTime</span> <span class="pre">&gt;</span> <span class="pre">0.025</span></code> only includes events longer than 0.025 ms (or 25 <span class="math notranslate nohighlight">\(\mu s\)</span>). The GUI uses a <a class="reference external" href="https://en.wikipedia.org/wiki/SQL">SQL</a> <cite>select</cite> statement to restrict the events included in the histogram. The text in the <em>Filter</em> field represents the part of the query after the <cite>where</cite> clause, and allows the user to use standard <a class="reference external" href="https://en.wikipedia.org/wiki/SQL">SQL</a> syntax to narrow the results in the plot. See the <a class="reference internal" href="WorkingWithSQLite.html#working-with-sqlite-sec"><span class="std std-ref">Work with SQLite</span></a> section for details on <a class="reference external" href="https://en.wikipedia.org/wiki/SQL">SQL</a> syntax.</p></li>
 <li><p><strong>Bins</strong>: The number of bins in the histogram are defined here. By default, 500 bins are used, but the user can change this necessary.</p></li>
 <li><p><strong>Detect Peaks</strong>: Checking <em>Detect Peaks</em> enables a wavelet-based peak detection algorithm. The wavelet level slider controls the sensitivity of the peak detection. Sliding it to the right will decrease the number of peaks picked up. The peaks detected are represented with red dots. Mousing over the detected peaks cause the coordinates of the peak to be displayed in the lower right hand corner of the window. The detected peaks can also be exported to a CSV file from the file menu <code class="docutils literal notranslate"><span class="pre">File&gt;Save</span> <span class="pre">Histogram</span></code>.</p></li>
 </ul>
@@ -245,7 +253,7 @@
       
     </p>
     <p>
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 3.5.4.<br/>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 7.0.0.<br/>
     </p>
   </div>
 </footer> -->

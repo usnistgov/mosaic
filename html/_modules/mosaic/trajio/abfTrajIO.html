@@ -1,19 +1,18 @@
 <!DOCTYPE html>
 
-<html>
+<html lang="en">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>mosaic.trajio.abfTrajIO &#8212; MOSAIC v2.2 documentation</title>
-    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="../../../_static/bootstrap-sphinx.css" type="text/css" />
+    <title>mosaic.trajio.abfTrajIO &#8212; MOSAIC v2.4 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/bootstrap-sphinx.css" />
     <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css" />
     <link rel="stylesheet" type="text/css" href="../../../_static/style.css" />
-    <script id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
-    <script src="../../../_static/jquery.js"></script>
-    <script src="../../../_static/underscore.js"></script>
+    <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
     <script src="../../../_static/doctools.js"></script>
-    <link rel="shortcut icon" href="../../../_static/favicon.ico"/>
+    <script src="../../../_static/sphinx_highlight.js"></script>
+    <link rel="icon" href="../../../_static/favicon.ico"/>
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" />
 
@@ -21,13 +20,22 @@
 <meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
 <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
 <meta name="apple-mobile-web-app-capable" content="yes">
-<script type="text/javascript" src="../../../_static/js/jquery-1.11.0.min.js "></script>
-<script type="text/javascript" src="../../../_static/js/jquery-fix.js "></script>
-<script type="text/javascript" src="../../../_static/bootstrap-3.3.7/js/bootstrap.min.js "></script>
-<script type="text/javascript" src="../../../_static/bootstrap-sphinx.js "></script>
+<script type="text/javascript" src="../../../_static/js/jquery-1.12.4.min.js"></script>
+<script type="text/javascript" src="../../../_static/js/jquery-fix.js"></script>
+<script type="text/javascript" src="../../../_static/bootstrap-3.4.1/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="../../../_static/bootstrap-sphinx.js"></script>
 
 	<script async type="text/javascript" id="_fed_an_ua_tag" src="https://dap.digitalgov.gov/Universal-Federated-Analytics-Min.js?agency=DOC&subagency=NIST&pua=UA-66610693-1&yt=true&exts=ppsx,pps,f90,sch,rtf,wrl,txz,m1v,xlsm,msi,xsd,f,tif,eps,mpg,xml,pl,xlt,c"></script>	
 
+	<!-- Google tag (gtag.js) -->
+	<script async src="https://www.googletagmanager.com/gtag/js?id=G-RJSMY46M5C"></script>
+	<script>
+	  window.dataLayer = window.dataLayer || [];
+	  function gtag(){dataLayer.push(arguments);}
+	  gtag('js', new Date());
+
+	  gtag('config', 'G-RJSMY46M5C');
+	</script>
 	<meta name="theme-color" content="#283593">
 
   </head><body>
@@ -41,9 +49,9 @@
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </button>
-        <a class="navbar-brand" href="../../../index.html"><span><img src="../../../_static/icon_48.png"></span>
+        <a class="navbar-brand" href="../../../index.html">
            </a>
-        <span class="navbar-text navbar-version pull-left"><b>v2.2</b></span>
+        <span class="navbar-text navbar-version pull-left"><b>v2.4</b></span>
       </div>
 
         <div class="collapse navbar-collapse nav-collapse">
@@ -121,13 +129,14 @@
 <span class="sd">	:License:	See LICENSE.TXT</span>
 <span class="sd">	:ChangeLog:</span>
 <span class="sd">	.. line-block::</span>
+<span class="sd">		03/20/23 	AB  Use pyabf to read ABF files.</span>
 <span class="sd">		9/13/15 	AB 	Updated logging to use mosaicLogFormat class</span>
 <span class="sd">		3/28/15 	AB 	Updated file read code to match new metaTrajIO API.</span>
 <span class="sd">		5/23/13		AB	Initial version</span>
 
 <span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">import</span> <span class="nn">pyabf</span>
 <span class="kn">import</span> <span class="nn">mosaic.trajio.metaTrajIO</span> <span class="k">as</span> <span class="nn">metaTrajIO</span>
-<span class="kn">import</span> <span class="nn">mosaic.trajio.abf.abf</span> <span class="k">as</span> <span class="nn">abf</span>
 <span class="kn">import</span> <span class="nn">mosaic.utilities.mosaicLogging</span> <span class="k">as</span> <span class="nn">mlog</span>
 
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
@@ -135,7 +144,7 @@
 <span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;abfTrajIO&quot;</span><span class="p">]</span>
 
 <div class="viewcode-block" id="abfTrajIO"><a class="viewcode-back" href="../../../doc/settingsFile.html#mosaic.trajio.abfTrajIO.abfTrajIO">[docs]</a><span class="k">class</span> <span class="nc">abfTrajIO</span><span class="p">(</span><span class="n">metaTrajIO</span><span class="o">.</span><span class="n">metaTrajIO</span><span class="p">):</span>
-	<span class="sd">&quot;&quot;&quot;</span>
+<span class="w">	</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">		Read ABF1 and ABF2 file formats. Currently, only </span>
 <span class="sd">		gap-free mode and single channel recordings are supported.</span>
 
@@ -146,7 +155,9 @@
 <span class="sd">			&quot;abfTrajIO&quot; : {</span>
 <span class="sd">	                &quot;filter&quot;                        : &quot;*.abf&quot;,</span>
 <span class="sd">	                &quot;start&quot;                         : 0.0,</span>
-<span class="sd">	                &quot;dcOffset&quot;                      : 0.0</span>
+<span class="sd">	                &quot;dcOffset&quot;                      : 0.0,</span>
+<span class="sd">	                &quot;sweepNumber&quot;					: 0,</span>
+<span class="sd">	                &quot;channel&quot;						: 0</span>
 <span class="sd">	        	}</span>
 <span class="sd">        </span>
 
@@ -158,7 +169,7 @@
 		<span class="bp">self</span><span class="o">.</span><span class="n">abfLogger</span><span class="o">=</span><span class="n">mlog</span><span class="o">.</span><span class="n">mosaicLogging</span><span class="p">()</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="vm">__name__</span><span class="p">)</span>
 	
 <div class="viewcode-block" id="abfTrajIO.readdata"><a class="viewcode-back" href="../../../api-doc/mosaic.traj.html#mosaic.trajio.abfTrajIO.abfTrajIO.readdata">[docs]</a>	<span class="k">def</span> <span class="nf">readdata</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fname</span><span class="p">):</span>
-		<span class="sd">&quot;&quot;&quot;</span>
+<span class="w">		</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">			Read one or more files and append their data to the data pipeline.</span>
 <span class="sd">			Set a class attribute Fs with the sampling frequency in Hz.</span>
 
@@ -174,25 +185,37 @@
 
 <span class="sd">				- `SamplingRateChangedError` : if the sampling rate for any data file differs from previous</span>
 <span class="sd">		&quot;&quot;&quot;</span>
-		<span class="p">[</span><span class="n">freq</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">fileFormat</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">bandwidth</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">gain</span><span class="p">,</span> <span class="n">dat</span><span class="p">]</span> <span class="o">=</span> <span class="n">abf</span><span class="o">.</span><span class="n">abfload_gp</span><span class="p">(</span><span class="n">fname</span><span class="p">)</span>
-	
-		<span class="c1"># set the sampling frequency in Hz. The times are in ms.</span>
+		<span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;sweepNumber&#39;</span><span class="p">)</span> <span class="ow">or</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;channel&#39;</span><span class="p">):</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">sweepNumber</span><span class="o">=</span><span class="mi">0</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">channel</span><span class="o">=</span><span class="mi">0</span>
+
+		<span class="c1"># additional meta data</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">fileFormat</span><span class="o">=</span><span class="s1">&#39;abf&#39;</span>
+
+		<span class="n">abf</span><span class="o">=</span><span class="n">pyabf</span><span class="o">.</span><span class="n">ABF</span><span class="p">(</span><span class="n">fname</span><span class="p">)</span>
+		<span class="n">abf</span><span class="o">.</span><span class="n">setSweep</span><span class="p">(</span><span class="n">sweepNumber</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">sweepNumber</span><span class="p">,</span> <span class="n">channel</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">channel</span><span class="p">)</span>
+		<span class="n">scale</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_currentScale</span><span class="p">(</span><span class="n">abf</span><span class="p">)</span>
+
 		<span class="c1"># If the Fs attribute doesn&#39;t exist set it</span>
 		<span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;Fs&#39;</span><span class="p">):</span>	
-			<span class="bp">self</span><span class="o">.</span><span class="n">Fs</span><span class="o">=</span><span class="n">freq</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">Fs</span><span class="o">=</span><span class="n">abf</span><span class="o">.</span><span class="n">dataRate</span>
 		<span class="c1"># else check if it s the same as before</span>
 		<span class="k">else</span><span class="p">:</span>
-			<span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">Fs</span><span class="o">!=</span><span class="n">freq</span><span class="p">:</span>
+			<span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">Fs</span><span class="o">!=</span><span class="n">abf</span><span class="o">.</span><span class="n">dataRate</span><span class="p">:</span>
 				<span class="k">raise</span> <span class="n">metaTrajIO</span><span class="o">.</span><span class="n">SamplingRateChangedError</span><span class="p">(</span><span class="s2">&quot;The sampling rate in the data file &#39;</span><span class="si">{0}</span><span class="s2">&#39; has changed.&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">f</span><span class="p">))</span>
 
-		<span class="k">return</span> <span class="n">dat</span></div>
+		<span class="k">return</span> <span class="n">abf</span><span class="o">.</span><span class="n">sweepY</span><span class="o">*</span><span class="n">scale</span></div>
 
 	<span class="k">def</span> <span class="nf">_formatsettings</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-		<span class="sd">&quot;&quot;&quot;</span>
+<span class="w">		</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">			Log settings strings</span>
 <span class="sd">		&quot;&quot;&quot;</span>
-		<span class="bp">self</span><span class="o">.</span><span class="n">abfLogger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span> <span class="s1">&#39;Lowpass filter = </span><span class="si">{0}</span><span class="s1"> kHz&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">bandwidth</span><span class="o">*</span><span class="mf">0.001</span><span class="p">)</span> <span class="p">)</span>
-		<span class="bp">self</span><span class="o">.</span><span class="n">abfLogger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span> <span class="s1">&#39;Signal gain = </span><span class="si">{0}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">gain</span><span class="p">)</span> <span class="p">)</span></div>
+		<span class="bp">self</span><span class="o">.</span><span class="n">abfLogger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span> <span class="s1">&#39;Sweep number = </span><span class="si">{0}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sweepNumber</span><span class="p">)</span> <span class="p">)</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">abfLogger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span> <span class="s1">&#39;Channel = </span><span class="si">{0}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">channel</span><span class="p">)</span> <span class="p">)</span>
+
+	<span class="k">def</span> <span class="nf">_currentScale</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">abf</span><span class="p">):</span>
+		<span class="k">if</span> <span class="s2">&quot;pA&quot;</span> <span class="ow">in</span> <span class="n">abf</span><span class="o">.</span><span class="n">sweepLabelY</span> <span class="ow">or</span> <span class="s2">&quot;pA&quot;</span> <span class="ow">in</span> <span class="n">abf</span><span class="o">.</span><span class="n">sweepUnitsY</span><span class="p">:</span> <span class="k">return</span> <span class="mi">1</span>
+		<span class="k">if</span> <span class="s2">&quot;nA&quot;</span> <span class="ow">in</span> <span class="n">abf</span><span class="o">.</span><span class="n">sweepLabelY</span> <span class="ow">or</span> <span class="s2">&quot;nA&quot;</span> <span class="ow">in</span> <span class="n">abf</span><span class="o">.</span><span class="n">sweepUnitsY</span><span class="p">:</span> <span class="k">return</span> <span class="mi">1000</span></div>
 
 </pre></div>
 
@@ -208,7 +231,7 @@
       
     </p>
     <p>
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 3.5.4.<br/>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 7.0.0.<br/>
     </p>
   </div>
 </footer> -->

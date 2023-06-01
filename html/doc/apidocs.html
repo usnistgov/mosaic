@@ -1,20 +1,19 @@
 <!DOCTYPE html>
 
-<html>
+<html lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
-    <title>14. API Documentation &#8212; MOSAIC v2.2 documentation</title>
-    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="../_static/bootstrap-sphinx.css" type="text/css" />
+    <title>14. API Documentation &#8212; MOSAIC v2.4 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/bootstrap-sphinx.css" />
     <link rel="stylesheet" type="text/css" href="../_static/graphviz.css" />
     <link rel="stylesheet" type="text/css" href="../_static/style.css" />
-    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-    <script src="../_static/jquery.js"></script>
-    <script src="../_static/underscore.js"></script>
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
     <script src="../_static/doctools.js"></script>
-    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <script src="../_static/sphinx_highlight.js"></script>
+    <link rel="icon" href="../_static/favicon.ico"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="14.1.1. Top-Level Interfaces" href="../api-doc/mosaic.html" />
@@ -24,13 +23,22 @@
 <meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
 <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
 <meta name="apple-mobile-web-app-capable" content="yes">
-<script type="text/javascript" src="../_static/js/jquery-1.11.0.min.js "></script>
-<script type="text/javascript" src="../_static/js/jquery-fix.js "></script>
-<script type="text/javascript" src="../_static/bootstrap-3.3.7/js/bootstrap.min.js "></script>
-<script type="text/javascript" src="../_static/bootstrap-sphinx.js "></script>
+<script type="text/javascript" src="../_static/js/jquery-1.12.4.min.js"></script>
+<script type="text/javascript" src="../_static/js/jquery-fix.js"></script>
+<script type="text/javascript" src="../_static/bootstrap-3.4.1/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="../_static/bootstrap-sphinx.js"></script>
 
 	<script async type="text/javascript" id="_fed_an_ua_tag" src="https://dap.digitalgov.gov/Universal-Federated-Analytics-Min.js?agency=DOC&subagency=NIST&pua=UA-66610693-1&yt=true&exts=ppsx,pps,f90,sch,rtf,wrl,txz,m1v,xlsm,msi,xsd,f,tif,eps,mpg,xml,pl,xlt,c"></script>	
 
+	<!-- Google tag (gtag.js) -->
+	<script async src="https://www.googletagmanager.com/gtag/js?id=G-RJSMY46M5C"></script>
+	<script>
+	  window.dataLayer = window.dataLayer || [];
+	  function gtag(){dataLayer.push(arguments);}
+	  gtag('js', new Date());
+
+	  gtag('config', 'G-RJSMY46M5C');
+	</script>
 	<meta name="theme-color" content="#283593">
 
   </head><body>
@@ -44,9 +52,9 @@
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </button>
-        <a class="navbar-brand" href="../index.html"><span><img src="../_static/icon_48.png"></span>
+        <a class="navbar-brand" href="../index.html">
            </a>
-        <span class="navbar-text navbar-version pull-left"><b>v2.2</b></span>
+        <span class="navbar-text navbar-version pull-left"><b>v2.4</b></span>
       </div>
 
         <div class="collapse navbar-collapse nav-collapse">
@@ -114,9 +122,9 @@
     <div class="body col-md-12 content" role="main">
       
   <section id="api-documentation">
-<span id="api-docs-page"></span><h1><span class="section-number">14. </span>API Documentation<a class="headerlink" href="#api-documentation" title="Permalink to this headline">¶</a></h1>
+<span id="api-docs-page"></span><h1><span class="section-number">14. </span>API Documentation<a class="headerlink" href="#api-documentation" title="Permalink to this heading">¶</a></h1>
 <p><em>MOSAIC</em> is designed using object oriented tools, which makes it easy to extend. The API documentation provides class level descriptions of the different modules that can be used in customized code. Meta-Classes (<em>blue</em>) define interfaces to five key parts of MOSAIC: time-series IO (<code class="xref py py-class docutils literal notranslate"><span class="pre">metaTrajIO</span></code>), time-series filtering (<code class="xref py py-class docutils literal notranslate"><span class="pre">metaIOFilter</span></code>), analysis output (<code class="xref py py-class docutils literal notranslate"><span class="pre">metaMDIO</span></code>), event partition and segmenting (<code class="xref py py-class docutils literal notranslate"><span class="pre">metaEventPartition</span></code>), and event processing (<code class="xref py py-class docutils literal notranslate"><span class="pre">metaEventProcessor</span></code>). Sub-classing any of these meta classes and implementing their interface functions allows one to extend <em>MOSAIC</em>, while maintaining compatibility with other parts of the program. The diagram below shows the class inheritence in <em>MOSAIC</em>, with top-level classes in <em>gray</em>.</p>
-<div class="graphviz"><img src="../_images/graphviz-9ab132e45d77f3d9facf595378e1712866ed2fce.png" alt="digraph &quot;Graphical Class Hierarchy&quot;
+digraph &quot;Graphical Class Hierarchy&quot;
 {
   graph [ dpi = 1200 ];
   size=&quot;1,0.75&quot;;
@@ -163,66 +171,161 @@
   Node19 [label=&quot;mosaic.tsvTrajIO.tsvTrajIO&quot;,height=0.2,width=0.4,color=&quot;black&quot;, fillcolor=&quot;white&quot;, style=&quot;filled&quot;];
   Node1 -&gt; Node20 [dir=&quot;back&quot;, width=1.0, penwidth=2.5,color=&quot;midnightblue&quot;,fontsize=&quot;20&quot;,style=&quot;solid&quot;,fontname=&quot;Helvetica&quot;];
   Node20 [label=&quot;mosaic.SingleChannelAnalysis.\lSingleChannelAnalysis&quot;,height=0.2,width=0.4,color=&quot;black&quot;, fillcolor=&quot;grey88&quot;, style=&quot;filled&quot;];
-}" class="graphviz" /></div>
+}
 <section id="projname-modules">
-<h2><span class="section-number">14.1. </span><em>MOSAIC</em> Modules<a class="headerlink" href="#projname-modules" title="Permalink to this headline">¶</a></h2>
+<h2><span class="section-number">14.1. </span><em>MOSAIC</em> Modules<a class="headerlink" href="#projname-modules" title="Permalink to this heading">¶</a></h2>
 <div class="toctree-wrapper compound">
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../api-doc/mosaic.html">14.1.1. Top-Level Interfaces</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../api-doc/mosaic.html#module-mosaic.apps.SingleChannelAnalysis">14.1.1.1. mosaic.apps.SingleChannelAnalysis module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../api-doc/mosaic.html#module-mosaic.apps.ConvertTrajIO">14.1.1.2. mosaic.apps.ConvertTrajIO module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api-doc/mosaic.html#module-mosaic.apps.SingleChannelAnalysis">14.1.1.1. mosaic.apps.SingleChannelAnalysis module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../api-doc/mosaic.html#mosaic.apps.SingleChannelAnalysis.SingleChannelAnalysis"><code class="docutils literal notranslate"><span class="pre">SingleChannelAnalysis</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../api-doc/mosaic.html#module-mosaic.apps.ConvertTrajIO">14.1.1.2. mosaic.apps.ConvertTrajIO module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../api-doc/mosaic.html#mosaic.apps.ConvertTrajIO.ConvertTrajIO._filename"><code class="docutils literal notranslate"><span class="pre">ConvertTrajIO._filename()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../api-doc/mosaic.html#mosaic.apps.ConvertTrajIO.ConvertTrajIO._creategenerator"><code class="docutils literal notranslate"><span class="pre">ConvertTrajIO._creategenerator()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../api-doc/mosaic.html#mosaic.apps.ConvertTrajIO.ConvertTrajIO"><code class="docutils literal notranslate"><span class="pre">ConvertTrajIO</span></code></a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../api-doc/mosaic.meta.html">14.1.2. Meta-Classes</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../api-doc/mosaic.meta.html#mosaic-partition-metaeventpartition-module">14.1.2.1. mosaic.partition.metaEventPartition module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../api-doc/mosaic.meta.html#mosaic-process-metaeventprocessor-module">14.1.2.2. mosaic.process.metaEventProcessor module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../api-doc/mosaic.meta.html#mosaic-filters-metaiofilter-module">14.1.2.3. mosaic.filters.metaIOFilter module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../api-doc/mosaic.meta.html#mosaic-mdio-metamdio-module">14.1.2.4. mosaic.mdio.metaMDIO module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../api-doc/mosaic.meta.html#mosaic-trajio-metatrajio-module">14.1.2.5. mosaic.trajio.metaTrajIO module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api-doc/mosaic.meta.html#mosaic-partition-metaeventpartition-module">14.1.2.1. mosaic.partition.metaEventPartition module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../api-doc/mosaic.meta.html#mosaic.partition.metaEventPartition.metaEventPartition"><code class="docutils literal notranslate"><span class="pre">metaEventPartition</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../api-doc/mosaic.meta.html#mosaic-process-metaeventprocessor-module">14.1.2.2. mosaic.process.metaEventProcessor module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../api-doc/mosaic.meta.html#mosaic.process.metaEventProcessor.metaEventProcessor"><code class="docutils literal notranslate"><span class="pre">metaEventProcessor</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../api-doc/mosaic.meta.html#mosaic-filters-metaiofilter-module">14.1.2.3. mosaic.filters.metaIOFilter module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../api-doc/mosaic.meta.html#mosaic.filters.metaIOFilter.metaIOFilter"><code class="docutils literal notranslate"><span class="pre">metaIOFilter</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../api-doc/mosaic.meta.html#mosaic-mdio-metamdio-module">14.1.2.4. mosaic.mdio.metaMDIO module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../api-doc/mosaic.meta.html#mosaic.mdio.metaMDIO.metaMDIO"><code class="docutils literal notranslate"><span class="pre">metaMDIO</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../api-doc/mosaic.meta.html#mosaic-trajio-metatrajio-module">14.1.2.5. mosaic.trajio.metaTrajIO module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../api-doc/mosaic.meta.html#mosaic.trajio.metaTrajIO.metaTrajIO"><code class="docutils literal notranslate"><span class="pre">metaTrajIO</span></code></a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../api-doc/mosaic.traj.html">14.1.3. Time-Series IO</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../api-doc/mosaic.traj.html#mosaic-trajio-abftrajio-module">14.1.3.1. mosaic.trajio.abfTrajIO module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../api-doc/mosaic.traj.html#mosaic-trajio-qdftrajio-module">14.1.3.2. mosaic.trajio.qdfTrajIO module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../api-doc/mosaic.traj.html#mosaic-trajio-bintrajio-module">14.1.3.3. mosaic.trajio.binTrajIO module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../api-doc/mosaic.traj.html#mosaic-trajio-chimeratrajio-module">14.1.3.4. mosaic.trajio.chimeraTrajIO module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../api-doc/mosaic.traj.html#mosaic-trajio-tsvtrajio-module">14.1.3.5. mosaic.trajio.tsvTrajIO module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api-doc/mosaic.traj.html#mosaic-trajio-abftrajio-module">14.1.3.1. mosaic.trajio.abfTrajIO module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../api-doc/mosaic.traj.html#mosaic.trajio.abfTrajIO.abfTrajIO"><code class="docutils literal notranslate"><span class="pre">abfTrajIO</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../api-doc/mosaic.traj.html#mosaic-trajio-qdftrajio-module">14.1.3.2. mosaic.trajio.qdfTrajIO module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../api-doc/mosaic.traj.html#mosaic.trajio.qdfTrajIO.qdfTrajIO"><code class="docutils literal notranslate"><span class="pre">qdfTrajIO</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../api-doc/mosaic.traj.html#mosaic-trajio-bintrajio-module">14.1.3.3. mosaic.trajio.binTrajIO module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../api-doc/mosaic.traj.html#mosaic.trajio.binTrajIO.InvalidDataColumnError"><code class="docutils literal notranslate"><span class="pre">InvalidDataColumnError</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../api-doc/mosaic.traj.html#mosaic.trajio.binTrajIO.binTrajIO"><code class="docutils literal notranslate"><span class="pre">binTrajIO</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../api-doc/mosaic.traj.html#mosaic-trajio-chimeratrajio-module">14.1.3.4. mosaic.trajio.chimeraTrajIO module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../api-doc/mosaic.traj.html#mosaic.trajio.chimeraTrajIO.InvalidDataColumnError"><code class="docutils literal notranslate"><span class="pre">InvalidDataColumnError</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../api-doc/mosaic.traj.html#mosaic.trajio.chimeraTrajIO.chimeraTrajIO"><code class="docutils literal notranslate"><span class="pre">chimeraTrajIO</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../api-doc/mosaic.traj.html#mosaic-trajio-tsvtrajio-module">14.1.3.5. mosaic.trajio.tsvTrajIO module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../api-doc/mosaic.traj.html#mosaic.trajio.tsvTrajIO.tsvTrajIO"><code class="docutils literal notranslate"><span class="pre">tsvTrajIO</span></code></a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../api-doc/mosaic.filter.html">14.1.4. Time-Series Filters</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../api-doc/mosaic.filter.html#mosaic-filters-waveletdenoisefilter-module">14.1.4.1. mosaic.filters.waveletDenoiseFilter module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../api-doc/mosaic.filter.html#mosaic-filters-bessellowpassfilter-module">14.1.4.2. mosaic.filters.besselLowpassFilter module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../api-doc/mosaic.filter.html#mosaic-filters-convolutionfilter-module">14.1.4.3. mosaic.filters.convolutionFilter module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api-doc/mosaic.filter.html#mosaic-filters-waveletdenoisefilter-module">14.1.4.1. mosaic.filters.waveletDenoiseFilter module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../api-doc/mosaic.filter.html#mosaic.filters.waveletDenoiseFilter.waveletDenoiseFilter"><code class="docutils literal notranslate"><span class="pre">waveletDenoiseFilter</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../api-doc/mosaic.filter.html#mosaic-filters-bessellowpassfilter-module">14.1.4.2. mosaic.filters.besselLowpassFilter module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../api-doc/mosaic.filter.html#mosaic.filters.besselLowpassFilter.besselLowpassFilter"><code class="docutils literal notranslate"><span class="pre">besselLowpassFilter</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../api-doc/mosaic.filter.html#mosaic-filters-convolutionfilter-module">14.1.4.3. mosaic.filters.convolutionFilter module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../api-doc/mosaic.filter.html#mosaic.filters.convolutionFilter.convolutionFilter"><code class="docutils literal notranslate"><span class="pre">convolutionFilter</span></code></a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../api-doc/mosaic.partition.html">14.1.5. Event Partition and Segment</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../api-doc/mosaic.partition.html#mosaic-partition-eventsegment-module">14.1.5.1. mosaic.partition.eventSegment module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api-doc/mosaic.partition.html#mosaic-partition-eventsegment-module">14.1.5.1. mosaic.partition.eventSegment module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../api-doc/mosaic.partition.html#mosaic.partition.eventSegment.eventSegment"><code class="docutils literal notranslate"><span class="pre">eventSegment</span></code></a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../api-doc/mosaic.processing.html">14.1.6. Event Processing</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../api-doc/mosaic.processing.html#mosaic-process-adept2state-module">14.1.6.1. mosaic.process.adept2State module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../api-doc/mosaic.processing.html#mosaic-process-adept-module">14.1.6.2. mosaic.process.adept module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../api-doc/mosaic.processing.html#mosaic-process-cusumplus-module">14.1.6.3. mosaic.process.cusumPlus module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api-doc/mosaic.processing.html#mosaic-process-adept2state-module">14.1.6.1. mosaic.process.adept2State module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../api-doc/mosaic.processing.html#mosaic.process.adept2State.adept2State"><code class="docutils literal notranslate"><span class="pre">adept2State</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../api-doc/mosaic.processing.html#mosaic-process-adept-module">14.1.6.2. mosaic.process.adept module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../api-doc/mosaic.processing.html#mosaic.process.adept.InvalidEvent"><code class="docutils literal notranslate"><span class="pre">InvalidEvent</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../api-doc/mosaic.processing.html#mosaic.process.adept.adept"><code class="docutils literal notranslate"><span class="pre">adept</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../api-doc/mosaic.processing.html#mosaic-process-cusumplus-module">14.1.6.3. mosaic.process.cusumPlus module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../api-doc/mosaic.processing.html#mosaic.process.cusumPlus.InvalidEvent"><code class="docutils literal notranslate"><span class="pre">InvalidEvent</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../api-doc/mosaic.processing.html#mosaic.process.cusumPlus.cusumPlus"><code class="docutils literal notranslate"><span class="pre">cusumPlus</span></code></a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../api-doc/mosaic.output.html">14.1.7. Data Output</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../api-doc/mosaic.output.html#mosaic-mdio-sqlite3mdio-module">14.1.7.1. mosaic.mdio.sqlite3MDIO module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api-doc/mosaic.output.html#mosaic-mdio-sqlite3mdio-module">14.1.7.1. mosaic.mdio.sqlite3MDIO module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../api-doc/mosaic.output.html#mosaic.mdio.sqlite3MDIO.data_record"><code class="docutils literal notranslate"><span class="pre">data_record</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../api-doc/mosaic.output.html#mosaic.mdio.sqlite3MDIO.sqlite3MDIO"><code class="docutils literal notranslate"><span class="pre">sqlite3MDIO</span></code></a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../api-doc/mosaic.misc.html">14.1.8. Miscellaneous</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../api-doc/mosaic.misc.html#module-mosaic.settings">14.1.8.1. mosaic.settings module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../api-doc/mosaic.misc.html#mosaic-utilities-ionic-current-stats-module">14.1.8.2. mosaic.utilities.ionic_current_stats module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../api-doc/mosaic.misc.html#mosaic-utilities-util-module">14.1.8.3. mosaic.utilities.util module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../api-doc/mosaic.misc.html#mosaic-utilities-mosaiclogformat-module">14.1.8.4. mosaic.utilities.mosaicLogFormat module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../api-doc/mosaic.misc.html#mosaic-utilities-mosaiclogging-module">14.1.8.5. mosaic.utilities.mosaicLogging module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../api-doc/mosaic.misc.html#mosaic-utilities-mosaictiming-module">14.1.8.6. mosaic.utilities.mosaicTiming module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api-doc/mosaic.misc.html#module-mosaic.settings">14.1.8.1. mosaic.settings module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../api-doc/mosaic.misc.html#mosaic.settings.settings"><code class="docutils literal notranslate"><span class="pre">settings</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../api-doc/mosaic.misc.html#mosaic-utilities-ionic-current-stats-module">14.1.8.2. mosaic.utilities.ionic_current_stats module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../api-doc/mosaic.misc.html#mosaic.utilities.ionic_current_stats.OpenCurrentDist"><code class="docutils literal notranslate"><span class="pre">OpenCurrentDist()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../api-doc/mosaic.misc.html#mosaic-utilities-util-module">14.1.8.3. mosaic.utilities.util module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../api-doc/mosaic.misc.html#mosaic.utilities.util.avg"><code class="docutils literal notranslate"><span class="pre">avg()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../api-doc/mosaic.misc.html#mosaic.utilities.util.commonest"><code class="docutils literal notranslate"><span class="pre">commonest()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../api-doc/mosaic.misc.html#mosaic.utilities.util.decimate"><code class="docutils literal notranslate"><span class="pre">decimate()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../api-doc/mosaic.misc.html#mosaic.utilities.util.filter"><code class="docutils literal notranslate"><span class="pre">filter()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../api-doc/mosaic.misc.html#mosaic.utilities.util.flat2"><code class="docutils literal notranslate"><span class="pre">flat2()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../api-doc/mosaic.misc.html#mosaic.utilities.util.partition"><code class="docutils literal notranslate"><span class="pre">partition()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../api-doc/mosaic.misc.html#mosaic.utilities.util.sd"><code class="docutils literal notranslate"><span class="pre">sd()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../api-doc/mosaic.misc.html#mosaic.utilities.util.selectS"><code class="docutils literal notranslate"><span class="pre">selectS()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../api-doc/mosaic.misc.html#mosaic-utilities-mosaiclogformat-module">14.1.8.4. mosaic.utilities.mosaicLogFormat module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../api-doc/mosaic.misc.html#mosaic.utilities.mosaicLogFormat._d"><code class="docutils literal notranslate"><span class="pre">_d()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../api-doc/mosaic.misc.html#mosaic.utilities.mosaicLogFormat._dprop"><code class="docutils literal notranslate"><span class="pre">_dprop()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../api-doc/mosaic.misc.html#mosaic.utilities.mosaicLogFormat.mosaic_property"><code class="docutils literal notranslate"><span class="pre">mosaic_property</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../api-doc/mosaic.misc.html#mosaic-utilities-mosaiclogging-module">14.1.8.5. mosaic.utilities.mosaicLogging module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../api-doc/mosaic.misc.html#mosaic.utilities.mosaicLogging.MessageFormatter"><code class="docutils literal notranslate"><span class="pre">MessageFormatter</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../api-doc/mosaic.misc.html#mosaic.utilities.mosaicLogging.mosaicLogging"><code class="docutils literal notranslate"><span class="pre">mosaicLogging</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../api-doc/mosaic.misc.html#mosaic-utilities-mosaictiming-module">14.1.8.6. mosaic.utilities.mosaicTiming module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../api-doc/mosaic.misc.html#mosaic.utilities.mosaicTiming.mosaicTiming"><code class="docutils literal notranslate"><span class="pre">mosaicTiming</span></code></a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="../api-doc/mosaic.misc.html#mosaic-utilities-fit-funcs-module">14.1.8.7. mosaic.utilities.fit_funcs module</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../api-doc/mosaicscripts.html">14.1.9. MOSAIC Script Repository</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../api-doc/mosaicscripts.html#module-mosaicscripts.plots.timeseries">14.1.9.1. mosaicscripts.plots.timeseries module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../api-doc/mosaicscripts.html#module-mosaicscripts.plots.histogram">14.1.9.2. mosaicscripts.plots.histogram module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../api-doc/mosaicscripts.html#module-mosaicscripts.plots.contour">14.1.9.3. mosaicscripts.plots.contour module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api-doc/mosaicscripts.html#mosaicscripts-plots-timeseries-module">14.1.9.1. mosaicscripts.plots.timeseries module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api-doc/mosaicscripts.html#mosaicscripts-plots-histogram-module">14.1.9.2. mosaicscripts.plots.histogram module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api-doc/mosaicscripts.html#mosaicscripts-plots-contour-module">14.1.9.3. mosaicscripts.plots.contour module</a></li>
 </ul>
 </li>
 </ul>
@@ -243,7 +346,7 @@
       
     </p>
     <p>
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 3.5.4.<br/>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 7.0.0.<br/>
     </p>
   </div>
 </footer> -->

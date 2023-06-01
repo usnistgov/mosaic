@@ -1,19 +1,18 @@
 <!DOCTYPE html>
 
-<html>
+<html lang="en">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>mosaic.process.adept2State &#8212; MOSAIC v2.2 documentation</title>
-    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="../../../_static/bootstrap-sphinx.css" type="text/css" />
+    <title>mosaic.process.adept2State &#8212; MOSAIC v2.4 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/bootstrap-sphinx.css" />
     <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css" />
     <link rel="stylesheet" type="text/css" href="../../../_static/style.css" />
-    <script id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
-    <script src="../../../_static/jquery.js"></script>
-    <script src="../../../_static/underscore.js"></script>
+    <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
     <script src="../../../_static/doctools.js"></script>
-    <link rel="shortcut icon" href="../../../_static/favicon.ico"/>
+    <script src="../../../_static/sphinx_highlight.js"></script>
+    <link rel="icon" href="../../../_static/favicon.ico"/>
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" />
 
@@ -21,13 +20,22 @@
 <meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
 <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
 <meta name="apple-mobile-web-app-capable" content="yes">
-<script type="text/javascript" src="../../../_static/js/jquery-1.11.0.min.js "></script>
-<script type="text/javascript" src="../../../_static/js/jquery-fix.js "></script>
-<script type="text/javascript" src="../../../_static/bootstrap-3.3.7/js/bootstrap.min.js "></script>
-<script type="text/javascript" src="../../../_static/bootstrap-sphinx.js "></script>
+<script type="text/javascript" src="../../../_static/js/jquery-1.12.4.min.js"></script>
+<script type="text/javascript" src="../../../_static/js/jquery-fix.js"></script>
+<script type="text/javascript" src="../../../_static/bootstrap-3.4.1/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="../../../_static/bootstrap-sphinx.js"></script>
 
 	<script async type="text/javascript" id="_fed_an_ua_tag" src="https://dap.digitalgov.gov/Universal-Federated-Analytics-Min.js?agency=DOC&subagency=NIST&pua=UA-66610693-1&yt=true&exts=ppsx,pps,f90,sch,rtf,wrl,txz,m1v,xlsm,msi,xsd,f,tif,eps,mpg,xml,pl,xlt,c"></script>	
 
+	<!-- Google tag (gtag.js) -->
+	<script async src="https://www.googletagmanager.com/gtag/js?id=G-RJSMY46M5C"></script>
+	<script>
+	  window.dataLayer = window.dataLayer || [];
+	  function gtag(){dataLayer.push(arguments);}
+	  gtag('js', new Date());
+
+	  gtag('config', 'G-RJSMY46M5C');
+	</script>
 	<meta name="theme-color" content="#283593">
 
   </head><body>
@@ -41,9 +49,9 @@
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </button>
-        <a class="navbar-brand" href="../../../index.html"><span><img src="../../../_static/icon_48.png"></span>
+        <a class="navbar-brand" href="../../../index.html">
            </a>
-        <span class="navbar-text navbar-version pull-left"><b>v2.2</b></span>
+        <span class="navbar-text navbar-version pull-left"><b>v2.4</b></span>
       </div>
 
         <div class="collapse navbar-collapse nav-collapse">
@@ -149,12 +157,12 @@
 <span class="kn">import</span> <span class="nn">scipy.optimize</span>
 <span class="kn">from</span> <span class="nn">scipy.optimize</span> <span class="kn">import</span> <span class="n">curve_fit</span>
 
-<span class="kn">from</span> <span class="nn">lmfit</span> <span class="kn">import</span> <span class="n">minimize</span><span class="p">,</span> <span class="n">Parameters</span><span class="p">,</span> <span class="n">Parameter</span><span class="p">,</span> <span class="n">report_errors</span><span class="p">,</span> <span class="n">Minimizer</span>
+<span class="kn">from</span> <span class="nn">lmfit</span> <span class="kn">import</span> <span class="n">minimize</span><span class="p">,</span> <span class="n">Parameters</span><span class="p">,</span> <span class="n">Parameter</span><span class="p">,</span> <span class="n">Minimizer</span>
 
 <span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;adept2State&quot;</span><span class="p">]</span>
 
 <span class="k">class</span> <span class="nc">datblock</span><span class="p">:</span>
-	<span class="sd">&quot;&quot;&quot; </span>
+<span class="w">	</span><span class="sd">&quot;&quot;&quot; </span>
 <span class="sd">		Smart data block that holds time-series data and keeps track</span>
 <span class="sd">		of its mean and SD.</span>
 <span class="sd">	&quot;&quot;&quot;</span>
@@ -165,7 +173,7 @@
 
 
 <div class="viewcode-block" id="adept2State"><a class="viewcode-back" href="../../../api-doc/mosaic.processing.html#mosaic.process.adept2State.adept2State">[docs]</a><span class="k">class</span> <span class="nc">adept2State</span><span class="p">(</span><span class="n">metaEventProcessor</span><span class="o">.</span><span class="n">metaEventProcessor</span><span class="p">):</span>
-	<span class="sd">&quot;&quot;&quot; </span>
+<span class="w">	</span><span class="sd">&quot;&quot;&quot; </span>
 <span class="sd">		Analyze an event that is characteristic of PEG blockades. This method includes system </span>
 <span class="sd">		information in the analysis, specifically the filtering effects (throught the RC constant)</span>
 <span class="sd">		of either amplifiers or the membrane/nanopore complex. The analysis generates several </span>
@@ -187,7 +195,7 @@
 <span class="sd">	&quot;&quot;&quot;</span>
 
 	<span class="k">def</span> <span class="nf">_init</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-		<span class="sd">&quot;&quot;&quot; </span>
+<span class="w">		</span><span class="sd">&quot;&quot;&quot; </span>
 <span class="sd">			Initialize the single step analysis class.</span>
 <span class="sd">		&quot;&quot;&quot;</span>
 		<span class="c1"># initialize the object&#39;s metadata (to -1) as class attributes</span>
@@ -226,7 +234,7 @@
 	<span class="c1"># Interface functions implemented starting here</span>
 	<span class="c1">###########################################################################</span>
 	<span class="k">def</span> <span class="nf">_processEvent</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-		<span class="sd">&quot;&quot;&quot; </span>
+<span class="w">		</span><span class="sd">&quot;&quot;&quot; </span>
 <span class="sd">			This function implements the core logic to analyze one single step-event.</span>
 <span class="sd">		&quot;&quot;&quot;</span>
 		<span class="k">try</span><span class="p">:</span>
@@ -239,7 +247,7 @@
 			<span class="k">raise</span>
 
 	<span class="k">def</span> <span class="nf">_mdList</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-		<span class="sd">&quot;&quot;&quot; </span>
+<span class="w">		</span><span class="sd">&quot;&quot;&quot; </span>
 <span class="sd">			Return a list of meta-data from the analysis of single step events. We explicitly</span>
 <span class="sd">			control the order of the data to keep formatting consistent. 				</span>
 <span class="sd">		&quot;&quot;&quot;</span>
@@ -258,7 +266,7 @@
 				<span class="p">]</span>
 
 	<span class="k">def</span> <span class="nf">_mdHeadingDataType</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-		<span class="sd">&quot;&quot;&quot; </span>
+<span class="w">		</span><span class="sd">&quot;&quot;&quot; </span>
 <span class="sd">			Return a list of meta-data tags data types.</span>
 <span class="sd">		&quot;&quot;&quot;</span>
 		<span class="k">return</span> <span class="p">[</span>
@@ -276,7 +284,7 @@
 				<span class="p">]</span>
 
 	<span class="k">def</span> <span class="nf">_mdHeadings</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-		<span class="sd">&quot;&quot;&quot; </span>
+<span class="w">		</span><span class="sd">&quot;&quot;&quot; </span>
 <span class="sd">			Explicity set the metadata to print out.</span>
 <span class="sd">		&quot;&quot;&quot;</span>
 		<span class="k">return</span> <span class="p">[</span>
@@ -294,14 +302,14 @@
 				<span class="p">]</span>
 
 <div class="viewcode-block" id="adept2State.mdAveragePropertiesList"><a class="viewcode-back" href="../../../api-doc/mosaic.processing.html#mosaic.process.adept2State.adept2State.mdAveragePropertiesList">[docs]</a>	<span class="k">def</span> <span class="nf">mdAveragePropertiesList</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-		<span class="sd">&quot;&quot;&quot; </span>
+<span class="w">		</span><span class="sd">&quot;&quot;&quot; </span>
 <span class="sd">			Return a list of meta-data properties that will be averaged </span>
 <span class="sd">			and displayed at the end of a run. </span>
 <span class="sd">		&quot;&quot;&quot;</span>
 		<span class="k">pass</span></div>
 
 <div class="viewcode-block" id="adept2State.formatsettings"><a class="viewcode-back" href="../../../api-doc/mosaic.processing.html#mosaic.process.adept2State.adept2State.formatsettings">[docs]</a>	<span class="k">def</span> <span class="nf">formatsettings</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-		<span class="sd">&quot;&quot;&quot; </span>
+<span class="w">		</span><span class="sd">&quot;&quot;&quot; </span>
 <span class="sd">			Return a formatted string of settings for display</span>
 <span class="sd">		&quot;&quot;&quot;</span>
 		<span class="bp">self</span><span class="o">.</span><span class="n">a2sLogger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span> <span class="s1">&#39;</span><span class="se">\t</span><span class="s1">Event processing settings:&#39;</span> <span class="p">)</span>
@@ -362,7 +370,7 @@
 			<span class="n">optfit</span><span class="o">=</span><span class="n">Minimizer</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__objfunc</span><span class="p">,</span> <span class="n">params</span><span class="p">,</span> <span class="n">fcn_args</span><span class="o">=</span><span class="p">(</span><span class="n">ts</span><span class="p">,</span><span class="n">edat</span><span class="p">,))</span>
 			<span class="n">optfit</span><span class="o">.</span><span class="n">prepare_fit</span><span class="p">()</span>
 
-			<span class="n">result</span><span class="o">=</span><span class="n">optfit</span><span class="o">.</span><span class="n">leastsq</span><span class="p">(</span><span class="n">xtol</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">FitTol</span><span class="p">,</span><span class="n">ftol</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">FitTol</span><span class="p">,</span><span class="n">maxfev</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">FitIters</span><span class="p">)</span>
+			<span class="n">result</span><span class="o">=</span><span class="n">optfit</span><span class="o">.</span><span class="n">leastsq</span><span class="p">(</span><span class="n">xtol</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">FitTol</span><span class="p">,</span><span class="n">ftol</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">FitTol</span><span class="p">,</span><span class="n">max_nfev</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">FitIters</span><span class="p">)</span>
 
 			<span class="c1"># print optfit.params[&#39;b&#39;].value, optfit.params[&#39;b&#39;].value - optfit.params[&#39;a&#39;].value, optfit.params[&#39;mu1&#39;].value, optfit.params[&#39;mu2&#39;].value</span>
 			<span class="k">if</span> <span class="n">result</span><span class="o">.</span><span class="n">success</span><span class="p">:</span>
@@ -413,7 +421,7 @@
 	 		<span class="bp">self</span><span class="o">.</span><span class="n">rejectEvent</span><span class="p">(</span><span class="s1">&#39;eFitFailure&#39;</span><span class="p">)</span>
 
 	<span class="k">def</span> <span class="nf">__threadList</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">l1</span><span class="p">,</span> <span class="n">l2</span><span class="p">):</span>
-		<span class="sd">&quot;&quot;&quot; thread two lists	&quot;&quot;&quot;</span>
+<span class="w">		</span><span class="sd">&quot;&quot;&quot; thread two lists	&quot;&quot;&quot;</span>
 		<span class="k">try</span><span class="p">:</span>
 			<span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">,</span><span class="n">y</span> <span class="p">:</span> <span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">),</span> <span class="n">l1</span><span class="p">,</span> <span class="n">l2</span> <span class="p">))</span>
 		<span class="k">except</span> <span class="ne">KeyboardInterrupt</span><span class="p">:</span>
@@ -432,7 +440,7 @@
 			<span class="k">return</span> <span class="o">-</span><span class="mi">1</span>
 
 	<span class="k">def</span> <span class="nf">__objfunc</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">params</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
-		<span class="sd">&quot;&quot;&quot; single step response model parameters &quot;&quot;&quot;</span>
+<span class="w">		</span><span class="sd">&quot;&quot;&quot; single step response model parameters &quot;&quot;&quot;</span>
 		<span class="k">try</span><span class="p">:</span>
 			<span class="n">tau1</span> <span class="o">=</span> <span class="n">params</span><span class="p">[</span><span class="s1">&#39;tau1&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value</span>
 			<span class="n">tau2</span> <span class="o">=</span> <span class="n">params</span><span class="p">[</span><span class="s1">&#39;tau2&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value</span>
@@ -460,7 +468,7 @@
       
     </p>
     <p>
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 3.5.4.<br/>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 7.0.0.<br/>
     </p>
   </div>
 </footer> -->

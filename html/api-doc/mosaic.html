@@ -1,20 +1,19 @@
 <!DOCTYPE html>
 
-<html>
+<html lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
-    <title>14.1.1. Top-Level Interfaces &#8212; MOSAIC v2.2 documentation</title>
-    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="../_static/bootstrap-sphinx.css" type="text/css" />
+    <title>14.1.1. Top-Level Interfaces &#8212; MOSAIC v2.4 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/bootstrap-sphinx.css" />
     <link rel="stylesheet" type="text/css" href="../_static/graphviz.css" />
     <link rel="stylesheet" type="text/css" href="../_static/style.css" />
-    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-    <script src="../_static/jquery.js"></script>
-    <script src="../_static/underscore.js"></script>
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
     <script src="../_static/doctools.js"></script>
-    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <script src="../_static/sphinx_highlight.js"></script>
+    <link rel="icon" href="../_static/favicon.ico"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="14.1.2. Meta-Classes" href="mosaic.meta.html" />
@@ -24,13 +23,22 @@
 <meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
 <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
 <meta name="apple-mobile-web-app-capable" content="yes">
-<script type="text/javascript" src="../_static/js/jquery-1.11.0.min.js "></script>
-<script type="text/javascript" src="../_static/js/jquery-fix.js "></script>
-<script type="text/javascript" src="../_static/bootstrap-3.3.7/js/bootstrap.min.js "></script>
-<script type="text/javascript" src="../_static/bootstrap-sphinx.js "></script>
+<script type="text/javascript" src="../_static/js/jquery-1.12.4.min.js"></script>
+<script type="text/javascript" src="../_static/js/jquery-fix.js"></script>
+<script type="text/javascript" src="../_static/bootstrap-3.4.1/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="../_static/bootstrap-sphinx.js"></script>
 
 	<script async type="text/javascript" id="_fed_an_ua_tag" src="https://dap.digitalgov.gov/Universal-Federated-Analytics-Min.js?agency=DOC&subagency=NIST&pua=UA-66610693-1&yt=true&exts=ppsx,pps,f90,sch,rtf,wrl,txz,m1v,xlsm,msi,xsd,f,tif,eps,mpg,xml,pl,xlt,c"></script>	
 
+	<!-- Google tag (gtag.js) -->
+	<script async src="https://www.googletagmanager.com/gtag/js?id=G-RJSMY46M5C"></script>
+	<script>
+	  window.dataLayer = window.dataLayer || [];
+	  function gtag(){dataLayer.push(arguments);}
+	  gtag('js', new Date());
+
+	  gtag('config', 'G-RJSMY46M5C');
+	</script>
 	<meta name="theme-color" content="#283593">
 
   </head><body>
@@ -44,9 +52,9 @@
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </button>
-        <a class="navbar-brand" href="../index.html"><span><img src="../_static/icon_48.png"></span>
+        <a class="navbar-brand" href="../index.html">
            </a>
-        <span class="navbar-text navbar-version pull-left"><b>v2.2</b></span>
+        <span class="navbar-text navbar-version pull-left"><b>v2.4</b></span>
       </div>
 
         <div class="collapse navbar-collapse nav-collapse">
@@ -114,21 +122,21 @@
     <div class="body col-md-12 content" role="main">
       
   <section id="top-level-interfaces">
-<h1><span class="section-number">14.1.1. </span>Top-Level Interfaces<a class="headerlink" href="#top-level-interfaces" title="Permalink to this headline">¶</a></h1>
+<h1><span class="section-number">14.1.1. </span>Top-Level Interfaces<a class="headerlink" href="#top-level-interfaces" title="Permalink to this heading">¶</a></h1>
 <section id="module-mosaic.apps.SingleChannelAnalysis">
-<span id="mosaic-apps-singlechannelanalysis-module"></span><h2><span class="section-number">14.1.1.1. </span>mosaic.apps.SingleChannelAnalysis module<a class="headerlink" href="#module-mosaic.apps.SingleChannelAnalysis" title="Permalink to this headline">¶</a></h2>
+<span id="mosaic-apps-singlechannelanalysis-module"></span><h2><span class="section-number">14.1.1.1. </span>mosaic.apps.SingleChannelAnalysis module<a class="headerlink" href="#module-mosaic.apps.SingleChannelAnalysis" title="Permalink to this heading">¶</a></h2>
 <p>Top level module to run a single channel analysis.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Created</dt>
+<dt class="field-odd">Created<span class="colon">:</span></dt>
 <dd class="field-odd"><p>05/15/2014</p>
 </dd>
-<dt class="field-even">Author</dt>
+<dt class="field-even">Author<span class="colon">:</span></dt>
 <dd class="field-even"><p>Arvind Balijepalli &lt;<a class="reference external" href="mailto:arvind&#46;balijepalli&#37;&#52;&#48;nist&#46;gov">arvind<span>&#46;</span>balijepalli<span>&#64;</span>nist<span>&#46;</span>gov</a>&gt;</p>
 </dd>
-<dt class="field-odd">License</dt>
+<dt class="field-odd">License<span class="colon">:</span></dt>
 <dd class="field-odd"><p>See LICENSE.TXT</p>
 </dd>
-<dt class="field-even">ChangeLog</dt>
+<dt class="field-even">ChangeLog<span class="colon">:</span></dt>
 <dd class="field-even"><p></p></dd>
 </dl>
 <div class="line-block">
@@ -136,12 +144,12 @@
 <div class="line">5/15/14         AB      Initial version</div>
 </div>
 <dl class="py class">
-<dt id="mosaic.apps.SingleChannelAnalysis.SingleChannelAnalysis">
-<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">mosaic.apps.SingleChannelAnalysis.</span></code><code class="sig-name descname"><span class="pre">SingleChannelAnalysis</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dataPath</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">trajDataHnd</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dataFilterHnd</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">eventPartitionHnd</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">eventProcHnd</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/apps/SingleChannelAnalysis.html#SingleChannelAnalysis"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mosaic.apps.SingleChannelAnalysis.SingleChannelAnalysis" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<dt class="sig sig-object py" id="mosaic.apps.SingleChannelAnalysis.SingleChannelAnalysis">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mosaic.apps.SingleChannelAnalysis.</span></span><span class="sig-name descname"><span class="pre">SingleChannelAnalysis</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dataPath</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">trajDataHnd</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dataFilterHnd</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">eventPartitionHnd</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">eventProcHnd</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/apps/SingleChannelAnalysis.html#SingleChannelAnalysis"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mosaic.apps.SingleChannelAnalysis.SingleChannelAnalysis" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
 <p>Run a single channel analysis. This is the entry point class for the analysis.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><cite>dataPath</cite> : full path to the data directory</p></li>
 <li><p><cite>trajDataHnd</cite> : a handle to an implementation of <code class="xref py py-class docutils literal notranslate"><span class="pre">metaTrajIO</span></code></p></li>
@@ -153,11 +161,11 @@
 </dd>
 </dl>
 <dl class="py method">
-<dt id="mosaic.apps.SingleChannelAnalysis.SingleChannelAnalysis.Run">
-<code class="sig-name descname"><span class="pre">Run</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">forkProcess</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/apps/SingleChannelAnalysis.html#SingleChannelAnalysis.Run"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mosaic.apps.SingleChannelAnalysis.SingleChannelAnalysis.Run" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mosaic.apps.SingleChannelAnalysis.SingleChannelAnalysis.Run">
+<span class="sig-name descname"><span class="pre">Run</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">forkProcess</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/apps/SingleChannelAnalysis.html#SingleChannelAnalysis.Run"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mosaic.apps.SingleChannelAnalysis.SingleChannelAnalysis.Run" title="Permalink to this definition">¶</a></dt>
 <dd><p>Start an analysis.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><cite>forkProcess</cite> : start the analysis in a separate process if <em>True</em>. This option is useful when the main thread is used for other processing (e.g. GUI implementations).</p></li>
 </ul>
@@ -166,8 +174,8 @@
 </dd></dl>
 
 <dl class="py method">
-<dt id="mosaic.apps.SingleChannelAnalysis.SingleChannelAnalysis.Stop">
-<code class="sig-name descname"><span class="pre">Stop</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/apps/SingleChannelAnalysis.html#SingleChannelAnalysis.Stop"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mosaic.apps.SingleChannelAnalysis.SingleChannelAnalysis.Stop" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mosaic.apps.SingleChannelAnalysis.SingleChannelAnalysis.Stop">
+<span class="sig-name descname"><span class="pre">Stop</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/apps/SingleChannelAnalysis.html#SingleChannelAnalysis.Stop"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mosaic.apps.SingleChannelAnalysis.SingleChannelAnalysis.Stop" title="Permalink to this definition">¶</a></dt>
 <dd><p>Stop a running analysis.</p>
 </dd></dl>
 
@@ -175,40 +183,40 @@
 
 </section>
 <section id="module-mosaic.apps.ConvertTrajIO">
-<span id="mosaic-apps-converttrajio-module"></span><h2><span class="section-number">14.1.1.2. </span>mosaic.apps.ConvertTrajIO module<a class="headerlink" href="#module-mosaic.apps.ConvertTrajIO" title="Permalink to this headline">¶</a></h2>
+<span id="mosaic-apps-converttrajio-module"></span><h2><span class="section-number">14.1.1.2. </span>mosaic.apps.ConvertTrajIO module<a class="headerlink" href="#module-mosaic.apps.ConvertTrajIO" title="Permalink to this heading">¶</a></h2>
 <p>Top level module to convert any data file readble by TrajIO objects into a comma separated value text file.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Created</dt>
+<dt class="field-odd">Created<span class="colon">:</span></dt>
 <dd class="field-odd"><p>10/13/2014</p>
 </dd>
-<dt class="field-even">Author</dt>
+<dt class="field-even">Author<span class="colon">:</span></dt>
 <dd class="field-even"><p>Arvind Balijepalli &lt;<a class="reference external" href="mailto:arvind&#46;balijepalli&#37;&#52;&#48;nist&#46;gov">arvind<span>&#46;</span>balijepalli<span>&#64;</span>nist<span>&#46;</span>gov</a>&gt;</p>
 </dd>
-<dt class="field-odd">License</dt>
+<dt class="field-odd">License<span class="colon">:</span></dt>
 <dd class="field-odd"><p>See LICENSE.TXT</p>
 </dd>
 </dl>
 <dl class="py method">
-<dt id="mosaic.apps.ConvertTrajIO.ConvertTrajIO._filename">
-<code class="sig-prename descclassname"><span class="pre">ConvertTrajIO.</span></code><code class="sig-name descname"><span class="pre">_filename</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/apps/ConvertTrajIO.html#ConvertTrajIO._filename"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mosaic.apps.ConvertTrajIO.ConvertTrajIO._filename" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mosaic.apps.ConvertTrajIO.ConvertTrajIO._filename">
+<span class="sig-prename descclassname"><span class="pre">ConvertTrajIO.</span></span><span class="sig-name descname"><span class="pre">_filename</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/apps/ConvertTrajIO.html#ConvertTrajIO._filename"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mosaic.apps.ConvertTrajIO.ConvertTrajIO._filename" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return a output filename that contains the data file prefix and and the block index.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="mosaic.apps.ConvertTrajIO.ConvertTrajIO._creategenerator">
-<code class="sig-prename descclassname"><span class="pre">ConvertTrajIO.</span></code><code class="sig-name descname"><span class="pre">_creategenerator</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/apps/ConvertTrajIO.html#ConvertTrajIO._creategenerator"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mosaic.apps.ConvertTrajIO.ConvertTrajIO._creategenerator" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mosaic.apps.ConvertTrajIO.ConvertTrajIO._creategenerator">
+<span class="sig-prename descclassname"><span class="pre">ConvertTrajIO.</span></span><span class="sig-name descname"><span class="pre">_creategenerator</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/apps/ConvertTrajIO.html#ConvertTrajIO._creategenerator"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mosaic.apps.ConvertTrajIO.ConvertTrajIO._creategenerator" title="Permalink to this definition">¶</a></dt>
 <dd><p>Create a new filename generator if the file prefix has changed. 
 The generator returns a filename incremented by a counter each time 
 its next() function is called.</p>
 </dd></dl>
 
 <dl class="py class">
-<dt id="mosaic.apps.ConvertTrajIO.ConvertTrajIO">
-<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">mosaic.apps.ConvertTrajIO.</span></code><code class="sig-name descname"><span class="pre">ConvertTrajIO</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">trajDataObj</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">outdir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">extension</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'csv'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/apps/ConvertTrajIO.html#ConvertTrajIO"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mosaic.apps.ConvertTrajIO.ConvertTrajIO" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<dt class="sig sig-object py" id="mosaic.apps.ConvertTrajIO.ConvertTrajIO">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mosaic.apps.ConvertTrajIO.</span></span><span class="sig-name descname"><span class="pre">ConvertTrajIO</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">trajDataObj</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">outdir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">extension</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'csv'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/apps/ConvertTrajIO.html#ConvertTrajIO"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mosaic.apps.ConvertTrajIO.ConvertTrajIO" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
 <p>Convert data from a sub-class of metaTrajIO to either a delimited text file or binary file format.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><cite>trajDataObj</cite> : a trajIO data object</p></li>
 <li><p><cite>outdir</cite> : the output directory. Default is <em>None</em>, which causes the output to be saved in the same directory as the input data.</p></li>
@@ -217,11 +225,11 @@ its next() function is called.</p>
 </dd>
 </dl>
 <dl class="py method">
-<dt id="mosaic.apps.ConvertTrajIO.ConvertTrajIO.Convert">
-<code class="sig-name descname"><span class="pre">Convert</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">blockSize</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/apps/ConvertTrajIO.html#ConvertTrajIO.Convert"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mosaic.apps.ConvertTrajIO.ConvertTrajIO.Convert" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mosaic.apps.ConvertTrajIO.ConvertTrajIO.Convert">
+<span class="sig-name descname"><span class="pre">Convert</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">blockSize</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/apps/ConvertTrajIO.html#ConvertTrajIO.Convert"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mosaic.apps.ConvertTrajIO.ConvertTrajIO.Convert" title="Permalink to this definition">¶</a></dt>
 <dd><p>Start converting data</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><cite>blockSize</cite> : number of data points to convert.</p></li>
 </ul>
@@ -247,7 +255,7 @@ its next() function is called.</p>
       
     </p>
     <p>
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 3.5.4.<br/>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 7.0.0.<br/>
     </p>
   </div>
 </footer> -->

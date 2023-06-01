@@ -1,21 +1,20 @@
 <!DOCTYPE html>
 
-<html>
+<html lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
-    <title>4. MOSAIC GUI &#8212; MOSAIC v2.2 documentation</title>
-    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="../_static/bootstrap-sphinx.css" type="text/css" />
+    <title>4. MOSAIC GUI &#8212; MOSAIC v2.4 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/bootstrap-sphinx.css" />
     <link rel="stylesheet" type="text/css" href="../_static/graphviz.css" />
     <link rel="stylesheet" type="text/css" href="../_static/style.css" />
-    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-    <script src="../_static/jquery.js"></script>
-    <script src="../_static/underscore.js"></script>
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
     <script src="../_static/doctools.js"></script>
-    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
-    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <script src="../_static/sphinx_highlight.js"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <link rel="icon" href="../_static/favicon.ico"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="5. MOSAIC WEB" href="WebInterface.html" />
@@ -25,13 +24,22 @@
 <meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
 <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
 <meta name="apple-mobile-web-app-capable" content="yes">
-<script type="text/javascript" src="../_static/js/jquery-1.11.0.min.js "></script>
-<script type="text/javascript" src="../_static/js/jquery-fix.js "></script>
-<script type="text/javascript" src="../_static/bootstrap-3.3.7/js/bootstrap.min.js "></script>
-<script type="text/javascript" src="../_static/bootstrap-sphinx.js "></script>
+<script type="text/javascript" src="../_static/js/jquery-1.12.4.min.js"></script>
+<script type="text/javascript" src="../_static/js/jquery-fix.js"></script>
+<script type="text/javascript" src="../_static/bootstrap-3.4.1/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="../_static/bootstrap-sphinx.js"></script>
 
 	<script async type="text/javascript" id="_fed_an_ua_tag" src="https://dap.digitalgov.gov/Universal-Federated-Analytics-Min.js?agency=DOC&subagency=NIST&pua=UA-66610693-1&yt=true&exts=ppsx,pps,f90,sch,rtf,wrl,txz,m1v,xlsm,msi,xsd,f,tif,eps,mpg,xml,pl,xlt,c"></script>	
 
+	<!-- Google tag (gtag.js) -->
+	<script async src="https://www.googletagmanager.com/gtag/js?id=G-RJSMY46M5C"></script>
+	<script>
+	  window.dataLayer = window.dataLayer || [];
+	  function gtag(){dataLayer.push(arguments);}
+	  gtag('js', new Date());
+
+	  gtag('config', 'G-RJSMY46M5C');
+	</script>
 	<meta name="theme-color" content="#283593">
 
   </head><body>
@@ -45,9 +53,9 @@
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </button>
-        <a class="navbar-brand" href="../index.html"><span><img src="../_static/icon_48.png"></span>
+        <a class="navbar-brand" href="../index.html">
            </a>
-        <span class="navbar-text navbar-version pull-left"><b>v2.2</b></span>
+        <span class="navbar-text navbar-version pull-left"><b>v2.4</b></span>
       </div>
 
         <div class="collapse navbar-collapse nav-collapse">
@@ -115,7 +123,7 @@
     <div class="body col-md-12 content" role="main">
       
   <section id="projname-gui">
-<span id="gui-page"></span><h1><span class="section-number">4. </span><em>MOSAIC</em> GUI<a class="headerlink" href="#projname-gui" title="Permalink to this headline">¶</a></h1>
+<span id="gui-page"></span><h1><span class="section-number">4. </span><em>MOSAIC</em> GUI<a class="headerlink" href="#projname-gui" title="Permalink to this heading">¶</a></h1>
 <p><em>MOSAIC</em>’s GUI interface is designed to allow you to easily setup and run an analysis and to analyze the results of prior trials via a graphical interface; it contains the most commonly used features of <em>MOSAIC</em>.  The GUI contains modular panels for setting up an analysis, running it, and analyzing the results. Here we give you a brief overview of the graphical interface and its basic use. You can learn more in the <a class="reference internal" href="examples.html#examples-page"><span class="std std-ref">Examples</span></a> section.</p>
 <p><strong>Opening the GUI</strong></p>
 <p>If you installed <em>MOSAIC</em> from a precomiled binary, you can open the GUI by double clicking the <em>MOSAIC</em> icon. Alternatively, if you compiled <em>MOSAIC</em> from source code, you can run the GUI from the terminal window – navigate to the installation directory and type:</p>
@@ -124,10 +132,10 @@
 </div>
 <div class="admonition hint">
 <p class="admonition-title">Hint</p>
-<p>Having trobule getting the GUI to start? Frequently, this arises because your PYTHONPATH environment variable is set up incorrectly. To fix this error, first type <code class="docutils literal notranslate"><span class="pre">echo</span> <span class="pre">$PYTHONPATH</span></code> in the terminal. If you don’t see the path to the <em>MOSAIC</em> installation in <cite>PYTHONPATH</cite>, consult the operating-system specific instructions (<a class="reference internal" href="GettingStarted.html#setpythonpathosx"><span class="std std-ref">OSX</span></a> or <a class="reference internal" href="GettingStarted.html#setpythonpathubuntu"><span class="std std-ref">Ubuntu</span></a>) to help resolve this issue.</p>
+<p>Having trobule getting the GUI to start? Frequently, this arises because your PYTHONPATH environment variable is set up incorrectly. To fix this error, first type <code class="docutils literal notranslate"><span class="pre">echo</span> <span class="pre">$PYTHONPATH</span></code> in the terminal. If you don’t see the path to the <em>MOSAIC</em> installation in <cite>PYTHONPATH</cite>, consult the operating-system specific instructions (<a class="reference internal" href="InstallOSX.html#setpythonpathosx"><span class="std std-ref">OSX</span></a> or <a class="reference internal" href="InstallUbuntu.html#setpythonpathubuntu"><span class="std std-ref">Ubuntu</span></a>) to help resolve this issue.</p>
 </div>
 <section id="interface-overview">
-<h2><span class="section-number">4.1. </span>Interface Overview<a class="headerlink" href="#interface-overview" title="Permalink to this headline">¶</a></h2>
+<h2><span class="section-number">4.1. </span>Interface Overview<a class="headerlink" href="#interface-overview" title="Permalink to this heading">¶</a></h2>
 <figure class="align-center" id="id2">
 <a class="reference internal image-reference" href="../_images/mainpanels-panelLabel.png"><img alt="../_images/mainpanels-panelLabel.png" src="../_images/mainpanels-panelLabel.png" style="width: 85%;" /></a>
 <figcaption>
@@ -144,7 +152,7 @@
 </ol>
 </section>
 <section id="panels-a-b-analysis-setup-and-trajectory-viewer">
-<h2><span class="section-number">4.2. </span>Panels A &amp; B: Analysis Setup and Trajectory Viewer<a class="headerlink" href="#panels-a-b-analysis-setup-and-trajectory-viewer" title="Permalink to this headline">¶</a></h2>
+<h2><span class="section-number">4.2. </span>Panels A &amp; B: Analysis Setup and Trajectory Viewer<a class="headerlink" href="#panels-a-b-analysis-setup-and-trajectory-viewer" title="Permalink to this heading">¶</a></h2>
 <figure class="align-center" id="id3">
 <a class="reference internal image-reference" href="../_images/panelab.png"><img alt="../_images/panelab.png" src="../_images/panelab.png" style="width: 70%;" /></a>
 <figcaption>
@@ -152,7 +160,7 @@
 </figcaption>
 </figure>
 <section id="panel-a-analysis-setup">
-<span id="analysis-setup"></span><h3><span class="section-number">4.2.1. </span>Panel A: Analysis Setup<a class="headerlink" href="#panel-a-analysis-setup" title="Permalink to this headline">¶</a></h3>
+<span id="analysis-setup"></span><h3><span class="section-number">4.2.1. </span>Panel A: Analysis Setup<a class="headerlink" href="#panel-a-analysis-setup" title="Permalink to this heading">¶</a></h3>
 <p><strong>1. Data Settings</strong></p>
 <ul class="simple">
 <li><p><strong>Path</strong>: Allows user to set the directory containing files to analyze. Click the “…” icon to navigate to the directory.</p></li>
@@ -194,7 +202,7 @@
 </ul>
 </section>
 <section id="panel-b-trajectory-viewer">
-<span id="trajectory-viewer"></span><h3><span class="section-number">4.2.2. </span>Panel B: Trajectory Viewer<a class="headerlink" href="#panel-b-trajectory-viewer" title="Permalink to this headline">¶</a></h3>
+<span id="trajectory-viewer"></span><h3><span class="section-number">4.2.2. </span>Panel B: Trajectory Viewer<a class="headerlink" href="#panel-b-trajectory-viewer" title="Permalink to this heading">¶</a></h3>
 <p>This panel shows a segment of the data time series. The file currently being displayed is shown at the top of the window. If data from multiple files are loaded, the last filename is displayed. The length of time displayed in the window is controlled by <em>BlockSize</em> in Panel A (see #2).</p>
 <p><strong>6.  Time Series (Trajectory)</strong></p>
 <ul class="simple">
@@ -221,9 +229,9 @@
 </section>
 </section>
 <section id="panels-c-d-e-blockade-depth-histogram-statistics-and-event-viewer">
-<h2><span class="section-number">4.3. </span>Panels C,D, &amp; E: Blockade Depth Histogram, Statistics, and Event Viewer<a class="headerlink" href="#panels-c-d-e-blockade-depth-histogram-statistics-and-event-viewer" title="Permalink to this headline">¶</a></h2>
+<h2><span class="section-number">4.3. </span>Panels C,D, &amp; E: Blockade Depth Histogram, Statistics, and Event Viewer<a class="headerlink" href="#panels-c-d-e-blockade-depth-histogram-statistics-and-event-viewer" title="Permalink to this heading">¶</a></h2>
 <section id="panel-c-blockade-depth-histogram">
-<h3><span class="section-number">4.3.1. </span>Panel C: Blockade Depth Histogram<a class="headerlink" href="#panel-c-blockade-depth-histogram" title="Permalink to this headline">¶</a></h3>
+<span id="blockade-depth-hist"></span><h3><span class="section-number">4.3.1. </span>Panel C: Blockade Depth Histogram<a class="headerlink" href="#panel-c-blockade-depth-histogram" title="Permalink to this heading">¶</a></h3>
 <figure class="align-center" id="id4">
 <a class="reference internal image-reference" href="../_images/bd_hist.png"><img alt="../_images/bd_hist.png" src="../_images/bd_hist.png" style="width: 50%;" /></a>
 <figcaption>
@@ -232,13 +240,13 @@
 </figure>
 <p>This window shows the blockade depth histogram calculated from the meta-data output by <em>MOSAIC</em>.</p>
 <ul class="simple">
-<li><p><strong>Filter</strong>: The data displayed in the histogram can be restricted to events that fulfill specific user-defined criteria. For instance, the default filter <code class="docutils literal notranslate"><span class="pre">ResTime</span> <span class="pre">&gt;</span> <span class="pre">0.025</span></code> only includes events longer than 0.025 ms (or 25 <span class="math notranslate nohighlight">\(\mu s\)</span>). The GUI uses a <a class="reference external" href="https://en.wikipedia.org/wiki/SQL">SQL</a> <cite>select</cite> statement to restrict the events included in the histogram. The text in the <em>Filter</em> field represents the part of the query after the <cite>where</cite> clause, and allows the user to use standard <a class="reference external" href="https://en.wikipedia.org/wiki/SQL">SQL</a> syntax to narrow the results in the plot. See the <a class="reference internal" href="DatabaseStructure.html#working-with-sqlite-sec"><span class="std std-ref">Work with SQLite</span></a> section for details on <a class="reference external" href="https://en.wikipedia.org/wiki/SQL">SQL</a> syntax.</p></li>
+<li><p><strong>Filter</strong>: The data displayed in the histogram can be restricted to events that fulfill specific user-defined criteria. For instance, the default filter <code class="docutils literal notranslate"><span class="pre">ResTime</span> <span class="pre">&gt;</span> <span class="pre">0.025</span></code> only includes events longer than 0.025 ms (or 25 <span class="math notranslate nohighlight">\(\mu s\)</span>). The GUI uses a <a class="reference external" href="https://en.wikipedia.org/wiki/SQL">SQL</a> <cite>select</cite> statement to restrict the events included in the histogram. The text in the <em>Filter</em> field represents the part of the query after the <cite>where</cite> clause, and allows the user to use standard <a class="reference external" href="https://en.wikipedia.org/wiki/SQL">SQL</a> syntax to narrow the results in the plot. See the <a class="reference internal" href="WorkingWithSQLite.html#working-with-sqlite-sec"><span class="std std-ref">Work with SQLite</span></a> section for details on <a class="reference external" href="https://en.wikipedia.org/wiki/SQL">SQL</a> syntax.</p></li>
 <li><p><strong>Bins</strong>: The number of bins in the histogram are defined here. By default, 500 bins are used, but the user can change this necessary.</p></li>
 <li><p><strong>Detect Peaks</strong>: Checking <em>Detect Peaks</em> enables a wavelet-based peak detection algorithm. The wavelet level slider controls the sensitivity of the peak detection. Sliding it to the right will decrease the number of peaks picked up. The peaks detected are represented with red dots. Mousing over the detected peaks cause the coordinates of the peak to be displayed in the lower right hand corner of the window. The detected peaks can also be exported to a CSV file from the file menu <code class="docutils literal notranslate"><span class="pre">File&gt;Save</span> <span class="pre">Histogram</span></code>.</p></li>
 </ul>
 </section>
 <section id="panel-d-statistics">
-<h3><span class="section-number">4.3.2. </span>Panel D: Statistics<a class="headerlink" href="#panel-d-statistics" title="Permalink to this headline">¶</a></h3>
+<span id="statistics"></span><h3><span class="section-number">4.3.2. </span>Panel D: Statistics<a class="headerlink" href="#panel-d-statistics" title="Permalink to this heading">¶</a></h3>
 <figure class="align-center" id="id5">
 <a class="reference internal image-reference" href="../_images/statistics.png"><img alt="../_images/statistics.png" src="../_images/statistics.png" style="width: 40%;" /></a>
 <figcaption>
@@ -254,7 +262,7 @@
 </ul>
 </section>
 <section id="panel-e-event-viewer">
-<h3><span class="section-number">4.3.3. </span>Panel E: Event Viewer<a class="headerlink" href="#panel-e-event-viewer" title="Permalink to this headline">¶</a></h3>
+<span id="event-viewer"></span><h3><span class="section-number">4.3.3. </span>Panel E: Event Viewer<a class="headerlink" href="#panel-e-event-viewer" title="Permalink to this heading">¶</a></h3>
 <figure class="align-center" id="id6">
 <a class="reference internal image-reference" href="../_images/event_viewerpng.png"><img alt="../_images/event_viewerpng.png" src="../_images/event_viewerpng.png" style="width: 50%;" /></a>
 <figcaption>
@@ -264,7 +272,7 @@
 <p>If <em>Write to Disk</em> is enabled, this panel allows you to view the first 10,000 events processed. This is useful to ensure the quality of the analysis and to debug potential problems with the settings.</p>
 </section>
 <section id="console-log">
-<h3><span class="section-number">4.3.4. </span>Console Log<a class="headerlink" href="#console-log" title="Permalink to this headline">¶</a></h3>
+<h3><span class="section-number">4.3.4. </span>Console Log<a class="headerlink" href="#console-log" title="Permalink to this heading">¶</a></h3>
 <figure class="align-center" id="id7">
 <a class="reference internal image-reference" href="../_images/console.png"><img alt="../_images/console.png" src="../_images/console.png" style="width: 50%;" /></a>
 <figcaption>
@@ -274,7 +282,7 @@
 <p>When processing is complete, this panel displays a log of the analysis. This log contains useful information such as the analysis settings, the number of events fit, baseline drift, open channel conducatance, etc. This file is written to the database and can be accessed later.</p>
 </section>
 <section id="advanced-settings">
-<h3><span class="section-number">4.3.5. </span>Advanced Settings<a class="headerlink" href="#advanced-settings" title="Permalink to this headline">¶</a></h3>
+<h3><span class="section-number">4.3.5. </span>Advanced Settings<a class="headerlink" href="#advanced-settings" title="Permalink to this heading">¶</a></h3>
 <figure class="align-center" id="id8">
 <a class="reference internal image-reference" href="../_images/advanced-settings.png"><img alt="../_images/advanced-settings.png" src="../_images/advanced-settings.png" style="width: 50%;" /></a>
 <figcaption>
@@ -299,7 +307,7 @@
       
     </p>
     <p>
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 3.5.4.<br/>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 7.0.0.<br/>
     </p>
   </div>
 </footer> -->

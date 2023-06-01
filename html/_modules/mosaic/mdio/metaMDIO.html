@@ -1,19 +1,18 @@
 <!DOCTYPE html>
 
-<html>
+<html lang="en">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>mosaic.mdio.metaMDIO &#8212; MOSAIC v2.2 documentation</title>
-    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="../../../_static/bootstrap-sphinx.css" type="text/css" />
+    <title>mosaic.mdio.metaMDIO &#8212; MOSAIC v2.4 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/bootstrap-sphinx.css" />
     <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css" />
     <link rel="stylesheet" type="text/css" href="../../../_static/style.css" />
-    <script id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
-    <script src="../../../_static/jquery.js"></script>
-    <script src="../../../_static/underscore.js"></script>
+    <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
     <script src="../../../_static/doctools.js"></script>
-    <link rel="shortcut icon" href="../../../_static/favicon.ico"/>
+    <script src="../../../_static/sphinx_highlight.js"></script>
+    <link rel="icon" href="../../../_static/favicon.ico"/>
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" />
 
@@ -21,13 +20,22 @@
 <meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
 <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
 <meta name="apple-mobile-web-app-capable" content="yes">
-<script type="text/javascript" src="../../../_static/js/jquery-1.11.0.min.js "></script>
-<script type="text/javascript" src="../../../_static/js/jquery-fix.js "></script>
-<script type="text/javascript" src="../../../_static/bootstrap-3.3.7/js/bootstrap.min.js "></script>
-<script type="text/javascript" src="../../../_static/bootstrap-sphinx.js "></script>
+<script type="text/javascript" src="../../../_static/js/jquery-1.12.4.min.js"></script>
+<script type="text/javascript" src="../../../_static/js/jquery-fix.js"></script>
+<script type="text/javascript" src="../../../_static/bootstrap-3.4.1/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="../../../_static/bootstrap-sphinx.js"></script>
 
 	<script async type="text/javascript" id="_fed_an_ua_tag" src="https://dap.digitalgov.gov/Universal-Federated-Analytics-Min.js?agency=DOC&subagency=NIST&pua=UA-66610693-1&yt=true&exts=ppsx,pps,f90,sch,rtf,wrl,txz,m1v,xlsm,msi,xsd,f,tif,eps,mpg,xml,pl,xlt,c"></script>	
 
+	<!-- Google tag (gtag.js) -->
+	<script async src="https://www.googletagmanager.com/gtag/js?id=G-RJSMY46M5C"></script>
+	<script>
+	  window.dataLayer = window.dataLayer || [];
+	  function gtag(){dataLayer.push(arguments);}
+	  gtag('js', new Date());
+
+	  gtag('config', 'G-RJSMY46M5C');
+	</script>
 	<meta name="theme-color" content="#283593">
 
   </head><body>
@@ -41,9 +49,9 @@
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </button>
-        <a class="navbar-brand" href="../../../index.html"><span><img src="../../../_static/icon_48.png"></span>
+        <a class="navbar-brand" href="../../../index.html">
            </a>
-        <span class="navbar-text navbar-version pull-left"><b>v2.2</b></span>
+        <span class="navbar-text navbar-version pull-left"><b>v2.4</b></span>
       </div>
 
         <div class="collapse navbar-collapse nav-collapse">
@@ -133,7 +141,7 @@
 	<span class="k">pass</span>
 
 <div class="viewcode-block" id="metaMDIO"><a class="viewcode-back" href="../../../api-doc/mosaic.meta.html#mosaic.mdio.metaMDIO.metaMDIO">[docs]</a><span class="k">class</span> <span class="nc">metaMDIO</span><span class="p">(</span><span class="nb">object</span><span class="p">,</span> <span class="n">metaclass</span><span class="o">=</span><span class="n">ABCMeta</span><span class="p">):</span>
-	<span class="sd">&quot;&quot;&quot;</span>
+<span class="w">	</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">		.. warning:: |metaclass|</span>
 
 <span class="sd">		This class provides the skeleton for storing metadata</span>
@@ -151,7 +159,7 @@
 		<span class="bp">self</span><span class="o">.</span><span class="n">timingObj</span><span class="o">=</span><span class="n">mosaicTiming</span><span class="o">.</span><span class="n">mosaicTiming</span><span class="p">()</span>
 
 <div class="viewcode-block" id="metaMDIO.initDB"><a class="viewcode-back" href="../../../api-doc/mosaic.meta.html#mosaic.mdio.metaMDIO.metaMDIO.initDB">[docs]</a>	<span class="k">def</span> <span class="nf">initDB</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-		<span class="sd">&quot;&quot;&quot;</span>
+<span class="w">		</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">			Initialize a new database file.</span>
 
 <span class="sd">			:Parameters: </span>
@@ -175,7 +183,7 @@
 		<span class="bp">self</span><span class="o">.</span><span class="n">_initdb</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="metaMDIO.openDB"><a class="viewcode-back" href="../../../api-doc/mosaic.meta.html#mosaic.mdio.metaMDIO.metaMDIO.openDB">[docs]</a>	<span class="k">def</span> <span class="nf">openDB</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dbname</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-		<span class="sd">&quot;&quot;&quot;</span>
+<span class="w">		</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">			Open an existing database file.</span>
 
 <span class="sd">			:Parameters: </span>
@@ -187,7 +195,7 @@
 
 	<span class="nd">@abstractmethod</span>
 	<span class="k">def</span> <span class="nf">_dbfile</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-		<span class="sd">&quot;&quot;&quot;</span>
+<span class="w">		</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">			.. important:: |abstractmethod|</span>
 
 <span class="sd">			Return the full path and filename to the database.</span>
@@ -196,28 +204,28 @@
 
 <div class="viewcode-block" id="metaMDIO._opendb"><a class="viewcode-back" href="../../../api-doc/mosaic.meta.html#mosaic.mdio.metaMDIO.metaMDIO._opendb">[docs]</a>	<span class="nd">@abstractmethod</span>
 	<span class="k">def</span> <span class="nf">_opendb</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dbname</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-		<span class="sd">&quot;&quot;&quot;</span>
+<span class="w">		</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">			.. important:: |abstractmethod|</span>
 <span class="sd">		&quot;&quot;&quot;</span>
 		<span class="k">pass</span></div>
 
 <div class="viewcode-block" id="metaMDIO._initdb"><a class="viewcode-back" href="../../../api-doc/mosaic.meta.html#mosaic.mdio.metaMDIO.metaMDIO._initdb">[docs]</a>	<span class="nd">@abstractmethod</span>
 	<span class="k">def</span> <span class="nf">_initdb</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-		<span class="sd">&quot;&quot;&quot;</span>
+<span class="w">		</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">			.. important:: |abstractmethod|</span>
 <span class="sd">		&quot;&quot;&quot;</span>
 		<span class="k">pass</span></div>
 
 <div class="viewcode-block" id="metaMDIO.closeDB"><a class="viewcode-back" href="../../../api-doc/mosaic.meta.html#mosaic.mdio.metaMDIO.metaMDIO.closeDB">[docs]</a>	<span class="nd">@abstractmethod</span>
 	<span class="k">def</span> <span class="nf">closeDB</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-		<span class="sd">&quot;&quot;&quot;</span>
+<span class="w">		</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">			.. important:: |abstractmethod|</span>
 <span class="sd">		&quot;&quot;&quot;</span>
 		<span class="k">pass</span></div>
 
 <div class="viewcode-block" id="metaMDIO.writeRecord"><a class="viewcode-back" href="../../../api-doc/mosaic.meta.html#mosaic.mdio.metaMDIO.metaMDIO.writeRecord">[docs]</a>	<span class="nd">@abstractmethod</span>
 	<span class="k">def</span> <span class="nf">writeRecord</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">table</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-		<span class="sd">&quot;&quot;&quot;</span>
+<span class="w">		</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">			.. important:: |abstractmethod|</span>
 
 <span class="sd">			Write data to a specified table. By default table </span>
@@ -228,7 +236,7 @@
 
 <div class="viewcode-block" id="metaMDIO.writeSettings"><a class="viewcode-back" href="../../../api-doc/mosaic.meta.html#mosaic.mdio.metaMDIO.metaMDIO.writeSettings">[docs]</a>	<span class="nd">@abstractmethod</span>
 	<span class="k">def</span> <span class="nf">writeSettings</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">settingsstring</span><span class="p">):</span>
-		<span class="sd">&quot;&quot;&quot;</span>
+<span class="w">		</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">			.. important:: |abstractmethod|</span>
 
 <span class="sd">			Write the settings JSON object to the database.</span>
@@ -240,7 +248,7 @@
 
 <div class="viewcode-block" id="metaMDIO.writeAnalysisLog"><a class="viewcode-back" href="../../../api-doc/mosaic.meta.html#mosaic.mdio.metaMDIO.metaMDIO.writeAnalysisLog">[docs]</a>	<span class="nd">@abstractmethod</span>
 	<span class="k">def</span> <span class="nf">writeAnalysisLog</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">analysislog</span><span class="p">):</span>
-		<span class="sd">&quot;&quot;&quot;</span>
+<span class="w">		</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">			.. important:: |abstractmethod|</span>
 
 <span class="sd">			Write the analysis log string to the database. Note that subsequent calls to this method will overwrite the analysis log entry.</span>
@@ -252,7 +260,7 @@
 
 <div class="viewcode-block" id="metaMDIO.writeAnalysisInfo"><a class="viewcode-back" href="../../../api-doc/mosaic.meta.html#mosaic.mdio.metaMDIO.metaMDIO.writeAnalysisInfo">[docs]</a>	<span class="nd">@abstractmethod</span>
 	<span class="k">def</span> <span class="nf">writeAnalysisInfo</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">infolist</span><span class="p">):</span>
-		<span class="sd">&quot;&quot;&quot;</span>
+<span class="w">		</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">			.. important:: |abstractmethod|</span>
 
 <span class="sd">			Write analysis information to the database. Note that subsequent calls to this method will overwrite the analysis inoformation entry in the table.</span>
@@ -273,7 +281,7 @@
 
 <div class="viewcode-block" id="metaMDIO.readSettings"><a class="viewcode-back" href="../../../api-doc/mosaic.meta.html#mosaic.mdio.metaMDIO.metaMDIO.readSettings">[docs]</a>	<span class="nd">@abstractmethod</span>
 	<span class="k">def</span> <span class="nf">readSettings</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-		<span class="sd">&quot;&quot;&quot;</span>
+<span class="w">		</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">			.. important:: |abstractmethod|</span>
 
 <span class="sd">			Read JSON settings from the database.</span>
@@ -282,7 +290,7 @@
 
 <div class="viewcode-block" id="metaMDIO.readAnalysisLog"><a class="viewcode-back" href="../../../api-doc/mosaic.meta.html#mosaic.mdio.metaMDIO.metaMDIO.readAnalysisLog">[docs]</a>	<span class="nd">@abstractmethod</span>
 	<span class="k">def</span> <span class="nf">readAnalysisLog</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-		<span class="sd">&quot;&quot;&quot;</span>
+<span class="w">		</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">			.. important:: |abstractmethod|</span>
 
 <span class="sd">			Read the analysis log from the database.</span>
@@ -291,7 +299,7 @@
 
 <div class="viewcode-block" id="metaMDIO.readAnalysisInfo"><a class="viewcode-back" href="../../../api-doc/mosaic.meta.html#mosaic.mdio.metaMDIO.metaMDIO.readAnalysisInfo">[docs]</a>	<span class="nd">@abstractmethod</span>
 	<span class="k">def</span> <span class="nf">readAnalysisInfo</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-		<span class="sd">&quot;&quot;&quot;</span>
+<span class="w">		</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">			.. important:: |abstractmethod|</span>
 
 <span class="sd">			Read analysis information from the database.</span>
@@ -300,21 +308,21 @@
 
 <div class="viewcode-block" id="metaMDIO._colnames"><a class="viewcode-back" href="../../../api-doc/mosaic.meta.html#mosaic.mdio.metaMDIO.metaMDIO._colnames">[docs]</a>	<span class="nd">@abstractmethod</span>
 	<span class="k">def</span> <span class="nf">_colnames</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">table</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-		<span class="sd">&quot;&quot;&quot;</span>
+<span class="w">		</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">			.. important:: |abstractmethod|</span>
 <span class="sd">		&quot;&quot;&quot;</span>
 		<span class="k">pass</span></div>
 
 	<span class="nd">@abstractmethod</span>
 	<span class="k">def</span> <span class="nf">_coltypes</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">table</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-		<span class="sd">&quot;&quot;&quot;</span>
+<span class="w">		</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">			.. important:: |abstractmethod|</span>
 <span class="sd">		&quot;&quot;&quot;</span>
 		<span class="k">pass</span>
 
 <div class="viewcode-block" id="metaMDIO.queryDB"><a class="viewcode-back" href="../../../api-doc/mosaic.meta.html#mosaic.mdio.metaMDIO.metaMDIO.queryDB">[docs]</a>	<span class="nd">@abstractmethod</span>
 	<span class="k">def</span> <span class="nf">queryDB</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">query</span><span class="p">):</span>
-		<span class="sd">&quot;&quot;&quot;</span>
+<span class="w">		</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">			.. important:: |abstractmethod|</span>
 
 <span class="sd">			Query a database. </span>
@@ -355,7 +363,7 @@
       
     </p>
     <p>
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 3.5.4.<br/>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 7.0.0.<br/>
     </p>
   </div>
 </footer> -->

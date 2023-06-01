@@ -1,20 +1,19 @@
 <!DOCTYPE html>
 
-<html>
+<html lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
-    <title>14.1.2. Meta-Classes &#8212; MOSAIC v2.2 documentation</title>
-    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="../_static/bootstrap-sphinx.css" type="text/css" />
+    <title>14.1.2. Meta-Classes &#8212; MOSAIC v2.4 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/bootstrap-sphinx.css" />
     <link rel="stylesheet" type="text/css" href="../_static/graphviz.css" />
     <link rel="stylesheet" type="text/css" href="../_static/style.css" />
-    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-    <script src="../_static/jquery.js"></script>
-    <script src="../_static/underscore.js"></script>
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
     <script src="../_static/doctools.js"></script>
-    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <script src="../_static/sphinx_highlight.js"></script>
+    <link rel="icon" href="../_static/favicon.ico"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="14.1.3. Time-Series IO" href="mosaic.traj.html" />
@@ -24,13 +23,22 @@
 <meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
 <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
 <meta name="apple-mobile-web-app-capable" content="yes">
-<script type="text/javascript" src="../_static/js/jquery-1.11.0.min.js "></script>
-<script type="text/javascript" src="../_static/js/jquery-fix.js "></script>
-<script type="text/javascript" src="../_static/bootstrap-3.3.7/js/bootstrap.min.js "></script>
-<script type="text/javascript" src="../_static/bootstrap-sphinx.js "></script>
+<script type="text/javascript" src="../_static/js/jquery-1.12.4.min.js"></script>
+<script type="text/javascript" src="../_static/js/jquery-fix.js"></script>
+<script type="text/javascript" src="../_static/bootstrap-3.4.1/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="../_static/bootstrap-sphinx.js"></script>
 
 	<script async type="text/javascript" id="_fed_an_ua_tag" src="https://dap.digitalgov.gov/Universal-Federated-Analytics-Min.js?agency=DOC&subagency=NIST&pua=UA-66610693-1&yt=true&exts=ppsx,pps,f90,sch,rtf,wrl,txz,m1v,xlsm,msi,xsd,f,tif,eps,mpg,xml,pl,xlt,c"></script>	
 
+	<!-- Google tag (gtag.js) -->
+	<script async src="https://www.googletagmanager.com/gtag/js?id=G-RJSMY46M5C"></script>
+	<script>
+	  window.dataLayer = window.dataLayer || [];
+	  function gtag(){dataLayer.push(arguments);}
+	  gtag('js', new Date());
+
+	  gtag('config', 'G-RJSMY46M5C');
+	</script>
 	<meta name="theme-color" content="#283593">
 
   </head><body>
@@ -44,9 +52,9 @@
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </button>
-        <a class="navbar-brand" href="../index.html"><span><img src="../_static/icon_48.png"></span>
+        <a class="navbar-brand" href="../index.html">
            </a>
-        <span class="navbar-text navbar-version pull-left"><b>v2.2</b></span>
+        <span class="navbar-text navbar-version pull-left"><b>v2.4</b></span>
       </div>
 
         <div class="collapse navbar-collapse nav-collapse">
@@ -114,13 +122,13 @@
     <div class="body col-md-12 content" role="main">
       
   <section id="meta-classes">
-<span id="api-metaclass-page"></span><h1><span class="section-number">14.1.2. </span>Meta-Classes<a class="headerlink" href="#meta-classes" title="Permalink to this headline">¶</a></h1>
+<span id="api-metaclass-page"></span><h1><span class="section-number">14.1.2. </span>Meta-Classes<a class="headerlink" href="#meta-classes" title="Permalink to this heading">¶</a></h1>
 <section id="mosaic-partition-metaeventpartition-module">
-<h2><span class="section-number">14.1.2.1. </span>mosaic.partition.metaEventPartition module<a class="headerlink" href="#mosaic-partition-metaeventpartition-module" title="Permalink to this headline">¶</a></h2>
+<h2><span class="section-number">14.1.2.1. </span>mosaic.partition.metaEventPartition module<a class="headerlink" href="#mosaic-partition-metaeventpartition-module" title="Permalink to this heading">¶</a></h2>
 <dl class="py class">
-<dt id="mosaic.partition.metaEventPartition.metaEventPartition">
-<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">mosaic.partition.metaEventPartition.</span></code><code class="sig-name descname"><span class="pre">metaEventPartition</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">trajDataObj</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">eventProcHnd</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">eventPartitionSettings</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">eventProcSettings</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">settingsString</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/partition/metaEventPartition.html#metaEventPartition"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mosaic.partition.metaEventPartition.metaEventPartition" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<dt class="sig sig-object py" id="mosaic.partition.metaEventPartition.metaEventPartition">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mosaic.partition.metaEventPartition.</span></span><span class="sig-name descname"><span class="pre">metaEventPartition</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">trajDataObj</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">eventProcHnd</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">eventPartitionSettings</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">eventProcSettings</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">settingsString</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/partition/metaEventPartition.html#metaEventPartition"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mosaic.partition.metaEventPartition.metaEventPartition" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
 <p>This metaclass must be sub-classed. All abstract methods within this metaclass must be implemented.</p>
@@ -131,7 +139,7 @@ If parallel processing is requested, detailed event processing will commence
 immediately. If not, detailed event processing is performed after the event 
 partition has completed.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><dl class="simple">
 <dt><cite>trajDataObj</cite><span class="classifier">properly initialized object instantiated from a sub-class </span></dt><dd><p>of metaTrajIO.</p>
@@ -171,8 +179,8 @@ current working directory)</p>
 </ul>
 </div></blockquote>
 <dl class="py method">
-<dt id="mosaic.partition.metaEventPartition.metaEventPartition._init">
-<em class="property"><span class="pre">abstract</span> </em><code class="sig-name descname"><span class="pre">_init</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">trajDataObj</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">eventProcHnd</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">eventPartitionSettings</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">eventProcSettings</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/partition/metaEventPartition.html#metaEventPartition._init"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mosaic.partition.metaEventPartition.metaEventPartition._init" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mosaic.partition.metaEventPartition.metaEventPartition._init">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">_init</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">trajDataObj</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">eventProcHnd</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">eventPartitionSettings</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">eventProcSettings</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/partition/metaEventPartition.html#metaEventPartition._init"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mosaic.partition.metaEventPartition.metaEventPartition._init" title="Permalink to this definition">¶</a></dt>
 <dd><div class="admonition important">
 <p class="admonition-title">Important</p>
 <p><strong>Abstract method:</strong> This method must be implemented by a sub-class.</p>
@@ -181,8 +189,8 @@ current working directory)</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="mosaic.partition.metaEventPartition.metaEventPartition._stop">
-<em class="property"><span class="pre">abstract</span> </em><code class="sig-name descname"><span class="pre">_stop</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/partition/metaEventPartition.html#metaEventPartition._stop"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mosaic.partition.metaEventPartition.metaEventPartition._stop" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mosaic.partition.metaEventPartition.metaEventPartition._stop">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">_stop</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/partition/metaEventPartition.html#metaEventPartition._stop"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mosaic.partition.metaEventPartition.metaEventPartition._stop" title="Permalink to this definition">¶</a></dt>
 <dd><div class="admonition important">
 <p class="admonition-title">Important</p>
 <p><strong>Abstract method:</strong> This method must be implemented by a sub-class.</p>
@@ -191,8 +199,8 @@ current working directory)</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="mosaic.partition.metaEventPartition.metaEventPartition._eventsegment">
-<em class="property"><span class="pre">abstract</span> </em><code class="sig-name descname"><span class="pre">_eventsegment</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/partition/metaEventPartition.html#metaEventPartition._eventsegment"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mosaic.partition.metaEventPartition.metaEventPartition._eventsegment" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mosaic.partition.metaEventPartition.metaEventPartition._eventsegment">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">_eventsegment</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/partition/metaEventPartition.html#metaEventPartition._eventsegment"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mosaic.partition.metaEventPartition.metaEventPartition._eventsegment" title="Permalink to this definition">¶</a></dt>
 <dd><div class="admonition important">
 <p class="admonition-title">Important</p>
 <p><strong>Abstract method:</strong> This method must be implemented by a sub-class.</p>
@@ -201,20 +209,20 @@ current working directory)</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="mosaic.partition.metaEventPartition.metaEventPartition.PartitionEvents">
-<code class="sig-name descname"><span class="pre">PartitionEvents</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/partition/metaEventPartition.html#metaEventPartition.PartitionEvents"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mosaic.partition.metaEventPartition.metaEventPartition.PartitionEvents" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mosaic.partition.metaEventPartition.metaEventPartition.PartitionEvents">
+<span class="sig-name descname"><span class="pre">PartitionEvents</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/partition/metaEventPartition.html#metaEventPartition.PartitionEvents"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mosaic.partition.metaEventPartition.metaEventPartition.PartitionEvents" title="Permalink to this definition">¶</a></dt>
 <dd><p>Partition events within a time-series.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="mosaic.partition.metaEventPartition.metaEventPartition.Stop">
-<code class="sig-name descname"><span class="pre">Stop</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/partition/metaEventPartition.html#metaEventPartition.Stop"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mosaic.partition.metaEventPartition.metaEventPartition.Stop" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mosaic.partition.metaEventPartition.metaEventPartition.Stop">
+<span class="sig-name descname"><span class="pre">Stop</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/partition/metaEventPartition.html#metaEventPartition.Stop"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mosaic.partition.metaEventPartition.metaEventPartition.Stop" title="Permalink to this definition">¶</a></dt>
 <dd><p>Stop processing data.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="mosaic.partition.metaEventPartition.metaEventPartition.formatoutputfiles">
-<em class="property"><span class="pre">abstract</span> </em><code class="sig-name descname"><span class="pre">formatoutputfiles</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/partition/metaEventPartition.html#metaEventPartition.formatoutputfiles"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mosaic.partition.metaEventPartition.metaEventPartition.formatoutputfiles" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mosaic.partition.metaEventPartition.metaEventPartition.formatoutputfiles">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">formatoutputfiles</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/partition/metaEventPartition.html#metaEventPartition.formatoutputfiles"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mosaic.partition.metaEventPartition.metaEventPartition.formatoutputfiles" title="Permalink to this definition">¶</a></dt>
 <dd><div class="admonition important">
 <p class="admonition-title">Important</p>
 <p><strong>Abstract method:</strong> This method must be implemented by a sub-class.</p>
@@ -223,8 +231,8 @@ current working directory)</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="mosaic.partition.metaEventPartition.metaEventPartition.formatsettings">
-<em class="property"><span class="pre">abstract</span> </em><code class="sig-name descname"><span class="pre">formatsettings</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/partition/metaEventPartition.html#metaEventPartition.formatsettings"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mosaic.partition.metaEventPartition.metaEventPartition.formatsettings" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mosaic.partition.metaEventPartition.metaEventPartition.formatsettings">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">formatsettings</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/partition/metaEventPartition.html#metaEventPartition.formatsettings"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mosaic.partition.metaEventPartition.metaEventPartition.formatsettings" title="Permalink to this definition">¶</a></dt>
 <dd><div class="admonition important">
 <p class="admonition-title">Important</p>
 <p><strong>Abstract method:</strong> This method must be implemented by a sub-class.</p>
@@ -233,8 +241,8 @@ current working directory)</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="mosaic.partition.metaEventPartition.metaEventPartition.formatstats">
-<em class="property"><span class="pre">abstract</span> </em><code class="sig-name descname"><span class="pre">formatstats</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/partition/metaEventPartition.html#metaEventPartition.formatstats"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mosaic.partition.metaEventPartition.metaEventPartition.formatstats" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mosaic.partition.metaEventPartition.metaEventPartition.formatstats">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">formatstats</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/partition/metaEventPartition.html#metaEventPartition.formatstats"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mosaic.partition.metaEventPartition.metaEventPartition.formatstats" title="Permalink to this definition">¶</a></dt>
 <dd><div class="admonition important">
 <p class="admonition-title">Important</p>
 <p><strong>Abstract method:</strong> This method must be implemented by a sub-class.</p>
@@ -246,11 +254,11 @@ current working directory)</p>
 
 </section>
 <section id="mosaic-process-metaeventprocessor-module">
-<h2><span class="section-number">14.1.2.2. </span>mosaic.process.metaEventProcessor module<a class="headerlink" href="#mosaic-process-metaeventprocessor-module" title="Permalink to this headline">¶</a></h2>
+<h2><span class="section-number">14.1.2.2. </span>mosaic.process.metaEventProcessor module<a class="headerlink" href="#mosaic-process-metaeventprocessor-module" title="Permalink to this heading">¶</a></h2>
 <dl class="py class">
-<dt id="mosaic.process.metaEventProcessor.metaEventProcessor">
-<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">mosaic.process.metaEventProcessor.</span></code><code class="sig-name descname"><span class="pre">metaEventProcessor</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">icurr</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">icurrU</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Fs</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/process/metaEventProcessor.html#metaEventProcessor"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mosaic.process.metaEventProcessor.metaEventProcessor" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<dt class="sig sig-object py" id="mosaic.process.metaEventProcessor.metaEventProcessor">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mosaic.process.metaEventProcessor.</span></span><span class="sig-name descname"><span class="pre">metaEventProcessor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">icurr</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">icurrU</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Fs</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/process/metaEventProcessor.html#metaEventProcessor"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mosaic.process.metaEventProcessor.metaEventProcessor" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
 <p>This metaclass must be sub-classed. All abstract methods within this metaclass must be implemented.</p>
@@ -270,14 +278,14 @@ For example, the blockade depth meta-data can be defined as ‘mdBlockadeDepth�
 </ul>
 </div></blockquote>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><cite>icurr</cite> :                             ionic current in pA</p></li>
 <li><p><cite>icurrU</cite>:                             ionic current in pA with unfiltered event padding</p></li>
 <li><p><cite>Fs</cite> :                                sampling frequency in Hz</p></li>
 </ul>
 </dd>
-<dt class="field-even">Keyword Args</dt>
+<dt class="field-even">Keyword Args<span class="colon">:</span></dt>
 <dd class="field-even"><ul class="simple">
 <li><p><cite>eventstart</cite> :                the event start point</p></li>
 <li><p><cite>eventend</cite> :                  the event end point</p></li>
@@ -289,14 +297,14 @@ For example, the blockade depth meta-data can be defined as ‘mdBlockadeDepth�
 </dd>
 </dl>
 <dl class="py method">
-<dt id="mosaic.process.metaEventProcessor.metaEventProcessor.__mdformat">
-<code class="sig-name descname"><span class="pre">__mdformat</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dat</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mosaic.process.metaEventProcessor.metaEventProcessor.__mdformat" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mosaic.process.metaEventProcessor.metaEventProcessor.__mdformat">
+<span class="sig-name descname"><span class="pre">__mdformat</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dat</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mosaic.process.metaEventProcessor.metaEventProcessor.__mdformat" title="Permalink to this definition">¶</a></dt>
 <dd><p>Round a float to 3 decimal places. Leave ints and strings unchanged</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="mosaic.process.metaEventProcessor.metaEventProcessor._init">
-<em class="property"><span class="pre">abstract</span> </em><code class="sig-name descname"><span class="pre">_init</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/process/metaEventProcessor.html#metaEventProcessor._init"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mosaic.process.metaEventProcessor.metaEventProcessor._init" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mosaic.process.metaEventProcessor.metaEventProcessor._init">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">_init</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/process/metaEventProcessor.html#metaEventProcessor._init"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mosaic.process.metaEventProcessor.metaEventProcessor._init" title="Permalink to this definition">¶</a></dt>
 <dd><div class="admonition important">
 <p class="admonition-title">Important</p>
 <p><strong>Abstract method:</strong> This method must be implemented by a sub-class.</p>
@@ -304,8 +312,8 @@ For example, the blockade depth meta-data can be defined as ‘mdBlockadeDepth�
 </dd></dl>
 
 <dl class="py method">
-<dt id="mosaic.process.metaEventProcessor.metaEventProcessor._mdHeadingDataType">
-<em class="property"><span class="pre">abstract</span> </em><code class="sig-name descname"><span class="pre">_mdHeadingDataType</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/process/metaEventProcessor.html#metaEventProcessor._mdHeadingDataType"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mosaic.process.metaEventProcessor.metaEventProcessor._mdHeadingDataType" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mosaic.process.metaEventProcessor.metaEventProcessor._mdHeadingDataType">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">_mdHeadingDataType</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/process/metaEventProcessor.html#metaEventProcessor._mdHeadingDataType"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mosaic.process.metaEventProcessor.metaEventProcessor._mdHeadingDataType" title="Permalink to this definition">¶</a></dt>
 <dd><div class="admonition important">
 <p class="admonition-title">Important</p>
 <p><strong>Abstract method:</strong> This method must be implemented by a sub-class.</p>
@@ -314,8 +322,8 @@ For example, the blockade depth meta-data can be defined as ‘mdBlockadeDepth�
 </dd></dl>
 
 <dl class="py method">
-<dt id="mosaic.process.metaEventProcessor.metaEventProcessor._mdHeadings">
-<em class="property"><span class="pre">abstract</span> </em><code class="sig-name descname"><span class="pre">_mdHeadings</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/process/metaEventProcessor.html#metaEventProcessor._mdHeadings"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mosaic.process.metaEventProcessor.metaEventProcessor._mdHeadings" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mosaic.process.metaEventProcessor.metaEventProcessor._mdHeadings">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">_mdHeadings</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/process/metaEventProcessor.html#metaEventProcessor._mdHeadings"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mosaic.process.metaEventProcessor.metaEventProcessor._mdHeadings" title="Permalink to this definition">¶</a></dt>
 <dd><div class="admonition important">
 <p class="admonition-title">Important</p>
 <p><strong>Abstract method:</strong> This method must be implemented by a sub-class.</p>
@@ -324,8 +332,8 @@ For example, the blockade depth meta-data can be defined as ‘mdBlockadeDepth�
 </dd></dl>
 
 <dl class="py method">
-<dt id="mosaic.process.metaEventProcessor.metaEventProcessor._mdList">
-<em class="property"><span class="pre">abstract</span> </em><code class="sig-name descname"><span class="pre">_mdList</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/process/metaEventProcessor.html#metaEventProcessor._mdList"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mosaic.process.metaEventProcessor.metaEventProcessor._mdList" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mosaic.process.metaEventProcessor.metaEventProcessor._mdList">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">_mdList</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/process/metaEventProcessor.html#metaEventProcessor._mdList"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mosaic.process.metaEventProcessor.metaEventProcessor._mdList" title="Permalink to this definition">¶</a></dt>
 <dd><div class="admonition important">
 <p class="admonition-title">Important</p>
 <p><strong>Abstract method:</strong> This method must be implemented by a sub-class.</p>
@@ -334,8 +342,8 @@ For example, the blockade depth meta-data can be defined as ‘mdBlockadeDepth�
 </dd></dl>
 
 <dl class="py method">
-<dt id="mosaic.process.metaEventProcessor.metaEventProcessor._processEvent">
-<em class="property"><span class="pre">abstract</span> </em><code class="sig-name descname"><span class="pre">_processEvent</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/process/metaEventProcessor.html#metaEventProcessor._processEvent"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mosaic.process.metaEventProcessor.metaEventProcessor._processEvent" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mosaic.process.metaEventProcessor.metaEventProcessor._processEvent">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">_processEvent</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/process/metaEventProcessor.html#metaEventProcessor._processEvent"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mosaic.process.metaEventProcessor.metaEventProcessor._processEvent" title="Permalink to this definition">¶</a></dt>
 <dd><div class="admonition important">
 <p class="admonition-title">Important</p>
 <p><strong>Abstract method:</strong> This method must be implemented by a sub-class.</p>
@@ -343,15 +351,15 @@ For example, the blockade depth meta-data can be defined as ‘mdBlockadeDepth�
 </dd></dl>
 
 <dl class="py method">
-<dt id="mosaic.process.metaEventProcessor.metaEventProcessor.flagEvent">
-<code class="sig-name descname"><span class="pre">flagEvent</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">status</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/process/metaEventProcessor.html#metaEventProcessor.flagEvent"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mosaic.process.metaEventProcessor.metaEventProcessor.flagEvent" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mosaic.process.metaEventProcessor.metaEventProcessor.flagEvent">
+<span class="sig-name descname"><span class="pre">flagEvent</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">status</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/process/metaEventProcessor.html#metaEventProcessor.flagEvent"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mosaic.process.metaEventProcessor.metaEventProcessor.flagEvent" title="Permalink to this definition">¶</a></dt>
 <dd><p>Set a warning status that starts with ‘w’ for non-critical errors. 
 Metadata for these events is preserved and the user can be warned (e.g., in the GUI.)</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="mosaic.process.metaEventProcessor.metaEventProcessor.mdAveragePropertiesList">
-<em class="property"><span class="pre">abstract</span> </em><code class="sig-name descname"><span class="pre">mdAveragePropertiesList</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/process/metaEventProcessor.html#metaEventProcessor.mdAveragePropertiesList"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mosaic.process.metaEventProcessor.metaEventProcessor.mdAveragePropertiesList" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mosaic.process.metaEventProcessor.metaEventProcessor.mdAveragePropertiesList">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">mdAveragePropertiesList</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/process/metaEventProcessor.html#metaEventProcessor.mdAveragePropertiesList"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mosaic.process.metaEventProcessor.metaEventProcessor.mdAveragePropertiesList" title="Permalink to this definition">¶</a></dt>
 <dd><div class="admonition important">
 <p class="admonition-title">Important</p>
 <p><strong>Abstract method:</strong> This method must be implemented by a sub-class.</p>
@@ -363,33 +371,33 @@ is returned.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="mosaic.process.metaEventProcessor.metaEventProcessor.mdHeadingDataType">
-<code class="sig-name descname"><span class="pre">mdHeadingDataType</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/process/metaEventProcessor.html#metaEventProcessor.mdHeadingDataType"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mosaic.process.metaEventProcessor.metaEventProcessor.mdHeadingDataType" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mosaic.process.metaEventProcessor.metaEventProcessor.mdHeadingDataType">
+<span class="sig-name descname"><span class="pre">mdHeadingDataType</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/process/metaEventProcessor.html#metaEventProcessor.mdHeadingDataType"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mosaic.process.metaEventProcessor.metaEventProcessor.mdHeadingDataType" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return a list of meta-data tags data types.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="mosaic.process.metaEventProcessor.metaEventProcessor.mdHeadings">
-<code class="sig-name descname"><span class="pre">mdHeadings</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/process/metaEventProcessor.html#metaEventProcessor.mdHeadings"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mosaic.process.metaEventProcessor.metaEventProcessor.mdHeadings" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mosaic.process.metaEventProcessor.metaEventProcessor.mdHeadings">
+<span class="sig-name descname"><span class="pre">mdHeadings</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/process/metaEventProcessor.html#metaEventProcessor.mdHeadings"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mosaic.process.metaEventProcessor.metaEventProcessor.mdHeadings" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return a list of meta-data tags for display purposes.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="mosaic.process.metaEventProcessor.metaEventProcessor.processEvent">
-<code class="sig-name descname"><span class="pre">processEvent</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/process/metaEventProcessor.html#metaEventProcessor.processEvent"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mosaic.process.metaEventProcessor.metaEventProcessor.processEvent" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mosaic.process.metaEventProcessor.metaEventProcessor.processEvent">
+<span class="sig-name descname"><span class="pre">processEvent</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/process/metaEventProcessor.html#metaEventProcessor.processEvent"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mosaic.process.metaEventProcessor.metaEventProcessor.processEvent" title="Permalink to this definition">¶</a></dt>
 <dd><p>This is the equivalent of a pure virtual function in C++.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="mosaic.process.metaEventProcessor.metaEventProcessor.rejectEvent">
-<code class="sig-name descname"><span class="pre">rejectEvent</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">status</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/process/metaEventProcessor.html#metaEventProcessor.rejectEvent"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mosaic.process.metaEventProcessor.metaEventProcessor.rejectEvent" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mosaic.process.metaEventProcessor.metaEventProcessor.rejectEvent">
+<span class="sig-name descname"><span class="pre">rejectEvent</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">status</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/process/metaEventProcessor.html#metaEventProcessor.rejectEvent"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mosaic.process.metaEventProcessor.metaEventProcessor.rejectEvent" title="Permalink to this definition">¶</a></dt>
 <dd><p>Set an event as rejected if it doesn’t pass tests in processing.
 The status is assigned to mdProcessingStatus.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="mosaic.process.metaEventProcessor.metaEventProcessor.writeEvent">
-<code class="sig-name descname"><span class="pre">writeEvent</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/process/metaEventProcessor.html#metaEventProcessor.writeEvent"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mosaic.process.metaEventProcessor.metaEventProcessor.writeEvent" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mosaic.process.metaEventProcessor.metaEventProcessor.writeEvent">
+<span class="sig-name descname"><span class="pre">writeEvent</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/process/metaEventProcessor.html#metaEventProcessor.writeEvent"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mosaic.process.metaEventProcessor.metaEventProcessor.writeEvent" title="Permalink to this definition">¶</a></dt>
 <dd><p>Write event meta data to a metaMDIO object.</p>
 </dd></dl>
 
@@ -397,11 +405,11 @@ The status is assigned to mdProcessingStatus.</p>
 
 </section>
 <section id="mosaic-filters-metaiofilter-module">
-<h2><span class="section-number">14.1.2.3. </span>mosaic.filters.metaIOFilter module<a class="headerlink" href="#mosaic-filters-metaiofilter-module" title="Permalink to this headline">¶</a></h2>
+<h2><span class="section-number">14.1.2.3. </span>mosaic.filters.metaIOFilter module<a class="headerlink" href="#mosaic-filters-metaiofilter-module" title="Permalink to this heading">¶</a></h2>
 <dl class="py class">
-<dt id="mosaic.filters.metaIOFilter.metaIOFilter">
-<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">mosaic.filters.metaIOFilter.</span></code><code class="sig-name descname"><span class="pre">metaIOFilter</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/filters/metaIOFilter.html#metaIOFilter"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mosaic.filters.metaIOFilter.metaIOFilter" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<dt class="sig sig-object py" id="mosaic.filters.metaIOFilter.metaIOFilter">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mosaic.filters.metaIOFilter.</span></span><span class="sig-name descname"><span class="pre">metaIOFilter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/filters/metaIOFilter.html#metaIOFilter"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mosaic.filters.metaIOFilter.metaIOFilter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
 <p>This metaclass must be sub-classed. All abstract methods within this metaclass must be implemented.</p>
@@ -415,12 +423,12 @@ function:</p>
 </ul>
 </div></blockquote>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><cite>decimate</cite> :          sets the downsampling ratio of the filtered data (default:1, no decimation).</p></li>
 </ul>
 </dd>
-<dt class="field-even">Properties</dt>
+<dt class="field-even">Properties<span class="colon">:</span></dt>
 <dd class="field-even"><ul class="simple">
 <li><p><cite>filteredData</cite> :              list of filtered and decimated data</p></li>
 <li><p><cite>filterFs</cite> :                  sampling frequency after filtering and decimation</p></li>
@@ -428,8 +436,8 @@ function:</p>
 </dd>
 </dl>
 <dl class="py method">
-<dt id="mosaic.filters.metaIOFilter.metaIOFilter._init">
-<em class="property"><span class="pre">abstract</span> </em><code class="sig-name descname"><span class="pre">_init</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/filters/metaIOFilter.html#metaIOFilter._init"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mosaic.filters.metaIOFilter.metaIOFilter._init" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mosaic.filters.metaIOFilter.metaIOFilter._init">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">_init</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/filters/metaIOFilter.html#metaIOFilter._init"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mosaic.filters.metaIOFilter.metaIOFilter._init" title="Permalink to this definition">¶</a></dt>
 <dd><div class="admonition important">
 <p class="admonition-title">Important</p>
 <p><strong>Abstract method:</strong> This method must be implemented by a sub-class.</p>
@@ -437,8 +445,8 @@ function:</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="mosaic.filters.metaIOFilter.metaIOFilter.filterData">
-<em class="property"><span class="pre">abstract</span> </em><code class="sig-name descname"><span class="pre">filterData</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">icurr</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Fs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/filters/metaIOFilter.html#metaIOFilter.filterData"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mosaic.filters.metaIOFilter.metaIOFilter.filterData" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mosaic.filters.metaIOFilter.metaIOFilter.filterData">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">filterData</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">icurr</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Fs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/filters/metaIOFilter.html#metaIOFilter.filterData"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mosaic.filters.metaIOFilter.metaIOFilter.filterData" title="Permalink to this definition">¶</a></dt>
 <dd><div class="admonition important">
 <p class="admonition-title">Important</p>
 <p><strong>Abstract method:</strong> This method must be implemented by a sub-class.</p>
@@ -447,7 +455,7 @@ function:</p>
 <p>Implementations of this method MUST store (1) a ref to the raw event data in self.eventData AND 
 (2) the sampling frequency in self.Fs.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><cite>icurr</cite> :     ionic current in pA</p></li>
 <li><p><cite>Fs</cite> :        original sampling frequency in Hz</p></li>
@@ -457,20 +465,20 @@ function:</p>
 </dd></dl>
 
 <dl class="py attribute">
-<dt id="mosaic.filters.metaIOFilter.metaIOFilter.filterFs">
-<code class="sig-name descname"><span class="pre">filterFs</span></code><a class="headerlink" href="#mosaic.filters.metaIOFilter.metaIOFilter.filterFs" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mosaic.filters.metaIOFilter.metaIOFilter.filterFs">
+<span class="sig-name descname"><span class="pre">filterFs</span></span><a class="headerlink" href="#mosaic.filters.metaIOFilter.metaIOFilter.filterFs" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return the sampling frequency of filtered data.</p>
 </dd></dl>
 
 <dl class="py attribute">
-<dt id="mosaic.filters.metaIOFilter.metaIOFilter.filteredData">
-<code class="sig-name descname"><span class="pre">filteredData</span></code><a class="headerlink" href="#mosaic.filters.metaIOFilter.metaIOFilter.filteredData" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mosaic.filters.metaIOFilter.metaIOFilter.filteredData">
+<span class="sig-name descname"><span class="pre">filteredData</span></span><a class="headerlink" href="#mosaic.filters.metaIOFilter.metaIOFilter.filteredData" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return filtered data</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="mosaic.filters.metaIOFilter.metaIOFilter.formatsettings">
-<em class="property"><span class="pre">abstract</span> </em><code class="sig-name descname"><span class="pre">formatsettings</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/filters/metaIOFilter.html#metaIOFilter.formatsettings"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mosaic.filters.metaIOFilter.metaIOFilter.formatsettings" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mosaic.filters.metaIOFilter.metaIOFilter.formatsettings">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">formatsettings</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/filters/metaIOFilter.html#metaIOFilter.formatsettings"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mosaic.filters.metaIOFilter.metaIOFilter.formatsettings" title="Permalink to this definition">¶</a></dt>
 <dd><div class="admonition important">
 <p class="admonition-title">Important</p>
 <p><strong>Abstract method:</strong> This method must be implemented by a sub-class.</p>
@@ -482,11 +490,11 @@ function:</p>
 
 </section>
 <section id="mosaic-mdio-metamdio-module">
-<h2><span class="section-number">14.1.2.4. </span>mosaic.mdio.metaMDIO module<a class="headerlink" href="#mosaic-mdio-metamdio-module" title="Permalink to this headline">¶</a></h2>
+<h2><span class="section-number">14.1.2.4. </span>mosaic.mdio.metaMDIO module<a class="headerlink" href="#mosaic-mdio-metamdio-module" title="Permalink to this heading">¶</a></h2>
 <dl class="py class">
-<dt id="mosaic.mdio.metaMDIO.metaMDIO">
-<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">mosaic.mdio.metaMDIO.</span></code><code class="sig-name descname"><span class="pre">metaMDIO</span></code><a class="reference internal" href="../_modules/mosaic/mdio/metaMDIO.html#metaMDIO"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mosaic.mdio.metaMDIO.metaMDIO" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<dt class="sig sig-object py" id="mosaic.mdio.metaMDIO.metaMDIO">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mosaic.mdio.metaMDIO.</span></span><span class="sig-name descname"><span class="pre">metaMDIO</span></span><a class="reference internal" href="../_modules/mosaic/mdio/metaMDIO.html#metaMDIO"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mosaic.mdio.metaMDIO.metaMDIO" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
 <p>This metaclass must be sub-classed. All abstract methods within this metaclass must be implemented.</p>
@@ -495,15 +503,15 @@ function:</p>
 generated by algorithms. It also provides an interface to query metadata, for example in a 
 SQL database.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Properties</dt>
+<dt class="field-odd">Properties<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><cite>dbColumnNames</cite> : a list of database column names</p></li>
 </ul>
 </dd>
 </dl>
 <dl class="py method">
-<dt id="mosaic.mdio.metaMDIO.metaMDIO._opendb">
-<em class="property"><span class="pre">abstract</span> </em><code class="sig-name descname"><span class="pre">_opendb</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dbname</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/mdio/metaMDIO.html#metaMDIO._opendb"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mosaic.mdio.metaMDIO.metaMDIO._opendb" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mosaic.mdio.metaMDIO.metaMDIO._opendb">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">_opendb</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dbname</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/mdio/metaMDIO.html#metaMDIO._opendb"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mosaic.mdio.metaMDIO.metaMDIO._opendb" title="Permalink to this definition">¶</a></dt>
 <dd><div class="admonition important">
 <p class="admonition-title">Important</p>
 <p><strong>Abstract method:</strong> This method must be implemented by a sub-class.</p>
@@ -511,8 +519,8 @@ SQL database.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="mosaic.mdio.metaMDIO.metaMDIO._initdb">
-<em class="property"><span class="pre">abstract</span> </em><code class="sig-name descname"><span class="pre">_initdb</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/mdio/metaMDIO.html#metaMDIO._initdb"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mosaic.mdio.metaMDIO.metaMDIO._initdb" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mosaic.mdio.metaMDIO.metaMDIO._initdb">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">_initdb</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/mdio/metaMDIO.html#metaMDIO._initdb"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mosaic.mdio.metaMDIO.metaMDIO._initdb" title="Permalink to this definition">¶</a></dt>
 <dd><div class="admonition important">
 <p class="admonition-title">Important</p>
 <p><strong>Abstract method:</strong> This method must be implemented by a sub-class.</p>
@@ -520,8 +528,8 @@ SQL database.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="mosaic.mdio.metaMDIO.metaMDIO._colnames">
-<em class="property"><span class="pre">abstract</span> </em><code class="sig-name descname"><span class="pre">_colnames</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">table</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/mdio/metaMDIO.html#metaMDIO._colnames"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mosaic.mdio.metaMDIO.metaMDIO._colnames" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mosaic.mdio.metaMDIO.metaMDIO._colnames">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">_colnames</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">table</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/mdio/metaMDIO.html#metaMDIO._colnames"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mosaic.mdio.metaMDIO.metaMDIO._colnames" title="Permalink to this definition">¶</a></dt>
 <dd><div class="admonition important">
 <p class="admonition-title">Important</p>
 <p><strong>Abstract method:</strong> This method must be implemented by a sub-class.</p>
@@ -529,8 +537,8 @@ SQL database.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="mosaic.mdio.metaMDIO.metaMDIO.closeDB">
-<em class="property"><span class="pre">abstract</span> </em><code class="sig-name descname"><span class="pre">closeDB</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/mdio/metaMDIO.html#metaMDIO.closeDB"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mosaic.mdio.metaMDIO.metaMDIO.closeDB" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mosaic.mdio.metaMDIO.metaMDIO.closeDB">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">closeDB</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/mdio/metaMDIO.html#metaMDIO.closeDB"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mosaic.mdio.metaMDIO.metaMDIO.closeDB" title="Permalink to this definition">¶</a></dt>
 <dd><div class="admonition important">
 <p class="admonition-title">Important</p>
 <p><strong>Abstract method:</strong> This method must be implemented by a sub-class.</p>
@@ -538,11 +546,11 @@ SQL database.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="mosaic.mdio.metaMDIO.metaMDIO.initDB">
-<code class="sig-name descname"><span class="pre">initDB</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/mdio/metaMDIO.html#metaMDIO.initDB"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mosaic.mdio.metaMDIO.metaMDIO.initDB" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mosaic.mdio.metaMDIO.metaMDIO.initDB">
+<span class="sig-name descname"><span class="pre">initDB</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/mdio/metaMDIO.html#metaMDIO.initDB"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mosaic.mdio.metaMDIO.metaMDIO.initDB" title="Permalink to this definition">¶</a></dt>
 <dd><p>Initialize a new database file.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p></p></dd>
 </dl>
 <p>The arguments passed to init change based on the method of file IO selected, in addition to 
@@ -557,11 +565,11 @@ the common args below:</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="mosaic.mdio.metaMDIO.metaMDIO.openDB">
-<code class="sig-name descname"><span class="pre">openDB</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dbname</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/mdio/metaMDIO.html#metaMDIO.openDB"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mosaic.mdio.metaMDIO.metaMDIO.openDB" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mosaic.mdio.metaMDIO.metaMDIO.openDB">
+<span class="sig-name descname"><span class="pre">openDB</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dbname</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/mdio/metaMDIO.html#metaMDIO.openDB"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mosaic.mdio.metaMDIO.metaMDIO.openDB" title="Permalink to this definition">¶</a></dt>
 <dd><p>Open an existing database file.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><cite>dbname</cite> :            directory to store the MD database (‘&lt;full path to data directory&gt;’)</p></li>
 </ul>
@@ -574,8 +582,8 @@ the common args below:</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="mosaic.mdio.metaMDIO.metaMDIO.queryDB">
-<em class="property"><span class="pre">abstract</span> </em><code class="sig-name descname"><span class="pre">queryDB</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">query</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/mdio/metaMDIO.html#metaMDIO.queryDB"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mosaic.mdio.metaMDIO.metaMDIO.queryDB" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mosaic.mdio.metaMDIO.metaMDIO.queryDB">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">queryDB</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">query</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/mdio/metaMDIO.html#metaMDIO.queryDB"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mosaic.mdio.metaMDIO.metaMDIO.queryDB" title="Permalink to this definition">¶</a></dt>
 <dd><div class="admonition important">
 <p class="admonition-title">Important</p>
 <p><strong>Abstract method:</strong> This method must be implemented by a sub-class.</p>
@@ -594,8 +602,8 @@ the common args below:</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="mosaic.mdio.metaMDIO.metaMDIO.readAnalysisInfo">
-<em class="property"><span class="pre">abstract</span> </em><code class="sig-name descname"><span class="pre">readAnalysisInfo</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/mdio/metaMDIO.html#metaMDIO.readAnalysisInfo"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mosaic.mdio.metaMDIO.metaMDIO.readAnalysisInfo" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mosaic.mdio.metaMDIO.metaMDIO.readAnalysisInfo">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">readAnalysisInfo</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/mdio/metaMDIO.html#metaMDIO.readAnalysisInfo"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mosaic.mdio.metaMDIO.metaMDIO.readAnalysisInfo" title="Permalink to this definition">¶</a></dt>
 <dd><div class="admonition important">
 <p class="admonition-title">Important</p>
 <p><strong>Abstract method:</strong> This method must be implemented by a sub-class.</p>
@@ -604,8 +612,8 @@ the common args below:</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="mosaic.mdio.metaMDIO.metaMDIO.readAnalysisLog">
-<em class="property"><span class="pre">abstract</span> </em><code class="sig-name descname"><span class="pre">readAnalysisLog</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/mdio/metaMDIO.html#metaMDIO.readAnalysisLog"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mosaic.mdio.metaMDIO.metaMDIO.readAnalysisLog" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mosaic.mdio.metaMDIO.metaMDIO.readAnalysisLog">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">readAnalysisLog</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/mdio/metaMDIO.html#metaMDIO.readAnalysisLog"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mosaic.mdio.metaMDIO.metaMDIO.readAnalysisLog" title="Permalink to this definition">¶</a></dt>
 <dd><div class="admonition important">
 <p class="admonition-title">Important</p>
 <p><strong>Abstract method:</strong> This method must be implemented by a sub-class.</p>
@@ -614,8 +622,8 @@ the common args below:</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="mosaic.mdio.metaMDIO.metaMDIO.readSettings">
-<em class="property"><span class="pre">abstract</span> </em><code class="sig-name descname"><span class="pre">readSettings</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/mdio/metaMDIO.html#metaMDIO.readSettings"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mosaic.mdio.metaMDIO.metaMDIO.readSettings" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mosaic.mdio.metaMDIO.metaMDIO.readSettings">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">readSettings</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/mdio/metaMDIO.html#metaMDIO.readSettings"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mosaic.mdio.metaMDIO.metaMDIO.readSettings" title="Permalink to this definition">¶</a></dt>
 <dd><div class="admonition important">
 <p class="admonition-title">Important</p>
 <p><strong>Abstract method:</strong> This method must be implemented by a sub-class.</p>
@@ -624,15 +632,15 @@ the common args below:</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="mosaic.mdio.metaMDIO.metaMDIO.writeAnalysisInfo">
-<em class="property"><span class="pre">abstract</span> </em><code class="sig-name descname"><span class="pre">writeAnalysisInfo</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">infolist</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/mdio/metaMDIO.html#metaMDIO.writeAnalysisInfo"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mosaic.mdio.metaMDIO.metaMDIO.writeAnalysisInfo" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mosaic.mdio.metaMDIO.metaMDIO.writeAnalysisInfo">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">writeAnalysisInfo</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">infolist</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/mdio/metaMDIO.html#metaMDIO.writeAnalysisInfo"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mosaic.mdio.metaMDIO.metaMDIO.writeAnalysisInfo" title="Permalink to this definition">¶</a></dt>
 <dd><div class="admonition important">
 <p class="admonition-title">Important</p>
 <p><strong>Abstract method:</strong> This method must be implemented by a sub-class.</p>
 </div>
 <p>Write analysis information to the database. Note that subsequent calls to this method will overwrite the analysis inoformation entry in the table.</p>
 <dl class="field-list">
-<dt class="field-odd">Args</dt>
+<dt class="field-odd">Args<span class="colon">:</span></dt>
 <dd class="field-odd"><ul>
 <li><dl>
 <dt><cite>infolist</cite><span class="classifier">A list of strings in the following order [ datPath, dataType, partitionAlgorithm, processingAlgorithm, filteringAlgorithm].</span></dt><dd><p><cite>datPath</cite>                               : full path to the data directory</p>
@@ -649,15 +657,15 @@ the common args below:</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="mosaic.mdio.metaMDIO.metaMDIO.writeAnalysisLog">
-<em class="property"><span class="pre">abstract</span> </em><code class="sig-name descname"><span class="pre">writeAnalysisLog</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">analysislog</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/mdio/metaMDIO.html#metaMDIO.writeAnalysisLog"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mosaic.mdio.metaMDIO.metaMDIO.writeAnalysisLog" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mosaic.mdio.metaMDIO.metaMDIO.writeAnalysisLog">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">writeAnalysisLog</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">analysislog</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/mdio/metaMDIO.html#metaMDIO.writeAnalysisLog"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mosaic.mdio.metaMDIO.metaMDIO.writeAnalysisLog" title="Permalink to this definition">¶</a></dt>
 <dd><div class="admonition important">
 <p class="admonition-title">Important</p>
 <p><strong>Abstract method:</strong> This method must be implemented by a sub-class.</p>
 </div>
 <p>Write the analysis log string to the database. Note that subsequent calls to this method will overwrite the analysis log entry.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Args</dt>
+<dt class="field-odd">Args<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><cite>analysislog</cite> :       analysis log string to save</p></li>
 </ul>
@@ -666,8 +674,8 @@ the common args below:</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="mosaic.mdio.metaMDIO.metaMDIO.writeRecord">
-<em class="property"><span class="pre">abstract</span> </em><code class="sig-name descname"><span class="pre">writeRecord</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">table</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/mdio/metaMDIO.html#metaMDIO.writeRecord"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mosaic.mdio.metaMDIO.metaMDIO.writeRecord" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mosaic.mdio.metaMDIO.metaMDIO.writeRecord">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">writeRecord</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">table</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/mdio/metaMDIO.html#metaMDIO.writeRecord"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mosaic.mdio.metaMDIO.metaMDIO.writeRecord" title="Permalink to this definition">¶</a></dt>
 <dd><div class="admonition important">
 <p class="admonition-title">Important</p>
 <p><strong>Abstract method:</strong> This method must be implemented by a sub-class.</p>
@@ -678,15 +686,15 @@ to writing data to a default table.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="mosaic.mdio.metaMDIO.metaMDIO.writeSettings">
-<em class="property"><span class="pre">abstract</span> </em><code class="sig-name descname"><span class="pre">writeSettings</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">settingsstring</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/mdio/metaMDIO.html#metaMDIO.writeSettings"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mosaic.mdio.metaMDIO.metaMDIO.writeSettings" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mosaic.mdio.metaMDIO.metaMDIO.writeSettings">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">writeSettings</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">settingsstring</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/mdio/metaMDIO.html#metaMDIO.writeSettings"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mosaic.mdio.metaMDIO.metaMDIO.writeSettings" title="Permalink to this definition">¶</a></dt>
 <dd><div class="admonition important">
 <p class="admonition-title">Important</p>
 <p><strong>Abstract method:</strong> This method must be implemented by a sub-class.</p>
 </div>
 <p>Write the settings JSON object to the database.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Args</dt>
+<dt class="field-odd">Args<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><cite>settingsstring</cite> : a <a href="#id1"><span class="problematic" id="id2">JSON_</span></a> formatted settings string.</p></li>
 </ul>
@@ -698,11 +706,11 @@ to writing data to a default table.</p>
 
 </section>
 <section id="mosaic-trajio-metatrajio-module">
-<h2><span class="section-number">14.1.2.5. </span>mosaic.trajio.metaTrajIO module<a class="headerlink" href="#mosaic-trajio-metatrajio-module" title="Permalink to this headline">¶</a></h2>
+<h2><span class="section-number">14.1.2.5. </span>mosaic.trajio.metaTrajIO module<a class="headerlink" href="#mosaic-trajio-metatrajio-module" title="Permalink to this heading">¶</a></h2>
 <dl class="py class">
-<dt id="mosaic.trajio.metaTrajIO.metaTrajIO">
-<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">mosaic.trajio.metaTrajIO.</span></code><code class="sig-name descname"><span class="pre">metaTrajIO</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/trajio/metaTrajIO.html#metaTrajIO"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mosaic.trajio.metaTrajIO.metaTrajIO" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<dt class="sig sig-object py" id="mosaic.trajio.metaTrajIO.metaTrajIO">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mosaic.trajio.metaTrajIO.</span></span><span class="sig-name descname"><span class="pre">metaTrajIO</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/trajio/metaTrajIO.html#metaTrajIO"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mosaic.trajio.metaTrajIO.metaTrajIO" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
 <p>This metaclass must be sub-classed. All abstract methods within this metaclass must be implemented.</p>
@@ -714,7 +722,7 @@ the definition of additional arguments. See the documentation of those classes
 for what those may be. For example, the qdfTrajIO implementation of metaTrajIO also requires
 the feedback resistance (Rfb) and feedback capacitance (Cfb) to be passed at initialization.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><cite>dirname</cite> :           all files from a directory (‘&lt;full path to data directory&gt;’)</p></li>
 <li><p><cite>nfiles</cite> :            if requesting N files (in addition to dirname) from a specified directory</p></li>
@@ -727,14 +735,14 @@ the feedback resistance (Rfb) and feedback capacitance (Cfb) to be passed at ini
 <li><p><cite>filtersettings</cite>:     Dict containing low pass filter settings (optional: if not provided filter settings will be loaded from the settings file. If no settings are found, <cite>datafilter</cite> will be turned off.)</p></li>
 </ul>
 </dd>
-<dt class="field-even">Properties</dt>
+<dt class="field-even">Properties<span class="colon">:</span></dt>
 <dd class="field-even"><ul class="simple">
 <li><p><cite>FsHz</cite> :                                      sampling frequency in Hz. If the data was decimated, this property will hold the sampling frequency after decimation.</p></li>
 <li><p><cite>LastFileProcessed</cite> :         return the data file that was last processed.</p></li>
 <li><p><cite>ElapsedTimeSeconds</cite> :        return the analysis time in sec.</p></li>
 </ul>
 </dd>
-<dt class="field-odd">Errors</dt>
+<dt class="field-odd">Errors<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><cite>IncompatibleArgumentsError</cite> :        when conflicting arguments are used.</p></li>
 <li><p><cite>EmptyDataPipeError</cite> :                        when out of data.</p></li>
@@ -744,8 +752,8 @@ the feedback resistance (Rfb) and feedback capacitance (Cfb) to be passed at ini
 </dd>
 </dl>
 <dl class="py method">
-<dt id="mosaic.trajio.metaTrajIO.metaTrajIO._init">
-<em class="property"><span class="pre">abstract</span> </em><code class="sig-name descname"><span class="pre">_init</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/trajio/metaTrajIO.html#metaTrajIO._init"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mosaic.trajio.metaTrajIO.metaTrajIO._init" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mosaic.trajio.metaTrajIO.metaTrajIO._init">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">_init</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/trajio/metaTrajIO.html#metaTrajIO._init"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mosaic.trajio.metaTrajIO.metaTrajIO._init" title="Permalink to this definition">¶</a></dt>
 <dd><div class="admonition important">
 <p class="admonition-title">Important</p>
 <p><strong>Abstract method:</strong> This method must be implemented by a sub-class.</p>
@@ -754,14 +762,14 @@ the feedback resistance (Rfb) and feedback capacitance (Cfb) to be passed at ini
 </dd></dl>
 
 <dl class="py method">
-<dt id="mosaic.trajio.metaTrajIO.metaTrajIO._formatsettings">
-<em class="property"><span class="pre">abstract</span> </em><code class="sig-name descname"><span class="pre">_formatsettings</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/trajio/metaTrajIO.html#metaTrajIO._formatsettings"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mosaic.trajio.metaTrajIO.metaTrajIO._formatsettings" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mosaic.trajio.metaTrajIO.metaTrajIO._formatsettings">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">_formatsettings</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/trajio/metaTrajIO.html#metaTrajIO._formatsettings"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mosaic.trajio.metaTrajIO.metaTrajIO._formatsettings" title="Permalink to this definition">¶</a></dt>
 <dd><p>Log settings strings</p>
 </dd></dl>
 
 <dl class="py attribute">
-<dt id="mosaic.trajio.metaTrajIO.metaTrajIO.DataLengthSec">
-<code class="sig-name descname"><span class="pre">DataLengthSec</span></code><a class="headerlink" href="#mosaic.trajio.metaTrajIO.metaTrajIO.DataLengthSec" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mosaic.trajio.metaTrajIO.metaTrajIO.DataLengthSec">
+<span class="sig-name descname"><span class="pre">DataLengthSec</span></span><a class="headerlink" href="#mosaic.trajio.metaTrajIO.metaTrajIO.DataLengthSec" title="Permalink to this definition">¶</a></dt>
 <dd><div class="admonition important">
 <p class="admonition-title">Important</p>
 <p><strong>Property</strong></p>
@@ -771,8 +779,8 @@ this property assumes that each file contains an equal amount of data.</p>
 </dd></dl>
 
 <dl class="py attribute">
-<dt id="mosaic.trajio.metaTrajIO.metaTrajIO.ElapsedTimeSeconds">
-<code class="sig-name descname"><span class="pre">ElapsedTimeSeconds</span></code><a class="headerlink" href="#mosaic.trajio.metaTrajIO.metaTrajIO.ElapsedTimeSeconds" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mosaic.trajio.metaTrajIO.metaTrajIO.ElapsedTimeSeconds">
+<span class="sig-name descname"><span class="pre">ElapsedTimeSeconds</span></span><a class="headerlink" href="#mosaic.trajio.metaTrajIO.metaTrajIO.ElapsedTimeSeconds" title="Permalink to this definition">¶</a></dt>
 <dd><div class="admonition important">
 <p class="admonition-title">Important</p>
 <p><strong>Property</strong></p>
@@ -780,9 +788,9 @@ this property assumes that each file contains an equal amount of data.</p>
 <p>Return the elapsed time in the time-series in seconds.</p>
 </dd></dl>
 
-<dl class="py method">
-<dt id="mosaic.trajio.metaTrajIO.metaTrajIO.FsHz">
-<em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">FsHz</span></code><a class="headerlink" href="#mosaic.trajio.metaTrajIO.metaTrajIO.FsHz" title="Permalink to this definition">¶</a></dt>
+<dl class="py property">
+<dt class="sig sig-object py" id="mosaic.trajio.metaTrajIO.metaTrajIO.FsHz">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">FsHz</span></span><a class="headerlink" href="#mosaic.trajio.metaTrajIO.metaTrajIO.FsHz" title="Permalink to this definition">¶</a></dt>
 <dd><div class="admonition important">
 <p class="admonition-title">Important</p>
 <p><strong>Property</strong></p>
@@ -791,8 +799,8 @@ this property assumes that each file contains an equal amount of data.</p>
 </dd></dl>
 
 <dl class="py attribute">
-<dt id="mosaic.trajio.metaTrajIO.metaTrajIO.LastFileProcessed">
-<code class="sig-name descname"><span class="pre">LastFileProcessed</span></code><a class="headerlink" href="#mosaic.trajio.metaTrajIO.metaTrajIO.LastFileProcessed" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mosaic.trajio.metaTrajIO.metaTrajIO.LastFileProcessed">
+<span class="sig-name descname"><span class="pre">LastFileProcessed</span></span><a class="headerlink" href="#mosaic.trajio.metaTrajIO.metaTrajIO.LastFileProcessed" title="Permalink to this definition">¶</a></dt>
 <dd><div class="admonition important">
 <p class="admonition-title">Important</p>
 <p><strong>Property</strong></p>
@@ -801,8 +809,8 @@ this property assumes that each file contains an equal amount of data.</p>
 </dd></dl>
 
 <dl class="py attribute">
-<dt id="mosaic.trajio.metaTrajIO.metaTrajIO.ProcessedFiles">
-<code class="sig-name descname"><span class="pre">ProcessedFiles</span></code><a class="headerlink" href="#mosaic.trajio.metaTrajIO.metaTrajIO.ProcessedFiles" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mosaic.trajio.metaTrajIO.metaTrajIO.ProcessedFiles">
+<span class="sig-name descname"><span class="pre">ProcessedFiles</span></span><a class="headerlink" href="#mosaic.trajio.metaTrajIO.metaTrajIO.ProcessedFiles" title="Permalink to this definition">¶</a></dt>
 <dd><div class="admonition important">
 <p class="admonition-title">Important</p>
 <p><strong>Property</strong></p>
@@ -811,26 +819,26 @@ this property assumes that each file contains an equal amount of data.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="mosaic.trajio.metaTrajIO.metaTrajIO.formatsettings">
-<code class="sig-name descname"><span class="pre">formatsettings</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/trajio/metaTrajIO.html#metaTrajIO.formatsettings"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mosaic.trajio.metaTrajIO.metaTrajIO.formatsettings" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mosaic.trajio.metaTrajIO.metaTrajIO.formatsettings">
+<span class="sig-name descname"><span class="pre">formatsettings</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/trajio/metaTrajIO.html#metaTrajIO.formatsettings"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mosaic.trajio.metaTrajIO.metaTrajIO.formatsettings" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return a formatted string of settings for display</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="mosaic.trajio.metaTrajIO.metaTrajIO.popfnames">
-<code class="sig-name descname"><span class="pre">popfnames</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/trajio/metaTrajIO.html#metaTrajIO.popfnames"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mosaic.trajio.metaTrajIO.metaTrajIO.popfnames" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mosaic.trajio.metaTrajIO.metaTrajIO.popfnames">
+<span class="sig-name descname"><span class="pre">popfnames</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/trajio/metaTrajIO.html#metaTrajIO.popfnames"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mosaic.trajio.metaTrajIO.metaTrajIO.popfnames" title="Permalink to this definition">¶</a></dt>
 <dd><p>Pop a single filename from the start of <code class="docutils literal notranslate"><span class="pre">self.dataFiles</span></code>. If <code class="docutils literal notranslate"><span class="pre">self.dataFiles</span></code> is empty,
 raise an <code class="docutils literal notranslate"><span class="pre">EmptyDataPipeError</span></code> error.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p>None</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>A single filename if successful.</p>
 </dd>
-<dt class="field-odd">Errors</dt>
+<dt class="field-odd">Errors<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><cite>EmptyDataPipeError</cite> : when the filename list is empty.</p></li>
 </ul>
@@ -839,23 +847,23 @@ raise an <code class="docutils literal notranslate"><span class="pre">EmptyDataP
 </dd></dl>
 
 <dl class="py method">
-<dt id="mosaic.trajio.metaTrajIO.metaTrajIO.previewdata">
-<code class="sig-name descname"><span class="pre">previewdata</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/trajio/metaTrajIO.html#metaTrajIO.previewdata"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mosaic.trajio.metaTrajIO.metaTrajIO.previewdata" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mosaic.trajio.metaTrajIO.metaTrajIO.previewdata">
+<span class="sig-name descname"><span class="pre">previewdata</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/trajio/metaTrajIO.html#metaTrajIO.previewdata"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mosaic.trajio.metaTrajIO.metaTrajIO.previewdata" title="Permalink to this definition">¶</a></dt>
 <dd><p>Preview data points in self.currDataPipe. This function is identical in 
 behavior to popdata, except it does not remove data point from the queue.
 Like popdata, it uses recursion to automatically read data files 
 when the queue length is shorter than the requested data points. When all 
 data files are read, an EmptyDataPipeError is thrown.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><cite>n</cite> : number of requested data points</p>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><ul class="simple">
 <li><p>Numpy array with requested data</p></li>
 </ul>
 </dd>
-<dt class="field-odd">Errors</dt>
+<dt class="field-odd">Errors<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><cite>EmptyDataPipeError</cite> : if the queue has fewer data points than requested.</p></li>
 </ul>
@@ -864,8 +872,8 @@ data files are read, an EmptyDataPipeError is thrown.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="mosaic.trajio.metaTrajIO.metaTrajIO.readdata">
-<em class="property"><span class="pre">abstract</span> </em><code class="sig-name descname"><span class="pre">readdata</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fname</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/trajio/metaTrajIO.html#metaTrajIO.readdata"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mosaic.trajio.metaTrajIO.metaTrajIO.readdata" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mosaic.trajio.metaTrajIO.metaTrajIO.readdata">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">readdata</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fname</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/trajio/metaTrajIO.html#metaTrajIO.readdata"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mosaic.trajio.metaTrajIO.metaTrajIO.readdata" title="Permalink to this definition">¶</a></dt>
 <dd><div class="admonition important">
 <p class="admonition-title">Important</p>
 <p><strong>Abstract method:</strong> This method must be implemented by a sub-class.</p>
@@ -873,45 +881,45 @@ data files are read, an EmptyDataPipeError is thrown.</p>
 <p>Return raw data from a single data file. Set a class 
 attribute Fs with the sampling frequency in Hz.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><cite>fname</cite> :  fileame to read</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>An array object that holds raw (unscaled) data from <cite>fname</cite></p>
 </dd>
-<dt class="field-odd">Errors</dt>
+<dt class="field-odd">Errors<span class="colon">:</span></dt>
 <dd class="field-odd"><p>None</p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py method">
-<dt id="mosaic.trajio.metaTrajIO.metaTrajIO.scaleData">
-<code class="sig-name descname"><span class="pre">scaleData</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/trajio/metaTrajIO.html#metaTrajIO.scaleData"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mosaic.trajio.metaTrajIO.metaTrajIO.scaleData" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mosaic.trajio.metaTrajIO.metaTrajIO.scaleData">
+<span class="sig-name descname"><span class="pre">scaleData</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mosaic/trajio/metaTrajIO.html#metaTrajIO.scaleData"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mosaic.trajio.metaTrajIO.metaTrajIO.scaleData" title="Permalink to this definition">¶</a></dt>
 <dd><div class="admonition important">
 <p class="admonition-title">Important</p>
 <p><strong>Abstract method:</strong> This optional interface method can be overridden by a sub-class to modify functionality.</p>
 </div>
 <p>Scale the raw data loaded with <code class="xref py py-func docutils literal notranslate"><span class="pre">readdata()</span></code>. Note this function will not necessarily receive the entire data array loaded with <code class="xref py py-func docutils literal notranslate"><span class="pre">readdata()</span></code>. Transformations must be able to process partial data chunks.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><cite>data</cite> : partial chunk of raw data loaded using <code class="xref py py-func docutils literal notranslate"><span class="pre">readdata()</span></code>.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><ul class="simple">
 <li><p>Array containing scaled data.</p></li>
 </ul>
 </dd>
-<dt class="field-odd">Default Behavior</dt>
+<dt class="field-odd">Default Behavior<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p>If not implemented by a sub-class, the default behavior is to return <code class="docutils literal notranslate"><span class="pre">data</span></code> to the calling function without modifications.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Example</dt>
+<dt class="field-even">Example<span class="colon">:</span></dt>
 <dd class="field-even"><p>Assuming the amplifier scale and offset values are stored in the class variables <code class="docutils literal notranslate"><span class="pre">AmplifierScale</span></code> and <code class="docutils literal notranslate"><span class="pre">AmplifierOffset</span></code>, the raw data read using <code class="xref py py-func docutils literal notranslate"><span class="pre">readdata()</span></code> can be transformed by <code class="xref py py-func docutils literal notranslate"><span class="pre">scaleData()</span></code>. We can also use this function to change the array data type.</p>
 </dd>
 </dl>
@@ -939,7 +947,7 @@ attribute Fs with the sampling frequency in Hz.</p>
       
     </p>
     <p>
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 3.5.4.<br/>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 7.0.0.<br/>
     </p>
   </div>
 </footer> -->

@@ -4,7 +4,7 @@ import base64
 
 with open( resource_path('version-hash'), 'r' ) as f:
       version=f.read().strip()
-bld='f98ae80'
+bld=b'f98ae80'
 
 def enc(func):
 	def f(s):
@@ -34,8 +34,8 @@ def updateVers(verlist):
 	return verlist
 
 updatejson="""{
-		"version" 			: '"""+base64.b64encode(str(version))+"""',
-		"build"				: '"""+base64.b64encode(bld)+"""',
+		"version" 			: 'b"""+base64.b64encode(bytes(version, encoding='utf8'))+b"""',
+		"build"				: 'b"""+base64.b64encode(bld)+b"""',
 		"update-versions"	: '"""+updateVers("""["1.0", "1.1", "1.2", "1.3b1", "1.3b2", "1.3b3", "1.3", "1.3.1", "1.3.2", "1.3.3","1.3.4","1.3.5","1.3.6"]""")+"""', 
 		"changelog"			: '"""+readfile('../CHANGELOG.rst')+"""',
 		"dl-w64"			: '"""+dl_win("https://github.com/usnistgov/mosaic/releases/download/v")+"""',	

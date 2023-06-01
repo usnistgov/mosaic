@@ -1,20 +1,19 @@
 <!DOCTYPE html>
 
-<html>
+<html lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
-    <title>9. Extend MOSAIC &#8212; MOSAIC v2.2 documentation</title>
-    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="../_static/bootstrap-sphinx.css" type="text/css" />
+    <title>9. Extend MOSAIC &#8212; MOSAIC v2.4 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/bootstrap-sphinx.css" />
     <link rel="stylesheet" type="text/css" href="../_static/graphviz.css" />
     <link rel="stylesheet" type="text/css" href="../_static/style.css" />
-    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-    <script src="../_static/jquery.js"></script>
-    <script src="../_static/underscore.js"></script>
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
     <script src="../_static/doctools.js"></script>
-    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <script src="../_static/sphinx_highlight.js"></script>
+    <link rel="icon" href="../_static/favicon.ico"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="10. Publication Quality Figures" href="PublicationFigures.html" />
@@ -24,13 +23,22 @@
 <meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
 <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
 <meta name="apple-mobile-web-app-capable" content="yes">
-<script type="text/javascript" src="../_static/js/jquery-1.11.0.min.js "></script>
-<script type="text/javascript" src="../_static/js/jquery-fix.js "></script>
-<script type="text/javascript" src="../_static/bootstrap-3.3.7/js/bootstrap.min.js "></script>
-<script type="text/javascript" src="../_static/bootstrap-sphinx.js "></script>
+<script type="text/javascript" src="../_static/js/jquery-1.12.4.min.js"></script>
+<script type="text/javascript" src="../_static/js/jquery-fix.js"></script>
+<script type="text/javascript" src="../_static/bootstrap-3.4.1/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="../_static/bootstrap-sphinx.js"></script>
 
 	<script async type="text/javascript" id="_fed_an_ua_tag" src="https://dap.digitalgov.gov/Universal-Federated-Analytics-Min.js?agency=DOC&subagency=NIST&pua=UA-66610693-1&yt=true&exts=ppsx,pps,f90,sch,rtf,wrl,txz,m1v,xlsm,msi,xsd,f,tif,eps,mpg,xml,pl,xlt,c"></script>	
 
+	<!-- Google tag (gtag.js) -->
+	<script async src="https://www.googletagmanager.com/gtag/js?id=G-RJSMY46M5C"></script>
+	<script>
+	  window.dataLayer = window.dataLayer || [];
+	  function gtag(){dataLayer.push(arguments);}
+	  gtag('js', new Date());
+
+	  gtag('config', 'G-RJSMY46M5C');
+	</script>
 	<meta name="theme-color" content="#283593">
 
   </head><body>
@@ -44,9 +52,9 @@
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </button>
-        <a class="navbar-brand" href="../index.html"><span><img src="../_static/icon_48.png"></span>
+        <a class="navbar-brand" href="../index.html">
            </a>
-        <span class="navbar-text navbar-version pull-left"><b>v2.2</b></span>
+        <span class="navbar-text navbar-version pull-left"><b>v2.4</b></span>
       </div>
 
         <div class="collapse navbar-collapse nav-collapse">
@@ -114,10 +122,10 @@
     <div class="body col-md-12 content" role="main">
       
   <section id="extend-projname">
-<span id="extend-page"></span><h1><span class="section-number">9. </span>Extend <em>MOSAIC</em><a class="headerlink" href="#extend-projname" title="Permalink to this headline">¶</a></h1>
+<span id="extend-page"></span><h1><span class="section-number">9. </span>Extend <em>MOSAIC</em><a class="headerlink" href="#extend-projname" title="Permalink to this heading">¶</a></h1>
 <p><em>MOSAIC</em> was designed from the start using object oriented tools, which makes it easy to extend. <a class="reference internal" href="../api-doc/mosaic.meta.html#api-metaclass-page"><span class="std std-ref">Meta-Classes</span></a> define interfaces to five key parts of <em>MOSAIC</em>: time-series IO (<code class="xref py py-class docutils literal notranslate"><span class="pre">metaTrajIO</span></code>), time-series filtering (<code class="xref py py-class docutils literal notranslate"><span class="pre">metaIOFilter</span></code>), analysis output (<code class="xref py py-class docutils literal notranslate"><span class="pre">metaMDIO</span></code>), event partition and segmenting (<code class="xref py py-class docutils literal notranslate"><span class="pre">metaEventPartition</span></code>), and event processing (<code class="xref py py-class docutils literal notranslate"><span class="pre">metaEventProcessor</span></code>). Sub-classing any of these meta classes and implementing their  interface functions allows one to extend <em>MOSAIC</em> while maintaining compatibility with other parts of the program. We highlight these capabilities via two examples. In the first example, we show how one can extend <code class="xref py py-class docutils literal notranslate"><span class="pre">metaTrajIO</span></code> to read arbitrary binary files. In the second example, we implement a new top-level class that converts files to the comma separated value (CSV) format.</p>
 <section id="read-arbitrary-binary-data-files">
-<h2><span class="section-number">9.1. </span>Read Arbitrary Binary Data Files<a class="headerlink" href="#read-arbitrary-binary-data-files" title="Permalink to this headline">¶</a></h2>
+<h2><span class="section-number">9.1. </span>Read Arbitrary Binary Data Files<a class="headerlink" href="#read-arbitrary-binary-data-files" title="Permalink to this heading">¶</a></h2>
 <p>In this first example, we implement a class that can read an arbitrary binary data file and make its data available via the interface functions in <code class="xref py py-class docutils literal notranslate"><span class="pre">metaTrajIO</span></code>. This allows the newly implemented binary data to be used across <em>MOSAIC</em>. A complete listing of the code used in this example (<code class="xref py py-class docutils literal notranslate"><span class="pre">binTrajIO</span></code>) is available in the API documentation.</p>
 <p>The new binary IO class is implemented by sub-classing <code class="xref py py-class docutils literal notranslate"><span class="pre">metaTrajIO</span></code> as shown in the listing below.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">binTrajIO</span><span class="p">(</span><span class="n">metaTrajIO</span><span class="o">.</span><span class="n">metaTrajIO</span><span class="p">):</span>
@@ -147,7 +155,7 @@
 </div>
 <p>Finally, we implement the <code class="xref py py-meth docutils literal notranslate"><span class="pre">_formatsettings()</span></code> that returns a formatted string of the settings used to read in binary data.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">_formatsettings</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">                Return a formatted string of settings for display</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">fmtstr</span><span class="o">=</span><span class="s2">&quot;&quot;</span>
@@ -172,19 +180,19 @@
 </pre></div>
 </div>
 <p>Similar to other <cite>TrajIO</cite> objects, parameters for <code class="xref py py-class docutils literal notranslate"><span class="pre">binTrajIO</span></code> are obtained from the settings file when used with <code class="xref py py-class docutils literal notranslate"><span class="pre">SingleChannelAnalysis</span></code>. Example settings for <code class="xref py py-class docutils literal notranslate"><span class="pre">binTrajIO</span></code> that read 16-bit intgers from a binary data file, assuming 50 <cite>kHz</cite> sampling, are shown below.</p>
-<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="s2">&quot;binTrajIO&quot;</span> <span class="o">:</span> <span class="p">{</span>
-        <span class="s2">&quot;filter&quot;</span>                <span class="o">:</span> <span class="s2">&quot;*bin&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;AmplifierScale&quot;</span>        <span class="o">:</span> <span class="s2">&quot;1.0&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;AmplifierOffset&quot;</span>       <span class="o">:</span> <span class="s2">&quot;0.0&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;SamplingFrequency&quot;</span>     <span class="o">:</span> <span class="s2">&quot;50000&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;HeaderOffset&quot;</span>          <span class="o">:</span> <span class="s2">&quot;0&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;PythonStructCode&quot;</span>      <span class="o">:</span> <span class="s2">&quot;&#39;h&#39;&quot;</span>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="s2">&quot;binTrajIO&quot;</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="s2">&quot;filter&quot;</span><span class="w">                </span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;*bin&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="s2">&quot;AmplifierScale&quot;</span><span class="w">        </span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;1.0&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="s2">&quot;AmplifierOffset&quot;</span><span class="w">       </span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;0.0&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="s2">&quot;SamplingFrequency&quot;</span><span class="w">     </span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;50000&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="s2">&quot;HeaderOffset&quot;</span><span class="w">          </span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;0&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="s2">&quot;PythonStructCode&quot;</span><span class="w">      </span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;&#39;h&#39;&quot;</span>
 <span class="p">}</span>
 </pre></div>
 </div>
 </section>
 <section id="define-top-level-functionality">
-<h2><span class="section-number">9.2. </span>Define Top-Level Functionality<a class="headerlink" href="#define-top-level-functionality" title="Permalink to this headline">¶</a></h2>
+<h2><span class="section-number">9.2. </span>Define Top-Level Functionality<a class="headerlink" href="#define-top-level-functionality" title="Permalink to this heading">¶</a></h2>
 <p>New functionality can be added to <em>MOSAIC</em> by combining other parts of the code. One way of accomplishing this is by defining new top-level functionality as shown in the following example. We define a new class that converts data from one of the supported data formats to comma separated text files (CSV). A complete listing of the <code class="xref py py-class docutils literal notranslate"><span class="pre">ConvertToCSV</span></code> class in this example is available in the API documentation.</p>
 <p>The <em>__init__</em> function of <code class="xref py py-class docutils literal notranslate"><span class="pre">ConvertToCSV</span></code> class accepts two arguments: a trajIO object and the location to save the converted files. If the output directory is not specified, the data is saved in the same folder as the input data. The data conversion is performed by the <code class="xref py py-meth docutils literal notranslate"><span class="pre">Convert()</span></code> function, which saves the data in blocks controlled by the <em>blockSize</em> parameter. <code class="xref py py-meth docutils literal notranslate"><span class="pre">Convert()</span></code> saves each block to a new CSV file, named with the filename of the input data followed by an integer number (see the API documentation for <code class="xref py py-meth docutils literal notranslate"><span class="pre">_filename()</span></code> for additional details).</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">ConvertToCSV</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
@@ -233,7 +241,7 @@
 </pre></div>
 </div>
 <p>Finally, the <code class="xref py py-class docutils literal notranslate"><span class="pre">ConvertToCSV</span></code> class can be further extended to output arbitrary binary files in place of CSV by the simple extension shown below.</p>
-<script src="https://gist.github.com/abalijepalli/975148996058ee10d4d7.js">&nbsp;</script></section>
+</section>
 </section>
 
 
@@ -249,7 +257,7 @@
       
     </p>
     <p>
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 3.5.4.<br/>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 7.0.0.<br/>
     </p>
   </div>
 </footer> -->
