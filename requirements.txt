@@ -7,10 +7,10 @@ pytest==7.2.2
 coverage==6.5.0
 codecov==2.1.13
 pytest-cov==4.0.0
-pyinstaller==5.6.2
+pyinstaller==5.13.1
 numpy==1.23.5
 scipy==1.9.3
 pyabf==2.3.7
 docutils==0.19
 flask==2.3.2
-gunicorn==20.1.0
+gunicorn==22.0.0
