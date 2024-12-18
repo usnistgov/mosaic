@@ -1,8 +1,9 @@
-mosaic:
-  build: .
-  restart: always
-  container_name: mosaic
-  ports:
-   - "5000:5000"
-  volumes:
-   - ~:/src/data
+services:
+  mosaic:
+    build: .
+    restart: always
+    container_name: mosaic
+    ports:
+     - "50000:50000"
+    volumes:
+     - ~:/src/data
