@@ -24,8 +24,7 @@ __all__ = ["abfTrajIO"]
 
 class abfTrajIO(metaTrajIO.metaTrajIO):
 	"""
-		Read ABF1 and ABF2 file formats. Currently, only 
-		gap-free mode and single channel recordings are supported.
+		Read ABF1 and ABF2 file formats.
 
 		A typical settings section to read ABF files is shown below.
 
