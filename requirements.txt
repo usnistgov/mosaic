@@ -13,4 +13,4 @@ scipy==1.10.0
 pyabf==2.3.7
 docutils==0.19
 flask==2.3.2
-gunicorn==22.0.0
+gunicorn==23.0.0
