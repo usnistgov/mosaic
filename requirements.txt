@@ -7,7 +7,7 @@ pytest==7.2.2
 coverage==6.5.0
 codecov==2.1.13
 pytest-cov==4.0.0
-pyinstaller==5.13.1
+pyinstaller==6.0.0
 numpy==1.23.5
 scipy==1.10.0
 pyabf==2.3.7
