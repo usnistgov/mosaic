@@ -13,6 +13,7 @@ Chimera VC100 concatenated file format implementation of metaTrajIO. Read concat
 """
 import struct
 import glob
+import sys
 
 import mosaic.trajio.metaTrajIO as metaTrajIO
 import mosaic.utilities.mosaicLogging as mlog
@@ -22,6 +23,8 @@ from mosaic.trajio.ChimeraSettingsDict import ChimeraSettingsDict as ChimeraSett
 import numpy as np
 
 __all__ = ["chimeraTrajIO", "InvalidDataColumnError"]
+
+sys.set_int_max_str_digits(0)
 
 class InvalidDataColumnError(Exception):
 	pass
@@ -76,7 +79,7 @@ class chimeraTrajIO(metaTrajIO.metaTrajIO):
 
 		# set the sampling frequency in Hz.
 		if not hasattr(self, 'Fs'):	
-			self.Fs=self.SamplingFrequency
+			self.Fs=int(self.SamplingFrequency)
 
 	def readdata(self, fname):
 		"""
@@ -133,7 +136,7 @@ class chimeraTrajIO(metaTrajIO.metaTrajIO):
 			# set the sampling frequency in Hz.
 			# If the Fs attribute doesn't exist set it
 			if hasattr(self, 'Fs'):	
-				if self.Fs!=chimeraSettings["SamplingFrequency"]:
+				if self.Fs!=int(chimeraSettings["SamplingFrequency"]):
 					raise metaTrajIO.SamplingRateChangedError("The sampling rate in the data file '{0}' has changed.".format(fname))
 			else:
 				for k,v in chimeraSettings.items():

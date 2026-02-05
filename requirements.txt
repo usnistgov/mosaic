@@ -1,5 +1,5 @@
 cython==0.29.32
-pandas==1.5.2
+pandas==2.2.3
 lmfit==1.1.0
 uncertainties==3.1.7
 PyWavelets==1.4.1
@@ -8,9 +8,9 @@ coverage==6.5.0
 codecov==2.1.13
 pytest-cov==4.0.0
 pyinstaller==5.13.1
-numpy==1.23.5
-scipy==1.9.3
+numpy==1.26.4
+scipy==1.15.2
 pyabf==2.3.7
 docutils==0.19
 flask==2.3.2
-gunicorn==22.0.0
+gunicorn==23.0.0
