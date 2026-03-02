@@ -43,7 +43,7 @@ class ChimeraSettingsDict(dict):
 			self.clear()
 
 		for key, value in self.items():
-			self.chimeraSettingsLogger.info("{0}  : {1}".format(key, value))
+			self.chimeraSettingsLogger.debug("{0}  : {1}".format(key, value))
 
 
 	def __getitem__(self, key):
@@ -64,11 +64,11 @@ class ChimeraSettingsDict(dict):
 		try:
 			if line[0]=='__version__':
 				self.__version__=float(line[1])
-				self.chimeraSettingsLogger.info("Chimera settings version={0}".format(self.__version__))
+				self.chimeraSettingsLogger.debug("Chimera settings version={0}".format(self.__version__))
 				return {}
 			if line[0]=='__header__':
 				self.__header__=line[1]
-				self.chimeraSettingsLogger.info("Chimera settings header={0}".format(self.__header__))
+				self.chimeraSettingsLogger.debug("Chimera settings header={0}".format(self.__header__))
 				return {}
 		except:
 			return {}
@@ -90,9 +90,9 @@ class ChimeraSettingsDict(dict):
 
 		try:
 			self.__version__=float(sett["__version__"])
-			self.chimeraSettingsLogger.info("Chimera settings version={0}".format(self.__version__))
+			self.chimeraSettingsLogger.debug("Chimera settings version={0}".format(self.__version__))
 			self.__header__=str(sett["__header__"])
-			self.chimeraSettingsLogger.info("Chimera settings header={0}".format(self.__header__))
+			self.chimeraSettingsLogger.debug("Chimera settings header={0}".format(self.__header__))
 
 			for key, val in sett.items():
 				if key.startswith("SETUP"):
