@@ -30,12 +30,15 @@ class convolutionFilter(metaIOFilter.metaIOFilter):
 		"""
 		"""		
 		try:
-			self.filterCoeff=ast.eval_(kwargs['filterCoeff'])
+			self.filterCoeff=eval_(kwargs['filterCoeff'])
 		except KeyError:
 			self.filterCoeff=[1.0/10.0]*10
 
 		self.filtBuf=np.array([])
 
+		self.Fs = None
+
+		print(self.filterCoeff)
 		self.logger=mlog.mosaicLogging().getLogger(__name__)
 
 	def filterData(self, icurr, Fs):
@@ -46,6 +49,8 @@ class convolutionFilter(metaIOFilter.metaIOFilter):
 				- `icurr` :	ionic current in pA
 				- `Fs` :	original sampling frequency in Hz
 		"""
+		self.Fs = float(Fs)
+
 		self.filtBuf=np.hstack( (self.filtBuf, icurr) )
 		self.eventData=np.correlate(self.filtBuf, self.filterCoeff, 'valid')
 		self.filtBuf=self.filtBuf[len(self.filterCoeff)-1:]
