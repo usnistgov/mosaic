@@ -7,6 +7,7 @@
 	:License:	See LICENSE.TXT	
 	:ChangeLog:
 	.. line-block::
+		3/2/26		AB 	Fixed a bug in the filtering code to apply filtering before data was appended to the pipeline.
 		6/10/21 	AB 	Allow filter settings to be passed as keyword argument.
 		4/13/17 	AB 	Negative end values enable runnning an analysis on all available data.
 		7/29/16 	AB 	Add additional filtering when constructing a list of data files to process.
@@ -405,12 +406,7 @@ class metaTrajIO(object, metaclass=ABCMeta):
 		"""
 		try:			
 			data=self.scaleData(next(self.dataGenerator))
-
-			if self.dataFilter:
-				self.dataFilterObj.filterData(data, self.Fs)
-				self.currDataPipe=np.hstack((self.currDataPipe, self.dataFilterObj.filteredData ))
-			else:
-				self.currDataPipe=np.hstack((self.currDataPipe, data ))
+			self.currDataPipe=np.hstack((self.currDataPipe, data ))
 
 		except (StopIteration, AttributeError, TypeError):
 			# Read a new data file to get more data
@@ -418,6 +414,11 @@ class metaTrajIO(object, metaclass=ABCMeta):
 			if fname:
 				self.processedFilenames.extend([[fname, self.fileFormat, os.path.getmtime(fname)]])
 				self.rawData=self.readdata( fname )
+
+				if self.dataFilter:
+					self.dataFilterObj.filterData(self.rawData, self.Fs)
+					self.rawData=self.dataFilterObj.filteredData
+
 				self.dataGenerator=self._createGenerator()
 				self._appenddata()
 		

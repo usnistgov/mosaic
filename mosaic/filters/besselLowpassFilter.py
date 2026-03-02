@@ -7,7 +7,8 @@
 	:License:	See LICENSE.TXT
 	:ChangeLog:
 	.. line-block::
-				11/2/16         KB      changed Bessel filter implementation to match expected rise time
+		03/02/36	AB 	Updated Bessel filter output to us SOS filtering.
+		11/2/16     KB  Changed Bessel filter implementation to match expected rise time
 		9/27/16 	AB 	Control phase delay
 		9/13/15 	AB 	Updated logging to use mosaicLogFormat class
 		7/1/13		AB	Initial version
@@ -35,11 +36,11 @@ class besselLowpassFilter(metaIOFilter.metaIOFilter):
 		self.logger=mlog.mosaicLogging().getLogger(__name__)
 
 		try:
-			self.filterOrder=float(kwargs['filterOrder'])
+			self.filterOrder=int(kwargs['filterOrder'])
 			self.filterCutoff=float(kwargs['filterCutoff'])
 		except KeyError:
 			self.logger.error( "ERROR: Missing mandatory arguments 'filterOrder' or 'filterCutoff'" )
-		try:	
+		try:
 			self.causal = kwargs['causal'] == "True"
 		except KeyError:
 			self.causal = False
@@ -47,7 +48,8 @@ class besselLowpassFilter(metaIOFilter.metaIOFilter):
 		if self.causal:
 			raise NotImplementedError('Causal filter has not been implemented yet')
 
-		self.filterInit=False
+		self.Fs = None
+		self.sos = None
 
 	def filterData(self, icurr, Fs):
 		"""
@@ -58,28 +60,23 @@ class besselLowpassFilter(metaIOFilter.metaIOFilter):
 				- `Fs` :	original sampling frequency in Hz
 		"""
 		self.eventData=icurr
-		self.Fs=Fs
+		current_fs = float(Fs)
 
-		if not self.filterInit:
-				self.b, self.a=sig.bessel(
-							N=int(self.filterOrder), 
-							Wn=float(self.filterCutoff/(float(self.Fs)/2.0)), 
-							btype='lowpass',
-							analog=False, 
-							output='ba',
-							norm='mag'
-						)
-				self.filterInit=True
+		if self.Fs != current_fs:
+			self.Fs = current_fs
+			# Manually normalize the cutoff frequency to the Nyquist frequency,
+			# matching the behavior of the standalone script.
+			Wn = self.filterCutoff / (self.Fs / 2.0)
+			self.sos = sig.bessel(
+				int(self.filterOrder),
+				2*np.pi*Wn,
+				btype='lowpass',
+				analog=False,
+				output='sos',
+				norm='mag'
+			)
 
-		#pad the data with 10x the transient time at both ends to manually eliminate edge effects of the filter
-		#for some reason I can't get good results using the pad method in filtfilt so manual it is
-		#this means there may be some numerical artefacts but they should be well below the level of noise
-
-		padding = int(10 * self.Fs/float(self.filterCutoff))
-		paddedsignal = np.pad(self.eventData,pad_width=padding,mode='edge')
-		
-
-		self.eventData=sig.filtfilt(self.b, self.a, paddedsignal, padtype=None, method='pad')[padding:-padding]
+		self.eventData = sig.sosfiltfilt(self.sos, icurr)
 
 	def formatsettings(self):
 		"""
